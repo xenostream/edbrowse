@@ -1,6 +1,6 @@
 # ED Mastery
 
-** 목차 **<br>
+**목차**<br>
 [1. Introduction](#Introduction)  
 [2. Ed Essentials](#Ed-Essentials)  
 [3. Addresses](#Addresses)  
