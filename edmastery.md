@@ -10,6 +10,7 @@
 [7. Substitution](#Substitution)  
 [8. Scripting](#Scripting)  
 
+---
 
 # Introduction
 우선 분명하게 말해두겠습니다: **ed(1)** 는 **유닉스 표준 텍스트 편집기** 입니다. 유닉스(UNIX)의 공동
