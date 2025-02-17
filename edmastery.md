@@ -3,7 +3,7 @@
 **목차**<br>
 [1. Introduction](#Introduction)  
 [2. Ed Essentials](#Ed-Essentials)  
-> [2.1 Starting Ed](#Starting-Ed)
+> [2.1 Starting Ed](#Starting-Ed)  
 [3. Addresses](#Addresses)  
 [4. Text Editing](#Text-Editing)  
 [5. File Management and Shell Escapes](#File-Management-and-Shell-Escapes)  
