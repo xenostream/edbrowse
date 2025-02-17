@@ -1,3 +1,7 @@
+[1. Introduction](Introduction) 
+
+
+
 # Introduction
 우선 분명하게 말해두겠습니다: **ed(1)** 는 **유닉스 표준 텍스트 편집기** 입니다. 유닉스(UNIX)의 공동
 제작자 중 한 명인 데니스 리치 (Dennis Ritchie) 가 그렇게 선언했습니다. 글래스 텔레타이프를[^1]
