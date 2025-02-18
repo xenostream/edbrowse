@@ -750,13 +750,13 @@ Subsequent sections describe new and interesting features, completely foreign to
 
 
 ## Performance of the Editor
-Certain g commands have been optimized for performance. for example, consider r !seq 100000, followed by g/[678]$/d. Line 6 is deleted, then the remaining lines are pulled up to fill in the gap. Next line 7 is deleted, then 8, then 16, and so on. This direct algorithm is quadratic in the size of the file, and becomes untenable for large files. Therefore, edbrowse invokes a linear algorithm when the subcommand deletes or joins a fixed number of lines containing the marked line, e.g. g/re/ -,+3J. In this case edbrowse prints "mass delete" or "mass join" at debug level 3 or higher.
+Certain ```g``` commands have been optimized for performance. for example, consider ```r !seq 100000```, followed by ```g/[678]$/d```. Line 6 is deleted, then the remaining lines are pulled up to fill in the gap. Next line 7 is deleted, then 8, then 16, and so on. This direct algorithm is quadratic in the size of the file, and becomes untenable for large files. Therefore, edbrowse invokes a linear algorithm when the subcommand deletes or joins a fixed number of lines containing the marked line, e.g. ```g/re/ -,+3J```. In this case edbrowse prints "*mass delete*" or "*mass join*" at debug level 3 or higher.
 
-These commands are not optimized in browse mode, sql mode, or directory mode - with one exception. g/re/d, wherein we delete the marked lines, is optimized in directory mode. And what else would you do in directory mode anyways? g/\.o$/d makes sense, g/\.o$/-d, or anything else, is risky and unpredictable.
+These commands are not optimized in browse mode, sql mode, or directory mode - with one exception. ```g/re/d```, wherein we delete the marked lines, is optimized in directory mode. And what else would you do in directory mode anyways? ```g/\.o$/d``` makes sense, ```g/\.o$/-d```, or anything else, is risky and unpredictable.
 
-Reading from a buffer is also optimized. g/re/ r7 this prints "mass read" at debug level 3. You must read the contents of a buffer, or part of the buffer using the at syntax. If you want to inject the contents of a file many times over, read that file into a buffer in another session first, and then use the above construct. This is more efficient anyways; you don't want to open that file over and over again.
+Reading from a buffer is also optimized. ```g/re/ r7``` this prints "*mass read*" at debug level 3. You must read the contents of a buffer, or part of the buffer using the at syntax. If you want to inject the contents of a file many times over, read that file into a buffer in another session first, and then use the above construct. This is more efficient anyways; you don't want to open that file over and over again.
 
-To implement g/xyz/ 1,3t. efficiently:
+To implement ```g/xyz/ 1,3t```. efficiently:
 ```
 1,3w7
 g/xyz/r7
@@ -777,13 +777,13 @@ g/xyz/+s/$/uvw/
 g/uvw$/r5
 ,s/uvw$//.
 ```
-The s (substitute) command across a range is optimized when it turns one line into many, e.g. ,s/doghouse/dog\nhouse/. However, it is not optimized when under the g command. If you want to split doghouse on lines that begin with xyz, instead of g/^xyz/ s/doghouse/dog\nhouse/ try ,s/\(^xyz.*dog\)house/$1\nhouse/
+The ```s``` (substitute) command across a range is optimized when it turns one line into many, e.g. ```,s/doghouse/dog\nhouse/```. However, it is not optimized when under the ```g``` command. If you want to split doghouse on lines that begin with xyz, instead of ```g/^xyz/ s/doghouse/dog\nhouse/ try ,s/\(^xyz.*dog\)house/$1\nhouse/```
 
 Contact the developers if you feel other editor commands should be optimized.
 
 
 ## Balancing Braces
-The capital B command is of interest to programmers, and will probably not be used by casual home users. It locates the line with the balancing brace, parenthesis, or bracket. Consider the following code fragment.
+The capital ```B``` command is of interest to programmers, and will probably not be used by casual home users. It locates the line with the balancing brace, parenthesis, or bracket. Consider the following code fragment.
 ```
     if(x == 3 &&
     y == 7) {
@@ -793,7 +793,7 @@ The capital B command is of interest to programmers, and will probably not be us
         exit(1);
     }
 ```
-The capital B command, on either the second or the last line, moves to the middle line "} else {", because that balances the open brace. On the first line, B moves to the second line, which balances the open parenthesis. The second line balances {, rather than ), because braces have precedence over parentheses, which have precedence over brackets. You can force a parenthesis match by typing B), which moves from line 2 back to line 1.
+The capital ```B``` command, on either the second or the last line, moves to the middle line "} else {", because that balances the open brace. On the first line, B moves to the second line, which balances the open parenthesis. The second line balances {, rather than ), because braces have precedence over parentheses, which have precedence over brackets. You can force a parenthesis match by typing B), which moves from line 2 back to line 1.
 
 The B command on the else line is ambiguous - not knowing whether to look backwards or forwards. Type B{ or B}.
 
