@@ -51,7 +51,7 @@ Edbrowse presents the following features:
 * When editing a directory, each line of text corresponds to a file. Again, the substitute command renames a file, while the delete command removes a file, or moves it to your trash can, depending on your edbrowse configuration. There is no undo operation, thus moving files to the trash can is safer. However, this does not free up any disk space.
 
 * The edbrowse configuration file can contain functions, similar to the .bashrc file in Linux. These functions can invoke other edbrowse commands, along with branching and loops based on the success of these commands. This simple example changes every x to y. If any changes were made, the file is written back to disk. The * in the if statement is true if the previous command was successful.
-```bash
+```
 function+xy {
         ,s/x/y/g
         if(*) {
@@ -84,7 +84,7 @@ The output and error messages, such as "search string not found", have been inte
 * German: LANG=de by Sebastian Humenda
 * Italian: LANG=it by Enrico Mioso
 * Spanish: LANG=es by Oriol Prieto
-* 
+ 
 Some edbrowse messages include the output of strerror, e.g. when opening, reading, or writing files. These text fragments are also internationalized, if you have installed the appropriate libc configuration module for your language. This is probably installed on your behalf if you specified a preferred language when setting up the operating system. However, other language modules may not be present. LANG=es_ES.UTF8 edbrowse causes all the edbrowse messages to display in Spanish, however, if the libc Spanish module is not installed, because your native language is German, then the strerror portion might appear in English, as that is the default for strerror when the module corresponding to LANG is not present. That could indeed be confusing. That said, most users will use edbrowse consistently with the language of their operating system, and this issue will not arise.
 
 When an output or error message is displayed, accented letters are printed using single bytes, vectoring through an iso8859 page, unless the string utf8 or utf-8 appears in $LANG, whence the nonascii characters are generated using utf8. Similarly, the contents of a buffer, be it a local document or an Internet website, are displayed as single bytes or multi-byte sequences, according to $LANG. Bear in mind, utf8 has become the standard, and edbrowse may not display text or error messages through iso8859 pages for long. In other words, iso8859 is deprecated.
@@ -100,13 +100,16 @@ If your world is utf8, the search function can lead to some confusion. Consider 
 Search and substitute is performed by the pcre library, and fortunately, the latest version supports utf8. Edbrowse passes pcre an option that tells it to treat certain two-byte sequences as single letters, and thus it behaves the way you want it to. Searching for ni.o works again. If you want to disable utf8 search and substitute temporarily, use the su8 command.
 
 Some websites offer their contents in multiple languages. For example, twitter.com has an English version, a French version, and so forth. It is possible to select the language when requesting the page. Edbrowse supports this via the localizeweb keyword in its configuration file. For instance, the following entry in .ebrc indicates that you want the French version, when it is available.
-
+```
 localizeweb = fr
-
+```
 If not specified, edbrowse defers to the environment variable $LANG, which is set on almost every system. Thus you rarely need to set localizeweb in your config file. If LANG is not set, the default is English. Edbrowse always sends a language designator to the web servers, because some websites, such as amazon.com, will not run properly without it. If you do set localizeweb yourself, be sure to set it to language code hyphen territory code.
 
+
+
+
 # Chapter 2, Quick Reference Guide
-Quick Reference Guide
+## Quick Reference Guide
 Here are the ed and edbrowse commands, all in one place. This is a quick reference guide. Most of these commands will not make sense until you read the rest of the documentation. Commands that are designated (toggle), such as js to turn Javascript on and off, also admit a + or - suffix to explicitly enable or disable the feature. Thus js toggles Javascript, js+ enables Javascript, and js- disables Javascript. The + and - variants are not listed. Toggle prints the state of the feature, on or off, if help messages are enabled or if the debug level is at least 1. Setting or clearing a mode only prints the message if help messages are on.
 
 ## Leave the Program  
