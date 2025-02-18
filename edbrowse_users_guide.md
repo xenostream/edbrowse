@@ -1718,7 +1718,6 @@ Frame {bottom}
 
 
 
-
 # Chapter 5 Javascript
 ## Introduction to Javascript
 Javascript is software, embedded in the web page, that runs on your computer. These functions do not run on the web server, they run right on your box. Hence it is sometimes called client side javascript. And javascript can do almost anything. You could, for instance, download a web page that includes a javascript function to compute the digits of pi, right on your computer, although that would be rather silly. Most of the time javascript is used to validate and/or modify forms or create fancy visual effects.
