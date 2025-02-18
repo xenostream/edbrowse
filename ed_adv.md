@@ -1910,10 +1910,7 @@ sed는 조건부 테스트와 분기 명령을 포함해서 여기서 모두 설
 Ted Dolotta 가 본 문서를 주의깊게 읽고, 또한 귀중한 의견을 제안해 주셔서 감사합니다.
 
 ### 7.5. References
-[^1]:  
-Brian W. Ker nighan, A Tutorial Introduction to the UNIX Text Editor. Bell Laboratories inter nal memorandum.
-[^2]:  
-Brian W. Ker nighan, UNIX For Beginners. Bell Laboratories internal memorandum.
-[^3]:  
-Ken L. Thompson and Dennis M. Ritchie, THe UNIX Programmer’s Manual. Bell Laboratories.
+[^1]:  Brian W. Ker nighan, A Tutorial Introduction to the UNIX Text Editor. Bell Laboratories inter nal memorandum.
+[^2]:  Brian W. Ker nighan, UNIX For Beginners. Bell Laboratories internal memorandum.
+[^3]:  Ken L. Thompson and Dennis M. Ritchie, THe UNIX Programmer’s Manual. Bell Laboratories.
 
