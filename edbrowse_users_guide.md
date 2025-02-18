@@ -51,7 +51,7 @@ Edbrowse presents the following features:
 * When editing a directory, each line of text corresponds to a file. Again, the substitute command renames a file, while the delete command removes a file, or moves it to your trash can, depending on your edbrowse configuration. There is no undo operation, thus moving files to the trash can is safer. However, this does not free up any disk space.
 
 * The edbrowse configuration file can contain functions, similar to the .bashrc file in Linux. These functions can invoke other edbrowse commands, along with branching and loops based on the success of these commands. This simple example changes every x to y. If any changes were made, the file is written back to disk. The * in the if statement is true if the previous command was successful.
-```
+```bash
 function+xy {
         ,s/x/y/g
         if(*) {
