@@ -1,17 +1,17 @@
 # A tutorial for the sam command language
 
 **목차**
-[Introduction](#Introduction)
-[Text](#Text)
-[Addresses](#Addresses)
-[Loops](#Loops)
-[Conditionals](#Conditionals)
-[Composition](#Composition)
-[Grouping](#Grouping)
-[Multiple Changes](#Multiple-Changes)
-[Unix](#Unix)
-[A few other text commands](#A-few-other-text-commands)
-[Files](#Files)
+[Introduction](#Introduction)  
+[Text](#Text)  
+[Addresses](#Addresses)  
+[Loops](#Loops)  
+[Conditionals](#Conditionals)  
+[Composition](#Composition)  
+[Grouping](#Grouping)  
+[Multiple Changes](#Multiple-Changes)  
+[Unix](#Unix)  
+[A few other text commands](#A-few-other-text-commands)  
+[Files](#Files)  
 
 ---
 
