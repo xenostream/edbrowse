@@ -7,10 +7,7 @@
 [Chapter 3 The Editor](#Chapter-3-The-Editor)  
 [Chapter 4 Web Browser](#Chapter-4-Web-Browser)  
 [Chapter 5 Javascript](#Chapter-5-Javascript)  
-[Chapter 6 Edbrowse Scripts and the Configuration File](#Chapter-6-Edbrowse-Scripts-and-the-Configuration-File)  
-[Chapter 7 Mail Client](#Chapter-7-Mail-Client)  
-[Chapter 8 IRC Client](#Chapter-8-IRC-Client)  
-[Chapter 9 Database Access](#Chapter-9-Database-Access)  
+ 
 
 ---
 
