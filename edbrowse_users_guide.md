@@ -112,6 +112,7 @@ If not specified, edbrowse defers to the environment variable $LANG, which is se
 ## Quick Reference Guide
 Here are the ed and edbrowse commands, all in one place. This is a quick reference guide. Most of these commands will not make sense until you read the rest of the documentation. Commands that are designated (toggle), such as js to turn Javascript on and off, also admit a + or - suffix to explicitly enable or disable the feature. Thus js toggles Javascript, js+ enables Javascript, and js- disables Javascript. The + and - variants are not listed. Toggle prints the state of the feature, on or off, if help messages are enabled or if the debug level is at least 1. Setting or clearing a mode only prints the message if help messages are on.
 
+<details><summary>fold/expand reference</summary>
 ## Leave the Program  
 |command|description|
 |:---|:---|
@@ -623,7 +624,7 @@ e scp://login:password@example.com/absolute-path scp download
 |step$go = label | set step$l to 2 at this point, breaking at each step thereafter|
 |step$exp = expression | set step$l to 2 when expression is true, breaking at each step thereafter|
 |arg$ | reference the arguments object from within a breakpoint|
-
+</details>    
 
 
 ## Tips for Avoiding Line Numbers
