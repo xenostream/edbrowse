@@ -7,17 +7,20 @@
 [Chapter 3 The Editor](#Chapter-3-The-Editor)  
 [Chapter 4 Web Browser](#Chapter-4-Web-Browser)  
 [Chapter 5 Javascript](#Chapter-5-Javascript)  
- 
+[Chapter 6 Edbrowse Scripts and the Configuration File](#Chapter-6-Edbrowse-Scripts-and-the-Configuration-File)  
+[Chapter 7 Mail Client](#Chapter-7-Mail-Client)  
+[Chapter 8 IRC Client](#Chapter-8-IRC-Client)  
+[Chapter 9 Database Access](#Chapter-9-Database-Access) 
 
 ---
 
 # Chapter 1 Preface
 
 ## Maintainer
-The edbrowse home page is **edbrowse.org**. Chris Brannon is the current project maintainer and webmaster.
+The edbrowse home page is <http://www.edbrowse.org>. *Chris Brannon* is the current project maintainer and webmaster.
 
 ## Author
-Karl Dahlke wrote the first version of edbrowse in perl, in 2001, and he is still the principal developer of the project.
+*Karl Dahlke* wrote the first version of edbrowse in perl, in 2001, and he is still the principal developer of the project.
 
 ## Copyright Notice
 This program is copyright © Karl Dahlke (and other authors and contributors), 2001-2023. It is made available by the authors under the terms of the GNU General Public License (GPL), as articulated by the Free Software Foundation. It may be used for any purpose, and redistributed, provided this copyright notice is included.
@@ -26,28 +29,28 @@ This program is copyright © Karl Dahlke (and other authors and contributors), 2
 Edbrowse is provided as-is, with no implied warranty of fitness for any particular purpose. It might trash your precious files. It might send bad data across the Internet, causing you to buy a $37,000 elephant instead of $37 worth of printer supplies. It may delete all the rows in your mysql customer table. This is a spare-time project written by a couple of volunteers, that (understandably) cannot attain the quality and rigor of corporate or government software. By using this program, you agree to use it as-is.
 
 ## Acknowledgements
-Chris Brannon wrote or modified at least 20% of the code, and provided valuable ideas for the overall design. Adam Thompson converted the Javascript interface from C to C++, as required by Mozilla JS versions 2, and he continues to direct the project's overall architecture. Kevin Carhart deciphered the mysteries of jquery, and upgraded the DOM to support it. Jeremy O'Brien ported the software to Mac OS X. Several people translated the output and error messages into other languages, and they are given due credit in the Languages section below.
+*Chris Brannon* wrote or modified at least 20% of the code, and provided valuable ideas for the overall design. *Adam Thompson* converted the Javascript interface from C to C++, as required by Mozilla JS versions 2, and he continues to direct the project's overall architecture. *Kevin Carhart* deciphered the mysteries of jquery, and upgraded the DOM to support it. *Jeremy O'Brien* ported the software to Mac OS X. Several people translated the output and error messages into other languages, and they are given due credit in the Languages section below.
 
 ## Overview
-This program is, at first glance, a reimplementation of /bin/ed. In fact you might issue a few ed commands and not realize that you are actually running this program. But as you proceed you will eventually discover some discrepancies, areas where edbrowse differs from ed. These are discussed below.
+This program is, at first glance, a reimplementation of ```/bin/ed```. In fact you might issue a few ed commands and not realize that you are actually running this program. But as you proceed you will eventually discover some discrepancies, areas where edbrowse differs from ed. These are discussed below.
 
 Reinventing ed seems like a complete waste of time, until you realize that this program also acts as a browser - a browser embedded inside ed. You can edit a URL as easily as a local file, and activate browse mode to render the html tags in a manner that is appropriate for a command-response program such as this. In other words, we discard most of the formatting information and retain the links and fill-out forms. This allows blind users to access the Internet through an application that is compatible with the linear nature of speech or braille.
 
 Edbrowse presents the following features:
 
-* Edbrowse can edit multiple files or browse multiple websites simultaneously, and transfer blocks of text between them in a manner similar to cut & paste. For instance, edbrowse *.c accesses all the C sourcefiles in the current directory.
+* Edbrowse can edit multiple files or browse multiple websites simultaneously, and transfer blocks of text between them in a manner similar to cut & paste. For instance, ```edbrowse *.c``` accesses all the C sourcefiles in the current directory.
 
-* The regular expressions of ed have been replaced with Perl Compatible Regular Expressions, which have more power and flexibility. This simplifies the task of finding or modifying text in a large document. You can, for instance, replace each instance of the word foo, not foot or food, but foo by itself, in upper or lower case, with the word bar, as long as foo is not followed by an exclamation point or a question mark. The change in regular expressions means edbrowse is not 100% backward compatible with ed, though it is close.
+* The regular expressions of ed have been replaced with Perl Compatible Regular Expressions, which have more power and flexibility. This simplifies the task of finding or modifying text in a large document. You can, for instance, replace each instance of the word ```foo```, not ```foot``` or ```food```, but ```foo``` by itself, in upper or lower case, with the word ```bar```, as long as foo is not followed by an exclamation point or a question mark. The change in regular expressions means edbrowse is not 100% backward compatible with ed, though it is close.
 
-* Edbrowse can fetch a web page from the Internet as easily as it opens a file on the current computer, using http, https, ftp, or gopher. Once the page is fetched into the active buffer, it can be browsed or rendered as text, using the b command. This supplements the other one-letter commands which were already part of ed. Once the page is browsed, the user can go to hyperlinks, or fill out and submit forms.
+* Edbrowse can fetch a web page from the Internet as easily as it opens a file on the current computer, using http, https, ftp, or gopher. Once the page is fetched into the active buffer, it can be browsed or rendered as text, using the ```b``` command. This supplements the other one-letter commands which were already part of ed. Once the page is browsed, the user can go to hyperlinks, or fill out and submit forms.
 
-* The -fm option turns edbrowse into an interactive email client. It fetches mail from one or more pop3 accounts and presents these emails to the user one at a time, where they can be read, deleted, or saved to a file for future reference. Filters can automatically save certain emails to certain files, based on subject, sender, or destination email address. Other options cause edbrowse to send mail using smtp. imap is also supported.
+* The ```-fm``` option turns edbrowse into an interactive email client. It fetches mail from one or more pop3 accounts and presents these emails to the user one at a time, where they can be read, deleted, or saved to a file for future reference. Filters can automatically save certain emails to certain files, based on subject, sender, or destination email address. Other options cause edbrowse to send mail using smtp. imap is also supported.
 
 * In database mode, edbrowse can access selected rows and columns of an sql table through odbc. The insert, substitute, and delete commands of edbrowse now correspond to the insert, update, and delete operations of a database respectively. This feature is well tested on some databases, and completely untested on others. Since text editing has consequences outside the context of the current buffer, there is no undo command. When a row is deleted, it is gone, without any chance of retrieval. Fortunately, referential integrity often prevents these unintended deletions.
 
 * When editing a directory, each line of text corresponds to a file. Again, the substitute command renames a file, while the delete command removes a file, or moves it to your trash can, depending on your edbrowse configuration. There is no undo operation, thus moving files to the trash can is safer. However, this does not free up any disk space.
 
-* The edbrowse configuration file can contain functions, similar to the .bashrc file in Linux. These functions can invoke other edbrowse commands, along with branching and loops based on the success of these commands. This simple example changes every x to y. If any changes were made, the file is written back to disk. The * in the if statement is true if the previous command was successful.
+* The edbrowse configuration file can contain functions, similar to the .bashrc file in Linux. These functions can invoke other edbrowse commands, along with branching and loops based on the success of these commands. This simple example changes every ```x``` to ```y```. If any changes were made, the file is written back to disk. The * in the if statement is true if the previous command was successful.
 ```
 function+xy {
         ,s/x/y/g
@@ -56,11 +59,12 @@ function+xy {
         }
 }
 ```
-If edbrowse is not included in your distribution, there is a perl version, with fewer features, that you can bring up right away on any computer: Linux, Unix, Mac, Windows, etc. Give edbrowse.pl a try, and if you like it then you can git the package and build it from source to realize the full-featured C version.
+If edbrowse is not included in your distribution, there is a perl version, with fewer features, that you can bring up right away on any computer: Linux, Unix, Mac, Windows, etc. Give ```edbrowse.pl``` a try, and if you like it then you can git the package and build it from source to realize the full-featured C version.
 
 If you are a Linux user, and your distribution doesn't package edbrowse, you can use the aforementioned perl version of course, but you can also run the full-featured C version without going through the hassle of building it yourself. Statically-linked executables for 32 bit and 64 bit architectures are maintained on the edbrowse home page.
 
 This documentation assumes you are familiar with ed. In fact it helps if you are fluent in ed. Experience with Internet browsers and the associated terminology is also helpful.
+
 
 ## Other Languages
 First, a few words about character sets (charsets). English is easily contained within a byte stream, one letter per byte. In fact, each letter fits in 7 bits; the eighth bit is not needed, and is set to 0. This system is called ascii, and is English specific.
