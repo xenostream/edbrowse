@@ -4,7 +4,7 @@
 
 [Chapter 1, Preface](#Chapter-1,-Preface)  
 [Chapter 2, Quick Reference Guide](#Chapter-2,-Quick-Reference-Guide)  
-[Chapter 3, The Editor](#Chapter-3,-The-Editor)  
+[Chapter 3, The Editor](#Chapter-3\,-The-Editor)  
 [Chapter 4, Web Browser](#Chapter-4,-Web-Browser)  
 [Chapter 5, Javascript](#Chapter-5,-Javascript)  
 [Chapter 6, Edbrowse Scripts and the Configuration File](#Chapter-6,-Edbrowse-Scripts-and-the-Configuration-File)  
