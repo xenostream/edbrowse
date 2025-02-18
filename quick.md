@@ -1,4 +1,4 @@
-**Leave the Program**  
+# Leave the Program  
 |command|description|
 |:---|:---|
 |q | quit the current session|
@@ -32,7 +32,7 @@
 |config | reread the config file|
 
 
-**Input**  
+# Input  
 |command|description|
 |:---|:---|
 |~c2~b1 | enter bytes as hex, in this case utf8 for plussminus|
@@ -44,7 +44,7 @@
 |rl | use readline() on input (toggle), respects $HISTCONTROL|
 
 
-**Display Lines in the Buffer**  
+# Display Lines in the Buffer   
 |command|description|
 |:---|:---|
 |p | print the current line|
@@ -75,7 +75,7 @@
 |B{2 | find the line that balances the second (from the inside out) unbalanced brace|
 
 
-**Help Messages**  
+# Help Messages   
 |command|description|
 |:---|:---|
 |h | help, explain the last question mark|
@@ -83,7 +83,7 @@
 |help | put this reference guide in an edbrowse buffer for review|
 
 
-**Search and Substitute**  
+# Search and Substitute    
 |command|description|
 |:---|:---|
 |s/x/y/ | replace x with y on the current line|
@@ -132,7 +132,7 @@
 |,s/$/ %line/ | put the line number at the end of each line|
 
 
-**Files and Sessions**  
+# Files and Sessions   
 |command|description|
 |:---|:---|
 |f | print the name of the current file|
@@ -209,7 +209,7 @@ e scp://login:password@example.com/absolute-path scp download
 |iu | automatically convert between iso8859 and utf8 (toggle)|
 
 
-**Text Editing, much like ed**  
+# Text Editing, much like ed   
 |command|description|
 |:---|:---|
 |u | undo the last command|
@@ -228,7 +228,7 @@ e scp://login:password@example.com/absolute-path scp download
 |4,7t11 | copy lines 4 through 7 to line 11|
 
 
-**Directory Scan**  
+# Directory Scan   
 |command|description|
 |:---|:---|
 |dr | directory is readonly|
@@ -274,7 +274,7 @@ e scp://login:password@example.com/absolute-path scp download
 |.t-3 | copy this file down 3 levels in your editing history|
 
 
-**Browse an html file or a web page**  
+# Browse an html file or a web page   
 |command|description|
 |:---|:---|
 |b | browse the current file, either html, or email, or rendered by plugin|
@@ -303,7 +303,7 @@ e scp://login:password@example.com/absolute-path scp download
 |crs | (curl restart) to recover from certain curl or ssl bugs|
 
 
-**FTP or HTTP Downloads**  
+# FTP or HTTP Downloads   
 |command|description|
 |:---|:---|
 |pdd | progress of download indicated by dots|
@@ -315,7 +315,9 @@ e scp://login:password@example.com/absolute-path scp download
 |bg | download files in background (toggle)|
 |bglist | list background downloads, complete or in progress|
 |jsbg | download Javascript files in background (toggle)|
-**Interact with a Web Page**  
+
+
+# Interact with a Web Page   
 |command|description|
 |:---|:---|
 |g | go to the link on the current line|
@@ -367,7 +369,7 @@ e scp://login:password@example.com/absolute-path scp download
 |colors | show the colors on the page|
 
 
-**Mail Client**  
+# Mail Client   
 |command|description|
 |:---|:---|
 |sm | send mail [account number]|
@@ -386,7 +388,7 @@ e scp://login:password@example.com/absolute-path scp download
 |g | go into a folder, similar to directory mode|
 
 
-**Envelopes**  
+# Envelopes   
 |command|description|
 |:---|:---|
 |rf | refresh the envelopes in this buffer|
@@ -404,7 +406,7 @@ e scp://login:password@example.com/absolute-path scp download
 |g- | go to this email but do not browse|
 
 
-**Reading an email beneath Imap**  
+# Reading an email beneath Imap   
 |command|description|
 |:---|:---|
 |rf | refresh the email you are reading|
@@ -417,7 +419,7 @@ e scp://login:password@example.com/absolute-path scp download
 |^^ | back up to folders|
 
 
-**IRC Client**  
+# IRC Client   
 |command|description|
 |:---|:---|
 |irc m n domain nickname | set up irc chat using sessions m and n with the specified domain and nickname|
@@ -428,7 +430,7 @@ e scp://login:password@example.com/absolute-path scp download
 |lst | show the date and time when this line was received in the output buffer|
 
 
-**Plugins**  
+# Plugins   
 |command|description|
 |:---|:---|
 |pb | play buffer (typically audio)|
@@ -436,7 +438,7 @@ e scp://login:password@example.com/absolute-path scp download
 |pg | plugins active (toggle)|
 
 
-**Database Access**  
+# Database Access   
 |command|description|
 |:---|:---|
 |ds=source,login,password | set the data source|
@@ -446,7 +448,7 @@ e scp://login:password@example.com/absolute-path scp download
 |fbc | fetch blob columns (toggle)|
 
 
-**Edbrowse Functions**  
+# Edbrowse Functions   
 |command|description|
 |:---|:---|
 |<foo arg1 arg2 … | invoke the function foo, defined in your .ebrc file|
@@ -474,7 +476,7 @@ e scp://login:password@example.com/absolute-path scp download
 |[ $(x) != $(y) and friends ] | test for inequality|
 
 
-**Debug**  
+# Debug   
 |command|description|
 |:---|:---|
 |db3 | set debug level, 0 through 9|
