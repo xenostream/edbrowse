@@ -67,25 +67,27 @@ This documentation assumes you are familiar with ed. In fact it helps if you are
 
 
 ## Other Languages
-First, a few words about character sets (charsets). English is easily contained within a byte stream, one letter per byte. In fact, each letter fits in 7 bits; the eighth bit is not needed, and is set to 0. This system is called ascii, and is English specific.
+First, a few words about character sets (charsets). English is easily contained within a byte stream, one letter per byte. In fact, each letter fits in 7 bits; the eighth bit is not needed, and is set to 0. This system is called ```ascii```, and is English specific.
 
-Indo-european languages bring in more characters, such as ñ (Spanish), è (French), and ö (German). These can still fit within single bytes, by setting the eighth bit to 1, according to the ISO8859-1 standard. Still other languages, such as Czech and Hungarian, fit within the iso8859-2 standard, which assigns different characters to the bytes above 127. And there is iso8859-3, and so on. Select your code page, and all the letters of your language still fit within one byte. This is the iso8859 standard, and it is backward compatible with ascii. In other words, z is 122 in ascii and in every iso8859-x code page, but the higher numbers, above 127, could represent different letters in different languages.
+Indo-european languages bring in more characters, such as ```ñ``` (Spanish), ```è``` (French), and ```ö``` (German). These can still fit within single bytes, by setting the eighth bit to 1, according to the ISO8859-1 standard. Still other languages, such as Czech and Hungarian, fit within the iso8859-2 standard, which assigns different characters to the bytes above 127. And there is iso8859-3, and so on. Select your code page, and all the letters of your language still fit within one byte. This is the iso8859 standard, and it is backward compatible with ascii. In other words, z is 122 in ascii and in every iso8859-x code page, but the higher numbers, above 127, could represent different letters in different languages.
 
-This worked well for a while, but what if you want to write one paragraph in French and one in Czech? You either switch from iso8859-1 to iso8859-2 in mid stream, or we come up with a new standard that represents all letters in all languages simultaneously. This charset, which obviously will not fit into a single byte, is known as utf8, and it has become the new standard across the computer industry. Software does not have to select an iso8859 page and map numbers to letters in a manner that depends on the country you live in. Instead, ñ is represented by two bytes, not one. This is transparent to you; you see the same letter on the screen, and you hear the same sounds if your screen reader passes these letters to a speech synthesizer. A quick way to tell which system you are on is to echo $LANG. If it ends in utf8 or utf-8, and it probably does, then your console is using utf8, and it expects two-byte sequences. Your files probably contain these underlying sequences. Older pre-utf8 systems store each character in a single byte, with an iso8859 codepage doing the translation.
+This worked well for a while, but what if you want to write one paragraph in French and one in Czech? You either switch from iso8859-1 to iso8859-2 in mid stream, or we come up with a new standard that represents all letters in all languages simultaneously. This charset, which obviously will not fit into a single byte, is known as ```utf8```, and it has become the new standard across the computer industry. Software does not have to select an iso8859 page and map numbers to letters in a manner that depends on the country you live in. Instead, ```ñ``` is represented by two bytes, not one. This is transparent to you; you see the same letter on the screen, and you hear the same sounds if your screen reader passes these letters to a speech synthesizer. A quick way to tell which system you are on is to ```echo $LANG```. If it ends in ```utf8``` or ```utf-8```, and it probably does, then your console is using utf8, and it expects two-byte sequences. Your files probably contain these underlying sequences. Older pre-utf8 systems store each character in a single byte, with an iso8859 codepage doing the translation.
 
-There's much more to say about charsets; this is merely a brief introduction. I need not go further, because edbrowse only supports iso8859-1 ⇔ utf8 at this time. Other iso8859 pages are not supported, and even iso8859-1 may drop off in the future, since utf8 is nearly universal.
+There's much more to say about charsets; this is merely a brief introduction. I need not go further, because edbrowse only supports ```iso8859-1 ⇔ utf8``` at this time. Other iso8859 pages are not supported, and even iso8859-1 may drop off in the future, since utf8 is nearly universal.
 
-The output and error messages, such as "search string not found", have been internationalized. Set the environment variable LANG to interact with edbrowse in your home language. Supported languages are shown below. If you can translate edbrowse into additional languages, please contact the developers.
-```
-* English: LANG=en (this is the default)
-* French: LANG=fr by Erwin Bliesenick including documentation
-* Brazilian Portuguese: LANG=pt_br by Cleverson Casarin Uliana
-* Polish: LANG=pl by Wojciech Gac
-* Russian: LANG=ru by Wojciech Gac
-* German: LANG=de by Sebastian Humenda
-* Italian: LANG=it by Enrico Mioso
-* Spanish: LANG=es by Oriol Prieto
-``` 
+The output and error messages, such as "*search string not found*", have been internationalized. Set the environment variable ```LANG``` to interact with edbrowse in your home language. Supported languages are shown below. If you can translate edbrowse into additional languages, please contact the developers.
+
+|Language|Environment & Author|
+|:---|:---|
+|* English | LANG=en (this is the default)|
+|* French | LANG=fr by Erwin Bliesenick including documentation|
+|* Brazilian Portuguese | LANG=pt_br by Cleverson Casarin Uliana|
+|* Polish | LANG=pl by Wojciech Gac|
+|* Russian | LANG=ru by Wojciech Gac|
+|* German | LANG=de by Sebastian Humenda|
+|* Italian | LANG=it by Enrico Mioso|
+|* Spanish | LANG=es by Oriol Prieto|
+ 
 Some edbrowse messages include the output of strerror, e.g. when opening, reading, or writing files. These text fragments are also internationalized, if you have installed the appropriate libc configuration module for your language. This is probably installed on your behalf if you specified a preferred language when setting up the operating system. However, other language modules may not be present. LANG=es_ES.UTF8 edbrowse causes all the edbrowse messages to display in Spanish, however, if the libc Spanish module is not installed, because your native language is German, then the strerror portion might appear in English, as that is the default for strerror when the module corresponding to LANG is not present. That could indeed be confusing. That said, most users will use edbrowse consistently with the language of their operating system, and this issue will not arise.
 
 When an output or error message is displayed, accented letters are printed using single bytes, vectoring through an iso8859 page, unless the string utf8 or utf-8 appears in $LANG, whence the nonascii characters are generated using utf8. Similarly, the contents of a buffer, be it a local document or an Internet website, are displayed as single bytes or multi-byte sequences, according to $LANG. Bear in mind, utf8 has become the standard, and edbrowse may not display text or error messages through iso8859 pages for long. In other words, iso8859 is deprecated.
