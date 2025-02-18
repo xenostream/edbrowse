@@ -1242,7 +1242,7 @@ The browse reformatting is relatively simple. Most tags are discarded, except th
 
 Because the physical line is the unit of thought, i.e. the atomic construct that is modified or moved or copied, lines are cut at approximately 80 characters, give or take a few, usually at a sentence or phrase boundary. Thus reading line by line often reveals a sequence of sentences, or at least self-contained phrases within a larger sentence. If you read this manual raw, without doing the browse on the file, you'll see what I mean.
 
-The layout of a preformatted section, <pre>, is honored, although sequences of blank lines are compressed down to one blank line, and whitespace at the end of lines is stripped. This preserves the structure of street addresses, code fragments, poems, and other preformatted blocks.
+The layout of a preformatted section, ```<pre>```, is honored, although sequences of blank lines are compressed down to one blank line, and whitespace at the end of lines is stripped. This preserves the structure of street addresses, code fragments, poems, and other preformatted blocks.
 
 Note that the browsable text is readonly. After all, it's not the "source" -- why should you edit it? There are ways to enter and edit the input fields of an on-line form, but that will be discussed later. For now, you can think of the text as readonly. Issue a copy or insert or substitute command, and you'll get an error.
 
