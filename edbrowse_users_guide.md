@@ -2,19 +2,19 @@
 
 **Chapter 0, Contents**
 
-[Chapter 1, Preface](#Chapter-1,-Preface)  
-[Chapter 2, Quick Reference Guide](#Chapter-2,-Quick-Reference-Guide)  
-[Chapter 3, The Editor](#Chapter-3,-The-Editor)  
-[Chapter 4, Web Browser](#Chapter-4,-Web-Browser)  
-[Chapter 5, Javascript](#Chapter-5,-Javascript)  
-[Chapter 6, Edbrowse Scripts and the Configuration File](#Chapter-6,-Edbrowse-Scripts-and-the-Configuration-File)  
-[Chapter 7, Mail Client](#Chapter-7,-Mail-Client)  
-[Chapter 8, IRC Client](#Chapter-8,-IRC-Client)  
-[Chapter 9, Database Access](#Chapter-9,-Database-Access)  
+[Chapter 1 Preface](#Chapter-1-Preface)  
+[Chapter 2 Quick Reference Guide](#Chapter-2-Quick-Reference-Guide)  
+[Chapter 3 The Editor](#Chapter-3-The-Editor)  
+[Chapter 4 Web Browser](#Chapter-4-Web-Browser)  
+[Chapter 5 Javascript](#Chapter-5-Javascript)  
+[Chapter 6 Edbrowse Scripts and the Configuration File](#Chapter-6-Edbrowse-Scripts-and-the-Configuration-File)  
+[Chapter 7 Mail Client](#Chapter-7-Mail-Client)  
+[Chapter 8 IRC Client](#Chapter-8-IRC-Client)  
+[Chapter 9 Database Access](#Chapter-9-Database-Access)  
 
 ---
 
-# Chapter 1, Preface
+# Chapter 1 Preface
 
 ## Maintainer
 The edbrowse home page is **edbrowse.org**. Chris Brannon is the current project maintainer and webmaster.
@@ -108,7 +108,7 @@ If not specified, edbrowse defers to the environment variable $LANG, which is se
 
 
 
-# Chapter 2, Quick Reference Guide
+# Chapter 2 Quick Reference Guide
 ## Quick Reference Guide
 Here are the ed and edbrowse commands, all in one place. This is a quick reference guide. Most of these commands will not make sense until you read the rest of the documentation. Commands that are designated (toggle), such as js to turn Javascript on and off, also admit a + or - suffix to explicitly enable or disable the feature. Thus js toggles Javascript, js+ enables Javascript, and js- disables Javascript. The + and - variants are not listed. Toggle prints the state of the feature, on or off, if help messages are enabled or if the debug level is at least 1. Setting or clearing a mode only prints the message if help messages are on.
 
@@ -648,7 +648,7 @@ There is a wiki devoted to edbrowse, including tips and tricks, and sample .ebrc
 
 
 
-# Chapter 3, The Editor
+# Chapter 3 The Editor
 ## Important Deviations From /bin/ed
 Certain search/substitute commands may behave differently under this editor. This is because the regular expressions are interpreted by the perl compatible regular expression (pcre) library, rather than the traditional regexp library. Hence regular expressions have more features, and more power, than the regular expressions employed by /bin/ed. The syntax is also somewhat different. For instance, perl uses bare parentheses where ed uses escaped braces -- to delimit sections of matched text. And perl uses $1 ... $9 to reference the matched substrings, whereas ed uses \1 ... \9. Also, perl supports the i suffix, for case insensitive search, along with the traditional g suffix for global substitute. There is no reason to describe all the nuances here. Please read the perlre man page `man perlre' for a full description of regular expressions under perl, or visit this pcre page. Once you are accustomed to their power and flexibility, you'll never go back to ed.
 
@@ -1208,7 +1208,7 @@ Another race condition is more subtle. Suppose you are editing a file and your f
 
 
 
-# Chapter 4, Web Browser
+# Chapter 4 Web Browser
 ## Accessing A URL
 Instead of invoking `e filename', you can invoke `e http://this.that.com/file.html', and the editor will retrieve the named file using the http protocol. The source (i.e. raw html) is made available for editing. You can modify it or save it on your local machine. Because the text was retrieve from another machine, it cannot be written back to that machine, hence the `w' command will not work. You must specify a local file `w myfile.html', or another editing session `w3'.
 
@@ -1719,7 +1719,7 @@ Frame {bottom}
 
 
 
-# Chapter 5, Javascript
+# Chapter 5 Javascript
 ## Introduction to Javascript
 Javascript is software, embedded in the web page, that runs on your computer. These functions do not run on the web server, they run right on your box. Hence it is sometimes called client side javascript. And javascript can do almost anything. You could, for instance, download a web page that includes a javascript function to compute the digits of pi, right on your computer, although that would be rather silly. Most of the time javascript is used to validate and/or modify forms or create fancy visual effects.
 The first version of edbrowse, written in perl, ignored javascript completely, and that was OK for a while, but more and more sites use javascript, and these websites were simply inaccessible. Most of the e-commerce sites fall into this category. If you want to make purchases, or manage your bank account online, you need a javascript enabled browser.
@@ -1779,7 +1779,7 @@ A few edbrowse commands are valid inside the javascript debugger. These are: the
 
 
 
-# Chapter 6, Edbrowse Scripts and the Configuration File
+# Chapter 6 Edbrowse Scripts and the Configuration File
 ## Config File
 At startup, edbrowse reads and parses a config file. It's OK if this file is missing, but if it is present it should be syntactically correct. If there is an error, edit the config file, fix the error, and type `config' to reapply. Repeat until there are no errors. Processing of the config file stops at the first error, so you really want a clean run. Remember that `edbrowse -c', from the command line, will edit the config file directly. Also, from within edbrowse, a file name of -c is treated as the config file. You can switch to a new session, view, edit, save, and reapply the config file without ever leaving edbrowse.
 
@@ -2241,7 +2241,7 @@ The best documentation is an example, so I have provided a sample config file wi
 
 
 
-# Chapter 7, Mail Client
+# Chapter 7 Mail Client
 ## Send Mail
 Email the contents of your current editing session to someone else via the `sm' command. Your email accounts are described in the config file.
 Most mail clients can automatically append a signature to outgoing email messages; edbrowse is no exception. In fact, you may have a different signature for each of your mail accounts. Thus, you can use one signature for work email, and another for personal email. When sending mail from account N, edbrowse first checks for a file named .signatureN in your home directory. For example, when sending from account 2, edbrowse looks for .signature2. If that file is not found, edbrowse looks for a file named .signature in your home directory, appending its contents if it is found.
@@ -2559,7 +2559,7 @@ The reply commands re and rea can be used on an envelope. This is simply shortha
 
 
 
-# Chapter 8, IRC Client
+# Chapter 8 IRC Client
 ## Using IRC
 Edbrowse can participate in irc chat sessions, on multiple servers in parallel. An example is perhaps the best form of documentation. Issue this command to join the edbrowse developers on irc.
 ```
@@ -2628,7 +2628,7 @@ On a multi-user system, create this log file mode 600, or put it in a directory 
 
 
 
-# Chapter 9, Database Access
+# Chapter 9 Database Access
 ## Building edbrowse with Database Access
 Edbrowse can connect to sql databases through odbc. This assumes you have the unixODBC and unixODBC-devel packages installed on your machine. A separate target, edbrowseinf, provides a direct link to an Informix database. This works, but is not generally supported. Other database specific edbrowse connectors could be built. You are basically implementing the interface described in dbapi.h, using the C database development toolkit provided by the vendor. Since odbc connects to everything, it will probably meet your needs.
 
