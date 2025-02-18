@@ -18,10 +18,10 @@
 UNIX 운영체제는 텍스트 편집을 위한 매우 효과적인 도구들을 제공하지만, 사용자가 모든 도구를 효과적으로 사용하고 있다고 생각할 수 없습니다. 
 특히, 컴퓨터 전문가가 아닌 사람들 (타이피스트, 일반 사용자, 작가) 은 시스템을 효율적으로 사용하지 못하는 경우가 대부분입니다.
 
-이 문서는 ```A Tutorial Introduction to the UNIX Text Editor``` [1] 의 후속편으로, 보다 적은 노력으로 텍스트를 편집할 수 있는 방법에 
-대한 설명과 예제를 제공합니다. (또한, UNIX for Beginners [2] 의 내용도 잘 알고 있어야 합니다.) 
+이 문서는 ```A Tutorial Introduction to the UNIX Text Editor``` [^1] 의 후속편으로, 보다 적은 노력으로 텍스트를 편집할 수 있는 방법에 
+대한 설명과 예제를 제공합니다. (또한, UNIX for Beginners [^2] 의 내용도 잘 알고 있어야 합니다.) 
 
-본 문서에서 설명하는 모든 명령은 The UNIX Programmer’s Manual [3] 에서 찾을 수 있습니다.
+본 문서에서 설명하는 모든 명령은 The UNIX Programmer’s Manual [^3] 에서 찾을 수 있습니다.
 
 본 문서에서 사용한 예제는 사용자가 ed 편집기를 사용할 때 겪을 수 있는 여러 어려운 상황에 대해 설명합니다.
 
@@ -1910,9 +1910,10 @@ sed는 조건부 테스트와 분기 명령을 포함해서 여기서 모두 설
 Ted Dolotta 가 본 문서를 주의깊게 읽고, 또한 귀중한 의견을 제안해 주셔서 감사합니다.
 
 ### 7.5. References
-[1]  Brian W. Ker nighan, A Tutorial Introduction to the UNIX Text Editor. Bell Laboratories in-
-ter nal memorandum.
-[2]  Brian W. Ker nighan, UNIX For Beginners. Bell Laboratories internal memorandum.
-[3]  Ken L. Thompson and Dennis M. Ritchie, THe UNIX Programmer’s Manual. Bell Labora-
-tories.
+[^1]:  
+Brian W. Ker nighan, A Tutorial Introduction to the UNIX Text Editor. Bell Laboratories inter nal memorandum.
+[^2]:  
+Brian W. Ker nighan, UNIX For Beginners. Bell Laboratories internal memorandum.
+[^3]:  
+Ken L. Thompson and Dennis M. Ritchie, THe UNIX Programmer’s Manual. Bell Laboratories.
 
