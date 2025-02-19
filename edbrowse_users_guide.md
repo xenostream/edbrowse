@@ -1816,120 +1816,159 @@ The config file is line oriented. Lines beginning with ```#``` are comments, and
 * A mail filtering rule.
 * Describe a plugin.
 * Describe a table or a view in an sql database.
-* Keyword = Value
+
+### Keyword = Value
 
 The best documentation is an example, so let's dive right in.
-Recall the section on cookies. You'll need a file, often called a cookie jar, to store your cookies. The line that establishes this cookie jar might look like this.
+Recall the section on cookies. You'll need a file, often called a ```cookie jar```, to store your cookies. The line that establishes this cookie jar might look like this.
+
 ```
 jar = /home/mylogin/.ebsys/cookie-jar
 ```
-This is a simple keyword = value syntax. It's OK if the filename has embedded spaces, or even an equals sign. No need to quote it.
 
-When edbrowse sees this line in its config file, it records the location of the cookie jar, and it checks the validity of that file. If the file is a directory (or something weird), or is otherwise inaccessible, edbrowse prints an error message and stops processing the config file at that point. If this happens, edit your config file and change the cookie jar.
+This is a simple ```keyword = value``` syntax. It's OK if the filename has embedded spaces, or even an equals sign. No need to quote it.
 
-Here are some additional name=value directives. Some of these are used to set up an email account. This will become clearer when we talk about the mail client.
+When edbrowse sees this line in its config file, it records the location of the ```cookie jar```, and it checks the validity of that file. If the file is a directory (or something weird), or is otherwise inaccessible, edbrowse prints an error message and stops processing the config file at that point. If this happens, edit your config file and change the cookie jar.
+
+Here are some additional ```name=value``` directives. Some of these are used to set up an email account. This will become clearer when we talk about the mail client.
+
 ```
 certfile = /etc/pki/tls/cert.pem
 ```
+
 Specify the file that holds the certificates for secure connections. This was explained in the section on secure connections. This can usually be omitted, whereupon edbrowse uses the system's certificate file.
+
 ```
 maildir = /home/mylogin/mbox
 ```
+
 Go to this directory when fetching mail. thus, if you save a mail message, you'll always know where it is.
+
 ```
 cachedir = /home/mylogin/.ebcache
 cachesize = 200
 ```
-Edbrowse stores some web pages locally, in a cache, so that they can be fetched directly from your computer when you visit them again. (All modern browsers do this.) You can specify the cache directory where these files are stored. If omitted, edbrowse selects ~/.ebcache. On a multiuser system, your cache should be private, since it literally contains the web pages you are looking at. Separate users should not share the same cache space. The cache directory is created mode 0700, if it does not already exist.
+
+Edbrowse stores some web pages locally, in a cache, so that they can be fetched directly from your computer when you visit them again. (All modern browsers do this.) You can specify the cache directory where these files are stored. If omitted, edbrowse selects ```~/.ebcache```. On a multiuser system, your cache should be private, since it literally contains the web pages you are looking at. Separate users should not share the same cache space. The cache directory is created mode 0700, if it does not already exist.
 
 The cachesize parameter sets the size of the cache in megabytes. Default is 1000. If this is set to 0, edbrowse does not cache any files. When the cache is full, edbrowse deletes the 100 oldest files and marches on. Edbrowse does not retain more than 10,000 files, even if the cache could hold more.
 
-The local command causes edbrowse to read http or https pages from cache. It does not go out to the Internet. If a page is not in cache it prints a connection error. This can be useful when there is no Internet connection and you want to review some pages that are cached. It can also be used in a function that fetches a web page that is static, and fetched often, so it will not fall out of cache. Remember that settings are local to a function, so local+ in a function will not disturb your interactive session. This setting does not affect ftp, scp, gopher, etc.
+The ```local``` command causes edbrowse to read http or https pages from cache. It does not go out to the Internet. If a page is not in cache it prints a connection error. This can be useful when there is no Internet connection and you want to review some pages that are cached. It can also be used in a function that fetches a web page that is static, and fetched often, so it will not fall out of cache. Remember that settings are ```local``` to a function, so ```local+``` in a function will not disturb your interactive session. This setting does not affect ftp, scp, gopher, etc.
+
 ```
 imapfetch = 40
 ```
+
 Fetch the last 40 emails when calling up a folder through imap. The fetch count must be between 1 and 1000. In the interactive imap client, you can specify -40, for the first 40 emails (in time order), but that can't be done from the config file. I assume you are always starting with the most recent emails.
+
 ```
 envelope = fsd
 ```
-Prescribe the format of an imap envelope, one letter per field. t = to, f = from, s = subject, d = date, z = size, n = number, and u = unseen. The default is fs, from subject. This can be changed interactively with the e command. The "unseen" field presents a star if the email has not been read.
+
+Prescribe the format of an imap envelope, one letter per field. t = to, f = from, s = subject, d = date, z = size, n = number, and u = unseen. The default is ```fs```, from subject. This can be changed interactively with the ```e``` command. The "unseen" field presents a star if the email has not been read.
+
 ```
 webtimer = 30
 mailtimer = 180
 ```
+
 Wait 30 seconds for a response from a web server, and 3 minutes for a response from the mail server. A time value of 0 waits forever. Sorry, there seems to be no way to interrupt a socket call, other than control backslash (quit), which kills the entire program. That's why these timers are here - so you don't hang forever. The defaults are 20 and 0 respectively.
+
 ```
 downdir = /home/mylogin/downloads
 ```
-When you access a binary file on a website, you have the option of downloading it directly to disk, rather than reading it into memory. If you do this, the file is placed in this download directory by default. If the file name you entered has a slash, or if there is no download directory, the path is taken relative to the current directory (assuming it is not absolute). In this case, globbing is performed. For instance, you can direct an mp3 file to ~/music/country/Some-Song.mp3. Downloads take place in the foreground, with progress dots, thus locking up edbrowse until the download is complete. If you prefer, you can run downloads in the background by issuing the bg (background) command. This is especially useful for large files. You are notified when the download is complete. Meantime you can continue to use edbrowse. No dots will be printed, as they would interfere with what you are doing.
 
-When prompted for the filename, hit return for the default file name as provided by the website, enter x to abort, enter space to read the data into memory, or type a different file name if you wish. If the file already exists, it is overwritten.
+When you access a binary file on a website, you have the option of downloading it directly to disk, rather than reading it into memory. If you do this, the file is placed in this download directory by default. If the file name you entered has a slash, or if there is no download directory, the path is taken relative to the current directory (assuming it is not absolute). In this case, globbing is performed. For instance, you can direct an mp3 file to ```~/music/country/Some-Song.mp3```. Downloads take place in the foreground, with progress dots, thus locking up edbrowse until the download is complete. If you prefer, you can run downloads in the background by issuing the ```bg``` (*background*) command. This is especially useful for large files. You are notified when the download is complete. Meantime you can continue to use edbrowse. No dots will be printed, as they would interfere with what you are doing.
 
-The dld= command presets a download file name. This can be used in a noninteractive setting, such as an edbrowse function or a batch job. dld=jkl is the same as typing jkl when edbrowse asks you for the file name. A single space downloads into memory as usual, and x aborts. dld=% accepts the file name as provided by the server. dld= is a one-time command; it only applies to the next download.
+When prompted for the filename, hit return for the default file name as provided by the website, enter ```x``` to abort, enter ```space``` to read the data into memory, or type a different file name if you wish. If the file already exists, it is overwritten.
 
-Type bglist to list your background download jobs, including those that have run to completion. If edbrowse exits, any background downloads still in progress will not complete.
+The ```dld=``` command presets a download file name. This can be used in a noninteractive setting, such as an edbrowse function or a batch job. ```dld=jkl``` is the same as typing ```jkl``` when edbrowse asks you for the file name. A single space downloads into memory as usual, and ```x``` aborts. ```dld=%``` accepts the file name as provided by the server. ```dld=``` is a one-time command; it only applies to the next download.
 
-Foreground downloads, or any Internet fetch for that matter, prints progress dots, but you can suppress these with the pdq (progress of download quiet) command. Another option is the pdc (progress of download by count) command. This prints megabytes downloaded and megabytes total. For instance, 17/235 means 17 megs received out of 235. These are decimal megabytes, not binary 0x100000 megabytes - there is only a slight difference.
+Type ```bglist``` to list your background download jobs, including those that have run to completion. If edbrowse exits, any background downloads still in progress will not complete.
+
+Foreground downloads, or any Internet fetch for that matter, prints progress dots, but you can suppress these with the ```pdq``` (*progress of download quiet*) command. Another option is the ```pdc``` (*progress of download by count*) command. This prints megabytes downloaded and megabytes total. For instance, 17/235 means 17 megs received out of 235. These are decimal megabytes, not binary 0x100000 megabytes - there is only a slight difference.
+
 ```
 nojs = space.com
 ```
+
 Specify domains that don't need javascript. Javascript will not be run on pages within these domains, nor will it be fetched from these domains. The above directive will also drop javascript from subdomains such as www.space.com.
 
-You can include a path or partial path after the domain, as in space.com/popups. This will block the popup ads that you don't want to see, which often generate edbrowse errors in any case. Subdomains are not considered when a path is given; the domain must match exactly.
+You can include a path or partial path after the domain, as in ```space.com/popups```. This will block the popup ads that you don't want to see, which often generate edbrowse errors in any case. Subdomains are not considered when a path is given; the domain must match exactly.
 
 This seems like a useful feature, but it is risky. The popup page may define a variable that the rest of javascript needs to run properly. thus, you probably shouldn't block certain pages on this site, or other domains that are fetched on behalf of this website, such as google-analytics.com or googlesyndication.com. Fetching all those other pages slows down edbrowse, and seems like a waste of time, but if you need javascript, you probably need all of it.
+
 ```
 js = nasa.gov
 ```
-Specify a site that must have javascript to run properly, such as nasa.gov. This directive is used under a different paradigm. Use nojs to block .com, .net, and .gov, for example, thus js hardly ever runs. Then turn on the websites that require js. Some users prefer to run edbrowse in this fashion. It's definitely faster. However, if you run into a new site that requires javascript, you have to edit your config file, add the new site, run config, and rebrowse.
+
+Specify a site that must have javascript to run properly, such as nasa.gov. This directive is used under a different paradigm. Use ```nojs``` to block .com, .net, and .gov, for example, thus ```js``` hardly ever runs. Then turn on the websites that require ```js```. Some users prefer to run edbrowse in this fashion. It's definitely faster. However, if you run into a new site that requires javascript, you have to edit your config file, add the new site, run config, and rebrowse.
+
 ```
 novs = example.com
 ```
+
 Indicate hostnames for which SSL certificate verification should not be performed. This directive is useful for sites that use self-signed certificates, since these cannot be verified. It should probably not be used for anything serious, such as a site that is going to receive your credit card number. This directive includes subdomains, such as www.example.com.
+
 ```
 inserver = pop3.some-domain.com
 inport = 110
 outserver = smtp.some-domain.com
 outport = 25
 ```
-Specify the machines and ports that you use to fetch mail and send mail respectively. You can use the fully qualified domain names, or aliases as defined in /etc/hosts. The ports shown here are standard, and usually correct. They are also default in edbrowse, so you need not set inport and outport unless they are different from that shown above. Note, these keywords are only valid in the context of a mail account, as indicated by mail{}.
 
-A star in front of the port number, e.g. outport *465, means the socket is to be encrypted for security. When the smtp port is encrypted, login authentication is assumed. No other authentication method is implemented at this time.
+Specify the machines and ports that you use to fetch mail and send mail respectively. You can use the fully qualified domain names, or aliases as defined in ```/etc/hosts```. The ports shown here are standard, and usually correct. They are also default in edbrowse, so you need not set inport and outport unless they are different from that shown above. Note, these keywords are only valid in the context of a mail account, as indicated by mail{}.
 
-An arrow in front of the port number, e.g. outport ^587, encrypts the socket, but only after an initial handshake in the clear. This is the hotmail protocol, and it is as secure as *465; just different.
+A star in front of the port number, e.g. ```outport *465```, means the socket is to be encrypted for security. When the smtp port is encrypted, login authentication is assumed. No other authentication method is implemented at this time.
 
-Use +587 to authenticate yourself without encryption. This is sometimes done when you are directly connected to the mail server and traffic is not flowing across the Internet, but the server still wants to make sure you are you.
+An arrow in front of the port number, e.g. ```outport ^587```, encrypts the socket, but only after an initial handshake in the clear. This is the hotmail protocol, and it is as secure as ```*465```; just different.
+
+Use ```+587``` to authenticate yourself without encryption. This is sometimes done when you are directly connected to the mail server and traffic is not flowing across the Internet, but the server still wants to make sure you are you.
+
 ```
 secure
 ```
+
 Incoming and outgoing email connections are secure. This effectively puts stars in front of the port numbers, if ports are specified. If ports are not specified, the defaults change to reflect the secure connections. Default pop3s is 995 and default smtps is 465.
+
 ```
 nofetch
 ```
-Do not fetch mail from this account through the -f option.
+
+Do not fetch mail from this account through the ```-f``` option.
+
 ```
 login = eklhad
 password = secret
 ```
+
 Specify the login and password that edbrowse uses to fetch your mail.
+
 ```
 from = Full Name
 reply = john.smith@some-domain.com
 ```
+
 These lines are added in to the emails that you send. They tell the recipient who you are, and how to reply. It is illegal to use these lines for deceptive purposes. Make sure they identify you, and that the reply address is indeed one of your email accounts.
+
 ```
 to = address
 cc = address
 bcc = address
 ```
-Specify a recipient; every email you send through this account will go to that recipient. cc is carbon copy and bcc is blind carbon copy. gmail.com keeps a copy of every email you send, but most mail servers don't do that. If you want to replicate this behavior, include cc = your-address in the mail descriptor, whence every mail you send out goes back to yourself. A filter on the mail server can redirect mail from you into a sent folder. That is the only practical use I know of for this feature.
+
+Specify a recipient; every email you send through this account will go to that recipient. cc is carbon copy and bcc is blind carbon copy. gmail.com keeps a copy of every email you send, but most mail servers don't do that. If you want to replicate this behavior, include ```cc = your-address``` in the mail descriptor, whence every mail you send out goes back to yourself. A filter on the mail server can redirect mail from you into a sent folder. That is the only practical use I know of for this feature.
+
 ```
 attach = file
 ```
+
 The named file is sent, as an attachment, on every email you send through this account. If it is a work account, you might want an image or logo to be part of every email. That is the only practical use I know of for this feature.
+
 ```
 imask = 3,5
 ```
+
 Present folders 3 and 5 when accessing this account. imap is assumed here. You can toggle this masking feature on and off interactively with the imask command. When searching for a folder by number or by substring, all folders are searched, not just the ones presented on screen. Thus you can still access folders that are not presented or preselected.
 ```
 imask = ju,inbox
