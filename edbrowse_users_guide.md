@@ -1803,28 +1803,20 @@ A few edbrowse commands are valid inside the javascript debugger. These are: the
 
 # Chapter 6 Edbrowse Scripts and the Configuration File
 ## Config File
-At startup, edbrowse reads and parses a config file. It's OK if this file is missing, but if it is present it should be syntactically correct. If there is an error, edit the config file, fix the error, and type `config' to reapply. Repeat until there are no errors. Processing of the config file stops at the first error, so you really want a clean run. Remember that `edbrowse -c', from the command line, will edit the config file directly. Also, from within edbrowse, a file name of -c is treated as the config file. You can switch to a new session, view, edit, save, and reapply the config file without ever leaving edbrowse.
+At startup, edbrowse reads and parses a config file. It's OK if this file is missing, but if it is present it should be syntactically correct. If there is an error, edit the config file, fix the error, and type ```config``` to reapply. Repeat until there are no errors. Processing of the config file stops at the first error, so you really want a clean run. Remember that ```edbrowse -c```, from the command line, will edit the config file directly. Also, from within edbrowse, a file name of ```-c``` is treated as the config file. You can switch to a new session, view, edit, save, and reapply the config file without ever leaving edbrowse.
 
-The config file is in $HOME/.ebrc. The "eb" is shorthand for edbrowse. You cannot rename the config file; it is what it is. However, -c otherfile on the command line causes edbrowse to access a different config file. This option must precede any arguments. The config command, issued from within edbrowse, continues to access otherfile.
+The config file is in ```$HOME/.ebrc```. The "eb" is shorthand for edbrowse. You cannot rename the config file; it is what it is. However, ```-c otherfile``` on the command line causes edbrowse to access a different config file. This option must precede any arguments. The ```config``` command, issued from within edbrowse, continues to access otherfile.
 
-The config file is line oriented. Lines beginning with # are comments, and are ignored. Blank lines are also ignored. All other lines fall into one of 7 categories.
+The config file is line oriented. Lines beginning with ```#``` are comments, and are ignored. Blank lines are also ignored. All other lines fall into one of 7 categories.
 
-Define an option using the keyword=value syntax.
-
-Define an edbrowse script that can be invoked from the command line or from another script.
-
-An edbrowse command, that is part of an edbrowse script.
-
-Establish an email account. This will be described later, under email clients.
-
-A mail filtering rule.
-
-Describe a plugin.
-
-Describe a table or a view in an sql database.
-```
-Keyword = Value
-```
+* Define an option using the keyword=value syntax.
+* Define an edbrowse script that can be invoked from the command line or from another script.
+* An edbrowse command, that is part of an edbrowse script.
+* Establish an email account. This will be described later, under email clients.
+* A mail filtering rule.
+* Describe a plugin.
+* Describe a table or a view in an sql database.
+* Keyword = Value
 
 The best documentation is an example, so let's dive right in.
 Recall the section on cookies. You'll need a file, often called a cookie jar, to store your cookies. The line that establishes this cookie jar might look like this.
