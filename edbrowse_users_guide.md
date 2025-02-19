@@ -109,7 +109,7 @@ localizeweb = fr
 If not specified, edbrowse defers to the environment variable ```$LANG```, which is set on almost every system. Thus you rarely need to set ```localizeweb``` in your config file. If ```LANG``` is not set, the default is English. Edbrowse always sends a language designator to the web servers, because some websites, such as amazon.com, will not run properly without it. If you do set ```localizeweb``` yourself, be sure to set it to language code hyphen territory code.
 
 
-⬆️
+[⬆️](#top)
 <br><br><br><br>
 
 # Chapter 2 Quick Reference Guide
