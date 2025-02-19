@@ -109,7 +109,8 @@ localizeweb = fr
 If not specified, edbrowse defers to the environment variable ```$LANG```, which is set on almost every system. Thus you rarely need to set ```localizeweb``` in your config file. If ```LANG``` is not set, the default is English. Edbrowse always sends a language designator to the web servers, because some websites, such as amazon.com, will not run properly without it. If you do set ```localizeweb``` yourself, be sure to set it to language code hyphen territory code.
 
 
-
+⬆️
+<br><br><br><br>
 
 # Chapter 2 Quick Reference Guide
 ## Quick Reference Guide
@@ -651,7 +652,8 @@ There is a mailing list for users of edbrowse and other command line utilities. 
 There is a [wiki](https://github.com/CMB/edbrowse/wiki) devoted to edbrowse, including tips and tricks, and sample ```.ebrc``` configurations and functions. See edbrowse.org for more information.
 
 
-
+⬆️
+<br><br><br><br>
 
 # Chapter 3 The Editor
 ## Important Deviations From /bin/ed
@@ -1225,7 +1227,8 @@ Then links came on the scene, first hard links, and then symbolic links. Authors
 
 Another race condition is more subtle. Suppose you are editing a file and your friend, or a system program, edits the same file. Your file has actually been changed out from under you while you held it in memory. When you go to write your changes, they will clobber any changes made by your friend, or the system utility. Most text editors guard against this by watching the timestamp. When you first edit the file foo, an editor might remember the timestamp on foo. then, when you are ready to write your changes, it checks the timestamp, and if foo has been updated in the interim it issues a warning message. "File has been updated by someone else - do you really want to write?" This is a good feature, but edbrowse doesn't have it, simply because I haven't gotten round to writing it. This feature is not in high demand.
 
-
+⬆️
+<br><br><br><br>
 
 # Chapter 4 Web Browser
 ## Accessing A URL
@@ -1735,7 +1738,8 @@ This is the home page of blah blah blah. Interesting information about blah blah
 Frame {bottom}
 ```
 
-
+⬆️
+<br><br><br><br>
 
 # Chapter 5 Javascript
 ## Introduction to Javascript
@@ -1794,8 +1798,8 @@ If the output of any command is long, you can redirect it into a file by using t
 
 A few edbrowse commands are valid inside the javascript debugger. These are: the db commands (to change debugging), e number (to jump to another edbrowse session and look at another file), bflist, bglist, timers, demin, and shell escapes.
 
-
-
+⬆️
+<br><br><br><br>
 
 # Chapter 6 Edbrowse Scripts and the Configuration File
 ## Config File
@@ -2256,8 +2260,8 @@ The best documentation is an example, so I have provided a sample config file wi
 
 
 
-
-
+⬆️
+<br><br><br><br>
 
 # Chapter 7 Mail Client
 ## Send Mail
@@ -2573,8 +2577,8 @@ Use r- to mark an email as unread, as though you had not seen it. If you have u 
 
 The reply commands re and rea can be used on an envelope. This is simply shorthand for g followed by re.
 
-
-
+⬆️
+<br><br><br><br>
 
 
 # Chapter 8 IRC Client
@@ -2643,8 +2647,8 @@ If you continue to monitor channels in separate buffers, each buffer will contin
 On a multi-user system, create this log file mode 600, or put it in a directory that is mode 700, so that others cannot read your irc chats.
 
 
-
-
+⬆️
+<br><br><br><br>
 
 # Chapter 9 Database Access
 ## Building edbrowse with Database Access
