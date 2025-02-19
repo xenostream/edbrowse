@@ -1238,7 +1238,7 @@ Many common protocols are supported. You can fetch a file from an ftp server via
 
 Note that the initial fetch via the e command is not browsing, we are simply retrieving text from another machine and viewing it locally. The text need not be html, it could be (for instance) a plain ascii document. Many people put various types of files, even executables, on their websites for retrieval. You wouldn't want to edit a binary file, but you can still use this editor to retrieve the file and save it locally, thus implementing an http download.
 
-While inside the editor, you can type `e URL' to push the current buffer and retrieve text from a remote machine. Or you can type `r URL' to retrieve remote text and add it to the current buffer. There is no `w URL' command, because the http protocol does not allow you to write html source back to a remote machine. However, you can write to an ftp url, assuming you have permission to upload onto that server.
+While inside the editor, you can type ```e URL``` to push the current buffer and retrieve text from a remote machine. Or you can type ```r URL``` to retrieve remote text and add it to the current buffer. There is no ```w URL``` command, because the http protocol does not allow you to write html source back to a remote machine. However, you can write to an ftp url, assuming you have permission to upload onto that server.
 
 As a convenience, any filename with two or more embedded dots and a standard suffix (such as .com or .net) is treated as a URL. You can usually omit the http:// prefix. Try invoking `e www.space.com', as an example. But again, you are looking at html source, which probably isn't what you want. Browsing will be discussed later.
 
