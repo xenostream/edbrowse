@@ -1370,7 +1370,7 @@ Most people never read technical web pages, but if you do...
 
 A subscript, as indicated by html tags, is enclosed in brackets. Thus x<sub>n</sub> becomes x[n]. (sub should render the subscript properly in your css file - lower and in a smaller font.) This transformation is not done if the subscript is a one or two digit number. Thus x subscript 1 is rendered x1, just like your professor would say it. This is not ambiguous, as you might first think; only programmers use x1 as a variable name, not mathematicians. If you see x1 in a formula, it means x subscript 1. Even 17a3b3 is not ambiguous; it is a translation of 17 times a[3] times b[3].
 
-Superscripts, as indicated by <sup>, are enclosed in parentheses with a preceding arrow. The parentheses are omitted if the superscript is a number. Thus x cubed looks like x^3, while x to the n-1 power looks like x^(n-1). Again, your css file should define sup, but even if it doesn't, most browsers will do the right thing, putting the text above and in a smaller font.
+Superscripts, as indicated by \<sup>, are enclosed in parentheses with a preceding arrow. The parentheses are omitted if the superscript is a number. Thus x cubed looks like x^3, while x to the n-1 power looks like x^(n-1). Again, your css file should define sup, but even if it doesn't, most browsers will do the right thing, putting the text above and in a smaller font.
 
 The sup and sub tags are honored in other browsers and screen readers, so it is best to use these tags, rather than spans with css that places the text visually above or below the line. The sup and sub tags preserve the semantics of the relationship, so that edbrowse, and other browsers, can read the text in a helpful manner.
 
