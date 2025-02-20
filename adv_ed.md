@@ -79,7 +79,7 @@ Examples are based on observations of users and the difficulties they encounter.
 
 A word of caution. There is only one way to learn to use something, and that is to use it. Reading a description is no substitute for trying something. A paper like this one should give you ideas about what to try, but until you actually try something, you will not learn it.
 
-
+[⬆️](#top)
 <br><br><br><br>
 
 # 2. SPECIAL CHARACTERS
@@ -639,7 +639,7 @@ although hard to read, does the job. The first \(...\) matches the last name, wh
 
 Of course, with any editing sequence this complicated, it's foolhardy to simply run it and hope. The global commands g and v discussed in section 4 provide a way for you to print exactly those lines which were affected by the substitute command, and thus verify that it did what you wanted in all cases.
 
-
+[⬆️](#top)
 <br><br><br><br>
 
 
@@ -873,7 +873,7 @@ As a final note on what dot gets set to, you should be aware that if you hit the
 Printing is more clear cut. Dot is not changed until the printing is done. Thus if you print until you see an interesting line, then hit delete, you are not sitting on that line over even near it. Dot is left where it was when the p command was started.
 
 
-
+[⬆️](#top)
 <br><br><br><br>
 
 
@@ -956,7 +956,7 @@ It is also possible to execute a, c and i commands under a global command; as wi
 There is no need for a final line containing a "." to terminate the i command, unless there are further commands being done under the global. On the other hand, it does no harm to put it ir either.
 
 
-
+[⬆️](#top)
 <br><br><br><br>
 
 
@@ -1075,7 +1075,7 @@ The easy way is to use a variant of >, called >>. In fact, >> is identical to > 
 
 and "good1" is added to the end of "good". (And if "good" didn't exist, this makes a copy of "good1" called "good") 
 
-
+[⬆️](#top)
 <br><br><br><br>
 
 
@@ -1256,7 +1256,7 @@ your current editing state is suspended, and the UNIX command you asked for is e
 You can really do any UNIX command, including another ed. (This is quite common, in fact) In this case, you can even do another !.
 
 
-
+[⬆️](#top)
  <br><br><br><br>
 
 
