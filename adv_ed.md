@@ -25,7 +25,7 @@ Although the treatment is aimed at non-programmers, new users with any backgroun
 **Table of Contents**
 * [1. INTRODUCTION](#1-INTRODUCTION)
 * [2. SPECIAL CHARACTERS](#2-SPECIAL-CHARACTERS)
-    * [The List command "l"](#The-List-command--l-)
+    * [The List command "l"](#The-List-command-"l")
     * [The Substitute Command "s"](#The-Substitute-Command-"s")
     * [The Undo Command "u"](#The-Undo-Command-"u")
     * [The Metacharacter "."](#The-Metacharacter-".")
