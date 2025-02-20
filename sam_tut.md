@@ -1,5 +1,19 @@
 # A tutorial for the sam command language
 
+<br><br><br><br>
+[**Rob Pike**]
+<br><br>
+
+**ABSTRACT**
+
+> [!NOTE]
+>sam은 정규표현식을 많이 사용하는 명령 언어 (Command Language) 가 포함된 대화형 텍스트 편집기 입니다. 명령 언어는 문법적으로 ed(1) 와 유사하지만 세부 사항은 흥미롭게 다릅니다. 이 자습서에서는 명령 언어에 대해서 소개하고 화면 및 마우스 인터페이스에 대해서는 별도로 설명하지 않습니다. 9th 버전의 Blit 소프트웨어에 익숙한 사용자에게는 미리 사과 말씀과 함께 mux(9) 에 대한 sam의 유사성으로 인해 sam의 마우스 언어는 사용자가 쉽게 배울 수 있다고 가정하고 설명합니다.
+>
+>sam 명령 언어는 일반적으로 두 가지 환경에서 실행할 수 있습니다. 일반적인 터미널 (sam -d 를 통해) 에서 실행하는 경우와 비트맵 디스플레이와 마우스를 사용하는 명령 윈도우를 포함한 다운로드된 sam으로 실행할 수 있습니다.
+
+---
+
+<details><summary>Table of Contents</summary>
 **목차**  
 - [Introduction](#Introduction)  
 - [Text](#Text)  
@@ -12,19 +26,13 @@
 - [Unix](#Unix)  
 - [A few other text commands](#A-few-other-text-commands)  
 - [Files](#Files)  
-
----
-
-[Rob Pike]
-<br><br>
-ABSTRACT
-> [!NOTE]
->sam은 정규표현식을 많이 사용하는 명령 언어 (Command Language) 가 포함된 대화형 텍스트 편집기 입니다. 명령 언어는 문법적으로 ed(1) 와 유사하지만 세부 사항은 흥미롭게 다릅니다. 이 자습서에서는 명령 언어에 대해서 소개하고 화면 및 마우스 인터페이스에 대해서는 별도로 설명하지 않습니다. 9th 버전의 Blit 소프트웨어에 익숙한 사용자에게는 미리 사과 말씀과 함께 mux(9) 에 대한 sam의 유사성으로 인해 sam의 마우스 언어는 사용자가 쉽게 배울 수 있다고 가정하고 설명합니다.
->
->sam 명령 언어는 일반적으로 두 가지 환경에서 실행할 수 있습니다. 일반적인 터미널 (sam -d 를 통해) 에서 실행하는 경우와 비트맵 디스플레이와 마우스를 사용하는 명령 윈도우를 포함한 다운로드된 sam으로 실행할 수 있습니다.
+</details>
 
 
 <br><br><br><br>
+
+---
+
 # Introduction
 이 자습서에서는 Blits 및 비트맵 디스플레이가 있는 일부 컴퓨터에서 실행되는 ```대화형 텍스트 편집기인 sam의 명령 언어(Command Language)``` 에 대해 설명 합니다. 대부분의 편집 작업은 마우스 기반의 편집 기능으로 충분하며 사용법과 학습 또한 매우 쉽습니다.
 
