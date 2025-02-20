@@ -539,9 +539,9 @@ the method in the madness that is the Emacs{TM} command structure.
 Finally, let’s restore the state of the file with another x command, and make use of a handy shorthand: a
 comma in an address has its left side default to 0, and its right side default to $, so the easy-to-type address ,
 refers to the whole file:
+
 마지막으로 다른 x 명령으로 파일의 상태를 복원하고 편리한 단축키를 사용해 보겠습니다
-. 주소의 쉼표는 왼쪽 기본값이 0이고 오른쪽 기본값이 $이므로 입력하기 쉬운 주소 는
-전체 파일을 가리킵니다:
+. 주소의 쉼표는 왼쪽 기본값이 0이고 오른쪽 기본값이 $이므로 입력하기 쉬운 주소는 전체 파일을 가리킵니다:
 
 ```
 ,x/Emacs/ /{TM}/d
