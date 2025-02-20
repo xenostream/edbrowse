@@ -23,7 +23,7 @@ Although the treatment is aimed at non-programmers, new users with any backgroun
 <br><br><br><br>
 
 **Table of Contents**
-<details><summary>**Table of Contents</summary></details>
+<details><summary>**Table of Contents</summary>
 * [1. INTRODUCTION](#1\.-INTRODUCTION)
 * [2. SPECIAL CHARACTERS](#2\.-SPECIAL-CHARACTERS)
     * The List command "l"
@@ -64,6 +64,7 @@ Although the treatment is aimed at non-programmers, new users with any backgroun
     * Grep
     * Editing Scripts
     * Sed
+</details>
 
 <br><br>
 August 4, 1978
