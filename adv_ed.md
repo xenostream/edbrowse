@@ -21,6 +21,50 @@ _Murray Hill, New Jersey 07974_
 <br><br><br><br>
 Although the treatment is aimed at non-programmers, new users with any background should find helpful hints on how to get their jobs done more easily.
 <br><br><br><br>
+
+**Table of Contents**
+* [1. INTRODUCTION]("1. INTRODUCTION")
+* [2. SPECIAL CHARACTERS]("2. SPECIAL CHARACTERS")
+    * The List command "l"
+    * The Substitute Command "s"
+    * The Undo Command "u"
+    * The Metacharacter "."
+    * The Metacharacter "\\"
+    * The Metacharacter "$"
+    * The Circumflex "^"
+    * The Star "*"
+    * The Brackets "[ ]"
+    * The Ampersand "&"
+    * Substituting Newlines
+    * Rearranging a Line with \(...\)
+* [3. LINE ADDRESSING IN THE EDITOR]("3. LINE ADDRESSING IN THE EDITOR")
+    * Address Arithmetic
+    * Repeated Searches
+    * Default Line Numbers and the Value of Dot
+    * Semicolon ";"
+    * Interrupting the Editor
+* [4. GLOBAL COMMANDS]("4. GLOBAL COMMANDS")
+    * Multi-line Global Commands
+* [5. CUT AND PASTE WITH UNIX COMMANDS]("5. CUT AND PASTE WITH UNIX COMMANDS")
+    * Changing the Name of a File
+    * Making a Copy of a File
+    * Removing a File
+    * Putting Two or More Files Together
+    * Adding Something to the End of a File
+* [6. CUT AND PASTE WITH THE EDITOR]("6. CUT AND PASTE WITH THE EDITOR")
+    * Filenames
+    * Inserting One File into Another
+    * Writing out Part of a File
+    * Moving Lines Around
+    * Marks
+    * Copying Lines
+    * The Temporary Escape "!"
+* [7. SUPPORTING TOOLS]("7. SUPPORTING TOOLS")
+    * Grep
+    * Editing Scripts
+    * Sed
+
+<br><br>
 August 4, 1978
 
 <br><br><br><br>
