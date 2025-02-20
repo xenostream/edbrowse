@@ -13,7 +13,6 @@
 
 ---
 
-<details><summary>Table of Contents</summary>
 **목차**  
 - [Introduction](#Introduction)  
 - [Text](#Text)  
@@ -26,7 +25,6 @@
 - [Unix](#Unix)  
 - [A few other text commands](#A-few-other-text-commands)  
 - [Files](#Files)  
-</details>
 
 
 <br><br><br><br>
