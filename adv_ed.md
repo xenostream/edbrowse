@@ -1,11 +1,11 @@
 # Advanced Editing on UNIX
 
 <br><br><br><br>
-Brian W. Kernighan
+**Brian W. Kernighan**
 
 <br><br><br><br>
-Bell Laboratories
-Murray Hill, New Jersey 07974
+_Bell Laboratories_ <br>
+_Murray Hill, New Jersey 07974_
 
 <br><br><br><br>
 **ABSTRACT**
