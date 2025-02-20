@@ -42,12 +42,16 @@ The next few sections will discuss shortcuts and labor-saving devices. Not all o
 
 The List command "l"
 ed provides two commands for printing the contents of the lines you're editing. Most people are familiar with p, in combinations like
-	
+
+```	
 	1,$p
+```
 
 to print all the lines you're editing, or
 
+```
 	s/abc/def/p
+```
 
 to change "abe" to "def" on the current line. Less familiar is the list command l (the letter "l"), which gives slightly more information than p. In particular, l makes visible characters that are normally invisible, such as tabs and backspaces. If you list a line that contains some of these, l will print each tab as → and each backspace as ←. This makes it much easier to correct the sort of typing mistake that inserts extra spaces adjacent to tabs, or inserts a backspace followed by a space.
 
@@ -61,30 +65,40 @@ Most of the next few sections will be taken up with a discussions of the substit
 
 As the simplest place to begin, recall the meaning of a trailing g after a substitute command. With
 
+```
 	s/this/that/
+```
 
 and
-	
+
+ ```
 	s/this/that/g
+```
 
 the first one replaces the first "this" on the line with "that". If there is more than one "this" on the line, the second form with the trailing g channges all of them.
 
 Either form of the s command can be followed by p or l to "print" or "list" (as described in the previous section) the contents of the line:
 
+```
 	s/this/that/p
 	s/this/that/l
 	s/this/that/gp
 	s/this/that/gl
+```
 
 are all legal, and mean slightly different things. Make sure you know what the differences are.
 
 Of course, any s command can be preceded by one or two "line numbers" to specify that the substitution is to take place on a group of lines. Thus
 
+```
 	1,$s/mispell/misspell/
+```
 
 changes the first occurrence of "mispell" to "misspell" on every line of the file. But
 
+```
 	1,$s/mispell/misspell/g
+```
 
 changes every occurrence in every line (and this is more likely to be what you wanted in this particular case)
 
@@ -95,44 +109,57 @@ You should also notice that if you add a p or l to the end of any of these subst
 The Undo Command "u"
 Occasionally you will make a substitution in a line, only to realize too late that it was a ghastly mistake. The "undo" command u lets you "undo" the last substitution: the last line that was substituted can be restored to its previous state by typing the command
 
+```
 	u
-
+```
 
 The Metacharacter "."
 As you have undoubtedly noticed when you use ed, certain characters have unexpected meanings when they occur in the left side of a substitute command, or in a search for a particular line. In the next several sections, we will talk about these special characters, which are often called "metacharacters".
 
 The first one is the period ".". On the left side of a substitute command, or in a search with "/.../", "." stands for any single character. Thus the search 
 
+```
 	/x.y/
+```
 
 finds any line where "x" and "y" occur separated by a single character, as in
 
+```
 	x+y
 	x-y
 	x□y
 	x.y
+```
 
 and so on. (We will use □ to stand for a space whenever we need to make it visible)
 
 Since "." matches a single character, that gives you a way to deal with funny characters printed by l. Suppose you have a line that, when printed with the l command, appears as
 
+```
 	... th\07is ...
+```
 
 and you want to get rid of the \07. (which represents the bell character, by the way)
 
 The most obvious solution is to try
 
+```
 	s/\07//
+```
 
 but this will fail. (Try it) The brute force solution, which most people would now take, is to re-type the entire line. This is guaranteed and is actually quite a reasonable tactic if the line in question isn't too big, but for a very long line, re-typing is a bore. This is where the metacharacter "." comes in handy. Since "\07" really represents a single character, if we say
 
+```
 	s/th.is/this/
 
+```
 the job is done. The "." matches the mysterious character between the "h" and the "i", whatever it is.
 
 Bear in mind that since "." matches any single character, the command
 
+```
 	s/./,/
+```
 
 converts the first character on a line into a ",", which very often is not what you intended.
 
