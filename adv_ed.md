@@ -10,7 +10,7 @@ _Murray Hill, New Jersey 07974_
 <br><br><br><br>
 **ABSTRACT**
 
-> [!NOTE]
+> [!NOTE] **ABSTRACT**
 >This paper is meant to help secretaries, typists and programmers to make effective use of the UNIX facilities for preparing and editing text. It provides explanations and examples of
 >
 > ⦁	special characters, line addressing and global commands in the editor ed;
