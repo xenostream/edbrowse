@@ -23,7 +23,7 @@ Although the treatment is aimed at non-programmers, new users with any backgroun
 <br><br><br><br>
 August 4, 1978
 
-
+<br><br><br><br>
 
 # 1. INTRODUCTION
 Although UNIX provides remarkably effective tools for text editing, that by itself is no guarantee that everyone will automatically make the most effective use of them. In particular, people who are not computer specialists ― typists, secretaries, casual users ― often use the system less effectively than they might.
@@ -35,10 +35,14 @@ Examples are based on observations of users and the difficulties they encounter.
 A word of caution. There is only one way to learn to use something, and that is to use it. Reading a description is no substitute for trying something. A paper like this one should give you ideas about what to try, but until you actually try something, you will not learn it.
 
 
+<br><br><br><br>
+
 # 2. SPECIAL CHARACTERS
 The editor ed is the primary interface to the system for many people, so it is worthwhile to know how to get the most out of ed for the least effort.
 
 The next few sections will discuss shortcuts and labor-saving devices. Not all of these will be instantly useful to any one person, of course, but a few will be, and the others should give you ideas to store away for future use. And as always, until you try these things, they remain theoretical knowledge, not something you have confidence in.
+
+<br><br>
 
 ## The List command "l"
 ed provides two commands for printing the contents of the lines you're editing. Most people are familiar with p, in combinations like
@@ -59,6 +63,7 @@ The l command also "folds" long lines for printing ― any line that exceeds 72 
 
 Occasionally the l command will print in a line a string of numbers preceded by a backslash, such as \07 or \16. These combinations are used to make visible characters that normally don't print, like form feed or vertical tab or bell. Each such combination is a single character. When you see such characters, be wary ― they may have surprising meanings when printed on some terminals. Often their presence means that your finger slipped while you were typing; you almost never want them.
 
+<br><br>
 
 ## The Substitute Command "s"
 Most of the next few sections will be taken up with a discussions of the substitute command s. Since this is the command for changing the contents of individual lines, it probably has the most complexity of any ed command, and the most potential for effective use.
@@ -104,7 +109,7 @@ changes every occurrence in every line (and this is more likely to be what you w
 
 You should also notice that if you add a p or l to the end of any of these substitute commands, only the last line that got changed will be printed, not all the lines. We will talk later about how to print all the lines that were modified.
   
-
+<br><br>
 
 ## The Undo Command "u"
 Occasionally you will make a substitution in a line, only to realize too late that it was a ghastly mistake. The "undo" command u lets you "undo" the last substitution: the last line that was substituted can be restored to its previous state by typing the command
@@ -112,6 +117,8 @@ Occasionally you will make a substitution in a line, only to realize too late th
 ```
 	u
 ```
+
+<br><br>
 
 ## The Metacharacter "."
 As you have undoubtedly noticed when you use ed, certain characters have unexpected meanings when they occur in the left side of a substitute command, or in a search for a particular line. In the next several sections, we will talk about these special characters, which are often called "metacharacters".
@@ -177,6 +184,7 @@ the result will be
 
 which is probably not what you intended.
 
+<br><br>
 
 ## The Metacharacter "\\"
 Since a period means "any character", the question naturally arises of what to do when you really want a period. For example, how do you convert the line
@@ -255,7 +263,7 @@ Second, if # and @ are your character erase and line kill characters, you have t
 
 When you are adding text with a or i or c, backslash is not special, and you should only put in one backslash for each one you really want. 
 
-
+<br><br>
 
 ## The Metacharacter "$"
 The next metacharacter, the "$", stands for "the end of the line". As its most obvious use, suppose you have the line
@@ -304,7 +312,7 @@ Like ".", the "$" has multiple meanings depending on context. In the line
 
 the first "$" refers to the last line of the file, the second refers to the end of that line, and th third is a literal dollar sign, to be added to that line.
 
-
+<br><br>
 
 
 ## The Circumflex "^"
@@ -332,7 +340,7 @@ you can use the command
 
 	/^\.PP$/
 
-
+<br><br>
 
 
 ## The Star "*"
@@ -426,7 +434,7 @@ which is almost certainly not what was intended. The reason for this behavior is
 
 "xx*" is one or more x's
 
-
+<br><br>
 
 ## The Brackets "[ ]"
 Suppose that you want to delete any numbers that appear at the beginning of all lines of a file. You might first think of trying a series of command like
@@ -467,7 +475,7 @@ Within a character class, the circumflex has a special meaning only if it occurs
 
 finds a line that doesn't begin with a circumflex.
 
-
+<br><br>
 
 ## The Ampersand "&"
 The ampersand "&" is used primarily to save typing. Suppose you have the line
@@ -512,8 +520,7 @@ To get a literal ampersand, naturally the backslash is used to turn off the spec
 
 convert the word into the symbol. Notice that "&" is not special on the left side of a substitute, only on the right side.
 
-
-
+<br><br>
 
 ## Substituting Newlines
 ed provides a facility for splitting a single line into two or more shorter lines by "substituting in a newline". As the simplest example, suppose a line has gotten unmanageably long because of editing (or merely because it was unwisely typed) If it looks like
@@ -562,7 +569,7 @@ All by itself, a j command joins line dot to line dot+1, but any contiguous set 
 
 joins all the lines into one big once and prints it. (More on line numbers in Section 3)
 
-
+<br><br>
 
 ## Rearranging a Line with \(...\)
 (This section should be skipped on first reading) Recall that "&" is a shorthand that stands for whatever was matched by the left side of an s command. In much the same way you can capture separate pieces of what was matched; the only difference is that you have to specify on the left side just what pieces you're interested in.
@@ -588,7 +595,7 @@ although hard to read, does the job. The first \(...\) matches the last name, wh
 Of course, with any editing sequence this complicated, it's foolhardy to simply run it and hope. The global commands g and v discussed in section 4 provide a way for you to print exactly those lines which were affected by the substitute command, and thus verify that it did what you wanted in all cases.
 
 
-
+<br><br><br><br>
 
 
 
@@ -610,7 +617,7 @@ to scan backwards for the previous occurrence of "thing". This is especially han
 
 The slash and question mark are the only characters you can use to delimit a context search, though you can use essentially any character in a substitute command.
 
-
+<br><br>
 
 ## Address Arithmetic
 The next step is to combine the line numbers like ".", "$", "/.../" and "?...?" with "+" and "-". Thus
@@ -657,7 +664,7 @@ are useful. This changes "bad" to "good" on the previous line and on the current
 
 finds the line containing "thing", and positions you two lines before it.
 
-
+<br><br>
 
 ## Repeated Searches
 Suppose you ask for the search
@@ -690,7 +697,7 @@ Of course, you can still use the "&" on the right hand side of a substitute to s
 
 finds the next occurrence of whatever you searched for last, replaces it by two copies of itself, then prints the line just to verify that it worked.
 
-
+<br><br>
 
 ## Default Line Numbers and the Value of Dot
 One of the most effective ways to speed up your editing is always to know what lines will be affected by a command if you don't specify the lines it is to act on, and on what line you will be positioned (i.e., the value of dot) when a command finishes. If you can edit without specifying unnecessary line numbers, you can save a lot of typing.
@@ -758,7 +765,7 @@ prints the third line, which is the last one changed. But if the three lines had
 
 and the same command had been issued while dot pointed at the second line, then the result would be to change and print only the first line, and that is where dot would be set.
 
-
+<br><br>
 
 ## Semicolon ";"
 Searches with "/.../" and "?...?" start at the current line and move forward or backward respectively until they either find the pattern or get back to the current line. Sometimes this is not what is wanted. Suppose, for example, that the buffer contains lines like this: 
@@ -813,7 +820,7 @@ because this fails if "thing" occurs on line 1. But it is possible to say
 
 (one of the few places where 0 is a legal line number), for this starts the search at line 1.
 
-
+<br><br>
 
 ## Interrupting the Editor
 As a final note on what dot gets set to, you should be aware that if you hit the interrupt or delete or rubout or break key while ed is doing a command, things are put back together again and your state is restored as much as possible to what it was before the command began. Naturally, some changes are irrevocable - if you are reading or writing a file or making substitutions or deleting lines, these will be stoppted in some clean but unpredictable state in the middle. (which is why it is not usually wise to stop them) Dot may or may not be changed.
@@ -822,7 +829,7 @@ Printing is more clear cut. Dot is not changed until the printing is done. Thus 
 
 
 
-
+<br><br><br><br>
 
 
 
@@ -875,7 +882,7 @@ prints all the lines that lie between lines beginning with ".EQ" and ".EN" forma
 
 The g and v commands can also be preceded by line numbers, in which case the lines searched are only those in the range specified.
 
-
+<br><br>
 
 ## Multi-line Global Commands
 It is possible to do more than one command under the control of a global command, although the syntax for expressing the operation is not especially natural or pleasant. As an example, suppose the task is to change "x" to "y" and "a" to "b" on all lines that contain "thing". Then 
@@ -905,7 +912,7 @@ There is no need for a final line containing a "." to terminate the i command, u
 
 
 
-
+<br><br><br><br>
 
 
 # 5. CUT AND PASTE WITH UNIX COMMANDS
@@ -913,7 +920,7 @@ One editing area in which non-programmers seem not very confident is in what mig
 
 Yet most of these operations are actually quite easy, if you keep your wits about you and go cautiously. The next several sections talk about cut and paste. We will begin with the UNIX commands for moving entire files around, then discuss ed commands for operating on pieces of files. 
 
-
+<br><br>
 
 ## Changing the Name of a File
 You have a file named "memo" and you want it to be called "paper" instead. How is it done? 
@@ -932,7 +939,7 @@ Warning: if there is already a file around with the new name, its present conten
 
 is illegal.
 
-
+<br><br>
 
 ## Making a Copy of a File
 Sometimes what you want is a copy of a file - an entirely fresh version. This might be because you want to work on a file, and yet save a copy in case something gets fouled up, or jst because you're paranoid.
@@ -955,7 +962,7 @@ if you still want to retain a safe copy.
 
 In summary, mv just renames a file; cp makes a duplicat copy. Both of them clobber the "target" file if it already exists, so you had better be sure that's what you want to do before you do it.
 
-
+<br><br>
 
 ## Removing a File
 If you decide you are really done with a file forever, you can remove it with the rm command:
@@ -964,7 +971,7 @@ If you decide you are really done with a file forever, you can remove it with th
 
 throws away (irrevocably) the file called "savegood". 
 
-
+<br><br>
 
 ## Putting Two or More Files Together
 The next step is the familiar one of collecting two or more files into one big one. This will be needed, for example, when the author of a paper decides that several sections need to be combined into one. There are several ways to do it, of which the cleanest, once you get used to it, is a program called cat. (Not all programs have two-letter names) cat is short for "concatenate", which is exactly what we want to do.
@@ -1003,7 +1010,7 @@ and
 
 Answer: for most purposes, no. You might reasonably ask why there are two programs in that case, since cat is obviously all you need. The answer is that cp will do some other things as well, which you can investigate for yourself by reading the manual. For now we'll stick to simple usages.
 
-
+<br><br>
 
 ## Adding Something to the End of a File
 Sometimes you want to add one file to the end of another. We have enough building blocks now that you can do it; in fact before reading further it would be valuable if you figured out how. To be specific, how would you use cp, mv and/or cat to add the file "good1" to the end of the file "good"? You could try
@@ -1024,14 +1031,14 @@ The easy way is to use a variant of >, called >>. In fact, >> is identical to > 
 and "good1" is added to the end of "good". (And if "good" didn't exist, this makes a copy of "good1" called "good") 
 
 
-
+<br><br><br><br>
 
 
 
 # 6. CUT AND PASTE WITH THE EDITOR
 Now we move on to manipulating pieces of files - individual lines or groups of lines. This is another area where new users seem unsure of themselves. 
 
-
+<br><br>
 
 ## Filenames
 The first step is to ensure what you konw the ed commands for reading and writing files. Of course you can't go very far without knowing r and w. Equally useful, but less well known, is the "edit" command e. Within ed, the command
@@ -1061,7 +1068,7 @@ You can find out the remembered file name at any time with the f command; just t
 
 which gets a copy of a precious file, then uses f to guarantee that a careless w command won't clobber the original.
 
-
+<br><br>
 
 ## Inserting One File into Another
 Suppose you have a file called "memo", and you want the file called "table" to be inserted just after the reference to Table 1. That is, in "memo" somewhere is a line that says
@@ -1077,7 +1084,7 @@ and the data contained in "table" has to go there, probably so it will be format
 
 The critical line is the last one. As we said earlier, the r command reads a file; here you asked for it to be read in right after line dot. An r command without any address adds lines at the end, so it is the same as $r.
 
-
+<br><br>
 
 ## Writing out Part of a File 
 The other side of the coin is writing out part of the document you're editing. For example, maybe you want to split out into a separate file that table from the previous example, so it can be formatted and tested separately. Suppose that in the file being edited we have
@@ -1113,7 +1120,7 @@ The point is that the w command can write out a group of lines, instead of the w
 
 This last example is worth studying, to be sure you appreciate what's going on. 
 
-
+<br><br>
 
 ## Moving Lines Around 
 Suppose you want to move a paragraph from its present position in a paper to the end. How would you do it? As a concrete example, suppose each paragraph in the paper begins with the formatting command ".PP". Think about it and write down the details before reading on.
@@ -1152,7 +1159,7 @@ does the interchange.
 
 As you can see, the m command is more succinct and direct than writing, deleting and re-reading. When brute force better anyway? This is a matter of personal taste - do what you have most confidence in. The main difficulty with the m command is that if you use patterns to specify both the lines you are moving and the target, you have to take care that you specify them properly, or you may well not move the line you thought you did. The result of a botched m command can be a ghastly mess. Doing the job a step at a time makes it easier for you to verify at each step that you accomplished what you wanted to. It's also a good idea to issue a w command before doing anything complicated; then if you goof, it's easy to back up to where you were.
 
-
+<br><br>
 
 ## Marks
 ed provides a facility for marking a line with a particular name so you can later reference it by name regardless of its actual line number. This can be handy for moving lines, and for keeping track of them as they move. The mark command is k; the command
@@ -1169,7 +1176,7 @@ Marks are most useful for moving things around. Find the first line of the block
 
 Bear in mind that only one line can have a particular mark name associated with it at any given time. 
 
-
+<br><br>
 
 ## Copying Lines
 We mentioned earlier the idea of saving a line that was hard to type or used often, so as to cut down on typing time. Of course this could be more than one line; then the saving is presumably even greater.
@@ -1192,8 +1199,7 @@ duplicates the entire contents that you are editing. A more common use for t is 
 
 and so on.     
 
-
-
+<br><br>
 
 ## The Temporary Escape "!"
 Sometimes it is convenient to be able to temporarily escape from the editor to do some other UNIX command, perhaps one of the file copy or move commands discussed in section 5, without leaving the editor. The "escape" command ! provides a way to do this. If you say
@@ -1206,13 +1212,13 @@ You can really do any UNIX command, including another ed. (This is quite common,
 
 
 
- 
+ <br><br><br><br>
 
 
 # 7. SUPPORTING TOOLS
 There are several tools and techniques that go along with the editor, all of which are relatively easy once you know how ed works, because they are all based on the editor. In this section we will give some fairly cursory examples of these tools, more to indicate their existence than to provide a complete tutorial. More information on each can be found in [3]. 
 
-
+<br><br>
 
 ## Grep
 Sometimes you want to find all occurrences of some word or pattern in a set of files, to edit them or perhaps just to verify their presence or absence. It may be possible to edit each file separately and look for the pattern of interest, but if there are many files this can get very tedious, and if the files are really big, it may be impossible because of limits in ed.
@@ -1239,8 +1245,7 @@ finds all lines that don't contains "thing". The -v must occur in the position s
 
 (THe notation | is a "pipe", which causes the output of the first command to be used as input to the second command; see [2])
 
-
-
+<br><br>
 
 ## Editing Scripts
 If a fairly complicated set of editing operations is to be done on a whole set of files, the easiest thing to do is to make up a "script", i.e., a file that contains the operations you want to perform, then apply this script to each file in turn. For example, suppose you want to change every "Unix" to "UNIX" and every "Gcos" to "GCOS" in a large number of files. Then put into the file "script" the lines
@@ -1260,6 +1265,7 @@ This causes ed to take its commands from the prepared script. Notice that the wh
 
 And of course by using the UNIX command interpreter, you can cycle through a set of files automatically, with varying degrees of ease.
 
+<br><br>
 
 ## Sed
 sed ("stream editor") is a version of the editor with restricted capabilities but which is capable of processing unlimited amounts of input. Basically sed copies its input to its output, applying one or more editing commands to each line of input.
