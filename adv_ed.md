@@ -1333,6 +1333,9 @@ sed has further capabilities, including conditional testing and branching, which
 # Acknowledgement
 I am grateful to Ted Dolotta for his careful reading and valuable suggestions.
 
+<br><br>
+[⬆️](#top)
+
 
 # Referrences
 [^1]:	Brian W. Kernighan, A Tutorial Introduction to the UNIX Text Editor. 	Bell Laboratories internal memorandum.
