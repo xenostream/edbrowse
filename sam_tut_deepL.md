@@ -1169,7 +1169,7 @@ $
 ## Sam idioms     
 | command | description |
 |:---|:---|    
-|X/.*/,x/<cr>/d | strip <cr> from all files |   
+|X/.*/,x/\<cr\>/d | strip \<cr\> from all files |   
 |x/ˆ/ .,/0d | strip C comments from selection |   
 |-/ˆ/+#10 | goto the 10th colum in the current line |   
 |-0+,+0- | round dot down to whole lines only |   
