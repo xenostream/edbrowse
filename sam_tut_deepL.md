@@ -1091,6 +1091,70 @@ $
 |, | equivalent to 0,$ |   
 
   
+## Regular Expressions    
+| command | description |
+|:---|:---|    
+|. | any character |   
+|* | 0 or more of previous |   
+|+ | 1 or more of previous |   
+|[ˆn] | any char but n |   
+|[nm] | n or m |   
+|[a-z] | class a thru z |   
+|(re) | tag pattern |   
+|\# |  substitute #’th tagged pattern |   
+
+
+## Text commands     
+| command | description |
+|:---|:---|    
+|-/re/ | search backward |   
+|+/re/ | search forward |   
+|/re/ | search in same direction as last |   
+|a/text/ | Append text after dot |   
+|c/text/ | Change text in dot |   
+|i/text/ | Insert text before dot |   
+|d | Delete text in dot |   
+|s/regexp/text/ | Substitute text for regexp in dot |   
+|m | address Move dot to after address |   
+|t | address  Copy dot to after address  |   
+
+  
+## Display commands     
+| command | description |
+|:---|:---|   
+|p | Print contents of dot |   
+|= | Print value of dot |   
+|n | Print file menu list |   
+
+
+## I/O commands     
+| command | description |
+|:---|:---|    
+|b file-list | Set current file to first in menu list |   
+|B file-list | As b, but load new file-list |   
+|D file-list | Delete named buffers |   
+|e [file-name] | Replace current with file |   
+|r file-name | Replace dot by contents of file |   
+|w file-name | Write current to named file |   
+|f [file-name] | Set current file name |   
+|< command | Replace dot by stdout of command |   
+|> command | Send dot to stdin of command |   
+| command | Pipe dot through command |   
+|! command | Run the command |   
+
+
+## Loops and conditionals     
+| command | description |
+|:---|:---|    
+|x/regexp/ command | Set dot and run command on each match |   
+|x cmd | Set dot and run command on each matching line |   
+|y/regexp/ command | as x but select unmatched text |   
+|X/regexp/ command | Run command on files whose menu line matches |   
+|Y/regexp/ command | As X but select unmatched files |   
+|g/regexp/ command | If dot contains regexp, run command |   
+|v/regexp/ command | If dot does not contain, run command |   
+
+
 ## Miscellany    
 | command | description |
 |:---|:---|    
@@ -1144,7 +1208,6 @@ $
 |g/fred/ v/...../ c/jim/ |   
 |g/jim/ v/..../ c/fred/ |   
 |} |  swap fred for jim in file |
-
 
 
 
