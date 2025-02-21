@@ -24,9 +24,9 @@
 - [Conditionals](#Conditionals)
 - [Composition](#Composition)
 - [Grouping](#Grouping)
-- [Multiple Changes](#Multiple Changes)
+- [Multiple Changes](#Multiple-Changes)
 - [Unix](#Unix)
-- [A few other text commands](#A few other text commands)
+- [A few other text commands](#A-few-other-text-commands)
 - [Files](#Files)
 
   <br><br><br><br>
