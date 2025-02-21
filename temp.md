@@ -17,6 +17,20 @@
 
 <br><br><br><br>
 
+- [Introduction](#Introduction)
+- [Text](#Text)
+- [Addresses](#Addresses)
+- [Loops](#Loops)
+- [Conditionals](#Conditionals)
+- [Composition](#Composition)
+- [Grouping](#Grouping)
+- [Multiple Changes](#Multiple Changes)
+- [Unix](#Unix)
+- [A few other text commands](#A few other text commands)
+- [Files](#Files)
+
+  <br><br><br><br>
+
 # Introduction
 이 튜토리얼에서는 Blits 및 비트맵 디스플레이가 있는 일부 컴퓨터에서 실행되는 대화형 텍스트 편집기인 sam 의 명령 언어를 설명합니다. 대부분의 편집 작업은 
 마우스 기반 편집 기능으로 충분하며, 사용하기 쉽고 배우기 쉽습니다.
