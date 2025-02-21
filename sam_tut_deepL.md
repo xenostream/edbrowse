@@ -1079,6 +1079,8 @@ $
 
 # sam quick reference card    
 
+![sam reference card](http://sam.cat-v.org/cheatsheet/sam-refcard.png "sam reference card")
+
 ## Addresses    
 | command | description |
 |:---|:---|    
