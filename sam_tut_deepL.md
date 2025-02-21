@@ -1075,6 +1075,135 @@ $
 
 
 
+<br><br><br><br>
+
+# sam quick reference card
+
+
+## Addresses
+|:---|:---|
+n,m | line n to line m
+’ | address mark, see k below
+. | correct selection/position
+0 | start of file
+ˆ | start of line
+$ | end of line/file
+, | equivalent to 0,$
+
+
+## Regular Expressions 
+|:---|:---|
+. | any character
+* | 0 or more of previous
++ | 1 or more of previous
+[ˆn] | any char but n
+[nm] | n or m
+[a-z] | class a thru z
+(re) | tag pattern
+\# |  substitute #’th tagged pattern
+
+
+## Text commands 
+|:---|:---|
+-/re/ | search backward
++/re/ | search forward
+/re/ | search in same direction as last
+a/text/ | Append text after dot
+c/text/ | Change text in dot
+i/text/ | Insert text before dot
+d | Delete text in dot
+s/regexp/text/ | Substitute text for regexp in dot
+m | address Move dot to after address
+t | address  Copy dot to after address 
+
+
+## Display commands 
+|:---|:---|
+p | Print contents of dot
+= | Print value of dot
+n | Print file menu list
+
+
+## I/O commands 
+|:---|:---|
+b file-list | Set current file to first in menu list
+B file-list | As b, but load new file-list
+D file-list | Delete named buffers
+e [file-name] | Replace current with file
+r file-name | Replace dot by contents of file
+w file-name | Write current to named file
+f [file-name] | Set current file name
+< command | Replace dot by stdout of command
+> command | Send dot to stdin of command
+ command | Pipe dot through command
+! command | Run the command
+
+
+## Loops and conditionals 
+|:---|:---|
+x/regexp/ command | Set dot and run command on each match
+x cmd | Set dot and run command on each matching line
+y/regexp/ command | as x but select unmatched text
+X/regexp/ command | Run command on files whose menu line matches
+Y/regexp/ command | As X but select unmatched files
+g/regexp/ command | If dot contains regexp, run command
+v/regexp/ command | If dot does not contain, run command
+
+
+
+## Miscellany
+|:---|:---|
+k | Set address mark to value of dot
+q | Quit
+u n | Undo last n (default 1) changes
+{ } | Braces group commands
+<compose> Xnnnn | Insert char xxxx hex (Unix/Plan9)
+Alt-nnnn | Insert char xxxx hex (Windows) 
+
+
+
+## Sam idioms 
+|:---|:---|
+X/.*/,x/<cr>/d | strip <cr> from all files
+x/ˆ/ .,/0d | strip C comments from selection
+-/ˆ/+#10 | goto the 10th colum in the current line
+-0+,+0- | round dot down to whole lines only
+,x/ +/ v/ˆ/ c/ / | compress runs of spaces, leaving indentation
+s/"([ˆ"]*)"/‘‘1’’/ | replace "hello" with ‘‘hello’’ in selection
+f <nl> | set current file-name to null
+< echo "" | insert ascii code xxx at current pos
+, > wc -l | count lines in file
+/text/+-p | highlight the lines containing <pat>
+-/text/ | search for text backwards
+$-/text/ | search for the last occurrence of text in file
+,x/<text>/+-p | grep for text
+.x/<pat>/ c/<rep>/ | search for <pat> and replace with <rep>
+B < echo *.c | add all the C files in current dir to file list
+B < grep -l <pat> * | add all the files containing <pat> to file list
+X/’/w | write all modified files
+Y/.c/D | remove all non C files from file list
+\| fmt | pipe selection through the text formatter
+> mail <user> | send selection as Email to <user>
+x/0 a/0 | double space selection
+x/ˆ/ a/ / | indent selection 1 tab
+x/ˆ<tab>/d | remove 1 tab of indent from selection
+/(.+0+/ | matches blocks of text separated by blank lines
+! date | get current date in sam window
+,> wc | push file into wc, count appears in sam window
+0 < date | insert date at start of file
+1 < date | replace first line with todays date
+X D | remove out all up-to-date files
+, | sort sort current file
+,x/ˆTODAY$/ < date | replace TODAY on with the output of date
+,x/Plan9/tr a-z A-Z | replace all instances of Plan9 with upper case
+,t "junk.c" 0 | copy current file to start of junk.c
+-/.PP/,/.PP/- | highlight current paragraph in an nroff doc
+,x/[a-zA-Z0-9]+/ -#0;+#1  tr a-z A-Z | capitalise every word (slow)
+,x[a-zA-Z]+/{
+g/fred/ v/...../ c/jim/
+g/jim/ v/..../ c/fred/
+} |  swap fred for jim in file 
+
 
 
 
