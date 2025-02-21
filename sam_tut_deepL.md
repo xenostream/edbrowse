@@ -1115,8 +1115,8 @@ $
 |i/text/ | Insert text before dot |   
 |d | Delete text in dot |   
 |s/regexp/text/ | Substitute text for regexp in dot |   
-|m | address Move dot to after address |   
-|t | address  Copy dot to after address  |   
+|m address | Move dot to after address |   
+|t address | Copy dot to after address |   
 
   
 ## Display commands     
@@ -1139,7 +1139,7 @@ $
 |f [file-name] | Set current file name |   
 |< command | Replace dot by stdout of command |   
 |> command | Send dot to stdin of command |   
-| command | Pipe dot through command |   
+|\| command | Pipe dot through command |   
 |! command | Run the command |   
 
 
