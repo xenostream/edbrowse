@@ -1080,6 +1080,7 @@ $
 # sam quick reference card    
 
 ## Addresses    
+| command | description |
 |:---|:---|    
 |n,m | line n to line m |   
 |’ | address mark, see k below |   
