@@ -1204,9 +1204,9 @@ $
 |,t "junk.c" 0 | copy current file to start of junk.c |   
 |-/.PP/,/.PP/- | highlight current paragraph in an nroff doc |   
 |,x/[a-zA-Z0-9]+/ -#0;+#1  tr a-z A-Z | capitalise every word (slow) |   
-|,x[a-zA-Z]+/{ |   
-|g/fred/ v/...../ c/jim/ |   
-|g/jim/ v/..../ c/fred/ |   
+|,x[a-zA-Z]+/{ |   |
+|g/fred/ v/...../ c/jim/ | |   
+|g/jim/ v/..../ c/fred/ |   |
 |} |  swap fred for jim in file |
 
 
