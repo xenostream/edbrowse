@@ -436,15 +436,12 @@ Advance the address one line at a time with the  + command.
 ```
 *+
 The jaws that bite, the claws that catch!
-
-```
 *+
 Beware the Jubjub bird, and shun
-```
-```
 *+
 The frumious Bandersnatch!”
 ```
+
 To forward multiple lines, give the  + command and the number of
 lines you want to forward. This is the last line of the stanza, and I want
 to skip the blank line that follows, 4 so I advance two.
