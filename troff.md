@@ -17,8 +17,7 @@ vi 편집기를 사용하면 텍스트를 편집할 수 있지만, 서식을 지
 예제에 표시된 입력 텍스트와 요청을 포맷터의 출력과 구분하기 위해, ```nroff``` 또는 ```troff``` 의 출력물 주위에 "페이지 모서리" 를 표시하는 규칙을 채택했습니다. 
 또한, ```nroff``` 의 출력은 다른 예제와 동일한 일정한 너비의 서체로 표시됩니다:
 
-|:---:|
-|Here is an example of nroff output.|
+Here is an example of nroff output.
 
 Output from troff is shown in the same typeface as the text, but with the size of the type reduced by one
 point, unless the example calls for an explicit type size:
@@ -37,17 +36,16 @@ should always make clear just what is being demonstrated.
 Take a moment to think about the things you do when you format a page on a wysiwyg device such as a
 typewriter:
 
-• You set aside part of the page as the text area. This requires setting top, bottom, left, and right
-margins.
-• You adjust the lines that you type so they are all approximately the same length and fit into the
-designated text area.
+• You set aside part of the page as the text area. This requires setting top, bottom, left, and rightmargins.
+• You adjust the lines that you type so they are all approximately the same length and fit into the designated text area.
 • You break the text into syntactic units such as paragraphs.
 • You switch to a new page when you reach the bottom of the text area.
+
 Left to themselves, nroff or troff will do only one of these tasks: they will adjust the length of the
 lines in the input file so that they come out even in the output file. To do so, they make two assumptions:
+
 • They assume that the line length is 6.5 inches.
-• They assume that a blank line in the input signals the start of a new paragraph. The last line of
-the preceding text is not adjusted, and a blank line is placed in the output.
+• They assume that a blank line in the input signals the start of a new paragraph. The last line of the preceding text is not adjusted, and a blank line is placed in the output.
 
 The process of filling and adjusting is intuitively obvious—we’ve all done much the same thing manually
 when using a typewriter or had it done for us by a wysiwyg word processor. However, especially when it
@@ -61,8 +59,8 @@ There are three parts to line adjustment: filling, justification, and hyphenatio
 making all lines of text approximately equal in length. When working on a typewriter, you do this automat-
 ically, simply by typing a carriage return when the line is full. Most word-processing programs automati-
 cally insert a carriage return at the end of a line, and we have seen how to set up vi to do so as well.
-However, nroff and troff ignore carriage returns in the input except in a special “no fill” mode.
 
+However, nroff and troff ignore carriage returns in the input except in a special “no fill” mode. 
 They reformat the input text, collecting all input lines into even-length output lines, stopping only when
 they reach a blank line or (as we shall see shortly) a formatting instruction that tells them to stop. Lines
 that begin with one or more blank spaces are not filled, but trailing blank spaces are trimmed. Extra blank
@@ -79,34 +77,42 @@ in vi. Here’s a paragraph from the letter you entered in the last chapter, mod
 pare not just a user’s guide for the Alcuin illuminated lettering software, but a reference manual as well. In
 the course of making the changes, we’ve left a short line in the middle of the paragraph.
 
+```
 In our conversation last Thursday, we discussed a
 documentation project that would produce a user’s guide
 and reference manual
 for the Alcuin product. Yesterday, I received the product
 demo and other materials that you sent me.
+```
 
 Now, let’s look at the paragraph after processing by nroff:
 
+```
 In our conversation last Thursday, we discussed a
 documentation project that would produce a user’s
 guide and reference manual for the Alcuin product.
 Yesterday, I received the product demo and other
 materials that you sent me.
+```
 
 The paragraph has been both filled and justified. If the formatter were told to fill, but not to justify, the
 paragraph would look like this:
 
+```
 In our conversation last Thursday, we discussed a
 documentation project that would produce a user’s guide
 and reference manual for the Alcuin product. Yesterday,
 I received the product demo and other materials that
 you sent me.
+```
 
 As you can see, nroff justified the text in the first example by adding extra space between words.
+
 Most typewritten material is filled but not justified. In printer’s terms, it is typed ragged right.
 Books, magazines, and other typeset materials, by contrast, are usually right justified. Occasionally, you
 will see printed material (such as ad copy) in which the right end of each line is justified, but the left end is
 ragged. It is for this reason that we usually say that text is right or left justified, rather than simply justified.
+
 When it is difficult to perform filling or justification or both because a long word falls at the end of a
 line, the formatter has another trick to fall back on (one we are all familiar with)—hyphenation.
 
@@ -156,18 +162,22 @@ fractional spacing. The troff program always uses even interword spacing.
 
 Here’s the same paragraph filled and justified by troff:
 
+```
 In our conversation last Thursday, we discussed a documentation project that
 would produce a user’s guide and reference manual for the Alcuin product.
 Yesterday, I received the product demo and other materials that you sent me.
+```
 
 To make matters still more difficult, typeset characters come in a variety of different designs, or fonts.
 A font is a set of alphabetic, numeric, and punctuation characters that share certain design elements. Typi-
 cally, fonts come in families of several related typefaces. For example, this book is typeset for the most
 part in the Times Roman family of typefaces. There are three separate fonts:
 
+```
 roman
 bold
 italic
+```
 
 Typesetting allows for the use of multiple fonts on the same page, as you can see from the mixture of fonts
 throughout this book. Sometimes the fonts are from the same family, as with the Times Roman, Times
@@ -191,11 +201,14 @@ over after it has output each character on the line.
 
 We’ll talk more about troff later. For the moment, you should be aware that the job of the format-
 ting program is much more complicated when typesetting than it is when preparing text for typewriter-style
+printers.
+
+
 *The very best typesetting programs have the capability to adjust the space between individual characters as
 well. This process is called kerning. SoftQuad Publishing Software in Toronto sells an enhanced version of
 troff called SQroff that does support kerning.
 
-printers.
+
 
 
 # Using nroff
@@ -204,15 +217,20 @@ As mentioned previously, left to themselves, nroff and troff perform only rudime
 They will fill and justify the text, using a default line length of 6.5 inches, but they leave no margins, other
 than the implicit right margin caused by the line length. To make this clearer, let’s look at the sample letter
 from the last chapter (including the edit we made in this chapter) as it appears after formatting with nroff.
+
 First, let’s look at how to invoke the formatter. The nroff program takes as an argument the name
 of a file to be formatted:
 
+```
 $ nroff letter
+```
 
 Alternatively, it can take standard input, allowing you to preprocess the text with some other program
 before formatting it:
 
+```
 $ tbl report | nroff
+```
 
 There are numerous options to nroff. They are described at various points in this book (as appropriate to
 the topic) and summarized in Appendix B.
@@ -225,7 +243,9 @@ underscores in a second pass over the line). The default device is the Teletype 
 obsolete device. Other devices are listed in Appendix B. If you don’t recognize any of the printers or ter-
 minals, the safest type is probably lp:
 
+```
 $ nroff -Tlp file
+```
 
 In examples in this book, we will leave off the -T option, but you may want to experiment, and use which-
 ever type gives the best results with your equipment.
@@ -233,23 +253,31 @@ ever type gives the best results with your equipment.
 Like most UNIX programs, nroff prints its results on standard output. So, assuming that the text is
 stored in a file called letter, all you need to do is type:
 
+```
 $ nroff letter
+```
 
 A few moments later, you should see the results on the screen. Because the letter will scroll by quickly,
 you should pipe the output of nroff to a paging program such as pg or more:
 
+```
 $ nroff letter | pg
+```
 
 or out to a printer using lp or lpr:
 
+```
 $ nroff letter | lp
+```
 
 
-## Using troff
+
+# Using troff
 The chief advantage of troff over nroff is that it allows different types of character sets, or fonts, and
 so lets you take full advantage of the higher-quality printing available with typesetters and laser printers.
 There are a number of requests, useful only in troff, for specifying fonts, type sizes, and the vertical
 spacing between lines. Before we describe the actual requests though, we need to look at a bit of history.
+
 The troff program was originally designed for a specific typesetter, the Wang C/A/T. Later, it was
 modified to work with a wide range of output devices. We’ll discuss the original version of troff (which
 is still in use at many sites) first, before discussing the newer versions. The C/A/T typesetter was designed
@@ -264,8 +292,10 @@ wheel divided into four quadrants, onto which one could mount four different typ
 Typically, the four fonts were the standard (roman), bold, and italic fonts of the same family, plus a
 “special” font that contained additional punctuation characters, Greek characters (for equations), bullets,
 rules, and other nonstandard characters. Figure 4-1 shows the characters available in these standard fonts.
-The Coming of ditroff
 
+
+
+## The Coming of ditroff
 Later, troff was modified to support other typesetters and, more importantly (at least from the perspec-
 tive of many readers of this book), laser printers. The later version of troff is often called ditroff (for
 device-independent troff), but many UNIX systems have changed the name of the original troff to
@@ -287,6 +317,7 @@ to the original program, except in the greater flexibility it offers to use diff
 One way to find out which version of troff you have on your system (unless you have a program
 explicitly called ditroff) is to list the contents of the directory /usr/lib/font:
 
+```
 $ls -F /usr/lib/font
 devlj/
 devps/
@@ -294,6 +325,7 @@ ftB
 ftI
 ftR
 ftS
+```
 
 If there are one or more subdirectories whose name begins with the letters dev, your system is using
 ditroff. Our system supports both ditroff and otroff, so we have both a device subdirectory (for
@@ -301,6 +333,7 @@ ditroff) and font files (for otroff) directly in /usr/lib/font.
 
 We’ll talk more about font files later. For the moment, all you need to know is that they contain
 information about the widths of the characters in various fonts for a specific output device.
+
 Contrary to what a novice might expect, font files do not contain outlines of the characters them-
 selves. For a proper typesetter, character outlines reside in the typesetter itself. All troff sends out to the
 typesetter are character codes and size and position information.
@@ -316,6 +349,7 @@ the actual drawing of characters or images on the printed page. In a case like t
 the page, using tables describing the widths of the characters used by the printer, and generates instructions
 about page layout, spacing, and so on. The actual job of driving the printer is handled by another program,
 
+```
 Times Roman
 abcdefghijklmnopqrstuvwxyz
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
@@ -341,17 +375,25 @@ Special Mathematical Font
 √ ≥ ≤ ≡ ∼ ≠ → ← ↑ ↓ × ÷ ± ∪ ∩ ⊂ ⊃ ⊆ ⊇ ∞ ∂
 § ∇ ¬ ∫ ∝ ∅ ∈‡           
 Figure 4.1 The Four Standard Fonts
+```
 
 generally referred to as a printer driver or troff postprocessor.
+
 To use troff with such a postprocessor, you will generally need to pipe the output of troff to the
 postprocessor and from there to the print spooler:
 
+```
 $ troff file | postprocessor | lp
+```
 
 If you are using the old version of troff, which expects to send its output directly to the C/A/T typesetter,
 you need to specify the -t option, which tells troff to use standard output. If you don’t, you will get the
 message:
+
+```
 Typesetter busy.
+```
+
 (Of course, if by any chance you are connected to a C/A/T typesetter, you don’t need this option. There are
 several other options listed in Appendix B that you may find useful). When you use ditroff, on the
 other hand, you will need to specify the -T command-line option that tells it what device you are using.
@@ -359,73 +401,91 @@ The postprocessor will then translate the device-independent troff output into i
 ular type of laser printer or typesetter. For example, at our site, we use troff with an Apple LaserWriter
 and Pipeline Associates’ devps postprocessor, which translates troff output for the LaserWriter. Our
 command line looks something like this:
+
+```
 $ ditroff -Tps files | devps | lp
+```
+
 You can print the same file on different devices, simply by changing the -T option and the postprocessor.
 For example, you can print drafts on a laser printer, then switch to a typesetter for final output without mak-
 ing extensive changes to your files. (To actually direct output to different printers, you will also have to
-54 Unix Text Processing
 specify a printer name as an option to the lp command. In our generic example, we simply use lp without
 any options, assuming that the appropriate printer is connected as the default printer).
+
 Like all things in life, this is not always as easy as it sounds. Because the fonts used by different out-
 put devices have different widths even when the nominal font names and sizes are the same, pagination and
 line breaks may be different when you switch from one device to another.
+
 The job of interfacing ditroff to a wide variety of output devices is becoming easier because of
 the recent development of industry-wide page description languages like Adobe Systems’ PostScript,
 Xerox’s Interpress, and Imagen’s DDL. These page description languages reside in the printer, not the host
 computer, and provide a device-independent way of describing placement of characters and graphics on the
 page.
+
 Rather than using a separate postprocessor for each output device, you can now simply use a postpro-
 cessor to convert troff output to the desired page description language. For example, you can use Adobe
 Systems’ TranScript postprocessor (or an equivalent postprocessor like devps from Pipeline Associates)
 to convert troff output to PostScript, and can then send the PostScript output to any one of a number of
 typesetters or laser printers.
+
 From this point, whenever we say troff, we are generally referring to ditroff. In addition,
 although we will continue to discuss nroff as it differs from troff, our emphasis is on the more capable
 program. It is our opinion that the growing availability of laser printers will make troff the program of
 choice for almost all users in the not too distant future.
+
 However, you can submit a document coded for troff to nroff with entirely reasonable results.
 For the most part, formatting requests that cannot be handled by nroff are simply ignored. And you can
 submit documents coded for nroff to troff, though you will then be failing to use many of the charac-
 teristics that make troff desirable.
-The Markup Language
+
+
+
+
+# The Markup Language
 The nroff and troff markup commands (often called requests) typically consist of one or two lower-
 case letters and stand on their own line, following a period or apostrophe in column one. Most requests are
 reasonably mnemonic. For example, the request to leave space is:
+
+```
 .sp
+```
+
 There are also requests that can be embedded anywhere in the text. These requests are commonly called
 escape sequences. Escape sequences usually begin with a backslash (\). For example, the escape sequence
 \l will draw a horizontal line. Especially in troff, escape sequences are used for line drawing or for
 printing various special characters that do not appear in the standard ASCII character set. For instance, you
 enter \(bu to get •, a bullet.
+
 There are three classes of formatting instructions:
-• Instructions that have an immediate one-time effect, such as a request to space down an inch
-before outputting the next line of text.
-• Instructions that have a persistent effect, such as requests to set the line length or to enable or
-disable justification.
-• Instructions that are useful for writing macros. There is a “programming language” built into
-the formatter that allows you to build up complex requests from sequences of simpler ones. As
-part of this language there are requests for storing values into variables called strings and num-
-ber registers, for testing conditions and acting on the result, and so on.
+
+• Instructions that have an immediate one-time effect, such as a request to space down an inch before outputting the next line of text.
+• Instructions that have a persistent effect, such as requests to set the line length or to enable or disable justification.
+• Instructions that are useful for writing macros. There is a “programming language” built into the formatter that allows you to build up complex requests from sequences of simpler ones. 
+As part of this language there are requests for storing values into variables called strings and number registers, for testing conditions and acting on the result, and so on.
+
 For the most part, we will discuss the requests used to define macros, strings, and number registers
 later in this book.
+
 At this point, we want to focus on understanding the basic requests that control the basic actions of
-the formatter. We will also learn many of the most useful requests with immediate, one-time effects. Table
-nroff and troff 55
-4-1 summarizes the requests that you will use most often.
-Table 4.1 Basic nroff/troff Requests
-Request Meaning Request Meaning
-.ad Enable line adjustment .na No justification of lines
-.br Line break .ne Need lines to end of page
-.bp Page break .nf No filling of lines
-.ce Center next line .nr Define and set number register
-.de Define macro .po Set page offset
-.ds Define string .ps Set point size
-.fi Fill output lines .so Switch to source file and return
-.ft Set current font .sp Space
-.in Set indent .ta Set tab stop positions
-.ls Set double or triple spacing .ti Set temporary indent
-.ll Specify line length .vs Set vertical line spacing
-Looking at nroff Output
+the formatter. We will also learn many of the most useful requests with immediate, one-time effects. Table 4-1 summarizes the requests that you will use most often.
+
+**Table 4.1 Basic nroff/troff Requests**
+| Request | Meaning | Request | Meaning |
+|.ad | Enable line adjustment | .na No justification of lines |
+|.br | Line break | .ne Need lines to end of page |
+|.bp | Page break | .nf No filling of lines |
+|.ce | Center next line | .nr Define and set number register |
+|.de | Define macro | .po Set page offset |
+|.ds | Define string | .ps Set point size |
+|.fi | Fill output lines | .so Switch to source file and return |
+|.ft | Set current font | .sp Space |
+|.in | Set indent | .ta Set tab stop positions |
+|.ls | Set double or triple spacing | .ti Set temporary indent |
+|.ll | Specify line length | .vs Set vertical line spacing|
+
+
+
+## Looking at nroff Output
 When we discussed the basic operations of the text formatter, we saw that nroff and troff perform
 rudimentary formatting. They will fill and justify the text, using a default line length of 6.5 inches, but they
 leave no margins, other than the implicit right margin caused by the line length.
