@@ -17,18 +17,31 @@ vi 편집기를 사용하면 텍스트를 편집할 수 있지만, 서식을 지
 예제에 표시된 입력 텍스트와 요청을 포맷터의 출력과 구분하기 위해, ```nroff``` 또는 ```troff``` 의 출력물 주위에 "페이지 모서리" 를 표시하는 규칙을 채택했습니다. 
 또한, ```nroff``` 의 출력은 다른 예제와 동일한 일정한 너비의 서체로 표시됩니다:
 
+```
 Here is an example of nroff output.
+```
 
 Output from troff is shown in the same typeface as the text, but with the size of the type reduced by one
 point, unless the example calls for an explicit type size:
 
+트로프의 출력은 텍스트와 동일한 서체로 표시되지만
+, 예제에서 명시적인 서체 크기를 요구하지 않는 한 서체 크기가 1포인트 줄어든 상태로 표시됩니다:
+
+```
 Here is an example of troff output.
+```
 
 In representing output, compromises sometimes had to be made. For example, when showing nroff out-
 put, we have processed the example separately with nroff, and read the results back into the source file.
 However, from there, they have been typeset in a constant-width font by troff. As a result, there might
 be slight differences from true nroff output, particularly in line length or page size. However, the context
 should always make clear just what is being demonstrated.
+
+출력을 표현할 때 때때로 타협을 해야 했습니다. 예를 들어, nroff 출력을 표시할 때는
+예제를 nroff로 별도로 처리하고 그 결과를 다시 소스 파일로 읽었습니다.
+하지만 거기서부터 트로프에 의해 일정한 너비의 글꼴로 조판되었습니다. 따라서 줄 길이나 페이지 크기 등에서 실제 nroff 출력과 약간의 차이가 있을 수 있습니다
+. 그러나 문맥을
+통해 항상 무엇을 보여주고 있는지 명확히 알 수 있습니다.
 
 
 
