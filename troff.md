@@ -471,6 +471,7 @@ the formatter. We will also learn many of the most useful requests with immediat
 
 **Table 4.1 Basic nroff/troff Requests**
 | Request | Meaning | Request | Meaning |
+|:---|:---|:---|:---|
 |.ad | Enable line adjustment | .na No justification of lines |
 |.br | Line break | .ne Need lines to end of page |
 |.bp | Page break | .nf No filling of lines |
