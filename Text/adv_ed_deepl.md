@@ -13,14 +13,12 @@ _Murray Hill, New Jersey 07974_
 > [!NOTE] 
 > 이 문서는 비서, 타이피스트 및 프로그래머가 텍스트를 준비하고 편집할 때, UNIX 기능을 효과적으로 활용할 수 있도록 돕기 위한 것입니다. 다음에 대한 설명과 예제를 제공합니다.
 >
-> ⦁ ed 편집기에서 특수 문자, 줄 주소 지정 및 전역 명령을 편집합니다;
+> ⦁ ed 편집기에서 특수 문자, 줄 주소 지정 및 전역 명령을 사용해 텍스트를 편집합니다;
 > ⦁ 파일 및 파일 일부에 대한 '잘라내기 및 붙여넣기' 작업을 처리하기 위한 명령어 (mv, cp, cat, rm 명령어 및 편집기의 r, w, m, t 명령어 포함) 를 제공합니다;
 > ⦁ 스크립트 및 편집기 기반 프로그램(예: grep, sed 등) 편집 방법을 제공합니다.
 >
+> 이 문서는 프로그래머가 아닌 사용자를 대상으로 하지만, 신규 사용자라도 작업을 더 쉽게 완료하는 방법에 대한 유용한 힌트를 얻을 수 있습니다.
 
-<br><br><br><br>
-
-이 문서는 프로그래머가 아닌 사용자를 대상으로 하지만, 신규 사용자라도 작업을 더 쉽게 완료하는 방법에 대한 유용한 힌트를 얻을 수 있습니다.
 <br><br><br><br>
 
 **Table of Contents**
@@ -72,24 +70,21 @@ August 4, 1978
 <br><br><br><br>
 
 # 1. INTRODUCTION
-Although UNIX provides remarkably effective tools for text editing, that by itself is no guarantee that everyone will automatically make the most effective use of them. In particular, people who are not computer specialists ― typists, secretaries, casual users ― often use the system less effectively than they might.
+UNIX는 텍스트 편집에 매우 효과적인 도구를 제공하지만, 모든 사람이 효과적으로 사용할 수 있다는 보장은 없습니다. 특히 타이피스트, 비서, 일반 사용자 등 컴퓨터 전문가가 아닌 사람들은 시스템을 효과적으로 사용하지 못하는 경우가 많습니다.
 
-UNIX는 텍스트 편집에 매우 효과적인 도구를 제공하지만, 그 자체만으로는 모든 사람이 자동으로 가장 효과적으로 사용할 수 있다는 보장은 없습니다. 특히 타이피스트, 비서, 일반 사용자 등 컴퓨터 전문가가 아닌 사람들은 시스템을 효과적으로 사용하지 못하는 경우가 많습니다.
+이 문서는 _A Tutorial Introduction to the UNIX Text Editor_ [^1] 의 후속편으로, 적은 노력으로 텍스트를 편집하는 방법에 대한 설명과 예제를 제공합니다. (_UNIX for Beginners_ [^2] 의 자료도 숙지하고 있어야 합니다.) 
+여기서 설명하는 모든 명령에 대한 자세한 정보는_The UNIX Programmer's Manual_ [^3] 에서 확인할 수 있습니다.
 
-This document is intended as a sequel to _A Tutorial Introduction to the UNIX Text Editor_ [^1], providing explanations and examples of how to edit with less effort. (You should also be familiar with the material in _UNIX for Beginners_ [^2]) Further information on all commands discussed here can be found in _The UNIX Programmer's Manual_ [^3].
+사용한 예제는 사용자를 관찰한 후, 그들이 주로 겪는 어려움을 기반으로 작성했습니다. 검색 및 대체 명령의 특수 문자, 줄 주소 지정, 전역 명령, 줄 이동 및 복사 등의 주제가 다뤄집니다. 
+또한, 파일 조작을 처리하기 위한 도구와 ```grep``` 및 ```sed``` 같은 ed 에 기반한 도구를 효과적으로 사용하는 방법에 대해서도 간략하게 설명합니다.
 
-이 문서는 _유닉스 텍스트 편집기 튜토리얼 소개_[^1]의 속편으로, 적은 노력으로 편집하는 방법에 대한 설명과 예제를 제공합니다. (_초보자를 위한 UNIX_[^2]의 자료도 숙지하고 있어야 합니다.) 여기서 설명하는 모든 명령에 대한 자세한 정보는 _유닉스 프로그래머 매뉴얼_[^3]에서 확인할 수 있습니다.
+하지만, 주의할 점이 있습니다. 사용법을 배우는 방법은 단 하나, 직접 사용해 보는 것입니다. 단지, 설명을 읽는 것으로 무언가를 직접 시도해보는 것을 대신할 수 없습니다. 
+이와 같은 문서는 무엇을 시도해야 할지에 대한 아이디어는 제공하지만 실제로 무언가를 시도하기 전까지는 배울 수 없습니다.
 
-Examples are based on observations of users and the difficulties they encounter. Topics covered include special character in searches and substitute commands, line addressing, the global commands, and line moving and copying. There are also brief discussions of effective use of related tools, like those for file manipulation, and those based on ed, like grep and sed.
-
-예제는 사용자를 관찰하고 그들이 겪는 어려움을 기반으로 합니다. 검색 및 대체 명령의 특수 문자, 줄 주소 지정, 전역 명령, 줄 이동 및 복사 등의 주제가 다뤄집니다. 또한 파일 조작을 위한 도구와 grep 및 sed와 같은 ed 기반 도구 등 관련 도구를 효과적으로 사용하는 방법에 대해서도 간략하게 설명합니다.
-
-A word of caution. There is only one way to learn to use something, and that is to use it. Reading a description is no substitute for trying something. A paper like this one should give you ideas about what to try, but until you actually try something, you will not learn it.
-
-주의할 점이 있습니다. 사용법을 배우는 방법은 단 하나, 직접 사용해 보는 것입니다. 설명을 읽는 것은 무언가를 시도하는 것을 대신할 수 없습니다. 이와 같은 문서는 무엇을 시도해야 할지에 대한 아이디어를 제공하지만 실제로 무언가를 시도하기 전까지는 배울 수 없습니다.
 
 [⬆️](#top)
 <br><br><br><br>
+
 
 # 2. SPECIAL CHARACTERS
 The editor ed is the primary interface to the system for many people, so it is worthwhile to know how to get the most out of ed for the least effort.
