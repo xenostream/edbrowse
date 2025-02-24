@@ -14,6 +14,10 @@ vi 편집기를 사용하면 텍스트를 편집할 수 있지만, 서식을 지
 
 <kbd><br>Ctrl + P<br><br></kbd>
 
+일반텍스트 Normal Text
+
+<samp>모노스페이스 Monospace Text</samp>
+
 
 ## Conventions
 예제에 표시된 입력 텍스트와 요청을 포맷터의 출력과 구분하기 위해, ```nroff``` 또는 ```troff``` 의 출력물 주위에 "페이지 모서리" 를 표시하는 규칙을 채택했습니다. 
