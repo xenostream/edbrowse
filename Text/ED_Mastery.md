@@ -1,8 +1,3 @@
----
-title: ED Mastery
-date: 2025-02-25
-tags: editor
----
 # ED Mastery
 
 <br><br><br><br>
