@@ -446,5 +446,4 @@ e filename
 u
 ```
 
-
-restores the state of the file completely, including its name, dot, and modified bit. Because of the undo, potentially dangerous commands are not guarded by confirmations. Only D, which destroys the information necessary to restore itself, is protected. It will not delete a modified file, but a second D of the same file will succeed regardless. The q command, which exits sam, is similarly guarded.
+은 이름, 점, 수정된 비트 등 파일 상태를 완전히 복원합니다. 실행 취소로 인해 잠재적으로 위험한 명령은 확인을 통해 보호되지 않습니다. 복원하는 데 필요한 정보를 스스로 파괴하는 D만 보호됩니다. 수정된 파일은 삭제되지 않지만, 동일한 파일의 두 번째 D는 이에 관계없이 성공합니다. sam을 종료하는 q 명령도 마찬가지로 보호됩니다.
