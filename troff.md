@@ -1,76 +1,53 @@
 # nroff and troff
 vi 편집기를 사용하면 텍스트를 편집할 수 있지만, 서식을 지정하는 데는 그다지 능숙하지 않습니다. 프로그램의 소스코드 같은 텍스트 파일은 모든 페이지 상단에 헤더를 삽입하고 페이지 번호 매김을 처리하는 
-```pr``` 같은 간단한 프로그램으로 서식을 지정할 수 있지만, 그렇지 않으면 파일에 표시된 있는 그대로 문서를 인쇄합니다. 그러나 깔끔하게 서식이 지정된 텍스트를 준비해야 하는 애플리케이션의 경우 
-```nroff("en-roff")``` 또는 ```troff("tee-roff")``` 서식 지정 프로그램을 사용하게 됩니다.
+`pr` 같은 간단한 프로그램으로 서식을 지정할 수 있지만, 그렇지 않으면 파일에 표시된 있는그대로의 문서를 인쇄합니다. 그러나, 깔끔하게 서식이 지정된 텍스트를 준비해야 하는 애플리케이션의 경우 
+`nroff("en-roff")` 또는 `troff("tee-roff")` 서식 지정 프로그램을 사용하게 됩니다.
 
-이러한 프로그램은 입력 텍스트 파일을 처리하는 데 사용되며, 일반적으로 서식 지정 지침으로 코딩되거나, "마크업" 됩니다. 대부분의 워드 프로세서 같은 위지위그 프로그램을 사용할 때는 명령어를 사용하여 
-페이지에 배치되는 대로 화면에 텍스트를 배치합니다. ```nroff``` 및 ```troff``` 에서 사용하는 것과 같은 마크업 언어를 사용하면 텍스트에 서식 지정 프로그램에 수행할 작업을 알려주는 ```명령``` 을 입력합니다.
+이런 프로그램은 텍스트 파일을 입력으로 처리하는 데 사용되며, 일반적으로 서식 지정 지침으로 코딩되거나 `마크업` (*markup*) 됩니다. 대부분의 워드 프로세서 같은 위지위그 프로그램을 사용할 때는 명령어를 사용하여 
+페이지에 배치되는대로 화면에 텍스트를 배치합니다. `nroff` 및 `troff` 에서 사용하는 것 같은 마크업 언어를 사용하려면 텍스트에 서식 지정 프로그램에서 처리할 작업을 알려주는 `명령` 을 입력합니다.
 
-이 장의 목적은 크게 두 가지입니다. 여러분이 유용하게 사용할 수 있는 ```기본 서식 코드``` 를 소개하고자 합니다. 동시에 포맷터가 무엇을 처리하고 어떻게 작동하는지에 대한 맥락에서 소개하고자 합니다. 
-만약, 이 장이 조금 어렵게 느껴진다면(특히 nroff/트로프를 처음 접하는 경우) 5장이나 6장으로 건너뛰고 매크로 패키지인 ```ms``` 또는 ```mm``` 중 하나에 익숙해진 다음, 다시 돌아와서 이 장을 다시 시작하시기 바랍니다. 
+이 장의 목적은 크게 두 가지입니다. 여러분이 유용하게 사용할 수 있는 `기본 서식 코드` 를 소개합니다. 동시에 포맷터가 무엇을 처리하고 어떻게 작동하는지에 대한 맥락에 대해 소개하고자 합니다. 
+만약, 이 장이 어렵게 느껴진다면 (특히 `nroff/troff` 를 처음 접하는 경우) `ms` 또는 `mm` 매크로에 대한 설명을 읽은 후, 둘 중 하나에 익숙해진 다음 다시 돌아와 이 장을 다시 시작하시기 바랍니다. 
 
-이 책을 읽는 독자는 기초 이상의 내용을 학습하길 원하고, ```nroff/troff``` 의 복잡성을 마스터하려는 의도로 이 책을 읽는다고 가정합니다. 따라서, 이 장은 입문용 사용자 안내서보다 다소 길고 복잡합니다.
-
-
-<kbd><br>Ctrl + P<br><br></kbd>
-
-일반텍스트 Normal Text
-
-<samp>모노스페이스 Monospace Text</samp>
+이 책을 읽는 독자는 기초 이상의 내용을 학습하길 원하고, `nroff/troff` 의 복잡성을 마스터하려는 의도로 이 책을 읽는다고 가정합니다. 따라서, 이 장은 입문용 사용자 안내서보다 다소 길고 복잡합니다.
 
 
 ## Conventions
-예제에 표시된 입력 텍스트와 요청을 포맷터의 출력과 구분하기 위해, ```nroff``` 또는 ```troff``` 의 출력물 주위에 "페이지 모서리" 를 표시하는 규칙을 채택했습니다. 
-또한, ```nroff``` 의 출력은 다른 예제와 동일한 일정한 너비의 서체로 표시됩니다:
+예제에 표시된 입력용 텍스트와 요청 명령으로 처리한 포맷터의 출력과 구분하기 위해, `nroff` 또는 `troff` 출력물 주위에 `페이지 모서리` 를 표시하는 규칙을 채택했습니다. 
+또한, `nroff` 의 출력은 다른 예제와 동일한 일정한 너비의 서체로 표시합니다:
 
 ```
 Here is an example of nroff output.
 ```
 
-Output from troff is shown in the same typeface as the text, but with the size of the type reduced by one
-point, unless the example calls for an explicit type size:
-
-트로프의 출력은 텍스트와 동일한 서체로 표시되지만
-, 예제에서 명시적인 서체 크기를 요구하지 않는 한 서체 크기가 1포인트 줄어든 상태로 표시됩니다:
+`troff` 의 출력은 텍스트와 동일한 서체로 표시되지만, 예제에서 명시적인 서체 크기를 요구하지 않는 한, 서체 크기를 1포인트 줄인 상태로 표시합니다:
 
 ```
 Here is an example of troff output.
 ```
 
-In representing output, compromises sometimes had to be made. For example, when showing nroff out-
-put, we have processed the example separately with nroff, and read the results back into the source file.
-However, from there, they have been typeset in a constant-width font by troff. As a result, there might
-be slight differences from true nroff output, particularly in line length or page size. However, the context
-should always make clear just what is being demonstrated.
-
-출력을 표현할 때 때때로 타협을 해야 했습니다. 예를 들어, nroff 출력을 표시할 때는
-예제를 nroff로 별도로 처리하고 그 결과를 다시 소스 파일로 읽었습니다.
-하지만 거기서부터 트로프에 의해 일정한 너비의 글꼴로 조판되었습니다. 따라서 줄 길이나 페이지 크기 등에서 실제 nroff 출력과 약간의 차이가 있을 수 있습니다
-. 그러나 문맥을
-통해 항상 무엇을 보여주고 있는지 명확히 알 수 있습니다.
+이와 같은 문서에서 출력물을 표현할 때는 때때로 약간의 타협을 해야합니다. 예를 들어, `nroff` 출력을 표시할 때는 먼저 예제를 `nroff` 로 별도로 처리하고 그 결과를 
+다시 소스 파일로 읽었습니다. 하지만, 그 후에 `troff` 에 의해 다시 일정한 너비의 글꼴로 조판되었습니다. 따라서, 줄 길이나 페이지 크기 등에서 실제 `nroff` 출력과는 
+약간의 차이가 있을 수 있습니다. 그러나, 문맥을 통해 항상 무엇을 보여주고자 하는지는 명확히 알 수 있습니다.
 
 
 
 ## What the Formatter Does
-Take a moment to think about the things you do when you format a page on a wysiwyg device such as a
-typewriter:
+타자기 같은 위지위그 (*WYSIWYG*) 장치에서 페이지 서식을 지정할 때 어떤 작업을 처리하는지 잠시 생각해 보겠습니다:
 
-• You set aside part of the page as the text area. This requires setting top, bottom, left, and rightmargins.
-• You adjust the lines that you type so they are all approximately the same length and fit into the designated text area.
-• You break the text into syntactic units such as paragraphs.
-• You switch to a new page when you reach the bottom of the text area.
+- 페이지의 일부를 `텍스트 표시 영역` 으로 따로 설정합니다. 이를 처리하기 위해 상단, 하단, 왼쪽 및 오른쪽 여백을 설정해야 합니다.
+- 입력하는 줄의 길이가 거의 같도록 처리해 지정된 텍스트 영역에 맞도록 조정합니다.
+- 텍스트를 단락과 구와 같은 `구문 단위` 로 나눕니다.
+- 텍스트 영역의 하단에 도달하면 새로운 페이지로 전환합니다.
 
-Left to themselves, nroff or troff will do only one of these tasks: they will adjust the length of the
-lines in the input file so that they come out even in the output file. To do so, they make two assumptions:
+입력 파일의 줄 길이를 조정해 출력 파일에서도 동일하게 나오도록 처리하는 작업 중 하나만 `nroff` 또는 `troff` 가 수행합니다. 이를 위해 두 가지 가정을 합니다:
 
-• They assume that the line length is 6.5 inches.
-• They assume that a blank line in the input signals the start of a new paragraph. The last line of the preceding text is not adjusted, and a blank line is placed in the output.
+- 줄 길이는 `6.5인치` 라고 가정합니다.
+- 입력에서 빈 줄은 새로운 단락의 시작을 알리는 신호라고 가정합니다. 이전 텍스트의 마지막 줄은 조정되지 않고 출력에도 빈 줄이 배치됩니다.
 
-The process of filling and adjusting is intuitively obvious—we’ve all done much the same thing manually
-when using a typewriter or had it done for us by a wysiwyg word processor. However, especially when it
-comes to a typesetting program like troff, there are ramifications to the process of line adjustment that
-are not obvious. Having a clear idea of what is going on will be very useful later. For this reason, we’ll
-examine the process in detail.
+타자기를 사용한다거나 위지위그 방식의 워드 프로세서를 통해 입력 및 조정하는 과정은 직관적으로 분명합니다. 그러나, 특히 `troff` 같은 조판 프로그램의 경우, 
+줄을 조정하는 과정에는 분명하지 않은 결과가 있습니다. 과연 무슨 일이 일어나고 있는지를 명확하게 파악한다는 것은 나중에라도 매우 유용합니다. 
+이러한 이유로 이 프로세스를 보다 자세히 살펴보겠습니다.
 
 
 ## Line Adjustment
@@ -78,6 +55,12 @@ There are three parts to line adjustment: filling, justification, and hyphenatio
 making all lines of text approximately equal in length. When working on a typewriter, you do this automat-
 ically, simply by typing a carriage return when the line is full. Most word-processing programs automati-
 cally insert a carriage return at the end of a line, and we have seen how to set up vi to do so as well.
+줄 조정 작업에는 `채우기`, `맞춤법`, `하이픈` 의 세 가지 부분이 있습니다. 채우기는 텍스트의 모든 줄을 거의 같은 길이로 만드는 과정입니다
+. 타자기로 작업할 때는
+줄이 꽉 차면 캐리지 리턴을 입력하기만 하면 자동으로 이 작업을 수행합니다
+. 대부분의 워드 프로세싱 프로그램은
+줄 끝에 자동으로
+캐리지 리턴을 삽입하며, 바이에서도 그렇게 하도록 설정하는 방법을 살펴봤습니다.
 
 However, nroff and troff ignore carriage returns in the input except in a special “no fill” mode. 
 They reformat the input text, collecting all input lines into even-length output lines, stopping only when
