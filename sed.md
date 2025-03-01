@@ -46,68 +46,106 @@ sed [options] {sed-commands} {input-file}
 
 Sed reads one line at a time from the {input-file} and executes the
 {sed-commands} on that particular line.
+
 It reads the 1st line from the {input-file} and executes the {sed-
 commands} on the 1st line. Then it reads the 2nd line from the
 {input-file} and executes the {sed-commands} on the 2nd line. Sed
 repeats this process until it reaches the end of the {input-file}.
+
 There are also a few optional command line options that can be
 passed to sed as indicated by [options].
+
 The following example demonstrates the basic sed syntax. This
 simple sed example prints all the lines from the /etc/passwd file.
+
+```
 sed -n 'p' /etc/passwd
+```
+
 The main focus here is on the {sed-commands}, which can be either
 a single sed command or multiple sed commands. You can also
 combine multiple sed-commands in a file and call the sed script file
 using the -f option as shown below.
+
 Basic sed syntax for use with sed-command file:
+
+```
 sed [options] -f {sed-commands-in-a-file} {input-file}
+```
+
 The following example demonstrates the basic syntax. This example
 prints lines beginning with root and nobody from the /etc/passwd file.
-10
 
+```
 $ vi test-script.sed
 /^root/ p
 /^nobody/ p
+
 $ sed -n -f test-script.sed /etc/passwd
+```
+
 While executing multiple sed commands, you can also directly specify
 them in the command line using -e as shown below.
-Basic sed syntax using -e:
-sed [options] -e {sed-command-1} -e {sed-command-2}
-{input-file}
+
+**Basic sed syntax using -e:**
+
+```
+sed [options] -e {sed-command-1} -e {sed-command-2} {input-file}
+```
+
 The following example demonstrates the basic syntax. This prints
 lines beginning with root and nobody from /etc/passwd file:
+
+```
 sed -n -e '/^root/ p' -e '/^nobody/ p' /etc/passwd
+```
+
 If you are executing a lot of commands in a single line using several
 -e arguments, you can split them into multiple lines using a back
 slash as shown below.
+
+```
 sed -n \
 -e '/^root/ p' \
 -e '/^nobody/ p' \
 /etc/passwd
+```
+
 You can also execute multiple sed commands in the command line by
 grouping them together using { }:
-Basic sed syntax using { }:
+
+**Basic sed syntax using { }:**
+
+```
 sed [options] '{
 sed-command-1
 sed-command-2
-11
-
 }' input-file
+```
+
 The following example demonstrates this version of the basic syntax.
 This also prints lines beginning with root and nobody from
 /etc/passwd file.
+
+```
 sed -n '{
 /^root/ p
 /^nobody/ p
 }' /etc/passwd
+```
+
 Note: Sed never modifies the original file. It always prints the output
 to stdout. If you want to save the changes, you should redirect the
 output to a file by explicitly specifying > filename.txt.
-2. Sed Scripting Flow
+
+
+## 2. Sed Scripting Flow
 Sed scripting follows the easily remembered sequence Read,
 Execute, Print, Repeat. Use the simple REPR acronym to remember
 sed execution flow.
+
 We look at the steps in this sequence. Sed will:
+
 - Read a line into the pattern space (an internal temporary sed
 buffer, where it places the line it reads from the input file).
 - Execute the sed command on the line in the sed pattern
@@ -118,54 +156,67 @@ currently in the pattern space.
 - Print the line from the pattern space. After printing this line,
 the sed pattern space will be empty.
 - Repeat this again until the end of the input file is reached.
-12
+
 
 Fig: Illustration of SED execution flow
-3. Print Pattern Space (p command)
+
+
+## 3. Print Pattern Space (p command)
 Using the sed p command, you can print the current pattern space.
+
 You may wonder why you would need the p command, since by
 default sed prints the pattern buffer after executing its commands.
+
 There are reasons, as you will see; the command allows you to
 specifically control what is printed to stdout. Usually when p is used
 you will use the -n option to suppress the the default printing that
 happens as part of the standard sed flow. Otherwise, when execute p
 (print) as one of the commands, the line will be printed twice.
+
 The following example prints every line of employee.txt twice:
+
+```
 $ sed 'p' employee.txt
 101,John Doe,CEO
 101,John Doe,CEO
 102,Jason Smith,IT Manager
 102,Jason Smith,IT Manager
 103,Raj Reddy,Sysadmin
-13
-
 103,Raj Reddy,Sysadmin
 104,Anand Ram,Developer
 104,Anand Ram,Developer
 105,Jane Miller,Sales Manager
 105,Jane Miller,Sales Manager
-Print each line once (functionally the same as 'cat
-employee.txt'):
+```
+
+Print each line once (functionally the same as 'cat employee.txt'):
+
+```
 $ sed -n 'p' employee.txt
 101,John Doe,CEO
 102,Jason Smith,IT Manager
 103,Raj Reddy,Sysadmin
 104,Anand Ram,Developer
 105,Jane Miller,Sales Manager
-Specifying an Address Range
+```
+
+### Specifying an Address Range
 If you don't specify an address range before the sed command, by
 default it matches all the lines. The following are some examples of
 specifying an address range before the sed command.
+
 Print only the 2 nd line:
+
 $ sed -n '2 p' employee.txt
 102,Jason Smith,IT Manager
+
 Print from line 1 through line 4:
+
 $ sed -n '1,4 p' employee.txt
 101,John Doe,CEO
 102,Jason Smith,IT Manager
 103,Raj Reddy,Sysadmin
 104,Anand Ram,Developer
-14
 
 Print from line 2 through the last line ($ represents the last
 line):
