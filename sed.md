@@ -16,9 +16,9 @@ $ vi employee.txt
 The above employee database contains the following fields for every
 record:
 
-• Employee Id
-• Employee Name
-• Title
+- Employee Id
+- Employee Name
+- Title
 
 Sed stands for Stream Editor. It is very powerful tool to manipulate,
 filter, and transform text. Sed can take input from a file, or from a
@@ -108,16 +108,16 @@ Sed scripting follows the easily remembered sequence Read,
 Execute, Print, Repeat. Use the simple REPR acronym to remember
 sed execution flow.
 We look at the steps in this sequence. Sed will:
-• Read a line into the pattern space (an internal temporary sed
+- Read a line into the pattern space (an internal temporary sed
 buffer, where it places the line it reads from the input file).
-• Execute the sed command on the line in the sed pattern
+- Execute the sed command on the line in the sed pattern
 space. If there are more than one sed commands available,
 either via a sed script, -e options, or { }, it executes all the
 sed commands one by one in sequence on the line that is
 currently in the pattern space.
-• Print the line from the pattern space. After printing this line,
+- Print the line from the pattern space. After printing this line,
 the sed pattern space will be empty.
-• Repeat this again until the end of the input file is reached.
+- Repeat this again until the end of the input file is reached.
 12
 
 Fig: Illustration of SED execution flow
@@ -186,10 +186,10 @@ The tilde (~) may also be used in an address range. Its special
 meaning is to skip lines between commands. For example, address
 range n~m indicates that sed should start at the nth line and pick up
 every mth line from there.
-• 1~2 matches 1,3,5,7, etc.
-• 2~2 matches 2,4,6,8, etc.
-• 1~3 matches 1,4,7,10, etc.
-• 2~3 matches 2,5,8,11, etc.
+- 1~2 matches 1,3,5,7, etc.
+- 2~2 matches 2,4,6,8, etc.
+- 1~3 matches 1,4,7,10, etc.
+- 2~3 matches 2,5,8,11, etc.
 Print only odd numbered lines:
 $ sed -n '1~2 p' employee.txt
 101,John Doe,CEO
@@ -409,14 +409,14 @@ such power and so many options that we give it a whole chapter.
 sed '[address-range|pattern-range] s/original-
 string/replacement-string/[substitute-flags]' inputfile
 In the above sed substitute command syntax:
-• address-range or pattern-range is optional. If you don't specify
+- address-range or pattern-range is optional. If you don't specify
 one, sed will execute the substitute command on all lines.
-• s – tells Sed to execute the substitute command
-• original-string – this is the string to be searched for in the
+- s – tells Sed to execute the substitute command
+- original-string – this is the string to be searched for in the
 input file. The original-string can also be a regular expression.
-• replacement-string – Sed will replace original-string with this
+- replacement-string – Sed will replace original-string with this
 string.
-• substitute-flags are optional. More on this in the next section.
+- substitute-flags are optional. More on this in the next section.
 Remember that the original file is not changed; the substitution takes
 place in the pattern space buffer which is then printed to stdout.
 The following are couple of simple sed substitute examples (changes
@@ -708,10 +708,10 @@ $ sed 's/\([^,]*\).*/\1/g' employee.txt
 104
 105
 In the above example:
-• Regular expression \([^,]*\) matches the string up to the 1st
+- Regular expression \([^,]*\) matches the string up to the 1st
 comma.
-• \1 in the replacement-string replaces the first matched group.
-• g is the global substitute flag.
+- \1 in the replacement-string replaces the first matched group.
+- g is the global substitute flag.
 This sed example displays only the first field from the
 /etc/passwd file, i.e. it displays only the username:
 sed 's/\([^:]*\).*/\1/' /etc/passwd
@@ -765,17 +765,17 @@ sed 's/\([^,]*\),\([^,]*\),\([^,]*\).*/\1,\3/g' employee.txt
 In the above example, you can see three groups mentioned in the
 original-string (reg-ex). These three groups are separated by
 commas.
-• ([^,]*\) is group 1 that matches the employee id
-• , is the field separator after group 1
-• ([^,]*\) is group 2 that matches the employee name
-• , is the field separator after group 2
-• ([^,]*\) is group 3 that matches the employee title
-• , is the field separator after group 3 The replacement-string
+- ([^,]*\) is group 1 that matches the employee id
+- , is the field separator after group 1
+- ([^,]*\) is group 2 that matches the employee name
+- , is the field separator after group 2
+- ([^,]*\) is group 3 that matches the employee title
+- , is the field separator after group 3 The replacement-string
 section of the above example indicates how these groups
 should be used.
-• \1 is to print group 1 (employee id)
-• , is to print a comma after printing group 1
-• \3 is to print group 1 (title)
+- \1 is to print group 1 (employee id)
+- , is to print a comma after printing group 1
+- \3 is to print group 1 (title)
 Note: Sed can hold a maximum of 9 groups referenced using \1
 through \9
 Swap field 1 (employee id) with field 2 (employee name); print
@@ -871,10 +871,10 @@ below.
 sed 's/\([^,]*\),\([^,]*\),\(.*\).*/\U\2\E,\1,\L\3/g' employee.txt
 In the above example, in the replacement-string, we have the
 following:
-• \U\2\E - This indicates that this field, which is the 2nd group
+- \U\2\E - This indicates that this field, which is the 2nd group
 (employee name), should be converted to upper case. \U start
 the upper case conversion, and \E stops it.
-• \L\3 - This indicates that this field, which is 3rd group (title),
+- \L\3 - This indicates that this field, which is 3rd group (title),
 should be converted to lower case. \L starts the lower case
 conversion for rest of the characters.
 38
@@ -901,12 +901,12 @@ $ sed -n '/r$/ p' employee.txt
 Single Character (.)
 The special meta-character “.” (dot) matches any character except
 the end of the line character.
-• . matches single character
-• .. matches two characters
+- . matches single character
+- .. matches two characters
 39
 
-• ... matches three characters
-• etc.
+- ... matches three characters
+- etc.
 In the following example, the pattern "J followed by three characters
 and a space" will be replaced with "Jason followed by a space".
 So, "J... " matches both "John " and "Jane " from employee.txt, and
@@ -1379,9 +1379,9 @@ $ sed '/Raj/c\
 31. Combine a, i, and c Commands
 You can also combine the a, i, and c commands. the following sed
 example does all these three things:
-• a - Append 'Jack Johnson' after 'Jason'
-• i - Insert 'Mark Smith' before 'Jason'
-• c - Change 'Jason' to 'Joe Mason'
+- a - Append 'Jack Johnson' after 'Jason'
+- i - Insert 'Mark Smith' before 'Jason'
+- c - Change 'Jason' to 'Joe Mason'
 $ sed '/Jason/ {
 a\
 204,Jack Johnson,Engineer
@@ -1699,11 +1699,11 @@ the following hacks.
 # Chapter 6. Sed Hold and Pattern
 Space Commands
 Sed has two types of internal storage space:
-• Pattern space: You already know about pattern space, which
+- Pattern space: You already know about pattern space, which
 is used as part of the typical sed execution flow. Pattern space
 is the internal sed buffer where sed places, and modifies, the
 line it reads from the input file.
-• Hold space: This is an additional buffer available where sed
+- Hold space: This is an additional buffer available where sed
 can hold temporary data. Sed allows you to move data back
 and forth between pattern space and hold space, but you
 cannot execute the typical sed commands on the hold space.
@@ -1744,12 +1744,12 @@ $ sed -n -e 'x;n' -e '/Manager/{x;p}' empnametitle.txt
 Jason Smith
 Jane Miller
 In the above example:
-• {x;n} - x swaps pattern space to the hold space; n reads the
+- {x;n} - x swaps pattern space to the hold space; n reads the
 next line into the pattern space. So, this command saves the
 current line in hold space and reads the next line into pattern
 space. For the example file, it is saving employee name to
 hold space and fetching employee title into pattern space.
-• /Manager/{x;p} - If the content of the pattern space contains
+- /Manager/{x;p} - If the content of the pattern space contains
 the keyword 'Manager', this command swaps pattern space
 with hold space and then prints pattern space. This means
 that if the employee title contains 'Manager' the employee
@@ -1784,7 +1784,7 @@ The above command should be executed in a single line as shown
 below.
 sed -n -e '/Manager/!h' -e '/Manager/{x;p}' empnametitle.txt
 In the above example:
-• /Manager/!h - If the content of the pattern space doesn't
+- /Manager/!h - If the content of the pattern space doesn't
 contain Manager (the ! after the pattern means "not equal to"
 the pattern), copy the content of the pattern space to the hold
 space. (In this case, this might be employee name (or) a title
@@ -1793,7 +1793,7 @@ that is not "Manager".) Note that, unlike the previous example,
 
 this one does not use the 'n' command to get the next line;
 instead, the next line is fetched via normal execution flow.
-• /Manager/{x;p} - If the content of the pattern space contains
+- /Manager/{x;p} - If the content of the pattern space contains
 the keyword 'Manager', this command swaps pattern space
 with hold space and prints. This is identical to the command
 we used for printing in the example for the x command.
@@ -1829,13 +1829,13 @@ The above command should be executed in a single line as shown
 below.
 sed -n -e '/Manager/!h' -e '/Manager/{H;x;p}' empnametitle.txt
 In the above example:
-• /Manager/!h - If the content of the pattern space doesn't
+- /Manager/!h - If the content of the pattern space doesn't
 contain Manager (the ! after the pattern means "not equal
 to" the pattern), copy the content of the pattern space to the
 hold space. (In this case, this might employee name (or) a
 title that is not "Manager".) This is the same command we
 used in the h command example.
-• /Manager/{H;x;p} - If the content of the pattern space
+- /Manager/{H;x;p} - If the content of the pattern space
 contains the keyword 'Manager', the H command appends
 pattern space (which is Manager) to hold space with a new
 line. So, the hold space at this stage will have "Employee
@@ -1902,10 +1902,10 @@ The above command should be executed in a single line as shown
 below.
 sed -n -e '/Manager/!h' -e '/Manager/{g;p}' empnametitle.txt
 In the above example:
-• /Manager/!h – we've been using this one for the last few
+- /Manager/!h – we've been using this one for the last few
 examples. If the content of the pattern space doesn't contain
 Manager, copy the content of pattern space to hold space.
-• /Manager/{g;p} – g gets the line from hold space and puts
+- /Manager/{g;p} – g gets the line from hold space and puts
 it in pattern space, then prints it.
 You can also save this in a sed script file and execute it as shown
 below.
@@ -1943,21 +1943,21 @@ sed -n -e '/Manager/!h' -e '/Manager/{x;G;s/\n/:/;p}' empnametitle.txt
 In the above example:
 75
 
-• /Manager/!h – As in previous examples, if the content of
+- /Manager/!h – As in previous examples, if the content of
 pattern space doesn't contain Manager, copy pattern space
 to hold space.
-• /Manager/{x;G;s/\n/:/;p} - If the content of the pattern
+- /Manager/{x;G;s/\n/:/;p} - If the content of the pattern
 space contains Manager, do the following:
-• x - Swap the content of pattern space with hold space.
+- x - Swap the content of pattern space with hold space.
 So, the employee name stored in hold space will now
 be in pattern space, while the title will be in hold space.
-• G - Appends the content of hold space (title) to pattern
+- G - Appends the content of hold space (title) to pattern
 space (employee name). So, the pattern space at this
 stage will have "Employee Name\nTitle"
-• s/\n/:/ This replaces the \n that separates the
+- s/\n/:/ This replaces the \n that separates the
 "Employee Name\nTitle" with a colon :
-• p prints the result (i.e. the content of pattern space).
-• Note that if we left out the x command, i.e. if we
+- p prints the result (i.e. the content of pattern space).
+- Note that if we left out the x command, i.e. if we
 used /Manager/{G;s/\n/:/;p}, we would print the
 title:name instead of name:title for each manager.
 You can also save this in a sed script file and execute it as shown
@@ -2006,11 +2006,11 @@ Raj Reddy:Sysadmin
 Anand Ram:Developer
 Jane Miller:Sales Manager
 In the above example:
-• N appends new line to current pattern space (which has
+- N appends new line to current pattern space (which has
 employee name) and appends the next line from input-file to
 the current pattern space. So, the pattern space will contain
 (employee name\ntitle).
-• s/\n/:/ This replaces the \n that separates the "Employee
+- s/\n/:/ This replaces the \n that separates the "Employee
 Name\nTitle" with a colon :
 Fig: Illustration of the above example
 78
@@ -2056,9 +2056,9 @@ The upper case D command does not read the next line to the
 pattern space after deleting it, nor does it completely clear the
 pattern buffer (unless it only has one line). Instead, it does the
 following:
-• Deletes part of the pattern space until it encounters new line
+- Deletes part of the pattern space until it encounters new line
 (\n).
-• Aborts the rest of the sed commands and starts command
+- Aborts the rest of the sed commands and starts command
 execution from the beginning on the remaining content in the
 pattern buffer.
 Consider the following file, which has comments enclosed between @
@@ -2111,21 +2111,21 @@ $ ./D-upper.sed empnametitle-with-comment.txt
 81
 
 In the above example:
-• /@/ { - This is the outer loop. Sed looks for any line that
+- /@/ { - This is the outer loop. Sed looks for any line that
 contains @ symbol. If it finds one, it executes the rest of the
 logic. If not, it reads the next line. For example, let us take line
 4, which is "@Information Technology" (the comment spans to
 multiple column and goes to line 5 also). There is an @ symbol
 on line 4, so the rest of the commands are executed.
-• N - Get the next line from the input file and append it to the
+- N - Get the next line from the input file and append it to the
 pattern space. For example, this will read line 5 "Officer@",
 and append it to pattern space. So, pattern space will contain
 "@Information Technology\nOfficer@".
-• /@.*@/ - Searches whether pattern space has the pattern
+- /@.*@/ - Searches whether pattern space has the pattern
 "@.*@", which means anything enclosed between @ and @.
 The expression is true for the current pattern space, so, it
 goes to the next step.
-• s/@.*@//;P;D - This substitutes the whole text "@Information
+- s/@.*@//;P;D - This substitutes the whole text "@Information
 Technology\nOfficer@" with nothing (basically it deletes the
 text). P prints the 1st portion of the line. D deletes the rest of
 the content of pattern space. And the logic continues from the
@@ -2133,11 +2133,11 @@ top again.
 49. Loop and Branch (b command and :label)
 You can change the execution flow of the sed commands by using
 label and branch (b command).
-• :label defines the label.
-• b label branches the execution flow to the label. Sed jumps to
+- :label defines the label.
+- b label branches the execution flow to the label. Sed jumps to
 the line marked by the label and continues executing the rest
 of the commands from there.
-• Note: You can also execute just the b command (without any
+- Note: You can also execute just the b command (without any
 label name). In this case, sed jumps to the end of the sed
 script file.
 The following example combines the employee name and title (from
@@ -2157,11 +2157,11 @@ p
 In the above example, you already know what "h;n;H;x" and "s/\n/:/"
 does, as we discussed those in our previous examples. Following are
 the branching related lines in this file.
-• /Manager/!b end - If the lines doesn't contain the keyword
+- /Manager/!b end - If the lines doesn't contain the keyword
 "Manager", it goes to the label called "end". Please note that
 the name of the label can be anything you want. So, this
 executes "s/^/*/" (add a * in the front), only for the Managers.
-• :end - This is the label.
+- :end - This is the label.
 Execute the above label.sed script:
 $ chmod u+x label.sed
 $ ./label.sed empnametitle.txt
@@ -2204,16 +2204,16 @@ Anand Ram:Developer
 84
 
 In the above example:
-• The following code snippet does the looping.
+- The following code snippet does the looping.
 :repeat
 /Manager/s/^/*/
 /\*\*\*/!t repeat
-• /Manager/s/^/*/ - If it is Manager, it adds a single * in front of
+- /Manager/s/^/*/ - If it is Manager, it adds a single * in front of
 the line.
-• /\*\*\*/!t repeat - If the line doesn't contain three *s
+- /\*\*\*/!t repeat - If the line doesn't contain three *s
 (represented by /\*\*\*/!), and if the previous substitute
 command is successful by adding a single star in front of the
 line, sed jumps to the label called repeat (this is represented
 by t repeat)
-• :repeat - This is just the label
+- :repeat - This is just the label
 85
