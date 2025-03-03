@@ -965,7 +965,8 @@ so that the procedure is followed only if there is
 과연 우리 중에 몇 명이나 그렇게까지 처리할 일은 거의 없겠지만, 도구의 처리 범위나 능력을 정확히 이해한다는 것은 매우 중요합니다. 언젠가 반복적이고 끝없는 시간이 필요할 것 같은 복잡한 작업에 직면했을 때, "잠깐!! sed로 이걸 처리할 수 있겠다" 고 생각할 수 있습니다.* 
 
 
-
+<br><br>
+[⬆️](#top)
 
 # The sed Editor Appendix
 
