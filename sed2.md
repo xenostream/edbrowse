@@ -19,6 +19,8 @@
 [In Conclusion](#In-Conclusion)  
 
 
+<br><br>
+
 # Stream Editing
 우리는 아직까지 `sed` 프로그램을 살펴본 적이 없습니다. sed는 화면 기반 편집기가 아니라, 줄 기반 편집기일 뿐만아니라, 한 단계 더 나아가 `비대화형(noninteractive) 줄 기반 편집기` 입니다. 따라서, 편집용 스크립트 파일과 함께 주로 사용합니다. 
 
