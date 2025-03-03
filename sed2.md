@@ -3,20 +3,20 @@
 <br><br>
 **Table of Contents**
 <br>
-[Stream Editing](#Stream-Editing)
-[Running sed](#Running-sed)
-[Differences between ex and sed](#Differences-between-ex-and-sed)
-[Some Shell Scripts Using sed](#Some-Shell-Scripts-Using-sed)
-[Integrating sed into format](#Integrating-sed-into-format)
-[Excluding Lines from Editing](#Excluding-Lines-from-Editing)
-[Branching to Selective Parts of a Script](#Branching-to-Selective-Parts-of-a-Script)
-[Back to format](#Back-to-format)
-[Inserting Lines of Text](#Inserting-Lines-of-Text)
-[A sed Script For Extracting Information From a File](#A sed Script For Extracting Information From a File)
-[The Quit Command](#The-Quit-Command)
-[Matching Patterns across Two Lines](#Matching-Patterns-across-Two-Lines)
-[The Hold Space and the Pattern Space](#The-Hold-Space-and-the-Pattern-Space)
-[In Conclusion](#In-Conclusion)
+[Stream Editing](#Stream-Editing)  
+[Running sed](#Running-sed)  
+[Differences between ex and sed](#Differences-between-ex-and-sed)  
+[Some Shell Scripts Using sed](#Some-Shell-Scripts-Using-sed)  
+[Integrating sed into format](#Integrating-sed-into-format)  
+[Excluding Lines from Editing](#Excluding-Lines-from-Editing)  
+[Branching to Selective Parts of a Script](#Branching-to-Selective-Parts-of-a-Script)  
+[Back to format](#Back-to-format)  
+[Inserting Lines of Text](#Inserting-Lines-of-Text)  
+[A sed Script For Extracting Information From a File](#A sed Script For Extracting Information From a File)  
+[The Quit Command](#The-Quit-Command)  
+[Matching Patterns across Two Lines](#Matching-Patterns-across-Two-Lines)  
+[The Hold Space and the Pattern Space](#The-Hold-Space-and-the-Pattern-Space)  
+[In Conclusion](#In-Conclusion)  
 
 
 # Stream Editing
