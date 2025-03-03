@@ -12,7 +12,7 @@
 [Branching to Selective Parts of a Script](#Branching-to-Selective-Parts-of-a-Script)  
 [Back to format](#Back-to-format)  
 [Inserting Lines of Text](#Inserting-Lines-of-Text)  
-[A sed Script For Extracting Information From a File](#A sed Script For Extracting Information From a File)  
+[A sed Script For Extracting Information From a File](#A-sed-Script-For-Extracting-Information-From-a-File)  
 [The Quit Command](#The-Quit-Command)  
 [Matching Patterns across Two Lines](#Matching-Patterns-across-Two-Lines)  
 [The Hold Space and the Pattern Space](#The-Hold-Space-and-the-Pattern-Space)  
