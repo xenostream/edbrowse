@@ -17,6 +17,7 @@
 [Matching Patterns across Two Lines](#Matching-Patterns-across-Two-Lines)  
 [The Hold Space and the Pattern Space](#The-Hold-Space-and-the-Pattern-Space)  
 [In Conclusion](#In-Conclusion)  
+[The sed Editor Appendix](#The-sed-Editor-Appendix)
 
 ---
 <br><br>
@@ -991,7 +992,7 @@ sed [options] file(s)
 sed 편집기는 각 입력 줄을 `패턴 공간` (*pattern space*) 에 복사합니다. sed 명령은 `주소` 와 `명령` 으로 구성됩니다. 명령의 주소가 패턴 공간의 줄과 일치하면 해당 줄에 명령이 적용됩니다. 명령에 주소가 없으면 모든 줄에 적용됩니다. 명령은 공간의 내용에 영향을 미치므로, 후속된 명령 주소는 원래 입력 줄이 아닌 패턴 공간의 줄과 일치하려고 시도한다는 점에 유의해야 합니다.
 
 
-# Pattern Addressing
+## Pattern Addressing
 sed 명령에서 주소는 줄 번호이거나 슬래시 (`/패턴/`) 로 묶은 패턴일 수 있습니다. 두 개의 주소를 지정할 때는 주소 유형을 혼합해 사용할 수 없습니다. 패턴은 이 부록의 시작 부분에 설명한대로 `정규 표현식` (*regular expression*) 을 사용할 수 있습니다. 또한, `\n` 은 패턴 공간의 모든 개행 (`N` 명령의 결과) 을 일치시키는 데 사용할 수 있지만, 패턴 공간 끝에 있는 개행은 일치시키지 않습니다. 패턴을 지정하지 않으면 명령은 모든 줄에 적용됩니다. 주소를 두 개 지정하면 첫 번째와 두 번째 주소 사이의 모든 줄에 명령이 포괄적으로 적용됩니다. 일부 명령은 하나의 주소만 허용할 수 있습니다.
 
 패턴 뒤에 오는 `!` 연산자는 패턴을 포함하지 않는 모든 줄에 명령을 적용합니다.
@@ -1006,7 +1007,7 @@ command2
 ```
 
 
-# Alphabetical List of Commands
+## Alphabetical List of Commands
 
 <table>
 <tr>
@@ -1080,3 +1081,6 @@ command2
 <td> x </td><td> [addressl][ , address2]x <br>
 	  패턴 공간의 콘텐츠를 홀드 공간의 콘텐츠와 교환합니다. </td>
 </table>
+
+
+[⬆️](#top)
