@@ -18,7 +18,7 @@ sed 프로그램은 ex에서 사용하는 구문과 매우 유사하므로 배�
 
 <br><br>
 
-## Running sed 
+# Running sed 
 먼저, `사용 방법` 에 대한 간단한 설명입니다. 
 
 `sed` 는 다음과 같이 두 가지 실행 형식이 있습니다:
@@ -150,7 +150,7 @@ sed는 비대화형(noninteractive) 편집 작업을 지원할 수 있는 특별
 혼동 가능성을 강조하기 위해 제시되었습니다.
 
 
-
+<br><br>
 
 # Some Shell Scripts Using sed
 가장 많이 사용할 가능성이 높은 sed 명령은 `s` (substitute)입니다. 이 명령은 sed의 고급 제어 구조를 모른다 하더라도 곧바로 사용할 수 있기 때문입니다. 
@@ -217,7 +217,7 @@ $ change mispeling misspelling myfile
 따라서, 오류 메시지 문구를 변경했습니다).
 
 
-
+<br><br>
 
 # Integrating sed into format
 sed가 진정한 스트림 편집기 역할을 처리하는 간단한 응용 프로그램을 살펴보겠습니다. 이 예에서는 파일에 다시 쓰지 않고 파이프라인에서 직접 편집을 수행합니다.
@@ -262,7 +262,7 @@ eval "cat $files $sed | tbl $eqn $pic | $roff $options $col | lp"
 하이픈 문자를 "em dash" 문자로 자동 변환해 출력합니다. 마지막으로 `eval` 명령어를 사용해 최종 명령어를 생성하고, 파일을 형식화해 출력합니다.
 
 
-
+<br><br>
 
 # Excluding Lines from Editing
 위의 형식화 스크립트를 보다 완전하도록 만들기 위해 추가적인 사항을 한 번 고려해 보겠습니다. 예를 들어, 누군가 하이픈 문자를 사용해 수평선을 그리는 경우를 
@@ -323,7 +323,7 @@ s/\\(em"/\\(em‘‘/g
 또한, 여기서 사용한 `|——|` 는 탭 문자를 의미합니다.
 
 
-
+<br><br>
 
 # Branching to Selective Parts of a Script
 이와 같은 기술 관련 문서에서 각 문자가 실제 어떻게 나타나는지를 명확하게 보여줄 수 있는 `고정폭 글꼴` 을 사용하는 것이 일반적입니다. 고정폭 글꼴에서 
@@ -431,7 +431,7 @@ s/\\(em"/\\(em‘‘/g
 
 
 
-
+<br><br>
 
 # Back to format
 지금까지 설명한 sed의 편집 기능은 매우 유용하므로, 이를 포맷 처리 작업과 제대로 통합하는 것이 중요합니다. 이제부터 단일 편집이 아니라, 대량의 편집 작업을 
@@ -447,7 +447,7 @@ sed="| sed -f /usr/local/cleanup.sed"
 나중에 이 파일에 추가적인 포맷 명령을 추가할 것입니다.
 
 
-
+<br><br>
 
 
 # Inserting Lines of Text
@@ -481,7 +481,7 @@ followed by a nonprinting character-a newline.
 
 
 
-
+<br><br>
 
 # A sed Script For Extracting Information From a File
 `sed`의 `-n` 옵션은 기본 출력 작업을 억제한 후, `p` 명령을 사용해 명시적으로 필요한 부분만 출력합니다. `p` 명령은 두 가지 형식이 있습니다:
@@ -629,7 +629,7 @@ CHAPTER  13 Let the Computer Do the Dirty Work
 이 스크립트를 `ms` 또는 `mm` 섹션 제목 매크로에 맞도록 조정한다거나, C 수준의 제목을 포함하도록 쉽게 수정할 수 있습니다.
 
 
-
+<br><br>
 
 
 # The Quit Command
@@ -693,7 +693,7 @@ do
 done
 ```
 
-
+<br><br>
 
 
 
@@ -750,7 +750,7 @@ s/.BX "\s-2M\s0"\c\nain Menu/Main Menu/
 어느 지점에도 있을 수 있는 멀티라인 패턴을 조작할 수 있는 명령도 제공합니다. 이제 이런 멀티라인 명령에 대해 살펴보겠습니다.
 
 
-
+<br><br>
 
 
 # The Hold Space and the Pattern Space
