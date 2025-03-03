@@ -17,7 +17,7 @@
 [Matching Patterns across Two Lines](#Matching-Patterns-across-Two-Lines)  
 [The Hold Space and the Pattern Space](#The-Hold-Space-and-the-Pattern-Space)  
 [In Conclusion](#In-Conclusion)  
-[The sed Editor Appendix](#The-sed-Editor-Appendix)
+[Appendix](#Appendix)
 
 ---
 <br><br>
@@ -969,7 +969,7 @@ so that the procedure is followed only if there is
 <br><br>
 [⬆️](#top)
 
-# The sed Editor Appendix
+# Appendix
 
 **Syntax:**
 
