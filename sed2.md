@@ -1007,8 +1007,8 @@ command2
 
 
 # Alphabetical List of Commands
-| command | description |
-| :---:   | :---        |
+| command | description |  
+| :---:   | :---        |   
 | : | label 
       `b` 또는 `t` 명령으로 분기할 레이블을 지정합니다. 레이블은 최대 8 문자까지 입력할 수 있습니다. |	  
 | = | [/pattern/]=
