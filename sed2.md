@@ -18,7 +18,7 @@
 [The Hold Space and the Pattern Space](#The-Hold-Space-and-the-Pattern-Space)  
 [In Conclusion](#In-Conclusion)  
 
-
+---
 <br><br>
 
 # Stream Editing
