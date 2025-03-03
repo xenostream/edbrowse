@@ -61,7 +61,7 @@ $ sed -e s/thier/their own/g myfile
 또한, `s` 명령에 대한 종료 `/` 문자가 없기 때문에 sed는 오류 메세지를 표시하고 종료합니다.
 
 
-
+<br><br>
 
 # Differences between ex and sed
 sed와 ed, ex 같은 대화형 줄 기반 편집기와의 중요한 차이점 첫 번째는 처리할 줄을 주소로 지정하는 방식입니다. ed와 ex에서는 기본적으로 특정 줄만을 변경하며, 
