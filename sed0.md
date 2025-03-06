@@ -1,20 +1,20 @@
 # SED — A Non-interactive Text Editor
 
 <br><br>
-Lee E. McMahon
+*Lee E. McMahon*
 <br><br>
 
 **ABSTRACT**
 <br>
 
-Sed is a non-interactive context editor that runs on the UNIX † operating system.
-Sed is designed to be especially useful in three cases:
+Sed는 UNIX 운영 체제에서 실행되는 비대화형 (*non-interactive*) 텍스트 편집기입니다.
+Sed는 다음과 같은 세 가지 경우에 유용하도록 설계되었습니다:
 
-1) To edit files too large for comfortable interactive editing;
-2) To edit any size file when the sequence of editing commands is too complicated to be comfortably typed in interactive mode.
-3) To perform multiple ‘global’ editing functions efficiently in one pass through the input.
+1) 너무 커서 대화형 편집이 불편한 파일을 편집하는 경우;
+1) 편집 명령의 순서가 너무 복잡하여 대화형 모드에서 편안하게 입력할 수 없는 경우 모든 크기의 파일을 편집합니다.
+1) 한 번의 입력으로 여러 '전역' 편집 기능을 효율적으로 수행합니다.
 
-This memorandum constitutes a manual for users of sed.
+이 문서는 SED 사용자를 위한 매뉴얼입니다.
 
 
 # Introduction
