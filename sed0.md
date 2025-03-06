@@ -53,7 +53,9 @@ mand line; see Section 1.1 below.
 
 The general format of an editing command is:
 
+```
 [address1,address2][function][arguments]
+```
 
 One or both addresses may be omitted; the format of addresses is given in Section 2. Any number of
 blanks or tabs may separate the addresses from the function. The function must be present; the available
@@ -94,24 +96,29 @@ input text, but more than one line can be read into the pattern space by using t
 Examples are scattered throughout the text. Except where otherwise noted, the examples all assume the
 following input text:
 
+```
 In Xanadu did Kubla Khan
 A stately pleasure dome decree:
 Where Alph, the sacred river, ran
 Through caverns measureless to man
 Down to a sunless sea.
+```
 
 (In no case is the output of the sed commands to be considered an improvement on Coleridge.)
 
 Example:
 The command
 
+```
 2q
+```
 
 will quit after copying the first two lines of the input. The output will be:
 
+```
 In Xanadu did Kubla Khan
 A stately pleasure dome decree:
-
+```
 
 
 2. ADDRESSES: Selecting lines for editing
@@ -185,6 +192,7 @@ Two addresses are separated by a comma.
 
 Examples:
 
+```
 /an/  matches lines 1, 3, 4 in our sample text
 /an.*an/  matches line 1
 /ˆan/  matches no lines
@@ -192,7 +200,7 @@ Examples:
 /\./  matches line 5
 /r*an/  matches lines 1,3, 4 (number = zero!)
 /\(an\).*\1/  matches line 1
-
+```
 
 
 
@@ -255,26 +263,31 @@ backslash; the backslash will not appear in the output.
 Example:
 The list of editing commands:
 
+```
 n
 a\
 XXXX
 d
+```
 
 applied to our standard input, produces:
 
+```
 In Xanadu did Kubhla Khan
 XXXX
 Where Alph, the sacred river, ran
 XXXX
 Down to a sunless sea.
+```
 
 In this particular case, the same effect would be produced by either of the two following command lists:
 
+```
 n n
 i\  c\
 XXXX  XXXX
 d
-
+```
 
 3.2. Substitute Function
 One very important function changes parts of lines selected by a context search within the line.
@@ -331,47 +344,64 @@ and w functions (see below), combined.
 Examples:
 The following command, applied to our standard input,
 
+```
 s/to/by/w changes
+```
 
 produces, on the standard output:
 
+```
 In Xanadu did Kubhla Khan
 A stately pleasure dome decree:
 Where Alph, the sacred river, ran
 Through caverns measureless by man
 Down by a sunless sea.
+```
 
 and, on the file ‘changes’:
 
+```
 Through caverns measureless by man
 Down by a sunless sea.
+```
 
 If the nocopy option is in effect, the command:
 
+```
 s/[.,;?:]/*P&*/gp
+```
 
 produces:
 
+```
 A stately pleasure dome decree*P:*
 Where Alph*P,* the sacred river*P,* ran
 Down to a sunless sea*P.*
+```
 
 Finally, to illustrate the effect of the g flag, the command:
 
+```
 /X/s/an/AN/p
+```
 
 produces (assuming nocopy mode):
 
+```
 In XANadu did Kubhla Khan
+```
 
 and the command:
 
+```
 /X/s/an/AN/gp
+```
 
 produces:
 
+```
 In XANadu did Kubhla KhAN
-
+```
 
 3.3. Input-output Functions
 (2)p -- print
@@ -402,16 +432,21 @@ functions are present. (Only one read file is open at one time.)
 Examples
 Assume that the file ‘note1’ has the following contents:
 
+```
 Note: Kubla Khan (more properly Kublai Khan; 1216-1294) was the grandson and most
 eminent successor of Genghiz (Chingiz) Khan, and founder of the Mongol dynasty in
 China.
+```
 
 Then the following command:
 
+```
 /Kubla/r note1
+```
 
 produces:
 
+```
 In Xanadu did Kubla Khan
 Note: Kubla Khan (more properly Kublai Khan; 1216-1294) was the grandson and most
 eminent successor of Genghiz (Chingiz) Khan, and founder of the Mongol dynasty in
@@ -420,7 +455,7 @@ A stately pleasure dome decree:
 Where Alph, the sacred river, ran
 Through caverns measureless to man
 Down to a sunless sea.
-
+```
 
 3.4. Multiple Input-line Functions
 Three functions, all spelled with capital letters, deal specially with pattern spaces containing imbedded
@@ -462,20 +497,23 @@ The exchange command interchanges the contents of the pattern space and the hold
 Example
 The commands
 
+```
 1h
 1s/ did.*//
 1x
 G
 s/\n/ :/
+```
 
 applied to our standard example, produce:
 
+```
 In Xanadu did Kubla Khan :In Xanadu
 A stately pleasure dome decree: :In Xanadu
 Where Alph, the sacred river, ran :In Xanadu
 Through caverns measureless to man :In Xanadu
 Down to a sunless sea. :In Xanadu
-
+```
 
 3.6. Flow-of-Control Functions
 These functions do no editing on the input lines, but control the application of functions to the lines
