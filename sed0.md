@@ -47,7 +47,7 @@ from the code for ed, and the description of regular expressions in Section 2 is
 the UNIX Programmer’s Manual[1]. (Both code and description were written by Dennis M. Ritchie.)
 
 
-1. Overall Operation
+# 1. Overall Operation  
 Sed by default copies the standard input to the standard output, perhaps performing one or more editing
 commands on each line before writing it to the output. This behavior may be modified by flags on the com-
 mand line; see Section 1.1 below.
@@ -66,7 +66,7 @@ function is given; again, they are discussed in Section 3 under each individual 
 Tab characters and spaces at the beginning of lines are ignored.
 
 
-1.1. Command-line Flags
+## 1.1. Command-line Flags
 Three flags are recognized on the command line:
 
 -n: tells sed not to copy all lines, but only those specified by p functions or p flags after s functions
@@ -76,7 +76,7 @@ Three flags are recognized on the command line:
 to a line.
 
 
-1.2. Order of Application of Editing Commands
+## 1.2. Order of Application of Editing Commands
 Before any editing is done (in fact, before any input file is even opened), all the editing commands are com-
 piled into a form which will be moderately efficient during the execution phase (when the commands are
 actually applied to lines of the input file). The commands are compiled in the order in which they are
@@ -88,12 +88,12 @@ mands, t and b (see Section 3). Even when the order of application is changed by
 still true that the input line to any command is the output of any previously applied command.
 
 
-1.3. Pattern-space
+## 1.3. Pattern-space
 The range of pattern matches is called the pattern space. Ordinarily, the pattern space is one line of the
 input text, but more than one line can be read into the pattern space by using the N command (Section 3.6.).
 
 
-1.4. Examples
+## 1.4. Examples
 Examples are scattered throughout the text. Except where otherwise noted, the examples all assume the
 following input text:
 
@@ -122,7 +122,8 @@ A stately pleasure dome decree:
 ```
 
 
-2. ADDRESSES: Selecting lines for editing
+
+# 2. ADDRESSES: Selecting lines for editing
 Lines in the input file(s) to which editing commands are to be applied can be selected by addresses.
 Addresses may be either line numbers or context addresses.
 
@@ -130,7 +131,7 @@ The application of a group of commands can be controlled by one address (or addr
 commands with curly braces (‘{ }’)(Sec. 3.6.).
 
 
-2.1. Line-number Addresses
+## 2.1. Line-number Addresses
 A line number is a decimal integer. As each line is read from the input, a line-number counter is incre-
 mented; a line-number address matches (selects) the input line which causes the internal counter to equal
 the address line-number. The counter runs cumulatively through multiple input files; it is not reset when a
@@ -139,7 +140,7 @@ new input file is opened.
 As a special case, the character $ matches the last line of the last input file.
 
 
-2.2. Context Addresses
+## 2.2. Context Addresses
 A context address is a pattern (‘regular expression’) enclosed in slashes (‘/’). The regular expressions rec-
 ognized by sed are constructed as follows:
 
@@ -178,7 +179,7 @@ For a context address to ‘match’ the input requires that the whole pattern w
 portion of the pattern space.
 
 
-2.3. Number of Addresses
+## 2.3. Number of Addresses
 The commands in the next section can have 0, 1, or 2 addresses. Under each command the maximum num-
 ber of allowed addresses is given. For a command to have more addresses than the maximum allowed is
 considered an error.
@@ -205,14 +206,14 @@ Examples:
 
 
 
-3. FUNCTIONS
+# 3. FUNCTIONS
 All functions are named by a single character. In the following summary, the maximum number of allow-
 able addresses is given enclosed in parentheses, then the single character function name, possible argu-
 ments enclosed in angles (< >), an expanded English translation of the single-character name, and finally a
 description of what each function does. The angles around the arguments are not part of the argument, and
 should not be typed in actual editing commands.
 
-3.1. Whole-line Oriented Functions
+## 3.1. Whole-line Oriented Functions
 (2)d -- delete lines
 The d function deletes from the file (does not write to the output) all those lines matched
 by its address(es).
@@ -290,7 +291,7 @@ XXXX  XXXX
 d
 ```
 
-3.2. Substitute Function
+## 3.2. Substitute Function
 One very important function changes parts of lines selected by a context search within the line.
 
 (2)s<pattern><replacement><flags> -- substitute
@@ -404,7 +405,7 @@ produces:
 In XANadu did Kubhla KhAN
 ```
 
-3.3. Input-output Functions
+## 3.3. Input-output Functions
 (2)p -- print
 The print function writes the addressed lines to the standard output file. They are written
 at the time the p function is encountered, regardless of what succeeding editing com-
@@ -458,7 +459,7 @@ Through caverns measureless to man
 Down to a sunless sea.
 ```
 
-3.4. Multiple Input-line Functions
+## 3.4. Multiple Input-line Functions
 Three functions, all spelled with capital letters, deal specially with pattern spaces containing imbedded
 newlines; they are intended principally to provide pattern matches across lines in the input.
 
@@ -478,7 +479,7 @@ The P and D functions are equivalent to their lower-case counterparts if there a
 the pattern space.
 
 
-3.5. Hold and Get Functions
+## 3.5. Hold and Get Functions
 Four functions save and retrieve part of the input for possible later use.
 (2)h -- hold pattern space
 The h functions copies the contents of the pattern space into a hold area (destroying the
@@ -516,7 +517,7 @@ Through caverns measureless to man :In Xanadu
 Down to a sunless sea. :In Xanadu
 ```
 
-3.6. Flow-of-Control Functions
+## 3.6. Flow-of-Control Functions
 These functions do no editing on the input lines, but control the application of functions to the lines
 selected by the address part.
 
@@ -553,7 +554,7 @@ that a successful substitution has been executed is reset by:
 2) executing a t function.
 
 
-3.7. Miscellaneous Functions
+## 3.7. Miscellaneous Functions
 (1)= -- equals
 The = function writes to the standard output the line number of the line matched by its
 address.
@@ -561,5 +562,5 @@ address.
 The q function causes the current line to be written to the output (if it should be), any
 appended or read text to be written, and execution to be terminated.
 
-Reference
+# Reference
 [1]  Ken Thompson and Dennis M. Ritchie, The UNIX Programmer’s Manual. Bell Laboratories, 1978.
