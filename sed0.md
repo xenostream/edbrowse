@@ -19,24 +19,28 @@ Sed는 다음과 같은 세 가지 경우에 유용하도록 설계되었습니�
 
 
 # Introduction
-Sed is a non-interactive context editor designed to be especially useful in three cases:
+Sed는 다음과 같은 세 가지 경우에 유용하도록 설계된 `비대화형 텍스트 편집기` 입니다:
 
-1) To edit files too large for comfortable interactive editing;
-2) To edit any size file when the sequence of editing commands is too complicated to be comfortably typed in interactive mode;
-3) To perform multiple ‘global’ editing functions efficiently in one pass through the input.
+1) 너무 커서 대화형 편집이 불편한 파일을 편집하는 경우;
+1) 편집 명령의 순서가 너무 복잡하여 대화형 모드에서 편안하게 입력할 수 없는 경우 모든 크기의 파일을 편집합니다.
+1) 한 번의 입력으로 여러 '전역' 편집 기능을 효율적으로 수행합니다.
 
 Since only a few lines of the input reside in core at one time, and no temporary files are used, the effective
 size of file that can be edited is limited only by the requirement that the input and output fit simultaneously
 into available secondary storage.
+한 번에 몇 줄의 입력만 코어에 상주하고 임시 파일을 사용하지 않으므로 편집할 수 있는 파일의유효 크기는 입력과 출력이 사용 가능한 보조 저장소에동시에 들어맞는다는 조건에 의해서만 제한됩니다.
 
 Complicated editing scripts can be created separately and given to sed as a command file. For complex
 edits, this saves considerable typing, and its attendant errors. Sed running from a command file is much
 more efficient than any interactive editor known to the author, even if that editor can be driven by a pre-
 written script.
+복잡한 편집 스크립트는 별도로 생성하여 sed에 명령 파일로 제공할 수 있습니다. 복잡한 편집의 경우 이렇게 하면 상당한 타이핑과 그에 따른 오류를 줄일 수 있습니다. 
+미리 작성된 스크립트로 편집기를 구동할 수 있더라도명령 파일에서 실행되는 Sed는 작성자가 알고 있는 어떤 대화형 편집기보다훨씬 효율적입니다.
 
 The principal loss of functions compared to an interactive editor are lack of relative addressing (because of
 the line-at-a-time operation), and lack of immediate verification that a command has done what was
 intended.
+대화형 편집기와 비교했을 때 가장 큰 기능 손실은 상대 주소 지정이 불가능하다는 점(한 줄씩 작업하기때문에)과 명령이 의도한대로 수행되었는지 즉시 확인할 수 없다는 점입니다.
 
 Sed is a lineal descendant of the UNIX editor, ed. Because of the differences between interactive and non-
 interactive operation, considerable changes have been made between ed and sed; ev en confirmed users of
@@ -45,12 +49,16 @@ and 3 of this document. The most striking family resemblance between the two edi
 patterns (‘regular expressions’) they recognize; the code for matching patterns is copied almost verbatim
 from the code for ed, and the description of regular expressions in Section 2 is copied almost verbatim from
 the UNIX Programmer’s Manual[1]. (Both code and description were written by Dennis M. Ritchie.)
-
+Sed는 UNIX 편집기인 ed의 직계 후손입니다. 대화형과 비대화형 작업의차이로 인해 ed와 sed 사이에는 상당한 변화가 있었으며, 이 문서의 섹션 2와 3을 읽지 않고 섣불리 sed를 사용했다면 ed의사용자라면
+놀랄 것입니다. (그리고 아마도 당황할 것입니다). 두 편집기 간에 가장 눈에 띄는 유사점은 인식하는 패턴('정규식')클래스입니다. 패턴을 일치시키는 코드는 ed용 코드에서거의 그대로 복사했고, 
+섹션 2의 정규식에 대한 설명은 UNIX 프로그래머 매뉴얼[1]에서 거의 그대로 복사했습니다. (코드와 설명은 모두 Dennis M. Ritchie가 작성했습니다.)
 
 # 1. Overall Operation  
 Sed by default copies the standard input to the standard output, perhaps performing one or more editing
 commands on each line before writing it to the output. This behavior may be modified by flags on the com-
 mand line; see Section 1.1 below.
+Sed는 기본적으로 표준 입력을 표준 출력으로 복사하며, 출력에 쓰기 전에 각 줄에서 하나 이상의 편집
+명령을 수행할 수 있습니다. 이 동작은 명령줄의 플래그를 통해 수정할 수 있습니다 (아래 1.1절 참조).
 
 The general format of an editing command is:
 
