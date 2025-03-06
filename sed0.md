@@ -566,9 +566,11 @@ that a successful substitution has been executed is reset by:
 (1)= -- equals
 The = function writes to the standard output the line number of the line matched by its
 address.
+함수는 주소와 일치하는 줄의 줄 번호를 표준 출력에 씁니다.
 (1)q -- quit
 The q function causes the current line to be written to the output (if it should be), any
 appended or read text to be written, and execution to be terminated.
+q 함수는 현재 줄을 출력에 쓰고(있어야 하는 경우), 추가되거나 읽은 텍스트를 쓰고, 실행을 종료합니다.
 
 # Reference
 [1]  Ken Thompson and Dennis M. Ritchie, The UNIX Programmer’s Manual. Bell Laboratories, 1978.
