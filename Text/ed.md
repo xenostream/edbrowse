@@ -975,7 +975,7 @@ v/ /d
 해당 문자 앞에 백슬래시 문자를 추가해서 특수 문자의 의미를 일시적으로 끌 수 있습니다. 따라서, 다음과 같이
 
 ```
-s/\\\.*/backslash dot star/
+s/\\\.\*/backslash dot star/
 ```
 
 이 명령은 ```\.*``` 문자열을 "backslash dot star" 문자열로 대체합니다.
