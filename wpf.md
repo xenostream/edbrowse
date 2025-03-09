@@ -73,7 +73,7 @@ Visual Studio의 파일  메뉴에서 새 프로젝트를 선택하여 시작합
 
 새 프로젝트에는 몇 개의 파일이 있지만 지금은 그 중 하나인 MainWindow.xaml에 대해서만 집중적으로 설명하겠습니다. 이것은 응용 프로그램 기본 창이며, 특별히 변경하지 않는 한 응용 프로그램을 시작할 때 먼저 표시되는 창입니다. 여기에 있는 XAML 코드(XAML은 이 자습서의 다른 장에서 자세히 설명함)는 다음과 같습니다.
 
-```yaml
+```xml
 <Window x:Class="WpfApplication1.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -110,15 +110,120 @@ TextBlock에서 세 가지 다른 특성을 사용하여 창 중간에 사용자
 여기까지 오신 것을 축하드립니다. 이제 자습서의 나머지 부분을 읽으면 곧 WPF를 마스터하게 될 것입니다!
 
 
-
-
-
-
-
-
 # XAML
+
 ## What is XAML?
+XAML은 eXtensible Application Markup Language의 약자로 GUI를 설명하기 위한 Microsoft의 XML 변형입니다. WinForms와 같은 이전 GUI 프레임워크에서 GUI는 GUI와 상호 작용하는 데 사용하는 것과 동일한 언어(예: C# 또는 VB.NET)로 만들어졌으며 일반적으로 디자이너(예:  Visual Studio)가 유지 관리하지만 XAML을 사용하면 Microsoft는 다른 길을 가고 있습니다. HTML과 마찬가지로 GUI를 쉽게 작성하고 편집할 수 있습니다.
+
+이것은 실제로 XAML 자습서는 아니지만 WPF의 필수적인 부분이기 때문에 XAML 자습서를 사용하는 방법에 대해 간략하게 설명하겠습니다. 창을 만들든 페이지를 만들든 XAML 문서와 CodeBehind 파일로 구성되며, 이 파일들은 함께 Window/Page를 만듭니다. XAML 파일은 모든 요소와 함께 인터페이스를 설명하는 반면, CodeBehind는 모든 이벤트를 처리하고 XAML 컨트롤을 사용하여 조작할 수 있는 액세스 권한을 갖습니다.
+
+다음 장에서는 XAML의 작동 방식과 XAML을 사용하여 인터페이스를 만드는 방법을 살펴보겠습니다.
+
+
 ## Basic XAML
+이전 장에서 XAML의 정의와 용도에 대해 설명했지만 XAML에서 컨트롤을 만들려면 어떻게 해야 할까요? 다음 예제에서 볼 수 있듯이 XAML에서 컨트롤을 만드는 것은 꺾쇠 괄호로 묶인 이름을 쓰는 것만큼 쉽습니다. 예를 들어 Button은 다음과 같습니다.
+
+```xml
+<Button>
+```
+
+XAML 태그는 끝 태그를 작성하거나 시작 태그의 끝에 슬래시를 넣어 끝내야 합니다.
+
+```xml
+<Button></Button>
+```
+
+또는
+
+```xml
+<Button />
+```
+
+많은 컨트롤을 사용하면 시작 태그와 끝 태그 사이에 콘텐츠를 배치할 수 있으며, 이 태그는 컨트롤의 콘텐츠입니다. 예를 들어, Button 컨트롤을 사용하면 시작 태그와 끝 태그 사이에 표시되는 텍스트를 지정할 수 있습니다.
+
+```xml
+<Button>A button</Button>
+```
+
+HTML은 대/소문자를 구분하지 않지만 XAML은 컨트롤 이름이 .NET  Framework의 형식과 일치해야 하기 때문에 대/소문자를 구분합니다. 컨트롤의 속성에 해당하는 속성 이름도 마찬가지입니다. 다음은 태그에 속성을 추가하여 몇 가지 속성을 정의하는 버튼입니다.
+
+```xml
+<Button FontWeight="Bold" Content="A button" />
+```
+
+FontWeight 속성을 설정하여 굵은 텍스트를 제공한 다음 시작 태그와 끝 태그 사이에 텍스트를 쓰는 것과 동일한 Content 속성을 설정합니다. 그러나 컨트롤의 모든 특성은 다음과 같이 정의할 수도 있으며, Control-Dot-Property 표기법을 사용하여 주 컨트롤의 자식 태그로 표시됩니다.
+
+```xml
+<Button>
+    <Button.FontWeight>Bold</Button.FontWeight>
+    <Button.Content>A button</Button.Content>
+</Button>
+```
+
+결과는 위와 정확히 동일하므로이 경우에는 구문에 관한 것입니다. 그러나 많은 컨트롤이 텍스트 이외의 콘텐츠(예: 다른 컨트롤)를 허용합니다. 다음은 Button 내부에 여러 TextBlock 컨트롤을 사용하여 동일한 단추에 다른 색의 텍스트가 있는 경우입니다.
+
+이 예제를 다운로드하고 실행하십시오.
+
+```xml
+<Button>
+    <Button.FontWeight>Bold</Button.FontWeight>
+    <Button.Content>
+        <WrapPanel>
+            <TextBlock Foreground="Blue">Multi</TextBlock>
+            <TextBlock Foreground="Red">Color</TextBlock>
+            <TextBlock>Button</TextBlock>
+        </WrapPanel>
+    </Button.Content>
+</Button>
+```
+
+Content 속성은 단일 자식 요소만 허용하므로 WrapPanel을 사용하여 서로 다른 색상의 텍스트 블록을 포함합니다. WrapPanel과 같은 패널은 WPF에서 중요한 역할을 하며, 이에 대해서는 나중에 더 자세히 설명하겠지만 지금은 다른 컨트롤의 컨테이너로 간주하는 것이 좋습니다.
+
+다음 태그를 사용하여 정확히 동일한 결과를 얻을 수 있으며, 이는 단순히 동일한 내용을 작성하는 또 다른 방법입니다.
+
+이 예제를 다운로드하고 실행하십시오.
+
+```xml
+<Button FontWeight="Bold">
+    <WrapPanel>
+        <TextBlock Foreground="Blue">Multi</TextBlock>
+        <TextBlock Foreground="Red">Color</TextBlock>
+        <TextBlock>Button</TextBlock>
+    </WrapPanel>
+</Button>
+```
+
+### 코드 및 XAML 비교
+위의 예제를 통해 XAML이 작성하기가 매우 쉽지만 다양한 방법이 있으며 위의 예제가 다른 색상의 텍스트가 있는 버튼을 가져오기 위해 많은 마크업을 제공한다고 생각한다면 C#에서 정확히 동일한 작업을 수행하는 것과 비교해 보십시오.
+
+이 예제를 다운로드하고 실행하십시오.
+
+```cs
+Button btn = new Button();
+btn.FontWeight = FontWeights.Bold;
+
+WrapPanel pnl = new WrapPanel();
+
+TextBlock txt = new TextBlock();
+txt.Text = "Multi";
+txt.Foreground = Brushes.Blue;
+pnl.Children.Add(txt);
+
+txt = new TextBlock();
+txt.Text = "Color";
+txt.Foreground = Brushes.Red;
+pnl.Children.Add(txt);
+
+txt = new TextBlock();
+txt.Text = "Button";
+pnl.Children.Add(txt);
+
+btn.Content = pnl;
+pnlMain.Children.Add(btn);
+```
+
+물론 위의 예제는 덜 명시 적으로 작성하고 더 많은 구문 론적 설탕을 사용할 수 있지만, XAML은 인터페이스를 설명하기 위해 매우 짧고 간결합니다.
+
 ## Events in XAML
 
 # A WPF application
