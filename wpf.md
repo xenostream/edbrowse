@@ -73,7 +73,7 @@ Visual Studio의 파일  메뉴에서 새 프로젝트를 선택하여 시작합
 
 새 프로젝트에는 몇 개의 파일이 있지만 지금은 그 중 하나인 MainWindow.xaml에 대해서만 집중적으로 설명하겠습니다. 이것은 응용 프로그램 기본 창이며, 특별히 변경하지 않는 한 응용 프로그램을 시작할 때 먼저 표시되는 창입니다. 여기에 있는 XAML 코드(XAML은 이 자습서의 다른 장에서 자세히 설명함)는 다음과 같습니다.
 
-```cs
+```csharp
 <Window x:Class="WpfApplication1.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -88,7 +88,7 @@ Visual Studio의 파일  메뉴에서 새 프로젝트를 선택하여 시작합
 
 이를 위해 TextBlock 컨트롤을 Grid 패널에 추가하고 앞서 언급한 메시지를 콘텐츠로 사용합니다.
 
-```cs
+```c#
 <Window x:Class="WpfApplication1.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
