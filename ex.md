@@ -87,8 +87,8 @@ Alcuin is a computer graphics tool
 :.,+3
 that lets you design and create hand-lettered, illuminated
 manuscripts, such as were created in the Middle Ages.
-상기의 명령은 현재 주소부터 (.) 이후의 세 라인을 (+3) 화면에 출력합니다. (주소만 지정해 실행하면 기본적으로 `p` 명령이 적용되어 출력합니다.)
 ```
+상기의 명령은 현재 주소부터 (.) 이후의 세 라인을 (+3) 화면에 출력합니다. (주소만 지정해 실행하면 기본적으로 `p` 명령이 적용되어 출력합니다.)
 
 `+` 또는 `-` 같은 `상대 주소 기호` 는 `현재 주소를 기준` 으로 양수 또는 음수의 라인 오프셋을 지정합니다.
 
