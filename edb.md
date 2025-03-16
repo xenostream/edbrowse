@@ -1,47 +1,30 @@
-
-
-
-<br><br><br><br>
-
+# EDBrowse v3.8.9 User's Guide -KR
 
 # Preface
 
-
 <br><br>
-
 
 ## Maintainer
 
 Edbrowse의 홈페이지는 {edbrowse.org} 입니다. {Chris Brannon} 이 현재 프로젝트 관리자이자 웹마스터입니다.
 
-
-
 <br><br>
-
 
 ## Author
 
 {Karl Dahlke} 는 2001년에 edbrowse의 첫 버전을 Perl 언어로 작성했으며 여전히 프로젝트의 주요 개발자입니다.
 
-
-
 <br><br>
-
 
 ## Copyright Notice
 
 이 프로그램은 Karl Dahlke(및 다른 저자 및 기여자)에게 저작권이 있으며 2001-2023년 동안 작성되었습니다. 이 프로그램은 GNU 일반 공중 사용 허가서(GPL) 조건에 따라 제공되며 저작권 고지가 포함되어 있는 한 어떤 목적으로든 사용 및 재배포할 수 있습니다.
 
-
-
 <br><br>
-
 
 ## Disclaimer
 
 Edbrowse는 특정 목적에 적합하다는 묵시적 보증 없이 `$1` 사용할 것에 동의하는 것으로 간주합니다.
-
-
 
 <br><br>
 
@@ -49,8 +32,6 @@ Edbrowse는 특정 목적에 적합하다는 묵시적 보증 없이 `$1` 사용
 ## Acknowledgements
 
 {Chris Brannon} 은 소스 코드의 최소 20%를 작성했거나 수정했으며 전체 디자인에 대한 소중한 아이디어를 제공했습니다. {Adam Thompson} 은 Mozilla JS 버전 2의 요구 사항에 따라 Javascript 인터페이스를 C 언어에서 C++ 언어로 변환했으며 여전히 프로젝트의 전반적인 아키텍처를 지휘하고 있습니다. {Kevin Carhart} 는 jquery의 신비를 해독하고 이를 지원하기 위해 DOM을 업그레이드했습니다. {Jeremy O`Brien} 은 소프트웨어를 Mac OS X로 포팅했습니다. 몇몇 사람들은 출력 및 오류 메시지를 다른 나라의 언어로 번역했으며 그들의 기여는 아래 언어 섹션에서 적절히 인정됩니다.
-
-
 
 <br><br>
 
