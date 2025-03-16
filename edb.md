@@ -1,6 +1,6 @@
 # EDBrowse v3.8.9 User's Guide -KR
 
-# Preface
+# 1장. Preface
 
 <br><br>
 
@@ -137,7 +137,7 @@ localizeweb = fr
 <br><br><br><br>
 
 
-# Quick Reference Guide
+# 2장. Quick Reference Guide
 
 
 <br><br>
@@ -200,7 +200,7 @@ edbrowse에 관한 전용 위키(wiki) 페이지가 있으며 여기엔 팁과 �
 <br><br><br><br>
 
 
-# The Editor
+# 3장. The Editor
 
 
 <br><br>
@@ -916,7 +916,7 @@ Word 문서를 읽기 좋게 만들기 위해 `bl` 명령을 사용할 수 있�
 <br><br><br><br>
 
 
-# Web Browser
+# 4장. Web Browser
 
 
 <br><br>
@@ -1627,7 +1627,7 @@ Frame {bottom}
 <br><br><br><br>
 
 
-# Javascript
+# 5장. Javascript
 
 
 <br><br>
@@ -1731,7 +1731,7 @@ Onclose {Body}
 <br><br><br><br>
 
 
-# Edbrowse Scripts and the Configuration File
+# 6장. Edbrowse Scripts and the Configuration File
 
 
 <br><br>
@@ -2303,7 +2303,7 @@ outtype = H
 <br><br><br><br>
 
 
-# Mail Client
+# 7장. Mail Client
 
 
 <br><br>
@@ -2734,7 +2734,7 @@ r-를 사용하여 이메일을 읽지 않은 것으로 표시할 수 있으며,
 <br><br><br><br>
 
 
-# IRC Client
+# 8장. IRC Client
 
 
 <br><br>
@@ -2831,7 +2831,7 @@ irc 세션을 기록하려면, 구성 파일에서 irclog = filename을 설정�
 <br><br><br><br>
 
 
-# Database Access
+# 9장. Database Access
 
 
 <br><br>
