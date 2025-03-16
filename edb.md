@@ -1,5 +1,9 @@
 
 
+
+<br><br><br><br>
+
+
 # Preface
 
 ## Maintainer
@@ -120,6 +124,10 @@ localizeweb = fr
 
 
 
+
+<br><br><br><br>
+
+
 # Quick Reference Guide
 
 ## Quick Reference Guide
@@ -161,6 +169,10 @@ edbrowse에 관한 전용 위키(wiki) 페이지가 있으며 여기엔 팁과 �
 ----------
 
 
+
+
+
+<br><br><br><br>
 
 
 # The Editor
@@ -827,6 +839,10 @@ Word 문서를 읽기 좋게 만들기 위해 `bl` 명령을 사용할 수 있�
 
 ----------
 
+
+<br><br><br><br>
+
+
 # Web Browser
 
 ## Accessing A URL
@@ -1430,6 +1446,10 @@ Frame {bottom}
 
 ----------
 
+
+<br><br><br><br>
+
+
 # Javascript
 
 ## Introduction to Javascript
@@ -1509,6 +1529,10 @@ Onclose {Body}
 
 
 ----------
+
+
+<br><br><br><br>
+
 
 # Edbrowse Scripts and the Configuration File
 
@@ -2046,6 +2070,10 @@ outtype = H
 
 
 
+
+<br><br><br><br>
+
+
 # Mail Client
 
 ## Send Mail
@@ -2437,6 +2465,10 @@ r-를 사용하여 이메일을 읽지 않은 것으로 표시할 수 있으며,
 
 
 
+
+<br><br><br><br>
+
+
 # IRC Client
 
 ## Using IRC
@@ -2520,6 +2552,10 @@ irc 세션을 기록하려면, 구성 파일에서 irclog = filename을 설정�
 
 
 
+
+
+
+<br><br><br><br>
 
 
 # Database Access
