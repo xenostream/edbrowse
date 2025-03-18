@@ -5,34 +5,30 @@
 <br><br><br><br>
 
 # 1. Overview
-Working with textual data almost always involves parsing and modifying it.
+텍스트 데이터를 다루는 작업 대부분엔 `구문 분석` 과 `수정 작업` 이 수반됩니다.
 
-In this tutorial, we’ll learn about sed, a non-interactive stream editing utility that can edit a text input stream.
+이 튜토리얼에선 `텍스트 입력 스트림` 을 편집할 수 있는 `비대화형 스트림 편집 유틸리티` 인 **sed** 에 대해 알아보겠습니다.
 
 
 
 <br><br><br><br>
 
 # 2. sed Command
-Well, the whole idea is that sed treats the input as a stream of text.
-
-Further, it filters the lines with the help of the pattern before it can perform the core editing action:
+결국 핵심 개념은 `sed가 입력을 텍스트 스트림으로 취급한다` 는 것입니다. 또한, 핵심 편집 작업을 수행하기 전에 패턴을 활용해 줄을 필터링합니다.
 
 ```
 [pattern] action
 ```
 
-To define a pattern, we can either use a fixed address in the form of a line number or a contextual address in the form of a regular expression:
+패턴을 정의하려면 줄 번호 형태의 고정 주소를 사용하거나 정규 표현식 형태의 문맥적 주소를 사용할 수 있습니다.
 
 ```
 address[,address]
 ```
 
-We must note that the comma-separated pair of addresses allows us to select a range of lines. As such, the selection starts when the first address matches a line, and continues until we get a line that matches the second address.
+쉼표로 구분된 주소 쌍을 사용하면 특정 범위의 줄을 선택할 수 있다는 점을 유의해야 합니다. 즉, 첫 번째 주소가 줄과 일치하면 선택이 시작되며, 두 번째 주소와 일치하는 줄이 나올 때까지 계속됩니다.
 
-We’ll explore the actions and patterns in detail when we solve the editing problems in the following sections.
-
-However, for now, let’s settle our curiosity by knowing that we’ll use functions to define an action in a command:
+다음 섹션에서 편집 문제를 해결할 때 동작과 패턴에 대해 자세히 살펴보겠습니다. 하지만 지금은 명령으로 동작을 정의하기 위해 함수를 사용할 것이란 사실만으로 궁금증을 해결하겠습니다.
 
 ```
 function[arguments]
@@ -43,16 +39,17 @@ function[arguments]
 <br><br><br><br>
 
 # 3. sed in Action
-Let’s put the knowledge gained so far into action by learning different ways of executing sed commands.
+지금까지 얻은 지식을 실제로 활용해 다양한 방법으로 sed 명령을 실행하는 방법을 배워봅시다.
 
 ## 3.1. Single Command
-First, let’s see how we can execute a single sed command from the Linux shell:
+먼저, Linux 셸에서 단일 sed 명령을 어떻게 실행할 수 있는지 살펴보겠습니다.
+
 
 ```
 $ sed [-Ealn] [-i extension] command [file ...]
 ```
 
-Besides modifying the contents of the file, we should also be able to view it. Let’s see how we can use the print function and execute the corresponding sed command:
+파일의 내용을 수정하는 것 외에도 파일을 볼 수 있어야 합니다. 이제 print 함수를 사용하고 sed 명령을 실행하는 방법을 살펴보겠습니다.
 
 ```
 $ sed 'p' input.txt
@@ -62,9 +59,9 @@ line-2
 line-2
 ```
 
-We can see that when explicitly using the print function, each line is printed twice. That’s because sed always executes a default action of printing each line after all the commands have finished execution.
+명시적으로 print 함수를 사용할 때 각 줄이 두 번씩 출력되는 것을 알 수 있습니다. 이것은 sed가 모든 명령 실행이 끝난 후 각 줄을 출력하는 `기본 동작` 을 항상 수행하기 때문입니다.
 
-Further, to suppress this default behavior, we can use the -n flag in the same command and take things in our control:
+또한, 이 기본 동작을 억제하려면 동일한 명령에서 -n 플래그를 사용하여 출력을 제어할 수 있습니다.
 
 ```
 $ sed -n 'p' input.txt
@@ -72,7 +69,7 @@ line-1
 line-2
 ```
 
-However, if we rethink it, we don’t really want a print function in the first place, and we can just rely on sed’s default action to view the file:
+하지만, 다시 생각해보면 처음부터 print 함수는 필요하지 않으며, sed의 기본 동작을 활용해 파일을 살펴볼 수 있습니다.
 
 ```
 $ sed '' input.txt
@@ -80,21 +77,21 @@ line-1
 line-2
 ```
 
-We must note that although there are no functions, we still have to include an empty command string.
+사용할 함수가 없다 하더라도 `빈 명령 문자열` 을 포함해야 한다는 점에 유의합니다.
 
 ## 3.2. Multiple Commands
-As search is quintessential to working with text, wouldn’t it be nice if we could get this power with our sed commands? Yes, that’s quite possible!
+텍스트 편집 작업에 검색은 필수적인 요소이므로, sed 명령으로 검색 기능을 사용할 수 있다면 좋겠지요? 네, 충분히 가능합니다!
 
-So, let’s go ahead and use sed to get the first line from our input.txt file that contains the word, “line”:
+그럼 이제 sed를 사용해 "line" 이란 단어가 포함된 "input.txt" 파일의 첫 번째 줄을 가져오는 방법에 대해 알아보겠습니다.
 
 ```
 $ sed -n -e '/line/ p' -e '/line/ q'  input.txt
 line-1
 ```
 
-We must note the use of -e flag to separate the sed commands. The first command searches for the pattern and uses the print function to print the line, whereas the second command leverages the q (quit) function that stops further execution of sed commands on the input stream. Without the q function, sed will print all the lines that match the regex.
+`-e` 플래그를 사용해 sed 명령을 구분하는 것에 유의해야 합니다. 첫 번째 명령은 패턴을 검색하고 print 함수를 사용해 해당 줄을 출력하며, 두 번째 명령은 `q` (*quit*) 함수를 사용해 입력 스트림에 더 이상의 sed 명령 실행 작업을 중지합니다. `q` 함수가 없다면 sed는 정규 표현식과 일치하는 모든 줄을 출력합니다.
 
-Alternatively, we can also separate multiple commands with a semicolon:
+또는 다음과 같이 여러 명령을 세미콜론 문자로 구분할 수 있습니다.
 
 ```
 $ sed -n '/line/ p; /line/ q'  input.txt
@@ -102,13 +99,13 @@ line-1
 ```
 
 ## 3.3. sed Script
-As our complexity increases, we’ll have to break the problem into more and more sub-problems.
+복잡성이 증가할수록 문제를 점점 더 많은 하위 문제 단위로 나누어야 합니다.
 
-Each sub-problem is solved by a single sed command, and, put together, they’d solve the entire use case. But, if we still continue to use the -e flag or semicolon, then we’ll have poor code readability that usually has a negative impact in the long run.
+각 하위 문제는 하나의 sed 명령으로 해결되며, 이들을 모두 합치면 전체 문제를 해결할 수 있습니다. 그러나, `-e` 플래그나 세미콜론 문자를 계속 사용한다면 코드 가독성이 떨어져 장기적으로 부정적인 영향을 미칠 수 있습니다.
 
-Let’s say that in our earlier sed utility to find the first match, we’re now also interested to know the line number for which the pattern matched for the first time. So, we can extend our earlier solution by using the = command for displaying the line numbers.
+앞서 사용한 sed 유틸리티에서 첫 번째 검색 일치를 찾는 것 외에도, 이제부터는 패턴이 처음 검색 일치한 줄 번호를 알고 싶다고 가정합니다. 이를 위해 `=` 명령을 사용해 줄 번호를 표시하는 방식으로 이전 솔루션을 개선할 수 있습니다.
 
-Further, let’s work on the solution by keeping all the sed commands in a find_first_match.sed script, and first preview the contents of the script using sed itself:
+또한, 모든 sed 명령을 `find_first_match.sed` 스크립트 파일에 작성하고, sed 명령을 사용해 스크립트의 내용을 미리 살펴볼 수 있습니다.
 
 ```
 $ sed -n 'p' find_first_match.sed
@@ -117,7 +114,7 @@ $ sed -n 'p' find_first_match.sed
 /line/ q
 ```
 
-Finally, let’s execute our script by using the -f flag:
+마지막으로, `-f` 플래그를 사용해 스크립트 파일을 실행할 수 있습니다.
 
 ```
 $ sed -n -f find_first_match.sed input.txt
@@ -130,33 +127,33 @@ line-1
 <br><br><br><br>
 
 # 4. Search and Replace
-sed offers a variety of functions that we can use to search and replace text. Let’s explore a few important ones.
+sed는 텍스트를 검색하고 교체하는 데 사용할 수 있는 다양한 함수를 제공합니다. 중요한 몇 가지를 살펴보겠습니다.
 
 ## 4.1. Basic Substitution
-Let’s say that our team follows a convention to use spaces for code indentation. However, we often end up using tabs. As a result, our peers often ask us to change tabs to spaces during the code review cycle. To solve this use case, we can use the substitution function:
+예를 들어, 우리 팀은 "코드 들여쓰기에 공백 문자를 사용하라" 는 규칙을 따릅니다. 그러나, 간혹 탭 문자를 사용하면서 동료들이 코드를 리뷰할 때 탭 문자를 공백 문자로 변경해달라는 요청을 하는 경우가 많습니다. 이 문제를 해결하기 위해 대체 함수를 사용할 수 있습니다.
 
 ```
 [address[,address]]s/regular expression/replacement/flags
 ```
 
-As such, the substitution function searches for the regex in each line selected by the address range. Then, it replaces only the first matching substring by the replacement string, unless we modify this default behavior by using a flag.
+따라서, 대체 함수는 주소 범위에 의해 선택된 각 줄에서 정규 표현식을 검색합니다. 그런 다음, 기본 동작을 변경하는 플래그를 사용하지 않는다면 첫 번째 검색 일치하는 부분 문자열만 대체 문자열로 교체합니다.
 
-Since we intend to reuse our solution, let’s add our sed command in a script named indentation_fix.sed:
+이 솔루션을 재사용할 계획이라면, 사용한 sed 명령을 `indentation_fix.sed` 란 이름의 스크립트 파일에 추가합니다.
 
 ```
 /^[ 	]\+/ s/	/    /g
 ```
 
-Well, the contents of the script contain some tabs and spaces, and it’s hard to differentiate one from another. So, let’s get rid of this ambiguity by viewing the contents of the script with sed’s l command:
+스크립트 파일에는 탭과 공백 문자가 혼합되어 있어 구별하기 어렵습니다. 그래서, sed의 `l` 명령을 사용해 스크립트의 내용을 자세히 표시함으로 이런 모호성을 없애보겠습니다.
 
 ```
 $ sed -n 'l' indentation_fix.sed
 /^[ \t]+/ s/\t/    /$
 ```
 
-We must note that the presence of the \t character represents the tab, while the $ symbol represents the end of the line.
+이때 `\t` 문자는 탭 문자를 표시하며, `$` 문자는 줄의 끝을 표시한다는 점에 유의해야 합니다.
 
-Now, let’s take a sample Test.java file that uses tabs instead of spaces:
+이제 공백 문자 대신 탭 문자를 사용하는 `Test.java` 파일을 살펴봅시다.
 
 ```
 $ sed -n 'l' Test.java
@@ -167,7 +164,7 @@ public class Test {$
 }$
 ```
 
-Next, let’s test the functionality of our indentation_fix.sed script by putting it in action:
+다음으로, `indentation_fix.sed` 스크립트 파일을 실제로 실행해 테스트해 보겠습니다.
 
 ```
 $ sed -n -E -f "indentation_fix.sed" -e 'l' Test.java
@@ -178,16 +175,16 @@ public class Test {$
 }$
 ```
 
-Finally, let’s modify our original file in place with this script:
+마지막으로, 이 스크립트 파일을 사용해 원본 파일을 직접 수정해 보겠습니다.
 
 ```
 $ sed -n -i.save -E -f "indentation_fix.sed" -e 'p' Test.java
 ```
 
-We used the -i flag with an extension .save to create a backup copy of our original file in a file called Test.java.save.
+`-i` 플래그와 확장자 `.save` 를 사용해 원본 파일의 백업 복사본을 `Test.java.save` 라는 파일로 생성했습니다.
 
 ## 4.2. Substitution With Grouping
-At times, we often need to make syntactic corrections in our code. Let’s take a case of accessing characters in a Java string where we’ve mistakenly treated it as an array, which happens in a lot of other programming languages like C. We’ll use a file named AccessString.java to demonstrate:
+때때로 코드에서 문법적인 구문을 수정할 때가 있습니다. C와 같은 많은 프로그래밍 언어에서 흔히 발생하는 Java 문자열의 문자를 배열로 잘못 처리해 액세스하는 경우를 예로 들어보겠습니다. 이를 처리하기 위해 `AccessString.java` 라는 파일을 사용하겠습니다.
 
 ```
 // AccessString.java
@@ -197,17 +194,17 @@ if (name.length() > 0) {
 }
 ```
 
-Instead, we should be using the charAt() method to access the character at the 0th position. Since we could be having this error at a number of places in our file, we can save time if we use sed to fix this.
+대신, 0번째 위치에 있는 문자에 접근하기 위해 `charAt()` 메서드를 사용해야 합니다. 파일 여러 곳에서 이런 오류가 발생할 수 있으므로, 이를 수정하기 위해 sed를 사용하면 많은 시간을 절약할 수 있습니다.
 
-Now, to come up with a sed command, we need to understand the concept of grouping and format string in the substitution function. The former is a way to split a line into groups using regex matching, and the latter is the replacement string that contains special characters to do a back-reference for these groups.
+이제 sed 명령을 만들려면 대체 함수의 그룹화 및 서식 문자열 개념에 대해 이해해야 합니다. 전자는 정규 표현식 매칭 기술을 사용해 줄을 그룹으로 분할하는 방법이고, 후자는 이런 그룹에 대한 역참조를 수행하는 특수 문자가 포함된 대체 문자열입니다.
 
-As such, grouping helps us preserve parts of the original string and reuse them as part of the replacement string. In this case, we can split the line containing the name string into three groups:
+따라서, 그룹화를 사용하면 원본 문자열의 일부분을 보존하고 대체 문자열의 일부로 재사용할 수 있습니다. 이 경우 다음과 같이 이름 문자열이 포함된 줄을 세 그룹으로 나눌 수 있습니다:
 
-* the first group represented by (.*name) will refer to the left side of the opening square bracket
-* the second group represented by ([0-9]+) will refer to the index of characters that’s being access
-* the last group represented by (.*) will refer to the right side of the closing square bracket
+* 첫 번째 그룹인 `(.*name)` 은 여는 대괄호 앞쪽 부분을 참조합니다.
+* 두 번째 그룹인 `([0-9]+)` 은 액세스할 문자의 인덱스를 참조합니다.
+* 마지막 그룹인 `(.*)` 은 닫는 대괄호 오른쪽 부분을 참조합니다.
 
-Further, we can make a back-reference to these groups in the replacement string as \1, \2, and \3, respectively. So, putting it all together, we have our sed command:
+또한, 대체 문자열에서 이런 그룹에 대해 각각 `\1`, `\2`, `\3` 구문으로 역참조를 수행할 수 있습니다. 이를 모두 결합하면 다음과 같은 sed 명령을 얻을 수 있습니다:
 
 ```
 $ sed -n -E '1,$ s/(.*name)\[([0-9]+)\](.*)/\1.charAt(\2)\3/; p' AccessString.java
@@ -217,33 +214,33 @@ if (name.length() > 0) {
 }
 ```
 
-We can note that we didn’t intend to preserve the square brackets around the index. So, we didn’t make them part of any of the groups.
+인덱스 주변의 대괄호를 보존할 의도는 없습니다. 따라서, 대괄호는 어떤 그룹에도 포함시키지 않았습니다.
 
 
 
 <br><br><br><br>
 
 # 5. Workspace
-If we intend to use sed like an expert, then we must first acquaint ourselves with sed’s internal working areas, namely pattern space and hold space. To do this, let’s go ahead and explore sed’s workspace.
+sed를 전문가처럼 사용하려면 먼저 sed의 내부 작업 영역인 `패턴 스페이스` 와 `홀드 스페이스` 에 대해 잘 알아야 합니다. 이를 위해, sed의 작업 공간을 살펴보겠습니다.
 
 ## 5.1. Pattern and Hold Space
-So far, we solved all the problems without explicitly knowing the concepts of pattern space and hold space, and that’s fine; we didn’t need to rely on that concept in previous examples.
+지금까지는 패턴 스페이스와 홀드 스페이스의 개념을 명시적으로 알지못한 채 모든 문제를 해결했지만, 이전 예제는 이런 개념에 의존할 필요가 전혀 없었기 때문에 괜찮습니다.
 
-For starters, the pattern space and hold space have intuitive names. The former is an active storage area where sed first keeps each line read from the input stream after matching it with a pattern. In contrast, the latter is a temporary storage area that can be used on-demand.
+우선, 패턴 스페이스와 홀드 스페이스는 직관적인 이름을 가지고 있습니다. 패턴 스페이스는 sed가 입력 스트림에서 각 줄을 읽은 후, 이를 패턴과 매칭하여 우선적으로 저장하는 활성 저장 영역입니다. 반면, 보류 스페이스는 필요에 따라 사용할 수 있는 임시 저장 영역입니다.
 
-sed offers a variety of functions to help us manage the workspace. However, a few of them have subtle differences, and it’s important that we understand how pattern space fits into the execution cycle of a sed script.
+sed는 작업 공간을 관리하는 데 도움이 되는 다양한 함수를 제공합니다. 그러나 그 중 몇 가지는 미묘한 차이점도 있으므로, 패턴 스페이스가 sed 스크립트 실행 주기에 어떻게 작동하는지 제대로 이해하는 것이 중요합니다.
 
 ## 5.2. Pattern Space in Execution Cycle
-First, sed reads a single line of text from the input stream and keeps it in the pattern space. Then, it executes each sed command until there are no more commands left to execute. Finally, sed executes the function, n (next) by itself, to repeat the cycle until it has consumed the complete input stream.
+먼저, sed는 입력 스트림에서 한 줄의 텍스트를 읽고 이를 패턴 스페이스에 저장합니다. 그런 다음, 남아 있는 sed 명령이 없을 때까지 각 sed 명령을 실행합니다. 마지막으로, sed는 `n` (*next*) 함수를 실행해 이 실행 주기를 반복 처리하며 입력 스트림을 모두 처리할 때까지 계속 진행합니다.
 
-Now, we must understand that the execution of function n has a very crucial role in creating a cycle in the workflow. As such, the n function prints the pattern space on the standard output and then replaces it with the next line from the input stream. That’s why, when we execute sed without any command, it just prints the input stream to the standard output.
+이제 `n` 함수의 실행이 워크플로우에서 실행 주기를 생성하는 데 매우 중요한 역할을 처리한다는 점을 확실히 이해해야 합니다. `n` 함수는 패턴 스페이스의 내용을 표준 출력에 출력한 후, 입력 스트림의 다음 줄로 교체합니다. 그렇기 때문에 sed를 명령 없이 실행하면 입력 스트림 그대로를 표준 출력에 출력하는 것입니다.
 
-As such, the function n is not aligned with the single responsibility principle as it is doing two things, namely printing the pattern space and replacing the content with the next line from the input. To overcome this problem, we had used the -n flag earlier to suppress the printing behavior, but not the part where it refills the pattern space. If -n suppressed the complete functionality of n, then we wouldn’t be left with a cycle in the first place.
+따라서 `n` 함수는 단일 책임 원칙에 맞지 않습니다. 왜냐하면, 사실 두 가지 일을 동시에 수행하기 때문입니다. 즉, 패턴 스페이스의 내용을 출력하고 그 내용을 입력 스트림의 다음 줄로 교체하는 것입니다. 이런 문제를 해결하기 위해 이전에 `-n` 플래그를 사용해 기본 출력 동작을 억제했지만, 패턴 스페이스를 다시 채우는 과정은 억제하지 않았습니다. 만약 `-n` 프래그로 `n` 함수의 기능을 억제했다면, 처음부터 실행 주기는 형성되지 않았을 것입니다.
 
 ## 5.3. n and p
-The next function is implicitly invoked by sed in the background to continue processing each line of input. However, we can even make explicit use of this.
+다음 함수는 sed가 배경 작업에 암시적으로 호출해 입력의 각 줄을 계속 처리합니다. 그러나, 이것을 명시적으로 사용할 수 있습니다.
 
-Let’s say we have a file containing names of books and corresponding authors on alternate lines:
+책 이름과 해당 저자들이 번갈아가며 포함된 다음과 같은 파일이 있다고 가정해 보겠습니다:
 
 ```
 $ sed '' books_authors.txt
@@ -257,9 +254,9 @@ The Chord
 - Randhir Kaur
 ```
 
-Now, if we need to list the names of books separately from the books_authors.txt file, then we make use of a combination of n and p functions.
+이제 `books_authors.txt` 파일을 이용해 책 이름을 따로 출력해야 한다면, `n` 과 `p` 함수를 조합해 처리할 수 있습니다.
 
-First, let’s list the names of books that appear on all odd-numbered lines:
+먼저, 홀수 번째 줄에 나타나는 책 이름을 나열해 보겠습니다:
 
 ```
 $ sed -n 'p;n' books_authors.txt
@@ -269,7 +266,7 @@ The Waste Land
 The Chord
 ```
 
-Next, let’s list the names of authors that appear on all even-numbered lines:
+다음으로, 짝수 번째 줄에 나타나는 저자 이름을 나열해 보겠습니다:
 
 ```
 $ sed -n 'n;p' books_authors.txt
@@ -279,9 +276,9 @@ $ sed -n 'n;p' books_authors.txt
 - Randhir Kaur
 ```
 
-We can note that we suppressed the print functionality of ‘n‘ by using the -n flag. As a result, we were able to eat away lines that we didn’t want in our output. In the first case, we did a cycle of print-and-eat activity, while in the second case, it was an eat-and-print cycle.
+`n` 함수의 기능을 `-n` 플래그를 사용해 억제했다는 점을 알 수 있습니다. 그 결과, 출력에 원하지 않는 줄을 제거할 수 있었습니다. 첫 번째 경우에서는 출력한 후 제거하는 실행 주기를 실행했고, 두 번째 경우에서는 제거한 후 출력하는 실행 주기를 실행했습니다.
 
-Further, if we want, we can use the substitution function to remove the hyphens before the author names:
+또한, 원한다면 대체 기능을 사용해 저자 이름 앞의 하이픈 문자를 제거할 수 있습니다.
 
 ```
 $ sed -n 'n;s/^- //;p' books_authors.txt
@@ -292,25 +289,26 @@ Randhir Kaur
 ```
 
 ## 5.4. Hold, Get, and Exchange
-At times, we need to save the current content of the pattern space into the hold space and retrieve it later for further use. To easily transfer contents between these two working spaces, we can use the hold, get, and exchange functions:
+때때로, 현재 패턴 스페이스의 내용을 홀드 스페이스에 저장해 나중에 다시 가져와 재사용할 필요가 있습니다. 이 두 작업 공간 간에 내용을 쉽게 전송하려면 `hold`, `get`, 및 `exchange` 함수를 사용할 수 있습니다.
 
-* h – hold function saves content from pattern space into hold space
-* g – get function retrieves content from hold space into pattern space
-* x – exchange function swaps the contents of pattern space and hold space
-Let’s say that we need to get the names of books by author Rupi Kaur from our books_authors.txt file. Since the name of the book comes before the author’s name, we’ll need to hold that value in the hold space. If we do this, we can use pattern space to match the next line that has the author’s name against the given author’s name.
+* `h` – hold 함수는 패턴 스페이스의 내용을 홀드 스페이스에 저장합니다.
+* `g` – get 함수는 홀드 스페이스의 내용을 패턴 스페이스로 가져옵니다.
+* `x` – exchange 함수는 패턴 스페이스와 홀드 스페이스의 내용을 서로 교환합니다.
 
-For any two pair of lines, we can use hold followed by the next function to retain the name of the book in the hold space, and the author’s name in the pattern space. But, we also need to ensure that we get the value from hold space and print it, just after doing a pattern match. To do so, we can keep them together within {} as a function-list:
+`books_authors.txt` 파일에서 "Rupi Kaur" 라는 저자의 책 이름을 가져온다고 가정해 보겠습니다. 책 이름은 저자 이름 앞에 나오므로, 그 값을 홀드 스페이스에 저장해야 합니다. 이렇게 처리하면 패턴 스페이스를 사용해 다음 줄에 있는 저자 이름과 주어진 저자 이름을 비교할 수 있습니다.
+
+두 개의 줄 쌍에 대해, `hold` 함수 다음 `n` 함수를 사용해 책 이름을 홀드 스페이스에 저장하고 저자 이름을 패턴 스페이스에 저장할 수 있습니다. 그러나, 패턴 매칭을 수행한 후에는 홀드 스페이스의 내용을 가져와 출력할 수 있도록 처리해야 합니다. 이를 위해 `{}` 내에 함수 목록으로 함께 묶어 그룹 명령으로 처리할 수 있습니다.
 
 ```
 $ sed -n 'h;n;/Rupi Kaur/{g;p;}' books_authors.txt
 Milk and Honey
 ```
 
-As such, when we did a get function call, we lost the name of the author from the pattern space to the name of the book. Well, that was fine, as we already knew the name of the author beforehand, and we didn’t care to display that information.
+따라서 `get` 함수를 호출할 때, 패턴 스페이스의 저자 이름은 사라지고 책 이름이 들어갑니다. 하지만, 이것은 괜찮습니다. 왜냐하면, 이미 저자 이름을 알고 있고, 그에 대한 정보를 별도로 출력할 필요는 없기 때문입니다.
 
-However, at times, we don’t know the full name of the author, but just the first name or the last name. Naturally, in such a scenario, it makes sense that we also list the full name of the author along with the name of the book.
+하지만, 때때로 저자의 전체 이름을 알지 못할 수 있고, 첫 번째 이름이나 성만 알고 있을 때가 간혹 있습니다. 자연스럽게, 이런 상황에서는 책 이름과 함께 저자의 전체 이름도 함께 출력하는 것이 합리적입니다.
 
-Let’s extend the function-list part of our books by author solution. If we exchange the contents of pattern space and hold space using the x function, then we’ll have the author’s name in the hold space and name of the book in the pattern space. So, we can print the name of the book by using the p function. Finally, we can get the name of the author from hold space and print it as we did earlier:
+저자별 도서 솔루션의 함수 목록 부분을 확장해 보겠습니다. `x` 함수를 사용해 패턴 스페이스와 홀드 스페이스의 내용을 서로 교환한다면, 홀드 스페이스에는 저자 이름, 패턴 스페이스에는 책 이름이 들어가게 됩니다. 따라서, `p` 함수를 사용해 책 이름을 출력할 수 있습니다. 마지막으로, 홀드 스페이스의 저자 이름을 가져와 앞서 처리했던 것처럼 출력할 수 있습니다.
 
 ```
 $ sed -n 'h;n;/Kaur/{x;p;g;p;}' books_authors.txt
@@ -320,21 +318,20 @@ The Chord
 - Randhir Kaur
 ```
 
-We can note that we got two different author names for the same surname. So, that validates our decision to list the author’s name along with the name of the book.
-
+우리는 동일한 성을 가진 두 개의 다른 저자 이름까지 얻었다는 점을 유의해야 합니다. 따라서, 책 이름과 함께 저자 이름을 나열하는 결정이 타당함을 확인할 수 있습니다.
 
 
 <br><br><br><br>
 
 # 6. Working With Multiple Lines
-So far, we did pattern matching for only single lines. That’s because, by default, sed reads from the input stream line-by-line and discards the \n character before putting into the pattern space. But, that doesn’t mean we can’t work with multiple lines. In fact, sed offers a variety of functions that can help manage the working area with new lines in consideration:
+지금까지는 단일 줄에 대해서만 패턴 매칭을 수행했습니다. 이것은 기본적으로 sed가 입력 스트림을 줄 단위로 읽고, `\n` 문자를 제거한 후에 패턴 스페이스에 넣기 때문입니다. 하지만, 그렇다해서 여러 줄 작업을 처리할 수 없다는 것은 아닙니다. 사실, sed는 새로운 줄을 고려해 작업 공간을 관리하는 데 도움되는 다양한 함수들을 제공합니다.
 
-* P – print function prints the first line of pattern space to standard output
-* H – hold function adds a \n character to hold space, and then appends the content from pattern space
-* G – get function adds a \n character to pattern space, and then appends the content from hold space
-* N – next function adds a \n character to pattern space, and then appends the next line from the input stream
+* `P` – print 함수는 패턴 스페이스의 첫 번째 줄을 표준 출력에 출력합니다.
+* `H` – hold 함수는 홀드 스페이스에 `\n` 문자를 추가한 후, 패턴 스페이스의 내용을 홀드 스페이스에 추가합니다.
+* `G` – get 함수는 패턴 스페이스에 `\n` 문자를 추가한 후, 홀드 스페이스의 내용을 패턴 스페이스에 추가합니다.
+* `N` – next 함수는 패턴 스페이스에 `\n` 문자를 추가한 후, 입력 스트림에서 다음 줄을 읽어와 패턴 스페이스에 추가합니다.
 
-Now, let’s improve the readability of our books_authors.txt file by using the N function:
+이제 `N` 함수를 사용해 `books_authors.txt` 파일의 가독성을 개선해 보겠습니다:
 
 ```
 $ sed -E -n 'N; s/(.*)\n- (.*)/"\1" by \2/; p' books_authors.txt
@@ -344,9 +341,9 @@ $ sed -E -n 'N; s/(.*)\n- (.*)/"\1" by \2/; p' books_authors.txt
 "The Chord" by Randhir Kaur
 ```
 
-As such, by using the N function, we were able to join the name of the book and author with a newline character. Further, we used a group substitution for quoting the name of the book in quotes and in-fixing the “by” string.
+따라서 `N` 함수를 사용해 책 이름과 저자 이름을 줄 바꿈 문자로 연결할 수 있었습니다. 또한, 책 이름을 따옴표로 묶고 "by" 문자열을 삽입하는 그룹 대체를 사용했습니다.
 
-Next, let’s use the G function to improve the readability of output when we search for books by a partially-known author’s name:
+다음으로, 부분적으로 알려진 저자 이름으로 책을 검색할 때 출력물의 가독성을 향상시키기 위해 `G` 함수를 사용해 보겠습니다:
 
 ```
 $ sed -E -n 'h;n; /Kaur/ {G;s/- (.*)\n(.*)/"\2" by \1/;p;}' books_authors.txt
@@ -354,7 +351,7 @@ $ sed -E -n 'h;n; /Kaur/ {G;s/- (.*)\n(.*)/"\2" by \1/;p;}' books_authors.txt
 "The Chord" by Randhir Kaur
 ```
 
-Alternatively, we can also use the H and g functions to arrive at the same result:
+또한, 동일한 결과를 얻기 위해 `H` 와 `g` 함수를 사용할 수도 있습니다.
 
 ```
 $ sed -E -n 'h;n; /Kaur/ {H;g;s/(.*)\n- (.*)/"\1" by \2/;p;}' books_authors.txt
@@ -367,10 +364,10 @@ $ sed -E -n 'h;n; /Kaur/ {H;g;s/(.*)\n- (.*)/"\1" by \2/;p;}' books_authors.txt
 <br><br><br><br>
 
 # 7. Flow Control
-By default, sed commands in a script execute sequentially line-by-line. Now, let’s go ahead and learn how we can change the default flow of execution for a sed script.
+기본적으로, sed 스크립트의 명령은 줄 단위로 순차적으로 실행됩니다. 이제 sed 스크립트의 기본 실행 흐름을 어떻게 변경할 수 있는지 배워보겠습니다.
 
 ## 7.1. Empty Lines
-Let’s say someone edited our text file containing the list of books and authors. Now it contains several empty lines:
+누군가 우리가 작성한 책 이름과 저자 이름 목록이 담긴 텍스트 파일을 수정하면서 다음과 같이 여러 개의 빈 줄이 포함되었다고 가정해 보겠습니다.
 
 ```
 $ sed -n 'l' books_authors_empty_lines.txt
@@ -391,15 +388,16 @@ The Chord$
 - Randhir Kaur$
 ```
 
-Since we wrote all our earlier sed scripts assuming that there are no empty lines in between, those scripts might stop working.
+이전에 작성한 모든 sed 스크립트는 파일에 빈 줄이 없다고 가정한 상태로 작성되었기 때문에, 이렇게 빈 줄이 생긴다면 해당 스크립트가 제대로 작동하지 않을 수 있습니다.
 
-To fix this, either we can revise all the earlier scripts, or we can perform a cleansing activity on our text file to remove these empty lines. Of course, in the interest of time, the latter seems more reasonable.
+이를 해결하기 위해, 이전에 작성한 모든 스크립트를 수정할 수도 있겠지만, 좀 더 빠른 방법은 텍스트 파일에 빈 줄을 제거하는 정리 작업을 수행할 수 있습니다. 물론, 시간을 조금이라도 절약하기 위해선 후자가 합리적으로 보입니다.
 
 ## 7.2. Branching
-Firstly, we should be able to identify the empty lines when we read one. As such, sed doesn’t copy the newline character into pattern space. So, instead of doing a pattern matching with \n, we’ll do it with ^$.
-Then, if we see that there’s an empty line, then we need to start eating up the lines until we find a line that has some content. Further, for all non-empty lines, we just need to print them as-is.
+첫째, 빈 줄을 식별할 수 있어야 합니다. 이를 처리하기 위해, sed는 `\n` 문자를 패턴 스페이스엔 복사하지 않기 때문에 `^$` 로 패턴 매칭을 수행해야 합니다. `^$` 는 빈 줄을 의미하는 정규 표현식입니다.
 
-Well, to construct this logic using sed, we need to create a loop. In sed, we can do that by performing a conditional or unconditional branching using the : (label), b (branch), and t (test) functions:
+그런 다음, 빈 줄을 발견하면 내용이 있는 줄을 찾을 때까지 줄을 계속 건너뛰어야만 합니다. 또한, 내용이 있는 모든 줄은 있는 그대로 출력하면 됩니다. 이를 처리하기 위해 `sed` 는 `d` 명령어(줄 삭제)와 `n` 명령어(다음 줄로 이동)를 적절히 사용할 수 있습니다.
+
+맞습니다! 이런 논리로 sed를 사용해 처리하려면 루프를 만들어야 합니다. sed는 `:`(라벨), `b`(분기), 그리고 `t`(테스트) 함수들을 사용해 조건부 또는 무조건 분기를 수행함으로써 루프를 만들 수 있습니다. 이를 통해 빈 줄은 건너뛰고, 내용이 있는 줄만 찾을 수 있습니다.
 
 ```
 $ sed -n 'p' fix_empty_spacing.sed
@@ -416,9 +414,9 @@ b check_empty_line
 p
 ```
 
-We must note that we created three labels, namely check_empty_line, eat_empty_line, and print_content. In the beginning, we conditionally branched using test function to eat_empty_line block based on the fact that substitution in the previous line was successful or not. Further, we consumed the empty lines with the n function and did an unconditional branching to check_empty_line block using the branch function.
+`check_empty_line`, `eat_empty_line`, `print_content` 라는 세 가지 라벨을 만들었음을 주목해야 합니다. 처음에, `test` 함수를 사용해 이전 줄에서 대체 작업이 성공했는지 여부에 따라 `eat_empty_line` 블록으로 조건부 분기합니다. 그리고, 빈 줄을 `n` 함수를 수행한 후, `branch` 함수를 사용해 `check_empty_line` 블록으로 무조건 분기했습니다. 이렇게 처리하면 빈 줄은 건너뛰고, 내용이 있는 줄만 처리할 수 있습니다.
 
-If we’re more familiar with while() loops and if statements, we can think of this logic through a more relatable pseudo-code:
+만약, `while()` 루프문과 `if` 분기문에 익숙하다면, 이 논리를 좀 더 친숙한 다음과 같은 의사 코드로 생각할 수 있습니다.
 
 ```
 line = getNextLine();
@@ -436,7 +434,7 @@ while( true ) {
 }
 ```
 
-Finally, let’s do the cleansing task of removing the empty lines:
+마지막으로 빈 줄을 제거하는 정리 작업을 다음과 같이 실행해 보겠습니다:
 
 ```
 $ sed -n -f fix_empty_spacing.sed books_authors_empty_lines.txt
@@ -455,6 +453,4 @@ The Chord
 <br><br><br><br>
 
 # 8. Conclusion
-In this article, we developed a good understanding of various concepts related to stream text editing. Moreover, we also used sed as a stream editor to solve a few tricky text editing use cases.
-
-Let’s gear up by putting this tool in our Linux toolkit for regular use and boosting our productivity.
+이 글에서는 스트림 텍스트 편집과 관련된 다양한 개념에 대해 잘 이해할 수 있었습니다. 또한, 몇 가지 까다로운 텍스트 편집 문제를 해결하기 위해 sed를 스트림 편집기로 사용하는 방법을 배웠습니다.
