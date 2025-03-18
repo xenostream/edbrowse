@@ -10,9 +10,9 @@ Well, the whole idea is that sed treats the input as a stream of text.
 
 Further, it filters the lines with the help of the pattern before it can perform the core editing action:
 
-```
-[pattern] action
-```
+
+> [pattern] action
+
 To define a pattern, we can either use a fixed address in the form of a line number or a contextual address in the form of a regular expression:
 
 ```
