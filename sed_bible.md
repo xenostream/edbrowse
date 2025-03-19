@@ -1903,10 +1903,9 @@ $
 /./,/ ^ $/!d
 ```
 
-The range is /./ to  / ^ $/ . The start address in the range matches any line that contains at
-least one character. The end address in the range matches a blank line. Lines within this
-range aren’t deleted.
-Here’s the script in action:
+범위는 `/./`에서 `/^$/`까지입니다. 범위 내의 시작 주소는 적어도 하나의 문자가 포함된 모든 줄과 일치합니다. 범위의 끝 주소는 빈 줄과 일치합니다. 이 범위 내의 줄은 삭제되지 않습니다.
+
+다음은 이 스크립트가 실행되는 예입니다:
 
 ```
 $ cat data8.txt
@@ -1932,28 +1931,21 @@ This is line four.
 $
 ```
 
-No matter how many blank lines appear between lines of data in the fi le, the output places
-only one blank line between the lines.
+파일에서 데이터 줄 사이에 빈 줄이 얼마나 많이 나타나더라도, 출력에서는 줄 사이에 오직 하나의 빈 줄만 표시됩니다.
 
 
 #### Deleting leading blank lines
-It is also a nuisance when data fi les contain multiple blank lines at the start of the fi le.
-Often when you are trying to import data from a text fi le into a database, the blank lines
-create null entries, throwing off any calculations using the data.
+데이터 파일에 파일의 시작 부분에 여러 개의 빈 줄이 포함되어 있을 때도 불편함이 있습니다. 종종 텍스트 파일에서 데이터를 데이터베이스로 가져오려고 할 때, 빈 줄이 null 항목을 생성하여 데이터를 사용한 계산에 방해가 됩니다.
 
-Removing blank lines from the top of a data stream is not a diffi cult task. Here’s the script
-that accomplishes that function:
+데이터 스트림의 상단에서 빈 줄을 제거하는 것은 어려운 작업이 아닙니다. 아래는 그 기능을 수행하는 스크립트입니다:
 
 ```
 /./,$!d
 ```
 
-The script uses an address range to determine what lines are deleted. The range starts
-with a line that contains a character and continues to the end of the data stream. Any line
-within this range is not deleted from the output. This means that any lines before the fi rst
-line that contain a character are deleted.
+이 스크립트는 주소 범위를 사용하여 삭제할 줄을 결정합니다. 범위는 문자가 포함된 줄에서 시작하여 데이터 스트림의 끝까지 계속됩니다. 이 범위 내의 줄은 출력에서 삭제되지 않습니다. 즉, 문자가 포함된 첫 번째 줄 이전의 모든 줄은 삭제됩니다.
 
-Look at this simple script in action:
+다음은 이 간단한 스크립트가 실행되는 예입니다:
 
 ```
 $ cat data9.txt
@@ -1970,16 +1962,13 @@ This is line two.
 $
 ```
 
-The test fi le contains two blank lines before the data lines. The script successfully removes
-both of the leading blank lines, while keeping the blank line within the data intact.
+테스트 파일에는 데이터 줄 앞에 두 개의 빈 줄이 있습니다. 이 스크립트는 앞의 두 개의 빈 줄을 성공적으로 제거하며, 데이터 내의 빈 줄은 그대로 유지합니다.
 
 
 #### Deleting trailing blank lines
-Unfortunately, deleting trailing blank lines is not as simple as deleting leading blank lines.
-Just like printing the end of a data stream, deleting blank lines at the end of a data stream
-requires a little ingenuity and looping.
+불행히도, 끝 부분의 빈 줄을 삭제하는 것은 시작 부분의 빈 줄을 삭제하는 것만큼 간단하지 않습니다. 데이터 스트림의 끝을 출력하는 것처럼, 데이터 스트림 끝의 빈 줄을 삭제하려면 약간의 창의성과 루프가 필요합니다.
 
-Before we start the discussion, let’s see what the script looks like:
+이제 이 문제를 해결하는 스크립트가 어떻게 생겼는지 살펴보겠습니다:
 
 ```
 sed '{
@@ -1988,14 +1977,11 @@ sed '{
 }'
 ```
 
-This may look a little odd to you at fi rst. Notice that there are braces within the normal
-script braces. This allows you to group commands together within the overall command
-script. The group of commands applies to the specifi ed address pattern. The address pattern
-matches any line that contains only a newline character. When one is found, if it’s the last
-line, the  delete command deletes it. If it’s not the last line, the  N command appends the
-next line to it, and the  branch command loops to the beginning to start over.
+처음에는 이 스크립트가 조금 이상하게 보일 수 있습니다. 일반적인 스크립트 괄호 안에 중괄호가 있는 것을 주목하세요. 이는 전체 명령 스크립트 내에서 명령들을 함께 그룹화할 수 있게 해줍니다. 
+명령 그룹은 지정된 주소 패턴에 적용됩니다. 주소 패턴은 새 줄 문자만 포함된 줄에 일치합니다. 만약 그런 줄이 발견되면, 그것이 마지막 줄이라면 `delete` 명령이 해당 줄을 삭제합니다. 
+마지막 줄이 아니라면, `N` 명령이 그 줄에 다음 줄을 추가하고, `branch` 명령은 루프를 시작하여 처음으로 돌아갑니다.
 
-Here’s the script in action:
+다음은 이 스크립트가 실행되는 예입니다:
 
 ```
 $ cat data10.txt
@@ -2013,19 +1999,15 @@ This is the second line.
 $
 ```
 
-The script successfully removed the blank lines from the end of the text fi le.
+스크립트는 텍스트 파일의 끝에 있는 빈 줄을 성공적으로 제거했습니다.
 
 
 
 ### Removing HTML tags
-These days, it’s not uncommon to download text from a website to save or use as data in an
-application. Sometimes, however, when you download text from the website, you also get
-the HTML tags used to format the data. This can be a problem when all you want to see is
-the data.
+요즘, 웹사이트에서 텍스트를 다운로드하여 저장하거나 애플리케이션에서 데이터를 사용하는 것은 드문 일이 아닙니다. 그러나 때때로 웹사이트에서 텍스트를 다운로드할 때, 
+데이터 포맷을 지정하는 데 사용된 HTML 태그도 함께 다운로드되는 경우가 있습니다. 이 경우, 단순히 데이터만 보고 싶은데 HTML 태그가 함께 포함되어 있으면 문제가 될 수 있습니다.
 
-A standard HTML web page contains several different types of HTML tags, identifying for-
-matting features required to properly display the page information. Here’s a sample of what
-an HTML fi le looks like:
+표준 HTML 웹 페이지는 페이지 정보를 올바르게 표시하는 데 필요한 여러 유형의 HTML 태그를 포함하고 있습니다. 다음은 HTML 파일의 예시입니다:
 
 ```
 $ cat data11.txt
@@ -2043,20 +2025,15 @@ information to use in our sed script.
 $
 ```
 
-HTML tags are identifi ed by the less-than and greater-than symbols. Most HTML tags come
-in pairs. One tag starts the formatting process (for example,  <b> for bolding), and another
-tag stops the formatting process (for example,  </b> to turn off bolding).
+HTML 태그는 `<`와 `>` 기호로 식별됩니다. 대부분의 HTML 태그는 쌍으로 이루어져 있습니다. 하나의 태그는 포맷팅 프로세스를 시작하며 (예: `<b>`는 굵게 만들기), 다른 태그는 포맷팅 프로세스를 종료합니다 (예: `</b>`는 굵게 만들기를 종료).
 
-Removing HTML tags creates a problem, however, if you’re not careful. At fi rst glance, you’d
-think that the way to remove HTML tags would be to just look for a text string that starts
-with a less-than symbol (<), ends with a greater-than symbol (>), and has data in between
-the symbols:
+그러나 HTML 태그를 제거하는 데는 주의가 필요합니다. 처음에는 HTML 태그를 제거하는 방법이 `<` 기호로 시작하고 `>` 기호로 끝나는 텍스트 문자열을 찾아서 그 사이에 있는 데이터를 삭제하는 것이라고 생각할 수 있습니다.
 
 ```
 s/<.*>//g
 ```
 
-Unfortunately, this command has some unintended consequences:
+불행히도, 이 명령은 예상치 못한 결과를 초래할 수 있습니다:
 
 ```
 $ sed 's/<.*>//g' data11.txt
@@ -2074,21 +2051,16 @@ information to use in our sed script.
 $
 ```
 
-Notice that the title text is missing, along with the text that was bolded and italicized.
-The  sed editor literally interpreted the script to mean any text between the less-than and
-greater-than sign, including other less-than and greater-than signs! Each time the text was
-enclosed in HTML tags (such as  <b>first</b> ), the  sed script removed the entire text.
+제목 텍스트와 굵게 또는 기울임꼴로 표시된 텍스트가 모두 사라졌다는 것을 확인하세요. `sed` 편집기는 `<`와 `>` 기호 사이의 모든 텍스트를 처리한다고 해석했으며, 
+이때 다른 `<`와 `>` 기호도 포함되었습니다! HTML 태그로 감싼 각 텍스트 (예: `<b>first</b>`)마다 `sed` 스크립트는 해당 텍스트 전체를 제거했습니다.
 
-The solution to this problem is to have the  sed editor ignore any embedded greater-than
-signs between the original tags. To do that, you can create a character class that negates
-the greater-than sign. This changes the script to:
+이 문제를 해결하려면, `sed` 편집기가 원래 태그들 사이에 포함된 `>` 기호를 무시하도록 해야 합니다. 이를 위해서는 `>` 기호를 제외한 문자 클래스를 생성하면 됩니다. 이렇게 하면 스크립트는 다음과 같이 변경됩니다:
 
 ```
 s/<[ ^ >]*>//g
 ```
 
-This script now works properly, displaying the data you need to see from the web page
-HTML code:
+이 스크립트는 이제 제대로 작동하여 웹 페이지에서 필요한 데이터를 표시합니다. HTML 코드:
 
 ```
 $ sed 's/<[^>]*>//g' data11.txt
@@ -2106,8 +2078,7 @@ information to use in our sed script.
 $
 ```
 
-That’s a little better. To clean things up some, you can add a  delete command to get rid of
-those pesky blank lines:
+조금 더 나아졌습니다. 깨끗하게 정리하려면, 성가신 빈 줄을 제거하기 위해 `delete` 명령을 추가할 수 있습니다:
 
 ```
 $ sed 's/<[^>]*>//g ; /^$/d' data11.txt
@@ -2118,54 +2089,27 @@ information to use in our sed script.
 $
 ```
 
-Now that’s much more compact; there’s only the data you need to see.
+이제 훨씬 더 간결해졌습니다. 필요한 데이터만 남아 있습니다.
 
 
 # Summary
-The  sed editor provides some advanced features that allow you to work with text patterns
-across multiple lines. This chapter showed you how to use the  next command to retrieve
-the next line in a data stream and place it in the pattern space. Once in the pattern space,
-you can perform complex  substitution commands to replace phrases that span more
-than one line of text.
+`sed` 편집기는 여러 줄에 걸쳐 텍스트 패턴을 다룰 수 있는 고급 기능을 제공합니다. 이 장에서는 `next` 명령을 사용하여 데이터 스트림에서 다음 줄을 가져와 패턴 공간에 배치하는 방법을 보여주었습니다. 
+패턴 공간에 들어가면 여러 줄에 걸친 문구를 교체하는 복잡한 대체 명령을 실행할 수 있습니다.
 
-The multiline  delete command allows you to remove the fi rst line when the pattern space
-contains two or more lines. This is a convenient way to iterate through multiple lines in
-the data stream. Similarly, the multiline  print command allows you to print just the fi rst
-line when the pattern space contains two or more lines of text. The combination of the
-multiline commands allows you to iterate through the data stream and create a multiline
-substitution system.
+멀티라인 `delete` 명령은 패턴 공간에 두 개 이상의 줄이 있을 때 첫 번째 줄을 제거할 수 있습니다. 이는 데이터 스트림에서 여러 줄을 반복해서 처리하는 편리한 방법입니다. 
+마찬가지로, 멀티라인 `print` 명령은 패턴 공간에 두 개 이상의 텍스트 줄이 있을 때 첫 번째 줄만 출력할 수 있습니다. 멀티라인 명령을 결합하면 데이터 스트림을 반복하고 멀티라인 대체 시스템을 만들 수 있습니다.
 
-Next, we covered the hold space. The hold space allows you to set aside a line of text while
-processing more lines of text. You can recall the contents of the hold space at any time and
-either replace the text in the pattern space or append the contents of the hold space to the
-text in the pattern space. Using the hold space allows you to sort through data streams,
-reversing the order of text lines as they appear in the data.
+다음으로, `hold space`에 대해 설명했습니다. `hold space`는 텍스트 줄을 보관하여 더 많은 텍스트 줄을 처리하는 동안 보류할 수 있게 해줍니다. 언제든지 `hold space`의 내용을 호출하여 패턴 공간의 텍스트를 교체하거나, 
+`hold space`의 내용을 패턴 공간에 추가할 수 있습니다. `hold space`를 사용하면 데이터 스트림을 정렬하고, 데이터에 나타나는 텍스트 줄의 순서를 반전시킬 수 있습니다.
 
-Next we reviewed the various  sed editor fl ow control commands. The  branch command
-provides a way for you to alter the normal fl ow of  sed editor commands in the script,
-creating loops or skipping commands under certain conditions. The  test command pro-
-vides an  if-then type of statement for your  sed editor command scripts. The  test
-command branches only if a prior  substitution command succeeds in replacing text
-in a line.
+그 후 다양한 `sed` 편집기 흐름 제어 명령에 대해 살펴봤습니다. `branch` 명령은 스크립트에서 `sed` 명령의 정상적인 흐름을 변경하여 조건에 따라 명령을 반복하거나 건너뛸 수 있는 방법을 제공합니다. 
+`test` 명령은 `if-then` 형식의 구문을 제공하며, 이전에 텍스트를 대체한 `substitution` 명령이 성공할 경우만 분기됩니다.
 
-The chapter concluded with a discussion of how to use  sed scripts in your shell scripts. A
-common technique for large  sed scripts is to place the script in a shell wrapper. You can
-use command line parameter variables within the  sed script to pass shell command line
-values. This creates an easy way to utilize your  sed editor scripts directly from the com-
-mand line, or even from other shell scripts.
+이 장은 `sed` 스크립트를 셸 스크립트에서 사용하는 방법에 대해 설명하며 마무리되었습니다. 대형 `sed` 스크립트의 일반적인 기법은 스크립트를 셸 래퍼에 넣는 것입니다. 
+이때 `sed` 스크립트 내에서 명령줄 파라미터 변수를 사용하여 셸 명령줄 값을 전달할 수 있습니다. 이렇게 하면 명령줄에서 직접, 또는 다른 셸 스크립트에서 `sed` 편집기 스크립트를 쉽게 활용할 수 있습니다.
 
-The next chapter digs deeper into the  gawk world. The  gawk program supports many
-features of higher-level programming languages. You can create some pretty involved data
-manipulation and reporting programs just by using  gawk  . The chapter describes the vari-
-ous programming features and demonstrates how to use them to generate your own fancy
-reports from simple data.
-
-
-
-
-
-
-
+다음 장에서는 `gawk`의 세계를 더 깊이 파고들 것입니다. `gawk` 프로그램은 고급 프로그래밍 언어의 많은 기능을 지원합니다. `gawk`를 사용하여 꽤 복잡한 데이터 조작 및 보고 프로그램을 만들 수 있습니다. 
+이 장에서는 다양한 프로그래밍 기능을 설명하고, 이를 사용하여 간단한 데이터에서 멋진 보고서를 생성하는 방법을 보여줍니다.
 
 
 
