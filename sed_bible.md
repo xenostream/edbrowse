@@ -1903,46 +1903,262 @@ $
 /./,/ ^ $/!d
 ```
 
+The range is /./ to  / ^ $/ . The start address in the range matches any line that contains at
+least one character. The end address in the range matches a blank line. Lines within this
+range aren’t deleted.
+Here’s the script in action:
+
+```
+$ cat data8.txt
+This is line one.
+
+
+This is line two.
+
+This is line three.
+
+
+
+This is line four.
+$
+$ sed '/./,/^$/!d' data8.txt
+This is line one.
+
+This is line two.
+
+This is line three.
+
+This is line four.
+$
+```
+
+No matter how many blank lines appear between lines of data in the fi le, the output places
+only one blank line between the lines.
+
+
+#### Deleting leading blank lines
+It is also a nuisance when data fi les contain multiple blank lines at the start of the fi le.
+Often when you are trying to import data from a text fi le into a database, the blank lines
+create null entries, throwing off any calculations using the data.
+
+Removing blank lines from the top of a data stream is not a diffi cult task. Here’s the script
+that accomplishes that function:
+
+```
+/./,$!d
+```
+
+The script uses an address range to determine what lines are deleted. The range starts
+with a line that contains a character and continues to the end of the data stream. Any line
+within this range is not deleted from the output. This means that any lines before the fi rst
+line that contain a character are deleted.
+
+Look at this simple script in action:
+
+```
+$ cat data9.txt
+T
+
+his is line one.
+
+This is line two.
+$
+$ sed '/./,$!d' data9.txt
+This is line one.
+
+This is line two.
+$
+```
+
+The test fi le contains two blank lines before the data lines. The script successfully removes
+both of the leading blank lines, while keeping the blank line within the data intact.
+
+
+#### Deleting trailing blank lines
+Unfortunately, deleting trailing blank lines is not as simple as deleting leading blank lines.
+Just like printing the end of a data stream, deleting blank lines at the end of a data stream
+requires a little ingenuity and looping.
+
+Before we start the discussion, let’s see what the script looks like:
+
+```
+sed '{
+:start
+/ ^ \n*$/{$d; N; b start }
+}'
+```
+
+This may look a little odd to you at fi rst. Notice that there are braces within the normal
+script braces. This allows you to group commands together within the overall command
+script. The group of commands applies to the specifi ed address pattern. The address pattern
+matches any line that contains only a newline character. When one is found, if it’s the last
+line, the  delete command deletes it. If it’s not the last line, the  N command appends the
+next line to it, and the  branch command loops to the beginning to start over.
+
+Here’s the script in action:
+
+```
+$ cat data10.txt
+This is the first line.
+This is the second line.
+
+
+
+$ sed '{
+> :start
+> /^\n*$/{$d ; N ; b start }
+> }' data10.txt
+This is the first line.
+This is the second line.
+$
+```
+
+The script successfully removed the blank lines from the end of the text fi le.
+
+
+
+### Removing HTML tags
+These days, it’s not uncommon to download text from a website to save or use as data in an
+application. Sometimes, however, when you download text from the website, you also get
+the HTML tags used to format the data. This can be a problem when all you want to see is
+the data.
+
+A standard HTML web page contains several different types of HTML tags, identifying for-
+matting features required to properly display the page information. Here’s a sample of what
+an HTML fi le looks like:
+
+```
+$ cat data11.txt
+<html>
+<head>
+<title>This is the page title</title>
+</head>
+<body>
+<p>
+This is the <b>first</b> line in the Web page.
+This should provide some <i>useful</i>
+information to use in our sed script.
+</body>
+</html>
+$
+```
+
+HTML tags are identifi ed by the less-than and greater-than symbols. Most HTML tags come
+in pairs. One tag starts the formatting process (for example,  <b> for bolding), and another
+tag stops the formatting process (for example,  </b> to turn off bolding).
+
+Removing HTML tags creates a problem, however, if you’re not careful. At fi rst glance, you’d
+think that the way to remove HTML tags would be to just look for a text string that starts
+with a less-than symbol (<), ends with a greater-than symbol (>), and has data in between
+the symbols:
+
+```
+s/<.*>//g
+```
+
+Unfortunately, this command has some unintended consequences:
+
+```
+$ sed 's/<.*>//g' data11.txt
 
 
 
 
 
 
+This is the line in the Web page.
+This should provide some
+information to use in our sed script.
+
+
+$
+```
+
+Notice that the title text is missing, along with the text that was bolded and italicized.
+The  sed editor literally interpreted the script to mean any text between the less-than and
+greater-than sign, including other less-than and greater-than signs! Each time the text was
+enclosed in HTML tags (such as  <b>first</b> ), the  sed script removed the entire text.
+
+The solution to this problem is to have the  sed editor ignore any embedded greater-than
+signs between the original tags. To do that, you can create a character class that negates
+the greater-than sign. This changes the script to:
+
+```
+s/<[ ^ >]*>//g
+```
+
+This script now works properly, displaying the data you need to see from the web page
+HTML code:
+
+```
+$ sed 's/<[^>]*>//g' data11.txt
+
+
+This is the page title
 
 
 
+This is the first line in the Web page.
+This should provide some useful
+information to use in our sed script.
 
 
+$
+```
+
+That’s a little better. To clean things up some, you can add a  delete command to get rid of
+those pesky blank lines:
+
+```
+$ sed 's/<[^>]*>//g ; /^$/d' data11.txt
+This is the page title
+This is the first line in the Web page.
+This should provide some useful
+information to use in our sed script.
+$
+```
+
+Now that’s much more compact; there’s only the data you need to see.
 
 
+# Summary
+The  sed editor provides some advanced features that allow you to work with text patterns
+across multiple lines. This chapter showed you how to use the  next command to retrieve
+the next line in a data stream and place it in the pattern space. Once in the pattern space,
+you can perform complex  substitution commands to replace phrases that span more
+than one line of text.
 
+The multiline  delete command allows you to remove the fi rst line when the pattern space
+contains two or more lines. This is a convenient way to iterate through multiple lines in
+the data stream. Similarly, the multiline  print command allows you to print just the fi rst
+line when the pattern space contains two or more lines of text. The combination of the
+multiline commands allows you to iterate through the data stream and create a multiline
+substitution system.
 
+Next, we covered the hold space. The hold space allows you to set aside a line of text while
+processing more lines of text. You can recall the contents of the hold space at any time and
+either replace the text in the pattern space or append the contents of the hold space to the
+text in the pattern space. Using the hold space allows you to sort through data streams,
+reversing the order of text lines as they appear in the data.
 
+Next we reviewed the various  sed editor fl ow control commands. The  branch command
+provides a way for you to alter the normal fl ow of  sed editor commands in the script,
+creating loops or skipping commands under certain conditions. The  test command pro-
+vides an  if-then type of statement for your  sed editor command scripts. The  test
+command branches only if a prior  substitution command succeeds in replacing text
+in a line.
 
+The chapter concluded with a discussion of how to use  sed scripts in your shell scripts. A
+common technique for large  sed scripts is to place the script in a shell wrapper. You can
+use command line parameter variables within the  sed script to pass shell command line
+values. This creates an easy way to utilize your  sed editor scripts directly from the com-
+mand line, or even from other shell scripts.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The next chapter digs deeper into the  gawk world. The  gawk program supports many
+features of higher-level programming languages. You can create some pretty involved data
+manipulation and reporting programs just by using  gawk  . The chapter describes the vari-
+ous programming features and demonstrates how to use them to generate your own fancy
+reports from simple data.
 
 
 
