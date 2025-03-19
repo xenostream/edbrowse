@@ -1035,6 +1035,895 @@ This is the last line.
 $
 ```
 
+sed 편집기 스크립트는 "fi rst"라는 단어를 포함한 텍스트 라인을 검색합니다. 해당 라인을 찾으면, `N` 명령어를 사용하여 그 라인과 다음 라인을 결합합니다. 
+그 후 `s` (치환) 명령어를 사용하여 줄 바꿈 문자를 공백으로 바꿉니다. 그 결과, 텍스트 파일의 두 라인이 sed 편집기 출력에서 하나의 라인처럼 나타납니다.
+
+이 방법은 데이터 파일에서 텍스트 구문이 두 줄에 걸쳐 나눠져 있을 수 있는 경우에 실용적으로 사용됩니다. 예를 들어, 다음과 같습니다:
+
+```
+$ cat data3.txt
+On Tuesday, the Linux System
+Administrator's group meeting will be held.
+All System Administrators should attend.
+Thank you for your attendance.
+$
+$ sed 'N ; s/System Administrator/Desktop User/' data3.txt
+On Tuesday, the Linux System
+Administrator's group meeting will be held.
+All Desktop Users should attend.
+Thank you for your attendance.
+$
+```
+
+치환 명령어는 텍스트 파일에서 특정한 두 단어 구문인 "System Administrator"를 찾고 있습니다. 이 구문이 포함된 단일 라인에서는 모든 것이 정상적으로 작동하여 치환 명령어가 텍스트를 교체할 수 있습니다. 
+그러나 구문이 두 줄에 걸쳐 나뉘어 있는 경우, 치환 명령어는 일치하는 패턴을 인식하지 못합니다.
+
+`N` 명령어는 이 문제를 해결하는 데 도움이 됩니다:
+
+```
+$ sed 'N ; s/System.Administrator/Desktop User/' data3.txt
+On Tuesday, the Linux Desktop User's group meeting will be held.
+All Desktop Users should attend.
+Thank you for your attendance.
+$
+```
+
+`N` 명령어를 사용하여 첫 번째 단어가 있는 라인과 그 다음 라인을 결합하면, 구문이 두 줄로 나누어졌을 때 이를 감지할 수 있습니다.
+
+치환 명령어는 `System`과 `Administrator`라는 두 단어 사이에 와일드카드 패턴 (.)을 사용하여 공백과 줄 바꿈 상황을 모두 매칭합니다. 
+그러나 줄 바꿈 문자를 매칭했을 때, 해당 문자가 문자열에서 제거되어 두 줄이 하나로 합쳐졌습니다. 이는 원하는 결과가 아닐 수 있습니다.
+
+이 문제를 해결하려면, `sed` 편집기 스크립트에서 두 개의 치환 명령어를 사용할 수 있습니다. 하나는 멀티라인에서 발생한 구문을 매칭하고, 다른 하나는 단일 라인에서 발생한 구문을 매칭하는 방식입니다.
+
+```
+$ sed 'N
+> s/System\nAdministrator/Desktop\nUser/
+> s/System Administrator/Desktop User/
+> ' data3.txt
+On Tuesday, the Linux Desktop
+User's group meeting will be held.
+All Desktop Users should attend.
+Thank you for your attendance.
+$
+```
+
+첫 번째 치환 명령어는 두 검색 단어 사이에 있는 줄 바꿈 문자를 정확히 찾아서 교체 문자열에 포함시킵니다. 이렇게 하면 새 텍스트에서 동일한 위치에 줄 바꿈 문자를 추가할 수 있습니다.
+
+그러나 이 스크립트에는 여전히 미묘한 문제가 있습니다. 스크립트는 항상 `sed` 편집기 명령어를 실행하기 전에 다음 텍스트 라인을 패턴 공간에 읽어옵니다. 
+마지막 텍스트 라인에 도달하면 읽을 다음 텍스트 라인이 없기 때문에, `N` 명령어는 `sed` 편집기가 멈추도록 만듭니다. 만약 일치하는 텍스트가 데이터 스트림의 마지막 줄에 있다면, 명령어가 일치하는 데이터를 처리하지 못합니다.
+
+```
+$ cat data4.txt
+On Tuesday, the Linux System
+Administrator's group meeting will be held.
+All System Administrators should attend.
+$
+$ sed 'N
+> s/System\nAdministrator/Desktop\nUser/
+> s/System Administrator/Desktop User/
+> ' data4.txt
+On Tuesday, the Linux Desktop
+User's group meeting will be held.
+All System Administrators should attend.
+$
+```
+
+`System Administrator` 텍스트가 데이터 스트림의 마지막 줄에 나타나기 때문에, `N` 명령어는 그것을 놓칩니다. 그 이유는 패턴 공간에 결합할 다음 라인이 없기 때문입니다.
+
+이 문제는 간단하게 해결할 수 있습니다. 단일 라인 명령어를 `N` 명령어 앞에 배치하고, 멀티라인 명령어만 `N` 명령어 뒤에 배치하면 됩니다. 예를 들어, 다음과 같이 구성할 수 있습니다:
+
+```
+$ sed '
+> s/System Administrator/Desktop User/
+> N
+> s/System\nAdministrator/Desktop\nUser/
+> ' data4.txt
+On Tuesday, the Linux Desktop
+User's group meeting will be held.
+All Desktop Users should attend.
+$
+```
+
+이제 단일 라인에서 구문을 찾는 치환 명령어가 데이터 스트림의 마지막 줄에서도 잘 작동하고, 멀티라인 치환 명령어는 데이터 스트림 중간에 있는 일치 항목을 처리합니다.
+
+
+### Navigating the multiline delete command
+19장에서는 단일 라인 삭제 명령어 (`d`)를 소개했습니다. `sed` 편집기는 이를 사용하여 패턴 공간에서 현재 라인을 삭제합니다. 그러나 `N` 명령어를 사용할 때는 단일 라인 삭제 명령어를 사용할 때 주의해야 합니다:
+
+```
+$ sed 'N ; /System\nAdministrator/d' data4.txt
+All System Administrators should attend.
+$
+```
+
+삭제 명령어는 `System`과 `Administrator` 단어를 각각 다른 줄에서 찾고, 패턴 공간에서 두 줄을 모두 삭제했습니다. 이것이 의도한 결과였을 수도 있고, 아닐 수도 있습니다.
+
+`sed` 편집기는 멀티라인 삭제 명령어 (`D`)를 제공하는데, 이는 패턴 공간에서 첫 번째 줄만 삭제합니다. 이 명령어는 줄 바꿈 문자를 포함하여 해당 줄의 모든 문자를 제거합니다.
+
+```
+$ sed 'N ; /System\nAdministrator/D' data4.txt
+Administrator's group meeting will be held.
+All System Administrators should attend.
+$
+```
+
+`N` 명령어에 의해 패턴 공간에 추가된 두 번째 텍스트 줄은 그대로 유지됩니다. 이는 데이터 문자열을 찾는 라인 앞에 있는 텍스트 줄을 제거해야 할 때 유용하게 사용됩니다.
+
+다음은 데이터 스트림에서 첫 번째 라인 앞에 있는 빈 줄을 제거하는 예입니다:
+
+```
+$ cat data5.txt
+
+This is the header line.
+This is a data line.
+
+This is the last line.
+$
+$ sed '/^$/{N ; /header/D}' data5.txt
+This is the header line.
+This is a data line.
+
+This is the last line.
+$
+```
+
+이 `sed` 편집기 스크립트는 빈 줄을 찾고, `N` 명령어를 사용하여 다음 텍스트 줄을 패턴 공간에 추가합니다. 만약 새 패턴 공간 내용에 "header"라는 단어가 포함되어 있다면, 
+`D` 명령어가 패턴 공간에서 첫 번째 줄을 제거합니다. `N`과 `D` 명령어의 조합 없이는 첫 번째 빈 줄만 제거하는 것이 불가능하며, 다른 빈 줄까지 모두 제거될 수 있습니다.
+
+
+
+### Navigating the multiline print command
+이제 아마 단일 라인 명령어와 멀티라인 명령어의 차이를 이해하고 있을 것입니다. 멀티라인 출력 명령어 (`P`)도 같은 방식으로 작동합니다. 이 명령어는 멀티라인 패턴 공간에서 첫 번째 줄만 출력합니다. 
+여기에는 패턴 공간에서 줄 바꿈 문자를 포함한 모든 문자가 포함됩니다. `-n` 옵션을 사용하여 스크립트의 출력을 억제할 때, 텍스트를 표시하는 방식은 단일 라인 `p` 명령어와 비슷하게 사용됩니다.
+
+```
+$ sed -n 'N ; /System\nAdministrator/P' data3.txt
+On Tuesday, the Linux System
+$
+```
+
+멀티라인 매칭이 발생하면, `P` 명령어는 패턴 공간에서 첫 번째 줄만 출력합니다. 멀티라인 `P` 명령어의 강력함은 이를 `N`과 `D` 멀티라인 명령어와 결합할 때 나타납니다.
+
+`D` 명령어는 독특한 기능을 가지고 있는데, 이는 `sed` 편집기가 스크립트의 처음으로 돌아가서 동일한 패턴 공간에 대해 명령어를 반복 실행하게 만듭니다. 
+새로운 텍스트 라인을 데이터 스트림에서 읽어오지 않습니다. 명령어 스크립트에 `N` 명령어를 포함시키면, 패턴 공간을 한 줄씩 순차적으로 처리하면서 여러 줄을 결합할 수 있습니다.
+
+그다음, `P` 명령어를 사용하여 첫 번째 줄을 출력하고, `D` 명령어로 첫 번째 줄을 삭제한 후 스크립트의 처음으로 돌아갑니다. 
+스크립트의 처음에 돌아가면, `N` 명령어는 다음 텍스트 줄을 읽어들이고, 이 과정이 반복됩니다. 이 루프는 데이터 스트림의 끝에 도달할 때까지 계속됩니다.
+
+
+
+### Holding Space
+패턴 공간은 `sed` 편집기가 명령어를 처리하는 동안 텍스트를 저장하는 활성 버퍼 영역입니다. 그러나 이것이 `sed` 편집기에서 텍스트를 저장할 수 있는 유일한 공간은 아닙니다.
+
+`sed` 편집기는 또 다른 버퍼 영역인 **홀드 공간(hold space)** 을 사용합니다. 홀드 공간은 패턴 공간에서 다른 줄을 작업하는 동안 텍스트 라인을 임시로 저장하는 데 사용할 수 있습니다.
+
+홀드 공간을 사용하는 데 관련된 다섯 가지 명령어는 **표 21-1**에 나와 있습니다.
+
+| 명령 | 설명 |
+| ---  | ---  |
+| h    | 패턴 공간을 홀드 공간에 복사합니다.     |
+| H    | 패턴 공간을 홀드 공간에 추가합니다.     |
+| g    | 홀드 공간을 패턴 공간에 복사합니다.     |
+| G    | 홀드 공간을 패턴 공간에 추가합니다.     |
+| x    | 패턴 공간과 홀드 공간의 내용을 교환합니다.     |
+
+이 명령어들을 사용하면 패턴 공간에서 홀드 공간으로 텍스트를 복사할 수 있습니다. 이렇게 하면 패턴 공간을 비워 두고 다른 문자열을 로드하여 처리할 수 있게 됩니다.
+
+보통 `h` 또는 `H` 명령어로 문자열을 홀드 공간으로 이동한 후, 나중에 `g`, `G`, 또는 `x` 명령어를 사용하여 저장된 문자열을 다시 패턴 공간으로 이동시키게 됩니다. (그렇지 않으면 처음에 문자열을 저장할 필요가 없었을 것입니다.)
+
+두 개의 버퍼 영역을 사용하면 어느 텍스트 라인이 어떤 버퍼에 있는지 파악하는 것이 때때로 혼란스러울 수 있습니다. 다음은 `h`와 `g` 명령어를 사용하여 `sed` 편집기 버퍼 공간 간에 데이터를 이동시키는 방법을 보여주는 간단한 예입니다:
+
+```
+$ cat data2.txt
+This is the header line.
+This is the first data line.
+This is the second data line.
+This is the last line.
+$
+$ sed -n '/first/ {h ; p ; n ; p ; g ; p }' data2.txt
+This is the first data line.
+This is the second data line.
+This is the first data line.
+$
+```
+
+앞서 언급한 코드 예제를 단계별로 살펴보겠습니다:
+
+1. `sed` 스크립트는 주소에서 정규 표현식을 사용하여 "first"라는 단어가 포함된 라인을 필터링합니다.
+2. "first"라는 단어가 포함된 라인이 나타나면, `{}` 내의 첫 번째 명령어인 `h` 명령어가 그 라인을 홀드 공간에 저장합니다.
+3. 그 다음 명령어인 `p` 명령어는 패턴 공간의 내용을 출력합니다. 패턴 공간에는 여전히 첫 번째 데이터 라인이 들어 있습니다.
+4. `n` 명령어는 데이터 스트림에서 다음 라인(두 번째 데이터 라인)을 읽어와서 패턴 공간에 넣습니다.
+5. `p` 명령어는 패턴 공간의 내용을 출력하는데, 이제 두 번째 데이터 라인이 출력됩니다.
+6. `g` 명령어는 홀드 공간에 저장된 첫 번째 데이터 라인을 패턴 공간에 다시 넣어 현재 텍스트를 대체합니다.
+7. `p` 명령어는 패턴 공간의 현재 내용을 출력하는데, 이제 첫 번째 데이터 라인이 출력됩니다.
+
+홀드 공간을 사용하여 텍스트 라인을 재배치함으로써 첫 번째 데이터 라인이 두 번째 데이터 라인 뒤에 나오도록 할 수 있습니다. 만약 첫 번째 `p` 명령어를 제거하면 두 라인을 역순으로 출력할 수 있습니다.
+
+```
+$ sed -n '/first/ {h ; n ; p ; g ; p }' data2.txt
+This is the second data line.
+This is the first data line.
+$
+```
+
+이것은 유용한 작업의 시작입니다. 이 기술을 사용하여 텍스트 파일의 전체 라인을 뒤집는 `sed` 스크립트를 만들 수 있습니다! 하지만 이를 위해서는 `sed` 편집기의 부정 기능을 이해할 필요가 있으며, 그 내용은 다음 섹션에서 다루고 있습니다.
+
+
+### Negating a Command
+19장에서 `sed` 편집기는 명령어를 데이터 스트림의 모든 텍스트 라인에 적용하거나, 단일 주소나 주소 범위로 지정된 라인에만 적용한다고 설명했습니다. 또한, 특정 주소나 주소 범위에 명령어가 적용되지 않도록 설정할 수도 있습니다.
+
+느낌표 명령어 (`!`)는 명령어를 부정하는 데 사용됩니다. 이는 명령어가 일반적으로 활성화되었을 상황에서, 그것이 활성화되지 않도록 합니다. 이 기능을 보여주는 예는 다음과 같습니다:
+
+```
+$ sed -n '/header/!p' data2.txt
+This is the first data line.
+This is the second data line.
+This is the last line.
+$
+```
+
+일반적으로 `p` 명령어는 "header"라는 단어가 포함된 `data2` 파일의 라인만 출력합니다. 하지만 느낌표를 추가하면 반대의 결과가 발생합니다. 즉, "header"라는 단어가 포함된 라인을 제외한 모든 라인이 출력됩니다.
+
+느낌표를 사용하는 것은 여러 응용 프로그램에서 유용합니다. 이전 장에서 "다음 명령어 탐색" 섹션에서는 `sed` 편집기 명령어가 데이터 스트림의 마지막 라인에 적용되지 않는 상황을 설명했었습니다. 이 문제를 해결하려면 느낌표를 사용할 수 있습니다:
+
+```
+$ sed 'N;
+> s/System\nAdministrator/Desktop\nUser/
+> s/System Administrator/Desktop User/
+> ' data4.txt
+On Tuesday, the Linux Desktop
+User's group meeting will be held.
+All System Administrators should attend.
+$
+$ sed '$!N;
+> s/System\nAdministrator/Desktop\nUser/
+> s/System Administrator/Desktop User/
+> ' data4.txt
+On Tuesday, the Linux Desktop
+User's group meeting will be held.
+All Desktop Users should attend.
+$
+```
+
+이 예제에서는 `N` 명령어와 달러 기호 (`$`) 특별 주소를 함께 사용한 느낌표를 보여줍니다. 달러 기호는 데이터 스트림의 마지막 텍스트 라인을 나타내므로, 
+`sed` 편집기가 마지막 라인에 도달하면 `N` 명령어를 실행하지 않습니다. 그러나 다른 모든 라인에서는 명령어를 실행합니다.
+
+이 기술을 사용하면 데이터 스트림에서 텍스트 라인의 순서를 반전시킬 수 있습니다. 텍스트 스트림에서 라인의 순서를 반대로(마지막 라인을 먼저, 
+첫 번째 라인을 마지막에) 출력하려면, 홀드 공간을 사용하여 약간의 추가 작업을 해야 합니다.
+
+이 작업을 위한 패턴은 다음과 같습니다:
+
+1. 패턴 공간에 라인을 놓습니다.
+2. 패턴 공간에서 라인을 홀드 공간에 놓습니다.
+3. 다음 텍스트 라인을 패턴 공간에 넣습니다.
+4. 홀드 공간을 패턴 공간에 추가합니다.
+5. 패턴 공간의 모든 내용을 홀드 공간에 넣습니다.
+6. 3단계부터 5단계를 반복하여 모든 라인을 홀드 공간에 반전된 순서로 넣습니다.
+7. 라인들을 꺼내서 출력합니다.
+
+**그림 21-1**은 이 과정을 더 자세하게 다이어그램으로 설명합니다.
+
+이 기술을 사용할 때, 처리되는 라인들을 바로 출력하지 않기를 원합니다. 즉, `sed`의 `-n` 명령행 옵션을 사용해야 합니다. 
+그다음으로 결정할 것은 홀드 공간의 텍스트를 패턴 공간의 텍스트에 어떻게 추가할지입니다. 이것은 `G` 명령어를 사용하여 수행됩니다.
+
+문제는 첫 번째 텍스트 라인에 홀드 공간을 추가하고 싶지 않다는 점입니다. 이는 쉽게 해결할 수 있는데, `!` 명령어를 사용하면 됩니다.
+
+```
+1!G
+```
+
+다음 단계는 새 패턴 공간(반전된 라인들이 추가된 텍스트 라인)을 홀드 공간에 넣는 것입니다. 이는 간단하며, h 명령어를 사용하면 됩니다.
+
+전체 데이터 스트림이 패턴 공간에 반전된 순서로 들어갔다면, 이제 결과를 출력하기만 하면 됩니다. 데이터 스트림의 마지막 라인에 도달했을 때, 
+전체 데이터 스트림이 패턴 공간에 있다는 것을 알 수 있습니다. 결과를 출력하려면, 다음 명령어를 사용하면 됩니다:
+
+```
+$p
+```
+
+>> 그림 571 page
+>
+
+그것들이 라인 순서를 반전시키는 `sed` 편집기 스크립트를 만드는 데 필요한 요소들입니다. 이제 테스트 실행을 통해 시도해 보세요:
+
+```
+$ cat data2.txt
+This is the header line.
+This is the first data line.
+This is the second data line.
+This is the last line.
+$
+$ sed -n '{1!G ; h ; $p }' data2.txt
+This is the last line.
+This is the second data line.
+This is the first data line.
+This is the header line.
+$
+```
+
+`sed` 편집기 스크립트는 예상대로 작동했습니다. 스크립트의 출력은 원본 텍스트 파일의 라인 순서를 반전시킵니다. 
+이는 `sed` 스크립트에서 홀드 공간을 사용하는 강력한 기능을 보여줍니다. 홀드 공간을 사용하면 스크립트 출력에서 라인 순서를 쉽게 조작할 수 있습니다.
+
+> [!NOTE]
+> 궁금할 수 있겠지만, bash 셸 명령어는 텍스트 파일을 반전시키는 기능을 수행할 수 있습니다. `tac` 명령어는 텍스트 파일을 반대 순서로 출력합니다.
+> 아마도 이 명령어의 이름이 `cat` 명령어의 반대 기능을 수행하기 때문에 기발하다는 것을 눈치챘을 것입니다.
+
+
+
+
+
+## Changing the Flow
+일반적으로 `sed` 편집기는 명령어를 위에서 아래로 처리합니다(예외는 `D` 명령어로, 이는 `sed` 편집기가 새로운 텍스트 라인을 읽지 않고 스크립트의 맨 위로 돌아가게 만듭니다). 
+`sed` 편집기는 명령어 흐름을 변경하는 방법을 제공하여, 구조화된 프로그래밍 환경에서와 유사한 결과를 생성할 수 있습니다.
+
+
+### Branching
+이전 섹션에서는 느낌표 명령어가 텍스트 라인에 대한 명령의 효과를 부정하는 데 어떻게 사용되는지 보았습니다. `sed` 편집기는 주소, 주소 패턴 또는 주소 범위를 기반으로 
+명령어의 전체 섹션을 부정하는 방법을 제공합니다. 이를 통해 데이터 스트림 내에서 특정 하위 집합에 대해서만 명령어 그룹을 수행할 수 있습니다.
+
+다음은 브랜치 (*branch*) 명령어의 형식입니다:
+
+```
+[address]b [label]
+```
+
+주소 매개변수는 어떤 데이터 라인이나 라인이 브랜치 명령어를 트리거할지를 결정합니다. 라벨 매개변수는 분기할 위치를 정의합니다. 만약 라벨 매개변수가 없으면, 브랜치 명령어는 스크립트의 끝으로 진행됩니다.
+
+```
+$ cat data2.txt
+This is the header line.
+This is the first data line.
+This is the second data line.
+This is the last line.
+$
+$ sed '{2,3b ; s/This is/Is this/ ; s/line./test?/}' data2.txt
+Is this the header test?
+This is the first data line.
+This is the second data line.
+Is this the last test?
+$
+```
+
+`branch` 명령어는 데이터 스트림의 두 번째 및 세 번째 라인에 대해 두 개의 치환 명령어를 건너뜁니다. 
+
+스크립트의 끝으로 가는 대신, 브랜치 명령어가 이동할 라벨을 정의할 수 있습니다. 라벨은 콜론(:)으로 시작하며, 최대 7자의 길이를 가질 수 있습니다.
+
+```
+:label2
+```
+
+라벨을 지정하려면, `b` 명령어 뒤에 라벨을 추가하면 됩니다. 라벨을 사용하면 브랜치 주소와 일치하는 명령을 건너뛰면서도 스크립트의 다른 명령은 계속 처리할 수 있습니다.
+
+```
+$ sed '{/first/b jump1 ; s/This is the/No jump on/
+> :jump1
+> s/This is the/Jump here on/}' data2.txt
+No jump on header line
+Jump here on first data line
+No jump on second data line
+No jump on last line
+$
+```
+
+`branch` 명령어는 텍스트 "first"가 라인에 나타나면 프로그램이 `jump1` 라벨이 붙은 스크립트 라인으로 이동하도록 지정합니다. 
+만약 `branch` 명령어 패턴이 일치하지 않으면, `sed` 편집기는 스크립트에서 다음 명령을 계속 처리합니다. (따라서 세 개의 치환 명령어는 `branch` 패턴과 일치하지 않는 라인에서 처리됩니다.)
+
+라인이 `branch` 패턴과 일치하면, `sed` 편집기는 `branch` 라벨 라인으로 분기합니다. 따라서 마지막 치환 명령어만 실행됩니다.
+
+이 예시는 `sed` 스크립트에서 더 아래쪽에 있는 라벨로 분기하는 경우를 보여줍니다. 또한, 스크립트에서 더 앞쪽에 있는 라벨로 분기할 수도 있으며, 이를 통해 루프 효과를 만들 수 있습니다.
+
+```
+$ echo "This, is, a, test, to, remove, commas." | sed -n '{
+> :start
+> s/,//1p
+> b start
+> }'
+This is, a, test, to, remove, commas.
+This is a, test, to, remove, commas.
+This is a test, to, remove, commas.
+This is a test to, remove, commas.
+This is a test to remove, commas.
+This is a test to remove commas.
+^C
+$
+```
+
+각 스크립트 반복은 텍스트 문자열에서 첫 번째 쉼표를 제거하고 문자열을 출력합니다. 이 스크립트에는 한 가지 문제가 있습니다: 끝나지 않습니다. 
+이 상황은 쉼표를 찾을 때까지 무한 루프가 발생하며, 수동으로 Ctrl+C 키 조합으로 중지해야 합니다.
+
+이 문제를 방지하려면, `branch` 명령어가 찾을 주소 패턴을 지정해야 합니다. 만약 해당 패턴이 없으면, 브랜칭을 멈추도록 해야 합니다.
+
+```
+$ echo "This, is, a, test, to, remove, commas." | sed -n '{
+> :start
+> s/,//1p
+> /,/b start
+> }'
+This is, a, test, to, remove, commas.
+This is a, test, to, remove, commas.
+This is a test, to, remove, commas.
+This is a test to, remove, commas.
+This is a test to remove, commas.
+This is a test to remove commas.
+$
+```
+
+이제 `branch` 명령어는 라인에 쉼표가 있을 경우에만 분기합니다. 마지막 쉼표가 제거된 후에는 `branch` 명령어가 실행되지 않으므로, 스크립트가 제대로 종료될 수 있습니다.
+
+
+### Testing
+`branch` 명령어와 유사하게, `test` 명령어(t)는 `sed` 편집기 스크립트의 흐름을 수정하는 데 사용됩니다. 주소를 기반으로 라벨로 분기하는 대신, `test` 명령어는 치환 명령어의 결과에 따라 라벨로 분기합니다.
+
+만약 치환 명령어가 성공적으로 패턴을 일치시키고 치환을 수행하면, `test` 명령어는 지정된 라벨로 분기합니다. 반대로, 치환 명령어가 지정된 패턴과 일치하지 않으면, `test` 명령어는 분기하지 않습니다.
+
+`test` 명령어는 `branch` 명령어와 동일한 형식을 사용합니다:
+
+```
+[address]t [label]
+```
+
+`branch` 명령어와 마찬가지로, 라벨을 지정하지 않으면 `test` 명령어는 테스트가 성공하면 스크립트의 끝으로 분기합니다.
+
+`test` 명령어는 데이터 스트림의 텍스트에 대해 기본적인 `if-then` 문을 수행하는 간단한 방법을 제공합니다. 예를 들어, 다른 치환이 이루어졌을 때 추가적인 치환을 하지 않으려면, `test` 명령어가 도움이 될 수 있습니다:
+
+```
+$ sed '{
+> s/first/matched/
+> t
+> s/This is the/No match on/
+> }' data2.txt
+No match on header line
+This is the matched data line
+No match on second data line
+No match on last line
+$
+```
+
+첫 번째 `substitution` 명령어는 패턴 텍스트 "first"를 찾습니다. 만약 라인에서 패턴과 일치하면, 텍스트를 치환하고 `test` 명령어는 두 번째 `substitution` 명령어를 건너뜁니다. 
+첫 번째 `substitution` 명령어가 패턴과 일치하지 않으면, 두 번째 `substitution` 명령어가 처리됩니다.
+
+`test` 명령어를 사용하면, `branch` 명령어를 사용할 때 시도했던 루프를 정리할 수 있습니다:
+
+```
+$ echo "This, is, a, test, to, remove, commas. " | sed -n '{
+> :start
+> s/,//1p
+> t start
+> }'
+This is, a, test, to, remove, commas.
+This is a, test, to, remove, commas.
+This is a test, to, remove, commas.
+This is a test to, remove, commas.
+This is a test to remove, commas.
+This is a test to remove commas.
+$
+```
+
+더 이상 치환할 내용이 없으면, `test` 명령어는 분기하지 않고 스크립트의 나머지 부분을 계속 처리합니다.
+
+
+
+
+## Replacing via a Pattern
+`sed` 명령어에서 패턴을 사용하여 데이터 스트림의 텍스트를 교체하는 방법을 이미 보았을 것입니다. 그러나 와일드카드 문자를 사용할 때 어떤 텍스트가 정확히 패턴에 일치할지 예측하기가 쉽지 않습니다.
+
+예를 들어, 라인에서 일치하는 단어에 큰따옴표를 추가하고 싶다고 가정해 봅시다. 패턴에서 일치하는 단어가 하나뿐이라면 이것은 꽤 간단한 작업입니다:
+
+```
+$ echo "The cat sleeps in his hat." | sed 's/cat/"cat"/'
+The "cat" sleeps in his hat.
+$
+```
+
+하지만 패턴에서 와일드카드 문자 (.)를 사용하여 여러 단어와 일치시키는 경우에는 어떻게 될까요?
+
+```
+$ echo "The cat sleeps in his hat." | sed 's/.at/".at"/g'
+The ".at" sleeps in his ".at".
+$
+```
+
+치환 문자열은 점 (.) 와일드카드 문자를 사용하여 "at" 뒤에 오는 모든 문자에 일치시킵니다. 불행히도, 치환 문자열은 일치하는 단어의 와일드카드 문자 값을 제대로 처리하지 못합니다.
+
+
+### Using the ampersand
+`sed` 편집기에는 이를 해결할 수 있는 방법이 있습니다. 앰퍼샌드 기호 ( &) 는 치환 명령에서 일치하는 패턴을 나타내는 데 사용됩니다. 
+정의된 패턴과 일치하는 텍스트는 앰퍼샌드 기호를 사용하여 치환 패턴에서 다시 호출할 수 있습니다. 이를 통해 정의된 패턴과 일치하는 단어를 조작할 수 있습니다.
+
+```
+$ echo "The cat sleeps in his hat." | sed 's/.at/"&"/g'
+The "cat" sleeps in his "hat".
+$
+```
+
+패턴이 "cat"과 일치하면, "cat"이 치환된 단어에 나타납니다. 패턴이 "hat"과 일치하면, "hat"이 치환된 단어에 나타납니다.
+
+
+### Replacing individual words
+앰퍼샌드 기호는 치환 명령에서 지정한 패턴과 일치하는 전체 문자열을 가져옵니다. 때때로 문자열의 일부만 가져오고 싶을 때도 있습니다. 그것도 가능합니다만, 약간 까다롭습니다.
+
+`sed` 편집기는 괄호를 사용하여 치환 패턴 내에서 부분 문자열을 정의합니다. 그런 다음, 치환 패턴에서 특수 문자를 사용하여 각 부분 문자열을 참조할 수 있습니다. 
+치환 문자에는 백슬래시와 숫자가 포함됩니다. 이 숫자는 부분 문자열의 위치를 나타냅니다. `sed` 편집기는 첫 번째 구성 요소를 `\1`, 두 번째 구성 요소를 `\2`와 같이 할당합니다.
+
+> [!CAUTION]
+> 치환 명령에서 괄호를 사용할 때는 이들이 일반 괄호가 아니라 그룹화 문자임을 식별하기 위해 역슬래시(escape character)를 사용해야 합니다. 이는 다른 특수 문자를 이스케이프할 때와 반대입니다.
+
+이 기능을 `sed` 편집기 스크립트에서 사용하는 예를 살펴보겠습니다:
+
+```
+$ echo "The System Administrator manual" | sed '
+> s/\(System\) Administrator/\1 User/'
+The System User manual
+$
+```
+
+이 치환 명령은 "System"이라는 단어 주위에 괄호를 사용하여 그것을 부분 문자열로 식별합니다. 그런 다음 치환 패턴에서 `\1`을 사용하여 첫 번째로 식별된 구성 요소를 호출합니다. 
+이것은 그다지 흥미롭지 않지만, 와일드카드 패턴을 사용할 때 정말 유용할 수 있습니다.
+
+만약 구절을 하나의 단어로 교체해야 하고, 그 단어가 구절의 부분 문자열이라면, 그러나 그 부분 문자열이 와일드카드 문자를 사용하는 경우, 부분 문자열 구성 요소를 사용하는 것은 정말 유용합니다.
+
+```
+$ echo "That furry cat is pretty" | sed 's/furry \(.at\)/\1/'
+That cat is pretty
+$
+$ echo "That furry hat is pretty" | sed 's/furry \(.at\)/\1/'
+That hat is pretty
+$
+```
+
+이 상황에서는 전체 일치 패턴을 대체할 수 있는 앰퍼샌드( &) 기호를 사용할 수 없습니다. 부분 문자열 구성 요소가 해결책을 제공하여, 패턴에서 어떤 부분을 치환 패턴으로 사용할지 선택할 수 있습니다.
+
+이 기능은 두 개 이상의 부분 문자열 구성 요소 사이에 텍스트를 삽입해야 할 때 특히 유용할 수 있습니다. 아래는 부분 문자열 구성 요소를 사용하여 긴 숫자 사이에 쉼표를 삽입하는 스크립트입니다:
+
+```
+$ echo "1234567" | sed '{
+> :start
+> s/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/
+> t start
+> }'
+1,234,567
+$
+```
+
+스크립트는 일치하는 패턴을 두 개의 구성 요소로 나눕니다:
+
+```
+.*[0-9]
+[0-9]{3}
+```
+
+이 패턴은 두 개의 하위 문자열을 찾습니다. 첫 번째 하위 문자열은 숫자로 끝나는 문자들의 연속입니다. 두 번째 하위 문자열은 세 자릿수 숫자입니다 (정규 표현식에서 중괄호 사용법에 대해서는 20장을 참조하세요). 
+이 패턴이 텍스트에서 발견되면, 교체 텍스트는 두 구성 요소 사이에 쉼표를 넣습니다. 각 구성 요소는 해당하는 위치로 식별됩니다. 이 스크립트는  `test` 명령어를 사용하여 숫자에 쉼표가 모두 삽입될 때까지 반복합니다.
+
+
+
+
+## Placing sed Commands in Scripts
+이제 `sed` 편집기의 다양한 부분을 살펴보았으므로, 이를 결합하여 셸 스크립트에서 사용하는 방법을 알아보겠습니다. 이 섹션에서는 bash 셸 스크립트에서 `sed` 편집기를 사용할 때 알아야 할 몇 가지 기능을 설명합니다.
+
+
+
+### Using wrappers
+`sed` 편집기 스크립트를 구현하는 것이 번거롭다는 것을 느꼈을 수도 있습니다. 특히 스크립트가 길어질 경우 그렇습니다. 
+매번 전체 스크립트를 다시 입력하는 대신, `sed` 편집기 명령어를 셸 스크립트 래퍼(wrapper)에 넣을 수 있습니다. 래퍼는 `sed` 편집기 스크립트와 명령줄 간의 중개자 역할을 합니다. 
+
+셸 스크립트 내부에서는 일반적인 셸 변수와 매개변수를 사용하여 `sed` 편집기 스크립트를 사용할 수 있습니다. 다음은 명령줄 매개변수 변수를 `sed` 스크립트의 입력으로 사용하는 예입니다:
+
+```
+$ cat reverse.sh
+#!/bin/bash
+# Shell wrapper for sed editor script.
+# to reverse text file lines.
+#
+sed -n '{ 1!G ; h ; $p }' $1
+#
+$
+```
+
+쉘 스크립트 `reverse`는 `sed` 편집기 스크립트를 사용하여 데이터 스트림에서 텍스트 라인의 순서를 반전시킵니다. 
+이 스크립트는 `$1` 셸 매개변수를 사용하여 명령줄에서 첫 번째 매개변수를 가져오는데, 이 값은 반전시킬 파일의 이름이어야 합니다.
+
+```
+$ ./reverse.sh data2.txt
+This is the last line.
+This is the second data line.
+This is the first data line.
+This is the header line.
+$
+```
+
+이제 `sed` 편집기 스크립트를 매번 전체 명령어를 다시 입력할 필요 없이 어떤 파일에서든 쉽게 사용할 수 있습니다.
+
+
+### Redirecting sed output
+기본적으로 `sed` 편집기는 스크립트의 결과를 `STDOUT`(표준 출력)으로 출력합니다. 셸 스크립트에서 `sed` 편집기의 출력을 리디렉션하는 모든 표준 방법을 사용할 수 있습니다. 
+
+예를 들어, `$()`를 사용하여 `sed` 편집기 명령의 출력을 변수에 리디렉션하여 나중에 스크립트에서 사용할 수 있습니다. 다음은 숫자 계산 결과에 쉼표를 추가하는 `sed` 스크립트 사용 예입니다:
+
+```
+$ cat fact.sh
+#!/bin/bash
+# Add commas to number in factorial answer
+#
+factorial=1
+counter=1
+number=$1
+#
+while [ $counter -le $number ]
+do
+factorial=$[ $factorial * $counter ]
+counter=$[ $counter + 1 ]
+done
+#
+result=$(echo $factorial | sed '{
+:start
+s/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/
+t start
+}')
+#
+echo "The result is $result"
+#
+$
+$ ./fact.sh 20
+The result is 2,432,902,008,176,640,000
+$
+```
+
+정상적인 팩토리얼 계산 스크립트를 사용한 후, 그 결과는 `sed` 편집기 스크립트의 입력으로 사용되어 쉼표가 추가됩니다. 그런 다음 이 값은 `echo` 문에서 사용되어 결과를 출력합니다.
+
+
+
+
+## Creating sed Utilities
+지금까지 이 장에서 제시된 간단한 예제들을 통해, `sed` 편집기를 사용하여 다양한 멋진 데이터 형식 작업을 할 수 있다는 것을 보았습니다. 
+이번 섹션에서는 일반적인 데이터 처리 기능을 수행하는 몇 가지 유용한 잘 알려진 `sed` 편집기 스크립트를 소개합니다.
+
+
+### Spacing with double lines
+시작으로, 텍스트 파일에서 각 줄 사이에 빈 줄을 삽입하는 간단한 `sed` 스크립트를 살펴보겠습니다:
+
+```
+$ sed 'G' data2.txt
+This is the header line.
+
+This is the first data line.
+
+This is the second data line.
+
+This is the last line.
+
+$
+```
+
+정말 간단하죠! 이 트릭의 핵심은 홀드 공간의 기본 값입니다. `G` 명령은 홀드 공간의 내용을 현재 패턴 공간에 추가하는 역할을 합니다. 
+`sed` 편집기를 시작할 때, 홀드 공간은 빈 줄을 포함하고 있습니다. 이 빈 줄을 기존 줄에 추가하면 기존 줄 뒤에 빈 줄이 삽입됩니다.
+
+이 스크립트가 데이터 스트림의 마지막 줄에도 빈 줄을 추가한다는 점을 눈치챘을 것입니다. 파일의 끝에 빈 줄을 추가하지 않으려면, 
+부정 기호와 마지막 줄 기호를 사용하여 스크립트가 데이터 스트림의 마지막 줄에 빈 줄을 추가하지 않도록 할 수 있습니다:
+
+```
+$ sed '$!G' data2.txt
+This is the header line.
+
+This is the first data line.
+
+This is the second data line.
+
+This is the last line.
+$
+```
+
+이제 좀 더 나아 보입니다. 마지막 줄이 아닌 경우에만 `G` 명령이 홀드 공간의 내용을 추가합니다. `sed` 편집기가 마지막 줄에 도달하면 `G` 명령을 건너뛰게 됩니다.
+
+
+
+### Spacing fi les that may have blanks
+만약 텍스트 파일에 이미 몇 개의 빈 줄이 있고, 모든 줄을 두 배 간격으로 만들고 싶다면, 이전 스크립트를 사용하면 빈 줄이 이미 있는 부분에서 불필요하게 두 줄씩 추가되는 문제가 발생할 수 있습니다.
+
+```
+$ cat data6.txt
+This is line one.
+This is line two.
+
+This is line three.
+This is line four.
+$
+$ sed '$!G' data6.txt
+This is line one.
+
+This is line two.
+
+
+
+This is line three.
+
+This is line four.
+$
+```
+
+이제 원래의 빈 줄 위치에 세 개의 빈 줄이 생겼습니다. 이 문제를 해결하려면 먼저 데이터 스트림에서 빈 줄을 삭제한 후, `G` 명령을 사용하여 모든 줄 뒤에 새 빈 줄을 추가하면 됩니다. 
+기존의 빈 줄을 삭제하려면 빈 줄을 찾는 패턴과 함께 `d` 명령을 사용하면 됩니다:
+
+```
+/^$/d
+```
+
+이 패턴은 시작 줄 태그(캐럿 기호)와 끝 줄 태그(달러 기호)를 사용합니다. 이 패턴을 스크립트에 추가하면 원하는 결과를 얻을 수 있습니다:
+
+```
+$ sed '/^$/d ; $!G' data6.txt
+This is line one.
+
+This is line two.
+
+This is line three.
+
+This is line four.
+$
+```
+
+완벽해요! 예상대로 잘 작동합니다.
+
+
+### Numbering lines in a fi le
+19장에서는 데이터 스트림의 각 라인에 대해 등호(=)를 사용하여 라인 번호를 표시하는 방법을 보여주었습니다.
+
+```
+$ sed '=' data2.txt
+1
+This is the header line.
+2
+This is the first data line.
+3
+This is the second data line.
+4
+This is the last line.
+$
+```
+
+이 방식은 라인 번호가 데이터 스트림의 실제 라인 위에 표시되기 때문에 읽기에 다소 불편할 수 있습니다. 더 나은 해결책은 라인 번호를 텍스트와 동일한 라인에 배치하는 것입니다.
+
+이제 `N` 명령을 사용하여 라인들을 결합하는 방법을 봤으므로, 이 정보를 `sed` 편집기 스크립트에서 활용하는 것은 그리 어렵지 않을 것입니다. 
+하지만 이 유틸리티의 요령은 두 명령을 동일한 스크립트에서 결합할 수 없다는 점입니다.
+
+`equal` 명령의 출력을 얻은 후, 해당 출력을 다른 `sed` 편집기 스크립트에 파이프하여 `N` 명령을 사용해 두 라인을 결합할 수 있습니다. 
+또한, 줄 바꿈 문자를 공백이나 탭 문자로 대체하기 위해 치환 명령을 사용해야 합니다. 최종 해결책은 다음과 같습니다:
+
+```
+$ sed '=' data2.txt | sed 'N; s/\n/ /'
+1 This is the header line.
+2 This is the first data line.
+3 This is the second data line.
+4 This is the last line.
+$
+```
+
+이제 훨씬 나아 보입니다. 이 유틸리티는 프로그램에서 오류 메시지에 사용된 라인 번호를 볼 때 매우 유용하게 사용할 수 있습니다. 
+
+라인 번호를 추가할 수 있는 bash 셸 명령도 있지만, 이 명령은 추가적인 (그리고 원치 않는) 공백을 추가할 수 있습니다:
+
+```
+$ nl data2.txt
+    1 This is the header line.
+    2 This is the first data line.
+    3 This is the second data line.
+    4 This is the last line.
+$
+$ cat -n data2.txt
+    1 This is the header line.
+    2 This is the first data line.
+    3 This is the second data line.
+    4 This is the last line.
+$
+```
+
+`sed` 에디터 스크립트는 추가적인 공백 없이 출력을 처리합니다.
+
+
+
+### Printing last lines
+지금까지 `p` 명령어를 사용하여 데이터 스트림의 모든 라인 또는 특정 패턴에 맞는 라인만 출력하는 방법을 살펴보았습니다. 
+만약 긴 목록, 예를 들어 로그 파일의 마지막 몇 줄만 작업하고 싶다면 어떻게 해야 할까요?
+
+달러 기호(`$`)는 데이터 스트림의 마지막 줄을 나타내므로, 마지막 줄만 쉽게 출력할 수 있습니다.
+
+```
+$ sed -n '$p' data2.txt
+This is the last line.
+$
+```
+
+이제 데이터 스트림의 마지막에서 지정된 수의 줄을 표시하려면 어떻게 해야 할까요? 그 해답은 "롤링 윈도우"를 만드는 것입니다.
+
+롤링 윈도우는 패턴 공간에서 텍스트 라인 블록을 결합하여 텍스트 라인을 검사하는 일반적인 방법입니다. `N` 명령어를 사용하면, 이미 패턴 공간에 있는 텍스트에 다음 텍스트 라인을 추가할 수 있습니다. 
+10개의 텍스트 라인이 패턴 공간에 있으면, 달러 기호(`$`)를 사용하여 데이터 스트림의 끝에 있는지 확인할 수 있습니다. 만약 끝이 아니라면, 계속해서 새로운 라인을 패턴 공간에 추가하면서 원래 라인들은 제거합니다(첫 번째 라인을 삭제하는 `D` 명령어를 기억하세요).
+
+`N`과 `D` 명령어를 반복하면서, 패턴 공간에 새로운 라인을 추가하고 오래된 라인은 제거합니다. 이때, `branch` 명령어가 반복문에 적합합니다. 반복문을 종료하려면 마지막 라인을 식별하고 `q` 명령어를 사용하여 종료할 수 있습니다.
+
+다음은 최종 `sed` 편집기 스크립트 예제입니다:
+
+```
+$ cat data7.txt
+This is line 1.
+This is line 2.
+This is line 3.
+This is line 4.
+This is line 5.
+This is line 6.
+This is line 7.
+This is line 8.
+This is line 9.
+This is line 10.
+This is line 11.
+This is line 12.
+This is line 13.
+This is line 14.
+This is line 15.
+$
+$ sed '{
+> :start
+> $q ; N ; 11,$D
+> b start
+> }' data7.txt
+This is line 6.
+This is line 7.
+This is line 8.
+This is line 9.
+This is line 10.
+This is line 11.
+This is line 12.
+This is line 13.
+This is line 14.
+This is line 15.
+$
+```
+
+스크립트는 먼저 현재 라인이 데이터 스트림의 마지막 라인인지 확인합니다. 만약 그렇다면 `quit` 명령어가 반복문을 멈춥니다. 
+`N` 명령어는 패턴 공간의 현재 라인에 다음 라인을 추가합니다. `11,$D` 명령어는 현재 라인이 10번째 라인 이후라면 패턴 공간에서 첫 번째 라인을 삭제합니다. 
+이는 패턴 공간에서 슬라이딩 윈도우 효과를 생성합니다. 따라서, 이 `sed` 프로그램 스크립트는 `data7.txt` 파일의 마지막 10개 라인만 표시합니다.
+
+
+### Deleting lines
+`sed` 편집기의 또 다른 유용한 기능은 데이터 스트림에서 원하지 않는 빈 라인을 제거하는 것입니다. 빈 라인을 모두 제거하는 것은 쉽지만, 특정 빈 라인만 선택적으로 제거하는 데는 약간의 창의력이 필요합니다. 
+이 섹션에서는 데이터에서 원하지 않는 빈 라인을 제거하는 데 도움이 되는 몇 가지 빠른 `sed` 스크립트를 소개합니다.
+
+
+#### Deleting consecutive blank lines
+데이터 파일에서 여분의 빈 라인이 나타나면 번거로울 수 있습니다. 종종 데이터 파일에 빈 라인이 포함되어 있지만, 때때로 데이터 라인이 누락되어 너무 많은 빈 라인이 발생합니다 (앞서 더블 스페이싱 예제에서 보았듯이).  
+
+연속된 빈 라인을 제거하는 가장 쉬운 방법은 범위 주소를 사용하여 데이터 스트림을 확인하는 것입니다. 19장에서 범위 주소를 사용하는 방법과 주소 범위에 패턴을 포함하는 방법을 배웠습니다. 
+`sed` 편집기는 지정된 주소 범위 내에서 일치하는 모든 라인에 대해 명령을 실행합니다.  
+
+연속된 빈 라인을 제거하는 핵심은 비어 있지 않은 라인과 빈 라인이 포함된 주소 범위를 만드는 것입니다. `sed` 편집기가 이 범위를 만나면 라인을 삭제하지 않아야 합니다. 
+그러나 해당 범위에 일치하지 않는 라인(두 개 이상의 연속된 빈 라인)에는 라인을 삭제해야 합니다.  
+
+이 작업을 수행하는 스크립트는 다음과 같습니다:
+
+```
+/./,/ ^ $/!d
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
