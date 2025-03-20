@@ -678,6 +678,8 @@ And stood awhile in thought.
 내부 주소가 변경되었기 때문입니다.
 
 [^7]: 라인 재정렬 작업 명령이란 기존 라인에 라인을 추가하거나 삭제 또는 이동할 때 내부의 라인순서는 재정렬됩니다.
+
+
 <br><br>
 
 ## Viewing Trailing Space
