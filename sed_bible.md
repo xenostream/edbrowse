@@ -34,7 +34,7 @@ sed options scriptfile
 
 
 ## Defining an editor command in the command line
-기본적으로 **sed** 편집기는 지정한 명령을 **STDIN** (표준 입력) 입력 스트림에 적용합니다. 이를 통해 데이터를 직접 **sed** 편집기로 파이프 (*pipe*) 하여 처리할 수 있습니다. 다음은 이를 수행하는 방법을 보여주는 간단한 예입니다:
+기본적으로 **sed** 편집기는 지정한 명령을 **STDIN** (표준 입력) 입력 스트림에 적용합니다. 이를 통해 데이터를 직접 **sed** 편집기로 파이프 (*pipe*) 처리할 수 있습니다. 다음은 이를 수행하는 방법을 보여주는 간단한 예입니다:
 
 ```
 $ echo "This is a test" | sed 's/test/big test/'
