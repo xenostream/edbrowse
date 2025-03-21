@@ -56,10 +56,10 @@ The quick brown fox jumps over the lazy dog.
 The quick brown fox jumps over the lazy dog.
 $
 $ sed 's/dog/cat/' data1.txt
-The quick brown fox jumps over the lazy cat.
-The quick brown fox jumps over the lazy cat.
-The quick brown fox jumps over the lazy cat.
-The quick brown fox jumps over the lazy cat.
+The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
+The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
+The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
+The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
 $
 ```
 
@@ -83,10 +83,10 @@ $
 
 ```
 $ sed -e 's/brown/green/; s/dog/cat/' data1.txt
-The quick green fox jumps over the lazy cat.
-The quick green fox jumps over the lazy cat.
-The quick green fox jumps over the lazy cat.
-The quick green fox jumps over the lazy cat.
+The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
+The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
+The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
+The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
 $
 ```
 
