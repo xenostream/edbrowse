@@ -56,10 +56,10 @@ The quick brown fox jumps over the lazy dog.
 The quick brown fox jumps over the lazy dog.
 $
 $ sed 's/dog/cat/' data1.txt
-The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
-The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
-The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
-The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
+The quick brown fox jumps over the lazy cat.
+The quick brown fox jumps over the lazy cat.
+The quick brown fox jumps over the lazy cat.
+The quick brown fox jumps over the lazy cat.
 $
 ```
 
@@ -83,10 +83,10 @@ $
 
 ```
 $ sed -e 's/brown/green/; s/dog/cat/' data1.txt
-The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
+The quick green fox jumps over the lazy cat.
+The quick green fox jumps over the lazy cat.
+The quick green fox jumps over the lazy cat.
+The quick green fox jumps over the lazy cat.
 $
 ```
 
@@ -102,10 +102,10 @@ $ sed -e '
 > s/brown/green/
 > s/fox/elephant/
 > s/dog/cat/' data1.txt
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick green elephant jumps over the lazy cat.
+The quick green elephant jumps over the lazy cat.
+The quick green elephant jumps over the lazy cat.
+The quick green elephant jumps over the lazy cat.
 $
 ```
 
@@ -123,10 +123,10 @@ s/fox/elephant/
 s/dog/cat/
 $
 $ sed -f script1.sed data1.txt
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
-The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick green elephant jumps over the lazy cat.
+The quick green elephant jumps over the lazy cat.
+The quick green elephant jumps over the lazy cat.
+The quick green elephant jumps over the lazy cat.
 $
 ```
 
@@ -160,8 +160,8 @@ This is a test of the test script.
 This is the second test of the test script.
 $
 $ sed 's/test/trial/' data4.txt
-This is a 𝘁𝗿𝗶𝗮𝗹 of the test script.
-This is the second 𝘁𝗿𝗶𝗮𝗹 of the test script.
+This is a trial of the test script.
+This is the second trial of the test script.
 $
 ```
 
@@ -183,8 +183,8 @@ s/pattern/replacement/flags
 
 ```
 $ sed 's/test/trial/2' data4.txt
-This is a test of the 𝘁𝗿𝗶𝗮𝗹 script.
-This is the second test of the 𝘁𝗿𝗶𝗮𝗹 script.
+This is a test of the trial script.
+This is the second test of the trial script.
 $
 ```
 
@@ -194,8 +194,8 @@ $
 
 ```
 $ sed 's/test/trial/g' data4.txt
-This is a 𝘁𝗿𝗶𝗮𝗹 of the 𝘁𝗿𝗶𝗮𝗹 script.
-This is the second 𝘁𝗿𝗶𝗮𝗹 of the 𝘁𝗿𝗶𝗮𝗹 script.
+This is a trial of the trial script.
+This is the second trial of the trial script.
 $
 ```
 
@@ -208,7 +208,7 @@ This is a test line.
 This is a different line.
 $
 $ sed -n 's/test/trial/p' data5.txt
-This is a 𝘁𝗿𝗶𝗮𝗹 line.
+This is a trial line.
 $
 ```
 
@@ -223,7 +223,7 @@ This is a trial line.
 This is a different line.
 $
 $ cat test.txt
-This is a 𝘁𝗿𝗶𝗮𝗹 line.
+This is a trial line.
 $
 ```
 
@@ -285,7 +285,7 @@ address {
 ```
 $ sed '2s/dog/cat/' data1.txt
 The quick brown fox jumps over the lazy dog
-The quick brown fox jumps over the lazy 𝗰𝗮𝘁
+The quick brown fox jumps over the lazy cat
 The quick brown fox jumps over the lazy dog
 The quick brown fox jumps over the lazy dog
 $
@@ -341,7 +341,7 @@ $
 ```
 
 이 명령은 검색 일치한 텍스트 패턴이 포함된 줄에만 적용되었습니다. 이와 같이 고정된 텍스트 패턴을 사용하면 특정 값을 필터링하는 데는 유용할 수 있겠지만 그 사용 방법에 있어선 다소 제한적입니다. 
-**sed** 편집기는 **정규 표현식 (regular expressions) ** 을 사용해 좀 더 복잡한 패턴을 생성할 수 있습니다. 
+**sed** 편집기는 **정규 표현식 (regular expressions)** 을 사용해 좀 더 복잡한 패턴을 생성할 수 있습니다. 
 
 `정규 표현식` 은 다양한 데이터에 일치하는 고급 텍스트 패턴을 만들 수 있도록 해줍니다. 정규 표현식은 와일드카드 문자, 특수 문자 및 고정 텍스트 문자를 결합해 거의 모든 텍스트 처리 상황에 맞는 간결한 패턴을 생성할 수 있습니다. 
 정규 표현식은 스크립트 프로그래밍에서 가장 어려운 부분 중 하나이며 **별도의 장**에서 자세히 다룹니다.
