@@ -38,7 +38,7 @@ sed options scriptfile
 
 ```
 $ echo "This is a test" | sed 's/test/big test/'
-This is a big test
+This is a 𝐛𝐢𝐠 𝐭𝐞𝐬𝐭
 $
 ```
 
