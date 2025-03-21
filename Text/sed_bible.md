@@ -38,7 +38,7 @@ sed options scriptfile
 
 ```
 $ echo "This is a test" | sed 's/test/big test/'
-This is a 𝐛𝐢𝐠 𝐭𝐞𝐬𝐭
+This is a 𝗯𝗶𝗴 𝘁𝗲𝘀𝘁
 $
 ```
 
@@ -56,10 +56,10 @@ The quick brown fox jumps over the lazy dog.
 The quick brown fox jumps over the lazy dog.
 $
 $ sed 's/dog/cat/' data1.txt
-The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
-The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
-The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
-The quick brown fox jumps over the lazy 𝐜𝐚𝐭.
+The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
+The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
+The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
+The quick brown fox jumps over the lazy 𝗰𝗮𝘁.
 $
 ```
 
@@ -83,10 +83,10 @@ $
 
 ```
 $ sed -e 's/brown/green/; s/dog/cat/' data1.txt
-The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
-The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
-The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
-The quick 𝐠𝐫𝐞𝐞𝐧 fox jumps over the lazy 𝐜𝐚𝐭.
+The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 fox jumps over the lazy 𝗰𝗮𝘁.
 $
 ```
 
@@ -102,10 +102,10 @@ $ sed -e '
 > s/brown/green/
 > s/fox/elephant/
 > s/dog/cat/' data1.txt
-The quick green elephant jumps over the lazy cat.
-The quick green elephant jumps over the lazy cat.
-The quick green elephant jumps over the lazy cat.
-The quick green elephant jumps over the lazy cat.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
 $
 ```
 
@@ -123,10 +123,10 @@ s/fox/elephant/
 s/dog/cat/
 $
 $ sed -f script1.sed data1.txt
-The quick green elephant jumps over the lazy cat.
-The quick green elephant jumps over the lazy cat.
-The quick green elephant jumps over the lazy cat.
-The quick green elephant jumps over the lazy cat.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
+The quick 𝗴𝗿𝗲𝗲𝗻 𝗲𝗹𝗲𝗽𝗵𝗮𝗻𝘁 jumps over the lazy 𝗰𝗮𝘁.
 $
 ```
 
@@ -160,8 +160,8 @@ This is a test of the test script.
 This is the second test of the test script.
 $
 $ sed 's/test/trial/' data4.txt
-This is a trial of the test script.
-This is the second trial of the test script.
+This is a 𝘁𝗿𝗶𝗮𝗹 of the test script.
+This is the second 𝘁𝗿𝗶𝗮𝗹 of the test script.
 $
 ```
 
@@ -183,8 +183,8 @@ s/pattern/replacement/flags
 
 ```
 $ sed 's/test/trial/2' data4.txt
-This is a test of the trial script.
-This is the second test of the trial script.
+This is a test of the 𝘁𝗿𝗶𝗮𝗹 script.
+This is the second test of the 𝘁𝗿𝗶𝗮𝗹 script.
 $
 ```
 
@@ -194,8 +194,8 @@ $
 
 ```
 $ sed 's/test/trial/g' data4.txt
-This is a trial of the trial script.
-This is the second trial of the trial script.
+This is a 𝘁𝗿𝗶𝗮𝗹 of the 𝘁𝗿𝗶𝗮𝗹 script.
+This is the second 𝘁𝗿𝗶𝗮𝗹 of the 𝘁𝗿𝗶𝗮𝗹 script.
 $
 ```
 
@@ -208,7 +208,7 @@ This is a test line.
 This is a different line.
 $
 $ sed -n 's/test/trial/p' data5.txt
-This is a trial line.
+This is a 𝘁𝗿𝗶𝗮𝗹 line.
 $
 ```
 
@@ -223,7 +223,7 @@ This is a trial line.
 This is a different line.
 $
 $ cat test.txt
-This is a trial line.
+This is a 𝘁𝗿𝗶𝗮𝗹 line.
 $
 ```
 
@@ -285,7 +285,7 @@ address {
 ```
 $ sed '2s/dog/cat/' data1.txt
 The quick brown fox jumps over the lazy dog
-The quick brown fox jumps over the lazy cat
+The quick brown fox jumps over the lazy 𝗰𝗮𝘁
 The quick brown fox jumps over the lazy dog
 The quick brown fox jumps over the lazy dog
 $
