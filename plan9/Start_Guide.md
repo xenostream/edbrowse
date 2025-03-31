@@ -108,7 +108,7 @@ Plan 9에 로그인하면 (텍스트) 콘솔 모드로 시작되지만, 일반�
 
 리오는 초보자에겐 혼란스러울 수도 있는데 왜냐하면, 다음 그림과 같이 초기 화면이 빈 회색 화면이기 때문입니다. (그림 1).
 
-![](https://github.com/xenostream/edbrowse/blob/main/plan9/_images/_image/2025-03-31-23-11-25.jpg)
+![](plan9/_images/2025-03-31-23-11-25.jpg)
 
 Figure 1. Rio opening screen (in a terminal window) ? yes, it’s all blank gray.
   
