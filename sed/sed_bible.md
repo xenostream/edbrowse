@@ -573,8 +573,14 @@ $
 다음은 데이터 스트림에서 3번 줄 **앞에** 새로운 줄을 **삽입** 하는 예입니다:
 
 ```
+$ cat data4.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+$
 $ sed '3i\
-> This is an inserted line.' data6.txt
+> This is an inserted line.' data4.txt
 This is line number 1.
 This is line number 2.
 This is an inserted line.
@@ -586,8 +592,14 @@ $
 다음은 데이터 스트림에서 3번 줄 **뒤에** 새로운 줄을 **추가** 하는 예입니다:
 
 ```
+$ cat data4.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+$
 $ sed '3a\
-> This is an appended line.' data6.txt
+> This is an appended line.' data4.txt
 This is line number 1.
 This is line number 2.
 This is line number 3.
@@ -601,8 +613,14 @@ $
 멀티라인 데이터 스트림에서 데이터 스트림의 끝에 새로운 줄을 추가하려면, 달러 기호 (`$`) 를 사용하면 됩니다. 이것은 데이터의 **마지막 줄** 을 의미합니다:
 
 ```
+$ cat data4.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+$
 $ sed '$a\
-> This is a new line of text.' data6.txt
+> This is a new line of text.' data4.txt
 This is line number 1.
 This is line number 2.
 This is line number 3.
@@ -616,9 +634,15 @@ $
 만일, 단일 라인이 아닌 여러 줄의 텍스트를 삽입하거나 추가하려면, 새로운 텍스트 줄 뒤에 백슬래시 (`\`) 문자를 사용하고 마지막 텍스트 줄에 도달할 때까지 계속해야 합니다:
 
 ```
+$ cat data4.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+$
 $ sed '1i\
 > This is one line of new text.\
-> This is another line of new text.' data6.txt
+> This is another line of new text.' data4.txt
 This is one line of new text.
 This is another line of new text.
 This is line number 1.
@@ -639,8 +663,14 @@ $
 **변경** `c` (*change*) 명령은 데이터 스트림의 텍스트 줄 내용을 변경할 수 있습니다. 이것은 텍스트 삽입 및 추가 명령과 동일하게 작동합니다. 
 
 ```
+$ cat data4.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+$
 $ sed '3c\
-> This is a changed line of text.' data6.txt
+> This is a changed line of text.' data4.txt
 This is line number 1.
 This is line number 2.
 This is a changed line of text.
@@ -651,8 +681,14 @@ $
 `sed` 편집기는 3번 줄의 텍스트를 변경합니다. 또한, 텍스트 패턴을 주소로 사용할 수 있습니다:
 
 ```
+$ cat data4.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+$
 $ sed '/number 3/c\
-> This is a changed line of text.' data6.txt
+> This is a changed line of text.' data4.txt
 This is line number 1.
 This is line number 2.
 This is a changed line of text.
@@ -687,8 +723,14 @@ $
 변경 명령에 주소 범위를 사용할 수 있겠지만, 실행 결과는 예상과 다를 수 있습니다:
 
 ```
+cat data4.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+$
 $ sed '2,3c\
-> This is a new line of text.' data6.txt
+> This is a new line of text.' data4.txt
 This is line number 1.
 This is a new line of text.
 This is line number 4.
@@ -712,7 +754,16 @@ $
 다음은 변환 명령을 사용하는 간단한 예입니다:
 
 ```
-$ sed 'y/123/789/' data8.txt
+$ cat data7.txt
+This is line number 1.
+This is line number 2.
+This is line number 3.
+This is line number 4.
+This is line number 1 again.
+This is yet another line.
+This is the last line in the file.
+$
+$ sed 'y/123/789/' data7.txt
 This is line number 7.
 This is line number 8.
 This is line number 9.
