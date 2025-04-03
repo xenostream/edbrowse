@@ -1993,7 +1993,7 @@ This is line two.
 This is line three.
 This is line four.
 $
-$ sed '/^$/d ; $!G' data4.txt
+$ sed '/^$/d ; $!G' data6.txt
 This is line one.
 
 This is line two.
