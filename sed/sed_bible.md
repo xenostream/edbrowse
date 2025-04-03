@@ -887,7 +887,7 @@ $
 $ sed -n '/number 4/{
 > =
 > p
-> }' data6.txt
+> }' data4.txt
 4
 This is line number 4.
 $
@@ -928,8 +928,6 @@ $
 
 
 
-
-
 ## Using files with sed
 대체 명령에는 파일 작업을 처리하는 `w` 플래그가 포함되어 있습니다. 하지만, 텍스트를 대체하지 않고서도 파일 작업을 처리할 수 있는 `sed` 편집기 명령이 존재합니다.
 
@@ -947,7 +945,7 @@ $
 다음은 데이터 스트림의 첫 번째 두 줄만 파일로 출력 (저장) 하는 예입니다:
 
 ```
-$ sed '1,2w test.txt' data6.txt
+$ sed '1,2w test.txt' data4.txt
 This is line number 1.
 This is line number 2.
 This is line number 3.
