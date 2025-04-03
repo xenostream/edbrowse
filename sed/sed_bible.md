@@ -998,7 +998,7 @@ $ cat data11.txt
 This is an added line.
 This is the second added line.
 $
-$ sed '3r data11.txt' data6.txt
+$ sed '3r data11.txt' data4.txt
 This is line number 1.
 This is line number 2.
 This is line number 3.
@@ -1011,7 +1011,7 @@ $
 sed 편집기는 데이터 파일의 모든 텍스트 라인을 데이터 스트림에 삽입합니다. 텍스트 패턴 주소로 삽입할 때도 동일하게 처리됩니다:
 
 ```
-$ sed '/number 2/r data11.txt' data6.txt
+$ sed '/number 2/r data11.txt' data4.txt
 This is line number 1.
 This is line number 2.
 This is an added line.
@@ -1024,7 +1024,7 @@ $
 데이터 스트림의 끝에 텍스트를 추가하려면 달러 기호 주소 기호를 사용하면 됩니다:
 
 ```
-$ sed '$r data11.txt' data6.txt
+$ sed '$r data11.txt' data4.txt
 This is line number 1.
 This is line number 2.
 This is line number 3.
@@ -1992,7 +1992,7 @@ This is line two.
 This is line three.
 This is line four.
 $
-$ sed '/^$/d ; $!G' data6.txt
+$ sed '/^$/d ; $!G' data4.txt
 This is line one.
 
 This is line two.
