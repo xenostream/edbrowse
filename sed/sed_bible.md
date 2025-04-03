@@ -819,13 +819,13 @@ $
 `p` 명령의 가장 일반적인 사용 용도는 텍스트 패턴과 검색 일치한 **텍스트가 포함된 라인만 출력** 하는 것입니다:
 
 ```
-$ cat data6.txt
+$ cat data4.txt
 This is line number 1.
 This is line number 2.
 This is line number 3.
 This is line number 4.
 $
-$ sed -n '/number 3/p' data6.txt
+$ sed -n '/number 3/p' data4.txt
 This is line number 3.
 $
 ```
@@ -835,7 +835,7 @@ $
 또한, 스트림의 일부 라인만 빠르게 출력하는 방법으로 사용할 수 있습니다:
 
 ```
-$ sed -n '2,3p' data6.txt
+$ sed -n '2,3p' data4.txt
 This is line number 2.
 This is line number 3.
 $
@@ -847,7 +847,7 @@ $
 $ sed -n '/3/{
 > p
 > s/line/test/p
-> }' data6.txt
+> }' data4.txt
 This is line number 3.
 This is test number 3.
 $
