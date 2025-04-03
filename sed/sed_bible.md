@@ -1137,6 +1137,7 @@ $
 다음 예제는 스크립트가 *header* 란 단어가 포함된 줄을 찾습니다. 스크립트가 해당 줄을 식별한 후, `n` 명령으로 텍스트의 다음 줄로 이동시키며 그 줄은 빈 줄일 것입니다.
 
 ```
+$ cat data1.txt
 This is the header line.
 
 This is a data line.
