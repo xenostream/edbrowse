@@ -6,6 +6,9 @@
 
 또한 이런 토글 명령어는 해당 기능에 대한 현재 상태를 화면에 출력합니다, 즉, 켜짐(on) 또는 꺼짐(off)을 표시합니다. 만약 도움말 메시지 표시 기능이 활성화되어 있거나 디버그 레벨이 1 이상일 때 토글 모드를 활성화하거나 비활성화할 때는 도움말 메시지 표시 기능이 켜져 있는 경우에만 해당 메시지가 정상적으로 출력됩니다.
 
+<details>
+<summary>Quick Reference</summary>
+
 ## Leave the Program  
 |command|description|
 |:---|:---|
@@ -518,7 +521,7 @@ e scp://login:password@example.com/absolute-path scp download
 |step$exp = expression | set step$l to 2 when expression is true, breaking at each step thereafter|
 |arg$ | reference the arguments object from within a breakpoint|
 
-
+</details>
 
 .Ah "Tips for Avoiding Line Numbers
 
