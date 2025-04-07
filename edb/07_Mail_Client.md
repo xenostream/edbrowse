@@ -1,4 +1,4 @@
-.Ah "Send Mail
+# Send Mail
 
 현재 편집 중인 세션의 내용을 `sm` 명령어를 통해 다른 사람에게 이메일로 보낼 수 있습니다. 이메일 계정은 [설정 파일](#)에서 설명되어 있습니다.
 
@@ -6,7 +6,7 @@
 
 수신자, 첨부 파일, 그리고 제목은 파일의 상단에 나타나야 합니다. `sm` 명령어는 문법에 민감하므로 다음 구문을 주의 깊게 확인하세요.
 
-.Ps
+```
 To: fred.flintstone@bedrock.us
 CC: barney.rubble@bedrock.us
 account: 1
@@ -16,7 +16,7 @@ Come visit Hollyrock.
 Brochure attached.
 Sincerely,
 Rock studios incorporated.
-.Pe
+```
 
 계정 라인은 선택 사항입니다. 이 라인은 `edbrowse`에 `.ebrc` 설정 파일에 지정된 첫 번째 메일 계정을 사용하라고 지시합니다. `account:` 라인을 포함하지 않으면, `edbrowse`는 `.ebrc` 파일에서 "default"로 표시된 기본 계정을 사용합니다.
 
@@ -28,9 +28,9 @@ Rock studios incorporated.
 
 다양한 운영 체제는 전통적으로 줄 끝을 표시하는 서로 다른 문자를 사용합니다. 일반적으로 `edbrowse`는 중립적인 줄 끝 문자를 사용하여 텍스트 첨부 파일을 전송합니다. 수신 이메일 클라이언트는 해당 운영 체제에서 일반적으로 사용되는 줄 끝 문자를 사용하여 파일을 저장합니다. 줄 끝 문자를 정확히 유지하려면 `flow-`를 사용하세요. 이 작업은 자주 필요하지 않을 것입니다.
 
-.Ps
+```
 sub: is an acceptable shorthand for subject:
-.Pe
+```
 
 `attach:` 라인을 사용하여 이메일에 첨부 파일을 추가할 수 있습니다. 각 라인은 첨부할 파일을 지정해야 하며, 이 라인들은 제목 라인 앞에 위치해야 합니다. 파일 이름이 단순히 숫자인 경우, 해당하는 `edbrowse` 세션이 사용됩니다. 예를 들어, `Hollyrock` 브로셔를 첨부하려면 세션 2로 전환하여 PDF 파일을 읽어들이고, 세션 1로 돌아와서 `attach:2`를 사용하면 됩니다.
 
@@ -44,9 +44,9 @@ sub: is an acceptable shorthand for subject:
 
 수신자를 지정할 때 전체 이메일 주소 대신 별칭을 사용할 수 있습니다. 별칭은 `.ebrc` 파일에 지정된 주소록과 대조됩니다. 주소록에 다음과 같은 항목이 포함되어 있다면,
 
-.Ps
+```
 fred : fred.flintstone@bedrock.us : 226 cobblestone way : 5553827
-.Pe
+```
 
 그럼 "To:fred"라고 파일 상단에 작성하면 됩니다. `edbrowse`에서 주소록의 첫 두 필드만 중요합니다. 다른 필드는 전화번호, 팩스번호, 주소 등으로 사용할 수 있습니다. 
 
@@ -61,26 +61,26 @@ fred : fred.flintstone@bedrock.us : 226 cobblestone way : 5553827
 
 
 
-.Ah "Send Mail Client
+# Send Mail Client
 앞서 설명된 바와 같이, `edbrowse`는 메일 클라이언트 기능을 포함하고 있습니다. 인터랙티브한 `sm` 명령 외에도, 명령줄에서 배치 방식으로 메일을 보낼 수 있습니다. 주소록에 fred와 barney가 있고, 첫 번째 이메일 계정을 사용하여 첨부 파일과 함께 메일을 보내고 싶다면, 다음과 같이 할 수 있습니다.
 
-.Ps
+```
 edbrowse -m1 fred ^barney hollyrock-notice +hollyrock-brochure.pdf
-.Pe
+```
 
 `^` 기호가 앞에 붙은 `barney`는 CC 수신자를 의미합니다. BCC 수신자를 지정하려면 `?barney`를 사용합니다.
 
 파일 이름에 `+`가 붙은 경우, 해당 파일은 첨부 파일로 간주됩니다. 반면, `-`가 붙은 경우에는 대체 형식으로 처리됩니다.
 
-.Ps
+```
 edbrowse -m1 fred ^barney hollyrock-notice -hollyrock-graphical.html
-.Pe
+```
 
 
 
 
 
-.Ah "Retrieving Mail
+# Retrieving Mail
 
 `edbrowse`가 `-f` 옵션과 함께 호출되면, `nofetch`로 표시된 계정을 제외하고 모든 계정에서 메일을 가져옵니다. `-f` 뒤에 숫자를 지정하면, 특정 계정에서만 메일을 가져올 수 있습니다. 예를 들어, `-f1`은 첫 번째 메일 계정에서만 메일을 가져오고 나머지 계정은 무시합니다. 메일 가져오기가 완료되면, 프로그램은 가져온 메시지의 총 수를 출력합니다.
 
@@ -88,7 +88,7 @@ edbrowse -m1 fred ^barney hollyrock-notice -hollyrock-graphical.html
 
 여러 메일 계정을 `.ebrc` 파일에 지정할 수 있음을 기억하세요. 첫 번째 계정은 `-m1`처럼 인덱스 1로 표시됩니다. 좀 더 쉽게 관리하려면, `.bashrc` 파일에 별칭을 추가하는 것도 좋습니다.
 
-.Ps
+```
 #  My mail, home account
 alias mymail="edbrowse -fm1"
 #  My wife's account.
@@ -97,13 +97,13 @@ alias wifemail="edbrowse -pfm2"
 alias workmail="edbrowse -fm3"
 #  mail is obsolete
 alias mail="echo use mymail, wifemail, or workmail"
-.Pe
+```
 
 
 
 
 
-.Ah "Interactive Mail Reader
+# Interactive Mail Reader
 
 `edbrowse`가 `-m` 옵션과 함께 실행되면, 다른 인수 없이도 인터랙티브 메일 리더로 작동하여 읽지 않은 메시지 디렉토리에서 메일을 검사할 수 있습니다. 메일을 가져오고 읽는 작업을 한 단계에서 수행하려면 `-f`와 `-m` 옵션을 함께 사용할 수 있습니다.
 
@@ -111,7 +111,7 @@ alias mail="echo use mymail, wifemail, or workmail"
 
 프롬프트가 `?`이면 메시지가 완료된 것이며, `*`이면 더 많은 텍스트가 남아 있음을 의미합니다. 키를 눌러 응답할 수 있습니다. 키는 다음과 같은 의미를 가집니다.
 
-.Ps
+```
 ?	summary of key commands
 q	quit the program
 space	display more text
@@ -121,7 +121,7 @@ n	read the next message
 d	delete this message
 w	write this message to a file and delete it
 u	write this message unformatted to a file and delete it
-.Pe
+```
 
 스페이스를 입력하면 `/bin/more`처럼 이메일 표시가 계속됩니다. `g`를 입력하면 상단으로 돌아가며, `t`를 입력하면 이메일의 일반 텍스트 버전을 볼 수 있습니다. 그러나 일반 텍스트 버전이 없을 경우, `edbrowse`는 "이 이메일에는 일반 텍스트 버전이 없습니다; 이메일 클라이언트에서 HTML 처리를 활성화해 주세요."라는 메시지를 표시합니다. 일반 텍스트 버전이 사용 가능한 경우, HTML 버전보다 간단할 수 있습니다.
 
@@ -135,7 +135,7 @@ u	write this message unformatted to a file and delete it
 
 
 
-.Ah "Formatted Mail
+# Formatted Mail
 
 메일이 수신되면, 형식 없이 읽지 않은 메시지 디렉토리에 저장됩니다. 즉, 서버에 존재하던 메시지의 충실한 복사본입니다. `-m` 옵션으로 `edbrowse`를 실행하여 메시지를 읽으면, 여러 형식 규칙이 적용된 후 표시됩니다. 메시지를 원시 상태 또는 형식이 적용된 상태로 저장할 수 있습니다. 인터랙티브 메일 프롬프트에서 `w`를 선택하면 형식이 적용된 버전이 디스크에 저장되고, `u`를 선택하면 형식이 없는 버전이 저장됩니다.
 
@@ -143,13 +143,13 @@ HTML 메일 메시지가 렌더링될 때, 자바스크립트는 비활성화됩
 
 
 
-.Ah "Mail Filtering
+# Mail Filtering
 
 설정 파일은 적당한 수준의 메일 필터링을 지원합니다. 발신자, 수신자 또는 제목에 따라 수신 메일을 리디렉션할 수 있습니다. 이러한 매개변수는 설정 파일에 설정됩니다. 메일 필터링 규칙은 다음과 같은 형식을 가집니다:
 
-.Ps
+```
 matchString > destinationFile
-.Pe
+```
 
 실제로 `>` 기호는 약간 오해의 소지가 있습니다. 파일이 존재하는 경우, 이메일이 파일 끝에 추가되며, 파일이 잘리지 않습니다. 그래서 `>>`를 사용하는 것이 좋겠지만, 반복적으로 추가 기호를 사용하는 것보다 `>`를 사용하는 것이 더 간편했습니다.
 
@@ -157,14 +157,14 @@ matchString > destinationFile
 
 메일 필터링 규칙은 항상 필터 블록 내에서 적용됩니다. 예를 들어, 특정 사람들로부터의 메일을 리디렉션하려면 다음과 같이 설정합니다.
 
-.Ps
+```
 fromfilter {
 fred flintstone > fredmail
 fred.flintstone@bedrock.us > fredmail
 jerk@hotmail.com > x
 word@m-w.com > -wod
 }
-.Pe
+```
 
 발신자의 이름이나 이메일 주소를 지정할 수 있습니다. 발신자가 다른 계정에서 메일을 보낼 경우를 대비해 둘 다 지정하는 것이 좋습니다.
 
@@ -176,14 +176,14 @@ word@m-w.com > -wod
 
 메일을 `to:` 필드에 따라 필터링할 수도 있습니다. 이는 여러 메일 계정이나 주 계정으로 포워딩된 메일 별칭이 있는 경우 유용합니다. 다음은 샘플 블록입니다.
 
-.Ps
+```
 tofilter {
 support@my-side-business.com > support
 sales@my-side-business.com > sales
 @my-side-business.com > business
 me@my-regular-dayjob.com > work
 }
-.Pe
+```
 
 세 번째 항목은 모든 메일을 수신하는 캣콜 주소로, 해당 도메인으로 전송된 모든 메일이 저장됩니다. 규칙이 순서대로 적용되므로, 지원 요청은 "support"라는 파일에 저장되고, 판매 관련 메일은 "sales"라는 파일에 저장되며, 비즈니스 관련 기타 모든 메일은 "business"라는 파일에 저장됩니다.
 
@@ -193,12 +193,12 @@ me@my-regular-dayjob.com > work
 
 이 기능을 사용하여 다른 ISP로부터 바이러스 첨부 파일을 보냈다는 경고를 차단할 수도 있습니다. 실제로는 바이러스 첨부 파일을 보낸 적이 없지만, 포워딩된 이메일의 발신 주소가 위조되어 경고가 당신에게 돌아온 경우, 이를 "backscatter"라고 합니다. 이러한 허위 경고를 없애는 라인도 작성할 수 있습니다.
 
-.Ps
+```
 subjfilter {
 Come Kiss Me > x
 Net Integrator Virus Alert > x
 }
-.Pe
+```
 
 주제가 일치하거나 주제의 시작 또는 끝이 일치하며, 주제 길이가 일치 문자열의 두 배를 넘지 않는 경우 이메일이 리디렉션됩니다.
 
@@ -214,7 +214,7 @@ Net Integrator Virus Alert > x
 
 
 
-.Ah "Mail Reply
+# Mail Reply
 
 `re` 명령은 포맷된 이메일을 답장용으로 준비합니다. "Reply to" 라인(반드시 존재해야 함)은 상단으로 이동합니다. 이 라인은 답장할 이메일 주소를 포함하고 있으며, 이메일 메시지를 포맷할 때 생성됩니다. 이 라인이 없으면 `re` 명령은 실패합니다.
 
@@ -223,11 +223,11 @@ Net Integrator Virus Alert > x
 이메일이 방금 열려졌고, 포맷되지 않은 데이터가 현재 edbrowse 세션에 여전히 존재하거나 동일한 데이터가 데이터베이스 파일 `maildir/.reply`에 저장되어 있는 경우, `re` 명령은 원본 이메일의 메시지 ID를 삽입합니다. 이 메시지 ID는 답장의 일부로 포함되어야 합니다. 결과적으로 라인은 다음과 같을 수 있습니다.
 
 
-.Ps
+```
 Reply to somebody@foo.bar.com
 references: <4387A55E6AF43C4F9830C74EFECE9132022D0638@foo-bar.net>
 Subject: What's in a name?
-.Pe
+```
 
 `re` 명령은 답장을 준비하는 명령으로, 포맷된 이메일을 처리합니다. 이 명령은 "Reply to" 라인을 상단으로 이동시킵니다. 이 라인은 답장할 이메일 주소를 포함하고 있으며, 이메일 메시지를 포맷할 때 생성됩니다. 이 라인이 없으면 `re` 명령은 실패합니다. 
 
@@ -245,11 +245,11 @@ Subject: What's in a name?
 
 
 
-.Ah "Imap Client
+# Imap Client
 
 위에서 설명한 POP3 클라이언트는 메일을 컴퓨터로 가져오며, 이후에는 해당 메일에 대한 책임이 사용자의 몫이 됩니다. 이메일을 아카이브하고 백업하는 등의 작업은 사용자가 해야 합니다. 그러나 IMAP 프로토콜은 이메일을 서버에 무기한 저장할 수 있도록 하여, 말하자면 클라우드에 보관할 수 있게 합니다. 이로 인해 이메일을 20년 치든, 10만 메시지든, 어떤 컴퓨터나 태블릿, 스마트폰에서도 접근할 수 있습니다. 필요시 이메일을 로컬로 다운로드할 수도 있지만, 다운로드할 필요는 없습니다. 이는 서버 측 접근 방식에 해당합니다. IMAP에 맞게 조정된 Gmail의 초기 구성 항목은 다음과 같습니다.
 
-.Ps
+```
 mail {
   imap
   inserver = imap.gmail.com
@@ -260,11 +260,11 @@ mail {
   reply = somebody@gmail.com
   from = Full Name
 }
-.Pe
+```
 
 이것이 구성 파일의 세 번째 메일 항목이라면, `edbrowse -f3` 명령어로 이 계정에 접근할 수 있습니다. 이는 POP3 계정처럼 모든 이메일을 로컬 컴퓨터로 가져오는 것이 아닙니다. 대신, edbrowse는 IMAP 서버의 모든 이메일에 인터랙티브하게 접근할 수 있도록 합니다. 다음은 샘플 스크린샷입니다.
 
-.Ps
+```
  1 INBOX, 0 messages
  2 [Gmail]/All Mail, 7 messages
  3 [Gmail]/Drafts, 0 messages
@@ -275,12 +275,12 @@ mail {
  8 [Gmail]/Trash, 16 messages
 Select a folder by number or by substring. q to quit,
 rf to refresh, l number to change fetch limit, e string to set envelope format.
-.Pe
+```
 
 `6`, 또는 `spam`, 또는 단순히 `spa`를 입력하면 edbrowse가 스팸 폴더의 7개 메시지를 안내합니다. 각 이메일의 발신자와 제목, 즉 봉투 정보를 출력하고, 수행할 작업을 묻습니다. 이는 POP3 클라이언트 인터페이스와 유사합니다. `q`를 입력하면 종료하고, `n`은 다음 메시지로 이동하며, `d`는 삭제하고, `m`은 다른 폴더로 이동시킵니다. 목적지 폴더는 번호 또는 이름으로 지정할 수 있습니다. `space`를 입력하면 이메일 본문을 읽기 시작하고, 계속 입력하면 이메일을 원하는 만큼 읽을 수 있습니다. `g`는 `space`와 같은 효과가 있으며, 이메일로 이동하거나, 페이지의 하이퍼링크나 디렉토리 스캔의 파일처럼 작동합니다. 이메일 중간에 `g`를 입력하면 상단으로 돌아갑니다. `w`는 이메일을 포맷된 상태로 저장하고, `W`는 저장 후 삭제합니다. `u` 또는 `U`를 입력하면 이메일을 포맷되지 않은 상태로 저장합니다. `a`는 첨부 파일을 저장하고, `/`를 입력하면 주제, 발신자 또는 이메일 본문 텍스트로 이메일을 검색합니다. 마지막으로 `h`를 입력하면 도움말 메시지가 표시됩니다.
 
 
-.Ps
+```
 h	print this help message
 q	quit this program
 s	stop reading from this folder
@@ -300,7 +300,7 @@ u	write this email unformatted to a file
 U	write this email unformatted to a file and delete it
 a	scan and save attachments
 e	envelope format string
-.Pe
+```
 
 일부 서버, 예를 들어 Gmail에서는 "모든 메일" 폴더에서 이메일을 직접 삭제할 수 없습니다. 대신, 이메일을 휴지통으로 이동한 후 거기서 삭제해야 합니다.
 
@@ -311,7 +311,7 @@ e	envelope format string
 `create` 및 `delete` 명령은 새 폴더를 생성하거나 기존 폴더를 삭제합니다. `create foo`를 입력하여 새 폴더 `foo`를 생성할 수 있으며, 즉시 메시지를 이동할 수 있습니다. 경고 - `foo`를 삭제하면 `foo`의 모든 메시지가 사라질 수 있습니다. 이는 IMAP 서버에 따라 달라질 수 있습니다. `rename foo bar`를 입력하면 폴더 이름을 `foo`에서 `bar`로 변경할 수 있습니다. 이 명령은 폴더 이름에 공백이 없다고 가정합니다.
 
 
-.Ah "Imap Within Edbrowse
+# Imap Within Edbrowse
 
 Edbrowse는 거의 모든 기능에서 ed 유사 인터페이스를 제공합니다: 탐색, 파일 관리자, SQL 데이터베이스, IRC 클라이언트 등. 이 점이 Edbrowse의 매력 중 하나입니다. IMAP에서도 이와 같은 경험을 제공합니다. 이메일을 읽으면서 하이퍼링크로 이동하거나, 회신을 발송하거나, 이메일을 삭제하거나, 첨부 파일을 저장하는 등의 작업을 할 수 있습니다. 독립형 클라이언트는 일부 작업에서 더 빠를 수 있지만, 모든 통합 작업을 수행할 수는 없습니다.
 
@@ -339,14 +339,14 @@ d 명령은 현재 위치의 봉투를 제거하지만, 상위 페이지의 상�
 
 edbrowse는 IMAP 서버에서 원격 검색을 수행할 수 있습니다. 이는 버퍼에 있는 이메일을 검색하는 것이 아니라, 서버의 모든 이메일을 대상으로 검색을 수행합니다. 현재 줄의 폴더에 대해 적용되는 검색은 다음과 같습니다.
 
-.Ps
+```
 /f fred : emails that come from Fred
 /t wilma : emails that were sent to Wilma
 /s paypal transfer : emails with paypal and transfer in the subject line
 /b baseball : emails that mention baseball anywhere in the body
 /u unread emails
 /uf fred unread emails from fred ... etc
-.Pe
+```
 
 다른 `/expression`은 버퍼를 통해 텍스트 검색을 수행합니다.
 
