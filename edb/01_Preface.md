@@ -1,6 +1,6 @@
 # Maintainer
 
-Edbrowse의 홈페이지는 [edbrowse.org(https://www.edbrowse.org) 입니다. *Chris Brannon* 이 현재 프로젝트 관리자이자 웹마스터입니다.
+Edbrowse의 홈페이지는 [edbrowse.org](https://www.edbrowse.org) 입니다. *Chris Brannon* 이 현재 프로젝트 관리자이자 웹마스터입니다.
 
 
 # Author
