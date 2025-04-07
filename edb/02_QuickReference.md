@@ -1,4 +1,4 @@
-.Ah "Quick Reference Guide
+# Quick Reference Guide
 
 다음에 ed 및 edbrowse 명령어를 모두 모아놓은 명령 목록이 있습니다. 이것은 빠른 참조 가이드입니다. 이 명령어들은 문서의 나머지 부분을 모두 읽기 전까지는 대부분 제대로 이해되지 않을 수 있습니다.
 
@@ -523,7 +523,7 @@ e scp://login:password@example.com/absolute-path scp download
 
 </details>
 
-.Ah "Tips for Avoiding Line Numbers
+# Tips for Avoiding Line Numbers
 
 만약 ed 편집기를 사용해본 적이 없다면 이 프로그램은 매우 어색하게 느껴질 수 있습니다. 텍스트를 편집하면서 매번 줄 번호를 지정해서 사용해야만 하는 것처럼 보일 수 있습니다. 그러나, 실제 줄 번호는 거의 필요하지 않습니다. 다음은 이런 줄 번호 지정 작업을 피할 수 있는 몇 가지 팁입니다.
 
@@ -537,13 +537,13 @@ e scp://login:password@example.com/absolute-path scp download
 
 
 
-.Ah "Mailing List
+# Mailing List
 
 edbrowse 및 기타 커맨드라인 기반 유틸리티 사용자들을 위한 메일링 리스트가 존재합니다. 구독하려면 다음의 메일 주소로 메시지를 보내시길 바랍니다: 
 
 {commandline+subscribe@lists.the-brannons.com}
 
 
-.Ah "Edbrowse Wiki
+# Edbrowse Wiki
 
 edbrowse에 관한 전용 위키(wiki) 페이지가 있으며 여기엔 팁과 사용 요령 및 샘플 .ebrc 구성 파일 및 함수가 포함되어 있습니다. 자세한 내용은 {edbrowse.org} 를 참조하시기 바랍니다.
