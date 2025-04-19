@@ -548,29 +548,32 @@ $ cat output.txt
 
 
 # Chapter 2. Sed Substitute Command
-스트림 편집기에서 가장 강력한 명령어는 `substitute`입니다. 이 명령어는 매우 강력하고 많은 옵션을 제공하여, 하나의 전체 장을 할애하여 설명합니다.
+스트림 편집기에서 가장 강력한 명령어는 대체 (*substitute*) 명령입니다. 이 명령어는 매우 강력하고 수 많은 옵션을 제공하므로 하나의 장을 할애해서 설명합니다.
 
 
 
 ## 6. Sed Substitute Command Syntax
 
+
+**대체 명령 기본 문법:**
+
 ```
-sed '[address-range|pattern-range] s/original string/replacement-string/[substitute-flags]' inputfile
+sed '[address-range|pattern-range] s/original-string/replacement-string/[substitute-flags]' inputfile
 ```
 
-위의 `sed` 치환 명령어 구문에서:
+위의 `sed` 대체 명령 기본 문법에서:
 
-- **address-range** 또는 **pattern-range**는 선택 사항입니다. 이를 지정하지 않으면, `sed`는 모든 줄에서 치환 명령어를 실행합니다.
-- **s** – `sed`에게 치환 명령어를 실행하라고 지시합니다.
-- **original-string** – 입력 파일에서 검색할 문자열입니다. `original-string`은 정규 표현식이 될 수도 있습니다.
-- **replacement-string** – `sed`는 `original-string`을 이 문자열로 대체합니다.
-- **substitute-flags**는 선택 사항입니다. 이 부분은 다음 섹션에서 자세히 설명됩니다.
+- **address-range** 또는 **pattern-range** 는 [ 선택 사항 ] 입니다. 이를 별도로 지정하지 않으면 모든 줄 범위에 대체 명령어를 실행합니다.
+- **s** – `sed`에게 대체 명령어를 실행하라고 지시합니다.
+- **original-string** – **검색 문자열** 로 입력 파일에서 검색할 문자열입니다. *original-string* 은 정규 표현식이 (*regular expression*) 될 수 있습니다.
+- **replacement-string** – **대체 문자열** 로 *original-string* 을 이 문자열로 대체합니다.
+- **substitute-flags** 는 [ 선택 사항 ] 입니다. 이 부분은 다음 섹션에서 자세히 설명됩니다.
 
-원본 파일은 변경되지 않습니다. 치환은 패턴 공간 버퍼에서 이루어지며, 이후 이 내용이 `stdout`으로 출력됩니다.
+**원본 파일은 변경되지 않습니다!!** 대체 작업은 패턴 공간 버퍼에서만 이루어지며 내용은 `stdout` 으로만 출력됩니다.
 
-다음은 몇 가지 간단한 `sed` 치환 예제입니다(변경된 부분은 굵게 표시됨).
+다음은 몇 가지 간단한 `sed` 대체 명령 예제입니다.
 
-**Replace all occurrences of Manager with Director:**
+**Manager 문자열을 Director 문자열로 대체:**
 
 ```
 $ sed 's/Manager/Director/' employee.txt
@@ -581,7 +584,7 @@ $ sed 's/Manager/Director/' employee.txt
 105,Jane Miller,Sales Director
 ```
 
-**Replace Manager with Director only on lines that contain the keyword 'Sales':**
+**Sales 문자열이 포함된 라인에서만 Manager 문자열을 Director 로 대체:**
 
 ```
 $ sed '/Sales/s/Manager/Director/' employee.txt
@@ -592,14 +595,18 @@ $ sed '/Sales/s/Manager/Director/' employee.txt
 105,Jane Miller,Sales Director
 ```
 
-주소 범위를 사용한 경우, 이전 예제에서 보여준 두 개의 변경 사항 대신 하나의 변경만 발생했다는 점에 유의하세요.
+주소 범위를 사용한 경우 이전 예제에서 보여준 두 개의 변경 사항 대신 하나의 변경만 발생했다는 점에 유의하시기 바랍니다.
 
 
+<br>
 
 ## 7. Global Flag (g flag)
-`sed`의 치환 플래그 `g`는 글로벌(global)을 의미합니다. 기본적으로 `sed`의 치환 명령어는 각 줄에서 `{original-string}`의 첫 번째 발생만 교체합니다. 만약 한 줄에서 `{original-string}`의 모든 발생을 `{replacement-string}`으로 변경하고 싶다면, 글로벌 플래그 `g`를 사용해야 합니다.
+`sed`의 대체 명령 플래그 `g` 는 글로벌 (*global*) 을 의미합니다. 
 
-**Replace the 1st occurrence of lower case a with upper case A:**
+기본적으로 `sed`의 대체 명령어는 각 줄에서 `{original-string}` 의 첫 번째 검색 일치 부분만 교체합니다. 
+만약, 한 줄내에 `{original-string}` 의 모든 검색 일치 부분을 `{replacement-string}` 으로 모두 변경하고 싶다면 글로벌 플래그 `g` 를 사용해야 합니다.
+
+**첫 번째로 검색 일치한 a 문자를 대문자 A 문자로 대체:**
 
 ```
 $ sed 's/a/A/' employee.txt
@@ -610,7 +617,7 @@ $ sed 's/a/A/' employee.txt
 105,JAne Miller,Sales Manager
 ```
 
-**Replace all occurrences of lower case a with upper case A:**
+**모든 a 문자를 대문자 A 문자로 대체:**
 
 ```
 $ sed 's/a/A/g' employee.txt
@@ -621,18 +628,19 @@ $ sed 's/a/A/g' employee.txt
 105,JAne Miller,SAles MAnAger
 ```
 
-**참고:** 이러한 예제는 주소 범위가 지정되지 않았기 때문에 전체 파일에 적용되었습니다.
+**참고:** 위의 예제는 주소 범위가 지정되지 않았기 때문에 전체 파일 범위에 명령이 적용됩니다.
 
 
 
 ## 8. Number Flag (1,2,3.. flag)
-숫자 플래그를 사용하여 `original-string`의 특정 발생을 지정할 수 있습니다. 오직 n번째 발생만 치환을 트리거합니다. 카운팅은 각 줄에서 새로 시작되며, n은 1부터 512까지 아무 값이나 될 수 있습니다.
+숫자 플래그를 사용하면 `original-string` 의 특정 발생 위치를 지정할 수 있습니다. 즉, n번째 발생 위치만 대체 작업을 처리합니다. 
+숫자 카운팅은 각 줄내에서 새로 시작되며 n은 1부터 512까지의 아무 값이나 사용할 수 있습니다.
 
-예를 들어, `/11`은 한 줄에서 `original-string`의 11번째 발생만 교체합니다.
+예를 들어, `/11` 은 한 줄내에서 `original-string` 의 11번째 발생 위치만 대체합니다.
 
-다음은 몇 가지 예제입니다.
+다음은 숫자 플래그에 대한 몇 가지 예제입니다.
 
-**Replace the 2nd occurrence of lower case a to upper case A:**
+**두 번째로 검색 일치한 a 문자를 대문자 A 문자로 대체:**
 
 ```
 $ sed 's/a/A/2' employee.txt
@@ -643,7 +651,7 @@ $ sed 's/a/A/2' employee.txt
 105,Jane Miller,SAles Manager
 ```
 
-**For this example, create the following file with three lines:**
+**예제 설명을 위해 다음과 같은 3 라인을 포함한 파일을 생성합니다:**
 
 ```
 $ vi substitute-locate.txt
@@ -652,7 +660,7 @@ locate command uses database to locate files
 locate command can also use regex for searching
 ```
 
-**In the file you just created, change only the 2nd occurrence of locate to find:**
+**2번째로 검색 일치한 locate 문자열을 find 문자열로 대체:**
 
 ```
 $ sed 's/locate/find/2' substitute-locate.txt
@@ -661,11 +669,14 @@ locate command uses database to find files
 locate command can also use regex for searching
 ```
 
-**참고:** 위 예제의 3번 줄에서는 원본 `substitute-locate.txt` 파일에 "locate"가 하나만 존재합니다. 따라서 3번 줄에서는 아무 변경도 이루어지지 않습니다.
+**참고:** 위 예제의 3번째 줄에는 *locate* 문자열이 단 하나만 존재합니다. 따라서, 3번 줄에는 아무런 변경 작업도 이루어지지 않습니다.
 
+<br>
 
 ## 9. Print Flag (p flag)
-`sed` 치환 플래그 `p`는 출력(print)을 의미합니다. 치환이 성공하면 변경된 줄을 출력합니다. `sed`의 대부분의 출력 명령어처럼, 기본적으로 모든 줄을 출력하는 것을 억제하려면 `-n` 옵션과 함께 사용하는 것이 가장 유용합니다.
+`sed` 대체 명령 플래그 `p` 는 출력 (*print*) 을 의미합니다. 대체 작업이 성공하면 변경된 줄을 출력합니다. 
+
+`sed`의 대부분의 출력 명령어처럼 기본적으로 모든 줄을 출력하는 것을 억제하려면 `-n` 옵션과 함께 사용하는 것이 가장 유용합니다.
 
 **Print only the line that was changed by the substitute command:**
 
