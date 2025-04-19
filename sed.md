@@ -1,5 +1,5 @@
 # Chapter 1: Sed Syntax and Basic Commands
-모든 Sed 예제에서 다음의 `employee.txt` 파일을 사용할 것입니다. 이 책에서 제공하는 명령어를 직접 실행해 보려면 이 텍스트 파일을 먼저 생성합니다.
+본 문서의 모든 예제에서 *employee.txt* 파일을 사용할 것입니다. 따라서, 본 문서에서 제공하는 명령어를 직접 실행해 보려면 이 텍스트 파일을 먼저 생성해야 합니다.
 
 ```
 $ vi employee.txt
@@ -10,54 +10,61 @@ $ vi employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-위의 직원 데이터베이스에는 각 레코드마다 다음과 같은 필드가 포함되어 있습니다.
+위의 직원 데이터베이스 파일 (*file*) 에는 각 레코드마다 (*record*) 다음과 같은 필드가 (*field*) 포함되어 있습니다.
 
 - Employee Id
 - Employee Name
 - Title
 
-Sed는 스트림 편집기(*Stream Editor*)의 약자입니다. 이것은 텍스트를 조작하고, 필터링하며, 변환하는 매우 강력한 도구입니다. Sed는 파일에서 입력을 받을 수도 있고, 파이프에서 입력을 받을 수도 있습니다. 
-심지어 여러분이 정확히 Sed 스크립트를 이해하지 못한 채, 다양한 상황에서 사용하기 위해 Bash 시작 파일에 여러 개의 Sed 한 줄 명령어를 추가해 두었을 수도 있습니다.
+`Sed` 는 스트림 편집기 (*Stream Editor*) 의 약자입니다. 이것은 텍스트를 조작하고 필터링하며 변환할 수 있는 매우 강력한 도구입니다. 
+Sed는 파일에서 입력을 받을 수 있고 파이프에서 입력을 받을 수 있습니다. 
 
-초보자에게는 Sed 스크립트가 난해하게 보일 수도 있습니다. 하지만, Sed 명령어를 자세히 이해하면, 간단한 Sed 스크립트를 작성해 복잡한 텍스트 조작 문제를 빠르게 해결할 수 있게 될 것입니다.
+Sed 스크립트를 정확히 이해하지 못한 채 다양한 상황에 사용하는 Bash 시작 파일에서 여러 개의 Sed 한 줄 명령어를 추가했을 수 있습니다.
 
-이 책에서는 모든 Sed 명령어를 설명하고 이해하기 쉬운 예제를 제공합니다.
+초보자에게 Sed 스크립트는 암호처럼 난해하게 보일 수 있습니다. 하지만, Sed 명령어를 자세히 이해하면 간단한 Sed 스크립트를 작성해 
+복잡한 텍스트 조작 문제를 빠르게 해결할 수 있다는 것을 알게 될 것입니다.
+
+본 문서는 모든 Sed 명령어를 설명하고 이해하기 쉬운 예제를 제공합니다.
 
 
 <br><br>
-## 1. Sed Command Syntax
-이 섹션의 목적은 Sed의 `문법과 명령어 구조에 익숙해지도록 돕는 것` 입니다. 개별 Sed 명령어에 대한 자세한 설명은 후반부에 자세히 다룰 예정이므로, 여기서는 다루지 않습니다.
 
-**Basic sed syntax:**
+## 1. Sed Command Syntax
+이 섹션의 주요 목적은 Sed의 **문법과 명령어 구조에 익숙해지도록 돕는 것** 입니다. 
+
+개별적인 Sed 명령어에 대한 자세한 설명은 후반부에 자세히 다룰 예정이므로 여기서는 다루지 않습니다.
+
+**sed 기본 문법:**
 
 ```
 sed [options] {sed-commands} {input-file}
 ```
 
-Sed는 `{input-file}` 에서 한 번에 한 줄씩 읽고, 해당 줄에 `{sed-commands}` 를 실행합니다.  
+Sed는 `{input-file}` 에서 한 번에 한 줄씩 읽고 해당 줄에 `{sed-commands}` 를 실행합니다.  
 
-먼저, `{input-file}` 에서 첫 번째 줄을 읽고, 그 줄에 `{sed-commands}`를 실행합니다. 그런 다음 두 번째 줄을 읽고, 이와 동일한 방식으로 `{sed-commands}`를 실행합니다. 
-Sed는 `{input-file}` 파일의 끝에 도달할 때까지 이 과정을 반복합니다.  
+우선, `{input-file}` 에서 첫 번째 줄을 읽고 그 줄에 `{sed-commands}`를 실행합니다. 
+그런 다음 두 번째 줄을 읽고 이와 동일한 방식으로 `{sed-commands}`를 실행합니다. 
+Sed는 `{input-file}` 파일의 끝에 도달할 때까지 이 과정을 반복하면서 처리합니다.  
 
-또한, Sed에는 몇 가지 선택적인 명령어 옵션(`[options]`)이 있으며, 이를 통해 추가적인 기능을 수행할 수도 있습니다.  
+또한, Sed에는 몇 가지 선택적인 옵션 (`[options]`) 이 있으며 이를 통해 추가적인 기능을 수행할 수 있습니다.  
 
-다음 예제는 기본적인 Sed 문법을 보여줍니다. 이 간단한 Sed 예제는 `/etc/passwd` 파일의 모든 줄을 출력합니다.
+다음 예제는 기본적인 Sed 문법을 보여줍니다. 이 간단한 Sed 예제는 `/etc/passwd` 파일의 모든 줄을 화면에 출력합니다.
 
 ```
 sed -n 'p' /etc/passwd
 ```
 
-여기서 중요한 초점은 `{sed-commands}` 에 있으며, 이것은 단일 Sed 명령어일 수도 있고, 여러 개의 Sed 명령어일 수도 있습니다.  
+여기서 중요한 점은 `{sed-commands}` 에 있으며 이것은 단일 Sed 명령어일 수 있고 여러 개의 Sed 명령어일 수 있습니다.  
 
-또한, 여러 개의 Sed 명령어를 하나의 파일로 작성한 후, 아래와 같이 `-f` 옵션을 사용해 해당 Sed 스크립트 파일을 실행할 수도 있습니다.
+또한, 여러 개의 Sed 명령어를 하나의 파일로 작성한 후 아래와 같이 `-f` 옵션을 사용해 해당 Sed 스크립트 파일을 실행할 수 있습니다.
 
-**Basic sed syntax for use with sed-command file:**
+**sed 명령 파일을 사용하는 기본 문법:**
 
 ```
 sed [options] -f {sed-commands-in-a-file} {input-file}
 ```
 
-다음 예제는 기본적인 sed 문법을 보여줍니다. 이 예제는 `/etc/passwd` 파일에서 "root" 와 "nobody" 로 시작하는 줄을 출력합니다.
+다음 예제는 기본적인 sed 파일 문법을 보여줍니다. 이 예제는 `/etc/passwd` 파일에서 *root* 와 *nobody* 로 시작하는 줄을 출력합니다.
 
 ```
 $ vi test-script.sed
@@ -67,21 +74,21 @@ $ vi test-script.sed
 $ sed -n -f test-script.sed /etc/passwd
 ```
 
-여러 개의 Sed 명령어를 실행할 때, 아래와 같이 `-e` 옵션을 사용해 명령어를 명령줄에 직접 지정할 수도 있습니다.
+여러 개의 Sed 명령어를 실행할 때 아래와 같이 `-e` 옵션을 사용해 명령어를 명령줄에 직접 지정할 수 있습니다.
 
-**Basic sed syntax using -e:**
+**-e 옵션을 사용하는 기본 문법:**
 
 ```
 sed [options] -e {sed-command-1} -e {sed-command-2} {input-file}
 ```
 
-다음 예제는 기본적인 문법을 보여줍니다. 이 예제는 `/etc/passwd` 파일에서 "root" 와 "nobody" 로 시작하는 줄을 출력합니다:
+다음 예제는 `-e` 옵션을 사용하는 기본적인 문법을 보여줍니다. 이 예제는 `/etc/passwd` 파일에서 *root* 와 *nobody* 로 시작하는 줄을 출력합니다:
 
 ```
 sed -n -e '/^root/ p' -e '/^nobody/ p' /etc/passwd
 ```
 
-여러 개의 `-e` 인수를 사용해 한 줄에서 많은 명령어를 실행할 경우, 아래와 같이 백슬래시 문자를 사용해 여러 줄에 나눠서 작성할 수 있습니다.
+여러 개의 `-e` 인수를 사용해 한 줄에 많은 명령어를 실행할 경우 아래와 같이 백슬래시 문자를 사용해 여러 줄에 나눠서 작성할 수 있습니다.
 
 ```
 sed -n \
@@ -90,18 +97,18 @@ sed -n \
 /etc/passwd
 ```
 
-또한, `{ }` 를 사용해서 여러 개의 Sed 명령어를 `그룹화` 처리한 후 명령줄에서 실행할 수 있습니다.
+또한, `{...}` 를 사용해 여러 개의 Sed 명령어를 `그룹화` 한 후 명령줄에서 실행할 수 있습니다.
 
-**Basic sed syntax using { }:**
+**{...} 를 사용하는 기본 문법:**
 
 ```
 sed [options] '{
-sed-command-1
-sed-command-2
+  sed-command-1
+  sed-command-2
 }' input-file
 ```
 
-다음 예제는 기본적인 문법을 보여줍니다. 이 예제는 `/etc/passwd` 파일에서 "root" 와 "nobody" 로 시작하는 줄을 출력합니다.
+다음 예제는 기본적인 문법을 보여줍니다. 이 예제는 `/etc/passwd` 파일에서 *root* 와 *nobody* 로 시작하는 줄을 출력합니다.
 
 ```
 sed -n '{
@@ -111,36 +118,37 @@ sed -n '{
 ```
 
 > [!NOTE]
-**참고:** Sed는 원본 파일을 절대 수정하지 않습니다!! 항상 출력을 stdout 으로 인쇄합니다. 변경 사항을 저장하려면 명시적으로
-`> filename.txt` 형태로 지정해 출력 결과를 파일로 리디렉션해야 합니다.
+**참고:** Sed는 원본 파일을 절대 수정하지 않습니다!! 항상 출력은 stdout (표준 출력 즉, 모니터 화면) 으로만 인쇄합니다. 따라서, 변경 사항을 별도의 파일로 
+저장하려면 명시적으로 `> filename.txt` 형태로 지정해 출력 결과를 파일로 리디렉션해야 합니다.
 
-
+<br>
 
 ## 2. Sed Scripting Flow
-Sed 스크립팅은 쉽게 기억할 수 있는 처리 순서인, **읽기**(*Read*), **실행**(*Execute*), **출력**(*Print*), **반복**(*Repeat*)을 따릅니다. 
-이런 `실행 흐름` 을 기억하기 위해 간단한 **REPR** 약어를 사용할 수 있습니다.
+Sed 스크립팅은 쉽게 기억할 수 있는 처리 순서인 **읽기** (*Read*), **실행** (*Execute*), **출력** (*Print*), **반복** (*Repeat*) 을 따릅니다. 
+이런 `실행 흐름` (*execution cycle*) 을 쉽게 기억하기 위해 간단한 **REPR** 약어로 표현할 수 있습니다.
 
-이 처리 순서의 각 단계를 살펴보겠습니다. Sed는 다음과 같이 작동합니다:
+이런 처리 순서의 각 단계를 살펴보겠습니다. Sed는 다음과 같이 작동합니다:
 
-- **읽기(Read)**: 입력 파일에서 읽은 줄을 패턴 공간(*Pattern Space*)이란 내부의 임시 버퍼에 저장합니다.
-- **실행(Execute)**: Sed 명령어를 패턴 공간에 있는 줄에 실행합니다. 여러 개의 Sed 명령어가 있을 경우, Sed 스크립트, `-e` 옵션 또는 `{ }` 을 통해 제공된 명령어를 순차적으로 실행합니다.
-- **출력(Print)**: 패턴 공간에 포함된 줄을 출력합니다. 이 줄을 출력한 후 패턴 공간은 비워지게 됩니다.
-- **반복(Repeat)**: 입력 파일의 끝에 도달할 때까지 이 처리 과정을 반복합니다.
+- **읽기(Read)**: 입력 파일에서 읽은 줄을 패턴 공간 (*Pattern Space*) 이란 내부의 임시 버퍼 영역에 저장합니다.
+- **실행(Execute)**: Sed 명령어를 패턴 공간에 있는 줄에 실행합니다. 여러 개의 Sed 명령어가 있을 경우 Sed 스크립트 파일, `-e` 옵션 또는 `{...}` 을 통해 제공된 명령어를 순차적으로 실행합니다.
+- **출력(Print)**: 패턴 공간에 포함된 줄을 표준 출력으로 출력합니다. 이 줄을 출력한 후 패턴 공간은 비워지게 됩니다.
+- **반복(Repeat)**: 입력 파일의 끝에 도달할 때까지 이런 처리 과정을 반복해 실행합니다.
 
 ![](./_image/2025-03-01-14-23-10.jpg)
 Fig: Illustration of SED execution flow
 
+<br>
 
 ## 3. Print Pattern Space (p command)
-`sed` 의 `p` 명령어를 사용하면 현재 패턴 공간을 출력할 수 있습니다. 
+`sed` 의 `p` (*print*) 명령어를 사용하면 패턴 공간의 내용을 출력할 수 있습니다. 
 
-기본적으로 `sed` 는 명령어를 실행한 후, 패턴 버퍼를 출력하기 때문에 `p` 명령어가 굳이 왜 필요한지 궁금할 수 있습니다. 하지만, 모든일엔 이유가 있습니다. 
-`p` 명령어는 무엇을 출력할지 구체적으로 제어할 수 있도록 해줍니다.
+`sed` 는 명령어를 실행한 후 기본적으로 패턴 버퍼의 내용을 출력하기 때문에 `p` 명령어가 왜 필요한지 궁금할 수 있습니다. 하지만, 모든 일엔 다 이유가 있습니다. 
+즉, `p` 명령어는 무엇을 출력할지 구체적으로 제어할 수 있도록 해줍니다.
 
-보통의 경우, `p` 명령을 사용할 때는 `-n` 옵션과 함께 사용해서 표준 `sed` 처리 과정에서 발생하는 기본적인 출력을 억제합니다. 
-그렇지 않으면, `p` (*print*) 명령어가 실행될 때 한 줄이 두 번 중복되어 출력됩니다.
+보통의 경우 `p` 명령을 사용할 때는 `-n` 옵션과 함께 사용해 표준 `sed` 처리 과정에 발생하는 기본적인 출력 작업을 억제합니다. 
+그렇지 않고 `p` (*print*) 명령어를 실행하면 한 줄이 두 번 중복되어 출력됩니다.
 
-**The following example prints every line of employee.txt twice:**
+**employee.txt 의 각 줄을 중복 출력하는 예제:**
 
 ```
 $ sed 'p' employee.txt
@@ -156,7 +164,7 @@ $ sed 'p' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Print each line once (functionally the same as `cat employee.txt`):**
+**각 줄을 한 번만 출력하는 예제 (`cat employee.txt` 명령과 동일):**
 
 ```
 $ sed -n 'p' employee.txt
@@ -167,17 +175,21 @@ $ sed -n 'p' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-### Specifying an Address Range
-Sed 명령어 앞에 주소 범위를 지정하지 않으면, 기본적으로 모든 줄에 대해 실행합니다. 다음은 Sed 명령어 앞에 `주소 범위` 를 지정하는 몇 가지 예입니다.
+<br>
 
-**Print only the 2nd line:**
+### Specifying an Address Range
+Sed 명령어 앞에 **주소나 주소 범위** 를 지정하지 않으면 **기본적으로 모든 줄에 실행합니다.** 
+
+다음은 Sed 명령어 앞에 주소나 주소 범위를 지정하는 몇 가지 예입니다.
+
+**2번 줄만 출력:**
 
 ```
 $ sed -n '2 p' employee.txt
 102,Jason Smith,IT Manager
 ```
 
-**Print from line 1 through line 4:**
+**1번 줄부터 4번 줄까지 출력:**
 
 ```
 $ sed -n '1,4 p' employee.txt
@@ -187,7 +199,7 @@ $ sed -n '1,4 p' employee.txt
 104,Anand Ram,Developer
 ```
 
-**Print from line 2 through the last line ($ represents the last line):**
+**2번 줄부터 마지막줄까지 출력 (`$` 문자는 마지막 라인을 의미):**
 
 ```
 $ sed -n '2,$ p' employee.txt
@@ -197,22 +209,27 @@ $ sed -n '2,$ p' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
+<br>
 
 ### Modify Address Range
-주소 범위는 **쉼표**(*comma*), **더하기**(*plus*), **물결표**(*tilde*) 문자를 사용해 수정할 수 있습니다. 
-위의 예제에 사용한 쉼표(,) 기호는 주소 범위 지정의 일부로 사용한 것을 이미 보았습니다. 그에 대한 의미는 명확합니다: `n,m` 은 n번 줄에서 m번 줄까지를 나타냅니다.
+단일 주소가 아닌 주소 범위는 **쉼표** (*comma*), **더하기** (*plus*), **물결표** (*tilde*) 문자를 사용해 지정할 수 있습니다.
 
-더하기 기호(+)는 쉼표와 함께 사용해 절대적인 줄 번호 대신 특정 줄 번호를 지정할 수 있습니다. 예를 들어, `n,+m` 은 n번 줄부터 시작해 m개까지의 줄을 의미합니다.
+위의 예제에 사용한 쉼표 (`,`) 기호는 주소 범위 지정의 일부로 사용한 것을 이미 살펴봤습니다. 그에 대한 의미는 명확합니다: 
 
-물결표(~) 기호는 주소 범위에서도 사용될 수 있습니다. 이 특별한 기호의 의미는 명령어 사이에 줄을 건너뛰는 것입니다. 
-예를 들어, 주소 범위 `n~m` 은 sed가 n번째 줄부터 시작해 그 이후로 m번째 줄마다 선택하라는 의미입니다.
+- 쉼표 기호 `n,m` 은 n번 줄부터 m번 줄까지를 나타냅니다.
 
+- 더하기 기호 (`n,+m`) 은 쉼표 문자와 함께 사용해 절대적인 줄 번호 대신 특정 줄 번호를 지정할 수 있습니다. 예를 들어, `n,+m` 은 n번 줄부터 m줄까지 줄을 의미합니다.
+
+- 물결표(~) 기호 (`n~m`) 은 주소 범위에 사용할 수 있습니다. 이 특별한 기호의 의미는 명령어 사이의 줄을 건너뛰는 것입니다. 예를 들어, `n~m` 은 n번째 줄부터 그 이후 m번째 줄마다 선택하라는 의미입니다. 다음과 같습니다.
+
+```
 - 1~2 matches 1,3,5,7, etc.
 - 2~2 matches 2,4,6,8, etc.
 - 1~3 matches 1,4,7,10, etc.
 - 2~3 matches 2,5,8,11, etc
+```
 
-**Print only odd numbered lines:**
+**홀수 번째 줄만 출력:**
 
 ```
 $ sed -n '1~2 p' employee.txt
@@ -221,17 +238,21 @@ $ sed -n '1~2 p' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-### Pattern Matching
-줄 번호가 매겨진 주소(또는 주소 범위)처럼, 패턴(또는 패턴 범위)을 지정해 범위를 지정할 수 있습니다. 다음과 같은 몇 가지 예제에서 그 방법을 보여줍니다.
+<br>
 
-**Print lines matching the pattern “Jane”:**
+### Pattern Matching
+줄 번호가 매겨진 주소 (또는 주소 범위) 처럼 패턴 (또는 패턴 범위) 을 지정해 범위를 지정할 수 있습니다. 
+
+다음과 같은 몇 가지 예제는 사용 방법에 대해 보여줍니다.
+
+**“Jane” 문자열이 포함된 라인만 출력:**
 
 ```
 $ sed -n '/Jane/ p' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Print lines starting from the 1st match of "Jason" until the 4th line:**
+**"Jason" 문자열이 포함된 라인부터 4번 줄까지 출력:**
 
 ```
 $ sed -n '/Jason/,4 p' employee.txt
@@ -241,9 +262,9 @@ $ sed -n '/Jason/,4 p' employee.txt
 ```
 
 > [!NOTE]
-**참고:** 만약 첫 번째 줄부터 4번째 줄까지 "Jason" 과 일치하는 항목이 없다면, 이 명령어는 4번째 줄 이후 "Jason" 과 일치하는 줄을 출력할 것입니다.
+**참고:** 만약 첫 번째 줄부터 4번째 줄까지 "Jason" 과 일치한 항목이 없다면 4번째 줄 이후에 "Jason" 과 일치한 줄을 출력합니다.
 
-**Print lines starting from the 1st match of "Raj" until the last line:**
+**"Raj" 문자열이 포함된 라인부터 마지막 라인까지 출력:**
 
 ```
 $ sed -n '/Raj/,$ p' employee.txt
@@ -252,7 +273,7 @@ $ sed -n '/Raj/,$ p' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Print lines starting from the line matching "Raj" until the line matching "Jane":**
+**"Raj" 문자열이 포함된 라인부터 "Jane" 문자열이 포함된 라인까지 출력:**
 
 ```
 $ sed -n '/Raj/,/Jane/ p' employee.txt
@@ -261,7 +282,7 @@ $ sed -n '/Raj/,/Jane/ p' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Print the line matching "Jason" and 2 lines immediately after that:**
+**"Jason" 문자열이 포함된 라인부터 이후 2라인까지 출력:**
 
 ```
 $ sed -n '/Jason/,+2 p' employee.txt
@@ -270,19 +291,20 @@ $ sed -n '/Jason/,+2 p' employee.txt
 104,Anand Ram,Developer
 ```
 
+<br>
 
 ## 4. Delete Lines (d command)
-`sed`의 `d` 명령어를 사용하면 줄을 삭제할 수 있습니다. 주의할 점은, 줄이 출력 스트림에서만 삭제된다는 것입니다. 다른 `sed` 명령어들처럼, `d` 명령어는 원본 입력 파일의 내용을 수정하지 않습니다.
+`sed`의 `d` (*delete*) 명령어를 사용하면 줄을 삭제할 수 있습니다. 주의할 점은 해당 줄은 출력 스트림에서만 삭제된다는 것입니다. 다른 `sed` 명령어들처럼 `d` 명령어는 원본 파일의 내용을 수정하지 않습니다.
 
-기본적으로 주소 범위를 지정하지 않으면, `sed`는 모든 줄에 대해 일치합니다. 따라서 아래 예제는 `employee.txt` 파일의 모든 줄을 일치시켜 삭제하므로 아무것도 출력하지 않습니다.
+기본적으로 주소 범위를 지정하지 않으면 `sed`는 모든 줄에 대해 일치합니다. 따라서 아래 예제는 *employee.txt* 파일의 모든 줄을 일치시켜 삭제하므로 아무것도 출력하지 않습니다.
 
 ```
 sed 'd' employee.txt
 ```
 
-삭제할 주소 범위를 지정하는 것이 더 유용합니다. 다음은 몇 가지 예제입니다:
+삭제할 주소 범위를 지정하는 것이 더욱 유용합니다. 다음은 몇 가지 예제입니다:
 
-**Delete only the 2nd line:**
+**2번 줄만 삭제:**
 
 ```
 $ sed '2 d' employee.txt
@@ -292,21 +314,21 @@ $ sed '2 d' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Delete from line 1 through 4:**
+**1번줄부터 4번 줄까지 삭제:**
 
 ```
 $ sed '1,4 d' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Delete from line 2 through the last line:**
+**2번줄부터 마지막 줄까지 삭제:**
 
 ```
 $ sed '2,$ d' employee.txt
 101,John Doe,CEO
 ```
 
-**Delete only odd number of lines:**
+**홀수 줄만 삭제:**
 
 ```
 $ sed '1~2 d' employee.txt
@@ -314,7 +336,7 @@ $ sed '1~2 d' employee.txt
 104,Anand Ram,Developer
 ```
 
-**Delete lines matching the pattern "Manager":**
+**"Manager" 문자열이 포함된 라인만 삭제:**
 
 ```
 $ sed '/Manager/ d' employee.txt
@@ -323,7 +345,7 @@ $ sed '/Manager/ d' employee.txt
 104,Anand Ram,Developer
 ```
 
-**Delete lines starting from the 1st match of "Jason" until the 4th line:**
+**"Jason" 문자열이 처음 일치한 라인부터 4번 줄까지 삭제:**
 
 ```
 $ sed '/Jason/,4 d' employee.txt
@@ -331,9 +353,10 @@ $ sed '/Jason/,4 d' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-만약 첫 번째 4줄에서 "Jason"과 일치하는 항목이 없다면, 이 명령어는 4번째 줄 이후에서 "Jason"과 일치하는 줄만 삭제합니다.
+**참고:** 만약 첫 번째 줄부터 4번째 줄까지 "Jason" 과 일치한 항목이 없다면 4번째 줄 이후에 "Jason" 과 일치한 줄을 삭제합니다.
 
-**Delete lines starting from the 1st match of "Raj" until the last line:**
+
+**"Raj" 문자열이 포함된 라인부터 마지막 라인까지 삭제:**
 
 ```
 $ sed '/Raj/,$ d' employee.txt
@@ -341,7 +364,7 @@ $ sed '/Raj/,$ d' employee.txt
 102,Jason Smith,IT Manager
 ```
 
-**Delete lines starting from the line matching "Raj" until the line matching "Jane":**
+**"Raj" 문자열이 포함된 라인부터 "Jane" 문자열이 포함된 라인까지 삭제:**
 
 ```
 $ sed '/Raj/,/Jane/ d' employee.txt
@@ -349,7 +372,7 @@ $ sed '/Raj/,/Jane/ d' employee.txt
 102,Jason Smith,IT Manager
 ```
 
-**Delete lines starting from the line matching "Jason" and 2 lines immediately after that:**
+**"Jason" 문자열이 포함된 라인부터 이후 2줄까지 삭제:**
 
 ```
 $ sed '/Jason/,+2 d' employee.txt
@@ -357,30 +380,35 @@ $ sed '/Jason/,+2 d' employee.txt
 105,Jane Miller,Sales Manager
 ```
 
-### Useful Delete Examples
-다음 예제들은 실제 일상적인 작업에서 매우 유용합니다.
+<br>
 
-**Delete all the empty lines from a file:**
+### Useful Delete Examples
+다음 예제는 실제 일상적인 작업에서 매우 유용할 수 있습니다.
+
+**파일내의 모든 빈 라인을 삭제:**
 
 ```
 sed '/^$/ d' employee.txt
 ```
 
-**Delete all comment lines (assuming the comment starts with #):**
+**주석문을 삭제 (주석문은 `#` 문자로 시작함):**
 
 ```
 sed '/^#/ d' employee.txt
 ```
 
-참고: 여러 개의 Sed 명령어가 있을 때, Sed가 `'d'` 명령어를 만나면 패턴과 일치하는 전체 줄이 삭제되며, 삭제된 줄에 대해서는 이후 명령어가 실행되지 않습니다.
+**참고:** 여러 개의 Sed 명령어가 있을 때 `d` 명령어를 만나면 패턴과 일치한 전체 줄이 삭제되며 삭제된 줄에는 이후 명령어가 실행되지 않습니다.
 
+
+<br>
 
 ## 5. Write Pattern Space to File (w command)
-`sed`의 `w` 명령어를 사용하면 현재 패턴 공간을 파일에 쓸 수 있습니다. 기본적으로 Sed 표준 흐름에 따라 패턴 공간은 `stdout`에 출력되므로, 출력이 파일로만 저장되고 화면에는 출력되지 않도록 하려면 `-n` 옵션을 함께 사용해야 합니다.
+`sed`의 `w` (*write*) 명령어를 사용하면 현재 패턴 공간의 내용을 지정한 파일에 쓸 (저장) 수 있습니다. 
 
-다음은 몇 가지 예제입니다.
+기본적으로 Sed 표준 처리 흐름에 따라 패턴 공간의 내용은 `stdout` (표준 출력) 에 출력되므로 출력 결과를 파일에만 저장하고 화면에 출력되지 않도록 처리하려면 
+`-n` 옵션을 함께 사용해야 합니다. 다음은 몇 가지 예제입니다.
 
-**Write the content of employee.txt file to file output.txt (and display on screen):**
+**employee.txt 파일의 내용을 output.txt 파일에 저장 (화면에도 출력):**
 
 ```
 $ sed 'w output.txt' employee.txt
@@ -398,7 +426,7 @@ $ cat output.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Write the content of employee.txt file to output.txt file but not to screen:**
+**employee.txt 파일의 내용을 output.txt 파일에 저장 (화면에는 출력 안함):**
 
 ```
 $ sed -n 'w output.txt' employee.txt
@@ -411,7 +439,7 @@ $ cat output.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Write only the 2nd line:**
+**2번 라인만 output.txt 파일에 저장:**
 
 ```
 $ sed -n '2 w output.txt' employee.txt
@@ -420,7 +448,7 @@ $ cat output.txt
 102,Jason Smith,IT Manager
 ```
 
-**Write lines 1 through 4:**
+**1번 라인부터 4번 라인까지 저장:**
 
 ```
 $ sed -n '1,4 w output.txt' employee.txt
@@ -432,7 +460,7 @@ $ cat output.txt
 104,Anand Ram,Developer
 ```
 
-**Write from line 2 through the last line:**
+**2번 라인부터 마지막 라인까지 저장:**
 
 ```
 $ sed -n '2,$ w output.txt' employee.txt
@@ -444,7 +472,7 @@ $ cat output.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Write only odd numbered lines:**
+**홀수 라인만 저장:**
 
 ```
 $ sed -n '1~2 w output.txt' employee.txt
@@ -455,7 +483,7 @@ $ cat output.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Write lines matching the pattern "Jane":**
+**"Jane" 문자열을 포함한 라인만 저장:**
 
 ```
 $ sed -n '/Jane/ w output.txt' employee.txt
@@ -464,7 +492,7 @@ $ cat output.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Write lines starting from the 1st match of "Jason" until the 4th line:**
+**"Jason" 문장열을 포함한 라인부터 4번 라인까지 저장:**
 
 ```
 $ sed -n '/Jason/,4 w output.txt' employee.txt
@@ -475,9 +503,9 @@ $ cat output.txt
 104,Anand Ram,Developer
 ```
 
-첫 번째 4줄에서 "Jason"과 일치하는 항목이 없다면, 이 명령어는 4번째 줄 이후에서 "Jason"과 일치하는 줄만 파일에 씁니다.
+첫 번째 줄부터 4번 줄에 *Jason* 문자열과 일치한 항목이 없다면 4번 줄 이후 *Jason* 문자열과 일치한 줄만 파일에 저장합니다.
 
-**Write lines starting from the 1st match of "Raj" until the last line:**
+**"Raj" 문자열을 포함한 라인부터 마지막 라인까지 저장:**
 
 ```
 $ sed -n '/Raj/,$ w output.txt' employee.txt
@@ -488,7 +516,7 @@ $ cat output.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Write lines starting from the line matching "Raj" until the line matching "Jane":**
+**"Raj" 문자열을 포함한 라인부터 "Jane" 문자열을 포함한 라인까지 저장:**
 
 ```
 $ sed -n '/Raj/,/Jane/ w output.txt' employee.txt
@@ -499,7 +527,7 @@ $ cat output.txt
 105,Jane Miller,Sales Manager
 ```
 
-**Write the line matching "Jason" and the next 2 lines immediately after that:**
+**"Jason" 문자열을 포함한 라인부터 이후 2라인까지 저장:**
 
 ```
 $ sed -n '/Jason/,+2 w output.txt' employee.txt
@@ -510,10 +538,13 @@ $ cat output.txt
 104,Anand Ram,Developer
 ```
 
-참고: `w` 명령어는 자주 사용되지 않을 수 있습니다. 대부분의 사람들은 대신 UNIX 출력 리디렉션을 사용하여 `sed`의 출력을 파일에 저장합니다. 예를 들어: `sed 'p' employee.txt > output.txt`
+**참고:** `w` (*write*) 명령어는 자주 사용하지 않을 수 있습니다. 대부분의 사람들은 UNIX 출력 리디렉션 기능을 사용해 `sed`의 출력을 파일에 저장합니다. 예를 들어:
 
+```
+ $ sed 'p' employee.txt > output.txt
+```
 
-
+<br><br>
 
 
 # Chapter 2. Sed Substitute Command
