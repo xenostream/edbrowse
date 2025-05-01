@@ -14,7 +14,7 @@
 [6. Regular Expressions and Searches](#Regular-Expressions-and-Searches)  
 [7. Substitution](#Substitution)  
 [8. Scripting](#Scripting)  
-[A. APPENDIX](#Appendix-A:-Jabberwocky)
+[A. APPENDIX](#Appendix-A-Jabberwocky)
 
 ---
 
