@@ -1,0 +1,485 @@
+diff --git a/H04.FNT.xz.b64 b/H04.FNT.xz.b64
+new file mode 100644
+index 0000000..5cae47e
+--- /dev/null
++++ b/H04.FNT.xz.b64
+@@ -0,0 +1,23 @@
++/Td6WFoAAATm1rRGAgAhARwAAAAQz1jM4Cz/BM9dAABuIMV2CfQkumNaHYWP0Sl12cMYuh/moZUQ
++qdYyjv15+3g2/KQP8jnzGvAn5caL2fkT4+EB896mOQNzmsmTlgAXPbfxeCiPvWAY4SyrO3FUnpGR
+++jT1MzUm3e1anajeI5ejaqxk2qeSJQUuOZwawKIlvFNmk+qlvjwWhLQCZk6+QEgN/xKZAIAW+9oG
++qPbfmWErm2wI+TIaNQv4xX3FlIpE4atLTigtYsQSwk53scwMC/ZjVV7qvmcU+Sz0LyN6eU/TsD/A
++bWe85Kd79KBV44HtAG8m6Mn6eNpLq+GX0SZBP6qDmM1p/c7EkNKPfy5EUfQ4ra2nJkFWBjwy4OLM
++CfsUepfK+Wd3Z7f/Ycl5BnwOn5CaC8I8IhCNnmYntvhIPE4M5b+hiMj5nZ2+/ZW0o9DXCjwO9VfY
++ar/k1DD65og71PxSz8s6ViKTz+G8V3vQLwwGMccnKpeABCxt/m6kVf3DtDvEGzoWi3SNp1hl6Jzs
++CeEnSscJpoLhTyZr75KOvdi0OJXal4DWf5abJLRLYwirirYdMRLG1R9H2NbOAJwLAG6o++IToMOc
++KiYvdl96s1klDWPT4GjbN3I/sAcmofQK67uN3RrbKUYOGm+60E3XVG0Y5aYBVV0ObHQfDYpxW4MQ
++Frm2E9siX7uPXWZbl8tcyAkqPkIugA7NomqLLavbI5Qoe0v5LcSSULGMjAPsCITxQbPsC74+BTNO
++tSAhlwo11kKgcitzZmloVBODqaqDEAM+9V5NsHTNKJV++ekYBPFy5vvCs9tpITKAYPxmGaS4uPNj
++nS9QDIAxSESUgnbn1Y/GxuAI+s/kNMVXFdtvwXfMSqOpEB1uX6mjHJYvaWIxE68UA2ZZjxOYrPlz
++1kQYvvVFvXwFfK6nnUWmew1sNb1TPGj+aSin15NcXcKAGmyq6I17Xn3ABOh0CAtakeoW+ceb4LjQ
++llGC+brXBcnX4zUUfhuoIV+KV7Z2OivmpbCk6G0Tf4+iX1IOcAiLs985/Oofdib7OTH0A8p1tBzB
++z6xbhN0tySVm5PjWOcUpSmxQxDgPtQdVFP7t+Jsczw5fvcMm2Hh94jy6OPWCsYChFHcsLCW4ny/I
++iqnC/EM42YlYfwTx3gNnor/4Kl0W+9NFl9J6kr0/ciUmpQPLHxZsCuMghXvOaM92mg5ugaNky3LE
++1KF5qRrMEcvdoWeJxhOLanCsp3QBE0I954S80I18BCzTpnZBlQpVNzxb8Oik69qKAv1OBC9+HkF4
++nVxJmqsL3lxJj8FQ4Rnetq+euwMynmRhEF3qYUXbARNs0FkUGZ7k3qcbWBgtFRhD2NKREnGP3IQ8
++RRWmyT2qpKN1QMTaYg/Xfry3fk4GcAimc7C53idd9hAX8eacnGwowXb9cCFtXb60mytSX/xijNCF
++oBCO/hzRSUsTVFB7/ssYnspmwmb5CPdeALowGA7VGFf5TCoVvTxyPjgG3f9sHwXqiAS9imCahGxI
++Ih7N5ED7pmxksPKCVP2c6rBhdPWm0Ms0NzmLi538WsWmxafEgNiQWNUBOM4p01tzTeCdcHhMRhiA
++29LKwX/1Y2Dy55JhhPOgX7ePTBAkGEXmpGy7a+CBdBv/nD5xjCIN10f43tIERpHoUysClqKGaHS5
++bQSCUeXCCAAAAEKGf50JV/+dAAHrCYBaAACwQLQ+scRn+wIAAAAABFla
+diff --git a/conf.h b/conf.h
+index 65df86a..98dae75 100644
+--- a/conf.h
++++ b/conf.h
+@@ -48,0 +49,2 @@ const char *term_name = "yaft-256color";
++
++#define HANGUL_KEY 0x80
+diff --git a/ctrlseq/csi.h b/ctrlseq/csi.h
+index 67fb245..ac340ab 100644
+--- a/ctrlseq/csi.h
++++ b/ctrlseq/csi.h
+@@ -349,0 +350 @@ void set_attr(struct terminal_t *term, struct parm_t *parm)
++#ifndef YAFT_TC
+@@ -351,0 +353,6 @@ void set_attr(struct terminal_t *term, struct parm_t *parm)
++#else
++				term->color_pair.fg = (1<<31)
++					| ((dec2num(parm->argv[i + 2]) & bit_mask[8]) << BITS_PER_RGB*2)
++					| ((dec2num(parm->argv[i + 3]) & bit_mask[8]) << BITS_PER_RGB)
++					| (dec2num(parm->argv[i + 4]) & bit_mask[8]);
++#endif
+@@ -364,0 +372 @@ void set_attr(struct terminal_t *term, struct parm_t *parm)
++#ifndef YAFT_TC
+@@ -366,0 +375,6 @@ void set_attr(struct terminal_t *term, struct parm_t *parm)
++#else
++				term->color_pair.bg = (1<<31)
++					| ((dec2num(parm->argv[i + 2]) & bit_mask[8]) << BITS_PER_RGB*2)
++					| ((dec2num(parm->argv[i + 3]) & bit_mask[8]) << BITS_PER_RGB)
++					| (dec2num(parm->argv[i + 4]) & bit_mask[8]);
++#endif
+diff --git a/fb/common.h b/fb/common.h
+index ebc3721..24f4ee8 100644
+--- a/fb/common.h
++++ b/fb/common.h
+@@ -301,0 +302,5 @@ bool fb_init(struct framebuffer_t *fb)
++	// force resolution (for dual monitor setup with different resolution)
++	if ((env = getenv("YAFT_FB_W")) != NULL)
++		fb->info.width = atoi(env);
++	if ((env = getenv("YAFT_FB_H")) != NULL)
++		fb->info.height = atoi(env);
+@@ -391,0 +397 @@ static inline void draw_line(struct framebuffer_t *fb, struct terminal_t *term,
++    struct cell_t preedit_cell;
+@@ -398,0 +405,15 @@ static inline void draw_line(struct framebuffer_t *fb, struct terminal_t *term,
++		while (term->cursor.y == line && term->hangul_mode && *(term->preedit_str) != 0) {
++			if (term->cursor.x == col) {
++				preedit_cell.width = term->glyph[(uint16_t)term->preedit_str[0]]->width == 2 ? WIDE : HALF;
++			} else if (term->cursor.x == col - 1 && term->glyph[(uint16_t)term->preedit_str[0]]->width == 2) {
++				preedit_cell.width = NEXT_TO_WIDE;
++			} else
++				break;
++			preedit_cell.color_pair = term->cells[line][col].color_pair;
++			preedit_cell.glyphp = term->glyph[(uint16_t)term->preedit_str[0]];
++			preedit_cell.attribute = ATTR_RESET;
++			preedit_cell.has_pixmap = false;
++			cellp = &preedit_cell;
++			break;
++        }
++
+@@ -433,3 +454,10 @@ static inline void draw_line(struct framebuffer_t *fb, struct terminal_t *term,
+-				if (cellp->glyphp->bitmap[h] & (0x01 << (bdf_padding + w)))
+-					pixel = fb->real_palette[color_pair.fg];
+-				else if (fb->wall && color_pair.bg == DEFAULT_BG) /* wallpaper */
++				if (cellp->glyphp->bitmap[h] & (0x01 << (bdf_padding + w))) {
++#ifndef YAFT_TC
++					pixel = fb->real_palette[color_pair.fg & bit_mask[8]];
++#else
++					if (((1<<31) & color_pair.fg) == 0)
++						pixel = fb->real_palette[color_pair.fg & bit_mask[8]];
++					else
++						pixel = color2pixel(&fb->info, bit_mask[3 * BITS_PER_RGB] & color_pair.fg);
++#endif
++				} else if (fb->wall && color_pair.bg == DEFAULT_BG) /* wallpaper */
+@@ -437,2 +465,10 @@ static inline void draw_line(struct framebuffer_t *fb, struct terminal_t *term,
+-				else
+-					pixel = fb->real_palette[color_pair.bg];
++				else {
++#ifndef YAFT_TC
++					pixel = fb->real_palette[color_pair.bg & bit_mask[8]];
++#else
++					if (((1<<31) & color_pair.bg) == 0)
++						pixel = fb->real_palette[color_pair.bg & bit_mask[8]];
++					else
++						pixel = color2pixel(&fb->info, bit_mask[3 * BITS_PER_RGB] & color_pair.bg);
++#endif
++				}
+diff --git a/info/yaft.src b/info/yaft.src
+index bb8169e..88aff39 100644
+--- a/info/yaft.src
++++ b/info/yaft.src
+@@ -62,0 +63 @@ yaft-256color|yet another framebuffer terminal,
++	Tc,
+diff --git a/makefile b/makefile
+index 1eac71f..08c2704 100644
+--- a/makefile
++++ b/makefile
+@@ -4 +4,2 @@ CC ?= gcc
+-CFLAGS  ?= -std=c99 -pedantic -Wall -Wextra -O3 -s -pipe
++LIBHANGUL = $(shell pkg-config --cflags --libs libhangul)
++CFLAGS  ?= -std=c99 -pedantic -Wall -Wextra -O3 -s -pipe $(LIBHANGUL) -DYAFT_TC
+@@ -7 +8 @@ LDFLAGS ?=
+-XCFLAGS  ?= -std=c99 -pedantic -Wall -Wextra -I/usr/include/X11/ -O3 -s -pipe
++XCFLAGS  ?= -std=c99 -pedantic -Wall -Wextra -I/usr/include/X11/ -O3 -s -pipe $(LIBHANGUL)
+@@ -25 +26 @@ yaftx: mkfont_bdf
+-mkfont_bdf: tools/mkfont_bdf.c tools/mkfont_bdf.h tools/bdf.h tools/util.h
++mkfont_bdf: tools/mkfont_bdf.c tools/mkfont_bdf.h tools/bdf.h tools/util.h tools/dkb.h
+@@ -28 +29,4 @@ mkfont_bdf: tools/mkfont_bdf.c tools/mkfont_bdf.h tools/bdf.h tools/util.h
+-glyph.h: mkfont_bdf
++H04.FNT: H04.FNT.xz.b64
++	base64 -d $< | xz -d -c - > $@
++
++glyph.h: mkfont_bdf H04.FNT
+@@ -34 +38 @@ glyph.h: mkfont_bdf
+-	./mkfont_bdf table/alias fonts/milkjf/milkjf_k16.bdf fonts/milkjf/milkjf_8x16r.bdf fonts/milkjf/milkjf_8x16.bdf fonts/terminus/ter-u16n.bdf > glyph.h
++	./mkfont_bdf -hH04.FNT table/alias fonts/milkjf/milkjf_k16.bdf fonts/milkjf/milkjf_8x16r.bdf fonts/milkjf/milkjf_8x16.bdf fonts/terminus/ter-u16n.bdf > glyph.h
+@@ -46 +50 @@ install:
+-	tic -o $(PREFIX)/share/terminfo info/yaft.src
++	tic -x -o $(PREFIX)/share/terminfo info/yaft.src
+@@ -67 +71 @@ clean:
+-	rm -f yaft yaftx mkfont_bdf glyph.h
++	rm -f yaft yaftx mkfont_bdf glyph.h H04.FNT
+diff --git a/terminal.h b/terminal.h
+index b175610..c417b99 100644
+--- a/terminal.h
++++ b/terminal.h
+@@ -342,0 +343 @@ void term_die(struct terminal_t *term)
++    hangul_ic_delete(term->hic);
+@@ -348,0 +350 @@ bool term_init(struct terminal_t *term, int width, int height)
++    term->hangul_mode = false;
+@@ -386,0 +389,3 @@ bool term_init(struct terminal_t *term, int width, int height)
++    term->hic = hangul_ic_new("2");
++    term->preedit_str = hangul_ic_get_preedit_string(term->hic);
++
+diff --git a/tools/dkb.h b/tools/dkb.h
+new file mode 100644
+index 0000000..991d03c
+--- /dev/null
++++ b/tools/dkb.h
+@@ -0,0 +1,158 @@
++#define JUNG_OFFSET 5120
++#define JONG_OFFSET 7936
++
++union bitmap_t { //for big endian
++    struct {
++        uint8_t high;
++        uint8_t low;
++    };
++    uint16_t raw;
++};
++
++struct jamo_offset_t {
++	uint8_t length;
++	uint8_t use_codemap;
++	uint16_t *codemap;
++	uint16_t start_code;
++	uint16_t file_index;
++};
++
++const char cho_map1[] = {0,0,0,0,0,0,0,0,1,3,3,3,1,2,4,4,4,2,1,3,0}; //받침 없는 경우
++const char cho_map2[] = {5,5,5,5,5,5,5,5,6,7,7,7,6,6,7,7,7,6,6,7,5}; //받침 있는 경우
++
++const char jong_map[] = {0,2,0,2,1,2,1,2,3,0,2,1,3,3,1,2,1,3,3,1,1};
++
++const uint16_t compat_code_map[30] = { 21, 22, 0, 23, 0, 0, 24, 25, 26, 0, 0, 0, 0, 0, 0, 0, 27, 28, 29, 0, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39};
++
++struct jamo_offset_t jamo_offset[5] = {{19, false, NULL, 0x1100, 21}, {21, false, NULL, 0x1161, 161}, {27, false, NULL, 0x11A8, 249}, {30, true, compat_code_map, 0x3131, 0}, {27, false, NULL, 0x314F, 161}};
++
++
++void get_eng_bitmap(bitmap_width_t *bitmap, FILE *font, uint16_t code)
++{
++    fseek(font, 16*code, SEEK_SET);
++    for(int i=0; i<16; i++)
++		bitmap[i] = (uint8_t) fgetc(font);
++}
++	
++
++void get_bitmap(bitmap_width_t *bitmap, FILE *font, char cho, char jung, char jong)
++{
++    union bitmap_t bitmap_data;
++    char cho_bul=0, jung_bul=0, jong_bul=0;
++
++    if(jong) { //받침 있음
++        cho_bul = cho_map2[jung];
++        jung_bul = 2;
++    }
++    else
++        cho_bul = cho_map1[jung];
++
++    if(cho != 0 && cho != 15) //초성이 ㄱ,ㅋ 둘 중에 어느것도 아님
++        jung_bul++;
++
++    jong_bul = jong_map[jung];
++
++    fseek(font, 32*(20*cho_bul + cho + 1), SEEK_SET);
++    for(int i=0; i<16; i++) {
++        fread(&bitmap_data.raw, sizeof(uint16_t), 1, font);
++        bitmap[i] = bitmap_data.high<<8 | bitmap_data.low;
++    }
++    fseek(font, JUNG_OFFSET + 32*(22*jung_bul + jung + 1), SEEK_SET);
++    for(int i=0; i<16; i++) {
++        fread(&bitmap_data.raw, sizeof(uint16_t), 1, font);
++        bitmap[i] |= bitmap_data.high<<8 | bitmap_data.low;
++    }
++    fseek(font, JONG_OFFSET + 32*(28*jong_bul + jong), SEEK_SET);
++    for(int i=0; i<16; i++) {
++        fread(&bitmap_data.raw, sizeof(uint16_t), 1, font);
++        bitmap[i] |= bitmap_data.high<<8 | bitmap_data.low;
++    }
++}
++
++
++void get_jamo_bitmap(bitmap_width_t *bitmap, FILE *font, uint16_t code)
++{
++    union bitmap_t bitmap_data;
++    
++    fseek(font, 32*code, SEEK_SET);
++    for(int i=0; i<16; i++) {
++        fread(&bitmap_data.raw, sizeof(uint16_t), 1, font);
++		bitmap[i] = bitmap_data.high<<8 | bitmap_data.low;
++    }
++}
++
++
++bool load_dkb_eng_glyph(struct glyph_list_t **glist_head, struct glyph_t *default_glyph, char *path)
++{
++	FILE *fp;
++	struct glyph_list_t  *listp;
++	struct glyph_t *glyph;
++
++	if ((fp = efopen(path, "r")) == NULL)
++		return false;
++
++	for (int i = 0; i < 256; i++) {
++		listp = ecalloc(1, sizeof(struct glyph_list_t));
++		glyph = ecalloc(1, sizeof(struct glyph_t));
++		glyph->width = 8;
++		glyph->height = 16;
++		glyph->bitmap = (bitmap_width_t *) ecalloc(glyph->height, sizeof(bitmap_width_t));
++
++		get_eng_bitmap(glyph->bitmap, fp, i);
++
++		listp->code = i;
++		listp->glyph = glyph;
++		listp->next = *glist_head;
++		*glist_head = listp;
++
++		if (i == DEFAULT_CHAR)
++			*default_glyph = *glyph;
++	}
++
++	efclose(fp);
++	return true;
++}
++
++bool load_dkb_han_glyph(struct glyph_list_t **glist_head, char *path)
++{
++	FILE *fp;
++	struct glyph_list_t  *listp;
++	struct glyph_t *glyph;
++
++	if ((fp = efopen(path, "r")) == NULL)
++		return false;
++
++	for (int i = 0; i < 5; i++) {
++		for (int j = 0; j < jamo_offset[i].length; j++) {
++			listp = ecalloc(1, sizeof(struct glyph_list_t));
++			glyph = ecalloc(1, sizeof(struct glyph_t));
++			glyph->width = 16;
++			glyph->height = 16;
++			glyph->bitmap = (bitmap_width_t *) ecalloc(glyph->height, sizeof(bitmap_width_t));
++
++			if (jamo_offset[i].use_codemap)
++				get_jamo_bitmap(glyph->bitmap, fp, jamo_offset[i].codemap[j]);
++			else
++				get_jamo_bitmap(glyph->bitmap, fp, jamo_offset[i].file_index + j);
++
++			listp->code = jamo_offset[i].start_code + j;
++			listp->glyph = glyph;
++			listp->next = *glist_head;
++			*glist_head = listp;
++		}
++	}
++	for (int i = 0; i < 11172; i++) {
++		listp = ecalloc(1, sizeof(struct glyph_list_t));
++		glyph = ecalloc(1, sizeof(struct glyph_t));
++		glyph->width = 16;
++		glyph->height = 16;
++		glyph->bitmap = (bitmap_width_t *) ecalloc(glyph->height, sizeof(bitmap_width_t));
++		get_bitmap(glyph->bitmap, fp, i/588, (i/28)%21, i%28);
++		listp->code = 0xac00+i;
++		listp->glyph = glyph;
++		listp->next = *glist_head;
++		*glist_head = listp;
++	}
++	efclose(fp);
++	return true;
++}
+diff --git a/tools/mkfont_bdf.c b/tools/mkfont_bdf.c
+index b7de67c..d6d922f 100644
+--- a/tools/mkfont_bdf.c
++++ b/tools/mkfont_bdf.c
+@@ -0,0 +1,2 @@
++#include <unistd.h>
++#include <getopt.h>
+@@ -4,0 +7 @@
++#include "dkb.h"
+@@ -165,0 +169,3 @@ int main(int argc, char *argv[])
++	int opt;
++	char *dkb_eng_name = NULL;
++	char *dkb_han_name = NULL;
+@@ -170,3 +176,18 @@ int main(int argc, char *argv[])
+-	if (argc < 3) {
+-		logging(FATAL, "usage: ./mkfont ALIAS BDF1 [BDF2] [BDF3] ...\n");
+-		return EXIT_FAILURE;
++	opterr = 0;
++	while ((opt = getopt(argc, argv, "e:h:")) != -1) {
++		switch (opt) {
++			case 'e':
++				dkb_eng_name = optarg;
++				break;
++			case 'h':
++//				load_dkb_han_glyph(&glist_head, optarg);
++				dkb_han_name = optarg;
++//				dkb_han_name = malloc(sizeof(char) * (strlen(optarg) + 1));
++//				strcpy(dkb_han_name, optarg);
++				break;
++		}
++	}
++
++	if (argc - optind< 2) {
++		logging(FATAL, "usage: ./mkfont [-h도꺠비한글폰트] [-e도깨비영문폰트] ALIAS BDF1 [BDF2] [BDF3] ...\n");
++		//return EXIT_FAILURE;
+@@ -173,0 +195,5 @@ int main(int argc, char *argv[])
++	
++	if (dkb_han_name != NULL)
++		load_dkb_han_glyph(&glist_head, dkb_han_name);
++	if (dkb_eng_name != NULL)
++		load_dkb_eng_glyph(&glist_head, &default_glyph, dkb_eng_name);
+@@ -178 +204,2 @@ int main(int argc, char *argv[])
+-	for (int i = 2; i < argc; i++)
++//	for (int i = 2; i < argc; i++)
++	for (int i = optind + 1; i < argc; i++)
+@@ -186 +213 @@ int main(int argc, char *argv[])
+-	if (!load_alias(font, argv[1]))
++	if (!load_alias(font, argv[optind]))
+diff --git a/x/x.h b/x/x.h
+index e6e0878..ce81c23 100644
+--- a/x/x.h
++++ b/x/x.h
+@@ -238 +238,2 @@ static inline void draw_line(struct xwindow_t *xw, struct terminal_t *term, int
+-				if (glyphp->bitmap[h] & (0x01 << (bdf_padding + w)))
++				if (glyphp->bitmap[h] & (0x01 << (bdf_padding + w))) {
++#ifndef YAFT_TC
+@@ -240 +241,8 @@ static inline void draw_line(struct xwindow_t *xw, struct terminal_t *term, int
+-				else if (color_pair.bg != DEFAULT_BG)
++#else
++					if (((1<<31) & color_pair.fg) == 0)
++						XSetForeground(xw->display, xw->gc, xw->color_palette[color_pair.fg]);
++					else
++						XSetForeground(xw->display, xw->gc, color2pixel(xw, bit_mask[3 * BITS_PER_RGB] &color_pair.fg));
++#endif
++				} else if (color_pair.bg != DEFAULT_BG) {
++#ifndef YAFT_TC
+@@ -242 +250,7 @@ static inline void draw_line(struct xwindow_t *xw, struct terminal_t *term, int
+-				else /* already draw */
++#else
++					if (((1<<31) & color_pair.fg) == 0)
++						XSetForeground(xw->display, xw->gc, xw->color_palette[color_pair.bg]);
++					else
++						XSetForeground(xw->display, xw->gc, color2pixel(xw, bit_mask[3 * BITS_PER_RGB] &color_pair.bg));
++#endif
++				} else /* already draw */
+diff --git a/yaft.c b/yaft.c
+index 7b145aa..a851c24 100644
+--- a/yaft.c
++++ b/yaft.c
+@@ -13,0 +14,57 @@
++ssize_t process_hangul(struct terminal_t *term, const uint8_t *buf, size_t size)
++{
++	ssize_t ret = 0;
++	int bufpos = 0;
++	const ucschar *commit_string;
++	char u8buf[BUFSIZE];
++	bool used;
++
++	for (int i = 0; i < size; i++) {
++		if (term->hangul_mode) { //한글모드
++			// 입력받은 키를 처리
++			// ESC 누를 시 영문으로 전환 (vim 사용시 한영 전환 편의를 위함)
++			if (buf[i] == ESC || buf[i] == HANGUL_KEY) {
++				term->hangul_mode = false;
++				commit_string = hangul_ic_flush(term->hic);
++			} else {
++				if (buf[i] == DEL || buf[i] == BS) { // 백스페이스 처리
++					used = hangul_ic_backspace(term->hic);
++				} else
++					used = hangul_ic_process(term->hic, buf[i]);
++				commit_string = hangul_ic_get_commit_string(term->hic);
++			}
++
++			term->preedit_str = hangul_ic_get_preedit_string(term->hic);
++
++			// UTF-8로 출력
++			bufpos = 0;
++			for (int j = 0; commit_string[j] != 0; j++) {
++				if (commit_string[j] < 0x80)
++					u8buf[bufpos++] = commit_string[j];
++				else if (commit_string[j] < 0x800) {
++					u8buf[bufpos++] = 0xC0 | (commit_string[j] >> 6);
++					u8buf[bufpos++] = 0x80 | (commit_string[j] & 0x3F);
++				} else if (commit_string[j] < 0x10000) {
++					u8buf[bufpos++] = 0xE0 | (commit_string[j] >> 12);
++					u8buf[bufpos++] = 0x80 | (commit_string[j] >> 6 & 0x3F);
++					u8buf[bufpos++] = 0x80 | (commit_string[j] & 0x3F);
++				}
++			}
++			if (bufpos)
++				ret += ewrite(term->fd, u8buf, bufpos);
++
++			if ((buf[i] == ESC || !used) && buf[i] != HANGUL_KEY) {
++				ret += ewrite(term->fd, buf+i, 1);
++				used = true;
++			}
++		} else { //영어모드
++			if (buf[i] == HANGUL_KEY)
++				term->hangul_mode = true;
++			else
++				ret += ewrite(term->fd, buf+i, 1);
++		}
++	}
++
++	return ret;
++}
++
+@@ -209,2 +266,5 @@ int main(int argc, char *const argv[])
+-			if ((size = read(STDIN_FILENO, buf, BUFSIZE)) > 0)
+-				ewrite(term.fd, buf, size);
++			if ((size = read(STDIN_FILENO, buf, BUFSIZE)) > 0) {
++				process_hangul(&term, buf, size);
++				term.line_dirty[term.cursor.y] = true;
++				refresh(&fb, &term);
++			}
+diff --git a/yaft.h b/yaft.h
+index 4cb706f..6c0d28b 100644
+--- a/yaft.h
++++ b/yaft.h
+@@ -21,0 +22 @@
++#include <hangul.h>
+@@ -107,0 +109 @@ struct point_t { uint16_t x, y; };
++#ifndef YAFT_TC
+@@ -108,0 +111,3 @@ struct color_pair_t { uint8_t fg, bg; };
++#else
++struct color_pair_t { uint32_t fg, bg; };
++#endif
+@@ -169,0 +175,3 @@ struct terminal_t {
++    HangulInputContext *hic;
++    bool hangul_mode;
++    const ucschar *preedit_str;
