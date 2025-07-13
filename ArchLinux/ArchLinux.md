@@ -2,15 +2,15 @@
 
 ```bash
 archinstall
-- bash-completion networkmanager man-db man-pages
-
-# pacman -S intel-ucode
+ 
+# pacman -S intel-ucode bash-completion networkmanager man-db man-pages
 # pacman -S base-devel libx11 libxft libxinerama freetype2 fontconfig xorg xorg-xinit git \\
           wget unzip alsa-utils noto-fonts-cjk terminus-font imagemagick \\
-          cmus mupdf fbida fontforge groff ghostscript
+          cmus mupdf fbida fontforge groff ghostscript bluez bluez-utils
 
 # wget https://edbrowse.org/static/edbrowse-x86_64
-# mv edbrowse-x86_64 /bin/edb 
+# mv edbrowse-x86_64 /bin/edb
+# chmod 755 /bin/edb
 
 
 # su - pjkwon
@@ -36,9 +36,9 @@ ed .build/slstatus/config.h
 	{ uptime, "Run: %s | ", NULL },
 	{ datetime, "%s",           "%F %T" },
 
-/st/slstatus => make && make clean install
+/st/slstatus => make && sudo make clean install
 
-edb /root/.xinitrc
+$ edb /home/pjkwon/.xinitrc
 
 
 amixer set IEC958 unmute &     
@@ -59,7 +59,6 @@ exec dwm
 startx
 
 ▶ bluetooth:
-# pacman -S bluez bluez-utils 
 # systemctl enable bluetooth
 # systemctl start bluetooth (or reboot)
 # bluetoothctl
@@ -71,22 +70,27 @@ pair XX:XX:XX
 connect XX:XX:XX
 trust XX:XX:XX
 
-▶ Yaft FrameBuffer Terminal with Hangul key
+▶ Yaft FrameBuffer Terminal with Hangul key (working root)
 # pacman -S libhangul
 # git clone https://github.com/uobikiemukot/yaft.git
 # cd yaft
 # patch -p1 < hangul.patch
-# edb tools/mkfont_bdf.c  -> #define _GNU_SOURCE , #include <wchar.h>       added
+# edb tools/mkfont_bdf.c  -> 1st line added
+#define _GNU_SOURCE
+#include <wchar.h>
 # make 
 # make install
 
 # cd /root
 # dumpkeys > kmap
 string F60 = "\200"  (add)
-key code 100 = F60
+
+keycode 100 = AltGr
+    alt	keycode 100 = AltGr
+    shift keycode 57 = F60
 
 # ed /etc/vconsole.conf
 KMAP=/root/kmap
 
-yaft -> Ctrl + Space (Han/Eng)
+yaft -> Shift + Space (Han/Eng)
 ```
