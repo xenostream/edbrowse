@@ -2,7 +2,7 @@
 
 ```bash
 archinstall
-# bash-completion networkmanager man-db man-pages
+- bash-completion networkmanager man-db man-pages
 
 # pacman -S intel-ucode
 # pacman -S base-devel libx11 libxft libxinerama freetype2 fontconfig xorg xorg-xinit git \\
@@ -40,7 +40,7 @@ ed .build/slstatus/config.h
 
 edb /root/.xinitrc
 
-.B1
+
 amixer set IEC958 unmute &     
 
 export XMODIFIERS=@im=kime
@@ -54,7 +54,7 @@ exec kime-xim &
 exec slstatus &
 
 exec dwm
-.B2
+
 
 startx
 
