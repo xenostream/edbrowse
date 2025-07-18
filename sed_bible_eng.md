@@ -3852,4 +3852,298 @@ reports from simple data.
 
 
 
+---
+
+# Quick Guide to sed
+
+If you do any type of data handling in your shell scripts, most likely you’ll need to use either the
+sed program or the  gawk program (and sometimes both). This appendix provides a quick refer-
+ence for  sed and  gawk commands that come in handy when working with data in your
+shell scripts.
+
+
+## The sed Editor
+The  sed editor can manipulate data in a data stream based on commands you either enter into the
+command line or store in a command text fi le. It reads one line of data at a time from the input and
+matches that data with the supplied editor commands, changes data in the stream as specifi ed in
+the commands, and then outputs the new data to  STDOUT .
+
+
+## Starting the sed editor
+Here’s the format for using the  sed command:
+
+```bash
+sed options script file
+```
+
+The  options parameters allow you to customize the behavior of the  sed command and include the
+options shown in Table B-1
+
+**TABLE B-1 The sed Command Options**
+
+| Option | Description |
+| :--- | :--- |
+| -e script | Adds commands specifi ed in  script  to the commands run while processing the input |
+|-f file | Adds the commands specifi ed in the fi le  file  to the commands run while processing the input |
+| -n | Doesn’t produce output for each command, but waits for the  print command |
+
+The  script parameter specifi es a single command to apply against the stream data. If
+more than one command is required, you must use either the  -e option to specify them in
+the command line or the  -f option to specify them in a separate fi le.
+
+
+## sed commands
+The  sed editor script contains commands that  sed processes for each line of data in
+the input stream. This section describes some of the more common  sed commands you’ll
+want to use.
+
+
+### Substitution
+The  s command substitutes text in the input stream. Here’s the format of the  s command:
+
+```bash
+s/pattern/replacement/flags
+```
+
+pattern is the text to replace, and  replacement is the new text that  sed inserts in its
+place.
+
+The  flags parameter controls how the substitution takes place. Four types of substitution
+fl ags are available:
+
+■ A number indicates the pattern occurrence that should be replaced.
+■ g indicates that all occurrences of the text should be replaced.
+■ p indicates that the contents of the original line should be printed.
+■ w file indicates that the results of the substitution should be written to a fi le.
+
+In the fi rst type of substitution, you can specify which occurrence of the matching pattern
+the  sed editor should replace. For example, you use the number 2 to replace only the sec-
+ond occurrence of the pattern.
+
+
+### Addressing
+By default, the commands you use in the  sed editor apply to all lines of the text data. If
+you want to apply a command to only a specifi c line, or a group of lines, you must use line
+addressing.
+
+There are two forms of line addressing in the  sed editor:
+
+■ A numeric range of lines
+■ A text pattern that fi lters out a line
+
+Both forms use the same format for specifying the address:
+
+```bash
+[address]command
+```
+
+When using numeric line addressing, you reference lines by their line position in the text
+stream. The  sed editor assigns the fi rst line in the text stream as line number 1 and con-
+tinues sequentially for each new line.
+
+```bash
+$ sed '2,3s/dog/cat/' data1
+```
+
+The other method of restricting which lines a command applies to is a bit more compli-
+cated. The  sed editor allows you to specify a text pattern that it uses to fi lter lines for the
+command. Here’s the format for this:
+
+```bash
+/pattern/command
+```
+
+You must encapsulate the  pattern you specify in forward slashes. The  sed editor applies
+the command only to lines that contain the text pattern that you specify.
+
+```bash
+$ sed '/rich/s/bash/csh/' /etc/passwd
+```
+
+This fi lter fi nds the line that contains the text  rich and replaces the text  bash with  csh .
+
+You can also group more than one command together for a specifi c address:
+
+```bash
+address {
+command1
+command2
+command3 }
+```
+
+The  sed editor applies each of the commands you specify only to lines that match the
+address specifi ed. The  sed editor processes each command listed on the address line(s):
+
+```bash
+$ sed '2{
+> s/fox/elephant/
+> s/dog/cat/
+> }' data1
+```
+
+The  sed editor applies each of the substitutions to the second line in the data fi le.
+
+
+### Deleting lines
+The delete command,  d , pretty much does what it says. It deletes any text lines that match
+the addressing scheme supplied. Be careful with the delete command, because if you forget
+to include an addressing scheme, all the lines are deleted from the stream:
+
+```bash
+$ sed 'd' data1
+```
+
+The delete command is obviously most useful when used in conjunction with a specifi ed
+address. This allows you to delete specifi c lines of text from the data stream, either by line
+number:
+
+```bash
+$ sed '3d' data6
+```
+
+or by a specifi c range of lines:
+
+```bash
+$ sed '2,3d' data6
+```
+
+The pattern-matching feature of the  sed editor also applies to the delete command:
+
+```bash
+$ sed '/number 1/d' data6
+```
+
+Only lines matching the specifi ed text are deleted from the stream.
+
+
+### Inserting and appending text
+As you would expect, like any other editor, the  sed editor allows you to insert and append
+text lines to the data stream. The difference between the two actions can be confusing:
+
+■ The insert command ( i ) adds a new line before the specifi ed line.
+■ The append command ( a ) adds a new line after the specifi ed line.
+
+The format of these two commands can be confusing: You can’t use these commands on a
+single command line. You must specify the line to insert or append on a separate line by
+itself. Here’s the format for doing this:
+
+```bash
+sed '[address]command\
+new line'
+```
+
+The text in  new line appears in the  sed editor output in the place you specify. Remember
+that when you use the insert command, the text appears before the data stream text:
+
+```bash
+$ echo "testing" | sed 'i\
+> This is a test'
+This is a test
+testing
+$
+```
+
+And when you use the append command, the text appears after the data stream text:
+
+```bash
+$ echo "testing" | sed 'a\
+> This is a test'
+testing
+This is a test
+$
+```
+
+This allows you to insert text at the end of the normal text.
+
+
+### Changing lines
+The change command allows you to change the contents of an entire line of text in the
+data stream. It works the same as the insert and append commands, in that you must
+specify the new line separately from the rest of the  sed command:
+
+```bash
+$ sed '3c\
+> This is a changed line of text.' data6
+```
+
+The backslash character is used to indicate the new line of data in the script.
+
+
+### Transform command
+The transform command ( y ) is the only  sed editor command that operates on a single char-
+acter. The transform command uses this format:
+
+```bash
+[address]y/inchars/outchars/
+```
+
+The transform command performs a one-to-one mapping of the  inchars and the
+outchars values. The fi rst character in  inchars is converted to the fi rst character
+in  outchars . The second character in  inchars is converted to the second character in
+outchars . This mapping continues throughout the length of the specifi ed characters. If
+the  inchars and  outchars are not the same length, the  sed editor produces an error
+message.
+
+
+### Printing lines
+Similar to the  p fl ag in the substitution command, the  p command prints a line in the  sed
+editor output. The most common use for the print command is for printing lines that con-
+tain matching text from a text pattern:
+
+```bash
+$ sed -n '/number 3/p' data6
+This is line number 3.
+$
+```
+
+The  print command allows you to fi lter only specifi c lines of data from the input stream.
+
+
+### Writing to a file
+The  w command is used to write lines to a fi le. Here’s the format for the  w command:
+
+```bash
+[address]w filename
+```
+
+The  filename can be specifi ed as either a relative or absolute pathname, but in either
+case, the person running the  sed editor must have write permissions for the fi le. The
+address can be any type of addressing method used in  sed , such as a single line number,
+a text pattern, or a range of line numbers or text patterns.
+
+Here’s an example that prints only the fi rst two lines of a data stream to a text fi le:
+
+```bash
+$ sed '1,2w test' data6
+```
+
+The output fi le  test contains only the fi rst two lines from the input stream.
+
+
+### Reading from a file
+You’ve already seen how to insert and append text into a data stream from the  sed com-
+mand line. The read command ( r ) allows you to insert data contained in a separate fi le.
+
+Here’s the format of the read command:
+
+```bash
+[address]r filename
+```
+
+The  filename parameter specifi es either an absolute or relative pathname for the fi le that
+contains the data. You can’t use a range of addresses for the read command. You can specify
+only a single line number or text pattern address. The  sed editor inserts the text from the
+fi le after the address.
+
+```bash
+$ sed '3r data' data2
+```
+
+The  sed editor inserts the complete text from the data fi le into the data2 fi le, starting at
+line 3 of the data2 fi le.
+
+
+
+
+
 
