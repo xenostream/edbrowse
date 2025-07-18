@@ -25,7 +25,7 @@ sed options script file
 
 *options* 매개변수는 sed 명령의 동작을 사용자 정의할 수 있게 해주며, 표 19-1에 표시된 옵션을 포함한다.
 
-** TABLE 19-1 The sed Command Options **
+**TABLE 19-1 The sed Command Options**
 | 옵션 | 설명 |
 | :--- | :--- |
 | -e script | 입력을 처리하는 동안 실행할 명령에 스크립트에 지정한 명령을 추가함 |
