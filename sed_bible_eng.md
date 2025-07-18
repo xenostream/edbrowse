@@ -3608,10 +3608,10 @@ Here’s the script in action:
 $ cat data8.txt
 This is line one.
 
+
 This is line two.
 
 This is line three.
-
 
 
 This is line four.
@@ -3652,11 +3652,15 @@ Look at this simple script in action:
 
 ```bash
 $ cat data9.txt
+
+
 This is line one.
+
 This is line two.
 $
 $ sed '/./,$!d' data9.txt
 This is line one.
+
 This is line two.
 $
 ```
@@ -3845,104 +3849,6 @@ features of higher-level programming languages. You can create some pretty invol
 manipulation and reporting programs just by using  gawk  . The chapter describes the vari-
 ous programming features and demonstrates how to use them to generate your own fancy
 reports from simple data.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
