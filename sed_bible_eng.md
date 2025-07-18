@@ -46,7 +46,7 @@ pass through the data stream to make the edits. This makes the  sed editor much 
 an interactive editor and allows you to quickly make changes to data in a fi le on the fl y.
 Here’s the format for using the  sed command:
 
-```sh
+```bash
 sed options script file
 ```
 
@@ -73,7 +73,7 @@ By default, the  sed editor applies the specifi ed commands to the  STDIN input 
 allows you to pipe data directly to the  sed editor for processing. Here’s a quick example
 demonstrating how to do this:
 
-```sh
+```bash
 $ echo "This is a test" | sed 's/test/big test/'
 This is a big test
 $
@@ -90,7 +90,7 @@ it takes for some of the interactive editors just to start up.
 Of course, this simple test just edited one line of data. You should get the same speedy
 results when editing complete fi les of data:
 
-```sh
+```bash
 $ cat data1.txt
 The quick brown fox jumps over the lazy dog.
 The quick brown fox jumps over the lazy dog.
@@ -113,7 +113,7 @@ It’s important to note that the  sed editor doesn’t modify the data in the t
 only sends the modifi ed text to  STDOUT . If you look at the text fi le, it still contains the
 original data:
 
-```sh
+```bash
 $ cat data1.txt
 The quick brown fox jumps over the lazy dog.
 The quick brown fox jumps over the lazy dog.
@@ -126,7 +126,7 @@ $
 ## Using multiple editor commands in the command line
 To execute more than one command from the  sed command line, just use the  -e option:
 
-```sh
+```bash
 $ sed -e 's/brown/green/; s/dog/cat/' data1.txt
 The quick green fox jumps over the lazy cat.
 The quick green fox jumps over the lazy cat.
@@ -144,7 +144,7 @@ in the bash shell. Just enter the fi rst single quotation mark to open the  sed 
 ( sed editor command list), and bash continues to prompt you for more commands until you
 enter the closing quotation mark:
 
-```sh
+```bash
 $ sed -e '
 > s/brown/green/
 > s/fox/elephant/
@@ -166,7 +166,7 @@ line of data in the text fi le.
 Finally, if you have lots of  sed commands you want to process, it is often easier to just
 store them in a separate fi le. Use the  -f option to specify the fi le in the  sed command:
 
-```sh
+```bash
 $ cat script1.sed
 s/brown/green/
 s/fox/elephant/
@@ -211,7 +211,7 @@ help make your life easier.
 There’s a caveat to how the  substitute command replaces matching patterns in the text
 string. Watch what happens in this example:
 
-```sh
+```bash
 $ cat data4.txt
 This is a test of the test script.
 This is the second test of the test script.
@@ -227,7 +227,7 @@ replaces only the fi rst occurrence in each line. To get the  substitute command
 on different occurrences of the text, you must use a substitution fl ag. The substitution fl ag
 is set after the substitution command strings:
 
-```sh
+```bash
 s/pattern/replacement/flags
 ```
 
@@ -241,7 +241,7 @@ Four types of substitution fl ags are available:
 In the fi rst type of substitution, you can specify which occurrence of the matching pattern
 the  sed editor should substitute new text for:
 
-```sh
+```bash
 $ sed 's/test/trial/2' data4.txt
 This is a test of the trial script.
 This is the second test of the trial script.
@@ -252,7 +252,7 @@ As a result of specifying a  2 as the substitution fl ag, the  sed editor replac
 only in the second occurrence in each line. The  g substitution fl ag enables you to replace
 every occurrence of the pattern in the text:
 
-```sh
+```bash
 $ sed 's/test/trial/g' data4.txt
 This is a trial of the trial script.
 This is the second trial of the trial script.
@@ -262,7 +262,7 @@ $
 The p substitution fl ag prints a line that contains a matching pattern in the substitute
 command. This is most often used in conjunction with the  -n sed option:
 
-```sh
+```bash
 $ cat data5.txt
 This is a test line.
 This is a different line.
@@ -278,7 +278,7 @@ for lines that have been modifi ed by the substitute command.
 
 The  w substitution fl ag produces the same output but stores the output in the specifi ed fi le:
 
-```sh
+```bash
 $ sed 's/test/trial/w test.txt' data5.txt
 This is a trial line.
 This is a different line.
@@ -299,7 +299,7 @@ tion pattern. One popular example in the Linux world is the forward slash (/).
 Substituting pathnames in a fi le can get awkward. For example, if you wanted to substitute
 the C shell for the bash shell in the  /etc/passwd fi le, you’d have to do this:
 
-```sh
+```bash
 $ sed 's/\/bin\/bash/\/bin\/csh/' /etc/passwd
 ```
 
@@ -309,7 +309,7 @@ escape it if it appears in the pattern text. This often leads to confusion and m
 To solve this problem, the  sed editor allows you to select a different character for the
 string delimiter in the substitute command:
 
-```sh
+```bash
 $ sed 's!/bin/bash!/bin/csh!' /etc/passwd
 ```
 
@@ -329,13 +329,13 @@ There are two forms of line addressing in the  sed editor:
 
 Both forms use the same format for specifying the address:
 
-```sh
+```bash
 [address]command
 ```
 
 You can also group more than one command together for a specifi c address:
 
-```sh
+```bash
 address {
     command1
     command2
@@ -357,7 +357,7 @@ The address you specify in the command can be a single line number or a range of
 specifi ed by a starting line number, a comma, and an ending line number. Here’s an exam-
 ple of specifying a line number to which the  sed command will be applied:
 
-```sh
+```bash
 $ sed '2s/dog/cat/' data1.txt
 The quick brown fox jumps over the lazy dog
 The quick brown fox jumps over the lazy cat
@@ -369,7 +369,7 @@ $
 The  sed editor modifi ed the text only in line two per the address specifi ed. Here’s another
 example, this time using a range of line addresses:
 
-```sh
+```bash
 $ sed '2,3s/dog/cat/' data1.txt
 The quick brown fox jumps over the lazy dog
 The quick brown fox jumps over the lazy cat
@@ -381,7 +381,7 @@ $
 If you want to apply a command to a group of lines starting at some point within the text,
 but continuing to the end of the text, you can use the special address, the dollar sign:
 
-```sh
+```bash
 $ sed '2,$s/dog/cat/' data1.txt
 The quick brown fox jumps over the lazy dog
 The quick brown fox jumps over the lazy cat
@@ -398,7 +398,7 @@ The other method of restricting which lines a command applies to is a bit more c
 cated. The  sed editor allows you to specify a text pattern that it uses to fi lter lines for the
 command. This is the format:
 
-```sh
+```bash
 /pattern/command
 ```
 
@@ -408,7 +408,7 @@ command only to lines that contain the text pattern you specify.
 For example, if you want to change the default shell for only the user Samantha, you’d use
 the  sed command:
 
-```sh
+```bash
 $ grep Samantha /etc/passwd
 Samantha:x:502:502::/home/Samantha:/bin/bash
 $
@@ -438,7 +438,7 @@ Chapter 20 covers them in great detail.
 If you need to perform more than one command on an individual line, group the commands
 together using braces. The  sed editor processes each command listed on the address line(s):
 
-```sh
+```bash
 $ sed '2{
 > s/fox/elephant/
 > s/dog/cat
@@ -453,7 +453,7 @@ $
 Both commands are processed against the address. And of course, you can specify an
 address range before the grouped commands:
 
-```sh
+```bash
 $ sed '3,${
 > s/brown/green/
 > s/lazy/active/
@@ -476,7 +476,7 @@ The  delete command,  d , pretty much does what it says. It deletes any text lin
 match the addressing scheme supplied. Be careful with the  delete command, because if
 you forget to include an addressing scheme, all the lines are deleted from the stream:
 
-```sh
+```bash
 $ cat data1.txt
 The quick brown fox jumps over the lazy dog
 The quick brown fox jumps over the lazy dog
@@ -491,7 +491,7 @@ The  delete command is obviously most useful when used in conjunction with a spe
 address. This allows you to delete specifi c lines of text from the data stream, either by line
 number:
 
-```sh
+```bash
 $ cat data6.txt
 This is line number 1.
 This is line number 2.
@@ -507,7 +507,7 @@ $
 
 or by a specifi c range of lines:
 
-```sh
+```bash
 $ sed '2,3d' data6.txt
 This is line number 1.
 This is line number 4.
@@ -516,7 +516,7 @@ $
 
 or by using the special end-of-fi le character:
 
-```sh
+```bash
 $ sed '3,$d' data6.txt
 This is line number 1.
 This is line number 2.
@@ -525,7 +525,7 @@ $
 
 The pattern-matching feature of the  sed editor also applies to the  delete command:
 
-```sh
+```bash
 $ sed '/number 1/d' data6.txt
 This is line number 2.
 This is line number 3.
@@ -543,7 +543,7 @@ The fi rst pattern you specify “turns on” the line deletion, and the second 
 off” the line deletion. The  sed editor deletes any lines between the two specifi ed lines
 (including the specifi ed lines):
 
-```sh
+```bash
 $ sed '/1/,/3/d' data6.txt
 This is line number 4.
 $
@@ -552,7 +552,7 @@ $
 In addition, you must be careful because the delete feature “turns on” whenever the  sed
 editor detects the start pattern in the data stream. This may produce an unexpected result:
 
-```sh
+```bash
 $ cat data7.txt
 This is line number 1.
 This is line number 2.
@@ -572,7 +572,7 @@ again, deleting the rest of the lines in the data stream, because the stop patte
 recognized. Of course, the other obvious problem occurs if you specify a stop pattern that
 never appears in the text:
 
-```sh
+```bash
 $ sed '/1/,/5/d' data7.txt
 $
 ```
@@ -592,7 +592,7 @@ What is confusing about these two commands is their formats. You can’t use the
 mands on a single command line. You must specify the line to insert or append the line to
 insert on a separate line by itself. Here’s the format for doing this:
 
-```sh
+```bash
 sed '[address]command\
 new line'
 ```
@@ -600,7 +600,7 @@ new line'
 The text in  new line appears in the  sed editor output in the place you specify. Remember
 that when you use the  insert command, the text appears before the data stream text:
 
-```sh
+```bash
 $ echo "Test Line 2" | sed 'i\Test Line 1'
 Test Line 1
 Test Line 2
@@ -609,7 +609,7 @@ $
 
 And when you use the  append command, the text appears after the data stream text:
 
-```sh
+```bash
 $ echo "Test Line 2" | sed 'a\Test Line 1'
 Test Line 2
 Test Line 1
@@ -621,7 +621,7 @@ ary prompt to enter the new line of data. You must complete the  sed editor comm
 this line. After you enter the ending single quotation mark, the bash shell processes the
 command:
 
-```sh
+```bash
 $ echo "Test Line 2" | sed 'i\
 > Test Line 1'
 Test Line 1
@@ -640,7 +640,7 @@ or append before or after a single line, and not a range of lines.
 
 Here’s an example of inserting a new line before line 3 in the data stream:
 
-```sh
+```bash
 $ sed '3i\
 > This is an inserted line.' data6.txt
 This is line number 1.
@@ -653,7 +653,7 @@ $
 
 Here’s an example of appending a new line after line 3 in the data stream:
 
-```sh
+```bash
 $ sed '3a\
 > This is an appended line.' data6.txt
 This is line number 1.
@@ -669,7 +669,7 @@ the specifi ed line number. If you have a multiline data stream, and you want to
 new line of text to the end of a data stream, just use the dollar sign, which represents the
 last line of data:
 
-```sh
+```bash
 $ sed '$a\
 > This is a new line of text.' data6.txt
 This is line number 1.
@@ -686,7 +686,7 @@ Just insert a new line before line number one.
 To insert or append more than one line of text, you must use a backslash on each line of
 new text until you reach the last text line where you want to insert or append text:
 
-```sh
+```bash
 $ sed '1i\
 > This is one line of new text.\
 > This is another line of new text.' data6.txt
@@ -707,7 +707,7 @@ The  change command allows you to change the contents of an entire line of text 
 data stream. It works the same way as the  insert and  append commands, in that you
 must specify the new line separately from the rest of the  sed command:
 
-```sh
+```bash
 $ sed '3c\
 > This is a changed line of text.' data6.txt
 This is line number 1.
@@ -720,7 +720,7 @@ $
 In this example, the  sed editor changes the text in line number 3. You can also use a text
 pattern for the address:
 
-```sh
+```bash
 $ sed '/number 3/c\
 > This is a changed line of text.' data6.txt
 This is line number 1.
@@ -733,7 +733,7 @@ $
 The text pattern  change command changes any line of text in the data stream that it
 matches.
 
-```sh
+```bash
 $ cat data8.txt
 This is line number 1.
 This is line number 2.
@@ -758,7 +758,7 @@ $
 You can use an address range in the  change command, but the results may not be what you
 expect:
 
-```sh
+```bash
 $ sed '2,3c\
 > This is a new line of text.' data6.txt
 This is line number 1.
@@ -775,7 +775,7 @@ replace both lines.
 The  transform command ( y ) is the only  sed editor command that operates on a single
 character. The  transform command uses the format:
 
-```sh
+```bash
 [address]y/inchars/outchars/
 ```
 
@@ -787,7 +787,7 @@ inchars and  outchars are not the same length, the  sed editor produces an error
 
 Here’s a simple example of using the  transform command:
 
-```sh
+```bash
 $ sed 'y/123/789/' data8.txt
 This is line number 7.
 This is line number 8.
@@ -805,7 +805,7 @@ pattern has been replaced by the character in the same position in the  outchars
 The  transform command is a global command; that is, it performs the transformation on
 any character found in the text line automatically, without regard to the occurrence:
 
-```sh
+```bash
 $ echo "This 1 is a test of 1 try." | sed 'y/123/456/'
 This 4 is a test of 4 try.
 $
@@ -831,7 +831,7 @@ The following sections look at these three printing commands in the  sed editor.
 Like the  p fl ag in the  substitution command, the  p command prints a line in the  sed
 editor output. On its own, this command doesn’t offer much excitement:
 
-```sh
+```bash
 $ echo "this is a test" | sed 'p'
 this is a test
 this is a test
@@ -841,7 +841,7 @@ $
 All it does is print the data text that you already know is there. The most common use for
 the  print command is printing lines that contain matching text from a text pattern:
 
-```sh
+```bash
 $ cat data6.txt
 This is line number 1.
 This is line number 2.
@@ -858,7 +858,7 @@ only the line that contains the matching text pattern.
 
 You can also use this as a quick way to print a subset of lines in a data stream:
 
-```sh
+```bash
 $ sed -n '2,3p' data6.txt
 This is line number 2.
 This is line number 3.
@@ -869,7 +869,7 @@ You can also use the  print command when you need to see a line before it gets a
 such as with the  substitution or  change command. You can create a script that displays
 the line before it’s changed:
 
-```sh
+```bash
 $ sed -n '/3/{
 > p
 > s/line/test/p
@@ -892,7 +892,7 @@ stream. Line numbers are determined by using the newline character in the data s
 Each time a newline character appears in the data stream, the  sed editor assumes that it
 terminates a line of text:
 
-```sh
+```bash
 $ cat data1.txt
 The quick brown fox jumps over the lazy dog.
 The quick brown fox jumps over the lazy dog.
@@ -914,7 +914,7 @@ $
 The  sed editor prints the line number before the actual line of text. The  equal sign com-
 mand comes in handy if you’re searching for a specifi c text pattern in the data stream:
 
-```sh
+```bash
 $ sed -n '/number 4/{
 > =
 > p
@@ -934,7 +934,7 @@ data stream. Any nonprintable characters are shown using either their octal valu
 ceded by a backslash or the standard C-style nomenclature for common nonprintable char-
 acters, such as  \t for tab characters:
 
-```sh
+```bash
 $ cat data9.txt
 This line contains tabs.
 $
@@ -947,7 +947,7 @@ The tab character locations are shown with the  \t nomenclature. The dollar sign
 end of the line indicates the newline character. If you have a data stream that contains an
 escape character, the  list command displays it using the octal code if necessary:
 
-```sh
+```bash
 $ cat data10.txt
 This line contains an escape character.
 $
@@ -970,7 +970,7 @@ also regular  sed editor commands that let you do that without having to substit
 ### Writing to a file
 The  w command is used to write lines to a fi le. Here’s the format for the  w command:
 
-```sh
+```bash
 [address]w filename
 ```
 
@@ -981,7 +981,7 @@ text pattern, or a range of line numbers or text patterns.
 
 Here’s an example that prints only the fi rst two lines of a data stream to a text fi le:
 
-```sh
+```bash
 $ sed '1,2w test.txt' data6.txt
 This is line number 1.
 This is line number 2.
@@ -1000,7 +1000,7 @@ the  sed command.
 This is a great tool to use if you need to create a data fi le from a master fi le on the basis of
 common text values, such as those in a mailing list:
 
-```sh
+```bash
 $ cat data11.txt
 Blum, R Browncoat
 McGuiness, A Alliance
@@ -1024,7 +1024,7 @@ command line. The  read command ( r ) allows you to insert data contained in a s
 
 Here’s the format of the  read command:
 
-```sh
+```bash
 [address]r filename
 ```
 
@@ -1033,7 +1033,7 @@ contains the data. You can’t use a range of addresses for the  read command. Y
 specify a single line number or text pattern address. The  sed editor inserts the text from
 the fi le after the address.
 
-```sh
+```bash
 $ cat data12.txt
 This is an added line.
 This is the second added line.
@@ -1051,7 +1051,7 @@ $
 The  sed editor inserts into the data stream all the text lines in the data fi le. The same
 technique works when using a text pattern address:
 
-```sh
+```bash
 $ sed '/number 2/r data12.txt' data6.txt
 This is line number 1.
 This is line number 2.
@@ -1064,7 +1064,7 @@ $
 
 If you want to add text to the end of a data stream, just use the dollar sign address symbol:
 
-```sh
+```bash
 $ sed '$r data12.txt' data6.txt
 This is line number 1.
 This is line number 2.
@@ -1079,7 +1079,7 @@ A cool application of the  read command is to use it in conjunction with a  dele
 mand to replace a placeholder in a fi le with data from another fi le. For example, suppose
 that you had a form stored in a text fi le that looked like this:
 
-```sh
+```bash
 $ cat notice.std
 Would the following people:
 LIST
@@ -1092,7 +1092,7 @@ list of people after the placeholder, you just use the  read command. However, t
 leaves the placeholder text in the output. To remove that, just use the  delete command.
 The result looks like this:
 
-```sh
+```bash
 $ sed '/LIST/{
 > r data11.txt
 > d
