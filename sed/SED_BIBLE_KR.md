@@ -2449,7 +2449,7 @@ $p
 ```
 
 **FIGURE 21-1 Reversing the order of a text file using the hold space**
-![](.images/reverse.jpg)
+![](./images/reverse.jpg)
 
 이제 줄 순서를 뒤집는 `sed` 편집기 스크립트를 만들기 위한 **필요한 모든 요소들이 준비되었다**. 이제 테스트 실행을 통해서 **직접 시도해 볼 차례이다**:
 
