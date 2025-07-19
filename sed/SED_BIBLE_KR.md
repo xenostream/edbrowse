@@ -135,7 +135,9 @@ sed 편집기 스크립트 파일과 bash 셸 스크립트 파일을 혼동하�
 "sed 편집기 기본 명령" 섹션에서 데이터를 조작할 때 유용한 다른 sed 편집기 명령들을 살펴볼 것이다. 그 전에, Linux 데이터 편집기를 간단히 살펴보자.
 
 <br>
+
 ---
+
 <br>
 
 # Commanding at the sed Editor Basics
@@ -953,7 +955,9 @@ $
 
 
 <br>
+
 ---
+
 <br>
 
 # Regular Expressions
@@ -2068,7 +2072,9 @@ $
 
 
 <br>
+
 ---
+
 <br>
 
 
@@ -3256,7 +3262,9 @@ $
 
 
 <br>
+
 ---
+
 <br>
 
 # Quick Guide to sed
