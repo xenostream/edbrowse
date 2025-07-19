@@ -968,6 +968,8 @@ $
 ### A definition
 정규 표현식은 Linux 유틸리티가 **텍스트를 필터링할 때 사용하는 패턴 템플릿** 이다. Linux 유틸리티(`sed` 편집기나 `gawk` 프로그램 등)는 데이터가 유틸리티로 들어올 때 정규 표현식 패턴과 비교한다. 데이터가 패턴과 일치하면 처리 대상으로 받아들이고, 일치하지 않으면 거부한다. 이것은 그림 20-1에 설명되어 있다.
 
+![](./images/matching.jpg)
+
 정규 표현식 패턴은 와일드카드 문자를 사용해서 데이터 스트림에서 하나 이상의 문자를 나타낸다. Linux에서는 알 수 없는 데이터를 나타내기 위해 와일드카드 문자를 지정할 수 있는 경우가 매우 많다. 파일과 디렉터리를 나열하는 `ls` 명령에서 와일드카드 문자를 사용하는 예제를 본 적이 있다.
 
 별표(`*`) 와일드카드 문자를 사용하면 특정 조건에 맞는 파일만 나열할 수 있다. 예를 들어:
@@ -2787,8 +2789,8 @@ number=$1
 #
 while [ $counter -le $number ]
 do
-factorial=$[ $factorial * $counter ]
-counter=$[ $counter + 1 ]
+    factorial=$[ $factorial * $counter ]
+    counter=$[ $counter + 1 ]
 done
 #
 result=$(echo $factorial | sed '{
@@ -2822,8 +2824,11 @@ $
 ```bash
 $ sed 'G' data2.txt
 This is the header line.
+
 This is the first data line.
+
 This is the second data line.
+
 This is the last line.
 $
 ```
@@ -2837,8 +2842,11 @@ $
 ```bash
 $ sed '$!G' data2.txt
 This is the header line.
+
 This is the first data line.
+
 This is the second data line.
+
 This is the last line.
 $
 ```
@@ -2855,22 +2863,18 @@ $
 ```bash
 $ cat data6.txt
 This is line one.
-
 This is line two.
 
 This is line three.
-
 This is line four.
 $
 $ sed '$!G' data6.txt
 This is line one.
 
-
 This is line two.
 
 
 This is line three.
-
 
 This is line four.
 $
