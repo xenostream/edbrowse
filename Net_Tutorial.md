@@ -38,7 +38,7 @@ macOS용 버전도 있으니 위의 링크를 따라 macOS용 Visual Studio Comm
 ## Hello, world!
 프로그래밍 언어를 배운 적이 있다면 모두 "안녕하세요, 세상!" 예제로 시작한다는 것을 알고 있는데, 그런 훌륭한 전통을 깨뜨릴 수 있는 사람은 누구입니까? Visual Studio Community(마지막 장에서 소개)를 시작하고 파일 -> 새로 만들기 -> 프로젝트를 선택합니다. 프로젝트 대화 상자에서 콘솔 앱(.NET Framework)을 선택합니다. 이것은 Windows 시스템에서 가장 기본적인 응용 프로그램 유형이지만 언어를 배우는 데 좋습니다. 확인을 클릭하면 Visual Studio에서 Program.cs라는 파일을 포함하여 새 프로젝트를 만듭니다. 이것이 모든 재미가 있는 곳이며 다음과 같아야 합니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
