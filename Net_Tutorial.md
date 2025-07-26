@@ -6074,7 +6074,7 @@ Console.ReadKey();
 
 InnerText 속성은 다음과 같이 시작 및 끝 태그 내에 포함된 텍스트를 보유합니다.
 
-````
+```
 XmlDocument xmlDoc = new XmlDocument();
 xmlDoc.LoadXml("<test>InnerText is here</test>");
 Console.WriteLine(xmlDoc.DocumentElement.InnerText);
