@@ -356,7 +356,7 @@ e scp://login:password@example.com/absolute-path scp download
 |s/$/,oran | add the option orange to the select list|
 |i=`amber | put in your own color if it is a suggested select list|
 |s/,red/ | remove red from the select list|
-|selsep=| | change the separator between items in a select list|
+|selsep=\| | change the separator between items in a select list|
 |selsep= | print the separator|
 |i<5 | read session 5 into the text input field, one line of text|
 |i<5@3 | read line 3 from session 5 into the text input field|
