@@ -204,7 +204,10 @@ replacing name with the name of the copy file you just created. The screen shoul
 name을 당신이 방금 만든 복사 파일의 이름으로 바꾸어라. 화면이 지워지고 당신의 파일의 텍스트가 화면에 나타나야 한다. 다른 일이 발생하면 각주 [^1-1]을 참조하라.
 
 [^1-1]: 시스템에 잘못된 터미널 유형 코드를 지정하면, 편집기가 화면을 엉망으로 만들 수 있습니다. 이는 한 종류의 터미널에 맞는 제어 코드를 다른 종류의 터미널로 보내는 경우에 발생합니다. 이 경우 `:q`(콜론과 q 키)를 입력한 뒤 **RETURN** 키를 누르십시오. 그러면 명령어 수준 인터프리터로 돌아갈 수 있습니다. 무엇이 잘못되었는지 확인하고(필요하면 다른 사람에게 물어보고) 다시 시도하십시오. 
+또 다른 문제로는 잘못된 파일 이름을 입력해서 편집기가 오류 진단만 출력하는 경우가 있습니다.
+이 경우 앞서 설명한 절차에 따라 편집기를 종료한 뒤, 이번에는 파일 이름을 올바르게 입력해서 다시 시도해야 합니다.
 
+편집기가 여기서 입력한 명령에 반응하지 않는 것 같으면, 터미널에서 **DEL** 키나 **RUB** 키를 눌러 인터럽트를 보낸 뒤, `:q` 명령을 다시 입력하고 캐리지 리턴(Enter)을 누르십시오.
 
 ## The editor's copy: the buffer
   The editor does not directly modify the file which you are editing. Rather, the editor makes a copy of this file, in a place called the buffer, and remembers the file's name. You do not affect the contents of the file unless and until you write the changes you make back into the original file.
@@ -221,7 +224,8 @@ name을 당신이 방금 만든 복사 파일의 이름으로 바꾸어라. 화�
 ## Arrow keys
   The editor command set is independent of the terminal you are using. On most terminals with cursor positioning keys, these keys will also work within the editor. If you don't have cursor positioning keys, or even if you do, you can use the h j k and l keys as cursor positioning keys (these are labelled with arrows on an adm3a) (footnote 1-2).
 
-편집기 명령어 집합은 당신이 사용하는 터미널과는 독립적이다. 대부분의 커서 위치 지정 키가 있는 터미널에서는, 이러한 키들이 편집기 내에서도 작동한다. 만약 커서 위치 지정 키가 없거나, 있다고 하더라도, 당신은 `h`, `j`, `k`, `l` 키를 커서 위치 지정 키로 사용할 수 있다 (이 키들은 adm3a에서 화살표로 표시되어 있다) (각주 1-2).
+편집기 명령어 집합은 당신이 사용하는 터미널과는 독립적이다. 대부분의 커서 위치 지정 키가 있는 터미널에서는, 이러한 키들이 편집기 내에서도 작동한다. 만약 커서 위치 지정 키가 없거나, 있다고 하더라도, 당신은 `h`, `j`, `k`, `l` 키를 커서 위치 지정 키로 사용할 수 있다 (이 키들은 adm3a에서 화살표로 표시되어 있다) (각주 [^1-2]).
+
 
 
   (Particular note for the HP2621: on this terminal the function keys must be shifted (ick) to send to the machine, otherwise they only act locally. Unshifted use will leave the cursor positioned incorrectly.)
