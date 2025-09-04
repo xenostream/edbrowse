@@ -15,25 +15,15 @@ Freiburg i. Br., Germany
 ```
 
 ## ABSTRACT
-  Vi (visual) is a display oriented interactive text editor. When using vi the screen of your terminal acts as a window into the file which you are editing. Changes which you make to the file are reflected in what you see.
-  
   Vi(visual)은 화면 기반의 대화형 텍스트 편집기입니다. vi를 사용할 때 터미널 화면은 편집 중인 파일의 창 역할을 합니다. 파일에 가한 변경 사항은 화면에 바로 반영됩니다.
   
-  Using vi you can insert new text any place in the file quite easily. Most of the commands to vi move the cursor around in the file. There are commands to move the cursor forward and backward in units of characters, words, sentences and paragraphs. A small set of operators, like d for delete and c for change, are combined with the motion commands to form operations such as delete word or change paragraph, in a simple and natural way. This regularity and the mnemonic assignment of commands to keys makes the editor command set easy to remember and to use.
-
-  vi를 사용하면 파일 내 어디든 쉽게 새 텍스트를 삽입할 수 있습니다. vi의 대부분의 명령어는 파일 내에서 커서를 이동시킵니다. 커서를 문자, 단어, 문장, 단락 단위로 앞뒤로 이동시키는 명령어가 있습니다. 삭제(d)나 변경(c) 같은 소수의 명령을 이동 명령어와 결합하면 단어 삭제나 단락 변경 같은 작업을 간단하고 자연스럽게 수행할 수 있습니다. 이러한 규칙성과 명령어를 키에 할당하는 기억법 덕분에 편집기 명령어 집합은 기억하고 사용하기 쉽습니다.
+  vi를 사용하면 파일 내 어디든 쉽게 텍스트를 삽입할 수 있습니다. vi 대부분의 명령은 파일 내에서 커서를 이동시킵니다. 커서를 문자, 단어, 문장, 단락 단위로 앞뒤로 이동시키는 명령이 있습니다. 삭제(`d`)나 변경(`c`) 같은 명령을 커서 이동 명령과 결합하면 단어 삭제나 단락 변경 같은 작업을 간단하고 자연스럽게 수행할 수 있습니다. 이러한 규칙성과 명령을 키에 할당한 기억법 덕분에 편집기 명령 집합은 기억하고 사용하기 쉽습니다.
   
-  Vi will work on a large number of display terminals, and new terminals are easily driven after editing a terminal description file. While it is advantageous to have an intelligent terminal which can locally insert and delete lines and characters from the display, the editor will function quite well on dumb terminals over slow phone lines. The editor makes allowance for the low bandwidth in these situations and uses smaller window sizes and different display updating algorithms to make best use of the limited speed available.
-
-  Vi는 다양한 디스플레이 터미널에서 작동하며, 터미널 설명 파일을 편집한 후에는 새로운 터미널도 쉽게 구동할 수 있습니다. 디스플레이에서 로컬로 줄과 문자를 삽입 및 삭제할 수 있는 지능형 터미널을 사용하는 것이 유리하지만, 느린 전화 회선을 통한 더미 터미널에서도 편집기는 상당히 잘 작동합니다. 편집기는 이러한 상황에서의 낮은 대역폭을 고려해서 더 작은 창 크기와 다른 디스플레이 업데이트 알고리즘을 사용해서 제한된 속도를 최대한 활용합니다.
+  Vi는 다양한 디스플레이 터미널에서 작동하며, 터미널 설명 파일을 편집하면 새로운 터미널도 쉽게 구동할 수 있습니다. 디스플레이에서 로컬로 줄과 문자를 삽입 및 삭제할 수 있는 지능형 터미널을 사용하는 것이 유리하지만, 느린 전화 회선을 통한 더미 터미널에서도 편집기는 상당히 잘 작동합니다. 편집기는 이러한 상황의 낮은 대역폭까지 고려해서 보다 작은 창 크기와 디스플레이 업데이트 알고리즘을 사용해서 제한된 속도를 최대한 활용합니다.
   
-  It is also possible to use the command set of vi on hardcopy terminals, storage tubes and “glass tty's” using a one line editing window; thus vi's command set is available on all terminals. The full command set of the more traditional, line oriented editor ex is available within vi; it is quite simple to switch between the two modes of editing.
-
-  하드카피 터미널, 저장관 및 “유리 터미널” 에서도 한 줄 편집 창을 통해 vi의 명령어 세트를 사용할 수 있습니다. 따라서 vi의 명령어 세트는 모든 터미널에서 이용 가능합니다. 보다 전통적인 줄 단위 편집기인 ex의 전체 명령어 세트는 vi 내에서 사용할 수 있으며, 두 편집 모드 간 전환은 매우 간단합니다.
+  하드카피 터미널, 스토리지 튜브 및 "유리 터미널" 에서도 한 줄 편집 창을 통해서 vi의 명령 세트를 사용할 수 있습니다. 따라서, vi의 명령 세트는 모든 터미널에서 이용 가능합니다. 보다 전통적인 줄 단위 편집기인 `ex` 의 전체 명령 세트는 vi 내에서도 사용할 수 있으며, 두 편집 모드 간 전환은 매우 간단합니다.
   
-  To preserve the practical use of this document as a vi introduction more than twenty years after its original creation, annotations have been made for this edition to reflect changes in the environment or in the editor itselves.
-  
-  본 문서가 최초 작성된 지 20년이 넘은 시점에서 vi 소개 자료로서의 실용성을 유지하기 위해, 이번 판에서는 환경 변화나 편집기 자신의 변화를 반영한 주석을 추가했습니다.
+  본 문서가 최초 작성된 지 20년 넘은 시점에 vi 소개 자료의 실용성을 유지하도록 이번 판에서는 환경 변화나 편집기의 변화를 반영한 주석을 일부 첨가했습니다.
 
 
 ```
@@ -97,39 +87,34 @@ Table of Contents
 
 - Quick Reference Card
 
-Note: The text is often presented in eight sections. This is obviously result of a mistake and was thus corrected for this edition. When the subsection on Word Abbreviations was introduced for 4.0BSD in between the existing subsections on Macros and Abbreviations, it was labeled with a .NH macro instead of a .NH 2 one. But in troff -ms, .NH means the same as .NH 1, “start a numbered top level section”. So Word Abbreviations became the seventh section in print, and Nitty-gritty details the eighth one, breaking all existing references to the seventh section.
-
-참고: 본문은 종종 여덟 개의 섹션으로 제시됩니다. 이는 명백한 오류이므로 이번 판에서 수정되었습니다. 4.0BSD에서 ‘단어 약어’ 하위 섹션이 기존 ‘매크로’ 및 ‘약어’ 하위 섹션 사이에 도입되었을 때, `.NH 2` 매크로 대신 `.NH` 매크로로 표기되었습니다. 그러나, `troff -ms` 에서 `.NH` 는 `.NH 1` 과 동일한 의미인 “번호가 매겨진 최상위 섹션 시작” 을 의미합니다. 따라서, 단어 약어는 인쇄물에서 일곱 번째 섹션이 되었고, 세부 사항은 여덟 번째 섹션이 되어 기존 일곱 번째 섹션에 대한 모든 참조가 깨지게 되었습니다.
+참고: 원문은 여덟 개 섹션으로 설명합니다. 이것은 명백한 오류이므로 이번 판에서 수정했습니다. 4.0 BSD에서 ‘단어 약어’ 섹션이 기존 ‘매크로’ 및 ‘약어’ 하위 섹션 사이에 도입될 때, `.NH 2` 매크로 대신 `.NH` 매크로로 표기되었습니다. 그러나, `troff -ms` 에서 `.NH` 는 `.NH 1` 과 동일한 의미인 “번호가 매겨진 최상위 섹션 시작” 을 의미합니다. 따라서, 단어 약어 섹션은 출력물에서 일곱 번째 섹션이 되었고, 세부 사항은 여덟 번째 섹션이 되면서 기존 일곱 번째 섹션에 대한 모든 참조가 깨지게 되었습니다.
 
 
 
 # Getting started
-  This document provides a quick introduction to vi. (Pronounced vee-eye.) You should be running vi on a file you are familiar with while you are reading this. The first part of this document (sections 1 through 5) describes the basics of using vi. Some topics of special interest are presented in section 6, and some nitty-gritty details of how the editor functions are saved for section 7 to avoid cluttering the presentation here.
+이 문서는 vi 편집기에 대한 간략한 소개를 제공합니다. (발음은 '비-아이' 입니다.) 이 문서를 읽는 동안 익숙한 파일로 vi를 실행 중이어야 합니다. 본 문서의 첫 부분(1\~5절)에서는 vi 사용의 기본적인 사항을 설명합니다. 특히 주목할 만한 몇 가지 주제는 6장에서 다루며, 편집기 기능의 세부적인 작동 방식에 관한 내용은 설명을 복잡하게 하지 않기 위해 7장으로 미뤘습니다.
 
-  이 문서는 vi에 대한 간략한 소개를 제공합니다. (발음은 '비-아이' 입니다.) 이 문서를 읽는 동안 익숙한 파일에서 vi를 실행 중이어야 합니다. 본 문서의 첫 부분(1\~5절)에서는 vi 사용의 기본 사항을 설명합니다. 특별히 주목할 만한 몇 가지 주제는 6절에서 다루며, 편집기 기능의 세부적인 작동 방식에 관한 내용은 설명을 복잡하게 하지 않기 위해 7장으로 미뤄두었습니다.
-  
-  There is also a short appendix here, which gives for each character the special meanings which this character has in vi (Note: this has been moved to the vi(1) manual page). Attached to this document should be a quick reference card. This card summarizes the commands of vi in a very compact format. You should have the card handy while you are learning vi.
-  
-  여기에는 짧은 부록이 포함되어 있으며, 각 문자가 vi에서 가지는 특수한 의미를 설명합니다. (참고: 이 내용은 vi(1) 매뉴얼 페이지로 이동되었습니다.) 본 문서에는 빠른 참조 카드도 첨부되어 있습니다. 이 카드는 vi의 명령어를 매우 간결한 형식으로 요약합니다. vi를 배우는 동안 이 카드를 항상 가까이 두시기 바랍니다.
+본 문서에는 짧은 부록이 포함되어 있으며, 각 문자가 vi에서 가지는 특수한 의미를 설명합니다. (참고: 이 내용은 vi(1) 매뉴얼 페이지로 이동되었습니다.) 본 문서에는 빠른 참조 카드도 첨부되어 있습니다. 이 카드는 vi의 명령을 매우 간결한 형식으로 요약합니다. vi 편집기를 배울 동안 이 카드는 항상 가까이 두시기 바랍니다.
 
 
-1.1.  Specifying terminal type
+## Specifying terminal type
   Before you can start vi you must tell the system what kind of terminal you are using. Note: There might be a predefined setting. Try this by typing the following command:
 
-  vi를 시작하기 전에 사용 중인 터미널 유형을 시스템에 알려야 합니다. 참고: 미리 정의된 설정이 있을 수 있습니다. 다음 명령어를 입력해서 확인합니다:
+우선, vi 편집기를 시작하기 전에 현재 사용 중인 "터미널 유형" 을 시스템에 알려야 합니다. 
+
+> [!NOTE]
+> 참고: 미리 정의된 설정이 있을 수 있습니다.
+
+다음과 같은 명령을 입력해서 확인합니다:
 
 ```
 % echo $TERM
 xterm
 ```
 
-If a single word is printed as in our example, continue without change. If, however, something like TERM: Undefined variable is displayed, or if you get no output at all, you have to find out what terminal type you are using.
-
-예시와 같이 단일 단어가 출력되면 변경 없이 계속 진행합니다. 그러나, "TERM: 정의되지 않은 변수" 같은 메시지가 표시되거나 아예 출력이 전혀 없는 경우, 사용 중인 터미널 유형을 확인해야 합니다.
-
-  Here is a (necessarily incomplete) list of terminal type codes. If your terminal does not appear here, you should consult with one of the staff members on your system to find out the code for your terminal. If your terminal does not have a code, one can be assigned and a description for the terminal can be created.
+위와 같이 단일 단어가 출력되면 별다른 변경 없이 계속 진행하면 됩니다. 그러나, "TERM: 정의되지 않은 변수" 같은 메시지가 표시되거나 출력이 전혀 없는 경우는 현재 사용 중인 터미널 유형을 확인해야 합니다.
   
-다음은(필연적으로 불완전한) 터미널 유형 코드 목록입니다. 사용 중인 터미널이 여기에 없다면 시스템 담당자에게 문의해서 해당 터미널 코드를 확인해야 합니다. 터미널에 코드가 할당되지 않은 경우 코드를 지정하고 해당 터미널에 대한 설명을 생성할 수 있습니다.
+다음은(필연적으로 불완전한...) 터미널 유형 코드 목록입니다. 사용 중인 터미널이 여기 없다면 시스템 담당자에게 문의해서 터미널 코드를 확인해야 합니다. 터미널에 코드가 할당되지 않은 경우 코드를 지정하고 터미널에 대한 설명을 추가할 수 있습니다.
 
 | Code   | Full name                      | Type        |
 |--------|--------------------------------|-------------|
@@ -151,49 +136,37 @@ If a single word is printed as in our example, continue without change. If, howe
 | t1061  | Teleray 1061                   | Intelligent |
 | vt52   | Dec VT-52                      | Dumb        |
 
-  Suppose for example that you have a Hewlett-Packard HP2621A terminal. The code used by the system for this terminal is '2621'. In this case you can use one of the following commands to tell the system the type of your terminal:
-
-예를 들어, Hewlett-Packard HP2621A 터미널을 가지고 있다고 가정하자. 이 터미널에 대해 시스템에서 사용하는 코드는 '2621'이다. 이 경우, 시스템에 당신의 터미널 종류를 알려주기 위해 다음 명령어 중 하나를 사용할 수 있다.
+예를 들어, Hewlett-Packard HP2621A 터미널을 가지고 있다고 가정합니다. 이 터미널이 시스템에 사용하는 코드는 '2621' 입니다. 이 경우, 시스템에 터미널 종류를 알려주기 위해 다음과 같은 명령을 사용할 수 있습니다.
 
 ```
 % setenv TERM 2621
 ```
 
-This command works with the csh shell. If you are using the standard Bourne shell sh then you should give the commands
-
-이 명령은 csh 셸에서 작동한다. 만약 당신이 표준 Bourne 셸인 sh를 사용하고 있다면, 다음 명령어들을 입력해야 한다.
+이 명령은 csh 셸에서 작동합니다. 만약, 표준 Bourne 셸인 `sh` 를 사용한다면 다음 명령을 입력합니다.
 
 ```
 $ TERM=2621
 $ export TERM
 ```
 
-If you want to arrange to have your terminal type set up automatically when you log in, you can use the tset program. If you dial in on a mime, but often use hardwired ports, a typical line for your .login file (if you use csh) would be
-
-로그인할 때 터미널 종류가 자동으로 설정되도록 하려면,  프로그램을 사용할 수 있다. 만약 mime을 통해 접속하지만 자주 하드와이어드 포트를 사용한다면,  파일에 넣을 수 있는 일반적인 한 줄(당신이 csh를 사용하는 경우)은 다음과 같다.
+로그인할 때 터미널 종류를 자동으로 설정하려면 다음과 같이 처리합니다. 예를 들어, mime 을 통해 접속하는 하드와이어드 포트를 사용한다면, .login (당신이 csh를 사용하는 경우) 파일에 넣을 수 있는 일반적인 한 줄은 다음과 같습니다.
 
 ```
 % setenv TERM `tset - -d mime`
 ```
 
-or for your .profile file (if you use sh)
-
-또는 당신이 sh를 사용한다면, .profile 파일에 대해.
+또는, .profile 파일에 다음과 같이 입력할 수 있습니다. (sh를 사용한다면) 
 
 ```
 $ TERM=`tset - -d mime`
 ```
 
-Tset knows which terminals are hardwired to each port and needs only to be told that when you dial in you are probably on a mime. Tset is usually used to change the erase and kill characters, too.
-
-Tset은 어떤 터미널이 각 포트에 하드와이어되어 있는지를 알고 있으며, 당신이 접속할 때 아마도 mime을 사용하고 있다는 것만 알려주면 된다. Tset은 일반적으로 erase와 kill 문자를 변경하는 데에도 사용된다.
+`tset` 포로그램은 터미널이 어떤 포트에 하드와이어되어 있는지 알고 있으며, 접속할 때는 mime을 사용한다는 것만 알려주면 됩니다. 일반적으로 `tset` 프로그램은 erase 와 kill 문자를 변경할 때도 사용합니다.
 
 
 
 ## Editing a file
-  After telling the system which kind of terminal you have, you should make a copy of a file you are familiar with, and run vi on this file, giving the command
-
-시스템에 당신이 사용하는 터미널 종류를 알린 후, 당신이 익숙한 파일의 복사본을 만들고, 이 파일에 대해 vi를 실행하면서 다음 명령어를 입력해야 한다.
+시스템에 현재 사용하는 터미널 종류를 알린 후, 파일 복사본을 만들고 vi 편집기를 실행하려면 다음과 같은 명령을 입력합니다.
 
 ```
 % vi name
@@ -201,202 +174,141 @@ Tset은 어떤 터미널이 각 포트에 하드와이어되어 있는지를 알
 
 replacing name with the name of the copy file you just created. The screen should clear and the text of your file should appear on the screen. If something else happens refer to the footnote 1-1.
 
-name을 당신이 방금 만든 복사 파일의 이름으로 바꾸어라. 화면이 지워지고 당신의 파일의 텍스트가 화면에 나타나야 한다. 다른 일이 발생하면 각주 [^1-1]을 참조하라.
+name 은 편집하기 원하는 파일 이름으로 바꿉니다. 화면이 지워지고 파일에 포함된 텍스트가 화면에 나타납니다. 만약 다른 일이 발생한다면 각주 [^1-1]을 참고하시기 바랍니다.
 
-[^1-1]: 시스템에 잘못된 터미널 유형 코드를 지정하면, 편집기가 화면을 엉망으로 만들 수 있습니다. 이는 한 종류의 터미널에 맞는 제어 코드를 다른 종류의 터미널로 보내는 경우에 발생합니다. 이 경우 `:q`(콜론과 q 키)를 입력한 뒤 **RETURN** 키를 누르십시오. 그러면 명령어 수준 인터프리터로 돌아갈 수 있습니다. 무엇이 잘못되었는지 확인하고(필요하면 다른 사람에게 물어보고) 다시 시도하십시오. 또 다른 문제로는 잘못된 파일 이름을 입력해서 편집기가 오류 진단만 출력하는 경우가 있습니다. 이 경우 앞서 설명한 절차에 따라 편집기를 종료한 뒤, 이번에는 파일 이름을 올바르게 입력해서 다시 시도해야 합니다. 편집기가 여기서 입력한 명령에 반응하지 않는 것 같으면, 터미널에서 **DEL** 키나 **RUB** 키를 눌러 인터럽트를 보낸 뒤, `:q` 명령을 다시 입력하고 캐리지 리턴(Enter)을 누르십시오.
+[^1-1]: 시스템에 잘못된 터미널 유형 코드를 지정하면, 편집기 화면을 엉망으로 만들 수 있습니다. 특정 터미널에 맞는 제어 코드를 다른 종류의 터미널로 보낼 경우 발생합니다.  
+이 경우 `:q` (콜론과 q 키)를 입력한 뒤, **RETURN** 키를 눌러서 종료해서 시스템 쉘로 돌아갈 수 있습니다. 무엇이 잘못된건지 확인하고(필요하면 다른 사람에게 물어보고) 다시 시도하시기 바랍니다. 또 다른 문제는 잘못된 파일 이름을 입력해서 편집기가 오류 진단을 출력할 경우입니다. 이 경우, 앞에서 설명한 절차에 따라 편집기를 종료한 뒤, 파일 이름을 올바르게 입력해서 다시 시도해야 합니다. vi 편집기가 입력한 명령에 반응하지 않는다면, 터미널에 `DEL` 키나 `RUB` 키를 눌러 인터럽트를 보낸 뒤, `:q` 명령을 다시 입력한 후 캐리지 리턴(`Enter`) 키를 누릅니다.
 
 ## The editor's copy: the buffer
-  The editor does not directly modify the file which you are editing. Rather, the editor makes a copy of this file, in a place called the buffer, and remembers the file's name. You do not affect the contents of the file unless and until you write the changes you make back into the original file.
+vi 편집기는 현재 편집하는 파일을 직접 수정하지 않습니다!! 
 
-편집기는 당신이 편집하고 있는 파일을 직접 수정하지 않는다. 대신, 편집기는 이 파일의 복사본을 버퍼라고 불리는 장소에 만들고, 파일 이름을 기억한다. 당신이 변경한 내용을 원래 파일에 다시 기록하지 않는 한, 그리고 그렇게 하기 전까지는 파일의 내용에 영향을 주지 않는다.
+대신, 편집기는 파일의 복사본을 "버퍼" 라 불리는 메모리 내부의 임시 저장소에 만들고, 파일 이름을 기억합니다. 변경한 내용을 원래 파일에 다시 기록하지 않는 한, 파일의 내용에 영향을 주지 않습니다.
 
 
 ## Notational conventions
-  In our examples, input which must be typed as is will be presented in bold face. Text which should be replaced with appropriate input will be given in italics. We will represent special characters in SMALL CAPITALS.
-
-우리의 예제들에서, 그대로 입력해야 하는 내용은 굵은 글씨로 제시될 것이다. 적절한 입력으로 대체되어야 하는 텍스트는 이탤릭체로 제공될 것이다. 특수 문자는 작은 대문자로 표시할 것이다.
+본 문서에서는 사용자가 입력할 내용은 **굵은 글씨체** 로 제공합니다. 적절한 입력으로 대체할 텍스트는 *이탤릭체* 로 제공합니다. 특수 문자는 작은 대문자로 표시합니다.
 
 
 ## Arrow keys
-  The editor command set is independent of the terminal you are using. On most terminals with cursor positioning keys, these keys will also work within the editor. If you don't have cursor positioning keys, or even if you do, you can use the h j k and l keys as cursor positioning keys (these are labelled with arrows on an adm3a) (footnote 1-2).
+편집기의 "명령 집합" 은 현재 사용하는 터미널과 독립적입니다. 커서 이동 키가 장착된 터미널은 vi 편집기에서도 그대로 작동합니다. 만약, 커서 이동 키가 없거나, 있다하더라도, `h`, `j`, `k`, `l` 키를 사용해서 커서 이동 키로 사용할 수 있습니다. (이 키들은 adm3a 터미널에서는 화살표로 표시되어 있습니다.) (각주 [^1-2])
 
-편집기 명령어 집합은 당신이 사용하는 터미널과는 독립적이다. 대부분의 커서 위치 지정 키가 있는 터미널에서는, 이러한 키들이 편집기 내에서도 작동한다. 만약 커서 위치 지정 키가 없거나, 있다고 하더라도, 당신은 `h`, `j`, `k`, `l` 키를 커서 위치 지정 키로 사용할 수 있다 (이 키들은 adm3a에서 화살표로 표시되어 있다) (각주 [^1-2]).
+[^1-2]: 나중에 보겠지만, `h` 키는 왼쪽으로 이동하며(백스페이스인 `control-h` 처럼), `j` 키는 아래로(같은 열에서), `k` 키는 위로(같은 열에서), `l` 키는 오른쪽으로 이동합니다.
 
-[^1-2]:나중에 보겠지만, `h`는 왼쪽으로 이동하며(백스페이스인 control-h처럼), `j`는 아래로(같은 열에서), `k`는 위로(같은 열에서), `l`은 오른쪽으로 이동합니다.
-
-
-  (Particular note for the HP2621: on this terminal the function keys must be shifted (ick) to send to the machine, otherwise they only act locally. Unshifted use will leave the cursor positioned incorrectly.)
-
-(HP2621에 대한 특별한 주의 사항: 이 터미널에서는 기능 키를 기계로 보내기 위해 반드시 Shift 키를 눌러야 한다(으윽). 그렇지 않으면 기능 키는 로컬에서만 작동한다. Shift 키 없이 사용하면 커서가 잘못된 위치에 놓이게 된다.)
+> [!INFO] HP2621 터미널 주의 사항: 이 터미널은 기능 키를 전송하기 위해 반드시 `Shift` 키를 눌러야 합니다. 그렇지 않으면 기능 키는 로컬로만 작동합니다. `Shift` 키 없이 사용하면 커서는 잘못된 위치에 놓이게 됩니다다.
 
 
 ## Special characters: ESC, CR and DEL
-  Several of these special characters are very important, so be sure to find them right now. Look on your keyboard for a key labelled ESC or ALT. It should be near the upper left corner of your terminal. Try hitting this key a few times. The editor will ring the bell to indicate that it is in a quiescent state (footnote 1-3). Partially formed commands are cancelled by ESC, and when you insert text in the file you end the text insertion with ESC. This key is a fairly harmless one to hit, so you can just hit it if you don't know what is going on until the editor rings the bell.
+특수 키 몇 가지는 매우 중요하므로, 지금 설명합니다. 
 
-이 특수 문자들 중 몇 개는 매우 중요하므로, 지금 바로 그것들을 찾아보아야 한다. 키보드에서 ESC 또는 ALT라고 표시된 키를 찾아보라. 그것은 터미널의 왼쪽 위 근처에 있어야 한다. 이 키를 몇 번 눌러보라. 편집기는 조용한 상태에 있다는 것을 알리기 위해 종을 울릴 것이다(각주 1-3). 불완전하게 입력된 명령은 ESC로 취소되며, 파일에 텍스트를 삽입할 때는 ESC로 텍스트 삽입을 끝낸다. 이 키는 누르기에 꽤 무해하므로, 편집기에서 무슨 일이 일어나고 있는지 모를 때는 그냥 이 키를 눌러 편집기가 종을 울릴 때까지 기다려도 된다.
+키보드에서 `ESC` 또는 `ALT` 라고 표시된 키를 찾습니다. 주로 터미널 왼쪽 위에 있습니다. 이 키를 몇 번 눌러보시기 바랍니다. 편집기는 **명령 모드에 있다** 는 것을 알리는 벨을 울립니다. (각주 [^1-3]). 
 
-  The CR or RETURN key is important because it is used to terminate certain commands. It is usually at the right side of the keyboard, and is the same command used at the end of each shell command.
+[^1-3]: 가능한 경우, 스마트 터미널은 벨소리를 울리는 대신 화면을 조용히 깜박입니다.
 
-CR 또는 RETURN 키는 특정 명령을 종료하는 데 사용되므로 중요하다. 이 키는 보통 키보드의 오른쪽에 있으며, 각 셸 명령의 끝에서 사용되는 것과 동일한 명령이다.
+불완전하게 입력한 명령을 `ESC` 키로 취소할 수 있으며, 파일에 텍스트를 입력할 때도 `ESC` 키로 텍스트 삽입을 끝냅니다. 이 키는 언제 눌러도 무해하므로, 편집기에서 무슨 일이 일어나고 있는지 모를 때는 그냥 `ESC` 키를 눌러 편집기가 벨소리나 화면을 깜빡일 때까지 기다려도 됩니다.
+
+`CR` 또는 `RETURN` 키는 명령을 종료하는 데 사용되므로 매우 중요합니다. 보통의 경우 이 키는 키보드 오른쪽에 위치하며, 시스템 쉘 명령에서 사용하는 것과 동일한 명령입니다다.
 
   Another very useful key is the DEL or RUB key, which generates an interrupt, telling the editor to stop what it is doing. It is a forceful way of making the editor listen to you, or to return it to the quiescent state if you don't know or don't like what is going on. Try hitting the '/' key on your terminal. This key is used when you want to specify a string to be searched for. The cursor should now be positioned at the bottom line of the terminal after a '/' printed as a prompt. You can get the cursor back to the current position by hitting the DEL or RUB key; try this now (footnote 1-4). From now on we will simply refer to hitting the DEL or RUB key as “sending an interrupt” (footnote 1-5).
 
-또 하나 매우 유용한 키는 DEL 또는 RUB 키인데, 이 키는 인터럽트를 생성해서 편집기에게 현재 수행 중인 작업을 중지하라고 알린다. 이는 편집기로 해서금 당신의 말을 듣게 하거나, 당신이 무슨 일이 일어나고 있는지 모르거나 마음에 들지 않을 때 조용한 상태로 되돌리는 강력한 방법이다. 터미널에서 '/' 키를 눌러보라. 이 키는 검색할 문자열을 지정하고자 할 때 사용된다. 커서는 이제 '/'가 프롬프트로 출력된 후 터미널의 맨 아래 줄에 위치해야 한다. DEL 또는 RUB 키를 누르면 커서를 현재 위치로 되돌릴 수 있다; 지금 이것을 시도해보라 (각주 1-4). 이제부터는 DEL 또는 RUB 키를 누르는 것을 단순히 “인터럽트를 보낸다”라고 부르겠다 (각주 1-5).
+또 하나 유용한 키는 `DEL` 또는 `RUB` 키인데, 이 키는 인터럽트를 생성해서 편집기에게 현재 수행 중인 작업을 중지하라고 알립니다. 이것은 편집기로 하여금 말을 잘듣게 하거나, 무슨 일이 일어나는지 모른다거나 마음에 들지 않을 때, 명령 모드로 되돌리는 강력한 방법입니다. 
 
-  The editor often echoes your commands on the last line of the terminal. If the cursor is on the first position of this last line, then the editor is performing a computation, such as computing a new position in the file after a search or running a command to reformat part of the buffer. When this is happening you can stop the editor by sending an interrupt.
+터미널에서 '/' 키를 눌러보시기 바랍니다. 이 키는 검색할 문자열을 지정할 때 사용됩니다. 입력 커서는 '/' 문자가 프롬프트로 출력된 후 터미널의 맨 아래 줄에 위치합니다. 이 상태에서 `DEL` 또는 `RUB` 키를 누르면 커서를 현재 위치로 되돌릴 수 있습니다. 지금 바로 이 기능을 시도해 보시기 바랍니다. (각주 [^1-4])
 
-편집기는 종종 터미널의 마지막 줄에 당신의 명령을 에코한다. 만약 커서가 이 마지막 줄의 첫 번째 위치에 있다면, 편집기는 검색 후 파일의 새로운 위치를 계산하거나 버퍼의 일부를 다시 포맷하는 등의 계산을 수행 중인 것이다. 이러한 일이 발생하고 있을 때는 인터럽트를 보내어 편집기를 중지시킬 수 있다.
+[^1-4]: `/` 검색 명령에 백스페이스 키를 누르면 검색을 취소합니다. 참고: 편집기 화면 하단에 `No previous regular expression` 을 출력하면, 터미널의 **DEL** 키는 삭제 문자 `^?` 를 보내는 것이 아니라, `ESC` 로 시작하는 문자 시퀀스를 보내는 것입니다. 이 경우 인터럽트 기능은 보통 `^C` 에 할당되어 있습니다. (표기법은 2.1절 참조) 적절한 키나 키 시퀀스를 찾을 수 없다면, 시스템 쉘에 다음과 같이 입력합니다. `% stty -a` intr 뒤에 나오는 문자열을 확인합니다. 
+
+지금부터 `DEL` 또는 `RUB` 키를 누르는 것을 단순히 “인터럽트를 보낸다” 고 부르겠습니다. (각주 [^1-5])
+
+[^1-5]: 일부 시스템에서 인터럽트 기능은 대가를 수반합니다. 즉, 입력 커서가 맨 아래 줄에 있을 때, 편집기가 현재 계산 중이라면 입력할 수 없습니다.
+ 
+편집기는 종종 터미널 마지막 줄에 입력한 명령을 에코합니다. 만약, 입력 커서가 마지막 줄 첫 번째 위치에 없다면, 편집기는 현재 검색 명령 처리 중에 파일 내의 새로운 위치를 계산하거나 버퍼의 일부를 다시 포맷하는 등의 계산 작업을 수행 중인 것입니다. 이러한 일이 발생하면 인터럽트 키를 보내서 편집기를 중지시킬 수 있습니다.
 
 
 
 
 ## Getting out of the editor
-  After you have worked with this introduction for a while, and you wish to do something else, you can give the command ZZ to the editor. This will write the contents of the editor's buffer back into the file you are editing, if you made any changes, and then quit from the editor. You can also end an editor session by giving the command :q!CR (footnote 1-6); this is a dangerous but occasionally essential command which ends the editor session and discards all your changes. You need to know about this command in case you change the editor's copy of a file you wish only to look at. Be very careful not to give this command when you really want to save the changes you have made.
+이 입문서로 한동안 작업한 후, 다른 시스템 업무를 처리하려면, 편집기에 `ZZ` 명령을 입력할 수 있습니다. 이 명령은 편집기 버퍼의 내용을, 변경한 경우에 한해, 편집 중인 파일에 다시 기록한 후 편집기를 종료합니다. 또한 `:q!CR` 명령을 입력해서 편집기 세션을 강제 종료할 수 있습니다. (각주 [^1-6]) 
 
-이 입문서를 가지고 한동안 작업한 후 다른 일을 하고 싶다면, 편집기에 ZZ 명령을 입력할 수 있다. 이 명령은 편집기의 버퍼 내용을, 변경한 경우에 한해, 편집 중인 파일에 다시 기록하고 편집기를 종료한다. 또한 :q!CR 명령을 입력해서 편집기 세션을 종료할 수도 있다(각주 1-6); 이 명령은 위험하지만 때때로 필수적인 명령으로, 편집기 세션을 종료하고 모든 변경 사항을 폐기한다. 단지 파일을 보기만 하려 했는데 편집기의 복사본을 변경한 경우, 이 명령을 알아두어야 한다. 변경한 내용을 정말로 저장하려는 경우에는 이 명령을 입력하지 않도록 매우 주의해야 한다.
+[^1-6]: 마지막 표시 줄에 입력받는 모든 명령은 `CR` 뿐만 아니라 `ESC` 키로 종료할 수 있습니다.
+
+이 명령은 매우 위험하지만 때때로 "필수적인 명령" 으로, 편집기 세션을 강제 종료하고 모든 변경 사항을 폐기할 수 있습니다. 단지 파일을 보기만 할 경우나 편집기의 복사본 파일을 변경한 경우라면 이 명령은 반드시 알아둬야 합니다. 변경한 내용을 정말 저장해야 할 때 이 명령을 입력하지 않도록 주의해야 합니다.
 
 
 
 
 # Moving around in the file
 ## Scrolling and paging
-  The editor has a number of commands for moving around in the file. The most useful of these is generated by hitting the control and D keys at the same time, a control-D or '^D'. We will use this two character notation for referring to these control keys from now on. You may have a key labelled '^' on your terminal. This key will be represented as '↑' in this document; '^' is exclusively used as part of the '^x' notation for control characters (footnote 2-1).
+편집기에는 파일 내에서 입력 커서를 이동하기 위한 여러 명령들이 있습니다. 이 중에서 가장 유용한 것은 `Control` 키와 `D` 키를 동시에 눌러 생성하는 `Control-D` 또는 '^D' 라 표시된 키입니다. 이 `^` 컨트롤키는 본 문서에서는 '↑' 로 표시하며, '^' 표시는 오직 '^x' 형식의 제어 문자 표시에서만 사용됩니다. (각주 [^2-1]).
 
-편집기에는 파일 내에서 이동하기 위한 여러 명령들이 있다. 이 중 가장 유용한 것은 Control 키와 D 키를 동시에 눌러 생성되는 Control-D 또는 ''라고 표시된 키가 있을 수 있다. 이 키는 이 문서에서 '↑'로 표시될 것이며, '^'는 오직 '^x' 형식의 제어 문자 표기에서만 사용된다(각주 2-1).
+[^2-1]: 터미널에 `^` 키가 없다면, `↑` 라 표시된 키가 있을 수 있습니다. 어떤 경우든 이 두 문자는 동일합니다. 참고: 일부 웹 브라우저는 위쪽 화살표 문자를 표시할 수 없어서 `&uarr;` 로 표시하기도 합니다. 이것은 uparrow 로 읽으면 됩니다. 여기서 말하는 uparrow 는 커서 키패드에 있는 화살표 키가 아니라, 캐럿(caret) 또는 서컴플렉스(circumflex) 문자를 나타내는 아주 오래된 표기법입니다.
 
-  As you know now if you tried hitting ^D, this command scrolls down in the file. The D thus stands for down. Many editor commands are mnemonic and this makes them much easier to remember. For instance the command to scroll up is ^U. Many dumb terminals can't scroll up at all, in which case hitting ^U clears the screen and refreshes it with a line which is farther back in the file at the top.
+이미 알겠지만, `^D` 키를 누르면 파일을 아래로 스크롤합니다. 따라서, D 문자는 down(아래)을 의미합니다. 많은 편집기 명령은 연상되는 기호 문자로 구성되므로 기억하기 훨씬 쉽습니다. 예를 들어, 위로 스크롤하는 명령은 `^U` 입니다. 단순한 더미 터미널은 위로 스크롤할 수 없는데, 이 경우 `^U` 를 누르면 화면은 지워지고 파일에서 더 앞쪽에 있는 줄이 맨 위에 오도록 새로 고침됩니다.
 
-이제 알겠지만, ^D 키를 눌러보았다면 이 명령은 파일을 아래로 스크롤한다. 따라서 D는 down(아래)을 의미한다. 많은 편집기 명령은 연상기호로 되어 있어 기억하기 훨씬 쉽다. 예를 들어, 위로 스크롤하는 명령은 ^U이다. 많은 단순 터미널은 위로 스크롤을 전혀 할 수 없는데, 이 경우 ^U를 누르면 화면이 지워지고 파일에서 더 앞쪽에 있는 줄이 맨 위에 오도록 새로 고침된다.
+현재 위치 아래쪽의 파일 내용을 좀 더 보고 싶다면, `^E` 키를 눌러 화면 하단에 한 줄을 추가로 표시하며, 커서는 제자리에 그대로 남습니다. `^Y` 명령은(기억하기 어려운 이름이지만 키보드에 `^U` 옆에 있음) 화면 상단에 한 줄을 더 표시합니다.
 
-  If you want to see more of the file below where you are, you can hit ^E to expose one more line at the bottom of the screen, leaving the cursor where it is. The command ^Y (which is hopelessly non-mnemonic, but next to ^U on the keyboard) exposes one more line at the top of the screen.
+파일 내에서 입력 커서를 이동하는 다른 방법들도 있습니다; `^F` 와 `^B` 키는 한 페이지 앞이나 뒤로 이동하며 만약, 페이지 연속성을 유지하려면 `^D` 와 `^U` 대신 이 키를 사용해서 파일을 읽어 내려갈 수 있습니다.
 
-현재 위치 아래쪽의 파일 내용을 더 보고 싶다면, ^E 키를 눌러 화면 하단에 한 줄을 더 표시할 수 있으며, 커서는 제자리에 그대로 남는다. ^Y 명령은(기억하기 어려운 이름이지만 키보드에서 ^U 옆에 있음) 화면 상단에 한 줄을 더 표시한다.
-
-  There are other ways to move around in the file; the keys ^F and ^B move forward and backward a page, keeping a couple of lines of continuity between screens so that it is possible to read through a file using these rather than ^D and ^U if you wish.
-
-파일 내에서 이동하는 다른 방법들도 있다; ^F와 ^B 키는 한 페이지 앞으로 또는 뒤로 이동하며, 화면 간에 몇 줄의 연속성을 유지하므로 원한다면 ^D와 ^U 대신 이 키들을 사용해서 파일을 읽어 내려갈 수 있다.
-
-  Notice the difference between scrolling and paging. If you are trying to read the text in a file, hitting ^F to move forward a page will leave you only a little context to look back at. Scrolling on the other hand leaves more context, and happens more smoothly. You can continue to read the text as scrolling is taking place.
-
-스크롤과 페이지 이동의 차이를 알아두어라. 파일의 텍스트를 읽으려고 할 때, ^F를 눌러 한 페이지 앞으로 이동하면 되돌아볼 수 있는 문맥이 거의 남지 않는다. 반면 스크롤은 더 많은 문맥을 남기며, 더 부드럽게 진행된다. 스크롤이 진행되는 동안에도 텍스트를 계속 읽을 수 있다.
+스크롤과 페이지 이동의 차이점을 알아야 합니다. 파일의 텍스트를 읽을 때, `^F` 를 눌러 한 페이지 앞으로 이동한다면 되돌아볼 수 있는 문맥은 거의 남지 않습니다. 반면 스크롤은 보다 많은 문맥을 화면에 남기며, 좀 더 부드럽게 진행됩니다. 따라서, 스크롤이 진행되는 동안 텍스트를 계속해서 읽을 수 있습니다.
 
 
 
 ## Searching, goto, and previous context
-  Another way to position yourself in the file is by giving the editor a string to search for. Type the character / followed by a string of characters terminated by CR. The editor will position the cursor at the next occurrence of this string. Try hitting n to then go to the next occurrence of this string. The character ? will search backwards from where you are, and is otherwise like / (footnote 2-2).
+파일 내에서 입력 위치를 지정하는 또 다른 방법은 편집기에 검색할 문자열을 제공하는 것입니다. `/` 문자를 입력한 다음, 검색할 문자열을 입력하고 `CR` 로 종료합니다. 편집기는 이 문자열의 다음 번 발생 위치에 입력 커서를 놓습니다. 그런 다음, `n` 키를 눌러 이 문자열의 다음 번 발생 위치로 이동할 수 있습니다. `?` 문자는 현재 위치에서 뒤쪽으로 검색하며, 그 외에는 `/` 문자와 같습니다. (각주 [^2-2])
 
-파일 내에서 위치를 지정하는 또 다른 방법은 편집기에 검색할 문자열을 제공하는 것이다. 문자 를 입력한 다음 문자열을 입력하고 CR로 종료하라. 편집기는 이 문자열의 다음 발생 위치에 커서를 놓을 것이다. 그런 다음  키를 눌러 이 문자열의 다음 발생 위치로 이동해보라. 문자 는 현재 위치에서 뒤쪽으로 검색하며, 그 외에는 와 같다(각주 2-2).
+[^2-2]: 이런 검색은 보통 파일의 끝에서 처음으로 돌아가면서 수행되므로, 검색 방향에 해당하는 문자열이 없더라도 파일 어딘가에만 있다면 문자열을 찾습니다. 검색에서 이와 같은 래핑 기능을 비활성화하려면 `:se nowrapscanCR` 명령을 사용하거나, 좀 더 간단히 `:se nowsCR` 을 입력합니다.
 
-  If the search string you give the editor is not present in the file the editor will print a diagnostic on the last line of the screen, and the cursor will be returned to its initial position.
+편집기에 제공한 검색 문자열이 파일에 존재하지 않는다면, 편집기는 화면의 마지막 줄에 진단 메시지를 출력하고, 입력 커서는 원래 위치로 되돌아갑니다.
 
-편집기에 제공한 검색 문자열이 파일에 존재하지 않으면, 편집기는 화면의 마지막 줄에 진단 메시지를 출력하고, 커서는 원래 위치로 되돌아간다.
+검색 문자열이 줄 시작에서 일치하길 원한다면, 검색 문자열을 `↑` 문자로 시작합니다. 줄 끝에서만 일치하길 원한다면, 검색 문자열을 `$` 문자로 끝냅니다. 따라서, `/↑searchCR` 은 줄 시작에서 search 라는 단어를 검색하고, `/last$CR` 은 줄의 끝에서 last 라는 단어를 검색합니다. (각주 [^2-3])
 
-  If you wish the search to match only at the beginning of a line, begin the search string with an ↑. To match only at the end of a line, end the search string with a $. Thus /↑searchCR will search for the word 'search' at the beginning of a line, and /last$CR searches for the word 'last' at the end of a line (footnote 2-3).
+[^2-3]: 사실,검색할 문자열은 ex(1) 와 ed(1) 편집기에서 사용하는 정규 표현식이 될 수 있습니다. 아직 이런 기능을 배우지 않았다면 `:se nomagicCR` 명령으로 이 기능을 비활성화할 수 있습니다. 또한, 이 명령을 환경 변수 `EXINIT` 에 넣어두면 항상 적용됩니다. (`EXINIT` 환경 변수에 대해서는 뒤에서 설명합니다.)
 
-검색이 줄의 시작에서만 일치하길 원한다면, 검색 문자열을 ↑로 시작하라. 줄의 끝에서만 일치하길 원한다면, 검색 문자열을 $로 끝내라. 따라서 은 줄의 시작에서 'search'라는 단어를 검색하고, 은 줄의 끝에서 'last'라는 단어를 검색한다(각주 2-3).
+`G` 명령은 숫자가 앞에 붙으면 파일 내의 해당 줄로 커서를 위치시킵니다. 따라서, `1G` 는 커서를 파일 내의 첫 번째 줄로 이동시킵니다. `G` 에 숫자를 주지 않으면 파일 끝으로 이동합니다.
 
-  The command G, when preceded by a number will position the cursor at that line in the file. Thus 1G will move the cursor to the first line of the file. If you give G no count, then it moves to the end of the file.
+파일의 끝 근처에 있고 마지막 줄이 화면의 맨 아래에 있지 않다면, 편집기는 남은 줄에 '~' 문자를 표시하고 이 줄은 파일의 끝을 지난 부분을 의미합니다.
 
-G 명령은 숫자가 앞에 붙으면 파일의 해당 줄로 커서를 위치시킨다. 따라서 1G는 커서를 파일의 첫 번째 줄로 이동시킨다. G에 숫자를 주지 않으면 파일의 끝으로 이동한다.
+현재 편집 중인 파일에 대한 상태를 알아보려면 `^G` 를 입력합니다. 편집기는 편집 중인 "파일의 이름", "현재 줄 번호", "버퍼에 있는 전체 줄 수" 그리고 버퍼에서 어느 정도 진행된지를 보여줍니다. 지금 바로 이 기능을 시도해보고, 현재 줄 번호를 기억합니다. `G` 명령을 입력해서 파일 끝으로 이동한 다음, 다시 `G` 명령을 입력해서 원래 위치로 돌아올 수 있습니다.
 
-  If you are near the end of the file, and the last line is not at the bottom of the screen, the editor will place only the character '~' on each remaining line. This indicates that the last line in the file is on the screen; that is, the '~' lines are past the end of the file.
-
-파일의 끝 근처에 있고 마지막 줄이 화면의 맨 아래에 있지 않다면, 편집기는 남은 각 줄에 문자 '' 줄들은 파일의 끝을 지난 부분이다.
-
-  You can find out the state of the file you are editing by typing a ^G. The editor will show you the name of the file you are editing, the number of the current line, the number of lines in the buffer, and the percentage of the way through the buffer which you are. Try doing this now, and remember the number of the line you are on. Give a G command to get to the end and then another G command to get back where you were.
-
-편집 중인 파일의 상태를 알아보려면 ^G를 입력하라. 편집기는 당신이 편집 중인 파일의 이름, 현재 줄 번호, 버퍼에 있는 줄 수, 그리고 버퍼에서 어느 정도 진행되었는지를 보여줄 것이다. 지금 이것을 시도해보고, 당신이 있는 줄 번호를 기억하라. G 명령을 입력해서 파일 끝으로 이동한 다음, 다시 G 명령을 입력해서 원래 위치로 돌아가라.
-
-  You can also get back to a previous position by using the command `` (two back quotes). This is often more convenient than G because it requires no advance preparation. Try giving a G or a search with / or ? and then a `` to get back to where you were. If you accidentally hit n or any command which moves you far away from a context of interest, you can quickly get back by hitting ``.
-
-(백쿼트 두 개) 명령을 사용해서 이전 위치로 돌아갈 수도 있다. 이 명령은 사전 준비가 필요 없기 때문에 G보다 더 편리한 경우가 많다. G 명령이나 / 또는 ?를 사용한 검색을 수행한 다음를 입력해서 원래 위치로 돌아가 보라. 만약 n이나 관심 있는 문맥에서 멀리 이동시키는 다른 명령을 실수로 입력했다면, ``를 눌러 빠르게 돌아갈 수 있다.
+\`\` (백쿼트 두 개) 명령을 사용해서 이전 위치로 돌아갈 수도 있습니다. 이 명령은 사전 준비가 필요 없기 때문에 `G` 명령 보다 편리한 경우가 많습니다. `G` 명령이나 `/` 또는 `?` 문자를 사용한 검색 작업을 수행한 다음, \`\` 를 입력해서 원래 있던 이전 위치로 돌아갑니다. 만약, `n` 명령이나 관심 있는 문맥에서 멀리 이동시키는 다른 명령을 실수로 입력했다면, \`\` 를 눌러서 빠르게 돌아갈 수 있습니다.
 
 
 ## Moving around on the screen
-  Now try just moving the cursor around on the screen. If your terminal has arrow keys (4 or 5 keys with arrows going in each direction) try them and convince yourself that they work. If you don't have working arrow keys, you can always use h, j, k, and l. Experienced users of vi prefer these keys to arrow keys, because they are usually right underneath their fingers.
+이제 화면에서 커서를 움직여 보겠습니다. 터미널에 화살표 키(각 방향으로 표시된 4개 또는 5개의 키)가 있다면 직접 눌러보고 제대로 작동하는지 확인합니다. 작동하는 화살표 키가 없다면, 항상 `h, j, k, l`  키를 사용할 수 있다. vi의 숙련된 사용자들은 이 키들이 오른손 바로 아래에 있기 때문에 화살표 키보다 이 키들을 더 선호합니다.
 
+`+` 키를 눌러보시기 바랍니다. 누를 때마다 커서는 파일의 다음 줄로 이동하며, 줄에서 처음 공백이 아닌 위치에 놓습니다. `-` 키는 `+` 키와 같지만 반대 방향으로 이동합니다.
 
-이제 화면에서 커서를 움직여보라. 당신의 터미널에 화살표 키(각 방향으로 된 4개 또는 5개의 키)가 있다면 그것들을 눌러보고 작동하는지 확인하라. 작동하는 화살표 키가 없다면, 항상 , , ,  키를 사용할 수 있다. vi의 숙련된 사용자들은 이 키들이 보통 손가락 바로 아래에 있기 때문에 화살표 키보다 이 키들을 선호한다.
+이 키들은 파일에서 위아래 줄로 이동할 때 매우 일반적으로 사용됩니다. 이들 키로 화면의 맨 아래나 맨 위를 벗어나면, 화면이 아래로(또는 가능하다면 위로) 스크롤되어 한 줄씩 보입니다. `RETURN` 키는 `+` 키와 동일한 효과를 가집니다.
 
-  Hit the + key. Each time you do, notice that the cursor advances to the next line in the file, at the first non-white position on the line. The - key is like + but goes the other way.
-
-+ 키를 눌러보라. 누를 때마다 커서가 파일의 다음 줄로 이동하며, 줄에서 처음으로 공백이 아닌 위치에 놓인다. - 키는 + 키와 같지만 반대 방향으로 이동한다.
-
-  These are very common keys for moving up and down lines in the file. Notice that if you go off the bottom or top with these keys then the screen will scroll down (and up if possible) to bring a line at a time into view. The RETURN key has the same effect as the + key.
-
-이 키들은 파일에서 위아래 줄로 이동할 때 매우 일반적으로 사용된다. 이 키들로 화면의 맨 아래나 맨 위를 벗어나면, 화면이 아래로(또는 가능하다면 위로) 스크롤되어 한 줄씩 보이게 된다. RETURN 키는 + 키와 동일한 효과를 가진다.
-
-  Vi also has commands to take you to the top, middle and bottom of the screen. H will take you to the top (home) line on the screen. Try preceding it with a number as in 3H. This will take you to the third line on the screen. Many vi commands take preceding numbers and do interesting things with them. Try M, which takes you to the middle line on the screen, and L, which takes you to the last line on the screen. L also takes counts, thus 5L will take you to the fifth line from the bottom.
-
-vi에는 화면의 맨 위, 가운데, 맨 아래로 이동하는 명령도 있다. 는 화면의 맨 위(홈) 줄로 이동시킨다. 앞에 숫자를 붙여 처럼 입력해보라. 이는 화면의 세 번째 줄로 이동시킨다. 많은 vi 명령은 앞에 숫자를 붙이면 흥미로운 동작을 한다. 을 시도해보라. 이는 화면의 가운데 줄로 이동시키며, 은 화면의 마지막 줄로 이동시킨다. 도 숫자를 받을 수 있으므로, 은 화면의 아래에서 다섯 번째 줄로 이동시킨다.
+vi에는 화면의 맨 위, 가운데, 맨 아래로 이동하는 명령도 있습니다. `H` (high)는 화면의 맨 위(홈) 줄로 이동시킵니다. 또한, 앞에 숫자를 붙여 `3H` 처럼 입력합니다. 이것은 화면의 세 번째 줄로 이동시킵니다. 이처럼 많은 vi 명령은 앞에 숫자를 붙이면 흥미로운 동작을 합니다. `M` (Middle)키를 누릅니다. 이것은 화면의 가운데 줄로 이동시키며, `L` (Low)은 화면의 마지막 줄로 이동시킵니다. `L` 명령도 숫자를 받을 수 있으므로, `5L` 은 화면 아래에서 다섯 번째 줄로 이동시킵니다.
 
 
 
 ## Moving within a line
-  Now try picking a word on some line on the screen, not the first word on the line. move the cursor using RETURN and - to be on the line where the word is. Try hitting the w key. This will advance the cursor to the next word on the line. Try hitting the b key to back up words in the line. Also try the e key which advances you to the end of the current word rather than to the beginning of the next word. Also try SPACE (the space bar) which moves right one character and the BS (backspace or ^H) key which moves left one character. The key h works as ^H does and is useful if you don't have a BS key. (Also, as noted just above, l will move to the right.)
+이제 화면의 어떤 줄에서 단어 하나를 골라보겠습니다. 이때 줄의 첫 번째 단어는 선택하지 말고, `RETURN` 과 `-` 키를 사용해서 해당 단어가 있는 줄로 커서를 이동합니다. `w` 키를 눌러보시기 바랍니다. 이 키는 커서를 줄의 다음 단어로 이동시킵니다.  `b` 키를 눌러 단어 단위로 뒤로 이동합니다. 또한, `e` 키를 눌러 현재 단어의 끝으로 이동합니다. `SPACE` (스페이스 바)는 오른쪽으로 한 문자 이동하며, `BS` (백스페이스 또는 `^H`) 키는 왼쪽으로 한 문자 이동합니다. 이것은 `h` 키와 같은 동작을 처리하며, `BS` 키가 없는 경우에는 유용합니다. (또한, 앞서 언급했듯이 `l` 키는 오른쪽으로 이동합니다.)
 
-이제 화면의 어떤 줄에서 단어 하나를 골라보라. 줄의 첫 번째 단어는 선택하지 말고, RETURN과 - 키를 사용해서 해당 단어가 있는 줄로 커서를 이동하라.  키를 눌러보라. 이 키는 커서를 줄의 다음 단어로 이동시킨다.  키를 눌러 단어 단위로 뒤로 이동해보라. 또한  키를 눌러 현재 단어의 끝으로 이동해보라. (스페이스 바)는 오른쪽으로 한 문자 이동하며, (백스페이스 또는 ) 키는 왼쪽으로 한 문자 이동한다.  키는 와 같은 동작을 하며, BS 키가 없는 경우 유용하다. (또한 앞서 언급했듯이  키는 오른쪽으로 이동한다.)
+줄에 구두점이 포함되어 있다면, `w` 와 `b` 키는 구두점마다 멈춘다는 것을 알아차렸을 것입니다. 구두점에서 멈추지 않고 단어 단위로 앞뒤로 이동하려면 소문자 대신 `W` 와 `B` 를 사용합니다. 이것은 좀 더 큰 단어라고 생각하면 됩니다. 구두점이 있는 몇 줄에 이 키를 직접 사용해고 소문자 `w` 와 `b` 명령과 어떻게 다른지 확인해보시기 바랍니다.
 
-  If the line had punctuation in it you may have noticed that that the w and b keys stopped at each group of punctuation. You can also go back and forwards words without stopping at punctuation by using W and B rather than the lower case equivalents. Think of these as bigger words. Try these on a few lines with punctuation to see how they differ from the lower case w and b.
-
-줄에 구두점이 포함되어 있다면, w와 b 키가 구두점마다 멈추는 것을 알아차렸을 것이다. 구두점에서 멈추지 않고 단어 단위로 앞뒤로 이동하려면 소문자 대신 W와 B를 사용하라. 이것들을 더 큰 단어라고 생각하라. 구두점이 있는 몇 줄에서 이 키들을 사용해보며 소문자 w와 b와 어떻게 다른지 확인해보라.
-
-
-  The word keys wrap around the end of line, rather than stopping at the end. Try moving to a word on a line below where you are by repeatedly hitting w.
-
-단어 이동 키는 줄 끝에서 멈추지 않고 다음 줄로 이어진다. 현재 위치보다 아래 줄에 있는 단어로 이동하려면 w 키를 반복해서 눌러보라.
-
+단어 이동 키는 줄 끝에서 멈추지 않고 다음 줄로 이어집니다. 현재 위치보다 아래 줄에 있는 단어로 이동하려면 `w` 키를 반복해서 누릅니다.
 
 
 ## Summary
 
-| Key   | Function Description                          |
-|-------|-----------------------------------------------|
-| SPACE | advance the cursor one position               |
-| ^B    | backwards to previous page                    |
-| ^D    | scrolls down in the file                      |
-| ^E    | exposes another line at the bottom            |
-| ^F    | forward to next page                          |
-| ^G    | tell what is going on                         |
-| ^H    | backspace the cursor                          |
-| ^N    | next line, same column                        |
-| ^P    | previous line, same column                    |
-| ^U    | scrolls up in the file                        |
-| ^Y    | exposes another line at the top               |
-| +     | next line, at the beginning                   |
-| -     | previous line, at the beginning               |
-| /     | scan for a following string forwards          |
-| ?     | scan backwards                                |
-| B     | back a word, ignoring punctuation             |
-| G     | go to specified line, last default            |
-| H     | home screen line                              |
-| M     | middle screen line                            |
-| L     | last screen line                              |
-| W     | forward a word, ignoring punctuation          |
-| b     | back a word                                   |
-| e     | end of current word                           |
-| n     | scan for next instance of / or ? pattern      |
-| w     | word after this word                          |
-
-
-
 | 키(Key) | 기능 설명(직역) |
 |---------|----------------|
-| SPACE | 커서를 한 위치 앞으로 이동 |
+| SPACE | 커서를 한 칸 앞으로 이동 |
 | ^B | 이전 페이지로 뒤로 이동 |
-| ^D | 파일에서 아래로 스크롤 |
+| ^D | 아래로 스크롤 |
 | ^E | 아래쪽에 한 줄 더 노출 |
 | ^F | 다음 페이지로 앞으로 이동 |
-| ^G | 무슨 일이 일어나고 있는지 알려줌 |
+| ^G | 현재 무슨 일이 일어나는지 알려줌 |
 | ^H | 커서를 뒤로 한 칸 지움(백스페이스) |
 | ^N | 다음 줄, 같은 열 |
 | ^P | 이전 줄, 같은 열 |
-| ^U | 파일에서 위로 스크롤 |
+| ^U | 위로 스크롤 |
 | ^Y | 위쪽에 한 줄 더 노출 |
 | + | 다음 줄, 맨 처음 위치에서 |
 | - | 이전 줄, 맨 처음 위치에서 |
 | / | 지정한 문자열을 앞으로 검색 |
-| ? | 뒤로 검색 |
+| ? | 지정한 문자열을 뒤로 검색 |
 | B | 구두점을 무시하고 단어 단위로 뒤로 이동 |
 | G | 지정한 줄로 이동, 기본값은 마지막 줄 |
 | H | 화면의 첫 줄로 이동 |
@@ -405,184 +317,127 @@ vi에는 화면의 맨 위, 가운데, 맨 아래로 이동하는 명령도 있�
 | W | 구두점을 무시하고 단어 단위로 앞으로 이동 |
 | b | 단어 단위로 뒤로 이동 |
 | e | 현재 단어의 끝으로 이동 |
-| n | `/` 또는 `?`로 검색한 패턴의 다음 항목으로 이동 |
+| n | `/` 또는 `?` 로 검색한 패턴의 다음 항목으로 이동 |
 | w | 현재 단어 다음 단어로 이동 |
 
 
-
-
 ## View
-  If you want to use the editor to look at a file, rather than to make changes, invoke it as view instead of vi. This will set the readonly option which will prevent you from accidently overwriting the file.
-
-**편집기를 사용해서 파일을 변경하지 않고 보기만 하려면, `vi` 대신 `view`로 실행하라. 이렇게 하면 `readonly` 옵션이 설정되어 파일을 실수로 덮어쓰는 것을 방지할 수 있다.**
+편집기를 사용해서 파일을 변경하지 않고 단지 보기만 하려면, `vi` 대신 `view` 로 실행합니다. 이렇게 실행하면 `readonly` 옵션이 설정되고 파일을 실수로 덮어쓰는 것을 방지할 수 있습니다.
 
 
+---
 
 # Making simple changes
 ## Inserting
-  One of the most useful commands is the i (insert) command. After you type i, everything you type until you hit ESC is inserted into the file. Try this now; position yourself to some word in the file and try inserting text before this word. If you are on an dumb terminal it will seem, for a minute, that some of the characters in your line have been overwritten, but they will reappear when you hit ESC.
+가장 유용한 명령 중 하나는 `i` (insert) 명령입니다. `i` 를 입력한 후 `ESC` 키를 누를 때까지 입력하는 모든 내용이 파일에 삽입됩니다. 지금 시도해보시기 바랍니다. 파일의 어떤 단어 앞에 커서를 위치시키고 그 단어 앞에 텍스트를 삽입합니다. 만약, 더미 터미널(dumb terminal)을 사용 중이면, 잠시 동안 해당 줄의 일부 문자를 덮어쓴 것처럼 보일 수 있지만, `ESC` 키를 누르면 곧바로 다시 나타납니다.
 
-가장 유용한 명령 중 하나는 (삽입) 명령이다. 를 입력한 후 ESC를 누를 때까지 입력하는 모든 내용이 파일에 삽입된다. 지금 이것을 시도해보라; 파일의 어떤 단어 앞에 커서를 위치시키고 그 단어 앞에 텍스트를 삽입해보라. 만약 단순 터미널(dumb terminal)을 사용 중이라면, 잠시 동안 해당 줄의 일부 문자가 덮어써진 것처럼 보일 수 있지만, ESC를 누르면 다시 나타날 것이다.
+> [!NOTE] 참고: vi 편집기의 최신 버전에서는 입력한 문자를 삽입할 텍스트로 인식하는지 명령으로 인식하는지에 대한 정보를 표시할 수 있습니다. 이를 활성화하려면 `ESC` 키를 누른 후, `:set showmodeCR` 을 입력합니다. 옵션 설정에 대한 자세한 내용은 6.2절에서 확인할 수 있습니다.
 
-  Note: Recent versions of the vi editor can optionally display information on whether characters are read as insertion text or as commands. Type :se showmodeCR after hitting ESC to enable this. More about setting options can be found in section 6.2.
+이제 's' 문자로 끝나지 않은 단어를 찾습니다. 해당 단어에 커서를 위치시키고 `e` 키를 눌러 단어 끝으로 이동한 다음, `a` 키를 눌러 추가 모드로 들어가고 `sESC` 를 입력해서 텍스트 삽입을 종료합니. 이 명령 시퀀스를 사용하면 단어를 쉽게 단수형에서 복수형으로 만들 수 있습니다.
 
-참고: vi 편집기의 최신 버전에서는 입력한 문자가 삽입 텍스트로 인식되는지 명령으로 인식되는지에 대한 정보를 표시할 수 있다. 이를 활성화하려면 ESC를 누른 후 을 입력하라. 옵션 설정에 대한 자세한 내용은 6.2절에서 확인할 수 있다.
+삽입(`i`)과 추가(`a`) 키를 몇 번 시도해보고 어떻게 작동하는지 확실히 이해하시기 바랍니다. `i` 키는 커서 왼쪽에 텍스트를 배치하고, `a` 키는 오른쪽에 배치합니다.
 
-  Now try finding a word which can, but does not, end in an 's'. Position yourself at this word and type e (move to end of word), then a for append and then 'sESC' to terminate the textual insert. This sequence of commands can be used to easily pluralize a word.
+편집 중인 파일에서 특정 줄 앞이나 뒤에 새로운 줄을 추가할 경우가 자주 있습니다. 의미 있는 줄을 하나 찾아서, 현재 줄 다음에 새로운 줄을 만들려면 `o` 명령을 입력하고, 현재 줄 앞에 새로운 줄을 만들고 싶다면 `O` (대문자)명령을 입력합니다. 이렇게 새로운 줄을 만든 후에는 `ESC` 키를 누를 때까지 입력한 텍스트는 새로운 줄에 삽입됩니다.
 
-이제 's'로 끝날 수 있지만 끝나지 않은 단어를 찾아보라. 해당 단어에 커서를 위치시키고 를 눌러 단어의 끝으로 이동한 다음, 를 눌러 추가 모드로 들어가고 를 입력해서 텍스트 삽입을 종료하라. 이 명령 시퀀스를 사용하면 단어를 쉽게 복수형으로 만들 수 있다.
+많은 편집기 명령은 동일한 문자 키로 호출하며, 하나는 소문자 키로, 다른 하나는 대문자 키로 입력한다는 점만 다릅니다. 이 경우, 대문자 키는 처리 방향에서 소문자 키와 다르며, 주로 대문자 키는 뒤쪽 또는 위쪽으로 작동하고, 소문자 키는 앞쪽 또는 아래쪽으로 이동합니다.
 
-  Try inserting and appending a few times to make sure you understand how this works; i placing text to the left of the cursor, a to the right.
+텍스트를 입력할 때는 여러 줄을 입력할 수도 있고 몇 글자만 입력할 수도 있습니다. 여러 줄의 텍스트를 입력하려면 입력 중간에 `RETURN` 키를 누릅니다. 그러면 텍스트를 위한 새로운 줄이 생성되며 계속 입력할 수 있습니다. 느리고 더미 터미널에서는 편집기가 화면 끝부분을 다시 그리는 것을 잠시 기다릴 수 있으며, 기존 화면 줄 위에 입력하도록 허용합니다. 이것은 편집기가 화면 끝부분을 항상 최신 상태로 유지할 때 발생할 수 있는 긴 지연 시간을 피하기 위한 것입니다. 화면 끝부분은 `ESC` 키를 누르면 수정되며, 누락된 줄이 다시 나타납니다.
 
-삽입(i)과 추가(a)를 몇 번 시도해보며 이것이 어떻게 작동하는지 확실히 이해하라; 는 커서의 왼쪽에 텍스트를 배치하고, 는 오른쪽에 배치한다.
+새로운 텍스트를 삽입할 동안에는 시스템 쉘에서 일반적으로 사용하는 문자(보통 `^H` 또는 `#`)를 사용해서 마지막으로 입력한 문자를 지울 수 있고, 입력 줄을 삭제하는 데 사용하는 문자(보통 `@`, `^X` 또는 `^U`)를 사용해서 현재 줄에 입력한 내용을 지울 수 있습니다. (각주 [^3-1]) 
 
-  It is often the case that you want to add new lines to the file you are editing, before or after some specific line in the file. Find a line where this makes sense and then give the command o to create a new line after the line you are on, or the command O to create a new line before the line you are on. After you create a new line in this way, text you type up to an ESC is inserted on the new line.
+[^3-1]: 사실 `^H` (백스페이스) 문자는 마지막으로 입력한 문자를 지울 떄 항상 사용할 수 있으며, 이것은 삭제할 문자가 무엇이든 관계없습니다.
 
-편집 중인 파일에서 특정 줄 앞이나 뒤에 새 줄을 추가하고 싶은 경우가 자주 있다. 의미 있는 줄을 하나 찾아서, 현재 줄 다음에 새 줄을 만들고 싶다면  명령을 입력하고, 현재 줄 앞에 새 줄을 만들고 싶다면  명령을 입력하라. 이렇게 새 줄을 만든 후에는 ESC 키를 누를 때까지 입력한 텍스트가 새 줄에 삽입된다.
+`^W` 는 전체 단어를 지우고 이전 단어 뒤의 공백 위치에 커서를 남깁니다. 이것은 삽입 중에 빠르게 되돌아갈 때 유용합니다.
 
-  Many related editor commands are invoked by the same letter key and differ only in that one is given by a lower case key and the other is given by an upper case key. In these cases, the upper case key often differs from the lower case key in its sense of direction, with the upper case key working backward and/or up, while the lower case key moves forward and/or down.
+삽입 중에 백스페이스 키를 누르면, 백스페이스로 지운 문자들이 실제 삭제되지 않고 커서만 뒤로 이동하며, 문자들은 화면에 그대로 남아 있습니다. 이것은 비슷한 내용을 입력할 경우 유용합니다. 어쨌든 `ESC` 키를 누르면 해당 문자들은 모두 사라집니다. 만약, 즉시 지우고 싶다면 `ESC` 를 누른 후 진행하면 됩니다.
 
-많은 관련 편집기 명령들은 동일한 문자 키로 호출되며, 하나는 소문자 키로, 다른 하나는 대문자 키로 입력된다는 점만 다르다. 이러한 경우, 대문자 키는 방향 감각에서 소문자 키와 종종 다르며, 대문자 키는 뒤쪽 또는 위쪽으로 작동하고, 소문자 키는 앞쪽 또는 아래쪽으로 이동한다.
-
-  Whenever you are typing in text, you can give many lines of input or just a few characters. To type in more than one line of text, hit a RETURN at the middle of your input. A new line will be created for text, and you can continue to type. If you are on a slow and dumb terminal the editor may choose to wait to redraw the tail of the screen, and will let you type over the existing screen lines. This avoids the lengthy delay which would occur if the editor attempted to keep the tail of the screen always up to date. The tail of the screen will be fixed up, and the missing lines will reappear, when you hit ESC.
-
-텍스트를 입력할 때는 여러 줄을 입력할 수도 있고 몇 글자만 입력할 수도 있다. 여러 줄의 텍스트를 입력하려면 입력 중간에 RETURN 키를 누르라. 그러면 텍스트를 위한 새 줄이 생성되며 계속 입력할 수 있다. 느리고 단순한 터미널에서는 편집기가 화면의 끝부분을 다시 그리는 것을 잠시 기다릴 수 있으며, 기존 화면 줄 위에 입력하도록 허용한다. 이는 편집기가 화면의 끝부분을 항상 최신 상태로 유지하려 할 때 발생할 수 있는 긴 지연을 피하기 위한 것이다. 화면의 끝부분은 ESC 키를 누르면 수정되며, 누락된 줄들이 다시 나타난다.
-
-  While you are inserting new text, you can use the characters you normally use at the system command level (usually ^H or #) to backspace over the last character which you typed, and the character which you use to kill input lines (usually @, ^X, or ^U) to erase the input you have typed on the current line (footnote 3-1). The character ^W will erase a whole word and leave you after the space after the previous word; it is useful for quickly backing up in an insert.
-
-새 텍스트를 삽입하는 동안에는 시스템 명령 수준에서 일반적으로 사용하는 문자(보통  또는 )를 사용해서 마지막으로 입력한 문자를 지울 수 있고, 입력 줄을 삭제하는 데 사용하는 문자(보통 , , 또는 )를 사용해서 현재 줄에 입력한 내용을 지울 수 있다(각주 3-1). 문자 는 전체 단어를 지우고 이전 단어 뒤의 공백 위치에 커서를 남긴다; 삽입 중 빠르게 되돌아갈 때 유용하다.
-
-  Notice that when you backspace during an insertion the characters you backspace over are not erased; the cursor moves backwards, and the characters remain on the display. This is often useful if you are planning to type in something similar. In any case the characters disappear when when you hit ESC; if you want to get rid of them immediately, hit an ESC and then a again.
-
-삽입 중에 백스페이스를 누르면, 백스페이스로 지운 문자들이 실제로 삭제되지 않고 커서만 뒤로 이동하며, 문자들은 화면에 그대로 남아 있다. 이는 비슷한 내용을 입력하려는 경우에 종종 유용하다. 어쨌든 ESC 키를 누르면 해당 문자들은 사라진다; 만약 즉시 지우고 싶다면 ESC를 누른 다음 다시 를 누르라.
-
-  Notice also that you can't erase characters which you didn't insert, and that you can't backspace around the end of a line. If you need to back up to the previous line to make a correction, just hit ESC and move the cursor back to the previous line. After making the correction you can return to where you were and use the insert or append command again.
-
-또한, 자신이 삽입하지 않은 문자는 지울 수 없으며, 줄의 끝을 넘어 백스페이스할 수 없다는 점도 알아두라. 이전 줄로 되돌아가서 수정하려면 ESC 키를 누르고 커서를 이전 줄로 이동하라. 수정을 마친 후에는 원래 위치로 돌아가서 삽입(i) 또는 추가(a) 명령을 다시 사용할 수 있다.
+또한, 삽입하지 않은 문자는 지울 수 없으며, 줄 끝을 넘어서 백스페이스 처리할 수 없다는 점도 알아두시기 바랍니다. 이전 줄로 되돌아가서 수정하려면 `ESC` 키를 누르고 커서를 이전 줄로 이동합니다. 수정을 마친 후에는 원래 위치로 돌아가서 삽입(`i`) 또는 추가(`a`) 명령을 다시 사용할 수 있습니다.
 
 
 
 ## Making small corrections
-  You can make small corrections in existing text quite easily. Find a single character which is wrong or just pick any character. Use the arrow keys to find the character, or get near the character with the word motion keys and then either backspace (hit the BS key or ^H or even just h) or SPACE (using the space bar) until the cursor is on the character which is wrong. If the character is not needed then hit the x key; this deletes the character from the file. It is analogous to the way you x out characters when you make mistakes on a typewriter (except it's not as messy).
+기존 텍스트에 작은 수정 작업은 쉽게 처리할 수 있습니다. 잘못된 문자 하나를 찾거나 아무 문자나 골라보시기 바랍니다. 화살표 키를 사용하거나 단어 이동 키를 사용해서 해당 문자 근처로 이동한 다음, 백스페이스(`BS` 키 또는 `^H`, 또는 그냥 `h`)나 스페이스바를 사용해서 커서를 잘못된 문자에 놓습니다. 해당 문자가 필요 없다면 `x` 키를 누릅니다. 이 키는 파일에서 해당 문자를 삭제합니다. 이것은 마치 타자기에서 실수한 문자를 `x` 키로 지우는 방식과 유사하지만 훨씬 깔끔합니다.
 
-기존 텍스트에서 작은 수정은 매우 쉽게 할 수 있다. 잘못된 문자 하나를 찾거나 아무 문자나 골라보라. 화살표 키를 사용하거나 단어 이동 키를 사용해서 해당 문자 근처로 이동한 다음, 백스페이스(BS 키 또는 , 또는 그냥 )나 스페이스 바()를 사용해서 커서를 잘못된 문자 위에 놓으라. 해당 문자가 필요 없다면  키를 누르라; 이 키는 파일에서 해당 문자를 삭제한다. 이는 타자기에서 실수한 문자를 x로 지우는 방식과 유사하지만 훨씬 깔끔하다.
+문자가 잘못된 경우, 올바른 문자로 교체하려면 `rc` 명령을 사용합니다. 여기서 `c` 는 교체할 올바른 문자입니다. 문자 하나를 여러 문자로 교체할 경우 `s` 명령을 사용해서 문자열로 대체할 수 있으며, 문자열 입력 후 `ESC` 키로 종료합니다. 잘못된 문자의 수가 적은 경우에는 `s` 앞에 교체할 문자 수를 지정할 수 있습니다. 또한, `x` 명령과 함께 숫자를 사용하면 해당 수만큼의 문자를 삭제할 수 있습니다.
 
-  If the character is incorrect, you can replace it with the correct character by giving the command rc, where c is replaced by the correct character. Finally if the character which is incorrect should be replaced by more than one character, give the command s which substitutes a string of characters, ending with ESC, for it. If there are a small number of characters which are wrong you can precede s with a count of the number of characters to be replaced. Counts are also useful with x to specify the number of characters to be deleted.
-
-문자가 잘못되었을 경우,  명령을 사용해서 올바른 문자로 교체할 수 있다. 여기서 는 올바른 문자로 대체된다. 마지막으로, 잘못된 문자가 하나 이상의 문자로 교체되어야 한다면  명령을 사용하라. 이 명령은 ESC로 끝나는 문자열을 해당 문자 대신 삽입한다. 잘못된 문자가 소수일 경우,  앞에 교체할 문자 수를 지정할 수 있다. 문자 수 지정은  명령에도 유용하며, 삭제할 문자 수를 지정할 수 있다.
 
 
 
 ## More corrections: operators
-  You already know almost enough to make changes at a higher level. All you need to know now is that the d key acts as a delete operator. Try the command dw to delete a word. Try hitting . a few times. Notice that this repeats the effect of the dw. The command . repeats the last command which made a change. You can remember it by analogy with an ellipsis '...'.
+당신은 이미 좀 더 높은 수준에서 변경 작업을 처리할 수 있을 만큼 충분히 알고 있습니다. 이제 알아야 할 것은 `d` 키가 삭제 연산자 역할을 처리한다는 것입니다. 단어를 삭제하려면 `dw`  명령을 사용합니. `.` (마침표)키를 몇 번 누릅니다. `dw` 명령 효과가 반복된다는 것을 확인할 수 있습니다. `.` 명령은 마지막으로 수행한 변경 명령을 반복 실행합니다. 이 명령은 생략 부호 '...' 와 비슷하다고 기억하면 됩니다.
 
-당신은 이미 더 높은 수준에서 변경을 수행할 수 있을 만큼 충분히 알고 있다. 이제 알아야 할 것은  키가 삭제 연산자로 작동한다는 것이다.  명령을 시도해서 단어를 삭제해보라.  키를 몇 번 눌러보라. 이것은 의 효과를 반복한다.  명령은 마지막으로 변경을 수행한 명령을 반복한다. 이는 생략 부호 '...'와 유사하다고 기억하면 된다.
+이제 `db` 명령을 시도합니다. 이 명령은 단어를 거꾸로 삭제하며 즉, 앞에 있는 단어를 삭제합니다. `dSPACE` 를 시도합니다. 이 명령은 한 문자를 삭제하며, 이것은 `x` 명령과 동일합니다.
 
-  Now try db. This deletes a word backwards, namely the preceding word. Try dSPACE. This deletes a single character, and is equivalent to the x command.
+또 하나의 매우 유용한 연산자는 `c` 즉, 변경(change) 명령입이다. `cw` 명령은 하나의 단어 텍스트를 변경합니다. 이 명령 뒤에 `ESC` 키로 끝나는 대체 텍스트를 입력합니다. 다른 단어로 바꿀 수 있는 단어를 찾아서 지금 시도해 보시기 바랍니다. 변경될 텍스트의 끝은 `$` 문자로 표시하므로, 새로운 내용을 입력할 동안 확인할 수 있습니다.
 
-이제 를 시도해보라. 이 명령은 단어를 거꾸로 삭제하며, 즉 앞에 있는 단어를 삭제한다. 를 시도해보라. 이 명령은 한 문자를 삭제하며, 이는  명령과 동일하다.
-
-  Another very useful operator is c or change. The command cw thus changes the text of a single word. You follow it by the replacement text ending with an ESC. Find a word which you can change to another, and try this now. Notice that the end of the text to be changed was marked with the character '$' so that you can see this as you are typing in the new material.
-
-또 하나의 매우 유용한 연산자는 , 즉 변경(change)이다.  명령은 하나의 단어 텍스트를 변경한다. 이 명령 뒤에 ESC로 끝나는 대체 텍스트를 입력한다. 다른 단어로 바꿀 수 있는 단어를 찾아 지금 시도해보라. 변경될 텍스트의 끝은  문자로 표시되므로, 새 내용을 입력하는 동안 이를 확인할 수 있다.
 
 
 ## Operating on lines
-  It is often the case that you want to operate on lines. Find a line which you want to delete, and type dd, the d operator twice. This will delete the line. If you are on a dumb terminal, the editor may just erase the line on the screen, replacing it with a line with only an @ on it. This line does not correspond to any line in your file, but only acts as a place holder. It helps to avoid a lengthy redraw of the rest of the screen which would be necessary to close up the hole created by the deletion on a terminal without a delete line capability.
+줄 단위로 작업할 경우가 자주 있습니다. 삭제하고 싶은 줄을 찾아서 즉 `d` 연산자를 `dd` 두 번 입력합니다. 이렇게 처리하면 해당 줄이 삭제됩니다. 더미 터미널(dumb terminal)을 사용할 경우, 편집기는 화면에서 해당 줄을 지우고 `@` 문자만 있는 줄로 대체할 수 있습니다다. 이 줄은 파일의 어떤 줄도 해당하지 않으며, 단지 자리 표시자 역할만 합니다. 이것은 삭제 작업으로 인해 생긴 빈 공간을 메우기 위해 화면 전체를 다시 그리는 데 걸리는 지연 시간을 피하는 데 도움이 됩니다.
 
-줄 단위로 작업하고 싶은 경우가 자주 있다. 삭제하고 싶은 줄을 찾아 , 즉  연산자를 두 번 입력하라. 이렇게 하면 해당 줄이 삭제된다. 단순 터미널(dumb terminal)을 사용하는 경우, 편집기가 화면에서 해당 줄을 지우고 만 있는 줄로 대체할 수 있다. 이 줄은 파일의 어떤 줄에도 해당하지 않으며, 단지 자리 표시자 역할만 한다. 이는 삭제로 인해 생긴 빈 공간을 메우기 위해 화면 전체를 다시 그리는 데 걸리는 긴 시간을 피하는 데 도움이 된다.
-
-  Try repeating the c operator twice; this will change a whole line, erasing its previous contents and replacing them with text you type up to an ESC (footnote 3-2).
-
- 연산자를 두 번 반복해보라; 이렇게 하면 한 줄 전체를 변경하게 되며, 기존 내용을 지우고 ESC를 누를 때까지 입력한 텍스트로 대체된다(각주 3-2).
+`c` 연산자를 두 번 반복합니다. 이렇게 처리하면 한 줄 전체를 변경하며, 기존 내용을 지우고 `ESC` 키를 누를 때까지 입력한 텍스트로 대체됩니다. (각주 [^3-2])
  
-  You can delete or change more than one line by preceding the dd or cc with a count, i.e. 5dd deletes 5 lines. You can also give a command like dL to delete all the lines up to and including the last line on the screen, or d3L to delete through the third from the bottom line. Try some commands like this now (footnote 3-3). Notice that the editor lets you know when you change a large number of lines so that you can see the extent of the change. The editor will also always tell you when a change you make affects text which you cannot see.
+[^3-2]: `S` (대문자)명령은 `cc` 명령의 편리한 동의어로, `s` 명령과 유사성에서 나온 것입니다. `S` 명령을 줄 단위 대체(substitute)로, `s` 명령을 문자 단위 대체로 생각하면 됩니다.
 
- 또는  앞에 숫자를 붙이면 여러 줄을 삭제하거나 변경할 수 있다. 예를 들어 는 5줄을 삭제한다.  같은 명령을 사용하면 화면의 마지막 줄까지 모든 줄을 삭제할 수 있고, 은 아래에서 세 번째 줄까지 삭제한다. 지금 이런 명령들을 몇 가지 시도해보라(각주 3-3). 편집기는 많은 줄을 변경했을 때 그 범위를 알려주므로 변경된 정도를 확인할 수 있다. 또한, 편집기는 보이지 않는 텍스트에 영향을 주는 변경이 있을 때 항상 이를 알려준다.
+또는, `cc` 명령 앞에 숫자를 붙이면 여러 줄을 삭제하거나 변경할 수 있습니다. 예를 들어, `5dd` 는 5줄을 삭제합니다. `dL` 같은 명령을 사용하면 화면 마지막 줄까지의 모든 줄을 삭제할 수 있고, `d3L` 은 화면 아래에서 세 번째 줄까지 삭제합니다. 지금 이 명령들로 몇 가지 시도를 해보시기 바랍니다. (각주 [^3-3]) 
+ 
+[^3-3]: 여기서 미묘한 점은 `d` 뒤에 `/` 검색 명령을 사용할 경우입니다. 이것은 보통 현재 위치부터 일치 지점까지의 문자를 삭제합니다. 만약, 두 지점을 포함한 전체 줄을 삭제하려면, 패턴을 `/pat/+0` 처럼 패턴 주소로 지정하면 됩니다.
+ 
+편집기는 많은 줄을 변경할 때, 그 범위를 알려주므로 변경될 정도를 확인할 수 있습니다. 또한, 편집기는 보이지 않는 텍스트에 영향을 주는 변경이 있을 때 항상 이를 알려줍니다.
  
  
 ## Undoing
-  Now suppose that the last change which you made was incorrect; you could use the insert, delete and append commands to put the correct material back. However, since it is often the case that we regret a change or make a change incorrectly, the editor provides a u (undo) command to reverse the last change which you made. Try this a few times, and give it twice in a row to notice that an u also undoes a u.
+이제 마지막으로, 수행한 변경 작업이 뭔가 잘못되었다고 가정합니다. 삽입, 삭제, 추가 명령을 사용해서 올바른 내용을 다시 입력할 수도 있습니다. 하지만, 변경 작업을 후회하거나 잘못 변경할 경우도 자주 있기 때문에, 편집기는 마지막으로 수행한 변경 작업을 되돌리는 `u` (undo)명령을 제공합니다. 이 명령을 몇 번 시도해보시기 바랍니다. 연속으로 두 번 입력하면 `u` 명령도 `u` 명령 자체를 되돌릴 수 있다는 것을 알 수 있습니다.
 
-이제 마지막으로 수행한 변경이 잘못되었다고 가정해보자. 삽입, 삭제, 추가 명령을 사용해서 올바른 내용을 다시 입력할 수도 있다. 하지만 변경을 후회하거나 잘못 변경하는 경우가 자주 있기 때문에, 편집기는 마지막으로 수행한 변경을 되돌리는 (undo) 명령을 제공한다. 이 명령을 몇 번 시도해보라. 연속으로 두 번 입력해보면  명령도  자체를 되돌릴 수 있다는 것을 알 수 있다.
+`u` 명령은 단 하나의 변경 작업만 되돌릴 수 있습니다. 만약, 한 줄에 여러 번 변경을 가한 후, 원래 상태로 되돌리고 싶어질 수 있습니다. `U` (대문자)명령은 현재 줄을 변경하기 시작하기 이전의 상태로 복원한다.
 
-  The undo command lets you reverse only a single change. After you make a number of changes to a line, you may decide that you would rather have the original state of the line back. The U command restores the current line to the state before you started changing it.
-
- 명령은 단 하나의 변경만 되돌릴 수 있다. 한 줄에 여러 변경을 가한 후, 원래 상태로 되돌리고 싶어질 수도 있다.  명령은 현재 줄을 변경하기 시작하기 전의 상태로 복원한다.
- 
-  You can recover text which you delete, even if undo will not bring it back; see the section on recovering lost text below.
-
-삭제한 텍스트는  명령으로 복구되지 않더라도 되살릴 수 있다; 아래의 '삭제된 텍스트 복구' 섹션을 참조하라.
+삭제한 텍스트는 delete 명령으로 복구되지 않더라도 되살릴 수 있습니다. 아래의 '삭제한 텍스트 복구' 섹션을 참조하시기 바랍니다.
 
 
 ## Summary
-| Key    | Function Description                                      |
-|--------|-----------------------------------------------------------|
-| SPACE  | advance the cursor one position                           |
-| ^H     | backspace the cursor                                      |
-| ^W     | erase a word during an insert                             |
-| erase  | your erase (usually ^H or #), erases a character during an insert |
-| kill   | your kill (usually @, ^X, or ^U), kills the insert on this line |
-| .      | repeats the changing command                              |
-| O      | opens and inputs new lines, above the current             |
-| U      | undoes the changes you made to the current line           |
-| a      | appends text after the cursor                             |
-| c      | changes the object you specify to the following text      |
-| d      | deletes the object you specify                            |
-| i      | inserts text before the cursor                            |
-| o      | opens and inputs new lines, below the current             |
-| u      | undoes the last change                                    |
-
-
-
 
 | 키(Key) | 기능 설명(직역) |
 |---------|----------------|
-| SPACE | 커서를 한 위치 앞으로 이동 |
+| SPACE | 커서를 한 칸 앞으로 이동 |
 | ^H | 커서를 백스페이스 |
 | ^W | 입력 중에 단어를 지움 |
-| erase | 사용자의 erase(보통 ^H 또는 #), 입력 중에 문자를 지움 |
-| kill | 사용자의 kill(보통 @, ^X, 또는 ^U), 현재 줄에서 입력을 삭제 |
-| . | 변경 명령을 반복 |
-| O | 현재 줄 위에 새 줄을 열고 입력 |
-| U | 현재 줄에 가한 변경을 취소 |
-| a | 커서 뒤에 텍스트를 추가 |
-| c | 지정한 객체를 다음 텍스트로 변경 |
+| erase | 사용자의 erase(보통 `^H` 또는 `#`), 입력 중에 문자를 지움 |
+| kill | 사용자의 kill(보통 `@`, `^X`, 또는 `^U`), 현재 줄에서 입력을 삭제 |
+| . | 변경 명령을 반복 실행 |
+| O | 현재 줄 위에 새로운 줄을 만들고 입력 |
+| U | 현재 줄에 가한 모든 변경 작업 취소 |
+| a | 커서 뒤에 텍스트 추가 |
+| c | 지정한 객체를 입력 텍스트로 변경 |
 | d | 지정한 객체를 삭제 |
-| i | 커서 앞에 텍스트를 삽입 |
-| o | 현재 줄 아래에 새 줄을 열고 입력 |
-| u | 마지막 변경을 취소 |
+| i | 커서 앞에 텍스트 삽입 |
+| o | 현재 줄 아래에 새로운 줄을 만들고 입력 |
+| u | 마지막 변경 작업 취소 |
 
 
-
-
+---
 
 # Moving about; rearranging and duplicating text
 ## Low level character motions
-  Now move the cursor to a line where there is a punctuation or a bracketing character such as a parenthesis or a comma or period. Try the command fx where x is this character. This command finds the next x character to the right of the cursor in the current line. Try then hitting a ;, which finds the next instance of the same character. By using the f command and then a sequence of ;'s you can often get to a particular place in a line much faster than with a sequence of word motions or SPACEs. There is also a F command, which is like f, but searches backward. The ; command repeats F also.
+이제 괄호나 쉼표, 마침표 같은 구두점이나 괄호 문자가 있는 줄로 커서를 이동합니다. `fx` 명령을 시도합니다. 여기서 `x` 는 해당 문자이며, 이 명령은 현재 줄에서 커서 오른쪽에 있는 다음 `x` 문자를 찾습니다. 그런 다음, `;` 키를 누릅니다. 이 키는 동일한 문자의 다음 번 인스턴스를 찾습니다. `f` 명령과 이어지는 여러 번의 `;` 를 사용하면 단어 이동이나 스페이스 키를 여러 번 사용하는 것보다 줄의 특정 위치로 훨씬 빠르게 이동할 수 있습니다. `F` (대문자)명령도 있으며, 이것은 `f` 와 같지만 반대로 검색합니다. `;` 명령은 `F` 명령도 반복합니다.
 
-이제 괄호나 쉼표, 마침표 같은 구두점이나 괄호 문자가 있는 줄로 커서를 이동하라.  명령을 시도해보라. 여기서 는 해당 문자이며, 이 명령은 현재 줄에서 커서 오른쪽에 있는 다음  문자를 찾는다. 그런 다음  키를 눌러보라. 이 키는 동일한 문자의 다음 인스턴스를 찾는다.  명령과 이어지는 여러 번의 를 사용하면 단어 이동이나 스페이스 키를 여러 번 사용하는 것보다 줄의 특정 위치로 훨씬 빠르게 이동할 수 있다.  명령도 있으며, 이는 와 같지만 반대로 검색한다.  명령은 도 반복한다.
+줄의 텍스트를 다룰 때는 특정 문자까지(하지만, 그 문자는 포함하지 않고) 처리하는 것이 바람직한 경우가 많습니다. `dfx` 명령을 어떤 문자 `x` 에 시도합니다. 이 명령은 `x` 문자까지 삭제하며, `x` 문자도 함께 삭제됩니다. `u` 명령으로 이를 되돌린 다음 `dtx` 명령을 시도합니다. 여기서 `t` 는 '~까지(to)' 를 의미하며, `x` 문자 직전까지 삭제하고 `x` 는 남겨둡니다. `T` (대문자)명령은 `t` 명령의 반대 방향으로 작동합니다.
 
-  When you are operating on the text in a line it is often desirable to deal with the characters up to, but not including, the first instance of a character. Try dfx for some x now and notice that the x character is deleted. Undo this with u and then try dtx; the t here stands for to, i.e. delete up to the next x, but not the x. The command T is the reverse of t.
+한 줄의 텍스트를 다룰 때, `↑` (`^`)는 커서를 해당 줄의 첫 번째 공백이 아닌 위치로 이동시키고, `$` 는 줄의 끝으로 이동시킵니다. 따라서, `$a` 는 현재 줄의 끝에 새로운 텍스트를 추가합니다.
 
-줄의 텍스트를 다룰 때는 특정 문자까지(하지만 그 문자는 포함하지 않고) 처리하는 것이 바람직한 경우가 많다.  명령을 어떤 문자 에 대해 시도해보라. 이 명령은  문자까지 삭제하며,  문자도 함께 삭제된다.  명령으로 이를 되돌린 다음 를 시도해보라. 여기서 는 '까지(to)'를 의미하며,  문자 직전까지 삭제하고 는 남겨둔다.  명령은 의 반대 방향으로 작동한다.
+파일에는 탭(`^I`) 문자가 포함되어 있을 수 있습니다. 이 문자들은 탭 정지 위치까지 확장되는 여러 개의 공백으로 표시되며, 탭 정지는 매 8번째 위치마다 있습니다. (각주 [^4-1]) 
 
-  When working with the text of a single line, an ↑ moves the cursor to the first non-white position on the line, and a $ moves it to the end of the line. Thus $a will append new text at the end of the current line.
+[^4-1]: 이것은 `:se ts=xCR` 명령으로 설정할 수 있으며, 예를 들어 `x` 를 4 로 지정하면 매 4열마다 탭 정지가 설정됩니다. 이 설정은 편집기에서 화면 표시 방식에 영향을 줍니다.
 
-한 줄의 텍스트를 다룰 때, 는 커서를 해당 줄의 첫 번째 공백이 아닌 위치로 이동시키고, 는 줄의 끝으로 이동시킨다. 따라서 는 현재 줄의 끝에 새 텍스트를 추가한다.
+커서가 탭에 위치할 때는 해당 탭을 나타내는 여러 공백 중 마지막 공백 위에 놓입니다. 커서를 탭 위에서 앞뒤로 움직여보며 이 동작 방식을 이해하시기 바랍니다.
 
-  Your file may have tab (^I) characters in it. These characters are represented as a number of spaces expanding to a tab stop, where tab stops are every 8 positions (footnote 4-1). When the cursor is at a tab, it sits on the last of the several spaces which represent that tab. Try moving the cursor back and forth over tabs so you understand how this works.
+드물지만 파일에 인쇄되지 않는(non-printing) 문자가 포함될 수 있습니다. 이런 문자들은 이 문서에서 표현한 방식과 동일하게 표시하며, 첫 번째 문자가 `^` 인 두 문자 코드로 나타납니다. 화면에 인쇄되지 않는 문자는 서로 인접한 문자처럼 보이지만, 해당 문자에서 스페이스 또는 백스페이스키를 누르면 이 두 문자가 탭 문자를 나타내는 공백처럼 하나의 문자라는 것을 알 수 있습니다. 
 
-파일에는 탭() 문자가 포함되어 있을 수 있다. 이 문자들은 탭 정지 위치까지 확장되는 여러 개의 공백으로 표시되며, 탭 정지는 매 8번째 위치마다 있다(각주 4-1). 커서가 탭에 위치할 때는 해당 탭을 나타내는 여러 공백 중 마지막 공백 위에 놓인다. 커서를 탭 위에서 앞뒤로 움직여보며 이 동작 방식을 이해해보라.
+> [!NOTE]
+> 참고: 가장 상위 비트가 설정된 인쇄되지 않는 문자는 편집기의 최신 버전에서는 `\nnn` 형식으로 표시되며, 여기서 nnn 은 해당 문자의 8진수 코드입니다.
 
-  On rare occasions, your file may have nonprinting characters in it. These characters are displayed in the same way they are represented in this document, that is with a two character code, the first character of which is '^'. On the screen non-printing characters resemble a '^' character adjacent to another, but spacing or backspacing over the character will reveal that the two characters are, like the spaces representing a tab character, a single character. Note: Non-printing characters with their most significant bit set show as '\nnn' in recent versions of the editor, where nnn is the octal code of the character.
+편집기는 파일에 제어 문자를 삽입할 때, 문자 종류와 beautify 옵션 설정에 따라 이런 문자를 무시할 수 있습니다. 제어 문자를 파일에 삽입하려면 삽입을 시작한 후, 해당 제어 문자 앞에 `^V` 를 입력합니다. `^V` 는 다음 문자를 인용(quote)해서 해당 문자가 파일에 직접 삽입되도록 처리합니다.
 
-드물게 파일에 인쇄되지 않는(nonprinting) 문자가 포함되어 있을 수 있다. 이러한 문자들은 이 문서에서 표현된 방식과 동일하게 표시되며, 첫 번째 문자가 인 두 문자 코드로 나타난다. 화면에서는 인쇄되지 않는 문자가 서로 인접한  문자처럼 보이지만, 해당 문자 위에서 스페이스 또는 백스페이스를 해보면 이 두 문자가 탭 문자를 나타내는 공백처럼 하나의 문자라는 것을 알 수 있다. 참고: 가장 상위 비트가 설정된 인쇄되지 않는 문자는 편집기의 최신 버전에서는  형식으로 표시되며, 여기서 은 해당 문자의 8진수 코드이다.
-  
-  The editor sometimes discards control characters, depending on the character and the setting of the beautify option, if you attempt to insert them in your file. You can get a control character in the file by beginning an insert and then typing a ^V before the control character. The ^V quotes the following character, causing it to be inserted directly into the file.   
-
-편집기는 파일에 제어 문자를 삽입하려고 할 때, 문자 종류와 beautify 옵션 설정에 따라 이러한 문자를 무시할 수 있다. 제어 문자를 파일에 삽입하려면 삽입을 시작한 후 해당 제어 문자 앞에 를 입력하라. 는 다음 문자를 인용(quote)해서 해당 문자가 파일에 직접 삽입되도록 한다.
-
+ZZZZ
 
 ## Higher level text objects
   In working with a document it is often advantageous to work in terms of sentences, paragraphs, and sections. The operations ( and ) move to the beginning of the previous and next sentences respectively. Thus the command d) will delete the rest of the current sentence; likewise d( will delete the previous sentence if you are at the beginning of the current sentence, or the current sentence up to where you are if you are not at the beginning of the current sentence.
