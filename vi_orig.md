@@ -222,6 +222,7 @@ name을 당신이 방금 만든 복사 파일의 이름으로 바꾸어라. 화�
 
 편집기 명령어 집합은 당신이 사용하는 터미널과는 독립적이다. 대부분의 커서 위치 지정 키가 있는 터미널에서는, 이러한 키들이 편집기 내에서도 작동한다. 만약 커서 위치 지정 키가 없거나, 있다고 하더라도, 당신은 `h`, `j`, `k`, `l` 키를 커서 위치 지정 키로 사용할 수 있다 (이 키들은 adm3a에서 화살표로 표시되어 있다) (각주 [^1-2]).
 
+[^1-2]:나중에 보겠지만, `h`는 왼쪽으로 이동하며(백스페이스인 control-h처럼), `j`는 아래로(같은 열에서), `k`는 위로(같은 열에서), `l`은 오른쪽으로 이동합니다.
 
 
   (Particular note for the HP2621: on this terminal the function keys must be shifted (ick) to send to the machine, otherwise they only act locally. Unshifted use will leave the cursor positioned incorrectly.)
