@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini Editor</title>
+  <style>
+    :root {
+      --console-h: 200px;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
+      overflow: hidden;
+      font-family: "Cascadia Mono", monospace;
+      background: #1e1e1e;
+    }
+    #editor {
+      height: calc(100vh - var(--console-h));
+      width: 100vw;
+      transition: height 0.2s ease;
+    }
+    #console {
+      height: var(--console-h);
+      width: 100vw;
+      background: #111;
+      color: #0f0;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #333;
+      overflow: hidden;
+      transition: height 0.2s ease;
+    }
+    #console-header {
+      background: #222;
+      padding: 4px 8px;
+      font-size: 12px;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    #toggle-btn { font-weight: 600; }
+    .hint { color: #999; margin-left: auto; font-size: 11px; }
+    #console-output {
+      flex: 1;
+      padding: 6px;
+      overflow-y: auto;
+      font-size: 13px;
+    }
+    #console-input {
+      height: 80px;
+      border-top: 1px solid #333;
+    }
+  </style>
+  <!-- Monaco Editor CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+</head>
+<body>
+  <div id="editor"></div>
+  <div id="console">
+    <div id="console-header">
+      <span id="toggle-btn">▼ Console</span>
+      <span class="hint">클릭해서 접기/펼치기 • 📂Ctrl+O 열기 • 💾Ctrl+S 저장 • ↩️Ctrl+Z 되돌리기 • ↪️Ctrl+Shift+Z 재실행</span>
+    </div>
+    <div id="console-output"></div>
+    <div id="console-input"></div>
+  </div>
+
+  <input type="file" id="fileInput" style="display:none" />
+
+  <script>
+    require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs" } });
+
+    let editor, jsConsole;
+    let currentFileName = "untitled.txt";
+
+    require(["vs/editor/editor.main"], function () {
+      // 메인 에디터
+      editor = monaco.editor.create(document.getElementById("editor"), {
+        value: `console.log("Hello World");`,
+        language: "javascript",
+        theme: "vs-dark",
+        fontFamily: "Cascadia Mono, monospace",
+        fontSize: 14,
+        wordWrap: "on",
+        folding: true,
+        minimap: { enabled: true, side: "right" },
+        lineNumbers: "on",
+        cursorBlinking: "smooth",
+      });
+
+      // 콘솔 입력용 에디터
+      jsConsole = monaco.editor.create(document.getElementById("console-input"), {
+        value: "// 여기에 JS 코드 입력 후 Enter (Shift+Enter = 줄바꿈)",
+        language: "javascript",
+        theme: "vs-dark",
+        fontSize: 13,
+        minimap: { enabled: false },
+        lineNumbers: "off",
+        automaticLayout: true,
+      });
+
+      // 메인 에디터 크기 자동 조정
+      const ro = new ResizeObserver(() => editor.layout());
+      ro.observe(document.getElementById("editor"));
+      requestAnimationFrame(() => editor.layout());
+
+      // 콘솔 입력 실행 (Enter 실행, Shift+Enter 줄바꿈)
+      jsConsole.onKeyDown(e => {
+        if (e.keyCode === monaco.KeyCode.Enter) {
+          if (e.shiftKey) {
+            // 줄바꿈 허용
+            return;
+          } else {
+            const code = jsConsole.getValue();
+            jsConsole.setValue("");
+            runCode(code);
+            e.preventDefault(); // 줄바꿈 방지
+          }
+        }
+      });
+    });
+
+    function log(msg) {
+      const out = document.getElementById("console-output");
+      out.innerHTML += msg + "<br>";
+      out.scrollTop = out.scrollHeight;
+    }
+
+    // console.log 가로채기
+    const origLog = console.log;
+    console.log = (...args) => {
+      origLog(...args);
+      log(args.join(" "));
+    };
+
+    // Ctrl+O / Ctrl+S
+    const fileInput = document.getElementById("fileInput");
+    window.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "o") {
+        e.preventDefault();
+        fileInput.click();
+      }
+      if (e.ctrlKey && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        saveFile();
+      }
+    });
+
+    // 파일 열기
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        editor.setValue(reader.result);
+        currentFileName = file.name;
+        const ext = file.name.split(".").pop().toLowerCase();
+        let lang = "plaintext";
+        if (ext === "js") lang = "javascript";
+        else if (ext === "ts") lang = "typescript";
+        else if (ext === "md" || ext === "markdown") lang = "markdown";
+        else if (ext === "cs") lang = "csharp";
+        else if (ext === "html" || ext === "htm") lang = "html";
+        else if (ext === "css") lang = "css";
+        else if (ext === "json") lang = "json";
+        else if (ext === "xml") lang = "xml";
+        monaco.editor.setModelLanguage(editor.getModel(), lang);
+        log(`파일 로드 완료: ${file.name} (언어: ${lang})`);
+      };
+      reader.readAsText(file);
+    });
+
+    // 파일 저장
+    function saveFile() {
+      const text = editor.getValue();
+      const blob = new Blob([text], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = currentFileName || "untitled.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+      log(`파일 저장 완료: ${a.download}`);
+    }
+
+    // 코드 실행 / 정규식 치환
+    function runCode(code) {
+      try {
+        const rangeMatch = code.match(/^(\d+)(?:,(\d+))?\s+\/(.+)\/(\w*)\s*,\s*["'](.+)["']$/);
+        if (rangeMatch) {
+          const [, startStr, endStr, pattern, flags, replacement] = rangeMatch;
+          const start = parseInt(startStr, 10);
+          const end = endStr ? parseInt(endStr, 10) : start;
+          const regex = new RegExp(pattern, flags);
+          const model = editor.getModel();
+          const edits = [];
+          for (let i = start - 1; i < end && i < model.getLineCount(); i++) {
+            const lineContent = model.getLineContent(i + 1);
+            const newContent = lineContent.replace(regex, replacement);
+            if (newContent !== lineContent) {
+              edits.push({
+                range: new monaco.Range(i + 1, 1, i + 1, lineContent.length + 1),
+                text: newContent,
+                forceMoveMarkers: true
+              });
+            }
+          }
+          if (edits.length > 0) {
+            editor.executeEdits("console-replace", edits);
+            log(`줄 ${start}${endStr ? "~" + end : ""} 치환 완료: ${regex} → "${replacement}"`);
+          }
+          return;
+        }
+        const globalMatch = code.match(/^\/(.+)\/(\w*)\s*,\s*["'](.+)["']$/);
+        if (globalMatch) {
+          const [, pattern, flags, replacement] = globalMatch;
+          const regex = new RegExp(pattern, flags);
+          const model = editor.getModel();
+          const fullText = model.getValue();
+          const newText = fullText.replace(regex, replacement);
+          if (newText !== fullText) {
+            editor.executeEdits("console-replace", [
+              { range: model.getFullModelRange(), text: newText, forceMoveMarkers: true }
+            ]);
+            log(`전역 치환 완료: ${regex} → "${replacement}"`);
+          }
+          return;
+        }
+        const result = eval(code);
+        if (result !== undefined) log(String(result));
+      } catch (err) {
+        log("Error: " + err.message);
+      }
+    }
+
+    // 콘솔 토글 (CSS 변수로 높이 제어)
+    const rootStyle = document.documentElement.style;
+    const toggleBtn = document.getElementById("toggle-btn");
+    const header = document.getElementById("console-header");
+
+    function setConsoleHeight(px) {
+      rootStyle.setProperty("--console-h", px);
+      requestAnimationFrame(() => editor && editor.layout());
+    }
+
+    header.addEventListener("click", () => {
+      const collapsed = toggleBtn.textContent.startsWith("▼") ? false : true;
+      if (!collapsed) {
+        setConsoleHeight("25px");
+        toggleBtn.textContent = "▶ Console";
+      } else {
+        setConsoleHeight("200px");
+        toggleBtn.textContent = "▼ Console";
+      }
+    });
+  </script>
+</body>
+</html>
