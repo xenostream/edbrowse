@@ -196,7 +196,7 @@ we don't take action soon!
 
 ![](./images/img_20260114_154733.jpg)
 
-> [!INFO]
+> [!NOTE]
 > So far, we've passed content blocks (markup in square brackets) and strings (text in double quotes) to our functions. Both seem to contain text. What's the difference?
 
 지금까지 함수에 콘텐츠 블록(대괄호 안의 마크업)과 문자열(따옴표 안의 텍스트)을 전달했습니다. 둘 다 텍스트를 포함하는 것처럼 보입니다. 차이점은 무엇일까요?
@@ -407,8 +407,8 @@ water).
 
 ![](./images/img_20260115_051616.jpg)
 
-> [!INFO] Want to know in more technical terms what is happening here?
-> [!INFO] 여기서 무슨 일이 일어나는지 좀 더 기술적인 용어로 알고 싶으신가요?
+> [!NOTE] Want to know in more technical terms what is happening here?
+> [!NOTE] 여기서 무슨 일이 일어나는지 좀 더 기술적인 용어로 알고 싶으신가요?
 >
 > Set rules can be conceptualized as setting default values for some of the parameters of a function for all future uses of that function.
 > 설정 규칙은 함수의 일부 매개변수에 대해 향후 해당 함수를 사용할 때마다 적용될 기본값을 설정하는 것으로 개념화될 수 있습니다.
@@ -545,8 +545,8 @@ This example also uses the lorem function to generate some placeholder text. Thi
 
 이 예제도 `lorem` 함수를 사용해서 일부 자리 표시자 텍스트를 생성합니다. 이 함수는 숫자를 인수로 받아 해당 수만큼의 Lorem Ipsum 텍스트를 생성합니다.
 
-> [!INFO] Did you wonder why the headings and text set rules apply to all text and headings, even if they are not produced with the respective functions?
-> [!INFO] 제목과 본문 설정 규칙이 해당 기능으로 생성되지 않은 텍스트와 제목에도 적용되는 이유가 궁금하셨나요?
+> [!NOTE] Did you wonder why the headings and text set rules apply to all text and headings, even if they are not produced with the respective functions?
+> [!NOTE] 제목과 본문 설정 규칙이 해당 기능으로 생성되지 않은 텍스트와 제목에도 적용되는 이유가 궁금하셨나요?
 >
 > Typst internally calls the heading function every time you write = Conclusion. In fact, the function call #heading[Conclusion] is equivalent to the heading markup above. Other markup elements work similarly, they are only syntax sugar for the corresponding function calls.
 > Typst는 사용자가 `= Conclusion` 을 작성할 때마다 내부적으로 `heading` 함수를 호출합니다. 실제로 함수 호출 `#heading[Conclusion]` 은 위의 `heading` 마크업과 동일합니다. 다른 마크업 요소들도 유사하게 작동하며 해당 함수 호출을 위한 구문 설탕에 불과합니다.
@@ -707,8 +707,8 @@ You can see that the title is already boldfaced and has some space around it. Ho
 
 제목이 이미 굵게 표시되고 주변에 여백이 있음을 확인할 수 있습니다. 그러나 왼쪽 정렬되어 있으며 정확히 17pt 크기도 아닙니다. 따라서 외관을 조정해야 합니다. 제목 함수에는 설정할 수 있는 글꼴이나 텍스트 크기 관련 인수가 없습니다. 대신 이러한 속성은 텍스트 및 정렬 함수에서 정의됩니다.
 
-> [!INFO] What is the difference between what the title function inserted and the headings we produced with equals signs?
-> [!INFO] 제목 함수가 삽입한 내용과 등호(`=`)로 생성한 제목의 차이점은 무엇인가요?
+> [!NOTE] What is the difference between what the title function inserted and the headings we produced with equals signs?
+> [!NOTE] 제목 함수가 삽입한 내용과 등호(`=`)로 생성한 제목의 차이점은 무엇인가요?
 >
 > Headings, even first-level headings, can appear multiple times in your document whereas a title only appears once, usually at the beginning. Differentiating between the two helps Typst make your document accessible for users of Assistive Technology such as screen readers.
 > 제목은 문서 내에서 여러 번 나타날 수 있지만(1단계 제목도 포함), 제목(title)은 일반적으로 문서 시작 부분에 한 번만 나타납니다. 이 둘을 구분하면 Typst가 스크린 리더 같은 보조 기술 사용자에게 문서를 접근 가능하게 만드는 데 도움이 됩니다.
@@ -868,8 +868,8 @@ Next, take a look at the header. Instead of the title in square parentheses, we 
 
 다음으로 헤더를 살펴보겠습니다. 괄호 안의 제목 대신 컨텍스트 키워드를 사용해서 문서 제목에 접근했습니다. 이로 인해 위에서 설정한 내용이 정확히 삽입되었습니다. 컨텍스트의 역할은 속성 접근에만 국한되지 않습니다: 이를 통해 문서에 특정 요소가 존재하는지 확인하거나 다른 요소의 물리적인 크기를 측정하는 등 다양한 작업을 수행할 수 있습니다. 컨텍스트를 활용하면 최종 사용자의 선호도에 반응하는 강력한 템플릿을 구축할 수 있습니다.
 
-> [!INFO] Why is the context keyword required to access element properties?
-> [!INFO] 왜 요소 속성에 접근하려면 컨텍스트 키워드가 필요할까요?
+> [!NOTE] Why is the context keyword required to access element properties?
+> [!NOTE] 왜 요소 속성에 접근하려면 컨텍스트 키워드가 필요할까요?
 
 
 ## Adding columns and headings
