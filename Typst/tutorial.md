@@ -3,7 +3,7 @@ Typst 튜토리얼에 오신 것을 환영합니다! 이 튜토리얼은 Typst�
 
 The best way to start is to sign up to the Typst app for free and follow along with the steps below. The app gives you instant preview, syntax highlighting and helpful autocompletions. Alternatively, you can follow along in your local text editor with the open-source CLI.
 
-시작하기 가장 좋은 방법은 [Typst]("https://typst.app") 앱에 무료로 가입하고 아래의 단계를 따라가는 것입니다. 이 앱은 실시간 미리보기, 구문 강조 표시 및 유용한 자동 완성 기능을 제공합니다. 또는 오픈소스 CLI를 사용하여 로컬 텍스트 편집기에서 따라할 수도 있습니다.
+시작하기 가장 좋은 방법은 [Typst](https://typst.app) 앱에 무료로 가입하고 아래의 단계를 따라가는 것입니다. 이 앱은 실시간 미리보기, 구문 강조 표시 및 유용한 자동 완성 기능을 제공합니다. 또는 오픈소스 CLI를 사용하여 로컬 텍스트 편집기에서 따라할 수도 있습니다.
 
 ## When to use Typst
 Before we get started, let's check what Typst is and when to use it. Typst is a markup language for typesetting documents. It is designed to be easy to learn, fast, and versatile. Typst takes text files with markup in them and outputs PDFs.
