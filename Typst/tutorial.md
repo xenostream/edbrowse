@@ -1,41 +1,21 @@
 # Tutorial
 Typst 튜토리얼에 오신 것을 환영합니다! 이 튜토리얼은 Typst에서 문서를 작성하고 서식을 지정하는 방법에 대해 배우게 됩니다. 일상적인 작업부터 시작해서 점차 고급 기능을 소개합니다. 본 튜토리얼은 Typst, 다른 마크업 언어 또는 프로그래밍에 대한 사전 지식을 가정하지 않습니다. 단지 텍스트 파일 편집 방법은 알고 있다고 가정합니다.
 
-The best way to start is to sign up to the Typst app for free and follow along with the steps below. The app gives you instant preview, syntax highlighting and helpful autocompletions. Alternatively, you can follow along in your local text editor with the open-source CLI.
-
-시작하기 가장 좋은 방법은 [Typst](https://typst.app) 앱에 무료로 가입하고 아래의 단계를 따라가는 것입니다. 이 앱은 실시간 미리보기, 구문 강조 표시 및 유용한 자동 완성 기능을 제공합니다. 또는 오픈소스 CLI를 사용하여 로컬 텍스트 편집기에서 따라할 수도 있습니다.
+시작하기 가장 좋은 방법은 [Typst](https://typst.app) 앱에 무료 가입한 후 아래의 단계를 따라가는 것입니다. Typst 앱은 실시간 미리보기, 구문 강조 표시 및 유용한 자동 완성 기능을 제공합니다. 또는 오픈소스 CLI를 사용해서 로컬 텍스트 편집기에서 따라할 수도 있습니다.
 
 ## When to use Typst
-Before we get started, let's check what Typst is and when to use it. Typst is a markup language for typesetting documents. It is designed to be easy to learn, fast, and versatile. Typst takes text files with markup in them and outputs PDFs.
+시작하기 전에 Typst가 무엇이며 언제 사용하는지 살펴보겠습니다. **Typst는 문서 조판을 위한 마크업 언어** 입니다. 또한 배우기 쉽고 빠르며 다용도로 설계되었습니다. Typst는 마크업이 포함된 텍스트 파일을 입력 받아 PDF 파일로 출력합니다.
 
-시작하기 전에 Typst가 무엇이며 언제 사용하는지 살펴보겠습니다. Typst는 문서 조판을 위한 마크업 언어입니다. 배우기 쉽고 빠르며 다용도로 설계되었습니다. Typst는 마크업이 포함된 텍스트 파일을 입력 받아 PDF로 출력합니다.
+Typst는 에세이, 기사, 학술 논문, 책, 보고서, 숙제 과제 등 장문의 텍스트를 작성하는 데 적합한 선택입니다. 또한 수학, 물리학, 공학 분야 논문처럼 수학 기호가 포함된 문서도 매우 잘 어울립니다. 마지막으로 강력한 스타일링 및 자동화 기능 덕분에 책이나 시리즈처럼 공통된 스타일을 공유하는 문서 집합에 탁월한 선택입니다.
 
-Typst is a good choice for writing any long form text such as essays, articles, scientific papers, books, reports, and homework assignments. Moreover, Typst is a great fit for any documents containing mathematical notation, such as papers in the math, physics, and engineering fields. Finally, due to its strong styling and automation features, it is an excellent choice for any set of documents that share a common style, such as a book series.
 
-Typst는 에세이, 기사, 학술 논문, 책, 보고서, 숙제 과제 등 장문의 텍스트를 작성하는 데 적합한 선택입니다. 또한 수학, 물리학, 공학 분야의 논문처럼 수학 기호가 포함된 문서에도 매우 잘 어울립니다. 마지막으로 강력한 스타일링 및 자동화 기능 덕분에 책 시리즈처럼 공통된 스타일을 공유하는 문서 집합에 탁월한 선택입니다.
-
-# What you will learn
-This tutorial has four chapters. Each chapter builds on the previous one. Here is what you will learn in each of them:
-
+## What you will learn
 이 튜토리얼은 네 개의 장으로 구성되어 있습니다. 각 장은 이전 장의 내용을 바탕으로 진행됩니다. 각 장에서 배울 내용은 다음과 같습니다:
 
-Writing in Typst: Learn how to write text and insert images, equations, and other elements.
-
-1. Typst에서 글쓰기: 텍스트 작성 방법과 이미지, 방정식 및 기타 요소 삽입 방법을 배웁니다.
-
-Formatting: Learn how to adjust the formatting of your document, including font size, heading styles, and more.
-
-1. 서식 설정: 문서의 서식 설정 방법을 배웁니다. 글꼴 크기, 제목 스타일 등을 포함합니다.
-
-Advanced Styling: Create a complex page layout for a scientific paper with typographic features such as an author list and run-in headings.
-
-1. 고급 스타일링: 저자 목록 및 중간 제목과 같은 타이포그래픽 기능을 갖춘 과학 논문의 복잡한 페이지 레이아웃 생성 등을 배웁니다.
-
-Making a Template: Build a reusable template from the paper you created in the previous chapter.
-
-1. 템플릿 만들기: 이전 장에서 작성한 문서를 바탕으로 재사용 가능한 템플릿을 구축합니다.
-
-We hope you'll enjoy Typst!
+1. **Typst에서 글쓰기**: 텍스트 작성 방법과 이미지, 방정식 및 기타 요소의 삽입 방법을 배웁니다.
+1. **서식 설정**: 문서의 서식 설정 방법을 배웁니다. 글꼴 크기, 제목 스타일 등을 포함합니다.
+1. **고급 스타일링**: 저자 목록 및 중간 제목 같은 타이포그래픽 기능을 갖춘 과학 논문의 복잡한 페이지 레이아웃 생성 등을 배웁니다.
+1. **템플릿 만들기**: 이전 장에서 작성한 문서를 바탕으로 재사용 가능한 템플릿을 구축합니다.
 
 Typst를 즐겨주시길 바랍니다!
 
