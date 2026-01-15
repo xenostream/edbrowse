@@ -41,16 +41,15 @@ behaviour of these natural structures.
 
 다음 단계는 제목(heading)을 추가하고 일부 텍스트를 강조하는 것입니다. Typst는 가장 일반적인 서식 작업에 간단한 마크업을 사용합니다. 제목을 추가하려면 `=` 문자를 입력하고 이탤릭체로 텍스트를 강조하려면 해당 텍스트를 `_밑줄_` 로 묶습니다.
 
-| 텍스트 패널 | 미리보기 패널 |
-| --- | --- |
-| <pre>
+```
 = Introduction
 In this report, we will explore the
 various factors that influence _fluid
 dynamics_ in glaciers and how they
 contribute to the formation and
 behaviour of these natural structures.
-</pre> | ![](./images/img_20260114_154035.jpg) |
+```
+![](./images/img_20260114_154035.jpg) |
 
 아주 쉽네요! 새로운 단락(paragraph)을 추가하려면 텍스트 두 줄 사이에 빈 줄을 넣기만 하면 됩니다. 해당 단락에 소제목(subheading)이 필요하면 `=` 대신 `==` 를 입력합니다. `=` 문자의 개수가 제목의 중첩 수준을 결정합니다.
 
