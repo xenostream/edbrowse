@@ -43,16 +43,14 @@ behaviour of these natural structures.
 
 | 텍스트 패널 | 미리보기 패널 |
 | --- | --- |
-| ```
+| `
 = Introduction
 In this report, we will explore the
 various factors that influence _fluid
 dynamics_ in glaciers and how they
 contribute to the formation and
 behaviour of these natural structures.
-``` |
-
-| ![](./images/img_20260114_154035.jpg) |
+` | ![](./images/img_20260114_154035.jpg) |
 
 아주 쉽네요! 새로운 단락(paragraph)을 추가하려면 텍스트 두 줄 사이에 빈 줄을 넣기만 하면 됩니다. 해당 단락에 소제목(subheading)이 필요하면 `=` 대신 `==` 를 입력합니다. `=` 문자의 개수가 제목의 중첩 수준을 결정합니다.
 
