@@ -1,11 +1,9 @@
 # Tutorial
-Welcome to Typst's tutorial! In this tutorial, you will learn how to write and format documents in Typst. We will start with everyday tasks and gradually introduce more advanced features. This tutorial does not assume prior knowledge of Typst, other markup languages, or programming. We do assume that you know how to edit a text file.
-
-Typst 튜토리얼에 오신 것을 환영합니다! 이 튜토리얼에서는 Typst에서 문서를 작성하고 서식을 지정하는 방법을 배우게 됩니다. 일상적인 작업부터 시작하여 점차 고급 기능을 소개할 것입니다. 본 튜토리얼은 Typst, 다른 마크업 언어 또는 프로그래밍에 대한 사전 지식을 가정하지 않습니다. 단, 텍스트 파일 편집 방법은 알고 계신다고 가정합니다.
+Typst 튜토리얼에 오신 것을 환영합니다! 이 튜토리얼은 Typst에서 문서를 작성하고 서식을 지정하는 방법에 대해 배우게 됩니다. 일상적인 작업부터 시작해서 점차 고급 기능을 소개합니다. 본 튜토리얼은 Typst, 다른 마크업 언어 또는 프로그래밍에 대한 사전 지식을 가정하지 않습니다. 단지 텍스트 파일 편집 방법은 알고 있다고 가정합니다.
 
 The best way to start is to sign up to the Typst app for free and follow along with the steps below. The app gives you instant preview, syntax highlighting and helpful autocompletions. Alternatively, you can follow along in your local text editor with the open-source CLI.
 
-시작하는 가장 좋은 방법은 Typst 앱에 무료로 가입하고 아래의 단계를 따라가는 것입니다. 이 앱은 실시간 미리보기, 구문 강조 표시 및 유용한 자동 완성 기능을 제공합니다. 또는 오픈소스 CLI를 사용하여 로컬 텍스트 편집기에서 따라할 수도 있습니다.
+시작하기 가장 좋은 방법은 [Typst]("https://typst.app") 앱에 무료로 가입하고 아래의 단계를 따라가는 것입니다. 이 앱은 실시간 미리보기, 구문 강조 표시 및 유용한 자동 완성 기능을 제공합니다. 또는 오픈소스 CLI를 사용하여 로컬 텍스트 편집기에서 따라할 수도 있습니다.
 
 ## When to use Typst
 Before we get started, let's check what Typst is and when to use it. Typst is a markup language for typesetting documents. It is designed to be easy to learn, fast, and versatile. Typst takes text files with markup in them and outputs PDFs.
