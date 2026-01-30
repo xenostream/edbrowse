@@ -2,6 +2,7 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_winsize = 20
 
+set encoding=utf-8
 set nocompatible              " Vi 설정 대신 Vim 설정 사용
 set softtabstop=2             " 탭 키 입력 시 2칸 들여쓰기
 set shiftwidth=4              " 자동 들여쓰기 시 4칸 들여쓰기
@@ -24,7 +25,7 @@ autocmd InsertLeave * :setlocal relativenumber
 syntax on                     " 구문 강조 활성화
 filetype indent on            " 파일 들여쓰기 활성화
 filetype plugin indent on     " 파일 타입 들여쓰기
-colorscheme desert            " 보기 좋은 색상 테마 설정
+colorscheme elflord           " 보기 좋은 색상 테마 설정
 
 
 " --- Folding Settings ---
