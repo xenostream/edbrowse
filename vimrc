@@ -1,8 +1,9 @@
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_winsize = 20
+" netrw 설정
+let g:netrw_liststyle = 3     " 트리 형태로 표시
+let g:netrw_browse_split = 4  " 파일 선택시 새로운 분할 창으로 열기
+let g:netrw_winsize = 20      " 파일 탐색기 전체 장 표시 비율
 
-set encoding=utf-8
+set encoding=utf-8            " 유니코드 인코딩 사용
 set nocompatible              " Vi 설정 대신 Vim 설정 사용
 set softtabstop=2             " 탭 키 입력 시 2칸 들여쓰기
 set shiftwidth=4              " 자동 들여쓰기 시 4칸 들여쓰기
@@ -11,12 +12,11 @@ set autoindent                " 자동 들여쓰기 활성화
 set number                    " 줄 번호 활성화
 set nobackup                  " 백업 파일 생성 비활성화
 set laststatus=2              " 상태표시줄 표시
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)
 set wildmenu                  " 명령줄의 탭 완성 옵션을 메뉴로 표시
-set undofile                  " 세션간 실행 취소 기록 유지
-set cursorline                    " 현재 라인 강조
+set cursorline                " 현재 라인 강조
 
-set relativenumber
+set relativenumber            " 명령 모드는 상대 번호 입력 모드는 절대 번호 
 augroup toggle_relative_number
 autocmd InsertEnter * :setlocal norelativenumber
 autocmd InsertLeave * :setlocal relativenumber
@@ -37,6 +37,8 @@ set foldnestmax=10            " 폴딩 중첩 최대 깊이
 
 
 " 사용자 정의 설정
+
+" 리더 키 설정 
 let mapleader = "\<Space>"
 
 " Visual 모드: 선택 영역을 클립보드에 복사
