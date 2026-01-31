@@ -16,7 +16,7 @@ set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)
 set wildmenu                  " 명령줄의 탭 완성 옵션을 메뉴로 표시
 set cursorline                " 현재 라인 강조
 
-set relativenumber            " 명령 모드는 상대 번호 입력 모드는 절대 번호 
+set relativenumber            " 명령 모드는 상대 번호 입력 모드는 절대 번호
 augroup toggle_relative_number
 autocmd InsertEnter * :setlocal norelativenumber
 autocmd InsertLeave * :setlocal relativenumber
@@ -38,7 +38,7 @@ set foldnestmax=10            " 폴딩 중첩 최대 깊이
 
 " 사용자 정의 설정
 
-" 리더 키 설정 
+" 리더 키 설정
 let mapleader = "\<Space>"
 
 " Visual 모드: 선택 영역을 클립보드에 복사
@@ -55,3 +55,9 @@ vnoremap <leader>b c`<C-r>"`<Esc>
 
 " Visual 모드: 선택한 블록을 #iconbox()[ ... ] 로 감싸기
 vnoremap <leader>x :<C-u>set paste<CR>gvc<CR>#iconbox()[<CR>```<CR><C-r>"<CR>```<CR>]<CR><Esc>:<C-u>set nopaste<CR>
+
+" 현재 라인 trans 로 번역해서 삽입
+nnoremap <leader>t :.t.<CR>:.!trans -no-ansi -brief :ko<CR>
+
+" 비주얼 블럭 trans 로 번역해서 삽입 (번역 -> 원문 형식)
+xnoremap <leader>t y'>p:'<,'>!trans -no-ansi -brief :ko<CR>
