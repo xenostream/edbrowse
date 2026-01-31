@@ -775,8 +775,6 @@ unmap lhs
 
 # Nitty-gritty details
 ## Line representation in the display
-  The editor folds long logical lines onto many physical lines in the display. Commands which advance lines advance logical lines and will skip over all the segments of a line in one motion. The command | moves the cursor to a specific column, and may be useful for getting near the middle of a long line to split it in half. Try 80| on a line which is more than 80 columns long (footnote 7-1).
-
 편집기는 긴 논리 줄을 화면에서는 여러 개의 물리 줄로 접어서 표시합니다. 줄을 앞으로 이동하는 명령은 논리 줄을 이동하며, 한 번에 해당 줄의 모든 구간을 건너뜁니다. `|` 명령은 커서를 지정한 열로 옮기며, 긴 줄 중간 근처로 이동해서 그것을 절반으로 나누는 데 유용할 수 있습니다. 80자보다 긴 줄에 `80|` 명령을 시도합니다. (각주 [^7-1])
 
 [^7-1]: 짧은 줄은 `J` 명령으로 서로 연결하면 긴 줄로 쉽게 만들 수 있습니다.
