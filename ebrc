@@ -54,6 +54,7 @@ function+tr {
         H-
         .t.
         .W !trans -brief :ko
+        .-10,.+10n
 }
 
 # Typst Code Block
