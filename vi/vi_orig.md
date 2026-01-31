@@ -14,6 +14,8 @@ Freiburg i. Br., Germany
 3/3/02
 ```
 
+[https://ex-vi.sourceforge.net/viin/paper.html](https://ex-vi.sourceforge.net/viin/paper.html)
+
 ## ABSTRACT
 Vi(visual)은 화면 기반의 대화형 텍스트 편집기입니다. vi를 사용할 때 터미널 화면은 편집 중인 파일의 창 역할을 합니다. 파일에 가한 변경 사항은 화면에 바로 반영됩니다.
   
