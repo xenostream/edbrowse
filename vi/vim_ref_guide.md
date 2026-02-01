@@ -29,8 +29,7 @@ Vim 사용을 즐기는 이들의 추가 의견:
 > [!WARNING] 
 > **경고:** 모든 사람이 Vim을 사용해야 할까요? 모든 종류의 편집 작업에 적합할까요? 저는 아니라고 말하고 싶습니다. 이미 잘 정립된 다른 텍스트 편집기가 많고, 새로운 편집기도 계속 등장하고 있습니다. 모든 사람에게 그 학습 곡선은 가치가 없습니다. 직장에서 Vim을 사용하지 않았다면, 아마도 저는 신경 쓰지 않았을 겁니다. ‘잘못된 이유로 Vim을 사용하지 마세요’ 글이 이 주제를 더 자세히 다룹니다.
 
-
-
+<br><br>
 ## Installation
 저는 우분투(리눅스 배포판)에서 다음 명령어를 사용합니다:
 
@@ -44,7 +43,7 @@ sudo apt install vim vim-gui-common
 > [!NOTE]
 > 소스 코드 및 기타 세부 사항은 [https://github.com/vim/vim](https://github.com/vim/vim)를 참조하십시오.
 
-
+<br><br>
 ## Ice Breaker
 터미널을 열고 다음 단계를 따르세요:
 
@@ -80,7 +79,7 @@ GVim을 실행했다면 **메뉴** 와 **도구 모음** 이 표시되었을 텐
 > 참고: 명령줄에서 Vim을 실행하는 옵션과 세부 사항은 CLI 옵션 장에서 다룰 예정입니다.
 
 
-
+<br><br>
 ## Built-in tutor
 - gvimtutor 명령어는 Vim 시작을 위한 튜토리얼 세션을 엽니다.
     - 임시 파일을 사용하므로 문제가 발생해도 걱정하지 마세요.
@@ -93,7 +92,7 @@ GVim을 실행했다면 **메뉴** 와 **도구 모음** 이 표시되었을 텐
 > [!NOTE]
 > NOTE 고급 레슨을 제공하는 [vimtutor-sequel](https://github.com/micahkepe/vimtutor-sequel)도 참고하세요.
 
-
+<br><br>
 ## Built-in help
 Vim에는 포괄적인 사용자 설명서와 참조 설명서가 포함되어 있습니다. 사용자 설명서는 교과서처럼 읽히며, 참조 설명서는 필요 이상으로 상세한 내용을 담고 있습니다. 이 도움말 내용은 온라인 사이트에서도 확인할 수 있으며, 이 책 전체에 걸쳐 적절한 위치에 링크가 제공될 것입니다.
 
@@ -127,7 +126,7 @@ Vim에는 포괄적인 사용자 설명서와 참조 설명서가 포함되어 �
 > [!NOTE]
 > 참고: https://vimhelp.org/에서 문서 사본을 온라인으로 확인할 수 있습니다. 위에서 보듯이, 이 책의 모든 :h 힌트는 해당 온라인 도움말 섹션으로도 연결됩니다.
 
-
+<br><br>
 ## Vim learning resources
 서문 장에서 언급했듯이, 이 Vim 참조 가이드는 일반적인 Vim 학습서라기보다는 치트 시트에 가깝습니다. 이전 섹션에서 이미 다룬 내장 기능 외에도 활용할 수 있는 자료는 다음과 같습니다:
 
@@ -153,7 +152,7 @@ Vim에는 포괄적인 사용자 설명서와 참조 설명서가 포함되어 �
 > [!NOTE]
 > 자세한 내용은 제 Vim 추천 리스트에서 학습 자료, 치트시트, 팁, 트릭, 포럼 등 더 포괄적인 목록을 확인하세요.
 
-
+<br><br>
 ## Modes of Operation
 앞서 언급했듯이 Vim은 모드 기반 편집기입니다. 이 책에서는 주로 다음 네 가지 모드를 다룰 것입니다:
 
@@ -189,7 +188,7 @@ Esc 키를 누르면 일반 모드로 돌아갑니다.
 
 이 모드에 사용되는 화면 하단 공간을 명령줄 영역이라고 합니다. 일반적으로 한 줄이지만, 자동 완성이나 셸 명령어 등 특정 상황에서는 확장될 수 있습니다.
 
-
+<br><br>
 ## Identifying the current mode
 - 삽입 모드에서는 깜박이는 | 커서가 표시됩니다
     - 또한 명령줄 영역 왼쪽에 -- INSERT --가 보입니다
@@ -200,7 +199,7 @@ Esc 키를 누르면 일반 모드로 돌아갑니다.
 > [!NOTE]
 > 참고: :h ‘showmode’ 설정도 참조하십시오.
 
-
+<br><br>
 ## Vim philosophy and features
 > [!NOTE]
 > 이 섹션에서 다루는 명령어들은 후속 장에서도 다시 설명됩니다. 여기서는 모드와 주목할 만한 Vim 기능에 대한 간략한 소개를 제공하는 것이 목적입니다. 참고 자료:
@@ -257,11 +256,11 @@ Esc 키를 누르면 일반 모드로 돌아갑니다.
 - [JetBrains IdeaVim](https://plugins.jetbrains.com/plugin/164-ideavim), [VSCodeVim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) 등
 - [Vim과 유사한 애플리케이션 및 플러그인의 방대한 목록](https://vim.reversed.top/)
 
-
+<br><br>
 ## Vim's history
 Vim의 역사가 1960년대 qed, ed 등으로 거슬러 올라간다는 점에 관심이 있다면 [Vim의 기원](https://twobithistory.org/2018/08/05/where-vim-came-from.html)을 살펴보십시오.
 
-
+<br><br>
 ## Chapters
 남은 장 목록은 다음과 같습니다:
 
@@ -276,7 +275,8 @@ CLI 옵션(CLI Options)
 
 
 
-
+<br><br>
+---
 # 삽입 모드(Insert mode)
 이 모드에서는 필요한 텍스트를 입력합니다. 이동, 삭제, 자동 완성 등을 위한 명령어도 사용할 수 있습니다.
 
@@ -288,7 +288,7 @@ CLI 옵션(CLI Options)
 > [!NOTE]
 > 참고: 삽입 모드 명령어에 대한 내장 도움말을 보려면 i_ 접두사를 추가해야 합니다. 예: :h i_CTRL-P.
 
-
+<br><br>
 ## Motion keys and commands
 - ← 현재 줄 내에서 한 글자 왼쪽으로 이동
 - → 현재 줄 내에서 한 글자 오른쪽으로 이동
@@ -307,7 +307,7 @@ CLI 옵션(CLI Options)
 > [!NOTE]
 > info ← 및 → 화살표 키로 줄을 넘나들게 하려면 whichwrap 설정(줄임말 ww)을 사용하세요. 예를 들어, :set ww+=[,]는 삽입 모드에서 좌우 화살표 키로 줄을 넘나들게 합니다(+=는 기존 whichwrap 설정을 유지하기 위해 사용됨).
 
-
+<br><br>
 ## Deleting
 - Delete 커서 뒤의 문자 삭제
 - Backspace 커서 앞의 문자 삭제
@@ -317,7 +317,7 @@ CLI 옵션(CLI Options)
 - Ctrl+u 현재 줄에서 커서 앞의 모든 문자를 삭제하며, 들여쓰기가 있으면 유지
     - 기존 줄에 문자를 입력한 경우, 수정 시작점까지의 문자를 삭제합니다
 
-
+<br><br>
 ## Autocomplete word
 - Ctrl+p 뒤쪽 방향으로 일치하는 단어를 기반으로 자동 완성
 - Ctrl+n 앞쪽 방향으로 일치하는 단어를 기반으로 자동 완성
@@ -332,14 +332,14 @@ CLI 옵션(CLI Options)
 > [!NOTE]
 > 참고: 어떤 문자든 입력하면 팝업 메뉴가 사라지고 입력한 문자가 삽입됩니다.
 
-
+<br><br>
 ## Autocomplete line
 - Ctrl+x 다음에 Ctrl+l을 누르면 뒤쪽 방향으로 일치하는 줄을 기반으로 줄을 자동 완성합니다.
 
 > [!NOTE]
 > 정보: 하나 이상의 줄이 일치하는 경우, 팝업 메뉴를 통해 표시됩니다. 이전 섹션에서 본 옵션 외에도 Ctrl+l을 사용하여 목록을 위로 이동할 수 있습니다.
 
-
+<br><br>
 ## Autocomplete assist
 - Ctrl+e는 자동완성을 취소합니다.
     - 자동완성을 호출하기 전에 입력한 텍스트는 유지됩니다.
@@ -347,14 +347,14 @@ CLI 옵션(CLI Options)
 > [!NOTE]
 > 자세한 내용 및 기타 자동완성 기능은 :h ins-completion을 참조하십시오. 자동완성 명령어 사용자 정의는 :h ‘complete’ 설정을 참조하십시오.
 
-
+<br><br>
 ## Execute a Normal mode command
 - Ctrl+o: 일반 모드 명령을 실행하고 삽입 모드로 복귀
     - Ctrl+o + A: 커서를 현재 줄 끝으로 이동
     - Ctrl+o + 3j: 커서를 세 줄 아래로 이동
     - Ctrl+o + ce: 단어 끝까지 지우기
 
-
+<br><br>
 ## Indenting
 - Ctrl+t 현재 줄 들여쓰기
 - Ctrl+d 현재 줄 들여쓰기 해제
@@ -363,7 +363,7 @@ CLI 옵션(CLI Options)
 > [!NOTE]
 > 참고: 위 기능들은 커서가 줄의 어느 위치에 있더라도 사용 가능합니다. 들여쓰기 양은 shiftwidth 설정에 따라 달라집니다. 자세한 내용은 :h 'shiftwidth'를 참조하십시오.
 
-
+<br><br>
 ## Insert register contents
 - Ctrl+r은 레지스터의 내용을 삽입하는 데 도움이 됩니다
     - Ctrl+r 다음에 %를 입력하면 현재 파일 이름이 삽입됩니다
@@ -380,7 +380,7 @@ CLI 옵션(CLI Options)
 > [!NOTE]
 > 레지스터에 대한 자세한 내용은 일반 모드 장에서 설명됩니다. Vim 스크립트 시작을 위해 :h usr_41.txt를 참조하십시오.
 
-
+<br><br>
 ## Insert special characters
 - Ctrl+v는 특수 키를 문자 그대로 삽입하는 데 도움이 됩니다
     - Ctrl+v 후 Esc를 누르면 ^[이 출력됩니다
@@ -390,7 +390,7 @@ CLI 옵션(CLI Options)
 > [!NOTE]
 > 이 명령어의 실제 사용법은 매크로 장에서 확인할 수 있습니다. 십진수, 8진수 또는 16진수 형식으로 문자를 지정할 수도 있습니다. 자세한 내용은 :h 24.8을 참조하십시오.
 
-
+<br><br>
 ## Insert digraphs
 - Ctrl+k는 이중 문자(단일 문자를 나타내기 위해 사용되는 두 문자 조합으로, 일반적으로 키보드에서 사용할 수 없음)를 삽입하는 데 도움이 됩니다.
     - Ctrl+k 다음에 예(Ye)를 입력하면 ¥가 생성됩니다.
@@ -419,31 +419,38 @@ CLI 옵션(CLI Options)
 
 
 
-
+<br><br>
+---
 # 일반 모드(Normal mode)
 
 
-
+<br><br>
+---
 # 명령줄 모드(Command-line mode)
 
 
-
+<br><br>
+---
 # 시각 모드(Visual mode)
 
 
-
+<br><br>
+---
 # 정규 표현식(Regular Expressions)
 
 
-
+<br><br>
+---
 # 매크로(Macro)
 
 
-
+<br><br>
+---
 # Vim 사용자 정의(Customizing Vim)
 
 
-
+<br><br>
+---
 # CLI 옵션(CLI Options)
 
 
