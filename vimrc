@@ -50,8 +50,9 @@ nnoremap <Leader>v "+p
 " Normal 모드: 커서 단어를 백틱으로 감싸기
 nnoremap <leader>b viw<Esc>a`<Esc>bi`<Esc>
 
- " Visual 모드   : 선택한 블록을 백틱으로 감싸기
-vnoremap <leader>b c`<C-r>"`<Esc>
+" Visual 모드   : 선택한 블록을 백틱으로 감싸기
+"vnoremap <leader>b <Esc>`<i`<Esc>`>a`
+xnoremap <leader>b <Esc>`<i`<Esc>`>a`<Esc>
 
 " Visual 모드: 선택한 블록을 #iconbox()[ ... ] 로 감싸기
 vnoremap <leader>x :<C-u>set paste<CR>gvc<CR>#iconbox()[<CR>```<CR><C-r>"<CR>```<CR>]<CR><Esc>:<C-u>set nopaste<CR>
