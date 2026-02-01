@@ -2029,10 +2029,10 @@ From :h substitute 문서:
 
 
 ## Further Reading
-[vi.stackexchange: 원본 단어를 입력하지 않고 Vim에서 찾기 및 바꾸기 하는 방법? — 다양한 팁과 트릭](https://vi.stackexchange.com/q/13689/1616)
-[vi.stackexchange: 각 일치 항목을 증가하는 카운터로 바꾸는 방법?](https://vi.stackexchange.com/q/12867/1616)
-[vi.stackexchange: s 명령어에서 \r과 \n이 서로 다른 의미를 가지는 이유는 무엇인가요?](https://vi.stackexchange.com/q/9386/1616) 그리고 [stackoverflow: 왜 \r이 Vim에서 줄바꿈인가요?](https://stackoverflow.com/q/71417/4082052)
-[stackoverflow: 이 정규 표현식은 무엇을 의미하나요?](https://stackoverflow.com/q/22937618/4082052)
+- [vi.stackexchange: 원본 단어를 입력하지 않고 Vim에서 찾기 및 바꾸기 하는 방법? — 다양한 팁과 트릭](https://vi.stackexchange.com/q/13689/1616)
+- [vi.stackexchange: 각 일치 항목을 증가하는 카운터로 바꾸는 방법?](https://vi.stackexchange.com/q/12867/1616)
+- [vi.stackexchange: s 명령어에서 \r과 \n이 서로 다른 의미를 가지는 이유는 무엇인가요?](https://vi.stackexchange.com/q/9386/1616) 그리고 [stackoverflow: 왜 \r이 Vim에서 줄바꿈인가요?](https://stackoverflow.com/q/71417/4082052)
+- [stackoverflow: 이 정규 표현식은 무엇을 의미하나요?](https://stackoverflow.com/q/22937618/4082052)
 
 
 <br><br>
