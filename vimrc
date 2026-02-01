@@ -51,7 +51,6 @@ nnoremap <Leader>v "+p
 nnoremap <leader>b viw<Esc>a`<Esc>bi`<Esc>
 
 " Visual 모드   : 선택한 블록을 백틱으로 감싸기
-"vnoremap <leader>b <Esc>`<i`<Esc>`>a`
 xnoremap <leader>b <Esc>`<i`<Esc>`>a`<Esc>
 
 " Visual 모드: 선택한 블록을 #iconbox()[ ... ] 로 감싸기
