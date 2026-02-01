@@ -2262,43 +2262,414 @@ print(square(12))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <br><br>
 ---
 # Vim 사용자 정의(Customizing Vim)
+인덴트나 키워드 쌍 같은 설정은 프로그래밍 언어와 파일 유형에 따라 달라질 수 있습니다. 클라이언트 요구사항에 따라 스타일 가이드를 조정해야 할 수도 있습니다. 또는 선호도에 맞게 명령어를 생성하거나 재정의하고 싶을 수도 있습니다.
+
+이 장에서는 다양한 목적에 맞게 Vim을 사용자 정의하는 방법을 설명합니다. 일부 설정은 GVim에 특화된 내용입니다.
+
+문서 링크:
+
+- :h usr_05.txt — 설정 지정
+- :h usr_40.txt — 새 명령어 만들기
+- :h usr_41.txt — Vim 스크립트 작성하기
+- :h usr_43.txt — 파일 유형 사용하기
+- :h options.txt — 옵션에 대한 참조 매뉴얼
+- :h map.txt — 키 매핑, 약어 및 사용자 정의 명령어에 대한 참조 매뉴얼
+- :h autocmd.txt — 자동 명령어에 대한 참조 매뉴얼
+
+
+## Editing vimrc
+:h usr_41.txt 및 :h vimrc-intro에서 발췌:
+
+> [!NOTE]
+> Vim 스크립트 언어는 시작 시 실행되는 vimrc 파일, 구문 파일 및 기타 다양한 용도로 사용됩니다.
+>
+> vimrc 파일에는 콜론(:) 뒤에 입력하는 모든 명령어를 포함할 수 있습니다. 가장 간단한 명령어는 옵션 설정을 위한 것입니다.
+
+이 장에서는 일부 사용 사례만 다룹니다. 설정의 기능, 매핑 및 약어 사용법 등을 살펴볼 것입니다. Vim 스크립트의 프로그래밍 측면에 대해서는 크게 다루지 않습니다. 다음 세부 사항을 사용하여 vimrc 파일이 있는지 확인하세요:
+
+- :e $MYVIMRC 기존 vimrc 파일이 있다면 이 사전 정의 변수를 사용해 열 수 있습니다
+- :h vimrc 운영체제에 따른 vimrc 파일 위치 확인
+- :source $MYVIMRC 현재 Vim 세션에서 변경 사항 적용
+
+> [!NOTE]
+> 샘플 vimrc 파일을 보려면 GitHub에 제가 올린 파일을 참고하세요. 추가 자료는 본 장 마지막의 ‘추가 자료’ 섹션에 언급되어 있습니다.
+
+
+## defaults.vim
+vimrc 파일을 생성하지 않았다면, Vim 설치 시 함께 제공되는 defaults.vim 파일이 사용됩니다. 이 파일은 구문 강조 활성화, 파일 유형 설정 등과 같은 보다 합리적인 기본값을 제공하기 위해 만들어졌습니다.
+
+- source $VIMRUNTIME/defaults.vim 이 기본값을 유지하려면 vimrc 파일에 다음을 추가하세요
+- :h defaults.vim-explained defaults.vim에서 제공하는 설정을 설명합니다
+
+또는 defaults.vim 파일에서 유지하고 싶은 부분만 vimrc 파일로 복사할 수 있습니다.
+
+
+## General Settings
+> [!NOTE]
+> 설정 옵션 섹션에서 info set 구문과 지침이 소개되었습니다.
+
+- set history=200 기본 히스토리 저장량을 50에서 200으로 증가
+    - 명령줄 모드 장에서 언급된 바와 같이, : 명령어, 검색 패턴 등에 대해 별도의 히스토리 목록이 존재합니다
+- set nobackup 백업 파일 비활성화
+- set noswapfile 스왑 파일 비활성화
+- colorscheme murphy 다크 테마
+    - :colorscheme 뒤에 공백을 입력한 후 Tab 또는 Ctrl+d를 눌러 사용 가능한 색상 테마 목록을 확인할 수 있습니다
+- set showcmd 명령줄 영역에 부분 입력된 일반 모드 명령어 및 시각 모드에서 선택된 문자/줄/블록 표시
+- set wildmode=longest,list,full bash 스타일 탭 완성 사용
+    - 첫 번째 탭: 가능한 한 많이 완성
+    - 두 번째 탭: 완성 후보 목록 제공
+    - 세 번째 이후 탭: 완성 옵션 순환
+
+> [!NOTE]
+> :h ‘history’ 명령으로 해당 옵션 설명 확인 가능 (단일 따옴표 사용 주의).
+
+> [!NOTE]
+> 명령줄 모드에서도 이 설정들을 사용할 수 있지만, 현재 Vim 세션에서만 활성화됩니다. vimrc 파일에 지정된 설정은 시작 시 자동으로 로드됩니다. CLI 옵션 장에서 설명할 다른 파일을 vimrc로 로드할 수도 있습니다.
+
+
+추가 자료
+
+- stackoverflow: [Vim 백업 파일](https://stackoverflow.com/q/607435/4082052)
+- stackoverflow: [스왑 파일 비활성화](https://stackoverflow.com/q/821902/4082052)
+- stackoverflow: [지속적 실행 취소 설정 방법](https://stackoverflow.com/q/5700389/4082052)
+
+
+## Text and Indent Settings
+- filetype plugin indent on 플러그인 및 들여쓰기 파일 로딩 활성화
+    - 해당 파일은 파일 유형에 따라 활성화되어 구문 강조, 들여쓰기 등에 영향을 줌
+    - :echo $VIMRUNTIME 설치 디렉터리 출력 (이 경로에 들여쓰기 및 플러그인 디렉터리가 존재함)
+    - 자세한 내용은 :h vimrc-filetype, :h :filetype-overview 및 :h filetype.txt 참조
+- set autoindent copy 새 줄 시작 시 현재 줄의 들여쓰기 복사
+    - 들여쓰기 설정이 적용되지 않는 파일에 유용함
+    - :h smartindent도 참조
+- set textwidth=80 Vim이 80자를 한 줄의 한계로 자동 줄바꿈하도록 지침
+    - 줄바꿈은 공백을 기준으로 하므로, 공백이 없으면 한 줄이 한계보다 길 수 있음
+    - 기본값은 0으로 이 설정이 비활성화됨
+- set colorcolumn=80 80번째 열에 강조된 수직 막대 생성
+    - 이 수직 막대의 색상은 highlight ColorColumn 설정으로 사용자 정의 가능
+    - 자세한 내용은 vi.stackexchange: Keeping lines to less than 80 characters 참조
+- set shiftwidth=4 들여쓰기에 사용할 공백 수 (기본값은 8)
+- set tabstop=4 탭 문자 너비 (기본값은 8)
+- set expandtab 탭 확장 시 공백 사용
+- set cursorline 커서가 있는 줄 강조 표시
+
+
+## Search Settings
+- hlsearch 설정 시 일치하는 모든 부분을 강조 표시합니다
+    - :noh (:nohlsearch의 약어)를 사용하면 현재 강조 표시된 부분을 지웁니다
+- incsearch 설정 시 패턴 입력 시 현재 일치 항목을 강조 표시하며, 필요에 따라 화면이 자동으로 업데이트됩니다
+    - Enter 키를 누르면 커서가 일치하는 부분으로 이동합니다
+    - Esc 키를 누르면 커서가 현재 위치에 유지됩니다
+    - 다른 일치 용어는 hlsearch 설정에 따라 강조 표시됩니다
+
+## Custom mapping
+매핑은 새로운 명령어를 생성하거나 기존 명령어를 재정의하는 데 도움이 됩니다. 특정 모드에 대해 이러한 매핑을 제한할 수도 있습니다. 이 장에서는 다음 설정만 다룹니다:
+
+- nnoremap: 일반 모드에서 중첩되지 않고 재귀적이지 않은 매핑
+- xnoremap: 시각 모드에서 중첩되지 않고 재귀적이지 않은 매핑
+- inoremap: 삽입 모드에서 중첩되지 않고 재귀적이지 않은 매핑
+- inoreabbrev: 삽입 모드에서 중첩되지 않고 재귀적이지 않은 약어
+
+다음 항목들은 다루지 않지만, 알아두거나 추가로 탐구하면 유용할 수 있습니다:
+
+- nmap, xmap, imap 및 iabbrev는 중첩 및 재귀 매핑을 허용합니다
+- nunmap, xunmap, iunmap 및 iunabbrev는 지정된 명령어의 매핑을 해제합니다(일반적으로 명령줄 모드에서 매핑을 일시적으로 비활성화하는 데 사용되며, vimrc에 정의된 경우 시작 시 다시 사용할 수 있음)
+    - 특정 모드의 모든 매핑을 지우려면 unmap 대신 mapclear를 사용하세요
+- onoremap (또는 omap)은 d나 y 같은 명령어와 함께 사용할 이동 또는 텍스트 객체를 매핑합니다
+- command는 명령줄 모드 명령어 생성을 돕습니다. 자세한 내용은 :h 40.2 및 :h user-commands 참조
+
+> [!NOTE]
+> :nmap, :xmap, :imap 및 :iab는 해당 모드의 현재 모든 매핑을 나열합니다. 특정 명령어의 매핑을 표시하려면 인수를 제공할 수 있습니다. 예: :nmap Y. 참조 매뉴얼은 :h key-mapping 및 :h map-overview를 참조하십시오.
+
+
+## Normal mode
+- nnoremap <F2> :w<CR> F2 기능 키를 눌러 변경 사항 저장
+    - <F2>는 F2 기능 키를, <CR>은 Enter 키를 나타냅니다
+    - Esc 키(F1은 도움말 페이지 열기)와 가까워 F2를 선택했습니다
+- nnoremap <F3> :wq<CR> F3 키를 눌러 변경 사항 저장 후 종료
+- nnoremap <F4> ggdG F4 키를 눌러 모든 내용 삭제
+- nnoremap <F5> :%y+<CR> F5 키를 눌러 모든 내용을 시스템 클립보드에 복사
+- nnoremap <left> <nop> ← 화살표 키를 눌렀을 때 아무 작업도 수행하지 않음
+    - 마찬가지로 다른 화살표 키도 아무 작업도 수행하지 않도록 매핑할 수 있음
+- nnoremap Y y$ Y 키 동작을 D 및 C 키와 유사하게 변경
+- nnoremap / /\v 앞으로 방향 검색용 매우 마법 같은 모드 수정자 추가
+- nnoremap ? ?\v 뒤로 방향 검색용 매우 마법 같은 모드 수정자 추가
+- nnoremap <silent> <Space> :noh<CR><Space> 스페이스 키 누르면 현재 강조 표시된 부분 지우기
+    - <silent> 수정자는 명령줄 영역에 표시하지 않고 명령을 실행합니다
+    - 이 매핑은 스페이스 키의 기본 동작도 유지합니다
+- nnoremap <A-1> 1gt Alt+1을 눌러 첫 번째 탭으로 전환
+    - 브라우저나 터미널 단축키와 일관성을 위해 탭 전환을 이렇게 설정하는 것을 선호합니다
+- nnoremap <A-2> 2gt Alt+2를 눌러 두 번째 탭으로 전환, 이후 탭도 동일하게 적용
+
+> [!NOTE]
+> :h map-which-keys를 참조하여 Vim 명령어가 아닌 키, 일반적으로 사용되지 않는 키 등을 확인하세요.
+
+> [!NOTE]
+> :h key-notation를 참조하여 <> 표기법으로 표현 가능한 키 목록을 확인하세요.
+
+
+## Map leader
+일반 모드 명령어는 이미 복잡하므로, 새로운 명령어를 만들고 싶다면 리더 매핑을 활용하는 것이 좋습니다. 새 명령어 집합의 접두사로 사용할 키를 정의할 수 있습니다. 기본적으로 백슬래시 키가 리더 키로 사용됩니다.
+
+- mapleader가 설정되지 않은 경우 \f를 사용하면 전체 파일의 코드를 자동으로 들여쓰기합니다
+- let mapleader = “;” 리더 키를 ;로 변경
+    - nnoremap <Leader>f gg=G 리더 키가 변경되었으므로 이제 ;f가 필요합니다
+
+> [!NOTE]
+> 더 많은 예시와 자세한 내용은 learnvimscriptthehardway: Leaders를 참조하세요.
+
+
+## Insert mode
+- inoremap <F2> <C-o>:w<CR> F2 키를 눌러 삽입 모드에서도 변경 사항을 저장합니다
+    - Ctrl+o는 명령을 실행하고 자동으로 삽입 모드로 돌아가기 위해 사용됩니다
+    - 이미 일반 모드 매핑을 정의한 경우 imap <F2> <C-o><F2>도 사용할 수 있습니다
+- inoremap <C-f> <Esc>ea Ctrl+f를 눌러 단어 끝으로 이동
+    - Ctrl+e를 선호하지만 자동 완성 취소에 유용합니다
+- inoremap <C-b> <C-Left> Ctrl+b를 눌러 단어 시작 부분으로 이동
+- inoremap <C-a> <End> Ctrl+a를 눌러 줄 끝으로 이동
+- inoremap <C-s> <Home> Ctrl+s를 눌러 줄 시작 부분으로 이동
+- inoremap <C-v> <C-o>"+p Ctrl+v를 눌러 클립보드에서 붙여넣기
+    - Ctrl+v 기능이 필요할 경우, Ctrl+q 별칭을 사용하여 Enter 키처럼 문자를 삽입할 수 있습니다(단, 일부 터미널에서는 작동하지 않을 수 있음)
+- inoremap <C-l> <C-x><C-l> Ctrl+l을 눌러 일치하는 줄을 자동 완성
+    - Ctrl+x가 제공하는 모든 기능은 :h i_CTRL-x 및 :h ins-completion을 참조하세요.
+
+> [!NOTE]
+> 삽입 모드와 명령줄 모드 모두에서 매핑이 작동하도록 하려면 noremap!을 사용하세요.
+
+
+## Visual mode
+- xnoremap * y/<C-R>"<CR> * 키를 눌러 시각적으로 선택된 텍스트를 앞으로 검색합니다
+    - Ctrl+r이 명령줄 모드에서 레지스터 내용을 삽입하는 데 도움이 된다는 점을 기억하세요
+- xnoremap # y?<C-R>"<CR> # 키를 눌러 시각적으로 선택된 텍스트를 뒤로 검색합니다
+
+> [!NOTE]
+> 여기서 xnoremap이 사용된 이유는 vnoremap이 시각 모드와 선택 모드 모두에 영향을 미치기 때문입니다.
+
+
+## Abbreviations
+약어는 일반적으로 오타를 수정하고 자주 사용하는 텍스트를 삽입하는 데 사용됩니다. :h abbreviations 문서에서 발췌:
+
+> [!NOTE]
+> 약어는 키워드가 아닌 문자를 입력할 때만 인식됩니다. 이는 삽입 모드를 종료하는 <Esc>나 명령을 종료하는 <CR>일 수도 있습니다. 약어를 종료하는 키워드가 아닌 문자는 확장된 약어 뒤에 삽입됩니다. 단, <C-]> 문자는 예외로, 추가 문자 없이 약어를 확장하는 데 사용됩니다.
+
+- inoreabbrev p #!/usr/bin/env perl<CR>use strict;<CR>use warnings;<CR> 아래 코드 조각과 같이 p를 텍스트로 확장하려면
+
+    - Esc, 스페이스, 엔터 키, 구두점 등 키워드가 아닌 문자로 약어 완성을 트리거할 수 있습니다
+    - 추가 문자 없이 약어를 확장하려면 Ctrl+]를 사용하세요
+
+```
+#!/usr/bin/env perl
+use strict;
+use warnings;
+```
+
+- inoreabbrev py #!/usr/bin/env python3 py를 #!/usr/bin/env python3로 확장
+
+    - py를 문자 그대로 사용해야 하는 경우(예: script.py) 문제가 발생할 수 있습니다
+    - 대신 [p 또는 @p 등을 사용할 수 있습니다
+- inoreabbrev teh 오타를 자동으로
+
+- inoreabbrev @a 항상 @()<CR>begin<CR>end<Esc>2k$ 아래 코드 스니펫에 표시된 텍스트로 @a 확장
+
+    - 이 설정은 @a 입력 후 Esc 키를 눌러 커서를 첫 줄 끝에 위치시킬 때 가장 효과적입니다
+
+```
+always @()
+begin
+end
+```
+
+- :abbreviate 또는 :ab list로 모든 약어 목록 확인
+
+> [!NOTE]
+> 약어 사용법에 대한 자세한 내용은 :h 24.7을 참조하세요.
+
+
+## Matcing Pairs
+- set matchpairs+=<:> 일반 모드에서 % 명령어가 일치시키는 쌍 목록에 <>를 추가합니다.
+
+> [!NOTE]
+> if-else 쌍과 같은 키워드를 %로 일치시키려면 matchit.vim 플러그인을 사용할 수 있습니다. 이 플러그인은 HTML, Vim, LaTeX, XML 등의 파일 형식을 지원합니다. 자세한 내용은 :h matchit-install을 참조하세요.
+
+
+## GUI options
+- set guioptions-=m 메뉴 바 제거
+- set guioptions-=T 도구 모음 제거
+
+> [!NOTE]
+> 자세한 내용은 :h guioptions를 참조하십시오.
+
+
+## Third-party customizations
+> [!NOTE]
+> 이 섹션에서 설명하는 플러그인과 패키지를 추가할 수 있는 경로를 확인하려면 :h 'runtimepath'를 참조하십시오. Unix/Linux 시스템에서는 일반적으로 ~/.vim이 사용됩니다.
+
+사용자 지정 설정을 새 컴퓨터에 쉽게 적용할 수 있도록 디렉터리(예: ~/.vim)와 vimrc 파일을 반드시 백업하십시오.
+
+### plugin
+일부 플러그인은 기본적으로 로드됩니다. 일부는 Vim 설치 시 함께 제공되지만 명시적으로 활성화해야 합니다. 직접 작성하거나 다른 사람이 작성한 플러그인을 추가할 수도 있습니다. :h add-plugin 문서에서 발췌:
+
+> [!NOTE]
+> Vim의 기능은 플러그인을 추가하여 확장할 수 있습니다. 플러그인은 Vim이 시작될 때 자동으로 로드되는 Vim 스크립트 파일에 불과합니다.
+>
+> 플러그인에는 두 가지 유형이 있습니다:
+> - 글로벌 플러그인: 모든 종류의 파일에 사용됩니다
+> - 파일 유형별 플러그인: 특정 유형의 파일에만 사용됩니다
+
+본인이나 다른 사람이 만든 글로벌 플러그인을 추가하려면 해당 플러그인을 플러그인 디렉터리에 배치하십시오. 해당 디렉터리가 아직 없다면 아래 명령을 사용하여 생성할 수 있습니다(Unix/Linux 가정):
+
+```
+$ mkdir -p ~/.vim/plugin
+$ cp plugin_file.vim ~/.vim/plugin/
+```
+
+관련 플러그인 파일이 여러 개인 경우 하위 디렉터리에 배치할 수 있습니다:
+
+```
+$ mkdir -p ~/.vim/plugin/python
+$ cp file_1.vim file_2.vim ~/.vim/plugin/python/
+```
+
+특정 파일 유형에 따라 작동해야 하는 플러그인을 추가하려면 ftplugin 디렉터리에 추가하세요:
+
+```
+$ mkdir -p ~/.vim/ftplugin
+$ cp ftplugin_file.vim ~/.vim/ftplugin/
+```
+
+### package
+패키지를 사용하면 여러 플러그인이 필요한 프로젝트 관리, 버전 관리 저장소 직접 사용 등이 쉬워집니다. 자세한 내용은 :h packages를 참조하세요. :h add-package에서 발췌:
+
+> [!NOTE]
+> 패키지는 Vim에 추가할 수 있는 파일 모음입니다. 패키지에는 선택적 패키지와 시작 시 자동으로 로드되는 패키지 두 종류가 있습니다.
+>
+> Vim 배포판에는 선택적으로 사용할 수 있는 몇 가지 패키지가 포함되어 있습니다. 예를 들어 matchit 플러그인이 있습니다.
+
+- packadd! matchit enable matchit package 
+    - 이 플러그인은 Vim에 포함되어 있으며, 자세한 내용은 :h matchit을 참조하십시오.
+    - !는 Vim이 --noplugin CLI 옵션으로 시작될 때 이 플러그인이 로드되지 않도록 방지하는 데 사용됩니다.
+
+vim-surround는 여기에서 타사 패키지의 예시로 사용됩니다. 시작 시 이 패키지를 활성화하려는 경우를 가정하여 설치 지침(이 저장소에 제공됨)은 다음과 같습니다:
+
+```
+# 'pack' is the directory for packages
+# 'tpope' subdirectory is useful to group all packages by this author
+# 'start' means this package will be loaded at startup
+$ mkdir -p ~/.vim/pack/tpope/start
+
+# go to the directory and clone the git repository
+# you can then update the repository when new changes are needed
+$ cd ~/.vim/pack/tpope/start
+$ git clone https://github.com/tpope/vim-surround.git
+```
+
+위의 단계를 마친 후 Vim을 시작하면 vim-surround가 자동으로 활성화됩니다. 몇 가지 예시는 아래에 제시되어 있으며, 자세한 내용은 위 링크된 저장소를 참조하세요.
+
+- ysiw]는 단어를 []로 감쌉니다. 예: hello → [hello]
+- cs“‘는 큰따옴표로 둘러싸인 텍스트를 작은따옴표로 변경합니다. 예: ”hi bye" → 'hi bye’
+
+이 패키지를 선택적으로 활성화하려면 start 디렉터리가 아닌 opt 디렉터리에 배치하세요.
+
+```
+# 'opt' makes it optional
+$ mkdir -p ~/.vim/pack/tpope/opt
+$ cd ~/.vim/pack/tpope/opt
+$ git clone https://github.com/tpope/vim-surround.git
+```
+
+- :packadd vim-surround 명령줄 모드에서 이 패키지 활성화
+- packadd! vim-surround vimrc에서 이 패키지 활성화 (일반적으로 특정 조건 하에)
+
+### color scheme
+새로운 색상 테마를 추가하는 방법은 여러 가지가 있습니다. 가장 간단한 방법은 theme.vim 파일을 ~/.vim/colors 디렉터리에 복사하는 것입니다. 또는 테마 제작자가 제공하는 설치 단계를 따르세요. 다음은 확인해 볼 수 있는 몇 가지 solarized 테마입니다:
+
+- vim-solarized
+- vim-solarized8
+
+설치 후 :colorscheme 명령어로 새 테마를 설정할 수 있습니다. 테마에 여러 변형이 제공되는 경우 set background=dark 또는 set background=light 같은 추가 설정이 필요할 수 있습니다. 자세한 내용은 위 저장소의 설치 안내를 참조하세요.
+
+설치 디렉터리 관련 자세한 내용은 :h packages의 ‘무엇을 어디에 두는가’ 섹션을 참조하세요.
+
+> [!NOTE]
+> Vim용 멋진 색상 구성 모음도 함께 확인해 보세요.
+
+
+## autocmd
+:h 40.3:
+
+> [!NOTE]
+> 자동 명령어는 파일 읽기/쓰기나 버퍼 변경과 같은 특정 이벤트 발생 시 자동으로 실행되는 명령어입니다.
+>
+> 자동 명령어는 매우 강력합니다. 신중하게 사용하면 많은 명령어 입력을 줄여주지만, 무분별하게 사용하면 큰 문제를 일으킬 수 있습니다.
+
+참조 매뉴얼의 구문은 다음과 같습니다:
+
+```
+:au[tocmd] [group] {event} {aupat} [++once] [++nested] {cmd}
+```
+
+Python 파일을 위한 예시는 다음과 같습니다:
+
+```
+augroup pyg
+    autocmd!
+
+    " add Python shebang for a new buffer with .py extension
+    " py abbreviation was discussed earlier in this chapter
+    autocmd BufNewFile *.py normal ipy
+
+    " Black command is provided by a Python code formatter plugin
+    autocmd BufWritePre *.py Black
+augroup END
+```
+
+- autocmd BufNewFile *.py normal ipy
+    - BufNewFile 이벤트: 존재하지 않는 파일을 편집할 때 트리거됨
+    - *.py: .py로 끝나는 파일명 (셸 와일드카드와 유사)
+    - normal ipy: 실행될 명령어 (기본적으로 명령어는 명령줄 모드로 처리되므로 normal이 필요함)
+- autocmd BufWritePre *.py Black
+    - BufWritePre 파일 쓰기 시 트리거되는 이벤트
+    - Black 실행할 명령어 (자세한 내용은 black vim 플러그인 문서를 참조하세요)
+- augroup 관련 자동명령을 그룹화하는 데 도움
+- autocmd! 그룹 내 모든 자동명령 제거 (위 예시에서는 pyg)
+    - vimrc 파일 소스 처리 시 자동명령이 재정의되는 것을 방지하는 데 유용
+- :autocmd 모든 자동 명령어 목록 표시, 인수를 제공하여 목록을 좁힐 수 있음
+
+> [!WARNING]
+> 이전 버전의 Vim에서는 위 스니펫과 같이 주석에 큰따옴표(")가 사용되었습니다. vim9script에서는 대신 # 문자를 사용해야 합니다. 기존 스크립트 업그레이드 방법은 vim9-conversion-aid를 참조하세요.
+
+참고:
+
+- 사용자 매뉴얼은 :h 40.3, 참조 매뉴얼은 :h :autocmd 및 :h autocmd-groups
+- 이벤트 목록은 :h autocmd-events
+- learnvimscriptthehardway: [autocmd 튜토리얼](https://learnvimscriptthehardway.stevelosh.com/chapters/12.html)
+- learnvimscriptthehardway: [augroup 튜토리얼](https://learnvimscriptthehardway.stevelosh.com/chapters/14.html)
+
+
+## Further Reading
+- [Vimscript를 어려운 방법으로 배우기](https://learnvimscriptthehardway.stevelosh.com/) — Vimscript와 Vim 커스터마이징에 관한 책 (버전 7.3 기준)
+- [Vimscript 치트시트](https://devhints.io/vimscript)
+- [Vim Awesome](https://vimawesome.com/) — Vim 플러그인 디렉토리
+- vimrc 참조, 팁 및 생성
+    - stackoverflow: [유용한 vimrc 팁](https://stackoverflow.com/q/164847/4082052)
+    - vi.stackexchange: [vimrc 파일을 디버깅하는 방법?](https://vi.stackexchange.com/q/2003/1616)
+    - [vim-sensible](https://github.com/tpope/vim-sensible)
+    - [초보자를 위한 최소한의 vimrc](https://gist.github.com/benmccormick/4e4bc44d8135cfc43fc3)
+    - [Vim 구성 처음부터 시작하기](https://marcgg.com/blog/2016/03/01/vimrc-example)
+    - [vimconfig](https://vimconfig.com/) — 옵션 선택으로 vimrc 생성하기
+- vi.stackexchange: [커서 위치 파일 새 탭(또는 분할)으로 열기](https://vi.stackexchange.com/q/3364/1616)
+- stackoverflow: [현재 파일 형식에 따라 커서 위치 파일 열기](https://stackoverflow.com/q/33093491/4082052)
+- stackoverflow: [Vim 히스토리 관련 정보](https://stackoverflow.com/q/10752863/4082052)
+- stackoverflow: [폴더 내 모든 파일 들여쓰기](https://stackoverflow.com/q/3218528/4082052)
+
+
+
+
+
+
 
 
 <br><br>
