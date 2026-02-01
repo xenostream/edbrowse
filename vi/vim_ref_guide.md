@@ -2669,17 +2669,125 @@ augroup END
 
 
 
-
-
-
 <br><br>
 ---
 # CLI 옵션(CLI Options)
+이 장에서는 명령줄에서 Vim을 시작할 때 사용할 수 있는 몇 가지 옵션에 대해 설명합니다. 본 장의 예시는 유닉스/리눅스 배포판을 기준으로 합니다. Windows와 같은 다른 플랫폼에서는 구문 및 기능이 다를 수 있습니다.
+
+**문서 링크:**
+
+- :h vim-arguments — Vim 인수에 대한 참조 매뉴얼
+
+> [!NOTE]
+> CLI 옵션에 대한 내장 도움말을 보려면 - 접두사를 추가해야 함을 기억하십시오. 예를 들어 :h -y.
 
 
+## Default
+- gvim은 파일명을 지정하지 않으면 새 이름 없는 버퍼를 엽니다
+- gvim script.py는 script.py를 엽니다
+    - script.py가 존재하지 않으면 빈 버퍼를 생성하며, 파일을 명시적으로 쓰기 명령을 실행한 후에만 생성됩니다
+- gvim report.log power.log area.log는 지정된 파일을 엽니다
+    - 첫 번째 파일(여기서는 report.log)이 현재 버퍼가 됩니다
+- gvim -- *.txt 파일명이 -로 시작할 수 있는 경우, --를 사용하여 해당 파일을 옵션으로 처리하지 않도록 방지합니다
 
 
+## Help
+- gvim -h 옵션에 대한 간략한 설명
+    - 이 장에서는 모든 옵션을 다루지 않으므로, 전체 목록을 보려면 이 명령을 사용할 수 있습니다.
 
 
+## Tabs and Splits
+- gvim -p *.log 지정된 파일을 별도의 탭 페이지로 엽니다
+    - 기본적으로 최대 10개의 페이지를 열 수 있으며, 이 수를 변경하려면 tabpagemax 설정을 사용하십시오
+- gvim -o *.log 지정된 파일을 가로 분할로 엽니다
+- gvim -O *.log 지정된 파일을 세로 분할로 엽니다
+
+> [!NOTE]
+> 각 옵션 뒤에 숫자를 추가하여 원하는 탭 또는 분할 수를 지정할 수 있습니다. 예를 들어, gvim -p3 *.py는 입력 파일 수와 관계없이 세 개의 탭을 엽니다. 지정된 수를 충족할 만큼 입력 파일이 충분하지 않으면 빈 버퍼가 사용됩니다.
+
+
+## Easy mode
+- gvim -y는 삽입 모드로 열리며 클릭하고 입력하는 편집기처럼 동작합니다.
+    - 단순한 텍스트 편집기만 원하는 사용자에게 유용합니다.
+    - 혹은 vim=‘vim -y’ 별칭을 설정해 Vim 사용자를 장난칠 수도 있겠죠.
+    - 일반 모드 명령어를 사용하려면 Ctrl+l 또는 Ctrl+o를 사용하세요.
+
+> [!NOTE]
+> Vim을 일반 편집기처럼 동작하도록 하는 novim-mode 플러그인도 참조하세요.
+
+
+## Readonly and Restricted modes
+- gvim -R 읽기 전용 모드
+    - 경고 메시지가 표시되더라도 변경 사항을 저장할 수 있음
+    - 예: :w! 명령어 사용
+- gvim -M stricter 더 엄격한 읽기 전용 모드
+    - :set modifiable 명령어를 사용하지 않으면 변경 불가
+    - :set write 명령어를 사용하기 전까지 파일 저장 불가
+- gvim -Z 제한 모드
+    - 외부 셸을 사용하는 명령어 사용 불가
+    - 예: :!ls 명령어 사용 불가
+
+
+## Cursor position
+- gvim + script.py는 script.py를 열고 커서를 마지막 줄에 위치시킵니다
+- gvim +25 script.py는 script.py를 열고 커서를 25번째 줄에 위치시킵니다
+    - 지정한 숫자가 파일의 사용 가능한 줄 수를 초과할 경우 커서는 마지막 줄에 위치합니다
+- gvim +/while script.py는 script.py를 열고 커서를 지정된 패턴이 포함된 첫 번째 줄에 위치시킵니다
+    - 패턴이 발견되지 않으면 커서는 마지막 줄에 위치합니다
+    - gvim +1 +/pattern을 사용하면 검색을 첫 번째 줄부터 강제 시작할 수 있으며, 그렇지 않으면 viminfo에 저장된 커서 위치가 사용됩니다 (해당되는 경우)
+
+
+## Execute command
+- gvim -c는 인수로 전달된 명령줄 모드 명령을 실행할 수 있게 합니다
+- gvim -c ‘%s/search/replace/g’ script.py는 script.py를 열고 지정된 대체 작업을 수행합니다
+- gvim -c ‘normal =G’ script.py는 script.py를 열고 파일 전체 내용을 자동으로 들여쓰기합니다
+
+> [!NOTE]
+> :h -c에 따르면, “Vim 명령어에서 최대 10개의 + 또는 -c 인수를 사용할 수 있습니다. 이들은 지정된 순서대로 실행됩니다. -S 인수도 -c 인수로 간주됩니다”
+
+> [!NOTE]
+> --cmd 옵션은 -c 옵션과 유사하지만, vimrc 파일을 로드하기 전에 명령어를 실행합니다.
+
+
+## Quickfix
+- gvim -q <(grep -Hn ‘검색어’ *.py) grep 출력에서 일치하는 줄을 대화형으로 편집합니다
+    - -H 및 -n 옵션은 일치하는 줄에 파일명과 줄 번호 접두사를 제공합니다
+    - :cn 및 :cp 명령으로 각각 다음/이전 발생 위치로 이동할 수 있습니다
+    - 하단 명령줄 영역에 일치 항목 수와 파일명이 표시됩니다
+    - grep 출력을 파일로 저장한 경우 gvim -q 파일명 명령도 사용 가능
+- gvim -q error.log 컴파일러 출력에 포함된 오류 위치의 파일명과 줄 번호를 기반으로 소스 코드 편집
+    - 여기서 error.log는 오류 메시지를 저장하는 데 사용된 파일명으로 가정합니다
+
+> [!NOTE]
+> 이 기능에 대해 자세히 알아보려면 Vim과 퀵픽스 목록 및 stackoverflow: Vim의 퀵픽스 기능은 어떻게 사용하나요?를 참조하세요.
+
+> [!NOTE]
+> 문서화는 :h quickfix를 참조하세요.
+
+
+## Vimrc and Plugins
+- gvim -u 파일은 vimrc 파일 대신 지정된 파일을 초기화에 사용합니다.
+    - 플러그인 테스트, 작업 중인 프로젝트에 따라 다른 vimrc 적용 등에 유용합니다.
+- gvim -u NONE 모든 초기화를 건너뜁니다
+- gvim -u DEFAULTS NONE과 유사하지만 defaults.vim이 로드됩니다
+- gvim -u NORC NONE과 유사하지만 플러그인이 로드됩니다
+- gvim --noplugin 플러그인만 로드되지 않습니다
+
+:h --noplugin에서 가져온 깔끔한 표입니다:
+
+| argument | vimrc | plugins | defaults.vim |
+| (nothing) | yes |  yes | yes | 
+| -u NONE | no | no | no | 
+| -u DEFAULTS | no | no | yes | 
+| -u NORC | no | yes | no | 
+| --noplugin | yes |  no |  yes | 
+
+
+## Session and Viminfo
+- gvim -S proj.vim 이전에 저장된 세션 파일을 사용하여 세션을 복원합니다
+    - 자세한 내용은 :h Session을 참조하세요
+- gvim -i proj.viminfo 지정된 파일에서 Viminfo를 복원합니다
+    - 이 파일은 정보 저장을 위한 기본 viminfo 파일 대신에도 사용됩니다
+    - 자세한 내용은 :h viminfo-read-write를 참조하세요
 
 
