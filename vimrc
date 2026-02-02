@@ -54,10 +54,11 @@ nnoremap <leader>b viw<Esc>a`<Esc>bi`<Esc>
 xnoremap <leader>b <Esc>`<i`<Esc>`>a`<Esc>
 
 " Visual 모드: 선택한 블록을 #iconbox()[ ... ] 로 감싸기
-vnoremap <leader>x :<C-u>set paste<CR>gvc<CR>#iconbox()[<CR>```<CR><C-r>"<CR>```<CR>]<CR><Esc>:<C-u>set nopaste<CR>
+"vnoremap <leader>x :<C-u>set paste<CR>gvc<CR>#iconbox()[<CR>```<CR><C-r>"<CR>```<CR>]<CR><Esc>:<C-u>set nopaste<CR>
+vnoremap <leader>x <Esc>`<:put! ='```'<CR><Esc>`>:put ='```'<CR>
 
 " 현재 라인 trans 로 번역해서 삽입
 nnoremap <leader>t :.t.<CR>:.!trans -no-ansi -brief :ko<CR>
 
 " 비주얼 블럭 trans 로 번역해서 삽입 (번역 -> 원문 형식)
-xnoremap <leader>t y'>p:'<,'>!trans -no-ansi -brief :ko<CR>
+xnoremap <leader>t y'>P:'<,'>!trans -no-ansi -brief :ko<CR>
