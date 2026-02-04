@@ -36,6 +36,10 @@ c.qt.args = [
     "num-raster-threads=4",
     "enable-zero-copy",
     "use-angle=d3d11",
+    "enable-smooth-scrolling",
     "enable-features=CanvasOopRasterization",
 ]
 # }}}
+
+# config.bind('<Ctrl-d>', 'yank selection;; open -t https://deepl.com/translator', mode='caret')
+config.bind('xx', 'config-cycle colors.webpage.darkmode.enabled')
