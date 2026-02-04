@@ -5,9 +5,12 @@ config.load_autoconfig()
 # ====================== UI / Appearance ==================== {{{
 c.statusbar.show = "always"
 c.tabs.show = "multiple"
-
 c.tabs.title.format = "{audio}{current_title}"
 c.fonts.web.size.default = 18
+
+
+# Private Browsing   per session   :open -p
+#c.content.private_browsing = True
 
 # Dark mode (site-aware / time-based themes unaffected)
 c.colors.webpage.darkmode.enabled = True
