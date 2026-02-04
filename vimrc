@@ -21,6 +21,7 @@ augroup toggle_relative_number
 autocmd InsertEnter * :setlocal norelativenumber
 autocmd InsertLeave * :setlocal relativenumber
 
+" GUI English
 set guifont=Cascadia_Mono:h12:cANSI:qDRAFT
 set langmenu=en_US.UTF-8
 language messages en_US.UTF-8
