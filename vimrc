@@ -21,6 +21,9 @@ augroup toggle_relative_number
 autocmd InsertEnter * :setlocal norelativenumber
 autocmd InsertLeave * :setlocal relativenumber
 
+set guifont=Cascadia_Mono:h12:cANSI:qDRAFT
+set langmenu=en_US.UTF-8
+language messages en_US.UTF-8
 
 syntax on                     " 구문 강조 활성화
 filetype indent on            " 파일 들여쓰기 활성화
