@@ -1,0 +1,68 @@
+# =========================
+# 기본 설정
+# =========================
+config.load_autoconfig()
+
+# =========================
+# 다크 모드
+# =========================
+
+# 웹페이지 강제 다크모드 (QtWebEngine 방식)
+c.colors.webpage.darkmode.enabled = True
+
+# 너무 검어지는 거 방지 (취향에 따라 조절)
+c.colors.webpage.darkmode.contrast = 0.9
+c.colors.webpage.darkmode.policy.images = "never"  # 이미지 색 반전 안 함
+
+# UI 자체도 다크
+c.colors.webpage.bg = "#1e1e1e"
+c.colors.statusbar.normal.bg = "#1e1e1e"
+c.colors.statusbar.normal.fg = "#cccccc"
+c.colors.tabs.bar.bg = "#1e1e1e"
+
+
+c.scrolling.smooth = True
+
+# =========================
+# macOS 15.7 크래시 회피
+# =========================
+
+# GPU 가속 + 샌드박스 비활성화 (중요)
+c.qt.args = [
+    "disable-gpu",
+    "no-sandbox"
+]
+
+# =========================
+# 시작 페이지 (DuckDuckGo 크래시 우회용)
+# =========================
+c.url.start_pages = ["ablut:blank"]
+
+# ====================== UI / Appearance ==================== {{{
+c.statusbar.show = "always"
+c.tabs.show = "multiple"
+c.tabs.title.format = "{audio}{current_title}"
+c.fonts.web.size.default = 18
+
+# ====================== User Agent ========================== {{{
+c.content.headers.user_agent = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/120.0.0.0 Safari/537.36"
+)
+# }}}
+
+
+# config.bind('<Ctrl-d>', 'yank selection;; open -t https://deepl.com/translator', mode='caret')
+config.bind('xx', 'config-cycle colors.webpage.darkmode.enabled')
+
+
+# Exclude dark mode
+config.set(
+    "colors.webpage.darkmode.enabled",
+    False,
+    "https://blog.naver.com/*"
+)
+
+
+
