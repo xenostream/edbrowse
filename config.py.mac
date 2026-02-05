@@ -3,6 +3,17 @@
 # =========================
 config.load_autoconfig()
 
+
+# =========================
+# macOS 15.7 크래시 회피
+# =========================
+# GPU 가속 + 샌드박스 비활성화 (중요)
+c.qt.args = [
+    "disable-gpu",
+    "no-sandbox"
+]
+
+
 # =========================
 # 다크 모드
 # =========================
@@ -22,21 +33,9 @@ c.colors.tabs.bar.bg = "#1e1e1e"
 
 
 c.scrolling.smooth = True
+c.content.blocking.method = "both"
 
-# =========================
-# macOS 15.7 크래시 회피
-# =========================
 
-# GPU 가속 + 샌드박스 비활성화 (중요)
-c.qt.args = [
-    "disable-gpu",
-    "no-sandbox"
-]
-
-# =========================
-# 시작 페이지 (DuckDuckGo 크래시 우회용)
-# =========================
-c.url.start_pages = ["ablut:blank"]
 
 # ====================== UI / Appearance ==================== {{{
 c.statusbar.show = "always"
@@ -53,16 +52,18 @@ c.content.headers.user_agent = (
 # }}}
 
 
-# config.bind('<Ctrl-d>', 'yank selection;; open -t https://deepl.com/translator', mode='caret')
-config.bind('xx', 'config-cycle colors.webpage.darkmode.enabled')
-
-
 # Exclude dark mode
 config.set(
     "colors.webpage.darkmode.enabled",
     False,
     "https://blog.naver.com/*"
 )
+
+
+# config.bind('<Ctrl-d>', 'yank selection;; open -t https://deepl.com/translator', mode='caret')
+config.bind('xx', 'config-cycle colors.webpage.darkmode.enabled')
+
+
 
 
 
