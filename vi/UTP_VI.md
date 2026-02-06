@@ -269,15 +269,15 @@ w, W, b 또는 B 명령어와 함께 숫자를 곱하면 이동량을 배가할 
 
 기본 편집 명령은 네 가지입니다: i 는 삽입(이미 보셨을 것입니다), c 는 변경, d 는 삭제, d 다음 p 는 이동(삭제 후 배치), y 는 복사(yank)입니다. 각 편집 유형은 이번 섹션에서 설명합니다. 다음 표는 몇 가지 간단한 예제를 제공합니다.
 
-|Object]|Change]|Delet]|Copy(Yank)]
+|Object|Change|Delet|Copy(Yank)|
 |---|---|---|---|
-|One word]|cw]|dw]|yw]
-|Two words]|2cW]|2dW]|2yW]
-|Three words back]|3cb]|3db]|3yb]
-|One line]|cc]|dd]|yy or Y]
-|To end of line]|c\$ or C]|d\$ or D]|y\$]
-|To beginning of line]|c0]|d0]|y0]
-|single character]|r]|x]|y1]
+|One word|cw|dw|yw |
+|Two words|2cW|2dW|2yW|
+|Three words back|3cb]|3db]|3yb]
+|One line|cc|dd|yy or Y|
+|To end of line|c\$ or C|d\$ or D|y\$|
+|To beginning of line|c0|d0|y0|
+|single character|r|x|y1|
 
 
 <br><br>
@@ -2462,6 +2462,7 @@ cat 명령어의 결과는 평소처럼 표준 출력으로 전송되고, echo�
 ||^str||str 제외 문자 중 하나|
 ||x-y||x~y 문자 범위|
 |\*|0개 이상의 반복|
+
 
 
 
