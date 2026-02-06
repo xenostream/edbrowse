@@ -2335,74 +2335,77 @@ cat 명령어의 결과는 평소처럼 표준 출력으로 전송되고, echo�
 
 
 
----
 # ex 편집기 명령어 요약
 
 <br><br>
 ## ex 편집기 시작 및 종료
-[명령어], [설명],
-[ex name], [파일 끝에서 ex 편집기 시작],
-[ex +n name], [n번째 라인에서 시작],
-[ex-ttag], [tag 위치에서 시작],
-[ex-r], [편집 내용 복구],
-[ex-r name], [name 파일로 복구],
-[ex name...], [여러 파일 편집 (:n 명령 사용)],
-[ex-R name], [읽기 전용 모드로 열기],
-[:x], [변경 사항 저장 후 종료],
-[:q!], [변경 사항 저장하지 않고 종료]
+|명령어|설명|
+|---|---|
+|ex name|파일 끝에서 ex 편집기 시작|
+|ex +n name|n번째 라인에서 시작|
+|ex-ttag|tag 위치에서 시작|
+|ex-r|편집 내용 복구|
+|ex-r name|name 파일로 복구|
+|ex name...|여러 파일 편집 (:n 명령 사용)|
+|ex-R name|읽기 전용 모드로 열기|
+|:x|변경 사항 저장 후 종료|
+|:q!|변경 사항 저장하지 않고 종료|
 
 
 <br><br>
 ## ex 편집기 작동 모드
-[모드], [설명],
-[명령 모드], [: 프롬프트에서 명령 입력],
-[입력 모드], [a, i, c 명령으로 진입],
-[오픈 모드], [open, vi, Q 명령으로 진입]
+|모드|설명|
+|---|---|
+|명령 모드|: 프롬프트에서 명령 입력|
+|입력 모드|a i c 명령으로 진입|
+|오픈 모드|open vi Q 명령으로 진입|
 
 
 <br><br>
 ## ex 명령어 및 단축어
-[명령어], [단축어], [명령어], [단축어),
- [abbrev], [ab], [unabbrev], [una],
- [append], [a], [number], [nu],
- [undo], [u], [args], [ar],
- [open], [o], [unmap], [unm],
- [change], [c], [preserve], [pre],
- [version], [ve], [copy], [co],
- [print], [p], [visual], [vi],
- [delete], [d], [put], [pu],
- [write], [w], [edit], [e],
- [quit], [q], [xit], [x],
- [file], [f], [read], [re],
- [yank], [ya], [global], [g],
- [recover], [rec], [window], [z],
- [insert], [i], [rewind], [rew],
- [escape], [!], [join], [j],
- [set], [se], [lshift], [<],
- [list], [l], [shell], [sh],
- [printnext], [CR], [source], [so],
- [resubst], [&], [mark], [ma],
- [stop], [st], [rshift], [>],
- [move], [m], [substitute], [s],
- [scroll], [^D]
+|명령어|단축어|명령어|단축어)
+|---|---|---|---|
+ |abbrev|ab|unabbrev|una|
+ |append|a|number|nu|
+ |undo|u|args|ar|
+ |open|o|unmap|unm|
+ |change|c|preserve|pre|
+ |version|ve|copy|co|
+ |print|p|visual|vi|
+ |delete|d|put|pu|
+ |write|w|edit|e|
+ |quit|q|xit|x|
+ |file|f|read|re|
+ |yank|ya|global|g|
+ |recover|rec|window|z|
+ |insert|i|rewind|rew|
+ |escape|!|join|j|
+ |set|se|lshift|<|
+ |list|l|shell|sh|
+ |printnext|CR|source|so|
+ |resubst|&|mark|ma|
+ |stop|st|rshift|>|
+ |move|m|substitute|s|
+ |scroll|^D|
 
 
 <br><br>
 ## ex 명령 주소 지정
-[주소], [설명],
-[n], [n번 라인],
-[/pat], [다음 pat 검색],
-[.], [현재 라인],
-[?pat], [이전 pat 검색],
-[\$], [마지막 라인],
-[x-n], [x 이전 n 라인],
-[+], [다음 라인],
-[x,y], [x~y 라인 범위],
-[-], [이전 라인],
-['x], [x 마크로 이동],
-[+n], [n 이후 라인],
-[''], [이전 편집 라인],
-[%], [전체 라인 (1,\$)]
+|주소|설명|
+|---|---|
+|n|n번 라인|
+|/pat|다음 pat 검색|
+|.|현재 라인|
+|?pat|이전 pat 검색|
+|\$|마지막 라인|
+|x-n|x 이전 n 라인|
+|+|다음 라인|
+|xy|x~y 라인 범위|
+|-|이전 라인|
+|'x|x 마크로 이동|
+|+n|n 이후 라인|
+|''|이전 편집 라인|
+|%|전체 라인 (1\$)|
 
 ---
 
@@ -2410,51 +2413,54 @@ cat 명령어의 결과는 평소처럼 표준 출력으로 전송되고, echo�
 
 <br><br>
 ## 옵션 설정
-[명령어], [설명],
-[EXINIT], [환경 변수로 옵션 설정],
-[set x], [옵션 활성화],
-[set nox], [옵션 비활성화],
-[set x=val], [x 옵션에 값 할당],
-[set], [변경된 옵션 출력],
-[set all], [전체 옵션 출력],
-[set x?], [x 옵션 값 출력]
+|명령어|설명|
+|---|---|
+|EXINIT|환경 변수로 옵션 설정|
+|set x|옵션 활성화|
+|set nox|옵션 비활성화|
+|set x=val|x 옵션에 값 할당|
+|set|변경된 옵션 출력|
+|set all|전체 옵션 출력|
+|set x?|x 옵션 값 출력|
 
 
 <br><br>
 ## 유용한 옵션
-[옵션], [설명],
-[autoindent (ai)], [자동 들여쓰기],
-[autowrite (aw)], [자동 저장],
-[ignorecase (ic)], [대소문자 무시 검색],
-[lisp], [() {} 확장],
-[list], [탭 문자 및 라인 끝 표시],
-[magic], [특수 문자 검색 패턴 사용],
-[number (nu)], [라인 번호 출력],
-[paragraphs (para)], [단락 시작 매크로 설정],
-[redraw], [터미널 에뮬레이션],
-[scroll], [명령 모드 라인 수],
-[sections (sect)], [섹션 매크로 설정],
-[shiftwidth (sw)], [들여쓰기 간격 설정],
-[showmatch (sm)], [괄호 일치 표시],
-[showmode (smd)], [입력 모드 정보 표시],
-[slowopen (slow)], [입력 반영 지연],
-[window], [비주얼 모드 라인 수],
-[wrapscan (ws)], [버퍼 내 순환 검색],
-[wrapmargin (wm)], [라인 분할 간격]
+|옵션|설명|
+|---|---|
+|autoindent (ai)|자동 들여쓰기|
+|autowrite (aw)|자동 저장|
+|ignorecase (ic)|대소문자 무시 검색|
+|lisp|() {} 확장|
+|list|탭 문자 및 라인 끝 표시|
+|magic|특수 문자 검색 패턴 사용|
+|number (nu)|라인 번호 출력|
+|paragraphs (para)|단락 시작 매크로 설정|
+|redraw|터미널 에뮬레이션|
+|scroll|명령 모드 라인 수|
+|sections (sect)|섹션 매크로 설정|
+|shiftwidth (sw)|들여쓰기 간격 설정|
+|showmatch (sm)|괄호 일치 표시|
+|showmode (smd)|입력 모드 정보 표시|
+|slowopen (slow)|입력 반영 지연|
+|window|비주얼 모드 라인 수|
+|wrapscan (ws)|버퍼 내 순환 검색|
+|wrapmargin (wm)|라인 분할 간격|
 
 
 <br><br>
 ## 검색 패턴 특수 문자
-[문자], [의미],
-[^], [라인 시작],
-[\$], [라인 끝],
-[.] , [임의의 단일 문자],
-[\<], [단어 시작],
-[\>], [단어 끝],
-[[str]], [str 내 문자 중 하나],
-[[^str]], [str 제외 문자 중 하나],
-[[x-y]], [x~y 문자 범위],
-[\*], [0개 이상의 반복]
+|문자|의미|
+|---|---|
+|^|라인 시작|
+|\$|라인 끝|
+|.|  |임의의 단일 문자|
+|\<|단어 시작|
+|\>|단어 끝|
+||str||str 내 문자 중 하나|
+||^str||str 제외 문자 중 하나|
+||x-y||x~y 문자 범위|
+|\*|0개 이상의 반복|
 
 
 
