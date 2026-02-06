@@ -273,7 +273,7 @@ w, W, b 또는 B 명령어와 함께 숫자를 곱하면 이동량을 배가할 
 |---|---|---|---|
 |One word|cw|dw|yw |
 |Two words|2cW|2dW|2yW|
-|Three words back|3cb]|3db]|3yb]
+|Three words back|3cb|3db|3yb|
 |One line|cc|dd|yy or Y|
 |To end of line|c\$ or C|d\$ or D|y\$|
 |To beginning of line|c0|d0|y0|
@@ -2462,6 +2462,7 @@ cat 명령어의 결과는 평소처럼 표준 출력으로 전송되고, echo�
 ||^str||str 제외 문자 중 하나|
 ||x-y||x~y 문자 범위|
 |\*|0개 이상의 반복|
+
 
 
 
