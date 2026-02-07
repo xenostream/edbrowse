@@ -8,6 +8,11 @@ c.tabs.show = "multiple"
 c.tabs.title.format = "{audio}{current_title}"
 c.fonts.web.size.default = 18
 
+c.fonts.hints = "12pt Consolas"
+c.hints.border = "1px solid #ffffff"
+c.colors.hints.bg = "#000000"
+c.colors.hints.fg = "#ffffff"
+
 
 # Private Browsing   per session   :open -p
 #c.content.private_browsing = True
