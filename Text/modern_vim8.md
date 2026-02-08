@@ -78,7 +78,7 @@ Vim을 배우려면 전념해야 합니다.
 
 저에게 핵심은 매일 단 50단어만 쓰겠다는 약속을 지키는 것입입니다. 여러분의 약속은 Vim을 빠르게 익히는 것일 수도 있습니다. 그래서 항상 가능한 가장 작은 단계를 완수하겠다는 마음가짐으로 시작해야 합니다. 목표를 크게 잡으면 저항감이 생기기 시작합니다.
 
-## 1% improvement per day
+### 1% improvement per day
 하루 만에 어떤 기술도 완벽히 익힐 수 없습니다. 매일 조금씩 발전해야 합니다. 그 작은 발전이 쌓여 큰 차이를 만듭니다. Vim을 배우는 방식도 마찬가지여야 합니다. 매일 하는 것이 중요합니다. 실력이 1% 향상되거나 1% 퇴보합니다. 선택은 여러분의 몫입니다.
 
 시작 단계에서는 1% 나아지는 선택과 1% 나빠지는 선택 사이에 실질적 차이가 없습니다. 오늘 당장 영향을 주지 않지만 시간이 지나면 이런 작은 선택들이 복리 효과를 일으킵니다. 1%가 매일 복리되면 72일마다 두 배가 됩니다. 매일 Vim 실력을 1%씩 향상시키기로 결심한다면, 1년 후에는 실력이 38배나 나아질 것입니다!
@@ -470,7 +470,7 @@ Vim은 커서 단어를 검색할 수 있습니다. 일반 모드에서 커서�
 
 정확한 단어 일치를 원하지 않는다면 g* 및 g# 명령어를 사용합니다.
 
-## Search history
+### Search history
 Vim은 검색 기록을 저장합니다. / 또는 ? 를 입력한 후 위/아래 화살표 키를 사용해서 이전 검색 명령을 탐색합니다. 물론 기록에서 찾은 명령(또는 패턴만)을 편집한 후 Enter 를 눌러 다시 검색할 수 있습니다.
 
 커서가 단어 위에 있고 유사한 단어를 검색하고 싶다면, 전체 단어를 입력하는 대신 다음과 같이 합니다:
@@ -515,7 +515,7 @@ netrw는 다음과 같은 여러 방법으로 실행할 수 있습니다:
 let g:netrw_liststyle = 3
 ```
 
-## Changing how files are opened
+### Changing how files are opened
 Vim은 파일을 열 수 있을 뿐만 아니라 디렉터리도 열 수 있습니다! 네, 디렉터리를 직접 열어 보시기 바랍니다. 예를 들어, 다음 명령어는
 
 ```
@@ -541,7 +541,7 @@ let g:netrw_browse_split = 4
 옵션 4는 개인적으로 선호하는 방식입니다. 파일을 이전 창(netrw 분할 창 옆에 있는 현재 분할 창)에서 엽니다.
 
 
-## Set netrw split width 
+### Set netrw split width 
 새로 열 파일의 창 위치는 netrw_browse_split 옵션으로 설정 가능합니다. netrw 분할창 너비를 전체 Vim 창의 20%로 설정하려면 .vimrc 에 다음을 추가합니다:
 
 ```
@@ -611,7 +611,7 @@ Netrw는 원격 편집을 위한 다양한 옵션과 기능을 제공합니다. 
 ```
 
 
-## Make Vim look beautiful
+### Make Vim look beautiful
 Vim은 사용자가 사용하는 색상을 변경할 수 있도록 합니다. 따라서, Vim은 색상 스킴(Colorscheme)을 지원합니다. 시작하려면 설치된 색상 스킴 중 일부를 선택합니다. 나중에 직접 만들거나 마음에 드는 스킴을 다운로드해서 Vim에 설치할 수 있습니다.
 
 컬러 스킴을 선택하려면 소스 코드가 포함된 파일을 엽니다. 그런 다음 다음 명령을 입력합니다:
@@ -654,13 +654,13 @@ nospell
 ```
 
 
-## Usability improvements
+### Usability improvements
 기본 Vim 설정은 그다지 훌륭하지 않습니다. Vim을 진지하게 사용할 계획이라면, 설정 작업에 시간을 투자하는 것이 분명히 가치가 있습니다. 앞서 언급했듯이, 모든 설정은 .vimrc 파일을 통해 관리하게 됩니다.
 
 이 부분에서 여러분이 고려하고 시도해 볼 만한 다양한 Vim 설정 목록을 제공하겠습니다. 이 장 마지막에는 기본적으로 권장되는 옵션들의 스니펫도 찾을 수 있는데, 이를 그대로 .vimrc 파일에 복사해 넣을 수 있습니다. 이후에는 스스로 설정을 계속해 나가면 됩니다.
 
 
-## General configuration options:
+#### General configuration options:
 - set nocompatible - Vi 설정 대신 Vim 설정을 사용. 다른 옵션에 영향을 미치므로 파일 상단에 설정하는 것이 중요합니다.
 - set backspace=indent,eol,start - 백스페이스로 들여쓰기, 줄바꿈, 삽입 시작 위치까지 삭제 가능
 - set history=1000 - 실행된 명령어의 히스토리 크기 설정
@@ -670,7 +670,7 @@ nospell
 - set hidden - 여러 버퍼를 효율적으로 관리: 현재 버퍼를 디스크에 쓰지 않고 백그라운드로 “보낼” 수 있습니다. 백그라운드 버퍼가 다시 현재 버퍼가 되면 마크와 실행 취소 기록이 유지됩니다. 자세한 내용은 버퍼 장을 참고합니다.
 
 
-## User Interface Options
+#### User Interface Options
 - set laststatus=2 - 상태 표시줄을 항상 표시
 - set ruler - 커서 위치를 항상 표시
 - set wildmenu - 명령줄의 탭 완성 옵션을 메뉴로 표시
@@ -686,13 +686,13 @@ nospell
 - set title - 현재 편집 중인 파일을 반영해서 창의 제목을 설정
 
 
-## Swap and backup file options - disable all of them:
+#### Swap and backup file options - disable all of them:
 - set noswapfile
 - set nobackup
 - set nowb
 
 
-## Indentation options:
+#### Indentation options:
 - set autoindent - 새 줄은 이전 줄의 들여쓰기를 상속
 - filetype plugin indent on - 스마트 자동 들여쓰기 (기존 smartindent 옵션 대신)
 - set tabstop=4 - 기존 탭을 4칸 너비로 표시
@@ -701,14 +701,14 @@ nospell
 - set nowrap - 줄을 자동으로 줄바꿈하지 않음
 
 
-## Search options:
+#### Search options:
 - set incsearch - 검색어를 입력할 때 다음 일치 항목 검색
 - set hlsearch - 기본적으로 검색어를 강조 표시
 - set ignorecase - 검색 시 대소문자를 구분하지 않음
 - set smartcase - ...대문자를 입력한 경우 제외
 
 
-## Text rendering options
+#### Text rendering options
 - set encoding=utf-8 - 유니코드를 지원하는 인코딩을 사용
 - set linebreak - 적절한 위치에서 줄바꿈을 하고, 단어 중간에서 줄바꿈하지 않도록 처리
 - set scrolloff=3 - 커서 위아래로 유지할 화면 줄 수
@@ -716,7 +716,7 @@ nospell
 - syntax enable - 구문 강조 표시 활성화
 
 
-## Miscellaneous Options
+#### Miscellaneous Options
 - set confirm - 저장하지 않은 파일을 닫을 때 확인 대화 상자를 표시
 - set nomodeline - 파일의 모드 라인을 무시하고 vimrc 설정 사용
 - set nrformats-=octal - 숫자를 증가시킬 때 8진수를 10진수로 해석
@@ -724,7 +724,7 @@ nospell
 - set spell - 맞춤법 검사 활성화
 
 
-## Status line
+### Status line
 Vim의 상태줄은 Vim 창 하단에 위치한 막대입니다. 상태줄의 목적은 현재 버퍼의 상태에 관한 다양한 정보를 제공하는 것입니다. 기본 상태줄은 파일 경로, 권한, 줄 번호, 파일 내 현재 위치의 백분율 수치 등의 정보가 포함됩니다.
 
 기본 상태줄이 꽤 유용한 정보를 제공하지만, 원한다면 언제든지 개선할 수 있습니다. 이를 위한 인기 있는 플러그인도 몇 가지 존재합니다. 여기서는 기본적인 내용만 다루겠습니다. 상태줄을 수정하고 싶다면 어떻게 해야 하는지 알게 될 것입니다.
@@ -775,18 +775,18 @@ set statusline+=\ %P        "percent through file
 
 
 
-## Swap and backup files dilemma
+### Swap and backup files dilemma
 
-### Swap files
+#### Swap files
 파일 편집 시 Vim이 현재 편집 중인 파일과 동일한 위치에 .filename.swp 형식의 파일을 생성한다는 사실을 조만간 알게 될 것입니다. 이 파일을 스왑 파일이라 합니다.
 
 스왑 파일은 버퍼에 가한 변경 사항을 저장합니다. Vim이 충돌할 경우 스왑 파일을 통해 해당 변경 사항을 복구할 수 있습니다. 스왑 파일의 또 다른 중요한 역할은 잠금 장치로 기능하는 것입니다: 다른 Vim 세션에서 이미 열려 있는 파일을 열려고 하면 경고가 표시됩니다. 이는 특히 다중 사용자 시스템에서 유용할 수 있습니다.
 
 
-### Disabling swap files
+#### Disabling swap files
 .vimrc 파일에 set noswapfile 을 추가하면 스왑 파일을 완전히 비활성화할 수 있습니다. 하지만, 자신이 무엇을 하는지 알지 못한다면 비활성화하지 않는 것이 좋습니다. 대신 스왑 파일을 좀 더 제대로 정리할 수 있습니다.
 
-### Swap files organization
+#### Swap files organization
 스왑 파일의 성가신 점은 일반적으로 파일 시스템을 가로질러, 파일을 편집하는 모든 위치에 생성된다는 것입니다. 이를 해결하려면 모든 스왑 파일을 한 위치에 저장할 수 있습니다. 처리 방법은 다음과 같습니다:
 
 1. 스왑 파일을 저장할 디렉터리를 생성합니다. 예제:
@@ -804,7 +804,7 @@ set directory=$HOME/.vim/swp//
 direcctory 옵션에는 Vim이 스왑 파일을 저장하려고 시도할 디렉터리 목록이 포함됩니다. 끝에 있는 // 는 Vim이 생성할 스왑 파일에 절대 경로를 사용하도록 지시합니다. 이는 스왑 파일 이름이 고유하도록 보장해서 서로 다른 디렉터리의 동일 이름 파일 간 충돌을 방지합니다.
 
 
-## Backup files
+#### Backup files
 Vim은 현재 편집 중인 파일의 백업을 생성할 수 있으므로 데이터 손실로부터 안전합니다. 개인적으로는 이 Vim 기능을 사용하지 않으며, 작업용으로 좀 더 나은 백업 솔루션을 설정할 것을 권장합니다.
 
 물론 이 기능은 유용할 수 있습니다. 백업은 backup 과 writebackup 두 옵션으로 제어됩니다. 관심이 있다면 :help 를 참고합니다.
@@ -816,7 +816,7 @@ set backupdir=~/.vim/.backup//
 ```
 
 
-## Project specific .vimrc
+### Project specific .vimrc
 여러 가지 다른 유형의 파일을 다루는 여러 프로젝트를 진행 중이면, 특정 유형의 프로젝트에 별도의 설정을 적용하고 싶을 수 있습니다. Vim은 프로젝트별 .vimrc 파일을 사용할 수 있습니다. 먼저 .vimrc 파일에 다음 내용을 추가해서 이 기능을 활성화해야 합니다:
 
 ```
@@ -827,7 +827,7 @@ set exrc
 그런 다음 프로젝트 폴더 루트에 특정 프로젝트용 .vimrc 파일 구성을 생성해야 합니다. 이렇게 하면 메인 .vimrc 파일을 깔끔하게 유지하면서 다른 프로젝트에 대한 특정 구성을 가질 수 있습니다.
 
 
-## Basic recommended configuration
+### Basic recommended configuration
 Vim을 자신의 필요에 맞게 설정하는 데는 시간과 경험이 필요합니다. 시작하기 위해 다음의 설정 조각을 .vimrc 파일에 복사합니다. 비록 최소한이지만 유용한 설정으로 시작하는 것을 권장합니다.
 
 책을 진행하면서 설정은 점차 개선될 것입니다. 가장 중요한 것은 Vim을 꾸준히 사용하기 시작하면 개선하고 변경하고 싶은 부분이 자연스럽게 떠오를 거라는 점입니다. 그때 이 장으로 돌아와서 필요한 추가 옵션을 활성화합니다. 또한, 구글은 언제나 당신의 친구입니다. 시간이 지나면 다른 고급 Vim 사용자들의 팁과 설정 옵션을 습득할 수 있을 것입니다.
@@ -1019,7 +1019,7 @@ Vim은 수식어를 명사 앞에 사용하므로, 명사에 어떤 영향을 �
 - ip - (내부) 단락
 
 
-## Learn to talk to Vim
+### Learn to talk to Vim
 기본적인 언어 요소를 다뤘으니 이제 Vim과 대화하는 법을 배울 수 있습니다. 여러분은 이제 문장으로 “Vim과 대화” 할 수 있게 될 것입니다. 몇 가지 예를 살펴보겠습니다:
 
 - 현재 단어 삭제: dw (커서 위치부터 단어 끝까지 삭제)
@@ -1044,7 +1044,7 @@ print ""
 커서를 “” 사이에 두고 삽입 모드에서 실행합니다. 이렇게 하면 따옴표 사이의 내용을 쉽게 변경할 수 있습니다. 변경 대신 삭제하려면 di" 를 실행하면 됩니다.
 
 
-## Change inside tags
+#### Change inside tags
 HTML 파일을 열었다고 가정해 보겠습니다. 그 안에 다음과 같은 줄이 있습니다:
 
 ```
@@ -1064,7 +1064,7 @@ HTML 파일을 열었다고 가정해 보겠습니다. 그 안에 다음과 같�
 마지막 두 예제를 살펴보면 사용 패턴을 확인할 수 있습니다. 두 문장 모두 "<동사><수식어><명사>" 와 같은 구조를 가집니다.
 
 
-## More examples
+#### More examples
 > [!NOTE]
 > 참고: 설명을 읽으면서 실제로 명령어를 보기 전에 어떤 명령어일지 추측합니다.
 
@@ -1083,7 +1083,7 @@ HTML 파일을 열었다고 가정해 보겠습니다. 그 안에 다음과 같�
 추가적인 명령어는 :help motion.txt 를 참고합니다.
 
 
-## The “dot” command
+### The “dot” command
 반복하지 마라! (Don’t Repeat Yourself) 원칙에 대해 이미 들어보셨을 겁니다. 소프트웨어 공학에서 이것은 모든 종류의 반복을 줄이는 데 초점을 맞춘 소프트웨어 개발 원칙입니다. 이 책 전체에서 보시게 될 것처럼, Vim은 다양한 작업을 자동화하는 여러 가지 방법과 명령어를 제공하므로 동일한 동작을 반복할 필요가 없습니다.
 
 이런 반복을 피하는 데 가장 강력한 Vim 명령어 중 하나는 .(“점”) 명령어입니다. 일반 모드에서 .(점)을 누르면 마지막으로 실행한 기본 Vim 명령어를 반복합니다.
@@ -1275,7 +1275,7 @@ That awesome girl did awesome on test.
 이 명령어에서 눈에 띄는 새로운 문자는 | 로, “논리 OR” 을 의미합니다. 이 방법으로 Vim에게 첫 번째 단어 또는 두 번째 단어를 찾아서 대체하도록 지시합니다. 하지만, 이를 사용하려면 앞에 \ 를 추가해야 합니다. 따라서, 논리 OR을 사용하려면 대체 명령어에 항상 \| 를 사용해야 합니다. 흥미롭다면 :help magic 을 참고합니다.
 
 
-## Interactive search and replace
+### Interactive search and replace
 c 플래그를 사용하면 Vim에서 대화형 검색 및 교체를 실행할 수 있습니다. 예제를 살펴보겠습니다:
 
 ```
@@ -1421,7 +1421,7 @@ important 문자열을 포함하지 않는 모든 줄을 삭제합니다:
 :g/pattern/d _
 ```
 
-## Execute macros with the global command
+### Execute macros with the global command
 레지스터 a 에 매크로를 기록했다고 가정하고, 이 매크로를 문자열 vim 을 포함하는 모든 줄에 실행하고 싶다면, :g 와 :normal 명령을 함께 사용해서 이를 수행할 수 있습니다:
 
 ```
@@ -1434,7 +1434,7 @@ important 문자열을 포함하지 않는 모든 줄을 삭제합니다:
 지금은 이해하지 못해도 걱정하지 않아도 됩니다. 곧 매크로에 대해 많이 배우게 될 겁니다.
 
 
-## Copy and move lines using :g
+### Copy and move lines using :g
 :g 명령어를 사용하면 파일 내에서 줄을 복사하거나 이동할 수도 있습니다. 
 
 20번째 줄 이후에 3번째부터 9번째 줄까지 복사하는 방법은 다음과 같습니다. 커서가 어디에 있든 상관없습니다:
@@ -1457,7 +1457,7 @@ important 문자열을 포함하지 않는 모든 줄을 삭제합니다:
 2. 다음 명령을 실행합니다: :m0
 
 
-## For every line containing “good” substitute all “bad” with “ugly”
+### For every line containing “good” substitute all “bad” with “ugly”
 제목이 모든 것을 말해줍니다. 방법은 다음과 같습니다:
 
 ```
@@ -1470,7 +1470,7 @@ important 문자열을 포함하지 않는 모든 줄을 삭제합니다:
 - s/bad/ugly/g - 대체 명령으로 (명령의 첫 부분으로) 이전에 일치된 모든 줄에서 'bad' 를 'ugly' 로 교체합니다.
 
 
-## Reverse all the lines
+### Reverse all the lines
 예를 들어, 다음과 같은 파일이 있다고 가정해 보겠습니다:
 
 ```
@@ -1565,7 +1565,7 @@ Vim에서 텍스트를 yank(y), change(c), delete(d), substitute(s) 또는 cut(x
 예를 들어, 명령어 “ad 를 사용한 후 레지스터를 선택하지 않고 p 명령어로 붙여넣으면, 이름 없는 레지스터 “” 에 저장된 텍스트가 붙여넣어집니다.
 
 
-## The famous annoying problem finally solved
+### The famous annoying problem finally solved
 많은 Vim 사용자를 괴롭히는 문제가 하나 있는데, 레지스터를 사용하면 쉽게 해결할 수 있습니다. 예를 들겠습니다: d 명령으로 (명명된 레지스터를 지정하지 않고) 텍스트를 삭제한 후, 이 텍스트를 다른 위치에 붙여넣으려 합니다. 텍스트를 새 위치에 붙여넣기 전에, 중간에 있는 텍스트를 좀 더 삭제해야 합니다. 앞서 언급했듯이 d 명령어의 수정 내용은 기본 " 레지스터(이름 없는)에 저장되므로, 1단계에서 복사한 원본 텍스트를 잃게 됩니다.
 
 이 문제를 해결하려면 Vim이 마지막으로 복사한 내용을 자동으로 0 레지스터에 저장한다는 점을 알아야 합니다. 즉, 명명된 레지스터 없이 텍스트를 복사한 후 중간에 일부 텍스트를 삭제하고, 최종적으로 이전에 복사한 텍스트를 "0p 명령어로 붙여넣을 수 있습니다.
@@ -1702,7 +1702,7 @@ map <C-J> :bnext<CR>
 ```
 
 
-## Switching windows
+### Switching windows
 다음은 창 전환을 위한 기본 단축키입니다:
 
 | 단축키 | 설명 |
@@ -1724,7 +1724,7 @@ nnoremap <C-L> <C-W><C-L>
 스플릿 창 사이를 좀 더 쉽게 이동하기 위해 다른 키 매핑을 사용할 수 있습니다. 다음 스니펫을 .vimrc 파일에 추가하면 Ctrl-w 다음에 j 를 누르는 대신 Ctrl-j 만으로 아래 창으로 전환할 수 있습니다.
 
 
-## Moving windows
+### Moving windows
 창을 이동시키고 싶은 경우가 매우 많습니다. 창을 이동시키는 기본 단축키 몇 가지는 다음과 같습니다:
 
 | 단축키 | 설명 |
@@ -1735,7 +1735,7 @@ nnoremap <C-L> <C-W><C-L>
 | Ctrl-w J | 현재 창을 화면 맨 아래로 이동하고 화면 전체 너비를 사용 |
 
 
-## Resizing windows
+### Resizing windows
 창 크기를 조정하고 싶은 경우가 매우 많습니다. 다음과 같은 방법으로 조정할 수 있습니다:
 
 | 단축키 | 설명 |
@@ -2269,7 +2269,7 @@ exe[cute] 명령어는 문자열을 Vim 명령어처럼 평가하는 데 사용�
 Hello world 문자열을 출력합니다. 이 예제는 내용을 출력하기 위해 Vim 내장 명령어인 echom 을 사용했습니다. 이 명령어는 임의의 문자열로 명령어를 생성할 수 있으므로 유용한 도구입니다.
 
 
-## The normal command
+### The normal command
 다음 명령어를 실행합니다:
 
 ```
