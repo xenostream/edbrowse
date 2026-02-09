@@ -260,7 +260,7 @@ Vim을 이해하고 배우려면 Vim 모드를 이해해야 합니다. Vim에는
 
 - **비주얼 모드(Visual mode)** - 텍스트 선택 영역의 탐색 및 조작을 위한 모드입니다. 일반 모드와 유사하지만, 이동 명령은 선택 영역을 확장합니다. 이동이 아닌 명령을 사용하면 선택 영역에 해당 명령이 실행됩니다. 기본적으로 창 하단에 “– VISUAL –” 이 표시됩니다.
 
-- **삽입 일반 모드(Normal insert mode)** - 삽입 모드에서 Ctrl - o 를 누르면 이 모드로 진입합니다. Vim 일반 모드와 유사하지만, 한 번의 명령을 실행한 후 Vim은 삽입 모드로 돌아갑니다. 기본적으로 '– (insert) –' 가 창 하단에 표시됩니다.
+- **삽입 일반 모드(Insert Normal mode)** - 삽입 모드에서 Ctrl - o 를 누르면 이 모드로 진입합니다. Vim 일반 모드와 유사하지만, 한 번의 명령을 실행한 후 Vim은 삽입 모드로 돌아갑니다. 기본적으로 '– (insert) –' 가 창 하단에 표시됩니다.
 
 
 ## Commands
@@ -1577,9 +1577,10 @@ Vim에서 텍스트를 시스템 클립보드로 복사하려면 "+ 레지스터
 1 my $ceph = get cmdb 'ceph';
 2 my $hostname = run 'hostname';
 3 my $config = $ceph->{$hostname};
+4
 5 file '/etc/ceph/ceph.client.admin.keyring',
-6 source => 'files/etc/ceph/ceph.client.admin.keyring',
-7 owner => 'ceph';
+6   source => 'files/etc/ceph/ceph.client.admin.keyring',
+7     owner => 'ceph';
 ```
 
 이미 배운 것 같이, 커서를 1행에 놓고 3yy 명령을 실행하면 1행부터 3행까지 복사할 수 있습니다. 이 경우, 이 세 줄을 시스템 레지스터 “+” 로 복사해야 합니다.
@@ -2195,6 +2196,7 @@ Vim은 각 프로그래밍 언어마다 별도의 구문 파일을 사용하며,
 ```
 set foldmethod=syntax
 set foldlevelstart=1
+
 let perl_fold=1                " Perl
 let perl_fold_blocks = 1       " Fold blocks in if statements, etc. in Perl
 let sh_fold_enabled=1          " sh - enable function folding
@@ -2579,18 +2581,18 @@ set thesaurus+=/home/jole/my_thesaurus.txt
 ```
 !/usr/bin/env perl
 #===============================================================================
-# FILE: filename.pl
-# USAGE: ./filename.pl
-# DESCRIPTION:
-# OPTIONS: ---
+#                       FILE: filename.pl
+#                   USAGE: ./filename.pl
+#     DESCRIPTION:
+#               OPTIONS: ---
 # REQUIREMENTS: ---
-# BUGS: ---
-# NOTES: ---
-# AUTHOR: YOUR NAME (),
-# ORGANIZATION:
-# VERSION: 1.0
-# CREATED: 04/18/2017 08:58:16 PM
-# REVISION: ---
+#                       BUGS: ---
+#                    NOTES: ---
+#                 AUTHOR: YOUR NAME (),
+#    ORGANIZATION:
+#                 VERSION: 1.0
+#                CREATED: 04/18/2017 08:58:16 PM
+#                REVISION: ---
 #===============================================================================
 use strict;
 use warnings;
@@ -2609,14 +2611,14 @@ mkdir ~/.vim/templates
 
 ```
 <html>
-<head>
-<title></title>
-<meta name="generator" content="Vim" />
-<meta name="author" content="Jovica Ilic"/>
-</head>
-<body>
+    <head>
+        <title></title>
+        <meta name="generator" content="Vim" />
+        <meta name="author" content="Jovica Ilic"/>
+    </head>
+    <body>
       <p>Your content here.</p>
-</body>
+     </body>
 </html>
 ```
 
@@ -2996,13 +2998,16 @@ $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 set nocompatible           " be iMproved, required
 filetype off               " required
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
+
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()         " required
 filetype plugin indent on " required
@@ -3020,8 +3025,10 @@ filetype plugin indent on " required
 
 ```
 call vundle#begin()
+
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'wellle/targets.vim'
+
 call vundle#end()
 ```
 
