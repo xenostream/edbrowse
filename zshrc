@@ -1,17 +1,8 @@
-# main zsh settings. env in ~/.zprofile
-# read second
-
-
-# source global shell alias & variables files
-[ -f "$XDG_CONFIG_HOME/shell/alias" ] && source "$XDG_CONFIG_HOME/shell/alias"
-[ -f "$XDG_CONFIG_HOME/shell/vars" ] && source "$XDG_CONFIG_HOME/shell/vars"
-
 # load modules
 zmodload zsh/complist
 autoload -U compinit && compinit
 autoload -U colors && colors
 # autoload -U tetris # main attraction of zsh, obviously
-
 
 # cmp opts
 zstyle ':completion:*' menu select # tab opens cmp menu
@@ -38,8 +29,6 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE="$XDG_CACHE_HOME/zsh_history" # move histfile to cache
 HISTCONTROL=ignoreboth # consecutive duplicates & commands starting with space are not saved
-
-
 
 
 # binds
