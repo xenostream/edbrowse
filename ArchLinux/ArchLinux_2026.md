@@ -32,6 +32,9 @@ $ chsh  => /usr/bin/zsh
 
 
 $ yay -S kime-bin  ? (build failed...   kime-git OK but heavy package need)
+  yay -S ibus ibus-hangul
+
+ ibus-setup (add Korean)
 
 $ yay -S dwm dmenu
 
@@ -53,14 +56,14 @@ ed .build/slstatus/config.h
 
 $ edb /home/pjkwon/.xinitrc
 
-export XMODIFIERS=@im=kime
-export QT_IM_MODULE=kime
-export GTK_IM_MODULE=kime
+export XMODIFIERS=@im=kime    ibus
+export QT_IM_MODULE=kime      ibus
+export GTK_IM_MODULE=kime     ibus
 
 exec xrandr --rate 75 &
 exec xset s off &
 exec xset -dpms &
-exec kime-xim &
+exec kime-xim &               ibus-daemon -d &
 exec slstatus &
 
 exec dwm
