@@ -2,6 +2,7 @@
 
 ```bash
 archinstall
+pjkwon add user / manual part - f2fs suggestion layout / Asia/Seoul => Install & reboot
  
 
 # pacman -S intel-ucode linux-firmware base-devel git 
