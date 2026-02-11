@@ -26,7 +26,7 @@ let g:neovide_floating_blur_amount_x = 0
 let g:neovide_floating_blur_amount_y = 0
 let g:neovide_cursor_antialiasing = v:true
 
-set guifont=Noto\ Sans\ Mono\ CJK\ KR:h14
+set guifont=Noto\ Sans\ Mono\ CJK\ KR:h12
 
 syntax on                     " 구문 강조 활성화
 filetype indent on            " 파일 들여쓰기 활성화
