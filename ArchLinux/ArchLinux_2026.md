@@ -13,6 +13,9 @@ pjkwon add user / manual part - f2fs suggestion layout / Asia/Seoul => Install &
 # mv edbrowse-x86_64 /usr/bin/edb
 # chmod 755 /usr/bin/edb
 
+curl -O https://raw.githubusercontent.com/xenostream/edbrowse/refs/heads/main/ebrc
+mv ebrc ~/.ebrc
+
 
 # su - pjkwon
 $ git clone https://aur.archlinux.org/yay
