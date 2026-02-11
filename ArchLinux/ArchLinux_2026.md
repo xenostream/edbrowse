@@ -9,9 +9,9 @@ pjkwon add user / manual part - f2fs suggestion layout / Asia/Seoul => Install &
 
 
 
-# wget https://edbrowse.org/static/edbrowse-x86_64
+# curl -O http://www.edbrowse.org/static/edbrowse-x86_64
 # mv edbrowse-x86_64 /usr/bin/edb
-# chmod 755 /bin/edb
+# chmod 755 /usr/bin/edb
 
 
 # su - pjkwon
@@ -21,7 +21,7 @@ $ makepkg -si
 $ yay -Syuu
 
 $ yay -S libx11 libxft libxinerama xorg xorg-xinit noto-fonts-cjk terminus-font 
-            moc-pulse bluez bluez-utils qutebrowser nvim neovide unzip wget alsa-utils 
+            moc-pulse bluez bluez-utils qutebrowser nvim neovide alsa-utils 
             zsh zsh-autosuggestions zsh-syntax-highlighting
 
 ~/.config/qutebrowser/config.py
@@ -32,9 +32,7 @@ $ chsh  => /usr/bin/zsh
 
 
 $ yay -S kime-bin  ? (build failed...   kime-git OK but heavy package need)
-  yay -S ibus ibus-hangul
 
- ibus-setup (add Korean)
 
 $ yay -S dwm dmenu
 
@@ -56,14 +54,14 @@ ed .build/slstatus/config.h
 
 $ edb /home/pjkwon/.xinitrc
 
-export XMODIFIERS=@im=kime    ibus
-export QT_IM_MODULE=kime      ibus
-export GTK_IM_MODULE=kime     ibus
+export XMODIFIERS=@im=kime    
+export QT_IM_MODULE=kime      
+export GTK_IM_MODULE=kime     
 
 exec xrandr --rate 75 &
 exec xset s off &
 exec xset -dpms &
-exec kime-xim &               ibus-daemon -d &
+exec kime-xim &               
 exec slstatus &
 
 exec dwm
