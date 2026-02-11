@@ -26,9 +26,6 @@ if(*){
 }
 }
 
-
-emoji = /root/Emojis.txt
-
 # github MD raw reader
 # <gitMD Text/ed.md
 function+gitMD {
