@@ -35,6 +35,9 @@ $ chsh  => /usr/bin/zsh
 
 
 $ yay -S kime-bin  ? (build failed...   kime-git OK but heavy package need)
+$ curl -O https://github.com/Riey/kime/releases/download/v3.1.1/kime_latest_v3.1.1.tar.zst
+tar xvzf kime_latest_v3.11.tar.zst  (or yay -S zstd)
+sudo mv kime /usr/bin/kime
 
 
 $ yay -S dwm dmenu
