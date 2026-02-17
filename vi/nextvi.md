@@ -1453,22 +1453,22 @@ export CFLAGS=‘-s’   	   	CFLAGS 설정, 스트립 예시
 제출하실 수 있습니다. https://github.com/kyx0r/nextvi/tree/patches
 
 이 매뉴얼 생성에 사용된 스크립트는 매뉴얼 브랜치에 위치합니다.
-     https://github.com/kyx0r/nextvi/tree/manual
+https://github.com/kyx0r/nextvi/tree/manual
 
-     원본 Neatvi 저장소
-     https://github.com/aligrudi/neatvi
+원본 Neatvi 저장소
+https://github.com/aligrudi/neatvi
 
-     Posix vi(1)
-     https://pubs.opengroup.org/onlinepubs/9699919799/utilities/vi.html
+Posix vi(1)
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/vi.html
 
-     Posix ex(1)
-     https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ex.html
+Posix ex(1)
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ex.html
 
-     Russ Cox의 NFA 정규 표현식
-     https://swtch.com/~rsc/regexp/regexp1.html
+Russ Cox의 NFA 정규 표현식
+https://swtch.com/~rsc/regexp/regexp1.html
 
-     Plan 9 regexp(7)
-     https://man.cat-v.org/p9p/7/regexp
+Plan 9 regexp(7)
+https://man.cat-v.org/p9p/7/regexp
 
 
 # AUTHORS
