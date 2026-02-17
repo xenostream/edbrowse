@@ -1,3 +1,4 @@
+```
 setup-alpine
 
 apk add intel-ucode linux-firmware build-base git \
@@ -27,3 +28,4 @@ permit persist :wheel
 addgroup <사용자명> wheel
 
 doas apk update
+```
