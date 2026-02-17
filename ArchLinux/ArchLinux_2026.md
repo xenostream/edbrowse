@@ -5,37 +5,36 @@ archinstall
 pjkwon add user / manual part - f2fs suggestion layout / Asia/Seoul => Install & reboot
  
 
-# pacman -S intel-ucode linux-firmware base-devel git 
+# pacman -S intel-ucode linux-firmware base-devel git zsh zsh-autosuggestions zsh-syntax-highlighting 
+reboot
 
-
+# pjkwon login
 
 # curl -O http://www.edbrowse.org/static/edbrowse-x86_64
 # mv edbrowse-x86_64 /usr/bin/edb
 # chmod 755 /usr/bin/edb
 
-curl -O https://raw.githubusercontent.com/xenostream/edbrowse/refs/heads/main/ebrc
+curl -O https://raw.githubusercontent.com/xenostream/edbrowse/refs/heads/main/ebrc  {zshrc, config.py, vimrc ...}
 mv ebrc ~/.ebrc
 
+~/.config/qutebrowser/config.py
+~/.config/nvim/init.vim
+~/.zshrc
 
-# su - pjkwon
+mv zshrc .zshrc
+chsh (/usr/bin/zsh)
+
+re-login
+
 $ git clone https://aur.archlinux.org/yay
 $ makepkg -si
 
 $ yay -Syuu
 
 $ yay -S libx11 libxft libxinerama xorg xorg-xinit noto-fonts-cjk terminus-font 
-            moc-pulse bluez bluez-utils qutebrowser nvim neovide alsa-utils 
-            zsh zsh-autosuggestions zsh-syntax-highlighting
-
-~/.config/qutebrowser/config.py
-~/.config/nvim/init.vim
-~/.zshrc
-
-$ chsh  => /usr/bin/zsh
-
-
-$ yay -S kime-git  
-
+            cmus bluez bluez-utils qutebrowser alsa-utils ntfs-3g 
+            
+$ yay -S kime-git    (long time & heavy rust + cargo...  kime-bin is failed)  
 
 $ yay -S dwm dmenu
 
@@ -70,6 +69,7 @@ exec slstatus &
 exec dwm
 
 
+re-login
 $ startx
 
 
@@ -82,7 +82,6 @@ agent on
 default-agent
 scan on
 pair XX:XX:XX
-connect XX:XX:XX
 trust XX:XX:XX
 
 ▶  Yaft FrameBuffer Terminal with Hangul key (working root)
@@ -128,7 +127,7 @@ yaft -> Shift + Space (Han/Eng)
 | 레이아웃 |   |
 | Alt+t | 타일 모드 |
 | Alt+f | 플로팅 모드 |
-| Alt+ㅡ | 모노클 모드 |
+| Alt+m | 모노클 모드 |
 | 플로팅 모드 |    |
 | Alt+R클릭 | 창 크기 조절 |
 | Alt+L클릭 | 창 위치 이동 |
