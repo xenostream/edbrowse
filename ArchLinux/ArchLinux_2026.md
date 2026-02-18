@@ -5,7 +5,7 @@ archinstall
 pjkwon add user / manual part - f2fs suggestion layout / Asia/Seoul => Install & reboot
  
 
-# pacman -S intel-ucode linux-firmware base-devel git zsh zsh-autosuggestions zsh-syntax-highlighting 
+# pacman -S base-devel git 
 reboot
 
 # pjkwon login
@@ -32,7 +32,7 @@ $ makepkg -si
 $ yay -Syuu
 
 $ yay -S libx11 libxft libxinerama xorg xorg-xinit noto-fonts-cjk terminus-font 
-            cmus bluez bluez-utils qutebrowser alsa-utils ntfs-3g 
+            cmus bluez bluez-utils qutebrowser alsa-utils ntfs-3g  zsh zsh-autosuggestions zsh-syntax-highlighting 
             
 $ yay -S kime-git    (long time & heavy rust + cargo...  kime-bin is failed)  
 
