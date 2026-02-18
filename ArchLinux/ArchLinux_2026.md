@@ -15,26 +15,30 @@ reboot
 # chmod 755 /usr/bin/edb
 
 curl -O https://raw.githubusercontent.com/xenostream/edbrowse/refs/heads/main/ebrc  {zshrc, config.py, vimrc ...}
-mv ebrc ~/.ebrc
-
-~/.config/qutebrowser/config.py
-~/.config/nvim/init.vim
-~/.zshrc
-
+mv ebrc .ebrc
 mv zshrc .zshrc
-chsh (/usr/bin/zsh)
 
-re-login
-
+mkdir Build; cd Build
 $ git clone https://aur.archlinux.org/yay
+cd yay
 $ makepkg -si
+
 
 $ yay -Syuu
 
 $ yay -S libx11 libxft libxinerama xorg xorg-xinit noto-fonts-cjk terminus-font 
             cmus bluez bluez-utils qutebrowser alsa-utils ntfs-3g  zsh zsh-autosuggestions zsh-syntax-highlighting 
-            
-$ yay -S kime-git    (long time & heavy rust + cargo...  kime-bin is failed)  
+
+chsh (/usr/bin/zsh)
+
+re-login
+
+cd Build
+git clone https://github.com/kyx0r/nextvi.git
+cd nextvi
+./cbuild.sh
+sudo mv vi /usr/bin        (run vi ->   2# , 8#, 1+^g)
+
 
 $ yay -S dwm dmenu
 
@@ -68,6 +72,8 @@ exec slstatus &
 
 exec dwm
 
+
+$ yay -S kime-git    (long time & heavy rust + cargo...  kime-bin is failed)  
 
 re-login
 $ startx
