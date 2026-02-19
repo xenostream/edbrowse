@@ -26,7 +26,7 @@ $ makepkg -si
 
 $ yay -Syuu
 
-$ yay -S libx11 libxft libxinerama xorg xorg-xinit noto-fonts-cjk terminus-font 
+$ yay -S libx11 libxft libxinerama xorg xorg-xinit noto-fonts-cjk terminus-font btop
             cmus bluez bluez-utils qutebrowser alsa-utils ntfs-3g  zsh zsh-autosuggestions zsh-syntax-highlighting 
 
 chsh (/usr/bin/zsh)
