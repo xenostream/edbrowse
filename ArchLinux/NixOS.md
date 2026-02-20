@@ -125,6 +125,9 @@ connect XX:YY
 trust [XX:YY]
 
 
+# fcitx5
+fcitx5-configtool => "Input Method" => "Available Input Method" => Search Input Method => Korea => Hangul => "<"
+한글 키 or Ctrl + Space
 ```
 
 
