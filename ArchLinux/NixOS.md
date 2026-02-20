@@ -1,3 +1,5 @@
+
+```
 sudo -i
 parted /dev/sda -- mklabel gpt
 parted /dev/sda -- mkpart primary 512MB -8GB
@@ -24,10 +26,19 @@ vi /etc/nixos/configuration.nix
 networking.hostName = "nixos"; # Define your hostname.
 time.timeZone = "Asia/Seoul";
 i18n.defaultLocale = "en_US.UTF-8";
+
 services.xserver.enable = true;
 services.xserver.displayManager.lightdm.enable = false;
 services.xserver.displayManager.startx.enable = true;
 services.xserver.windowManager.dwm.enable = true;
+
+  # NVIDIA 드라이버 설정 (GTX 1080 Ti)
+  nixpkgs.config.allowUnfree = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.open = false;
+  hardware.opengl.enable = true;
+
 
 i18n.inputMethod = {
     enabled = "fcitx5";
@@ -57,7 +68,7 @@ sound.enable = true;
   environment.systemPackages = with pkgs; [
   #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #   wget
-    ed dmenu st surf ntfs3g vis usb-modeswitch moc zathura
+    ed dmenu st ntfs3g moc zathura btop
     (st.overrideAttrs (oldAttrs: rec {
       configFile = writeText "config.def.h" (builtins.readFile /root/Temp/st.h);
       postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.def.h";
@@ -66,6 +77,7 @@ sound.enable = true;
 
 services.openssh.enable = true;
 services.openssh.settings.PermitRootLogin = "yes";
+
 
 # Post Install & Configuration
 
@@ -112,10 +124,8 @@ pair XX:YY
 connect XX:YY
 trust [XX:YY]
 
-# CF-795BF USB - CDROM MODE disable
-nix-env -i usb-modeswitch
-usb_modeswitch -KW -v 0bda -p 1a2b
 
+```
 
 
 
