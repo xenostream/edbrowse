@@ -64,6 +64,7 @@ environment.systemPackages = with pkgs; [
      ];
   };
 
+  # git clone https://git.suckless.org/st  => mv st/config.def.h /root/Temp/st.h
   # st.h custom Font : static char *font = "Noto Sans Mono CJK KR:style=Regular:size=16";
   nixpkgs.overlays = [
     (final: prev: {
