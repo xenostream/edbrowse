@@ -78,7 +78,8 @@ environment.systemPackages = with pkgs; [
 
 
 
-
+curl -O https://raw.githubusercontent.com/xenostream/edbrowse/refs/heads/main/config.py.mac
+mv .config/qutebrowser/config.py
 
 
 
