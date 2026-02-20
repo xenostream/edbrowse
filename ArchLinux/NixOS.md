@@ -16,6 +16,7 @@ mkdir -p /mnt/boot
 mount /dev/disk/by-label/boot /mnt/boot
 swapon /dev/sda2
 nixos-generate-config --root /mnt
+
 vim /mnt/etc/nixos/configuration.nix
 nixos-install
 reboot
@@ -33,7 +34,7 @@ services.xserver.displayManager.startx.enable = true;
 services.xserver.windowManager.dwm.enable = true;
 
 fonts.packages = with pkgs; [
-  nerd-fonts.jetbrains-mono noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
+  noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
 ];
 
 
@@ -42,36 +43,28 @@ i18n.inputMethod = {
     fcitx5.addons = with pkgs; [ fcitx5-hangul ];
   };
 
-fonts.fonts = with pkgs; [
-	noto-fonts
-	noto-fonts-cjk
-	noto-fonts-emoji
-];
-
-services.httpd.enable = true;
-services.httpd.adminAddr = "master@localhost.com";
-services.httpd.virtualHosts."localhost" = {
-  documentRoot  = "/var/www";
-  extraConfig = ''
-    ScriptAlias "/cgi-bin/" "/var/www/cgi-bin/"
-   '';
-};
-
 hardware.bluetooth.enable = true;
 services.blueman.enable = true;
 
-/optional
-services.pipewire.enable = true;
-services.pipewire.pulse.enable = true;
-services.pipewire.alsa.enable = true;
+environment.systemPackages = with pkgs; [
+#   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+#   wget
+  nextvi dmenu st git
+];
 
-  environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-    nextvi dmenu st ntfs3g cmus zathura btop
-  ];
 
-  /st.h custom Font : JetbrainMono Nerd Font Mono:18 
+----------------------------------------------------------------------------------------------
+  # first reboot setting.    => USE passwd pjkwon
+----------------------------------------------------------------------------------------------
+  users.users.pjkwon = {
+    isNormalUser = true;
+     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     packages = with pkgs; [
+       qutebrowser cmus btop nextvi ntfs3g
+     ];
+  };
+
+  # st.h custom Font : static char *font = "Noto Sans Mono CJK KR:style=Regular:size=16";
   nixpkgs.overlays = [
     (final: prev: {
       st = prev.st.overrideAttrs (old: {
@@ -81,10 +74,13 @@ services.pipewire.alsa.enable = true;
       });
     })
   ];
+----------------------------------------------------------------------------------------------
 
 
-services.openssh.enable = true;
-services.openssh.settings.PermitRootLogin = "yes";
+
+
+
+
 
 
 # Post Install & Configuration
@@ -105,8 +101,6 @@ exec fcitx5 &
 
 exec dwm
 
-chmod 755 .xinitrc
-
 
 # Modify /etc/nixos/configuration.nix
 nixos-rebuild switch
@@ -115,7 +109,6 @@ nixos-rebuild switch
 # Package MGMT
 nix-env -i (install) -e (remove) -qa | grep pkg_name | q (installed list)
 nix-collect-garbage
-
 
 
 # mount /nix/store RW
