@@ -97,6 +97,7 @@ export GTK_IM_MODULE=fcitx
 exec xrandr --rate 75 &
 exec xset s off &
 exec xset -dpms &
+exec xset r rate 200 35 &
 
 exec fcitx5 &
 
