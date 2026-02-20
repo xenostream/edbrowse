@@ -32,12 +32,9 @@ services.xserver.displayManager.lightdm.enable = false;
 services.xserver.displayManager.startx.enable = true;
 services.xserver.windowManager.dwm.enable = true;
 
-  # NVIDIA 드라이버 설정 (GTX 1080 Ti)
-  nixpkgs.config.allowUnfree = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  hardware.nvidia.open = false;
-  hardware.opengl.enable = true;
+fonts.packages = with pkgs; [
+  nerd-fonts.jetbrains-mono noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
+];
 
 
 i18n.inputMethod = {
@@ -63,17 +60,28 @@ services.httpd.virtualHosts."localhost" = {
 hardware.bluetooth.enable = true;
 services.blueman.enable = true;
 
-sound.enable = true;
+/optional
+services.pipewire.enable = true;
+services.pipewire.pulse.enable = true;
+services.pipewire.alsa.enable = true;
 
   environment.systemPackages = with pkgs; [
   #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #   wget
-    ed dmenu st ntfs3g moc zathura btop
-    (st.overrideAttrs (oldAttrs: rec {
-      configFile = writeText "config.def.h" (builtins.readFile /root/Temp/st.h);
-      postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.def.h";
-    }))
+    nextvi dmenu st ntfs3g cmus zathura btop
   ];
+
+  /st.h custom Font : JetbrainMono Nerd Font Mono:18 
+  nixpkgs.overlays = [
+    (final: prev: {
+      st = prev.st.overrideAttrs (old: {
+        postPatch = (old.postPatch or "") + ''
+          cp ${/root/Temp/st.h} config.h
+        '';
+      });
+    })
+  ];
+
 
 services.openssh.enable = true;
 services.openssh.settings.PermitRootLogin = "yes";
