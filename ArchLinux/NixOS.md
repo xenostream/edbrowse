@@ -35,6 +35,18 @@ services.xserver.displayManager.lightdm.enable = false;
 services.xserver.displayManager.startx.enable = true;
 services.xserver.windowManager.dwm.enable = true;
 
+nixpkgs.config.allowUnfree = true;
+services. xserver.videoDrivers = [ "nvidia" ];
+hardware.nvidia = {
+  modesetting.enable = true;
+  powerManagement.enable = false;
+  open = false;
+  nvidiaSettings = true;
+  package = config.boot.kernelPackages.nvidiaPackages.stable;
+};
+
+# boot.kernelParams = [ "nvidia NVreg_PreserveVideoMemoryAllocations=1" ];
+
 fonts.packages = with pkgs; [
   nerd-fonts.jetbrains-mono noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
 ];
