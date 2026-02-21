@@ -47,6 +47,21 @@ hardware.nvidia = {
 
 # boot.kernelParams = [ "nvidia NVreg_PreserveVideoMemoryAllocations=1" ];
 
+users.defaultUserShell = pkgs.zsh;
+programs.zsh = {
+  enable = true;
+  enableCompletion = true;
+  autosuggestion.enable = true;
+  syntaxHighlighting.enable = true;
+
+  shellAliases = {
+    ll = "ls -l";
+    update = "sudo nixos-rebuild switch";
+  };
+  history.size = 10000;
+};
+
+
 fonts.packages = with pkgs; [
   nerd-fonts.jetbrains-mono noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
 ];
