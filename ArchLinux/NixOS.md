@@ -52,11 +52,11 @@ environment.systemPackages = with pkgs; [
 #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 #   wget
   nextvi dmenu git alacritty
-];
 
-(pkgs.writeShellScriptBin "st" ''
+  (pkgs.writeShellScriptBin "st" ''
       exec ${pkgs.alacritty}/bin/alacritty "$@"
-'')
+  '')
+];
 
 users.users.pjkwon = {
   isNormalUser = true;
