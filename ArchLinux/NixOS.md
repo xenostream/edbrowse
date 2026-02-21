@@ -39,11 +39,11 @@ fonts.packages = with pkgs; [
   nerd-fonts.jetbrains-mono noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
 ];
 
-
 i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [ fcitx5-hangul ];
-  };
+  enable = true;
+  type = "fcitx5";
+  fcitx5.addons = with pkgs; [ fcitx5-hangul ];
+};
 
 hardware.bluetooth.enable = true;
 services.blueman.enable = true;
@@ -62,11 +62,10 @@ users.users.pjkwon = {
   isNormalUser = true;
   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
    packages = with pkgs; [
-     qutebrowser cmus btop nextvi ntfs3g
+     qutebrowser cmus btop ntfs3g
    ];
 };
 ----------------------------------------------------------------------------------------------
-
 
 
 curl -O https://raw.githubusercontent.com/xenostream/edbrowse/refs/heads/main/config.py.mac
