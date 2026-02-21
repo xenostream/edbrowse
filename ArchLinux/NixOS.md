@@ -19,6 +19,8 @@ nixos-generate-config --root /mnt
 
 vim /mnt/etc/nixos/configuration.nix
 nixos-install
+
+nixos-enter --root /mnt -c 'passwd pjkwon'
 reboot
 
 
@@ -34,7 +36,7 @@ services.xserver.displayManager.startx.enable = true;
 services.xserver.windowManager.dwm.enable = true;
 
 fonts.packages = with pkgs; [
-  noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
+  nerd-fonts.jetbrains-mono noto-fonts-cjk-sans noto-fonts-cjk-serif noto-fonts-color-emoji
 ];
 
 
@@ -49,32 +51,20 @@ services.blueman.enable = true;
 environment.systemPackages = with pkgs; [
 #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 #   wget
-  nextvi dmenu st git
+  nextvi dmenu git alacritty
 ];
 
+(pkgs.writeShellScriptBin "st" ''
+      exec ${pkgs.alacritty}/bin/alacritty "$@"
+'')
 
-----------------------------------------------------------------------------------------------
-  # first reboot setting.    => USE passwd pjkwon
-----------------------------------------------------------------------------------------------
-  users.users.pjkwon = {
-    isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-     packages = with pkgs; [
-       qutebrowser cmus btop nextvi ntfs3g
-     ];
-  };
-
-  # git clone https://git.suckless.org/st  => mv st/config.def.h /root/Temp/st.h
-  # st.h custom Font : static char *font = "Noto Sans Mono CJK KR:style=Regular:size=16";
-  nixpkgs.overlays = [
-    (final: prev: {
-      st = prev.st.overrideAttrs (old: {
-        postPatch = (old.postPatch or "") + ''
-          cp ${/root/Temp/st.h} config.h
-        '';
-      });
-    })
-  ];
+users.users.pjkwon = {
+  isNormalUser = true;
+  extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+   packages = with pkgs; [
+     qutebrowser cmus btop nextvi ntfs3g
+   ];
+};
 ----------------------------------------------------------------------------------------------
 
 
