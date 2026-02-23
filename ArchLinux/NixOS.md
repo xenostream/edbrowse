@@ -88,7 +88,7 @@ users.users.pjkwon = {
   isNormalUser = true;
   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
    packages = with pkgs; [
-     qutebrowser cmus btop ntfs3g
+     qutebrowser cmus btop bat ntfs3g
    ];
 };
 ----------------------------------------------------------------------------------------------
