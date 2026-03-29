@@ -328,6 +328,9 @@ Emacs Tutorial
   :config
   (load-theme 'nord t))
 
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
 ;; -------------------------------
 ;; 4. 줄번호 + 현재줄 강조
 ;; -------------------------------
