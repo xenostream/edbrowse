@@ -227,7 +227,7 @@ emacs -nw
 
 ​
 <br><br>
-# <ESC> <ESC> <ESC>
+# \<ESC> \<ESC> \<ESC>
 작업 중 메이저 모드 이름이 `[(Fundamental)]` 처럼 대괄호에 묶여 있을 때가 있으며,
 이를 `Recursive Editing Level` 이라 한다. `<ESC>` 를 세 번 입력해서 벗어날 수 있으며,
 이는 다른 윈도우를 제거하거나 미니 버퍼에서 나올 때도 사용할 수 있다.
