@@ -1,8 +1,11 @@
 [Ref from](https://blog.naver.com/kesam1/224227501605)
 
 [KLDP Emacs](https://wiki.kldp.org/HOWTO/html/Emacs-Beginner/Emacs-Beginner-HOWTO.html#toc6)
+
 [Emacs Guide Eng](http://xahlee.info/emacs/emacs/emacs_init_index.html)
+
 [Emacs Guide Kor](https://tsgates.github.io/emacsbook/)
+
 
 # 이맥스에서 한글 사용
 이맥스에서 한글 입력이 되지 않는다면 `~/.emacs.d/init.el` 파일에 다음을 추가한다.
