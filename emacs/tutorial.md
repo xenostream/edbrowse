@@ -6,6 +6,7 @@
 
 [Emacs Guide Kor](https://tsgates.github.io/emacsbook/)
 
+[Org Mode](https://blog.weirdx.io/post/54692?utm_source=chatgpt.com)
 
 [Mastering EMACS' Note](https://susam.net/cc/mastering-emacs/notes.html)
 
