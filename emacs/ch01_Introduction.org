@@ -1,0 +1,46 @@
+* Chapter 1: Introduction
+
+
+** Describe System
+Emacs에서 제공하는 강력한 ~describe~ 시스템을 살펴보려면 ~C-h C-k C-p~ 키 조합을 입력합니다. 그러면 커서를 이전 줄로 이동시키는 ~previous-line~ 명령을 호출하는 ~C-p~ 키 조합과 관련된 설명이 표시됩니다. 문서는 이 명령이 /simple.el/ 이라는 파일에 정의되어 있다고 언급되어 있습니다. 파일 이름을 클릭하면 이 명령이 정의된 /simple.el/ 파일의 소스 코드로 곧바로 이동할 수 있습니다. Emacs에서 Emacs의 소스 코드는 사용자에게 숨겨지지 않습니다. ~describe~ 시스템에 대한 설명은 이 책의 3장에서 다룹니다.
+
+
+** Language Servers
+Emacs에서 널리 사용되는 두 가지 언어 서버 구현체는 =LSP Mode= 와 =Eglot= 입니다. Emacs 29 버전부터는 Eglot이 Emacs 핵심 기능의 일부이므로 별도의 패키지를 설치할 필요가 없습니다. ~M-x eglot RET~ 키 조합을 입력하면 실행할 수 있습니다.
+
+
+** Baroque Terminology
+몇 가지 예는 다음과 같습니다:
+
+- 커서를 가리키는 용어는 ‘point’ 입니다.
+- 텍스트를 붙여넣는 용어인 ‘yank’ 입니다. 특히 Vim 사용 경험이 있는 사용자에게 혼란을 줄 수 있는 점은, Vim은 ‘yank’ 라는 용어를 텍스트 복사를 의미하는 데 사용하는 반면, Emacs는 이 용어를 텍스트 붙여넣기를 의미하는 데 사용한다는 것입니다.
+- Emacs는 OS 수준이나 데스크톱 환경 수준의 창을 '프레임(frame)' 이라 부릅니다. Emacs 프레임은 여러 개의 패널로 나눌 수 있으며, 이런 패널을 Emacs는 '창(window)' 이라 부릅니다.
+
+이와 같은 예는 훨씬 더 많이 있습니다. 위의 예는 Emacs 문서를 읽을 때 예상치 못한 상황에 대비해야 함을 보여줍니다. 다행히도, 이런 용어의 의미는 문맥을 통해 파악할 수 있는 경우가 많습니다.
+
+
+** Active, Friendly Community
+다른 Emacs 사용자들과 교류하거나, Emacs 관련 도움을 구하거나 다른 사람들에게 도움을 줄 수 있는 좋은 장소가 세 곳 정도 있습니다:
+
+- Reddit의 [[https://www.reddit.com/r/emacs/~][r/emacs]] 커뮤니티
+- Libera의 [[https://web.libera.chat/#emacs][#emacs]] 채널
+- Matrix의 [[https://app.element.io/#/room/#emacs:matrix.org~][#emacs]] 룸
+
+이 세 곳 모두 Emacs 초보자들에게 매우 친근한 분위기인 것 같습니다!
+
+
+** Vim Emulation Layer
+요즘 가장 인기 있는 Vim 에뮬레이션 레이어는 =Evil Mode= 입니다. Vim의 가장 훌륭한 구현체는 =Emacs Lisp= 로 작성되었다는 말이 자주 나옵니다. 어떤 이들은 Evil Mode가 Vim 본체보다 좀 더 나은 Vim이라 주장하기도 합니다. 실제로 다음 장, 즉 3장에서 다음과 같이 언급하고 있습니다:
+
+#+BEGIN_QUOTE
+Vim 사용자들이 Emacs로 옮겨가는 이유는, 뭐랄까, Emacs가 종종 Vim보다 더 나은 Vim이기 때문입니다.
+#+END_QUOTE
+
+
+** Links
+다음 목록은 유용한 몇 가지 링크가 포함되어 있습니다:
+
+- [[https://github.com/Wilfred/helpful][Helpful]]은 내장된 Emacs 도움말의 대안으로, 훨씬 더 많은 상황별 정보를 제공합니다.
+- [[https://github.com/xuchunyang/elisp-demos][Elisp API Demos]]는 *Help* 버퍼에 Elisp 데모 예제를 삽입합니다.
+- [[https://planet.emacslife.com/][Planet Emacslife]]는 Emacs 관련 블로그를 모아 보여주는 피드 애그리게이터입니다. 
+
