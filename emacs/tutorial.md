@@ -10,6 +10,8 @@
 
 [Mastering EMACS' Note](https://susam.net/cc/mastering-emacs/notes.html)
 
+[Mastering EMACS CHN](https://blog.3vyd.com/docs/mastering-emacs.html)
+
 <br><br>
 # 이맥스에서 한글 사용
 이맥스에서 한글 입력이 제대로 되지 않는다면 `~/.emacs.d/init.el` 파일에 다음 내용을 추가한다.
