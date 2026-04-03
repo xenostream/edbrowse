@@ -1,0 +1,66 @@
+wsl --import Xeno . .\rootfs.tar.gz 
+wsl -d xeno --exec /bin/busybox --install -s /bin 
+wsl --shutdown
+
+
+# Enabel APK
+mkdir -p /etc/apk
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+
+cd
+wget https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/apk-tools-static-3.0.5-r0.apk
+tar xvzf apk-tools-static-3.0.5-r0.apk 
+cd sbin
+./apk.static --initdb --allow-untrusted add apk-tools
+apk add --allow-untrusted alpine-keys
+apk update
+
+
+
+
+# Make a rootfs
+cd /mnt/c/Alpine
+tar -C rootfs -cvzf rootfs.tar.gz .
+
+
+
+
+
+
+# Emacs & spacemacs & doom emacs
+apk add emacs-pgtk-nativecomp git fd ripgrep
+
+## Doom Emacs
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+.config/emacs/bin/doom install
+.config/emacs/bin/doom doctor
+.config/emacs/bin/doom sync
+
+mkdir -p /usr/share/fonts
+cp /mnt/c/Alpine/sarasa*ttf /usr/share/fonts
+fc-cache -fv
+
+emacs
+M-x nerd-icons-install-fonts (if a Symbola font error..)
+
+
+## Spacemacs
+apk add emacs-pgtk-nativecomp git
+mkdir -p /usr/share/fonts
+cp /mnt/c/Alpine/sarasa*ttf /usr/share/fonts
+fc-cache -fv
+
+cd
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+emacs
+
+
+
+
+
+# apk binaries repository 
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/
+
+
+https://github.com/jonz94/Sarasa-Gothic-Nerd-Fonts/releases/download/v1.0.37-0/sarasa-mono-k-nerd-font.zip
