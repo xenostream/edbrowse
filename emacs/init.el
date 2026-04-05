@@ -73,3 +73,5 @@
   (set-face-attribute 'line-number-current-line nil
                       :foreground "#ebcb8b"               ;; 노란색
                       :weight 'bold))
+
+(global-visual-line-mode 1)                               ;; Soft Word-Wrap
