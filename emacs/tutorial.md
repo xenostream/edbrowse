@@ -282,7 +282,7 @@ Emacs Tutorial
 ;; -------------------------------
 ;; 1. UI 최소화 / 기본 환경
 ;; -------------------------------
-(menu-bar-mode -1)
+;;(menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
@@ -325,9 +325,6 @@ Emacs Tutorial
   :config
   (load-theme 'nord t))
 
-(use-package pdf-tools
-  :config
-  (pdf-tools-install))
 ;; -------------------------------
 ;; 4. 줄번호 + 현재줄 강조
 ;; -------------------------------
@@ -342,6 +339,6 @@ Emacs Tutorial
                       :foreground "#ebcb8b"               ;; 노란색
                       :weight 'bold))
 
-
 (global-visual-line-mode 1)                               ;; Soft Word-Wrap
+
 ```		     
