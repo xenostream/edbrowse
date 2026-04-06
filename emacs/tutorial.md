@@ -268,16 +268,11 @@ Emacs Tutorial
 
 ```
 ;; ============================================================
-;; Emacs 30.2 Minimal + Nord Theme + Vim-style Line Numbers
+;; Emacs 30.2 Minimal + Wombat Theme 
 ;; ============================================================
 
-;; UTF-8을 기본 인코딩으로 설정
+;; UTF-8 기본 인코딩
 (prefer-coding-system 'utf-8)
-(set-language-environment "UTF-8")
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
 
 ;; -------------------------------
 ;; 1. UI 최소화 / 기본 환경
@@ -286,28 +281,28 @@ Emacs Tutorial
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
+(setq inhibit-startup-screen t
+      inhibit-startup-message t
+      initial-scratch-message nil)
 
-;; 글꼴 설정 (GUI Emacs)
-(set-frame-font "JetBrainsMono NFM-12" nil t)
+;; 글꼴 설정 (GUI 전용)
+(when (display-graphic-p)
+  (set-frame-font "Sarasa Mono K Nerd Font-12" nil t))
 
 ;; 백업/자동저장 끄기
-(setq auto-save-default nil)
-(setq make-backup-files nil)
+(setq auto-save-default nil
+      make-backup-files nil
+      vc-follow-symlinks t)
 (delete-selection-mode t)
-(setq vc-follow-symlinks t)
 
 ;; -------------------------------
-;; 2. IDO 모드 (파일 찾기)
+;; 2. 파일 찾기 (fido-mode 권장)
 ;; -------------------------------
-(ido-mode 1)
-(setq ido-enable-flex-matching t)
-(global-set-key (kbd "C-x C-f") 'ido-find-file)
+(fido-mode 1)
+(global-set-key (kbd "C-x C-f") 'find-file)
 
 ;; -------------------------------
-;; 3. Nord Theme
+;; 3. 테마 (내장 wombat)
 ;; -------------------------------
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -315,30 +310,27 @@ Emacs Tutorial
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
+(load-theme 'wombat t)
 
-(use-package nord-theme
+(use-package org-modern
+  :ensure t
   :config
-  (load-theme 'nord t))
+  (with-eval-after-load 'org
+    (global-org-modern-mode)))
+
+;; 헤딩 크기 키우기 (예: 제목 레벨별 폰트 크기 조정)
+(custom-set-faces
+ '(org-level-1 ((t (:height 1.4 :weight bold))))
+ '(org-level-2 ((t (:height 1.2 :weight bold))))
+ '(org-level-3 ((t (:height 1.1)))))
 
 ;; -------------------------------
 ;; 4. 줄번호 + 현재줄 강조
 ;; -------------------------------
 (global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'absolute) 
+(setq display-line-numbers-type 'absolute)
 
 (global-hl-line-mode 1)
-(set-face-attribute 'hl-line nil :background "#3b4252") 
+(global-visual-line-mode 1) ;; Soft Word-Wrap
 
-(when (facep 'line-number-current-line)
-  (set-face-attribute 'line-number-current-line nil
-                      :foreground "#ebcb8b"               ;; 노란색
-                      :weight 'bold))
-
-(global-visual-line-mode 1)                               ;; Soft Word-Wrap
-
-```		     
+```
