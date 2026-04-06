@@ -310,7 +310,7 @@ Emacs Tutorial
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
-(load-theme 'wombat t)
+(load-theme 'tsdh-dark t)
 
 (use-package org-modern
   :ensure t
