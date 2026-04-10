@@ -5,7 +5,7 @@
 * The Noobs Guide to Programming a Vortex Core - Aug 30, 2017
 최근 들어 저는 기계식 키보드에 다소 병적인 집착을 보이게 되었는데, 제가 처음으로 손에 넣은 키보드 중 하나가 바로 악명 높은 =Vortex Core= 입니다. 잘 모르시는 분들을 위해 설명드리자면, Core는 40% 키보드, 즉 키가 단 47개뿐인 초소형 키보드입니다. 생김새는 다음과 같습니다:
 
-[[images/20260410_181858.jpg][20260410_181858.jpg]]
+[[file:images/20260410_181858.jpg]]
 
 Vortex Core.
 
