@@ -876,9 +876,7 @@ sed -e '1,/start/ s/#.*//' -e '/stop/,$ s/#.*//'
 
 
 # Delete with d
-“범위” 사용은 혼란스러울 수 있으므로 새로운 스크립트를 시도할 때는 약간의 실험과 생각이 필요합니다. 
-
-유용한 명령어로는 제한 조건에 맞는 모든 줄을 삭제하는 “d” 입니다. 파일의 처음 10줄을 출력하려면 다음과 같이 사용합니다:
+“범위” 사용은 혼란스러울 수 있으므로 새로운 스크립트를 시도할 때는 약간의 실험과 생각이 필요합니다. 유용한 명령어로는 제한 조건에 맞는 모든 줄을 삭제하는 “d” 입니다. 파일의 처음 10줄을 출력하려면 다음과 같이 사용합니다:
 
 ```
 sed '11,$ d' <file 
@@ -890,7 +888,7 @@ sed '11,$ d' <file
 sed '1,/^$/ d' <file
 ```
 
-파일 길이를 안다면 tail 의 기능을 복제할 수 있습니다. wc 는 줄 수를 세고, expr 은 줄 수에서 10을 뺄 수 있습니다. 따라서, 파일 내의 마지막 10줄을 출력하는 Bourne 셸 스크립트는 다음과 같습니다:
+파일 길이를 안다면 tail 의 기능을 복제할 수 있습니다. wc 는 줄 수를 세고 expr 은 줄 수에서 10 을 뺄 수 있습니다. 따라서, 파일 내의 마지막 10줄을 출력하는 Bourne 셸 스크립트는 다음과 같습니다:
 
 ```
 #!/bin/sh
@@ -909,7 +907,7 @@ sed "1,$start d" "$1"
 sed '/^#/ d'
 ```
 
-하지만, 주석과 빈 줄까지 모두 제거하려면 두 개의 명령어가 추가로 필요합니다. 첫 번째 명령어는 줄 끝까지 “#” 으로 시작하는 모든 문자를 제거하고, 두 번째 명령어는 모든 빈 줄을 삭제합니다:
+하지만, 주석과 빈 줄까지 모두 제거하려면 두 개의 명령어가 추가로 필요합니다. 첫 번째 명령어는 줄 끝까지 “#” 으로 시작하는 모든 문자를 제거하고 두 번째 명령어는 모든 빈 줄을 삭제합니다:
 
 ```
 sed -e 's/#.*//' -e '/^$/ d'
@@ -927,13 +925,13 @@ sed -e 's/#.*//' -e 's/[ ^I]*$//' -e '/^$/ d'
 
 - 입력 행을 패턴 공간에 복사합니다.
 - 주소나 제한이 참일 경우 패턴 공간에 첫 번째 sed 명령을 적용합니다.
-- 다음 sed 표현식을 반복하며, 다시 패턴 공간에 명령을 수행합니다.
+- 다음 sed 표현식을 반복하며 다시 패턴 공간에 명령을 수행합니다.
 - 마지막 명령까지 수행되면 패턴 공간을 표준 출력에 출력하고 입력 파일에서 다음 행을 읽어들입니다.
 
 
 
 # Printing with p
-또 다른 유용한 명령은 출력 명령인 “p” 입니다. “-n” 옵션 없이 sed를 시작한 경우, “p” 명령은 입력을 복제합니다. 
+또 다른 유용한 명령은 출력 명령인 “p” 입니다. “-n” 옵션 없이 sed를 시작한 경우 “p” 명령은 입력을 복제합니다. 
 
 즉, 다음과 같은 명령은
 
@@ -947,19 +945,19 @@ sed 'p'
 sed '/^$/ p'
 ```
 
-“-n” 옵션을 추가하면 명시적으로 요청하지 않는 한 출력을 중지합니다. head 의 기능을 복제하는 또 다른 방법은 원하는 줄만 출력하는 것입니다. 다음 예제는 처음 10줄을 출력합니다:
+“-n” 옵션을 추가하면 명시적으로 요청하지 않는 한 기본 출력을 중지합니다. head 의 기능을 복제하는 또 다른 방법은 특정 줄만 출력하는 것입니다. 다음 예제는 처음 10줄을 출력합니다:
 
 ```
 sed -n '1,10 p' <file
 ```
 
-sed는 정규 표현식과 일치하는 모든 줄에 print 연산자를 결합해서 grep처럼 동작합니다:
+sed는 정규 표현식과 일치하는 모든 줄에 print 연산자를 결합해서 grep처럼 동작할 수 있습니다:
 
 ```
 sed -n '/match/ p' 
 ```
 
-이는 다음과 동일합니다:
+이는 다음 명령과 동일합니다:
 
 ```
 grep match
@@ -968,45 +966,44 @@ grep match
 
 
 # Reversing the restriction with !
-때로는 정규 표현식과 일치하는 행이나 특정 주소 범위 밖에 있는 행을 “제외한” 모든 행에 작업을 수행해야 할 때가 있습니다. UNIX 유틸리티에서 종종 '아니' (not)를 의미하는 “!” 문자는 "주소나 제한을 반전" 시킵니다. 기억하시겠지만
+때로는 정규 표현식과 일치하는 행이나 특정 주소 범위 밖에 있는 행을 “제외한” 모든 행에 작업을 수행할 때가 있습니다. UNIX 유틸리티에서 종종 '아님' (not)를 의미하는 “!” 문자는 "주소나 제한 사항을 반전" 시킵니다. 기억하시겠지만
 
 ```
 sed -n '/match/ p'
 ```
 
-grep 명령어와 유사하게 동작합니다. grep의 “-v” 옵션은 패턴을 포함하지 않는 모든 줄을 출력합니다. sed로는 다음과 같이 수행합니다.
+이 명령은 grep 명령어와 유사하게 동작합니다. grep의 “-v” 옵션은 패턴을 “포함하지 않는” 모든 줄을 출력합니다. sed는 다음과 같이 수행할 수 있습니다.
 
 ```
 sed -n '/match/ !p' </tmp/b
 ```
 
 
-
 # Relationships between d, p, and !
-아시다시피, sed로 동일한 문제를 해결하는 방법은 종종 여러 가지가 있습니다. 이는 출력(print)과 삭제(delete)가 서로 상반된 기능이기 때문이며, “!p” 는 “d” 와 유사하고 “!d” 는 “p” 와 유사합니다. 
+아시다시피, sed로 문제를 해결하는 방법에는 여러 가지가 있습니다. 이는 출력(print)과 삭제(delete)가 서로 상반된 기능이기 때문이며 “!p” 는 “d” 와 유사하고 “!d” 는 “p” 와 유사합니다. 이를 테스트할 20줄짜리 테스트 파일을 만들고 모든 조합을 시도했습니다. 테스트 결과를 보여주는 다음 표는 그 차이를 보여줍니다:
 
-이를 테스트할 20줄짜리 테스트 파일을 만들고 모든 조합을 시도했습니다. 테스트 결과를 보여주는 다음 표는 그 차이를 보여줍니다:
+**Relations between d, p, and !**
 
-|Sed	Range | Command	 | Results|
-|----|---|---|
-|sed -n  1,10 | p | Print first 10 lines|
-|sed -n  11,$ | !p | Print first 10 lines|
-|sed	 1,10 | !d | Print first 10 lines|
-|sed  11,$ | d |	Print first 10 lines|
-|sed -n 1,10 | !p | Print last 10 lines of my 20-line file|
-|sed -n 11,$ | p | Print last 10 lines of my 20-line file|
-|sed	1,10 | d | Print last 10 lines of my 20-line file|
-|sed	11,$|  !d | Print last 10 lines of my 20-line file|
-|sed -n 1,10 | d | Nothing printed|
-|sed -n 1,10 | !d | Nothing printed|
-|sed -n 11,$ | d | Nothing printed|
-|sed -n 11,$ | !d | Nothing printed|
-|sed	1,10 | p | Print first 10 lines twice, then next 10 lines once|
-|sed	11,$ | !p | Print first 10 lines twice, then last 10 lines once|
-|sed	1,10 | !p | Print first 10 lines once, then last 10 lines twice|
-|sed	11,$ | p | Print first 10 lines once, then last 10 lines twice|
+|Sed | Range | Command	 | Results|
+|--- | --- | --- | --- |
+|sed -n |  1,10 | p | Print first 10 lines |
+|sed -n |  11,$ | !p | Print first 10 lines |
+|sed | 1,10 | !d | Print first 10 lines |
+|sed | 11,$ | d | Print first 10 lines |
+|sed -n | 1,10 | !p | Print last 10 lines of my 20-line file |
+|sed -n | 11,$ | p | Print last 10 lines of my 20-line file |
+|sed | 1,10 | d | Print last 10 lines of my 20-line file |
+|sed | 11,$ | !d | Print last 10 lines of my 20-line file |
+|sed -n | 1,10 | d | Nothing printed |
+|sed -n | 1,10 | !d | Nothing printed |
+|sed -n | 11,$ | d | Nothing printed |
+|sed -n | 11,$ | !d | Nothing printed |
+|sed | 1,10 | p | Print first 10 lines twice, then next 10 lines once |
+|sed | 11,$ | !p | Print first 10 lines twice, then last 10 lines once |
+|sed | 1,10 | !p | Print first 10 lines once, then last 10 lines twice |
+|sed | 11,$ | p | Print first 10 lines once, then last 10 lines twice |
 
-위의  표는 20줄짜리 테스트 파일에 사용했을 때 다음과 같은 명령어가 동일함을 보여줍니다:|
+위의 표는 20줄짜리 테스트 파일에서 다음과 같은 명령어가 동일함을 보여줍니다:
 
 ```
 sed -n '1,10 p'
@@ -1017,7 +1014,7 @@ sed '11,$ d'
 
 또한, “!” 명령어가 주소 범위를 “반전”시켜 다른 행들에 적용됨을 잘 보여줍니다.
 
-물론 20행보다 긴 파일의 경우, 마지막 두 예제는 10행 이상 나올 것입니다.
+물론 20행보다 긴 파일의 경우 마지막 두 예제는 10행 이상 나올 것입니다.
 
 
 
