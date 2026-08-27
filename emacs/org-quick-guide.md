@@ -99,19 +99,19 @@ Emacs가 Org 파일을 처음 열 때의 전역 상태는 showeverything 으로 
 ## 2.3 Motion
 다음 명령어는 버퍼 내의 다른 제목으로 이동합니다.
 
-`C-c C-n` (org-next-visible-heading) //
+- `C-c C-n` (org-next-visible-heading) //
 다음 제목으로 이동합니다.
 
-`C-c C-p` (org-previous-visible-heading)
+- `C-c C-p` (org-previous-visible-heading)
 이전 제목으로 이동합니다.
 
-`C-c C-f` (org-backward-heading-same-level)
+- `C-c C-f` (org-backward-heading-same-level)
 같은 수준(형제)의 다음 제목으로 이동합니다.
 
-`C-c C-b` (outline-backward-same-level)
+- `C-c C-b` (outline-backward-same-level)
 같은 수준(형제)의 이전 제목으로 이동합니다.
 
-`C-c C-u` (outline-up-heading)
+- `C-c C-u` (outline-up-heading)
 좀 더 높은 수준(부모)의 제목으로 이동합니다.
 
 ## 2.4 Structure Editing
