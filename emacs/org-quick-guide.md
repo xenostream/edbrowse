@@ -69,7 +69,7 @@ org-footnote-section 에서 이름을 딴 제목(기본값은 ‘Footnotes’)�
 ## 2.2 Visibility Cycling
 아웃라인을 사용하면 버퍼 내의 텍스트를 숨길 수 있습니다. Org는 “TAB” 및 “S-TAB” (org-cycle 및 org-shifttab)에 할당된 두 가지 명령어로 버퍼 내의 텍스트 표시 여부를 변경합니다.
 
-TAB (org-cycle)
+`TAB` (org-cycle)
 서브트리 순환: 현재 서브트리를 상태 사이를 순환시킵니다.
 
 ```
@@ -79,7 +79,7 @@ TAB (org-cycle)
 
 접두사 인자(C-u TAB)를 사용해서 호출하거나 Shift 키를 누른 상태에서 호출하면 전역 순환 기능이 실행됩니다.
 
-S-TAB (org-global-cycle), C-u TAB (org-cycle)
+`S-TAB` (org-global-cycle), `C-u TAB` (org-cycle)
 전역 사이클링: 버퍼 전체를 상태 사이를 순환시킵니다.
 
 ```
@@ -87,7 +87,7 @@ S-TAB (org-global-cycle), C-u TAB (org-cycle)
 '--------------------------------------'
 ```
 
-C-u C-u C-u TAB (org-fold-show-all)
+`C-u C-u C-u TAB` (org-fold-show-all)
 서랍(drawer)을 포함해서 모두 표시합니다.
 
 Emacs가 Org 파일을 처음 열 때의 전역 상태는 showeverything 으로 설정되어 즉, “파일의 모든 내용을 표시” 합니다. 이는 org-startup-folded 변수로 설정할 수 있으며 다음과 같이 ‘overview’, ‘content’, ‘showall’, ‘showeverything’ 또는 ‘show<n>levels’(n = 2..5)를 ‘STARTUP’ 키워드에 추가해서 파일별로 설정할 수 있습니다:
@@ -99,7 +99,7 @@ Emacs가 Org 파일을 처음 열 때의 전역 상태는 showeverything 으로 
 ## 2.3 Motion
 다음 명령어는 버퍼 내의 다른 제목으로 이동합니다.
 
-`C-c C-n` (org-next-visible-heading)
+`C-c C-n` (org-next-visible-heading)\\
 다음 제목으로 이동합니다.
 
 `C-c C-p` (org-previous-visible-heading)
