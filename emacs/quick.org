@@ -95,7 +95,7 @@ Emacs가 Org 파일을 처음 열 때 전역 상태는 ~showeverything~ 으로 �
 ** 2.3 Motion
 다음 명령어는 버퍼 내의 다른 제목으로 이동합니다.
 
-~C-c C-n~ (org-next-visible-heading)  //
+~C-c C-n~ (org-next-visible-heading)  \\
 다음 제목으로 이동합니다.
 
 ~C-c C-p~ (org-previous-visible-heading)  
