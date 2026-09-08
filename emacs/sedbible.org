@@ -147,7 +147,7 @@ $
 
 
 
-* Commanding at the sed Editor Basics
+** Commanding at the sed Editor Basics
 sed를 성공적으로 사용하기 위한 핵심은 명령과 사용 형식을 잘 아는 것이다. 이것은 텍스트 편집 작업에도 도움된다. 
 
 다음 섹션은 sed 편집기를 (기본적으로) 사용하거나 스크립트에서 사용할 수 있는 몇 가지 기본 명령과 기능에 대해 설명한다.
