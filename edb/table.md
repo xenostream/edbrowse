@@ -1,7 +1,7 @@
 > [!NOTE]
 > Edbrowse v3.8.17 @2026.09.09
 
-**Leave the Program**
+▶ **Leave the Program**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -37,7 +37,7 @@
 | config  |  reread the config file | 
 
 
-**Input**
+▶ **Input**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -49,7 +49,7 @@
 | P=foo  |  set prompt to foo | 
 | rl  |  use readline() on input (toggle), respects $HISTCONTROL | 
 
-**Display Lines in the Buffer**
+▶ **Display Lines in the Buffer**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -80,7 +80,7 @@
 | B(  |  find the line with the balancing closed parenthesis | 
 | B{2  |  find the line that balances the second (from the inside out) unbalanced brace | 
 
-**Help Messages**
+▶ **Help Messages**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -88,7 +88,7 @@
 | H  |  show all error messages (toggle) | 
 | help  |  put this reference guide in an edbrowse buffer for review | 
 
-**Search and Substitute**
+▶ **Search and Substitute**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -138,7 +138,7 @@
 | s/\bfoo\b/mc/g  |  convert foo to Foo, but not foobar | 
 | ,s/$/ %line/  |  put the line number at the end of each line | 
 
-**Files and Sessions**
+▶ **Files and Sessions**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -215,7 +215,7 @@
 | bd  |  binary detection on files (toggle) | 
 | iu  |  automatically convert between iso8859 and utf8 (toggle) | 
 
-**Text Editing, much like ed**
+▶ **Text Editing, much like ed**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -234,7 +234,7 @@
 | 4,7m11  |  move lines 4 through 7 to line 11 | 
 | 4,7t11  |  copy lines 4 through 7 to line 11 | 
 
-**Directory Scan**
+▶ **Directory Scan**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -280,7 +280,7 @@
 | .m+2  |  move this file up 2 levels in your editing history. Destination must be a directory. You don't need the @ sign here as the file is always placed at the end of the listing. Go up2 and refresh if you want it in sorted order. | 
 | .t-3  |  copy this file down 3 levels in your editing history | 
 
-**Browse an html file or a web page**
+▶ **Browse an html file or a web page**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -309,7 +309,7 @@
 | can  |  (curl auth negotiate) toggle SPNEGO type authentication, required for kerberos (krb5/gss) | 
 | crs  |  (curl restart) to recover from certain curl or ssl bugs | 
 
-**FTP or HTTP Downloads**
+▶ **FTP or HTTP Downloads**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -323,7 +323,7 @@
 | bglist  |  list background downloads, complete or in progress | 
 | jsbg  |  download Javascript files in background (toggle) | 
 
-**Interact with a Web Page**
+▶ **Interact with a Web Page**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -375,7 +375,7 @@
 | showall  |  show all hover and invisible text (toggle) | 
 | colors  |  show the colors on the page | 
 
-**Mail Client**
+▶ **Mail Client**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -395,7 +395,7 @@
 | d  |  delete a folder - but not a system folder! All email in that folder is lost. | 
 | g  |  go into a folder, similar to directory mode | 
 
-**Envelopes**
+▶ **Envelopes**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -421,7 +421,7 @@
 | t  |  go into this email but present the plain text mime component | 
 | g-  |  go to this email but do not browse | 
 
-**Reading an email beneath Imap**
+▶ **Reading an email beneath Imap**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -434,7 +434,7 @@
 | ^  |  back up to envelopes | 
 | ^^  |  back up to folders | 
 
-**IRC Client**
+▶ **IRC Client**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -446,7 +446,7 @@
 | lst  |  show the date and time when this line was received in the output buffer | 
 | lsc  |  show the channel of this message | 
 
-**Plugins**
+▶ **Plugins**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -454,7 +454,7 @@
 | pb.mp3  |  play the current buffer as an mp3 file | 
 | pg  |  plugins active (toggle) | 
 
-**Database Access**
+▶ **Database Access**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -464,7 +464,7 @@
 | shf  |  show foreign keys for the current table | 
 | fbc  |  fetch blob columns (toggle) | 
 
-**Edbrowse Functions**
+▶ **Edbrowse Functions**
 
 | 명령 | 설명 |
 | --- | --- |
@@ -492,7 +492,7 @@
 | [ $(x) = $(y) ]  |  test for equality | 
 | [ $(x) != $(y) and friends ]  |  test for inequality | 
 
-**Debug**
+▶ **Debug**
 
 | 명령 | 설명 |
 | --- | --- |
