@@ -1,4 +1,4 @@
-> [!INFO]
+> [!NOTE]
 > Edbrowse v3.8.17 @2026.09.09
 
 **Leave the Program**
