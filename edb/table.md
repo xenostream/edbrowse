@@ -5,524 +5,545 @@
 
 | 명령 | 설명 |
 | --- | --- |
-| q  |  quit the current session | 
-| qt  |  quit the program completely, whether you've written your files or not | 
-| q7  |  quit session 7 | 
-| q/foo  |  quit session whose file name contains the substring foo | 
-| bw  |  buffer written; you can quit at any time | 
-| bw7  |  buffer written in session 7 | 
-| bw/foo  |  buffer written in session whose file name contains the substring foo | 
-| !command  |  shell command | 
-| !!  |  previous shell command | 
-| !! stuff  |  previous shell command with stuff appended | 
-| ebvar  |  update environment variables before each shell command (toggle) | 
-| ! program "$EB_DOT"  |  run program on the contents of the current line | 
-| ! program '.  |  same as above | 
-| ! program "$EB_PLUS"  |  run program on the contents of the next line | 
-| ! program '+  |  same as above | 
-| ! program "$EB_MINUS"  |  run program on the contents of the previous line | 
-| ! program '-  |  same as above | 
-| ! program "$EB_LNx"  |  run program on the contents of the line marked by kx | 
-| ! program 'x  |  same as above | 
-| !program $EB_LN  |  access the current line number | 
-| !program $EB_LINES  |  access the number of lines in the buffer | 
-| !program $EB_SESSION  |  access the current session number | 
-| ! program "$EB_FILE"  |  run program on the file name | 
-| ! program '_  |  same as above | 
-| ! program "$EB_BASE"  |  use the file name without the .browse suffix | 
-| !program $EB_DIR  |  access the directory that holds the file | 
-| !  |  spawn an interactive shell | 
-| cd newdirectory  |  change directory | 
-| pwd  |  print working directory | 
-| config  |  reread the config file | 
-
+| q  |  현재 세션을 종료합니다 |
+| qt  |  파일을 저장했는지 여부와 관계없이 프로그램을 완전히 종료합니다 |
+| q7  |  세션 7을 종료합니다 |
+| q/foo  |  파일 이름에 foo라는 부분 문자열이 포함된 세션을 종료합니다 |
+| bw  |  버퍼를 저장했습니다. 언제든지 종료할 수 있습니다 |
+| bw7  |  세션 7의 버퍼를 저장함 |
+| bw/foo  |  파일 이름에 foo라는 부분 문자열이 포함된 세션의 버퍼를 저장함 |
+| !command  |  셸 명령어 |
+| !!  |  이전 셸 명령어 |
+| !! stuff  |  이전 셸 명령어에 stuff를 추가한 것 |
+| ebvar  |  각 셸 명령 실행 전에 환경 변수 업데이트 (토글) |
+| ! program “$EB_DOT”  |  현재 줄의 내용에 대해 프로그램 실행 |
+| ! program '.  |  위와 동일 |
+| ! program “$EB_PLUS”  |  다음 줄의 내용에 대해 프로그램 실행 |
+| ! program '+  |  위와 동일 |
+| ! program “$EB_MINUS”  |  이전 줄의 내용에 대해 프로그램을 실행 |
+| ! program '-  |  위와 동일 |
+| ! program “$EB_LNx”  |  kx로 표시된 줄의 내용에 대해 프로그램을 실행 |
+| ! program 'x  |  위와 동일 |
+| !program $EB_LN  |  현재 줄 번호에 접근 |
+| ! program $EB_LINES  |  버퍼의 줄 수에 접근 |
+| ! program $EB_SESSION  |  현재 세션 번호에 접근 |
+| ! program “$EB_FILE”  |  파일 이름에 대해 프로그램을 실행 |
+| ! program '_  |  위와 동일 |
+| ! program “$EB_BASE”  |  .browse 확장자를 제외한 파일 이름을 사용 |
+| !program $EB_DIR  |  파일이 있는 디렉터리에 접근 |
+| !  |  대화형 셸을 실행 |
+| cd newdirectory  |  디렉터리 변경 |
+| pwd  |  현재 디렉터리를 표시 |
+| config  |  설정 파일을 다시 읽기 |
 
 ▶ **Input**
 
 | 명령 | 설명 |
 | --- | --- |
-| ~c2~b1  |  enter bytes as hex, in this case utf8 for plussminus | 
-| ~u1f600  |  enter a unicode as hex, in this case the symbol for grin | 
-| ~jfood.carrot  |  enter the carrot emoji from the food group | 
-| ~~  |  enter a literal tilde, only necessary when the following character is hex or u or j | 
-| P  |  show prompt (toggle) | 
-| P=foo  |  set prompt to foo | 
-| rl  |  use readline() on input (toggle), respects $HISTCONTROL | 
+| ~c2~b1  |  바이트를 16진수로 입력합니다. 이 경우 plussminus에 해당하는 utf8입니다. |
+| ~u1f600  |  유니코드를 16진수로 입력합니다. 이 경우 웃는 표정 기호입니다. |
+| ~jfood.carrot  |  음식 그룹에 속한 당근 이모지를 입력합니다. |
+| ~~  |  리터럴 틸드를 입력합니다. 다음 문자가 16진수, u 또는 j일 때만 필요합니다 |
+| P  |  프롬프트 표시 (토글) |
+| P=foo  |  프롬프트를 foo로 설정 |
+| rl  |  입력에 readline() 사용 (토글), $HISTCONTROL을 따릅니다 |
 
 ▶ **Display Lines in the Buffer**
 
 | 명령 | 설명 |
 | --- | --- |
-| p  |  print the current line | 
-| 4,7p  |  print lines 4 through 7 | 
-| +3p  |  advance 3 lines and print | 
-| +3  |  same as +3p, print is default command | 
-| -  |  previous line | 
-| ---  |  back up three lines | 
-| 'a,'bp  |  print a range of lines marked with labels a and b | 
-| kb  |  mark the current line as b | 
-| 0ks  |  unset the line label s | 
-| l  |  list the current line, showing invisible chars and end markers | 
-| endm  |  show end markers ^$ on listed lines (toggle) | 
-| lna  |  expand all nonascii chars into hex when a line is listed (toggle) | 
-| n  |  print the current line with its line number | 
-| ll=1000  |  line length 1000, show the first 1000 chars of each line | 
-| ll  |  print the current line length | 
-| fll=80  |  format line length 80, cut lines to 80 chars, perhaps to fit the terminal | 
-| fll 80+  |  cut lines to 80 chars but allow some overflow so the next line isn't just one or two words | 
-| fll  |  print the format line length | 
-| z22  |  print the next 22 lines | 
-| z  |  print another 22 lines | 
-| =  |  print the number of lines in the file | 
-| .=  |  print the current line number | 
-| B  |  find the line with the balancing open or closed brace | 
-| B[  |  find the line with the balancing closed bracket | 
-| B(  |  find the line with the balancing closed parenthesis | 
-| B{2  |  find the line that balances the second (from the inside out) unbalanced brace | 
+| p  |  현재 줄을 출력합니다 |
+| 4,7p  |  4번째 줄부터 7번째 줄까지 출력합니다 |
+| +3p  |  3줄을 건너뛰고 출력합니다 |
+| +3  |  +3p와 동일하며, 출력은 기본 명령어입니다 |
+| -  |  이전 줄 |
+| ---  |  3줄 위로 이동 |
+| 'a,'bp  |  라벨 a와 b로 표시된 줄 범위 출력 |
+| kb  |  현재 줄을 b로 표시 |
+| 0ks  |  줄 라벨 s 해제 |
+| l  |  현재 줄을 나열하며, 보이지 않는 문자와 끝 표시자를 표시 |
+| endm  |  나열된 줄에 끝 표시자 ^$를 표시 (토글) |
+| lna  |  줄을 나열할 때 모든 비 ASCII 문자를 16진수로 확장 (토글) |
+| n  |  현재 줄을 줄 번호와 함께 출력 |
+| ll=1000  |  줄 길이 1000, 각 줄의 처음 1000자를 표시 |
+| ll  |  현재 줄의 길이를 출력 |
+| fll=80  |  줄 길이 80으로 형식 지정, 터미널에 맞추기 위해 줄을 80자로 잘라냄 |
+| fll 80+  |  줄을 80자로 잘라내되, 다음 줄이 단 한두 단어만 남지 않도록 약간의 오버플로를 허용 |
+| fll  |  형식화된 줄 길이를 출력 |
+| z22  |  다음 22줄 출력 |
+| z  |  또 다른 22줄 출력 |
+| =  |  파일의 줄 수 출력 |
+| .=  |  현재 줄 번호 출력 |
+| B  |  대칭되는 괄호(열림 또는 닫힘)가 있는 줄 찾기 |
+| B[  |  짝을 이루는 닫는 대괄호가 있는 줄 찾기 |
+| B(  |  짝을 이루는 닫는 괄호가 있는 줄 찾기 |
+| B{2  |  안쪽에서 두 번째로 불균형한 중괄호를 균형 잡는 줄 찾기 |
 
 ▶ **Help Messages**
 
 | 명령 | 설명 |
 | --- | --- |
-| h  |  help, explain the last question mark | 
-| H  |  show all error messages (toggle) | 
-| help  |  put this reference guide in an edbrowse buffer for review | 
+| h  |  도움말, 마지막 물음표에 대한 설명 |
+| H  |  모든 오류 메시지 표시 (토글) |
+| help  |  이 참조 가이드를 edbrowse 버퍼에 넣어 확인 |
 
 ▶ **Search and Substitute**
 
 | 명령 | 설명 |
 | --- | --- |
-| s/x/y/  |  replace x with y on the current line | 
-| s/x/y  |  replace x with y and print the result | 
-| s//y/  |  use the last substitution string, in this case x | 
-| s/x/%/  |  use the last replacement string, in this case y | 
-| s/x  |  replace x with nothing and print the result | 
-| s  |  repeat the previous substitute command | 
-| s/x/y/2p  |  replace the second instance of x with y on the current line | 
-| s2  |  same as above | 
-| s$  |  s//%/$p | 
-| 4,7s/x/y/g  |  replace all instances of x with y on lines 4 through 7 | 
-| s/x/y/3g  |  replace x with y starting with the third instance and proceeding down the line | 
-| s/dog/cat/gfip  |  replace dog or DOG with cat throughout this line, forget dog and cat as search and replacement strings, and print the result | 
-| s/a\(.\)c/a$1$1c/  |  duplicate the letter between a and c | 
-| /\([ab]\)\1/  |  search for aa or bb, will not match on ab or ba | 
-| s,  |  replace comma space with newline, break line in two | 
-| s.  |  replace period space with newline, break line in two | 
-| s?2  |  break line at the second question mark | 
-| s.$  |  break line at the last period | 
-| bl  |  break very long line into sentences and phrases, uses fll to wrap | 
-| /x/  |  look for the line containing x | 
-| /x  |  same as /x/ | 
-| /x/i  |  look for the line containing x or X | 
-| /x/f  |  look for x, but forget x as a search string | 
-| ?x?  |  look backwards for x | 
-| /x/!  |  find the next line that doesn't contain x | 
-| ?x?i!  |  find the previous line that doesn't contain x or X | 
-| ci  |  searches and substitutions are case insensitive (toggle) | 
-| sg  |  substitution strings are global across sessions (toggle) | 
-| su8  |  search and substitute uses utf8 character sequences (toggle) | 
-| ebre  |  edbrowse modified regular expressions, to be more like ed (toggle) | 
-| sss  |  search similar sessions (sessions with the same mode) (toggle) | 
-| sw  |  search with wrap (toggle) | 
-| g/x/ p  |  print every line that has an x | 
-| g/x  |  same as above | 
-| v/x/ p  |  print every line that does not have an x | 
-| v/x/i l  |  list every line that does not have x or X | 
-| g/x/f p  |  print every line that has x, but forget x as a search string | 
-| g/x/ -r foo  |  read the file foo before every line that has an x | 
-| g/x/ -,.w !command  |  run the prior and current line through a command, for each line that contains x | 
-| lc  |  convert line to lower case | 
-| mc  |  convert line to mixed case | 
-| uc  |  convert line to upper case | 
-| s/foo/uc  |  convert foo to FOO on the current line | 
-| s/\bfoo\b/mc/g  |  convert foo to Foo, but not foobar | 
-| ,s/$/ %line/  |  put the line number at the end of each line | 
+| s/x/y/  |  현재 줄에서 x를 y로 바꾸기 |
+| s/x/y  |  x를 y로 바꾸고 결과를 출력하기 |
+| s//y/  |  마지막 치환 문자열(이 경우 x)을 사용 |
+| s/x/%/  |  마지막 치환 문자열(이 경우 y)을 사용 |
+| s/x  |  x를 빈 문자열로 치환하고 결과를 출력 |
+| s  |  이전 치환 명령을 반복 |
+| s/x/y/2p  |  현재 줄에서 두 번째로 나오는 x를 y로 치환 |
+| s2  |  위와 동일 |
+| s$  |  s//%/$p |
+| 4,7s/x/y/g  |  4~7번째 줄에서 x가 나오는 모든 부분을 y로 치환 |
+| s/x/y/3g  |  세 번째 x부터 시작하여 줄 끝까지 x를 y로 치환 |
+| s/dog/cat/gfip  |  이 줄 전체에서 dog 또는 DOG를 cat으로 치환하고, dog와 cat을 검색 및 치환 문자열에서 제거한 후 결과를 출력 |
+| s/a\(.\)c/a$1$1c/  |  a와 c 사이의 문자를 복제 |
+| /\([ab]\)\1/  |  aa 또는 bb를 검색하며, ab 또는 ba와는 일치하지 않음 |
+| s,  |  쉼표와 공백을 줄바꿈으로 바꾸고, 줄을 두 개로 나누기 |
+| s.  |  마침표와 공백을 줄바꿈으로 바꾸고, 줄을 두 개로 나눕니다 |
+| s?2  |  두 번째 물음표에서 줄을 나눕니다 |
+| s.$  |  마지막 마침표에서 줄을 나눕니다 |
+| bl  |  매우 긴 줄을 문장과 구로 나누며, fll을 사용하여 줄바꿈합니다 |
+| /x/  |  x가 포함된 줄을 찾습니다 |
+| /x  |  /x/와 동일합니다 |
+| /x/i  |  x 또는 X가 포함된 줄을 찾습니다 |
+| /x/f  |  x를 찾되, x를 검색 문자열로 간주하지 않습니다 |
+| ?x?  |  뒤로 거슬러 올라가 x를 찾습니다 |
+| /x/!  |  x가 포함되지 않은 다음 줄을 찾습니다 |
+| ?x?i!  |  x 또는 X가 포함되지 않은 바로 앞 줄 찾기 |
+| ci  |  검색 및 치환 시 대소문자 구분 안 함 (토글) |
+| sg  |  치환 문자열이 세션 간에 전역적으로 적용됨 (토글) |
+| su8  |  검색 및 치환 시 utf8 문자 시퀀스 사용 (토글) |
+| ebre  |  edbrowse 정규 표현식을 ed와 더 유사하게 수정 (토글) |
+| sss  |  유사한 세션(동일한 모드를 가진 세션) 검색 (토글) |
+| sw  |  줄 바꿈을 포함한 검색 (토글) |
+| g/x/ p  |  x가 포함된 모든 줄 출력 |
+| g/x  |  위와 동일 |
+| v/x/ p  |  x가 없는 모든 줄 출력 |
+| v/x/i l  |  x 또는 X가 없는 모든 줄 나열 |
+| g/x/f p  |  x가 있는 모든 줄을 출력하되, x를 검색 문자열로 간주하지 않음 |
+| g/x/ -r foo  |  x가 포함된 모든 줄 앞에 foo 파일을 읽음 |
+| g/x/ -,.w !명령어  |  x가 포함된 각 줄에 대해, 이전 줄과 현재 줄을 명령어를 통해 처리함 |
+| lc  |  줄을 소문자로 변환 |
+| mc  |  줄을 대소문자 혼합으로 변환 |
+| uc  |  줄을 대문자로 변환 |
+| s/foo/uc  |  현재 줄에서 foo를 FOO로 변환 |
+| s/\bfoo\b/mc/g  |  foo를 Foo로 변환하되, foobar는 변환하지 않음 |
+| ,s/$/ %line/  |  각 줄의 끝에 줄 번호를 추가 |
+
 
 ▶ **Files and Sessions**
 
 | 명령 | 설명 |
 | --- | --- |
-| f  |  print the name of the current file | 
-| f foo  |  set the file name to foo | 
-| f/  |  retain only the last component of the filename | 
-| f clear  |  clear the filename | 
-| e  |  print the number of the current session | 
-| e3  |  move to session 3 | 
-| e+  |  move to the next editing session | 
-| e-  |  move to the previous editing session | 
-| e/foo  |  move to the session whose filename contains the substring foo | 
-| e?foo  |  move back to the session whose filename contains the substring foo | 
-| enum  |  move to the session indicated by the number on the current line | 
-| eret  |  return to the session you were previously in | 
-| enew  |  create a new empty buffer in the current session | 
-| etmp  |  like enew but don't check for buffer written | 
-| e foo  |  edit the file named foo | 
-| ^ e foo  |  edit foo but don't push the stack, replace the current file. ^ can be prepended to the following e commands as well. | 
-| e ~/projects/edbrowse/src/buf*.c  |  expand wildcards if exactly one match | 
-| e $EBSRC/buf*.c  |  variable expansion | 
-| e !command  |  create a new buffer with the output of the shell command | 
-| e http | //this.that.com : http or https download | 
-| e ftp | //login:password@example.com/file ftp download | 
-| e scp | //login:password@example.com/absolute-path scp download | 
-| r foo  |  read the contents of foo into the current buffer | 
-| r7  |  read the contents of session 7 into the current buffer | 
-| r7@3,8  |  read session 7 lines 3 through 8 into the current buffer | 
-| r7@-,+  |  read 3 lines around . into the current buffer | 
-| r7@'a,'b  |  read the designated block into the current buffer | 
-| r7@100,  |  same as r7@100,$ | 
-| r7@,  |  same as r7 | 
-| r/foo  |  find the session whose filename contains foo and read it into the current buffer | 
-| r/foo@6  |  read line 6 of session foo into the current buffer | 
-| r/foo@'a,'b  |  read a range of lines from session foo into the current buffer | 
-| r+1@'a,'b  |  read a block of text from the buffer up 1 level in the stack | 
-| r-2@$  |  read the last line of text from the buffer down 2 levels in the stack | 
-| r-2@,  |  read in the entire buffer from below | 
-| r-2  |  shorthand for r-2@, | 
-| 11r !command  |  put the output of the shell command after line 11 | 
-| w  |  write the buffer out to the current file | 
-| wq  |  write and quit | 
-| w foo  |  write the current buffer to foo | 
-| w+ foo  |  append to foo | 
-| w/  |  write to the last component of the filename | 
-| w+/  |  append to the last component of the filename | 
-| 8,20w7  |  write lines 8 through 20 to session 7, overwriting whatever was there before | 
-| 'a,'bw7@'c  |  write this block of text into session 7 at the line with label c | 
-| .w7@0  |  write this line at the start of session 7 | 
-| 9w7@-  |  write line 9 to session 7 before the current line | 
-| w7@$  |  append this file to session 7 | 
-| w/foo  |  find the session whose filename contains foo and overwrite it with the current buffer | 
-| 3w/foo@6  |  write line 3 into session foo after line 6 | 
-| 'a,'bw+1@'c  |  write a block of text into the buffer up 1 level in the stack | 
-| .w-2@0  |  write the current line at the start of the buffer down 2 levels in the stack | 
-| .w-2  |  syntax error, @ is necessary for on-stack write, to set the location | 
-| 5,7w !command  |  send lines 5 through 7 to a shell command | 
-| 'a,'bW !command  |  run a range of lines through a shell command and replace them | 
-| W !sort  |  sort the lines in the buffer | 
-| w ftp | //login:password@example.com/file : ftp upload | 
-| w scp | //login:password@example.com/absolute-path : scp upload | 
-| bflist  |  buffer list, all edbrowse sessions and their file names or titles | 
-| bflist/foo  |  list each edbrowse session whose file name or title contains the substring foo | 
-| bflist?foo  |  list in reverse each edbrowse session whose file name or title contains the substring foo | 
-| hist  |  show the history of buffers for the current session | 
-| hist/foo  |  list each buffer in the history whose file name or title contains the substring foo | 
-| hist?foo  |  list in reverse each buffer in the history whose file name or title contains the substring foo | 
-| up  |  go up in the history of buffers | 
-| down  |  go down in the history of buffers | 
-| up3  |  go up 3 buffers in the history | 
-| down4  |  go down 4 buffers in the history | 
-| up/foo  |  go up in the history to a buffer whose file name or title contains the substring foo | 
-| down/foo  |  go down in the history to a buffer whose file name or title contains the substring foo | 
-| bd  |  binary detection on files (toggle) | 
-| iu  |  automatically convert between iso8859 and utf8 (toggle) | 
+| f  |  현재 파일의 이름을 출력합니다 |
+| f foo  |  파일 이름을 foo로 설정합니다 |
+| f/  |  파일 이름의 마지막 구성 요소만 남깁니다 |
+| f clear  |  파일 이름을 지웁니다 |
+| e  |  현재 세션 번호를 출력합니다 |
+| e3  |  세션 3으로 이동 |
+| e+  |  다음 편집 세션으로 이동 |
+| e-  |  이전 편집 세션으로 이동 |
+| e/foo  |  파일 이름에 foo라는 부분 문자열이 포함된 세션으로 이동 |
+| e?foo  |  파일명에 foo라는 부분 문자열이 포함된 세션으로 되돌아가기 |
+| enum  |  현재 줄의 번호로 지정된 세션으로 이동 |
+| eret  |  이전에 있던 세션으로 돌아가기 |
+| enew  |  현재 세션에서 새로운 빈 버퍼 생성 |
+| etmp  |  enew와 같으나 버퍼 쓰기 여부를 확인하지 않음 |
+| e foo  |  foo라는 이름의 파일을 편집합니다 |
+| ^ e foo  |  foo를 편집하되 스택에 푸시하지 않고 현재 파일을 덮어씁니다. ^는 뒤따르는 e 명령어 앞에도 붙일 수 있습니다. |
+| e ~/projects/edbrowse/src/buf*.c  |  정확히 하나의 일치 항목이 있을 경우 와일드카드를 확장합니다 |
+| e $EBSRC/buf*.c  |  변수 확장 |
+| e !command  |  쉘 명령어의 출력을 사용하여 새 버퍼 생성 |
+| e http | //this.that.com : http 또는 https 다운로드 |
+| e ftp | //login:password@example.com/file FTP 다운로드 |
+| e scp | //login:password@example.com/absolute-path SCP 다운로드 |
+| r foo  |  foo의 내용을 현재 버퍼로 읽어옴 |
+| r7  |  세션 7의 내용을 현재 버퍼로 읽어옴 |
+| r7@3,8  |  세션 7의 3~8행을 현재 버퍼로 읽어옴 |
+| r7@-,+  |  .을 중심으로 3행을 현재 버퍼로 읽어옴 |
+| r7@'a,'b  |  지정된 블록을 현재 버퍼로 읽어옴 |
+| r7@100,  |  r7@100,$와 동일 |
+| r7@,  |  r7과 동일 |
+| r/foo  |  파일명에 foo가 포함된 세션을 찾아 현재 버퍼로 읽어옴 |
+| r/foo@6  |  세션 foo의 6번째 줄을 현재 버퍼로 읽어옴 |
+| r/foo@'a,'b  |  세션 foo의 지정된 줄 범위를 현재 버퍼로 읽어옴 |
+| r+1@'a,'b  |  스택에서 한 단계 위의 버퍼에서 텍스트 블록을 읽어옴 |
+| r-2@$  |  스택에서 두 단계 아래의 버퍼에서 마지막 줄의 텍스트를 읽어옴 |
+| r-2@,  |  아래쪽에서 전체 버퍼를 읽어옴 |
+| r-2  |  r-2@,의 약어 |
+| 11r !명령어  |  11번째 줄 뒤에 쉘 명령어의 출력을 삽입 |
+| w  |  버퍼 내용을 현재 파일에 기록 |
+| wq  |  기록 후 종료 |
+| w foo  |  현재 버퍼를 foo 파일에 기록 |
+| w+ foo  |  foo 파일에 추가 기록 |
+| w/  |  파일 이름의 마지막 구성 요소에 기록 |
+| w+/  |  파일 이름의 마지막 구성 요소에 추가 |
+| 8,20w7  |  8행부터 20행까지를 세션 7에 기록하며, 기존 내용을 덮어씁니다 |
+| 'a,'bw7@'c  |  이 텍스트 블록을 세션 7의 'c'라는 레이블이 붙은 줄에 기록 |
+| .w7@0  |  이 줄을 세션 7의 맨 앞에 기록 |
+| 9w7@-  |  9번째 줄을 현재 줄 앞에 세션 7에 기록 |
+| w7@$  |  이 파일을 세션 7에 추가 |
+| w/foo  |  파일명에 foo가 포함된 세션을 찾아 현재 버퍼의 내용으로 덮어씁니다 |
+| 3w/foo@6  |  3번째 줄을 foo 세션의 6번째 줄 뒤에 삽입합니다 |
+| 'a,'bw+1@'c  |  텍스트 블록을 스택에서 한 단계 위의 버퍼에 삽입합니다 |
+| .w-2@0  |  버퍼의 맨 앞줄을 스택에서 2단계 아래로 작성 |
+| .w-2  |  구문 오류, 스택 내 작성 시 위치를 지정하려면 @가 필수 |
+| 5,7w !command  |  5~7행을 셸 명령어에 전달 |
+| 'a,'bW !command  |  지정된 범위의 줄을 쉘 명령을 통해 처리하고 해당 줄을 대체합니다 |
+| W !sort  |  버퍼의 줄을 정렬합니다 |
+| w ftp | //login:password@example.com/file : ftp 업로드 |
+| w scp | //login:password@example.com/absolute-path : scp 업로드 |
+| bflist  |  버퍼 목록, 모든 edbrowse 세션 및 해당 파일 이름 또는 제목 |
+| bflist/foo  |  파일 이름이나 제목에 foo라는 부분 문자열이 포함된 각 edbrowse 세션을 나열 |
+| bflist?foo  |  파일 이름이나 제목에 foo라는 부분 문자열이 포함된 각 edbrowse 세션을 역순으로 나열 |
+| hist  |  현재 세션의 버퍼 이력을 표시합니다 |
+| hist/foo  |  파일 이름이나 제목에 foo라는 부분 문자열이 포함된 이력 내의 각 버퍼를 나열합니다 |
+| hist?foo  |  파일 이름이나 제목에 foo라는 부분 문자열이 포함된 이력 내의 각 버퍼를 역순으로 나열합니다 |
+| up  |  버퍼 이력에서 위쪽으로 이동합니다 |
+| down  |  버퍼 기록에서 아래로 이동 |
+| up3  |  버퍼 기록에서 3개 위로 이동 |
+| down4  |  버퍼 기록에서 4개 아래로 이동 |
+| up/foo  |  파일명이나 제목에 foo라는 부분 문자열이 포함된 버퍼로 기록에서 위로 이동 |
+| 아래/foo  |  이력에서 파일명이나 제목에 foo라는 부분 문자열이 포함된 버퍼로 이동 |
+| bd  |  파일의 바이너리 감지 (토글) |
+| iu  |  iso8859와 utf8 간 자동 변환 (토글) |
 
 ▶ **Text Editing, much like ed**
 
 | 명령 | 설명 |
 | --- | --- |
-| u  |  undo the last command | 
-| d  |  delete the current line | 
-| 1,$d  |  delete all the lines, 1 through eof | 
-| D  |  delete the current line and print the next line | 
-| j  |  join this line with the next one | 
-| 2,5j  |  join lines 2 through 5 | 
-| 2,5J  |  join lines 2 through 5 with space separator | 
-| 2,5Jhello  |  join lines 2 through 5 with hello separator | 
-| i  |  insert text before the current line, end with a period | 
-| c  |  change the current line, enter a new block of text, end with period | 
-| a  |  add text after the current line, end with a period | 
-| a+  |  include the line you just typed in, when you thought you were in append mode | 
-| 4,7m11  |  move lines 4 through 7 to line 11 | 
-| 4,7t11  |  copy lines 4 through 7 to line 11 | 
+| u  |  마지막 명령을 취소합니다 |
+| d  |  현재 줄을 삭제합니다 |
+| 1,$d  |  1번 줄부터 파일 끝(eof)까지 모든 줄을 삭제합니다 |
+| D  |  현재 줄을 삭제하고 다음 줄을 출력합니다 |
+| j  |  이 줄과 다음 줄을 합칩니다 |
+| 2,5j  |  2번 줄부터 5번 줄까지를 합칩니다 |
+| 2,5J  |  2행부터 5행까지 공백으로 구분하여 연결 |
+| 2,5Jhello  |  2행부터 5행까지 'hello'로 구분하여 연결 |
+| i  |  현재 행 앞에 텍스트를 삽입하고, 마침표로 끝냄 |
+| c  |  현재 행을 변경하고, 새로운 텍스트 블록을 입력한 후, 마침표로 끝냄 |
+| a  |  현재 줄 뒤에 텍스트를 추가하고, 마침표로 끝냄 |
+| a+  |  추가 모드에 있다고 생각했을 때 방금 입력한 줄을 포함시킴 |
+| 4,7m11  |  4~7행을 11행으로 이동 |
+| 4,7t11  |  4~7행을 11행으로 복사 |
+
 
 ▶ **Directory Scan**
 
 | 명령 | 설명 |
 | --- | --- |
-| dr  |  directory is readonly | 
-| dw  |  directory is writable, and d moves files to your trash bin | 
-| dx  |  directory is writable, and d deletes files | 
-| hf  |  show hidden files in directory listing (toggle) | 
-| dno  |  directory listing names only (toggle) | 
-| lsl  |  list length of the file on the current line (directory), or the current file | 
-| lss  |  list the approximate size of the file, in kilobytes, megabytes, etc | 
-| lst  |  list the mod time of the file | 
-| lsp  |  list owner group permissions | 
-| lsi  |  list the inode | 
-| lsk  |  list the number of hard links | 
-| lsm  |  list major and minor number | 
-| lsy  |  list path for a symbolic link | 
-| lsX  |  verify directory mode, primarily for scripting | 
-| ls  |  same as lsst | 
-| lst  |  list mod time of the current file if not in directory mode, and same for the other ls commands | 
-| ls=lt  |  display length and time of all files in subsequent directory scans | 
-| ls=  |  just list the files in a directory scan | 
-| sort=a  |  sort files alphabetically | 
-| sort=t  |  sort files by mod time | 
-| sort=s  |  sort files by size | 
-| sort+a  |  same as sort=a | 
-| sort-a  |  reverse alphabetical | 
-| sort-t  |  reverse mod time | 
-| sort-s  |  reverse size | 
-| rf  |  refresh directory scan, useful if you have changed ls or sort parameters | 
-| M  |  move this directory to an empty session and back up | 
-| g  |  go to the file or subdirectory, activates plugin if appropriate | 
-| g-  |  go to the file with no plugin | 
-| g.pdf  |  go to the file using plugin pdf | 
-| d  |  delete the file or move it to your trash can; there is no undo | 
-| g/\.o$/d  |  delete all the .o files | 
-| s/x/y  |  rename the file | 
-| .m3  |  move this file to the directory in session 3. You don't need the @ sign here as the file is always placed at the end of the listing. e3 and refresh if you want it in sorted order. | 
-| .m/foo  |  move this file to the session whose name contains the substring foo | 
-| .t3  |  copy this file to the directory in session 3 | 
-| .t/foo  |  copy this file to the session whose name contains the substring foo | 
-| .l3  |  link this file to the directory in session 3 | 
-| .L3  |  symlink this file to the directory in session 3, not recommended unless the current directory is an absolute path | 
-| .m+2  |  move this file up 2 levels in your editing history. Destination must be a directory. You don't need the @ sign here as the file is always placed at the end of the listing. Go up2 and refresh if you want it in sorted order. | 
-| .t-3  |  copy this file down 3 levels in your editing history | 
+| dr  |  디렉터리가 읽기 전용입니다 |
+| dw  |  디렉터리가 쓰기 가능하며, d 키를 누르면 파일이 휴지통으로 이동합니다 |
+| dx  |  디렉터리가 쓰기 가능하며, d 키를 누르면 파일이 삭제됩니다 |
+| hf  |  디렉터리 목록에 숨겨진 파일을 표시합니다 (토글) |
+| dno  |  디렉터리 목록에 이름만 표시합니다 (토글) |
+| lsl  |  현재 줄(디렉터리)에 있는 파일 또는 현재 파일의 길이를 표시합니다 |
+| lss  |  파일의 대략적인 크기를 킬로바이트, 메가바이트 등으로 표시합니다 |
+| lst  |  파일의 수정 시간을 표시합니다 |
+| lsp  |  소유자 및 그룹 권한을 표시합니다 |
+| lsi  |  i노드 정보 표시 |
+| lsk  |  하드 링크 수 표시 |
+| lsm  |  메이저 및 마이너 번호 표시 |
+| lsy  |  심볼릭 링크의 경로 표시 |
+| lsX  |  디렉터리 모드 확인 (주로 스크립트용) |
+| ls  |  lsst와 동일 |
+| lst  |  디렉터리 모드가 아닐 경우 현재 파일의 수정 시간을 표시하며, 다른 ls 명령어도 마찬가지 |
+| ls=lt  |  이후 디렉터리 스캔 시 모든 파일의 길이와 시간을 표시 |
+| ls=  |  디렉터리 스캔 시 파일만 나열 |
+| sort=a  |  파일을 알파벳순으로 정렬 |
+| sort=t  |  수정 시간 순으로 파일 정렬 |
+| sort=s  |  크기 순으로 파일 정렬 |
+| sort+a  |  sort=a와 동일 |
+| sort-a  |  알파벳 순서 역순 |
+| sort-t  |  수정 시간 역순 정렬 |
+| sort-s  |  크기 역순 정렬 |
+| rf  |  디렉터리 스캔 새로 고침. ls 또는 sort 매개변수를 변경한 경우 유용함 |
+| M  |  이 디렉터리를 빈 세션으로 이동한 후 다시 원래 위치로 되돌림 |
+| g  |  파일 또는 하위 디렉터리로 이동. 해당되는 경우 플러그인을 활성화함 |
+| g-  |  플러그인 없이 파일로 이동 |
+| g.pdf  |  pdf 플러그인을 사용하여 파일로 이동 |
+| d  |  파일을 삭제하거나 휴지통으로 이동; 실행 취소는 불가능 |
+| g/\.o$/d  |  모든 .o 파일 삭제 |
+| s/x/y  |  파일 이름 변경 |
+| .m3  |  이 파일을 세션 3의 디렉터리로 이동합니다. 파일은 항상 목록의 맨 끝에 위치하므로 여기서는 @ 기호가 필요하지 않습니다. 정렬된 순서로 보려면 e3을 입력하고 새로 고침하십시오. |
+| .m/foo  |  이 파일을 이름에 foo라는 부분 문자열이 포함된 세션으로 이동합니다 |
+| .t3  |  이 파일을 세션 3의 디렉터리로 복사합니다 |
+| .t/foo  |  이 파일을 이름에 “foo”라는 부분 문자열이 포함된 세션으로 복사합니다 |
+| .l3  |  이 파일을 세션 3의 디렉터리에 연결합니다 |
+| .L3  |  이 파일을 세션 3의 디렉터리에 심볼릭 링크로 연결합니다. 현재 디렉터리가 절대 경로가 아닌 경우 권장하지 않습니다 |
+| .m+2  |  이 파일을 편집 기록에서 2단계 위로 이동합니다. 대상은 반드시 디렉터리여야 합니다. 파일은 항상 목록의 맨 끝에 배치되므로 여기서는 @ 기호를 사용할 필요가 없습니다. 정렬된 순서로 표시하려면 up2를 실행한 후 새로 고침하십시오. |
+| .t-3  |  이 파일을 편집 기록에서 3단계 아래로 복사합니다 |
+
 
 ▶ **Browse an html file or a web page**
 
 | 명령 | 설명 |
 | --- | --- |
-| b  |  browse the current file, either html, or email, or rendered by plugin | 
-| b.pdf  |  browse the current file using plugin pdf | 
-| b foo.html  |  edit the file foo.html and browse it | 
-| b url  |  fetch url from the Internet and browse it | 
-| nostack b url  |  don't push a new window, replace the current window using the new url | 
-| ^ b url  |  same as above | 
-| attimg  |  show all images even those without alt attributes (toggle) | 
-| ub  |  unbrowse a file | 
-| ft  |  show the title of the current web page (file title) | 
-| fa  |  show the author of the current web page | 
-| fd  |  show the description of the current web page | 
-| fg  |  show the generator of the current web page | 
-| fk  |  show the keywords of the current web page | 
-| fu  |  print the file's underlying URL | 
-| rf  |  refresh the web page or directory listing | 
-| et  |  edit this web page as pure text | 
-| hr  |  http redirection (toggle) | 
-| vs  |  verify ssl connections (toggle) | 
-| sr  |  send referrer (toggle) | 
-| local  |  fetch pages from cache (toggle) | 
-| ua3  |  pretend to be the third user agent in your config file | 
-| ua  |  print the current user agent | 
-| can  |  (curl auth negotiate) toggle SPNEGO type authentication, required for kerberos (krb5/gss) | 
-| crs  |  (curl restart) to recover from certain curl or ssl bugs | 
+| b  |  현재 파일(html, 이메일 또는 플러그인으로 렌더링된 파일)을 열람합니다 |
+| b.pdf  |  플러그인 pdf를 사용하여 현재 파일을 열람합니다 |
+| b foo.html  |  foo.html 파일을 편집하고 열람합니다 |
+| b url  |  인터넷에서 URL을 불러와 열람합니다 |
+| nostack b url  |  새 창을 열지 않고, 새 URL로 현재 창을 대체합니다 |
+| ^ b url  |  위와 동일합니다 |
+| attimg  |  alt 속성이 없는 이미지까지 모두 표시합니다 (토글) |
+| ub  |  파일 보기 해제 |
+| ft  |  현재 웹 페이지의 제목(파일 제목)을 표시합니다 |
+| fa  |  현재 웹 페이지의 작성자 표시 |
+| fd  |  현재 웹 페이지의 설명 표시 |
+| fg  |  현재 웹 페이지의 생성자 표시 |
+| fk  |  현재 웹 페이지의 키워드 표시 |
+| fu  |  파일의 기본 URL 출력 |
+| rf  |  웹 페이지 또는 디렉터리 목록 새로 고침 |
+| et  |  이 웹 페이지를 순수 텍스트로 편집 |
+| hr  |  HTTP 리디렉션 (토글) |
+| vs  |  SSL 연결 확인 (토글) |
+| sr  |  리퍼러 전송 (토글) |
+| local  |  캐시에서 페이지 가져오기 (토글) |
+| ua3  |  구성 파일의 세 번째 사용자 에이전트로 위장 |
+| ua  |  현재 사용자 에이전트 출력 |
+| can  |  (curl auth negotiate) SPNEGO 유형 인증 토글, Kerberos(krb5/gss)에 필수 |
+| crs  |  (curl restart) 특정 curl 또는 SSL 버그로부터 복구 |
 
 ▶ **FTP or HTTP Downloads**
 
 | 명령 | 설명 |
 | --- | --- |
-| pdd  |  progress of download indicated by dots | 
-| pdc  |  progress of download indicated by megabyte count | 
-| pdq  |  progress of download quiet, no indicator | 
-| dld=foo  |  preset the name of the next file to download | 
-| dld=%  |  accept the download filename as set by the server | 
-| ftpa  |  ftp active mode (toggle) | 
-| bg  |  download files in background (toggle) | 
-| bglist  |  list background downloads, complete or in progress | 
-| jsbg  |  download Javascript files in background (toggle) | 
+| pdd  |  점(dot)으로 다운로드 진행 상황을 표시 |
+| pdc  |  메가바이트 수로 다운로드 진행 상황을 표시 |
+| pdq  |  다운로드 진행 상황을 표시하지 않음 (무표시) |
+| dld=foo  |  다음에 다운로드할 파일 이름을 미리 설정 |
+| dld=%  |  서버에서 지정한 다운로드 파일 이름을 그대로 사용 |
+| ftpa  |  FTP 능동 모드 (토글) |
+| bg  |  백그라운드에서 파일 다운로드 (토글) |
+| bglist  |  완료되었거나 진행 중인 백그라운드 다운로드 목록 표시 |
+| jsbg  |  백그라운드에서 자바스크립트 파일 다운로드 (토글) |
+
 
 ▶ **Interact with a Web Page**
 
 | 명령 | 설명 |
 | --- | --- |
-| g  |  go to the link on the current line | 
-| g-  |  go to the link, but don't browse, or render, or play | 
-| g2  |  go to the second link on the current line | 
-| g$  |  go to the last link on the current line | 
-| g?  |  print the url for the link on the current line | 
-| g2?  |  print the url for the second link | 
-| g$?  |  print the url for the last link | 
-| A  |  create a buffer of <a> tags for the hyperlinks on the current line | 
-| 4,7A  |  create a buffer of <a> tags for the hyperlinks on lines 4 through 7 | 
-| exp  |  expand a frame, g also works | 
-| ,exp  |  expand all frames | 
-| ctr  |  contract a frame | 
-| ^  |  the back key, go back to the web page you were looking at before | 
-| &  |  internal link back key, go back to the source of an internal link | 
-| img  |  download the image on the current line | 
-| img2  |  download the second image on the current line | 
-| img$  |  download the last image on the current line | 
-| img?  |  print the url of the image on the current line | 
-| i=xyz  |  set the input field on the current line to xyz | 
-| i=red,green,blue  |  select the options red, green, and blue from a multiple select list | 
-| s/$/,oran  |  add the option orange to the select list | 
-| i=`amber  |  put in your own color if it is a suggested select list | 
-| s/,red/  |  remove red from the select list | 
-| selsep=|  |  change the separator between items in a select list | 
-| selsep=  |  print the separator | 
-| i<5  |  read session 5 into the text input field, one line of text | 
-| i<5@3  |  read line 3 from session 5 into the text input field | 
-| i<5@'c  |  read line label c from session 5 into the text input field | 
-| i<-1@'c  |  read line label c from the buffer below into the text input field | 
-| i<foo  |  read file foo into the text input field, one line of text | 
-| i2=xyz  |  set the second input field on the current line to xyz | 
-| i2*  |  push the second button on the current line, usually submit or reset | 
-| i$*  |  push the last button on the current line | 
-| i3?  |  describe the third input field on the current line | 
-| ipass2  |  prompt for the content of the second input field, disabling echo | 
-| ib  |  allocate an input buffer for this textarea | 
-| ib7  |  use session 7 for this input textarea | 
-| /<session/ ib  |  note the space between / and i | 
-| shc  |  show columns of an html table | 
-| ur  |  unfold a row in an html table (toggle) | 
-| M4  |  move this web page to session 4 and back up to the previous page | 
-| M  |  move this web page to an empty session and back up | 
-| js  |  allow Javascript (toggle) | 
-| rr  |  rerender the screen, to reflect asynchronous Javascript changes | 
-| rr=75  |  rerender the screen automatically every 75 seconds | 
-| showall  |  show all hover and invisible text (toggle) | 
-| colors  |  show the colors on the page | 
+| g  |  현재 줄에 있는 링크로 이동 |
+| g-  |  링크로 이동하되, 브라우징, 렌더링 또는 재생은 하지 않음 |
+| g2  |  현재 줄에 있는 두 번째 링크로 이동 |
+| g$  |  현재 줄에 있는 마지막 링크로 이동 |
+| g?  |  현재 줄에 있는 링크의 URL을 출력 |
+| g2?  |  두 번째 링크의 URL을 출력 |
+| g$?  |  마지막 링크의 URL을 출력 |
+| A  |  현재 줄에 있는 하이퍼링크에 대한 <a> 태그 버퍼 생성 |
+| 4,7A  |  4~7번째 줄에 있는 하이퍼링크에 대한 <a> 태그 버퍼 생성 |
+| exp  |  프레임 확장, g 키도 작동 |
+| ,exp  |  모든 프레임을 확장 |
+| ctr  |  프레임을 축소 |
+| ^  |  뒤로 가기 키, 이전에 보고 있던 웹 페이지로 돌아가기 |
+| &  |  내부 링크 뒤로 가기 키, 내부 링크의 출처로 돌아가기 |
+| img  |  현재 줄에 있는 이미지를 다운로드합니다 |
+| img2  |  현재 줄에 있는 두 번째 이미지를 다운로드합니다 |
+| img$  |  현재 줄에 있는 마지막 이미지를 다운로드합니다 |
+| img?  |  현재 줄에 있는 이미지의 URL을 출력합니다 |
+| i=xyz  |  현재 줄의 입력 필드를 xyz로 설정합니다 |
+| i=red,green,blue  |  다중 선택 목록에서 red, green, blue 옵션을 선택합니다 |
+| s/$/,oran  |  선택 목록에 orange 옵션을 추가합니다 |
+| i=`amber  |  제안된 선택 목록인 경우 원하는 색상을 입력합니다 |
+| s/,red/  |  선택 목록에서 빨강을 제거합니다 |
+| selsep=|  |  선택 목록 항목 사이의 구분 기호를 변경합니다 |
+| selsep=  |  구분 기호를 출력합니다 |
+| i<5  |  세션 5의 텍스트를 한 줄씩 텍스트 입력 필드로 읽어옵니다 |
+| i<5@3  |  세션 5의 3번째 줄을 텍스트 입력 필드로 읽어옵니다 |
+| i<5@'c  |  세션 5의 c번 줄을 텍스트 입력 필드에 읽어옴 |
+| i<-1@'c  |  아래 버퍼의 c번 줄을 텍스트 입력 필드에 읽어옴 |
+| i<foo  |  foo 파일을 텍스트 입력 필드에 한 줄씩 읽어옴 |
+| i2=xyz  |  현재 줄의 두 번째 입력 필드를 xyz로 설정 |
+| i2*  |  현재 줄의 두 번째 버튼(보통 제출 또는 재설정)을 누름 |
+| i$*  |  현재 줄의 마지막 버튼을 누름 |
+| i3?  |  현재 줄의 세 번째 입력 필드를 설명합니다 |
+| ipass2  |  두 번째 입력 필드의 내용을 입력하도록 요청하며, 에코를 비활성화합니다 |
+| ib  |  이 텍스트 영역에 대한 입력 버퍼를 할당합니다 |
+| ib7  |  이 입력 텍스트 영역에 세션 7을 사용합니다 |
+| /<session/ ib  |  /와 i 사이의 공백에 유의하십시오 |
+| shc  |  HTML 테이블의 열 표시 |
+| ur  |  HTML 테이블의 행 펼치기 (토글) |
+| M4  |  이 웹 페이지를 세션 4로 이동하고 이전 페이지로 되돌리기 |
+| M  |  이 웹 페이지를 빈 세션으로 이동하고 되돌리기 |
+| js  |  자바스크립트 허용 (토글) |
+| rr  |  비동기 자바스크립트 변경 사항을 반영하기 위해 화면을 다시 렌더링 |
+| rr=75  |  75초마다 화면을 자동으로 다시 렌더링 |
+| showall  |  모든 호버 텍스트 및 보이지 않는 텍스트 표시 (토글) |
+| colors  |  페이지의 색상 표시 |
+
 
 ▶ **Mail Client**
 
 | 명령 | 설명 |
 | --- | --- |
-| sm  |  send mail [account number] | 
-| re  |  reply to this mail message | 
-| rea  |  reply to all | 
-| fwd  |  forward this email | 
-| flow  |  send mail with format=flowed (toggle) | 
-| attimg  |  show attached images (toggle) | 
-| imap n  |  establish an imap connection | 
-| imap 0  |  tear down the imap connection | 
-| rf  |  refresh the folders and their message counts | 
-| l=40  |  fetch 40 envelopes at a time | 
-| e=rfs  |  read indicator, from, subject | 
-| a  |  add folders, like append mode, . when finished | 
-| s/x/y/  |  rename a folder - but not a system folder! | 
-| d  |  delete a folder - but not a system folder! All email in that folder is lost. | 
-| g  |  go into a folder, similar to directory mode | 
+| sm  |  메일 보내기 [계정 번호] |
+| re  |  이 메일에 답장하기 |
+| rea  |  모두에게 답장하기 |
+| fwd  |  이 메일 전달하기 |
+| flow  |  format=flowed로 메일 보내기 (토글) |
+| attimg  |  첨부된 이미지 표시 (토글) |
+| imap n  |  IMAP 연결 설정 |
+| imap 0  |  IMAP 연결 해제 |
+| rf  |  폴더 및 메시지 수 업데이트 |
+| l=40  |  한 번에 40개의 메일 봉투 가져오기 |
+| e=rfs  |  읽음 표시, 발신자, 제목 확인 |
+| a  |  폴더 추가 (추가 모드와 유사), 완료 시 |
+| s/x/y/  |  폴더 이름 변경 - 단, 시스템 폴더는 제외! |
+| d  |  폴더 삭제 - 단, 시스템 폴더는 제외! 해당 폴더의 모든 이메일이 삭제됩니다. |
+| g  |  폴더로 이동 (디렉터리 모드와 유사) |
 
 ▶ **Envelopes**
 
 | 명령 | 설명 |
 | --- | --- |
-| rf  |  refresh the envelopes in this buffer | 
-| d  |  delete this email | 
-| m abc  |  move email to folder abc | 
-| t abc  |  copy email to folder abc | 
-| r  |  mark email as read | 
-| r-  |  mark email as not read | 
-| lsf  |  list the from field for this envelope | 
-| lst  |  list the to field | 
-| lsd  |  list the date field | 
-| lsl  |  list the length | 
-| lsz or lss  |  list the size in round numbers | 
-| lsy  |  list the subject, although I would expect that is already on the printed line | 
-| lsu  |  list the uid | 
-| lsr  |  list whether this email is read or unread | 
-| u filename  |  write this email unformatted to a file | 
-| U filename  |  same as above but delete the email | 
-| w filename  |  write this email formatted to a file, and an unformatted copy in ~/.trash/rawmail | 
-| W filename  |  same as above but delete the email | 
-| g  |  go into this email for reading | 
-| t  |  go into this email but present the plain text mime component | 
-| g-  |  go to this email but do not browse | 
+| rf  |  이 버퍼에 있는 메일 목록 새로 고침 |
+| d  |  이 이메일 삭제 |
+| m abc  |  이메일을 abc 폴더로 이동 |
+| t abc  |  이메일을 abc 폴더로 복사 |
+| r  |  이메일을 읽음으로 표시 |
+| r-  |  이메일을 미읽음으로 표시 |
+| lsf  |  이 엔벨로프의 발신자 필드 나열 |
+| lst  |  수신자 필드 나열 |
+| lsd  |  날짜 필드 나열 |
+| lsl  |  길이 나열 |
+| lsz 또는 lss  |  크기를 반올림한 값으로 나열 |
+| lsy  |  제목을 나열합니다(비록 이미 출력된 줄에 표시되어 있을 것으로 예상되지만) |
+| lsu  |  UID를 나열합니다 |
+| lsr  |  이 메일이 읽었는지, 읽지 않았는지 여부를 나열합니다 |
+| u 파일명  |  이 메일을 서식 없이 파일로 저장합니다 |
+| U 파일명  |  위와 동일하지만 메일을 삭제합니다 |
+| w 파일명  |  이 이메일을 서식이 적용된 상태로 파일에 쓰고, 서식이 적용되지 않은 사본을 ~/.trash/rawmail에 저장 |
+| W 파일명  |  위와 동일하지만 이메일을 삭제 |
+| g  |  이 이메일로 이동하여 읽기 |
+| t  |  이 이메일로 이동하되, 일반 텍스트 MIME 구성 요소만 표시 |
+| g-  |  이 이메일로 이동하되, 열람하지 않음 |
+
 
 ▶ **Reading an email beneath Imap**
 
 | 명령 | 설명 |
 | --- | --- |
-| rf  |  refresh the email you are reading | 
-| d  |  delete the email you are reading | 
-| m abc  |  move the email you are reading | 
-| t abc  |  copy the email you are reading | 
-| u filename  |  save the email you are reading unformatted | 
-| w filename  |  save the email you are reading formatted | 
-| ^  |  back up to envelopes | 
-| ^^  |  back up to folders | 
+| rf  |  현재 읽고 있는 이메일 새로 고침 |
+| d  |  현재 읽고 있는 이메일 삭제 |
+| m abc  |  현재 읽고 있는 이메일 이동 |
+| t abc  |  현재 읽고 있는 이메일 복사 |
+| u 파일명  |  현재 읽고 있는 이메일을 서식 없이 저장 |
+| w 파일명  |  현재 읽고 있는 이메일을 서식 그대로 저장 |
+| ^  |  엔벨로프로 돌아가기 |
+| ^^  |  폴더로 돌아가기 |
 
 ▶ **IRC Client**
 
 | 명령 | 설명 |
 | --- | --- |
-| irc m n domain nickname  |  set up irc chat using sessions m and n with the specified domain and nickname | 
-| irc m n domain nickname group  |  set up irc chat and join the specified group | 
-| irc m n domain | port nickname:password group : specify a port and a password | 
-| irc m n domain+ | port* nickname:password group : show this channel in the output buffer, and use secure sockets | 
-| showchan  |  show channels as messages are displayed (toggle) | 
-| lst  |  show the date and time when this line was received in the output buffer | 
-| lsc  |  show the channel of this message | 
+| irc m n 도메인 닉네임  |  지정된 도메인과 닉네임을 사용하여 세션 m 및 n을 통해 IRC 채팅을 설정합니다 |
+| irc m n 도메인 닉네임 그룹  |  IRC 채팅을 설정하고 지정된 그룹에 가입합니다 |
+| irc m n 도메인 | 포트 닉네임:비밀번호 그룹 : 포트와 비밀번호를 지정합니다 |
+| irc m n 도메인+ | 포트* 닉네임:비밀번호 그룹 : 이 채널을 출력 버퍼에 표시하고, 보안 소켓을 사용 |
+| showchan  |  메시지가 표시될 때 채널을 함께 표시 (토글) |
+| lst  |  이 줄이 수신된 날짜와 시간을 출력 버퍼에 표시 |
+| lsc  |  이 메시지의 채널을 표시 |
 
 ▶ **Plugins**
 
 | 명령 | 설명 |
 | --- | --- |
-| pb  |  play buffer (typically audio) | 
-| pb.mp3  |  play the current buffer as an mp3 file | 
-| pg  |  plugins active (toggle) | 
+| pb  |  재생 버퍼 (일반적으로 오디오) |
+| pb.mp3  |  현재 버퍼를 mp3 파일로 재생 |
+| pg  |  플러그인 활성화 (토글) |
 
 ▶ **Database Access**
 
 | 명령 | 설명 |
 | --- | --- |
-| ds=source,login,password  |  set the data source | 
-| sht  |  show tables | 
-| shc  |  show columns (and primary key) for the current table | 
-| shf  |  show foreign keys for the current table | 
-| fbc  |  fetch blob columns (toggle) | 
+| ds=소스,로그인,비밀번호  |  데이터 소스 설정 |
+| sht  |  테이블 표시 |
+| shc  |  현재 테이블의 열(및 기본 키) 표시 |
+| shf  |  현재 테이블의 외래 키 표시 |
+| fbc  |  BLOB 열 가져오기 (토글) |
+
 
 ▶ **Edbrowse Functions**
 
 | 명령 | 설명 |
 | --- | --- |
-| <foo arg1 arg2 …  |  invoke the function foo, defined in your .ebrc file | 
-| <7  |  run the commands in session 7 | 
-| <*7  |  run the commands but stopp on error | 
-| <7@22,29  |  run the commands from lines 22 through 29 | 
-| </foo  |  run the commands in session whose file name contains foo | 
-| <*/foo  |  run commands but stop on error | 
-| </foo@22,29  |  run the commands from lines 22 through 29 | 
-| <7  |  pass the commands in session 7 to jdb if in jdb mode | 
-| <-1  |  runn the commands in the buffer down one on your stack | 
-| <+2  |  runn the commands in the buffer up two on your stack | 
-| X  |  silently make this the current line, often used in scripts | 
-| sleep n  |  sleep for n seconds, while some javascript runs in the background | 
-| var x=7  |  set the variable x to 7 | 
-| var x=clear  |  clear the variable x | 
-| var x | =7 : set x in the environment | 
-| var x | =clear : clear x from the environment | 
-| $(x)  |  expand the variable x | 
-| $( | LANG) : expand the environment variable LANG | 
-| p text  |  print text | 
-| p $(x)  |  print the variable x | 
-| $(x+3*y-7)  |  perform basic arithmetic | 
-| [ $(x) = $(y) ]  |  test for equality | 
-| [ $(x) != $(y) and friends ]  |  test for inequality | 
+| <foo arg1 arg2 …  |  .ebrc 파일에 정의된 foo 함수를 호출합니다 |
+| <7  |  세션 7의 명령을 실행합니다 |
+| <*7  |  명령을 실행하되 오류가 발생하면 중지합니다 |
+| <7@22,29  |  22행부터 29행까지의 명령을 실행합니다 |
+| </foo  |  파일명에 foo가 포함된 세션의 명령어를 실행합니다 |
+| <*/foo  |  명령어를 실행하되 오류가 발생하면 중지합니다 |
+| </foo@22,29  |  22행부터 29행까지의 명령어를 실행합니다 |
+| <7  |  jdb 모드인 경우 세션 7의 명령어를 jdb로 전달합니다 |
+| <-1  |  스택에서 한 줄 아래에 있는 버퍼의 명령어를 실행 |
+| <+2  |  스택에서 두 줄 위에 있는 버퍼의 명령어를 실행 |
+| X  |  이 줄을 현재 줄로 설정하며, 스크립트에서 자주 사용됨 |
+| sleep n  |  n초 동안 대기하며, 이 동안 백그라운드에서 자바스크립트가 실행됨 |
+| var x=7  |  변수 x의 값을 7로 설정 |
+| var x=clear  |  변수 x를 초기화 |
+| var x | =7 : 환경에 x를 설정 |
+| var x | =clear : 환경에서 x를 제거 |
+| $(x)  |  변수 x를 전개 |
+| $( | LANG) : 환경 변수 LANG을 전개 |
+| p text  |  text를 출력 |
+| p $(x)  |  변수 x 출력 |
+| $(x+3*y-7)  |  기본 산술 연산 수행 |
+| [ $(x) = $(y) ]  |  등식 검사 |
+| [ $(x) != $(y) and friends ]  |  불등식 검사 |
+
 
 ▶ **Debug**
 
 | 명령 | 설명 |
 | --- | --- |
-| db3  |  set debug level, 0 through 9 | 
-| db  |  report debug level | 
-| db>/tmp/edbrowse.out  |  redirect debugging output to a file | 
-| demin  |  deminimize Javascript (toggle) | 
-| timers  |  enable Javascript timers (toggle) | 
-| speed=7  |  Javascript timers run 7 times slower | 
-| tmlist  |  show all timers for this window | 
-| dbcn  |  enable cloneNode debugging (toggle) | 
-| dbev  |  enable event debugging (toggle) | 
-| dberr  |  enable js error debugging (toggle) | 
-| dbcss  |  enable css debugging (toggle) | 
-| dbtags  |  debug the html scanner (toggle) | 
-| dblay  |  debug the page layout (toggle) | 
-| trace  |  inject trace points into the Javascript (toggle) | 
-| jdb  |  Javascript debugger, bye to exit | 
-| ok(o)  |  list all the members of an object, some may not be enumerable | 
-| showscripts()  |  show scripts anywhere in the tree | 
-| searchscripts(string)  |  look for a string in the scripts | 
-| showframes()  |  show frames anywhere in the tree | 
-| snapshot()  |  snapshot the Javascript and css files for local debugging | 
-| aloop(array, string_on[i])  |  execute string on each member of the array | 
-| uptrace(node)  |  climb up the tree from a given node | 
-| dumptree(node)  |  show the tree below a given node | 
-| by_esn(n)  |  find the tag with the given edbrowse sequence number | 
-| bp@(label)  |  inject this code into a js file for a simple breakpoint | 
-| step$stack()  |  show stack, usually from within a breakpoint | 
-| step$l = 0|1|2  |  set the trace level for each step | 
-| step$go = label  |  set step$l to 2 at this point, breaking at each step thereafter | 
-| step$exp = expression  |  set step$l to 2 when expression is true, breaking at each step thereafter | 
-| arg$  |  reference the arguments object from within a breakpoint | 
+| db3  |  디버그 수준 설정 (0~9) |
+| db  |  디버그 수준 표시 |
+| db>/tmp/edbrowse.out  |  디버깅 출력을 파일로 리디렉션 |
+| demin  |  자바스크립트 최소화 해제 (토글) |
+| timers  |  자바스크립트 타이머 활성화 (토글) |
+| speed=7  |  자바스크립트 타이머 실행 속도를 7배로 늦춤 |
+| tmlist  |  이 창의 모든 타이머 표시 |
+| dbcn  |  cloneNode 디버깅 활성화 (토글) |
+| dbev  |  이벤트 디버깅 활성화 (토글) |
+| dberr  |  자바스크립트 오류 디버깅 활성화 (토글) |
+| dbcss  |  CSS 디버깅 활성화 (토글) |
+| dbtags  |  HTML 스캐너 디버깅 (토글) |
+| dblay  |  페이지 레이아웃 디버깅 (토글) |
+| trace  |  자바스크립트에 추적 지점 삽입 (토글) |
+| jdb  |  자바스크립트 디버거, ‘bye’ 입력 시 종료 |
+| ok(o)  |  객체의 모든 멤버 나열 (일부 멤버는 열거 불가능할 수 있음) |
+| showscripts()  |  트리 내 어디서나 스크립트 표시 |
+| searchscripts(string)  |  스크립트에서 문자열 검색 |
+| showframes()  |  트리 내 어디에서나 프레임을 표시 |
+| snapshot()  |  로컬 디버깅을 위해 자바스크립트 및 CSS 파일의 스냅샷 생성 |
+| aloop(array, string_on[i])  |  배열의 각 멤버에 대해 문자열을 실행 |
+| uptrace(node)  |  지정된 노드에서 트리를 위로 탐색 |
+| dumptree(node)  |  지정된 노드 아래의 트리 표시 |
+| by_esn(n)  |  지정된 edbrowse 시퀀스 번호를 가진 태그 찾기 |
+| bp@(label)  |  간단한 중단점을 설정하기 위해 이 코드를 js 파일에 삽입 |
+| step$stack()  |  스택 표시, 보통 중단점 내에서 실행 |
+| step$l = 0|1|2  |  각 단계별 추적 수준 설정 |
+| step$go = 레이블  |  이 지점에서 step$l을 2로 설정하고, 이후 각 단계에서 중단 |
+| step$exp = 표현식  |  표현식이 참일 때 step$l을 2로 설정하고, 이후 각 단계에서 중단 |
+| arg$  |  중단점 내부에서 인자 객체를 참조 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
