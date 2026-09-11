@@ -12,11 +12,14 @@
 > [!NOTE]
 > GitHub의 6억 3천만 개 리포지토리는 문서, README, 변경 내역에 마크다운을 사용합니다(GitHub Octoverse, 2025). CommonMark 사양(버전 0.31.2)에는 모든 파서가 동일하게 렌더링되도록 보장하기 위한 600개 이상의 테스트 케이스가 포함되어 있습니다.
 
-
+<details>
+<summary>
 ## What Does This Markdown Cheat Sheet Cover?
-
+</summary>
+    
 > [!NOTE]
 > **요약**: 이 마크다운 치트 시트는 제목, 강조(굵게, 기울임, 취소선), 링크, 이미지, 목록, 코드 블록, 표, 인용문, 수평선, 줄 바꿈, 각주, 수학 식, Mermaid 다이어그램 그리고 원시 HTML을 다룹니다. 모든 예시는 CommonMark 0.31.2[^4] 사양(2024)을 따르며, 별도로 명시된 경우 GFM[^5] 사양을 따릅니다. 이 페이지를 즐겨찾기에 추가하시기 바랍니다. 이 한 장이면 마크다운을 다루는 데 필요한 모든 정보를 확인할 수 있습니다.
+</details>
 
 [^4]: https://spec.commonmark.org/0.31.2/
 [^5]: https://github.github.com/gfm/
