@@ -233,7 +233,26 @@ function greet(name) {
 일반적인 언어 식별자: 
 
 ```
-javascript, python, bash, html, css, json, yaml, markdown, sql, typescript, go, rust, csharp, java, ruby, swift, php.
+javascript
+typescript
+python
+ruby
+go
+rust
+java
+c
+cpp
+csharp
+php
+swift
+kotlin
+bash
+sql
+json
+yaml
+markdown
+html
+css
 ```
 
 ### 들여쓰기된 코드 블록
@@ -442,6 +461,28 @@ ___
 ```
 > [!CAUTION]
 > Dangerous action
+```
+
+### 코드접기
+<details>
+<summary>Click to expand</summary>
+
+Hidden content
+</details>
+
+```
+<details>
+<summary>Click to expand</summary>
+
+Hidden content
+</details>
+```
+
+### 키보드 키
+<kbd>Ctrl</kbd> + <kbd>C</kbd>
+
+```
+<kbd>Ctrl</kbd> + <kbd>C</kbd>
 ```
 
 ### 정의 목록
