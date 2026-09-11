@@ -21,42 +21,6 @@
 | *Source*      | https://github.com/fniessen/refcard-org-mode        |
 # | *Documentation* | http://refcard-org-mode.readthedocs.org/            |
 
-#+begin_quote
-[!TIP]
-
-*** Transform your Emacs experience in Paris from 24 to 28 November 2025!
-*Unlock unparalleled productivity with my exclusive "EmacsBoost" course!*
-
-Are you ready to /supercharge your productivity/ and become an unstoppable Emacs
-ninja?  This is the opportunity you've been waiting for!
-
-*What you'll learn:*
-- Expertly master Emacs from the ground up to advanced techniques that set you
-  apart.
-- /Maximize your editing efficiency/ and elevate your workflow to new heights.
-- Personalize Emacs to perfectly fit your unique style and needs.
-- And much more tips and tricks!
-
-*Who should join:*
-
-This course is designed for everyone passionate about Emacs -- from curious
-beginners to seasoned users looking to refine their skills.
-
-*Why choose my course?*
-- Learn from an expert instructor with over 26 years of Emacs mastery.
-- Engage in /dynamic hands-on exercises/ that reinforce and enhance your learning
-  journey.
-- Enjoy /exclusive networking opportunities/ with fellow Emacs enthusiasts who
-  share your passion.
-- Experience personalized guidance tailored just for you.
-
-Seize this exceptional opportunity to elevate your Emacs skills to new levels!
-\\
-
-Visit https://emacsboost.com/en/ for more details, course dates and locations,
-and to /secure your place today/.
-#+end_quote
-
 * Summary
 
 # See https://tutorialtodoapp.readthedocs.org/en/latest/ for nice home page!
