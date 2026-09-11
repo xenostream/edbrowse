@@ -403,6 +403,41 @@ ___
 
 [^20]: https://macmdviewer.com/blog/markdown-footnotes-guide
 
+### Alerts/Callouts
+**Note**  
+Informational callout
+```
+> [!NOTE]
+> Information note
+```
+
+**Tip**  
+Tip callout
+```
+> [!TIP]
+> Helpful tip
+```
+
+**Important**  
+Important callout
+```
+> [!IMPORTANT]
+> Key information
+```
+
+**Warning**  
+Warning callout
+```
+> [!WARNING]
+> Warning message
+```
+
+**Caution**  
+Caution callout
+```
+> [!CAUTION]
+> Dangerous action
+```
 
 ### 정의 목록
 
