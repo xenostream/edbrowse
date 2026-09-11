@@ -2,7 +2,7 @@
 > Edbrowse v3.8.17 @2026.09.09
 
 <details>
-<summary>▶ **Leave the Program**</summary>
+<summary>**Leave the Program**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -40,7 +40,7 @@
 </details>
 
 <details>
-<summary>▶ **Input**</summary>
+<summary>**Input**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -54,7 +54,7 @@
 </details>
 
 <details>
-<summary>▶ **Display Lines in the Buffer**</summary>
+<summary>**Display Lines in the Buffer**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
