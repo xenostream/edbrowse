@@ -2,7 +2,7 @@
 > Edbrowse v3.8.17 @2026.09.09
 
 <details>
-<summary>**Leave the Program**</summary>
+<summary>Leave the Program</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -40,7 +40,7 @@
 </details>
 
 <details>
-<summary>**Input**</summary>
+<summary>Input</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -54,7 +54,7 @@
 </details>
 
 <details>
-<summary>**Display Lines in the Buffer**</summary>
+<summary>Display Lines in the Buffer</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -87,7 +87,7 @@
 </details>
 
 <details>
-<summary>▶ **Help Messages**</summary>
+<summary>▶ Help Messages</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -97,7 +97,7 @@
 </details>
 
 <details>
-<summary>▶ **Search and Substitute**</summary>
+<summary>▶ Search and Substitute</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -149,7 +149,7 @@
 </details>
 
 <details>
-<summary>▶ **Files and Sessions**</summary>
+<summary>▶ Files and Sessions</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -228,7 +228,7 @@
 </details>
 
 <details>
-<summary>▶ **Text Editing, much like ed**</summary>
+<summary>▶ Text Editing, much like ed</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -249,7 +249,7 @@
 </details>
 
 <details>
-<summary>▶ **Directory Scan**</summary>
+<summary>▶ Directory Scan</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -297,7 +297,7 @@
 </details>
 
 <details>
-<summary>▶ **Browse an html file or a web page**</summary>
+<summary>▶ Browse an html file or a web page</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -328,7 +328,7 @@
 </details>
 
 <details>
-<summary>▶ **FTP or HTTP Downloads**</summary>
+<summary>▶ FTP or HTTP Downloads</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -344,7 +344,7 @@
 </details>
 
 <details>
-<summary>▶ **Interact with a Web Page**</summary>
+<summary>▶ Interact with a Web Page</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -398,7 +398,7 @@
 </details>
 
 <details>
-<summary>▶ **Mail Client**</summary>
+<summary>▶ Mail Client</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -420,7 +420,7 @@
 </details>
 
 <details>
-<summary>▶ **Envelopes**</summary>
+<summary>▶ Envelopes</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -448,7 +448,7 @@
 </details>
 
 <details>
-<summary>▶ **Reading an email beneath Imap**</summary>
+<summary>▶ Reading an email beneath Imap</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -463,7 +463,7 @@
 </details>
 
 <details>
-<summary>▶ **IRC Client**</summary>
+<summary>▶ IRC Client</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -477,7 +477,7 @@
 </details>
 
 <details>
-<summary>▶ **Plugins**</summary>
+<summary>▶ Plugins</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -487,7 +487,7 @@
 </details>
 
 <details>
-<summary>▶ **Database Access**</summary>
+<summary>▶ Database Access</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -499,7 +499,7 @@
 </details>
 
 <details>
-<summary>▶ **Edbrowse Functions**</summary>
+<summary>▶ Edbrowse Functions</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -529,7 +529,7 @@
 </details>
 
 <details>
-<summary>▶ **Debug**</summary>
+<summary>▶ Debug</summary>
 
 | 명령 | 설명 |
 | --- | --- |
