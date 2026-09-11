@@ -412,7 +412,7 @@ ___
 > Information note
 ```
 
-> [TIP]  
+> [!TIP]  
 > Tip callout
 
 ```
