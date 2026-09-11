@@ -1,7 +1,8 @@
 > [!NOTE]
 > Edbrowse v3.8.17 @2026.09.09
 
-▶ **Leave the Program**
+<details>
+<summary>▶ **Leave the Program**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -36,7 +37,10 @@
 | pwd  |  현재 디렉터리 표시 |
 | config  |  설정 파일 다시 읽기 |
 
-▶ **Input**
+</details>
+
+<details>
+<summary>▶ **Input**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -47,8 +51,10 @@
 | P  |  프롬프트 표시 (토글) |
 | P=foo  |  foo로 프롬프트 설정 |
 | rl  |  입력에 readline() 사용 (토글), $HISTCONTROL을 따름 |
+</details>
 
-▶ **Display Lines in the Buffer**
+<details>
+<summary>▶ **Display Lines in the Buffer**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -78,16 +84,20 @@
 | B[  |  짝을 이루는 닫는 대괄호 줄 찾기 |
 | B(  |  짝을 이루는 닫는 괄호 줄 찾기 |
 | B{2  |  안쪽에서 두 번째로 불균형한 중괄호를 균형잡는 줄 찾기 |
+</details>
 
-▶ **Help Messages**
+<details>
+<summary>▶ **Help Messages**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
 | h  |  도움말, 마지막 물음표 오류에 대한 설명 |
 | H  |  모든 오류 메시지 표시 (토글) |
 | help  |  본 참조 가이드를 edbrowse 버퍼로 확인 |
+</details>
 
-▶ **Search and Substitute**
+<details>
+<summary>▶ **Search and Substitute**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -136,9 +146,10 @@
 | s/foo/uc  |  현재 줄에서 foo를 FOO로 변환 |
 | s/\bfoo\b/mc/g  |  foo를 Foo로 변환하되, foobar는 변환하지 않음 |
 | ,s/$/ %line/  |  각 줄의 끝에 줄 번호 추가 |
+</details>
 
-
-▶ **Files and Sessions**
+<details>
+<summary>▶ **Files and Sessions**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -214,8 +225,10 @@
 | 아래/foo  |  이력에서 파일 이름이나 제목에 foo 부분 문자열이 포함된 버퍼로 이동 |
 | bd  |  파일의 바이너리 감지 (토글) |
 | iu  |  iso8859와 utf8 간 자동 변환 (토글) |
+</details>
 
-▶ **Text Editing, much like ed**
+<details>
+<summary>▶ **Text Editing, much like ed**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -233,9 +246,10 @@
 | a+  |  추가 모드에 있을 때 방금 입력한 줄 포함 |
 | 4,7m11  |  4~7행을 11행으로 이동 |
 | 4,7t11  |  4~7행을 11행으로 복사 |
+</details>
 
-
-▶ **Directory Scan**
+<details>
+<summary>▶ **Directory Scan**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -280,9 +294,10 @@
 | .L3  |  이 파일을 세션 3 디렉터리에 심볼릭 링크로 연결. 현재 디렉터리가 절대 경로가 아닌 경우 권장하지 않음 |
 | .m+2  |  이 파일을 편집 기록에서 2단계 위로 이동. 대상은 반드시 디렉터리여야 함. 파일은 항상 목록의 맨 끝에 배치되므로 @ 기호를 사용할 필요 없음. 정렬된 순서로 표시하려면 up2를 실행한 후 새로고침 |
 | .t-3  |  이 파일을 편집 기록에서 3단계 아래로 복사 |
+</details>
 
-
-▶ **Browse an html file or a web page**
+<details>
+<summary>▶ **Browse an html file or a web page**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -310,8 +325,10 @@
 | ua  |  현재 사용자 에이전트 출력 |
 | can  |  (curl auth negotiate) SPNEGO 유형 인증 토글, Kerberos(krb5/gss)에 필수 |
 | crs  |  (curl restart) 특정 curl 또는 SSL 버그로부터 복구 |
+</details>
 
-▶ **FTP or HTTP Downloads**
+<details>
+<summary>▶ **FTP or HTTP Downloads**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -324,9 +341,10 @@
 | bg  |  백그라운드에서 파일 다운로드 (토글) |
 | bglist  |  완료됐거나 진행 중인 백그라운드 다운로드 목록 표시 |
 | jsbg  |  백그라운드에서 자바스크립트 파일 다운로드 (토글) |
+</details>
 
-
-▶ **Interact with a Web Page**
+<details>
+<summary>▶ **Interact with a Web Page**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -377,9 +395,10 @@
 | rr=75  |  75초마다 화면을 자동으로 다시 렌더링 |
 | showall  |  모든 호버 텍스트 및 보이지 않는 텍스트 표시 (토글) |
 | colors  |  페이지의 색상 표시 |
+</details>
 
-
-▶ **Mail Client**
+<details>
+<summary>▶ **Mail Client**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -398,8 +417,10 @@
 | s/x/y/  |  폴더 이름 변경 - 단, 시스템 폴더 제외! |
 | d  |  폴더 삭제 - 단, 시스템 폴더 제외! 해당 폴더의 모든 이메일이 삭제됨 |
 | g  |  폴더로 이동 (디렉터리 모드와 유사) |
+</details>
 
-▶ **Envelopes**
+<details>
+<summary>▶ **Envelopes**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -424,9 +445,10 @@
 | g  |  이메일로 이동해서 읽기 |
 | t  |  이메일로 이동하되 일반 텍스트 MIME 구성 요소만 표시 |
 | g-  |  이메일로 이동하되 열람하지 않음 |
+</details>
 
-
-▶ **Reading an email beneath Imap**
+<details>
+<summary>▶ **Reading an email beneath Imap**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -438,8 +460,10 @@
 | w 파일명  |  현재 읽고 있는 이메일 서식 그대로 저장 |
 | ^  |  엔벨로프로 돌아가기 |
 | ^^  |  폴더로 돌아가기 |
+</details>
 
-▶ **IRC Client**
+<details>
+<summary>▶ **IRC Client**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -450,16 +474,20 @@
 | showchan  |  메시지가 표시될 때 채널 함께 표시 (토글) |
 | lst  |  이 줄이 수신된 날짜와 시간을 출력 버퍼에 표시 |
 | lsc  |  이 메시지의 채널 표시 |
+</details>
 
-▶ **Plugins**
+<details>
+<summary>▶ **Plugins**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
 | pb  |  버퍼 재생 (일반적으로 오디오) |
 | pb.mp3  |  현재 버퍼를 mp3 파일로 재생 |
 | pg  |  플러그인 활성화 (토글) |
+</details>
 
-▶ **Database Access**
+<details>
+<summary>▶ **Database Access**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -468,9 +496,10 @@
 | shc  |  현재 테이블의 열(및 기본 키) 표시 |
 | shf  |  현재 테이블의 외래 키 표시 |
 | fbc  |  BLOB 열 가져오기 (토글) |
+</details>
 
-
-▶ **Edbrowse Functions**
+<details>
+<summary>▶ **Edbrowse Functions**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -497,9 +526,10 @@
 | $(x+3*y-7)  |  기본 산술 연산 수행 |
 | [ $(x) = $(y) ]  |  등식 검사 |
 | [ $(x) != $(y) and friends ]  |  불등식 검사 |
+</details>
 
-
-▶ **Debug**
+<details>
+<summary>▶ **Debug**</summary>
 
 | 명령 | 설명 |
 | --- | --- |
@@ -534,4 +564,4 @@
 | step$exp = 표현식  |  표현식이 참일 때 step$l을 2로 설정하고 이후 각 단계에서 중단 |
 | arg$  |  중단점 내부에서 인자 객체를 참조 |
 
-
+</details>
