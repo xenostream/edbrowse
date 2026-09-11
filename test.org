@@ -1,0 +1,4 @@
+#+begin_quote
+[!TIP]
+Try doing it this way...
+#+end_quote
