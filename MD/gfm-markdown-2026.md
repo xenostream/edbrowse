@@ -548,8 +548,8 @@ macOS에서 마크다운을 작성하고 미리보기 위해, MacMD 뷰어는 �
 ## Quick Reference Table
 이 요약된 마크다운 참고표는 빠른 조회를 위해 모든 구문 요소를 다루고 있습니다:
 
-| Element | Syntax | Notes 
-| --- | --- --- |
+| Element | Syntax | Notes |
+| --- | --- | --- |
 | Heading 1	 | `# Text` | Always add a space after # |
 | Heading 2	 | `## Text` | Up to six levels (######) |
 | Bold | 	`**text**` | Prefer `**` over `__` |
