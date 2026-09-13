@@ -21,34 +21,33 @@
 | *Source*      | https://github.com/fniessen/refcard-org-mode        |
 # | *Documentation* | http://refcard-org-mode.readthedocs.org/            |
 
+
 * Summary
 
-# See https://tutorialtodoapp.readthedocs.org/en/latest/ for nice home page!
+*이 강좌를 통해 다음을 배우게 됩니다:*
 
-*You will learn to:*
+- Org 모드로 문서 작성하기
+- 표 만들기
+- 사용자 정의 코드 블록 만들기
+- 그 밖에도 다양한 내용!
 
-- write your docs in Org mode
-- create tables
-- create custom code blocks
-- and much more!
+이 문서는 ~.org~ 확장자를 사용하는 Org 모드 문서입니다(GitHub에서 지원됨).
 
-This is an Org mode document, using the ~.org~ extension (supported by GitHub).
+*Org 모드*는 메모,
+기사, LaTeX 문서, 책, 웹 페이지, Beamer 슬라이드 데크 등을 작성하기 위한, 작성하기 쉬운 /일반 텍스트/ 서식 구문입니다!
 
-*Org mode* is an easy-to-write /plain text/ formatting syntax for authoring notes,
-articles, LaTeX documents, books, Web pages, Beamer slide decks and much more!
+이 문서는 *Org 모드 8*용 치트 시트입니다(Org 모드 7 이후 마크업 구문이 일부 변경되었기
+때문이며), [[https://github.com/fniessen/org-html-themes] [ReadTheOrg CSS]]를 기반으로 한 *Org 모드 8*용 요약 자료입니다.
 
-This is a cheat sheet for *Org mode 8* (because of some markup syntax changes
-since Org mode 7), using [[https://github.com/fniessen/org-html-themes][ReadTheOrg CSS]].
+[[http://orgmode.org/org.pdf][문서]] 전체를 꼼꼼히 읽어보시는 것을 강력히 권장하지만, 정말
+인내심이 없는 분들을 위해 시작하기 위한 간단한 단계를 아래에 정리했습니다.
 
-Reading through all the [[http://orgmode.org/org.pdf][documentation]] is highly recommended, but for the truly
-impatient, following are some quick steps to get started.
 
 # #+begin_abstract
 # This paper talks about...
 # #+end_abstract
 
 # See http://asciidoctor.org/docs/user-manual/#the-big-picture
-
 # See http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html.
 
 * Reference card
@@ -56,8 +55,7 @@ impatient, following are some quick steps to get started.
 #+TOC: headlines 2
 
 * Document header
-
-Title and author line:
+제목 및 저자 정보:
 
 #+begin_src org :eval never-export
 ,#+TITLE:     Org mode syntax examples
@@ -66,7 +64,7 @@ Title and author line:
 My document provides...
 #+end_src
 
-It's a good practice to also include an email line following the author line.
+작성자 정보 뒤에 이메일 주소를 추가하는 것도 좋은 관행입니다.
 
 #+begin_src org :eval never-export
 ,#+EMAIL:     john.doe@example.com
@@ -77,7 +75,7 @@ It's a good practice to also include an email line following the author line.
 ** Document description
 
 #+begin_src org :eval never-export
-#+DESCRIPTION: This document catalogs a set of tips and tricks for composing documents in Org mode.
+#+DESCRIPTION: 이 문서는 Org 모드에서 문서를 작성하는 데 유용한 팁과 요령을 정리한 것입니다.
 #+KEYWORDS:  org-mode, syntax, quick reference, cheat sheet, recommended practices, latex, beamer, html
 #+LANGUAGE:  en
 #+end_src
@@ -94,8 +92,7 @@ It's a good practice to also include an email line following the author line.
 
 ** Table of contents
 
-Set the ~toc~ attribute to activate an auto-generated table of contents (limited
-to its 2 first levels) at the top of document.
+~toc~ 속성을 설정하면 문서 상단에 자동 생성된 목차(최상위 및 그 다음 단계까지, 총 2단계로 제한됨)가 표시됩니다.
 
 #+begin_src org :eval never-export
 #+OPTIONS:   toc:2
@@ -106,12 +103,11 @@ to its 2 first levels) at the top of document.
 #+end_src
 
 #+begin_note
-The ~ALT_TITLE~ property allows to set an alternate title (shorter, for example)
-for a given headline in the table of contents and other running heads.
+~ALT_TITLE~ 속성을 사용하면 목차 및 기타 페이지 머리글에 표시되는
+특정 제목에 대해 대체 제목(예: 더 짧은 제목)을 설정할 수 있습니다.
 #+end_note
 
-To locally insert the TOC at some random place, use the ~#+TOC: headlines [n]~
-feature; for example:
+목차(TOC)를 임의의 위치에 삽입하려면 ~#+TOC: headlines [n]~ 기능을 사용하십시오. 예를 들어:
 
 #+begin_src org :eval never-export
 ,#+TOC: headlines 2
@@ -119,11 +115,11 @@ feature; for example:
 
 ** List of figures
 
-~#+TOC: figures~ is not implemented yet in the HTML backend.
+~#+TOC: figures~ 는 HTML 백엔드에서 아직 구현되지 않았습니다.
 
 ** List of tables
 
-~#+TOC: tables~ is already implemented in the HTML backend.
+~#+TOC: tables~ 는 이미 HTML 백엔드에 구현되어 있습니다.
 
 ** List of equations
 
@@ -151,7 +147,7 @@ New sub-sub-section.
 
 ** Numbered headings
 
-You can create numbered headings up to a certain level by setting an option:
+다음과 같은 옵션을 설정하면 특정 수준까지 번호가 매겨진 제목을 만들 수 있습니다:
 
 #+begin_src org
 ,#+OPTIONS: H:4
@@ -162,29 +158,29 @@ You can create numbered headings up to a certain level by setting an option:
 ** Normal
 
 #+begin_src org
-A single newline has no effect.
-This line is part of the same paragraph.
+단일 줄바꿈은 아무런 영향을 미치지 않습니다.
+이 줄은 같은 단락의 일부입니다.
 
-But an empty line
+하지만 빈 줄은
 
-demarcates paragraphs.
+단락을 구분합니다.
 #+end_src
 
 ** Line breaks
 
 #+begin_src org
-By entering two consecutive backslashes, \\
-you can force a line break
-without starting a new paragraph.
+연속된 두 개의 백슬래시(\\)를 입력하면
+새로운 단락을 시작하지 않고도
+강제로 줄 바꿈을 할 수 있습니다.
 #+end_src
 
 ** Horizontal rules
 
 #+begin_src org
-For an horizontal line, insert at least 5 dashes: this is some text above an
-horizontal rule
+수평선을 표시하려면 대시를 5개 이상 입력하세요. 다음은
+수평선 위
 -----
-and some text below it.
+와 그 아래에 있는 텍스트입니다.
 #+end_src
 
 ** Text width
@@ -213,22 +209,22 @@ compared with the size of the rest of him, waved about helplessly as he looked.
 
 * Formatting text
 
-Text effects.
+텍스트 효과
 
 ** Bold and italic
 
 #+begin_src org
-/Emphasize/ (italics), *strongly* (bold), and */very strongly/* (bold italics).
+/강조/ (이탤릭체), *강하게* (굵은체), */매우 강하게/* (굵은 이탤릭체).
 #+end_src
 
-Markup elements can be nested:
+마크업 요소는 중첩될 수 있습니다:
 
 #+begin_src org
 This is /italic text which contains _underlined text_ within it/, whereas _this is
 normal underlined text_.
 #+end_src
 
-Markup can span across multiple lines, by default *no more than 2*:
+마크업은 여러 줄에 걸쳐 작성할 수 있으며, 기본적으로 *2줄을 초과할 수 없습니다*:
 
 #+begin_src org
 *This
@@ -236,8 +232,7 @@ is not
 bold.*
 #+end_src
 
-Org mode does not interpret a marker surrounded by alphanumeric characters as an
-emphasis marker. So, you can't (easily) emphasize just part of a word:
+Org 모드는 영숫자로 둘러싸인 마커를 강조 마커로 해석하지 않습니다. 따라서 단어의 일부만 (쉽게) 강조할 수는 없습니다:
 
 #+begin_src org
 Not feas*ible*.
@@ -245,70 +240,65 @@ Not feas*ible*.
 
 ** Monospace, superscript and subscript
 
-Other elements to use sparingly are:
+절제해서 사용해야 할 다른 요소들은 다음과 같습니다:
 
 #+begin_src org
-- monospaced typewriter font for ~inline code~
-- monospaced typewriter font for =verbatim text=
-- +deleted text+ (vs. _inserted text_)
-- text with super^{script}, such as 2^{10}
-- text with sub_{script}, such as H_{2}O
+  - ~인라인 코드~ 용 고정폭 타자기 글꼴
+  - =원문 그대로의 텍스트= 용 고정폭 타자기 글꼴
+  - +삭제된 텍스트+ (대조:  _삽입된 텍스트_ )
+  - 2^{10} 과 같은 상첨자^{script} 가 포함된 텍스트
+  - H_{2}O 와 같은 하첨자_{script} 가 포함된 텍스트
 #+end_src
 
 ** Smart punctuation
 
-If the XXX option is specified, Org mode will produce typographically correct
-output, converting straight quotes to curly quotes, ~---~ to em-dashes, ~--~ to
-en-dashes, and ~...~ to ellipses.
+XXX 옵션이 지정되면, Org 모드는 타이포그래피적으로 올바른 출력 결과를 생성하며, 직선 따옴표를 곡선 따옴표로, ~---~ 를 엠 대시로, ~--~ 를 엔 대시로, ~...~ 를 생략 부호로 변환합니다.
 
 * Lists
 
-Org markup allows you to create *bulleted* or *numbered* lists. It allows any
-combination of the two list types.
+Org 마크업을 사용하면 *글머리 기호* 또는 *번호* 가 붙은 목록을 만들 수 있습니다. 또한 이 두 가지 목록 유형을 자유롭게 조합하여 사용할 수 있습니다.
 
 ** Unordered lists
 
-Itemized lists are marked with bullets. Create them with a minus or a plus sign.
+항목별 목록은 글머리 기호로 표시됩니다. 마이너스 기호나 플러스 기호를 사용하여 목록을 작성하세요.
 
-They are convenient to organize data, and make the document prettier, and easier
-to read.
+목록은 데이터를 체계적으로 정리하는 데 유용할 뿐만 아니라, 문서를 더 보기 좋게 만들고 읽기 쉽게 해줍니다.
 
 #+begin_src org
-- Item with some lengthy text wrapping hopefully across several lines. We add
-  a few words to really show the line wrapping.
-- Bullet.
-  + Bullet.
-    * Bullet.
+- 여러 줄에 걸쳐 줄바꿈이 이루어지기를 바라는 긴 텍스트가 포함된 항목. 줄바꿈 효과를 확실히 보여주기 위해
+  단어 몇 개를 추가합니다.
+- 글머리 기호.
+  + 글머리 기호.
+    * 글머리 기호.
 #+end_src
 
 ** Checklists
 
 #+begin_src org
-- [X] Checked.
-- [-] Half-checked.
-- [ ] Not checked.
-- Normal list item.
+- [X] 선택됨.
+- [-] 반만 선택됨.
+- [ ] 선택되지 않음.
+- 일반 목록 항목.
 #+end_src
 
 ** Ordered lists
 
-Enumerated lists are marked with numbers or letters:
+번호 매기기 목록은 숫자나 문자로 표시됩니다:
 
 #+begin_src org
-1. Arabic (decimal) numbered list item. We add a few words to show the line
-   wrapping.
-   A. Upper case alpha (letter) numbered list item.
-      a. Lower alpha.
-      b. Lower alpha.
-   B. Upper alpha.
-2. Number.
+1. 아랍어(십진법) 번호 목록 항목. 줄 바꿈을 보여주기 위해 몇 단어를 추가합니다.
+   A. 대문자 알파벳(글자) 번호 목록 항목.
+      a. 소문자 알파벳.
+      b. 소문자 알파벳.
+   B. 대문자 알파벳.
+2. 숫자.
 #+end_src
 
-You can have ordered lists with jumping numbers:
+번호가 건너뛰는 정렬된 목록을 만들 수 있습니다:
 
 #+begin_src org
-2. [@2] We start with point number 2.
-3. Automatically numbered item.
+2. [@2] 2번 항목부터 시작하겠습니다.
+3. 자동으로 번호가 매겨진 항목.
 #+end_src
 
 ** Definition lists
@@ -316,23 +306,23 @@ You can have ordered lists with jumping numbers:
    :ID:       f1a4a242-755b-4c38-9280-ee3f60e2b29a
    :END:
 
-Labeled, multi-line lists.
+라벨이 붙은 여러 줄로 된 목록.
 
 #+begin_src org
-- First term to define ::
-     Definition of the first term. We add a few words to show the line wrapping,
-     to see what happens when you have long lines.
+- 정의할 첫 번째 항 ::
+     첫 번째 항의 정의. 줄 바꿈이 어떻게 되는지 보여주기 위해 몇 단어를 추가하여,
+     긴 줄이 있을 때 어떤 현상이 발생하는지 확인합니다.
 
-- Second term ::
-     Explication of the second term with *inline markup*.
+- 두 번째 항 ::
+     *인라인 마크업*을 사용하여 두 번째 항을 설명합니다.
 
-     In many paragraphs.
+     여러 단락에 걸쳐.
 #+end_src
 
 ** Separating lists
 
-Adjacent lists sometimes like to fuse. To force the start of a new list, offset
-the two lists by an empty line comment:
+인접한 목록은 때때로 합쳐지곤 합니다. 새로운 목록을 시작하도록 하려면,
+빈 줄 주석을 삽입하여 두 목록 사이에 간격을 두십시오:
 
 #+begin_src org
 - apples
@@ -348,8 +338,8 @@ the two lists by an empty line comment:
 
 * Tables
 
-Tables are one of the most refined areas of the Org mode syntax. They are very easy
-to create and to read.
+표는 Org 모드 구문에서 가장 정교한 부분 중 하나입니다. 표는
+만들기도, 읽기도 매우 쉽습니다.
 
 ** Simple table
 
@@ -358,19 +348,18 @@ to create and to read.
 | Cell in column 1, row 2 | Cell in column 2, row 2 |
 #+end_src
 
-Org tables have cells of at most one line long: there is no such thing as
-a multi-line table cell in Org.
+Org 테이블의 셀은 길이가 한 줄을 넘지 않습니다. Org에는 여러 줄로 이루어진 테이블 셀이라는 개념이 없습니다.
 
 ** Column formatting
 
-Columns are automatically aligned:
+열은 자동으로 정렬됩니다:
 
-- Number-rich columns to the right, and
-- String-rich columns to the left.
+- 숫자가 많은 열은 오른쪽으로,
+- 문자열이 많은 열은 왼쪽으로 정렬됩니다.
 
 *** Table with aligned cells
 
-If you want to override the automatic alignment, use ~<r>~, ~<c>~ or ~<l>~.
+자동 정렬을 무시하려면 ~<r>~, ~<c>~ 또는 ~<l>~ 을 사용하세요.
 
 #+begin_src org
 ,#+caption: Table with aligned columns
@@ -384,8 +373,8 @@ If you want to override the automatic alignment, use ~<r>~, ~<c>~ or ~<l>~.
 
 ** Header row
 
-You can create tables with an header row (by using an horizontal line of dashes
-to separate it from the rest of the table).
+표의 맨 위에 머리글 행을 추가할 수 있습니다(표의 나머지 부분과 구분하기 위해
+가로로 대시 줄을 사용하는 방식).
 
 #+begin_src org
 #+caption: Table with an header row
@@ -398,7 +387,7 @@ to separate it from the rest of the table).
 
 ** A very long table
 
-To test "sticky table headers"...
+“고정된 테이블 헤더” 기능을 테스트하려면...
 
 | Name of column 1 | Name of column 2 | Name of column 3 |
 |------------------+------------------+------------------|
@@ -441,7 +430,7 @@ To test "sticky table headers"...
 | 1 | 2 |
 #+end_src
 
-XXX Different from the following:
+XXX 다음 내용과는 다릅니다:
 
 #+begin_src org
 | a | b |
@@ -452,7 +441,7 @@ XXX Different from the following:
 
 *** Left
 
-Here is a table on the left side:
+왼쪽에 표가 하나 있습니다:
 
 #+begin_src org
 ,#+LATEX: \noindent
@@ -464,13 +453,11 @@ Here is a table on the left side:
 ,#+LATEX: \hfill
 #+end_src
 
-The ~noindent~ just gets rid of the indentation of the first line of a paragraph
-which in this case is the table. The ~hfill~ adds infinite stretch after the
-table, so it pushes the table to the left.
+~noindent~ 은 단락의 첫 줄, 이 경우 표의 들여쓰기를 제거합니다. ~hfill~ 은 표 뒤에 무한한 여백을 추가하여 표를 왼쪽으로 밀어냅니다.
 
 *** Center
 
-Here is a centered table:
+다음은 중앙 정렬된 표입니다:
 
 #+begin_src org
 | a | b | c |
@@ -481,7 +468,7 @@ Here is a centered table:
 
 *** Right
 
-And here's a table on the right side:
+그리고 오른쪽에는 다음과 같은 표가 있습니다:
 
 #+begin_src org
 #+LATEX: \hfill
@@ -492,8 +479,7 @@ And here's a table on the right side:
 | 4 | 5 | 6 |
 #+end_src
 
-Here the ~hfill~ adds infinite stretch before the table, so it pushes the table
-to the right.
+여기서 ~hfill~ 은 표 앞에 무한한 여백을 추가하므로, 표를 오른쪽으로 밀어냅니다.
 
 ** Table size
 
@@ -505,7 +491,7 @@ to the right.
 
 ** CSV
 
-You can fill a table from a CSV file using R commands.
+R 명령어를 사용하여 CSV 파일의 데이터를 테이블에 채울 수 있습니다.
 
 * Links
   :PROPERTIES:
@@ -519,9 +505,9 @@ You can fill a table from a CSV file using R commands.
   :END:
 #+end_src
 
-This document is available in [[file:README.org][plain text]], [[file:README.html][HTML]] and [[file:README.pdf][PDF]].
+이 문서는 [[file:README.org][일반 텍스트]], [[file:README.html][HTML]] 및 [[file:README.pdf][PDF]] 형식으로 제공됩니다.
 
-The links are delimited by double square brackets.
+링크는 이중 대괄호로 구분됩니다.
 
 ** External links
 
@@ -544,11 +530,10 @@ See http://www.pirilampo.org (automatic!) and the
 
 *** Image links
 
-To get image links, put a link to a file in the description.
+이미지 링크를 얻으려면 설명란에 파일 링크를 입력하세요.
 
 #+begin_src org
-Clicking on the image [[http://orgmode.org/][file:images/org-mode-unicorn.png]]
-leads to the Org mode home page.
+[[http://orgmode.org/][file:images/org-mode-unicorn.png]] 이미지를 클릭하면 Org mode 홈페이지로 이동합니다.
 #+end_src
 
 ** Internal links
@@ -558,21 +543,21 @@ leads to the Org mode home page.
 
 *** Inline anchors
 
-Anchors are used to specify hypertext link targets.
+앵커는 하이퍼텍스트 링크의 대상 위치를 지정하는 데 사용됩니다.
 
 #+begin_src org
-<<anchor>> Inline anchors make arbitrary content referenceable.
+<<anchor>> 인라인 앵커를 사용하면 임의의 콘텐츠에 링크를 걸 수 있습니다.
 #+end_src
 
 *** Internal cross references
 
-Links generally point to an headline.
+링크는 대개 헤드라인을 가리킵니다.
 
 #+begin_src org
 See chapter [[#links][Links]].
 #+end_src
 
-To add a link to a figure (e.g., "See Figure 1"), just do:
+그림에 링크를 추가하려면(예: “그림 1 참조”), 다음과 같이 하면 됩니다:
 
 #+begin_src org
 ,#+caption: caption
@@ -582,8 +567,7 @@ To add a link to a figure (e.g., "See Figure 1"), just do:
 See figure [[fig]].
 #+end_src
 
-You can also create a hypertext link to a document anchor in the current
-document /or in another document/.
+또한 현재 문서 내의 문서 앵커 또는 다른 문서 내의 문서 앵커로 연결되는 하이퍼텍스트 링크를 만들 수도 있습니다.
 
 #+begin_src org
 See:
@@ -595,7 +579,7 @@ See:
 
 * Images
 
-You can insert *image* files of different *formats* to a document:
+문서에 다양한 *형식* 의 *이미지* 파일을 삽입할 수 있습니다:
 
 |      | HTML                         | PDF |
 |------+------------------------------+-----|
@@ -617,7 +601,7 @@ Click to see the [[file:images/org-mode-unicorn.png][Unicorn picture]].
 
 ** Image alignment (using positioning)
 
-Books usually align/float images on the right/left of the contents.
+책에서는 보통 이미지를 내용의 오른쪽이나 왼쪽에 정렬하거나 배치합니다.
 
 *** Image is left aligned
 
@@ -636,7 +620,7 @@ plot(runif(100))
 
 ** Image attributes and values
 
-XXX Available HTML image tags include ...
+XXX 사용 가능한 HTML 이미지 태그에는 다음이 포함됩니다...
 
 | Attribute      | Value(s)                    |
 |----------------+-----------------------------|
@@ -655,18 +639,17 @@ XXX Available HTML image tags include ...
 [[file:images/org-mode-unicorn.png]]
 #+end_src
 
-Place images side by side: XXX
+이미지를 나란히 배치하기: XXX
 
 ** Figures
 
-To define images that will be *treated as book illustrations* (figures) and
-automatically labeled and numbered, use XXX.
+*책 삽화* (그림)로 간주되어 자동으로 라벨이 지정되고 번호가 매겨질 이미지를 정의하려면 XXX를 사용하십시오.
 
 * Videos
 
-Videos can't be added directly.
+동영상은 직접 추가할 수 없습니다.
 
-Though, you can add an image with a link to the video like this:
+하지만 다음과 같이 동영상 링크가 포함된 이미지를 추가할 수는 있습니다:
 
 #+begin_src org
 [[http://www.youtube.com/watch?v=DnSGSiXYuOk][file:../bigblow.png]]
@@ -674,10 +657,9 @@ Though, you can add an image with a link to the video like this:
 
 * Admonitions
 
-Admonitions (contextual backgrounds) are statements taken out of the content's
-flow and labeled with a title.
+주의사항(문맥적 배경)은 내용의 흐름에서 분리되어 제목이 붙은 문구입니다.
 
-Common admonitions are:
+일반적인 주의사항은 다음과 같습니다:
 
 1. ~note~
 2. ~warning~
@@ -685,7 +667,7 @@ Common admonitions are:
 4. ~caution~
 5. ~important~
 
-(Most themes style only ~note~ and ~warning~ specially.)
+(대부분의 테마는 ~note~ 와 ~warning~ 만 특별히 스타일링합니다.)
 
 ** List of supported admonitions                                      :noexport:
 
@@ -828,7 +810,7 @@ Danger
 # See example at http://docs.ckan.org/en/latest/contributing/python.html
 # or http://wsgiservice.readthedocs.org/en/latest/todo.html
 
-Simple box ("inline task"):
+간단한 상자(“인라인 작업”):
 
 #+begin_src org
 *************** TODO Do this task
@@ -850,16 +832,14 @@ or:
 Admonitiontodo
 #+end_admonitiontodo
 
-Alternatively to the inline tasks (for creating "TODO" annotations), if you want
-such notes not to show up in the published version, drawers may also do the job,
-e.g.:
+인라인 작업(“TODO” 주석을 생성하기 위한) 대신, 이러한 메모가 게시된 버전에 표시되지 않게 하려면 드로어를 사용해도 되며, 예를 들어:
 
   :FIXME:
   ...
   :END:
 
-You can then control what drawers are exported with
-~org-export-with-drawers~ (or per document with d OPTIONS item).
+그런 다음 ~org-export-with-drawers~ 를 사용하여 어떤 서랍을 내보낼지 제어할 수 있습니다
+(또는 d OPTIONS 항목을 사용하여 문서별로 제어할 수도 있습니다).
 
 * Centered text
 
@@ -911,7 +891,7 @@ commodo. Curabitur accumsan. Nam sed metus. Etiam tristique bibendum justo.
 
 * Example
 
-You can have ~example~ blocks.
+~예시~ 블록을 넣을 수 있습니다.
 
 #+begin_src org
 : 10/17/97   9:04         <DIR>    bin
@@ -939,8 +919,7 @@ or
 
 ** Quote
 
-Use the ~quote~ block for content that *doesn't require the preservation of line
-breaks*.
+*줄 바꿈을 유지할 필요가 없는* 콘텐츠에는 ~quote~ 블록을 사용하세요.
 
 #+begin_src org
 ,#+begin_quote
@@ -961,7 +940,7 @@ each other.
 ,#+end_quote
 #+end_src
 
-A short one:
+짧게 말하자면:
 
 #+begin_src org
 ,#+begin_quote
@@ -972,8 +951,7 @@ but not any simpler. -- Albert Einstein
 
 ** Verse
 
-In a ~verse~ environment, there is an *implicit line break at the end of each line*,
-and *indentation* is preserved:
+~verse~ 환경에서는 *각 줄의 끝에 암시적인 줄바꿈이 적용되며*, *들여쓰기* 도 유지됩니다:
 
 #+begin_src org
 ,#+begin_verse
@@ -982,7 +960,7 @@ but not any simpler. -- Albert Einstein
 ,#+end_verse
 #+end_src
 
-Typically used for quoting passages of an email message:
+일반적으로 이메일 메시지의 일부를 인용할 때 사용됩니다:
 
 #+begin_src org
 ,#+begin_verse
@@ -1020,9 +998,9 @@ Blockquote
 
 ** Non-breaking space
 
-Insert the Unicode character ~00A0~ to add a non-breaking space.
+비분리 공백을 추가하려면 유니코드 문자 ~00A0~ 을 삽입하세요.
 
-FIXME Or add/use an Org entity?  Or use tilde?
+FIXME 아니면 Org 엔티티를 추가하거나 사용해야 할까요? 아니면 물결표(~)를 사용해야 할까요?
 
 * Comments
 
@@ -1033,20 +1011,18 @@ It's possible to add comments in the document.
 #+end_src
 
 #+begin_note
-Org doesn't support *comments inside paragraphs* since a comment ends
-a paragraph.  However, you can mimic inline comments with export snippets, e.g.,
-~@@comment:...@@~.
+Org는 주석이 단락을 끝내게 되므로 *단락 내 주석*을 지원하지 않습니다.
+하지만 내보내기 스니펫(예: ~@@comment:...@@~ )을 사용하면 인라인 주석을 모방할 수 있습니다.
 #+end_note
 
 #+begin_tip
-If you have tables (for example) that you want to ignore during export, one possibility
-is to use *comment blocks* or ~:noexport:~ subtrees.  Another possibility is to
-*use* non-exported *drawers* (see #+OPTIONS: d:).
+(예를 들어) 내보내기 과정에서 무시하고 싶은 테이블이 있다면, 한 가지 방법은
+*주석 블록* 이나 ~:noexport:~ 하위 트리를 사용하는 것입니다. 또 다른 방법은
+내보내지 않는 *드로어* 를 *사용* 하는 것입니다(#+OPTIONS: d: 참조).
 #+end_tip
 
-If you want to ignore that part only during export, but still want to
-use keep it active in the buffer, I suggest to use a drawer, with an
-appropriate `org-export-with-drawers' value, e.g.,
+내보내기 시에만 해당 부분을 무시하되, 버퍼 내에서는 계속 활성화된 상태로 유지하고 싶다면, 적절한 ~org-export-with-drawers~ 값을 설정한
+드로어를 사용하는 것을 권장합니다. 예를 들어,
 
 #+begin_src org
 ,#+OPTIONS: d:(not "NOEXPORT")
@@ -1082,12 +1058,12 @@ Insert {{{longtext}}} wherever required.
 
 {{{color(red, This other text is in red.)}}}
 
-Find more macros on [[https://github.com/fniessen/org-macros][GitHub]].
+[[https://github.com/fniessen/org-macros][GitHub]]에서 더 많은 매크로를 찾아보세요.
 
 ** Special characters
 
-We also use substitutions to include some of the widely used Unicode characters
-(like ©, converted from text characters to its typographically correct entity).
+또한 널리 사용되는 일부 유니코드 문자를 포함하기 위해 대체 기호를 사용하기도 합니다
+(예: ©, 텍스트 문자를 타이포그래피적으로 올바른 엔티티로 변환한 것).
 
 *** Accents
 
@@ -1135,8 +1111,7 @@ The Greek letters \alpha, \beta, and \gamma are used to denote angles.
 #+end_src
 
 #+begin_note
-You can insert a real "zero-width space" Unicode character by pressing
-~C-x 8 RET zero width space RET~ or ~C-x 8 RET 200b RET~.
+~C-x 8 RET zero width space RET~ 또는 ~C-x 8 RET 200b RET~ 를 입력하면 실제 “폭이 0인 공백” 유니코드 문자를 삽입할 수 있습니다.
 #+end_note
 
 * Source code
@@ -1147,11 +1122,11 @@ You can insert a real "zero-width space" Unicode character by pressing
 Reference code like ~variables~ or ~functions~ inline.
 #+end_src
 
-You can also evaluate code inline as follows: 1 + 1 is src_R{1 + 1}.
+다음과 같이 코드를 인라인으로 평가할 수도 있습니다. 1 + 1 은 src_R{1 + 1} 입니다.
 
 ** Code blocks (with syntax highlighting)
 
-The source code blocks support syntax highlighting:
+소스 코드 블록은 구문 강조 기능을 지원합니다:
 
 #+begin_src cpp :eval no
 /*
@@ -1181,7 +1156,7 @@ You need =htmlize.el= in your ~load-path~, for the HTML export.
 
 ** Source mode
 
-The following language strings are currently recognized:
+현재 다음 언어 문자열이 인식됩니다:
 
 #+begin_src emacs-lisp :results drawer :exports results
 (concat (mapconcat (lambda (widget)
@@ -1205,7 +1180,7 @@ Awk, C, R, Asymptote, Calc, Clojure, CSS, Ditaa, Dot, Emacs Lisp, Fortran, Gnupl
 
 ** Line break
 
-Code block with long lines:
+줄이 긴 코드 블록:
 
 #+begin_src emacs-lisp :eval no
 testing testing testing testing testing testing testing testing testing testing
@@ -1213,7 +1188,7 @@ testing testing testing testing testing testing testing testing testing testing
 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456
 #+end_src
 
-For PDF (LaTeX), one  solution is to surround the code  block such as:
+PDF(LaTeX)의 경우, 한 가지 해결책은 다음과 같이 코드 블록을 감싸는 것입니다:
 
 #+latex: \scriptsize
 #+begin_src R
@@ -1223,8 +1198,7 @@ print("This block is in scriptsize")
 
 ** Line numbers
 
-Both in ~example~ and in ~src~ snippets, you can add a ~-n~ switch to the end of the
-~begin~ line to get the lines numbered:
+~example~ 및 ~src~ 스니펫 모두에서, ~begin~ 줄의 끝에 ~-n~ 스위치를 추가하면 줄 번호가 표시됩니다:
 
 #+header: :eval no
 #+begin_src emacs-lisp -n
@@ -1232,8 +1206,7 @@ Both in ~example~ and in ~src~ snippets, you can add a ~-n~ switch to the end of
   "Exclusive or."
 #+end_src
 
-If you use a ~+n~ switch, the numbering from the previous numbered snippet will
-be continued in the current one:
+~+n~ 스위치를 사용하면, 이전 번호가 매겨진 스니펫의 번호 매기기가 현재 스니펫에서 이어집니다:
 
 #+header: :eval no
 #+begin_src emacs-lisp +n
@@ -1242,16 +1215,10 @@ be continued in the current one:
 
 ** Callouts
 
-In literal examples, Org will interpret strings like ~(ref:name)~ as labels, and
-use them as targets for special hyperlinks like ~[[(name)]]~ (i.e., the reference
-name enclosed in single parenthesis).  In HTML, hovering the mouse over such
-a link will remote-highlight the corresponding code line, which is kind of
-cool.
+문자 그대로의 예시에서 Org는 ~(ref:name)~ 과 같은 문자열을 레이블로 해석하고, 이를 ~[[(name)]]~ 과 같은 특수 하이퍼링크의 대상(즉, 괄호 하나로 묶인 참조
+이름)으로 사용합니다. HTML에서 이러한 링크 위에 마우스를 올리면 해당 코드 줄이 원격으로 강조 표시되는데, 이는 꽤 멋진 기능입니다.
 
-You can also add a ~-r~ switch which removes the labels from the source code.
-With the ~-n~ switch, links to these references will be labeled by the line
-numbers from the code listing, otherwise links will use the labels with no
-parentheses.  Here is an example:
+또한 ~-r~ 스위치를 추가하여 소스 코드에서 레이블을 제거할 수도 있습니다. ~-n~ 스위치를 사용하면 이러한 참조에 대한 링크에 코드 목록의 줄 번호가 레이블로 표시되며, 그렇지 않은 경우 링크는 괄호 없이 레이블을 사용합니다. 다음은 그 예입니다:
 
 #+header: :eval no
 #+begin_src emacs-lisp -n -r
@@ -1259,16 +1226,15 @@ parentheses.  Here is an example:
   (goto-char (point-min)))       ; (ref:jump)
 #+end_src
 
-In line [[(sc)]], we remember the current position.  [[(jump)][Line (jump)]] jumps to
-~point-min~.
+[[(sc)]] 줄에서 현재 위치를 기억합니다.  [[(jump)][Line (jump)]] 는 ~point-min~ 으로 이동합니다.
 
 * Math
 
-You can embed LaTeX math formatting in Org mode files.
+Org 모드 파일에 LaTeX 수학 서식을 삽입할 수 있습니다.
 
 ** Inline math expressions
 
-For *inline math* expressions, use the parentheses notation ~\(...\)~:
+*인라인 수학* 식의 경우, 괄호 표기법 ~\(...\)~ 을 사용하십시오:
 
 #+begin_src org
 The formula \(a^2 + b^2 = c^2\) has been discovered by Pythagoras.
@@ -1278,15 +1244,14 @@ Let \(a=\sin(x) + \cos(x)\). Then \(a^2 = 2\sin(x)\cos(x)\) because \(\sin^2x +
 #+end_src
 
 #+begin_warning
-It's /not/ advised to use the ~$...$~ construct (both for Org and for MathJax).
+(Org와 MathJax 모두에서) ~$...$~ 구문을 사용하는 것은 권장되지 않습니다.
 
-Don't forget that ~$~ is also a valid currency symbol!
+~$~ 는 유효한 통화 기호이기도 하다는 점을 잊지 마세요!
 #+end_warning
 
 ** Math expressions in display mode
 
-For mathematical expressions which you want to make *stand out, centered on their
-own lines*, use ~\[...\]~:
+*눈에 띄게 하고, 별도의 줄에 중앙 정렬하여* 표시하고 싶은 수학 식의 경우, ~\[...\]~ 를 사용하십시오:
 
 #+begin_src org
 The /Euler theorem/:
@@ -1300,7 +1265,7 @@ LaTeX allows to inline such ~\[...\]~ constructs (/quadratic formula/):
 #+end_src
 
 #+begin_warning
-Double dollar signs (~$$~) should not be used.
+이중 달러 기호(~$$~)는 사용해서는 안 됩니다.
 #+end_warning
 
 #+begin_src org
@@ -1312,14 +1277,12 @@ right)^{2} -
 \]
 #+end_src
 
-The equation may be wrong, but it's a nice one!
+이 방정식이 틀렸을 수도 있지만, 참 멋진 방정식이네요!
 
 ** Equation numbers
 
-Differently from ~$...$~ and ~\(...\)~, an equation environment produces a *numbered*
-equation to which you can add a label and reference the equation by (label) name
-in other parts of the text. This is not possibly with unnumbered math
-environments (~$$~, ...).
+~$...$~ 및 ~\(...\)~ 과는 달리, 방정식 환경은 *번호가 매겨진* 방정식을 생성하며, 여기에 레이블을 추가하고 본문의 다른 부분에서 (레이블) 이름을 통해
+해당 방정식을 참조할 수 있습니다. 번호가 매겨지지 않은 수학 환경 (~$$~, ...)에서는 이러한 기능이 불가능합니다.
 
 #+begin_src org
 The /Pythagoras theorem/:
@@ -1341,49 +1304,46 @@ See equation [[pythag]].
 # See equation [[eqn:sinalpha]].
 #+end_src
 
-Only captioned equations are numbered.
+캡션이 있는 방정식에만 번호가 매겨집니다.
 
-Other alternatives: use
-- ~\begin{equation*}~ or
-- ~\begin{displaymath}~ (= the verbose form of the ~\[...\]~ construct).
+다른 대안: 다음을 사용하세요.
 
-~M-q~ does not fill those.
+- ~\begin{equation*}~ 또는
+- ~\begin{displaymath}~ (~\[...\]~ 구문의 상세 형식).
+
+~M-q~ 는 이러한 방정식을 채우지 않습니다.
 
 * Miscellaneous effects
 
 ** Include Org files
 
-You can include another Org file and skip its title by using the ~:lines~ argument
-to ~#+INCLUDE~:
+~#+INCLUDE~에 ~:lines~ 인수를 사용하면 다른 Org 파일을 포함시키면서 해당 파일의 제목을 생략할 수 있습니다.:
 
 #+begin_src org
 ,#+INCLUDE: "chapter1.org" :lines "2-"
 #+end_src
 
 #+begin_note
-File inclusion, through INCLUDE keywords, is an *export-only feature*.
+INCLUDE 키워드를 통한 파일 포함 기능은 *내보내기 전용 기능* 입니다.
 #+end_note
 
 ** Raw HTML
 
 # http://johnmacfarlane.net/pandoc/README.html
 
-You can include raw HTML in your Org documents and it will get kept as HTML
-when it's exported.
+Org 문서에 원시 HTML을 포함시킬 수 있으며, 내보낼 때 이 HTML은 그대로 유지됩니다.
 
 #+HTML_BEGIN: <pre style="color:red">
 Text can be preformatted (in a fixed-width font).
 #+HTML_END: </pre>
 
-It is especially useful for more advanced stuff like images or tables where you
-need more control of the HTML options than Org mode actually gives you.
+특히 이미지나 표와 같이 Org 모드가 제공하는 것보다 HTML 옵션을 더 세밀하게 제어해야 하는 고급 기능에 유용합니다.
 
-Similarly, you can incorporate JS or do anything else you can do in a Web page
-(such as importing a CSS file).
+마찬가지로, 자바스크립트(JS)를 삽입하거나 웹 페이지에서 할 수 있는 다른 작업들(예: CSS 파일 불러오기 등)도 수행할 수 있습니다.
 
 *** Native DIV blocks
 
-You can create named classes (to get style control from your CSS) with:
+다음과 같이 이름이 지정된 클래스를 생성할 수 있습니다(CSS를 통해 스타일을 제어하기 위해):
 
 #+begin_example
 ,#+begin_myclass
@@ -1391,19 +1351,19 @@ This text is wrapped in a myclass DIV...
 ,#+end_myclass
 #+end_example
 
-You can also add interactive elements to the HTML such as interactive R plots.
+또한 HTML에 대화형 R 플롯과 같은 대화형 요소를 추가할 수도 있습니다.
 
-Finally, you can include an HTML file verbatim (during export) with:
+마지막으로, 다음 코드를 사용하여 (내보내기 시) HTML 파일을 그대로 포함시킬 수 있습니다:
 
 #+begin_src org
 ,#+INCLUDE: "file.html" export html
 #+end_src
 
-Don't edit the exported HTML file!
+내보낸 HTML 파일을 수정하지 마세요!
 
 ** Raw LaTeX
 
-You can also use raw LaTeX. XXX
+일반 LaTeX을 사용할 수도 있습니다. XXX
 
 #+LaTeX_BEGIN: \begin{verbatim}
 Text can be preformatted (in a fixed-width font).
@@ -1435,18 +1395,16 @@ Timestamps: [2014-01-16 Thu] and <2014-01-16 Thu>.
     - State "TODO"        ->  "DONE"       [2014-01-16 Thu 09:52]
     :END:
 
-By default, ~DONE~ actions will be collapsed.
+기본적으로 ~DONE~ 상태의 작업은 접혀 있습니다.
 
-Note that I should probably implement that default behavior only for ~ARCHIVE~'d
-items.
+다만, 이 기본 동작은 ~ARCHIVE~ 상태의 항목에만 적용해야 할 것 같습니다.
 
 *** TODO [#A] Read GTD book
     SCHEDULED: <2014-09-11 Thu>
 
-By default, *all* (active) entries will be expanded at page load, so that their
-contents is visible.
+기본적으로 페이지가 로드될 때 *모든* (활성) 항목이 펼쳐져 그 내용이 표시됩니다.
 
-That can be changed by adding such a line (into your Org document):
+다음과 같은 줄을 (Org 문서에) 추가하면 이 설정을 변경할 수 있습니다:
 
 #+begin_src org :eval no
 ,#+HTML_HEAD: <script> var HS_STARTUP_FOLDED = true; </script>
@@ -1458,10 +1416,9 @@ That can be changed by adding such a line (into your Org document):
     :HTML_CONTAINER_CLASS: hsCollapsed
     :END:
 
-This section will be collapsed when loading the page because the entry has the
-value ~hsCollapsed~ for the property ~:HTML_CONTAINER_CLASS:~.
+이 항목의 ~:HTML_CONTAINER_CLASS:~ 속성 값이 ~hsCollapsed~ 이므로, 페이지가 로드될 때 이 섹션은 접혀집니다.
 
-Powerful, no?
+정말 강력하지 않나요?
 
 *** Some note                                                   :computer:write:
 
@@ -1476,7 +1433,7 @@ collapsed, so that you can really focus on one item at a time!
 
 ** Bigblow extension
 
-The string ~fixme~ (in *upper case*) gets replaced by a "Fix Me!" image:
+~fixme~ 라는 문자열(*대문자*)이 “Fix Me!” 이미지로 대체됩니다:
 
 #+begin_src org
 FIXME Delete this...
@@ -1484,15 +1441,14 @@ FIXME Delete this...
 
 * Graphs with Graphviz
 
-To enable the Graphviz extension, we have to add it to the extensions list in
-the ~org-babel-load-languages~ variable.
+Graphviz 확장 기능을 사용하려면 ~org-babel-load-languages~ 변수의 확장 기능 목록에 이를 추가해야 합니다.
 
 #+begin_src emacs-lisp :exports code
 (add-to-list 'org-babel-load-languages '(dot . t))
 (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 #+end_src
 
-It uses directly the ~dot~ command to process DOT language.
+이 도구는 ~dot~ 명령어를 직접 사용하여 DOT 언어를 처리합니다.
 
 ** Undirected
 
@@ -1516,23 +1472,20 @@ digraph foo {
 
 * Graphs with R
 
-The output from the *execution* of programs, scripts or commands can be inserted
-in the document itself, allowing you to work in the /reproducible research/
-mindset.
+프로그램, 스크립트 또는 명령어의 *실행* 결과물을 문서 자체에 삽입할 수 있어, ‘재현 가능한 연구’ 라는 관점에서 작업할 수 있습니다.
 
-To enable the Graphviz extension, we have to add it to the extensions list in
-the ~org-babel-load-languages~ variable.
+Graphviz 확장 기능을 사용하려면, ~org-babel-load-languages~ 변수의 확장 기능 목록에 이를 추가해야 합니다.
 
 #+begin_src emacs-lisp :exports code
 (add-to-list 'org-babel-load-languages '(R . t)) ; Requires R and ess-mode.
 (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 #+end_src
 
-It uses directly the ~R~ command to process R language.
+이 프로그램은 ~R~ 명령어를 직접 사용하여 R 언어를 처리합니다.
 
 ** Example
 
-Data to be charted:
+그래프로 표시할 데이터:
 
 #+name: data
 | Month | Degrees |
@@ -1559,7 +1512,7 @@ grid(nx=NULL, ny=NULL, col=c("#E8E8E8"), lwd=1)
 legend("bottom", legend=c("Degrees"), col=c("#ABD249"), pch=c(19))
 #+end_src
 
-The resulting chart:
+그 결과로 나온 차트:
 
 #+results: R-plot
 [[file:images/Rplot.png]]
@@ -1575,7 +1528,7 @@ The resulting chart:
 
 * Citations
 
-Cross-referenced to bibliography.
+참고 문헌을 참조하십시오.
 
 * Appendix
 
@@ -1583,21 +1536,21 @@ Special sections.
 
 ** Index
 
-Index (or list of acronyms).
+색인 (또는 약어 목록).
 
-- Write index entries
+- 색인 항목 작성하기
 
 #+index: Org-mode
 
-  Note that multi-entry terms generate separate index entries.
+  다중 항목 용어는 별도의 색인 항목을 생성한다는 점에 유의하십시오.
 
 #+index: Definitions!Org-mode
 
-- Place the index at the desired location
+- 색인을 원하는 위치에 배치합니다.
 
-- Produce the index by updating ~org-latex-pdf-process~
+- ~org-latex-pdf-process~ 를 업데이트하여 색인을 생성합니다.
 
-#+BIND: org-latex-pdf-process ("pdflatex %b" "bibtex %b" "pdflatex %b" "pdflatex %b")
+#+BIND: org-latex-pdf-process (“pdflatex %b” “bibtex %b” “pdflatex %b” “pdflatex %b”)
 
 ** Bibliography
 
@@ -1610,58 +1563,23 @@ The bibliography...
 
 ** Glossary
 
-Glossaries are optional.  Glossaries entries are an example of [[id:f1a4a242-755b-4c38-9280-ee3f60e2b29a][definition lists]].
+용어집은 선택 사항입니다. 용어집 항목은 [[id:f1a4a242-755b-4c38-9280-ee3f60e2b29a][정의 목록]]의 한 예입니다.
 
-- A glossary term ::
-     The corresponding (indented) definition.
+- 용어집 용어 ::
+     해당 용어에 대한 (들여쓰기된) 정의.
 
-- A second glossary term ::
-     The corresponding (indented) definition.
+- 두 번째 용어집 용어 ::
+     해당 용어에 대한 (들여쓰기된) 정의.
 
 * Contributing
 
 ** Issues
 
-Report issues and suggest features and improvements on the [[https://github.com/fniessen/refcard-org-mode/issues/new][GitHub issue tracker]].
+[[https://github.com/fniessen/refcard-org-mode/issues/new][GitHub 이슈 트래커]]에서 문제를 신고하고, 기능 및 개선 사항을 제안해 주세요.
 
 ** Patches
 
-I love contributions!  Patches under any form are always welcome!
-
-** Donations
-
-If you use the refcard-org-mode project and feel it is making your life better
-and easier, you can show your appreciation and help support future development
-by making a [[https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VCVAS6KPDQ4JC&lc=BE&item_number=refcard%2dorg%2dmode&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted][donation]] through PayPal.  Thank you!
-
-Regardless of the donations, refcard-org-mode will always be free both as in
-beer and as in speech.
-
-* License
-
-Copyright (C) 2014-2025 Fabrice Niessen. All rights reserved.
-
-Author: Fabrice Niessen \\
-Keywords: org-mode refcard
-
-This program is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-this program. If not, see http://www.gnu.org/licenses/.
-
-#+html: <a href="http://opensource.org/licenses/GPL-3.0">
-#+html:   <img src="http://img.shields.io/:license-gpl-blue.svg" alt=":license-gpl-blue.svg" />
-#+html: </a>
-#+html: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VCVAS6KPDQ4JC&lc=BE&item_number=refcard%2dorg%2dmode&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted">
-#+html:   <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="btn_donate_LG.gif" />
-#+html: </a>
+기여를 정말 환영합니다! 어떤 형태의 패치든 언제나 환영합니다!
 
 * Footnotes
 
