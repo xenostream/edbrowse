@@ -1,0 +1,1817 @@
+#+title: Grymoire SED Guide
+
+
+* Grymoire SED Guide
+파일을 자동으로 수정하는 특수 편집기인 sed 사용법, 파일 내용을 변경하는 프로그램을 작성하려면 ~sed~ 를 사용하면 됩니다.
+
+유닉스 도구 상자에는 진정한 ‘일꾼’ 역할을 하는 몇 가지 프로그램이 있습니다. 이 프로그램들은 간단한 용도로 사용하기 쉬우면서도, 복잡한 작업을 수행할 수 있는 풍부한 명령어 세트를 갖추고 있습니다. 프로그램이 가진 복잡한 잠재력 때문에 간단한 기능을 활용하는 것을 주저하지 마십시오. 먼저 간단한 개념부터 다루고, 나중에 고급 주제를 소개하겠습니다.
+
+이 글을 처음 작성했을 때(1994년), 대부분의 sed 버전에서는 스크립트 내에 주석을 넣을 수 없었습니다. ‘#’ 문자로 시작하는 줄은 주석입니다. 최신 버전의 sed는 줄 끝의 주석도 지원할 수 있습니다.
+
+이를 이해하는 한 가지 방법은, 구식인 “클래식” 버전이 GNU, FreeBSD 및 Solaris 버전의 sed의 기반이 되었다고 보는 것입니다. 제가 어떤 환경에서 작업했는지 이해하는 데 도움되도록, [[https://docs.oracle.com/cd/E26502_01/html/E29030/sed-1b.html#scrolltoc][Sun/Oracle의 sed(1) 매뉴얼 페이지]]를 소개합니다.
+
+* The Awful Truth about sed
+~sed~ 는 최고의 스트림 편집기입니다. 이게 이상하게 들린다면, 파이프를 통해 흐르는 개울을 상상해 보세요. 아, 파이프 안에 있으면 개울을 볼 수 없겠죠. 흐르는 물에 비유를 들려고 했더니 이런 결과가 나왔네요. 문학을 원하신다면 제임스 조이스를 읽으세요.
+
+어쨌든, sed는 놀라운 유틸리티입니다. 안타깝게도 대부분의 사람들은 sed의 진정한 위력을 결코 알지 못합니다. 언어는 매우 간단하지만, 설명서는 형편없습니다. Solaris의 sed 온라인 매뉴얼 페이지는 총 5페이지인데, 그중 2페이지는 발생할 수 있는 34가지 오류에 대한 설명으로 채워져 있습니다. 언어 설명에 할애하는 공간만큼이나 오류 설명에 많은 공간을 할애하는 프로그램은 학습 곡선이 매우 가파를 수밖에 없습니다.
+
+걱정하지 마세요! sed를 이해하지 못하는 건 여러분의 잘못이 아닙니다. 제가 sed에 대해 철저히 다룰 것입니다. 다만, 제가 배운 순서대로 기능을 설명할 것입니다. 저도 한 번에 모든 것을 배운 건 아니니까요. 여러분도 그럴 필요는 없습니다.
+
+
+* The essential command: s for substitution
+Sed에는 여러 가지 명령어가 있지만, 대부분의 사람들은 대체 명령어인 ~s~ 만 배웁니다. 대체 명령어는 정규 표현식이 나타나는 모든 부분을 새로운 값으로 바꿉니다. 간단한 예로, “old” 파일에서 “day” 를 “new” 파일에서 “night” 로 바꾸는 경우가 있습니다:
+
+#+begin_src 
+sed s/day/night/ <old >new
+#+end_src
+
+또는 다른 방법(유닉스 초보자를 위한):
+
+#+begin_src bash
+sed s/day/night/ old >new
+#+end_src
+
+그리고 이를 테스트해 보고 싶은 분들을 위해:
+
+#+begin_src bash
+echo day | sed s/day/night/
+#+end_src
+
+이 명령은 “night” 를 출력합니다.
+
+이 예제는 따옴표가 필요하지 않기 때문에 인수를 따옴표로 묶지 않았습니다. 따옴표에 관한 제 이전 [[https://www.grymoire.com/Unix/Quote.html][튜토리얼]]을 읽으셨다면 왜 따옴표가 필요없는지 이해하실 것입니다. 하지만 따옴표를 사용하는 것을 권장합니다. 명령어에 메타 문자가 포함되어 있다면 따옴표는 필수적입니다. 확실하지 않더라도 따옴표를 사용하는 것은 좋은 습관이며, 저는 앞으로 “모범 사례” 를 강조하기 위해 예제에 따옴표를 사용할 것입니다. 강한 따옴표(단일 따옴표)를 사용하면 다음과 같습니다.
+
+#+begin_src bash
+sed ‘s/day/night/’ <old >new
+#+end_src
+
+sed 편집기는 사용자가 지시한 대로 정확히 변경한다는 점을 강조해야 합니다. 따라서 다음 명령을 실행하면
+
+#+begin_src bash
+echo Sunday | sed ‘s/day/night/’
+#+end_src
+
+sed가 입력에서 “day” 라는 문자열을 찾았기 때문에 “Sunnight” 라는 단어가 출력됩니다.
+
+또 다른 중요한 개념은 sed가 행 단위로 작동한다는 점입니다. 다음과 같은 입력 파일이 있다고 가정해 봅시다.
+
+#+begin_example
+one two three, one two three
+four three two one
+one hundred
+#+end_example
+
+그리고 다음 명령어를 사용했다고 가정해 봅시다.
+
+#+begin_src bash
+sed ‘s/one/ONE/’ <file
+#+end_src
+
+를 실행했다면, 출력은 다음과 같을 것입니다.
+
+#+begin_example
+ONE two three, one two three
+four three two ONE
+ONE hundred
+#+end_example
+
+이 명령은 각 줄에서 “one” 을 한 번씩 “ONE” 으로 변경했다는 점에 유의하십시오. 첫 번째 줄에는 “one” 이 두 번 등장했지만, 첫 번째로 나타나는 것만 변경되었습니다. 이것이 기본 동작입니다. 다른 결과를 원한다면, 사용 가능한 옵션 중 일부를 사용해야 합니다. 이에 대해서는 나중에 설명하겠습니다.
+
+그럼 계속해 보겠습니다.
+
+이 /substitute/ 명령어는 네 부분으로 구성됩니다:
+
+#+begin_example
+s            대체 명령어
+/../../      구분 기호
+one          정규 표현식 검색 패턴
+ONE          대체 문자열
+#+end_example
+
+검색 패턴은 왼쪽에, 대체 문자열은 오른쪽에 위치합니다.
+
+지금까지 [[https://www.grymoire.com/Unix/Quote.html][따옴표 사용법]]과 [[https://www.grymoire.com/Unix/Regular.html][정규 표현식]]을 다루었습니다. 이것이 /substitute/ 명령어를 배우는 데 필요한 노력의 90%를 차지합니다. 다른 말로 하면, 여러분은 이미 sed의 가장 빈번한 용도의 90%를 다루는 방법을 알고 있는 셈입니다. 앞으로 sed 전문가가 되려면 알아야 할 몇 가지... 세부 사항이 더 있습니다. (방금 1절을 마쳤습니다. 앞으로 다룰 섹션은 63개밖에 남지 않았네요. :-) 아, 그리고 이 페이지를 북마크해 두는 게 좋을지도 모릅니다.... 혹시 다 마치지 못할 경우를 대비해서요.
+
+
+* The slash as a delimiter
+'s' 뒤의 문자는 구분자입니다. 관례적으로 슬래시가 사용되는데, 이는 ed, more, vi에서 사용하는 구분자이기 때문입니다. 하지만 원하는 어떤 문자로든 설정할 수 있습니다. 슬래시가 포함된 경로명(예: ~/usr/local/bin~)을 ~/common/bin~ 으로 변경하려면, 백슬래시를 사용하여 슬래시를 인용 부호로 묶을 수 있습니다.
+
+#+begin_src bash
+sed ‘s/\/usr\/local\/bin/\/common\/bin/’ <old >new
+#+end_src
+
+헉. 어떤 사람들은 이것을 ‘피켓 펜스(Picket Fence)’라고 부르는데, 보기 흉합니다. 구분자로 슬래시 대신 밑줄을 사용하면 읽기가 더 쉽습니다:
+
+#+begin_src bash
+sed ‘s_/usr/local/bin_/common/bin_’ <old >new
+#+end_src
+
+콜론을 사용하는 사람들도 있습니다:
+
+#+begin_src bash
+sed ‘s:/usr/local/bin:/common/bin:’ <old >new
+#+end_src
+
+또 다른 사람들은 “|” 문자를 사용하기도 합니다.
+
+#+begin_src bash
+sed ‘s|/usr/local/bin|/common/bin|’ <old >new
+#+end_src
+
+마음에 드는 것을 골라 쓰세요. 찾고 있는 문자열에 포함되지 않는 한 무엇이든 상관없습니다. 그리고 구분자가 세 개 필요하다는 점을 기억하세요. “Unterminated `s' command” 오류가 발생한다면, 구분자 중 하나가 빠졌기 때문입니다.
+
+* Using & as the matched string
+때로는 특정 패턴을 검색한 후, 찾은 패턴의 주변이나 근처에 괄호와 같은 문자를 추가하고 싶을 때가 있습니다. 특정 문자열을 찾는 경우라면 이 작업을 쉽게 수행할 수 있습니다:
+
+#+begin_src bash
+sed ‘s/abc/(abc)/’ <old >new
+#+end_src
+
+하지만 정확히 무엇을 찾을지 모르는 경우에는 이 방법이 통하지 않습니다. 찾은 문자열이 무엇인지 모르는데, 어떻게 그 문자열을 치환 문자열에 넣을 수 있을까요?
+
+해결책은 특수 문자 “&” 를 사용하는 것입니다. 이 문자는 발견된 패턴을 나타냅니다.
+
+#+begin_src bash
+sed ‘s/[a-z]*/(&)/’ <old >new
+#+end_src
+
+치환 문자열에는 “&” 를 원하는 만큼 넣을 수 있습니다. 또한 패턴을 두 번 반복할 수도 있습니다. 예를 들어, 줄의 첫 번째 숫자를 반복하는 경우:
+
+#+begin_src csh
+% echo “123 abc” | sed ‘s/[0-9]*/& &/’
+123 123 abc
+#+end_src
+
+이 예제를 약간 수정해 보겠습니다. sed는 첫 번째 문자열과 일치시키며, 가능한 한 탐욕적으로 일치시킵니다. 이에 대해서는 나중에 다루겠습니다. 그렇게 탐욕적이지 않게(즉, 일치 범위를 제한하고) 처리하고 싶다면 일치 조건에 제한을 두어야 합니다.
+
+'[0-9]*' 에 대한 첫 번째 일치 결과는 줄의 첫 번째 문자입니다. 이는 0개 이상의 숫자와 일치하기 때문입니다. 따라서 입력이 “abc 123” 이라면 출력은 변경되지 않을 것입니다(글자 앞의 공백을 제외하면 말이죠). 숫자를 복제하는 더 좋은 방법은 숫자와 일치하도록 하는 것입니다:
+
+#+begin_src bash
+% echo “123 abc” | sed ‘s/[0-9][0-9]*/& &/’
+123 123 abc
+#+end_src
+
+문자열 “abc” 는 정규 표현식과 일치하지 않았기 때문에 변경되지 않았습니다. 출력에서 “abc” 를 제거하려면, 정규 표현식을 확장하여 줄의 나머지 부분과 일치하도록 하고, “(”, “)” 및 “\1” 을 사용하여 표현식의 일부를 명시적으로 제외해야 합니다. 이에 대해서는 다음 주제에서 다룰 예정입니다.
+
+* Extended Regular Expressions
+여기서 간단히 한 가지 덧붙이자면, 위 스크립트를 작성하는 또 다른 방법이 있습니다. “[0-9]*” 는 0개 이상의 숫자를 일치시킵니다. “[0-9][0-9]*” 는 1개 이상의 숫자를 일치시킵니다. 또 다른 방법은 “+” 메타 문자를 사용하여 “[0-9]+” 패턴을 사용하는 것입니다. “확장 정규 표현식” 을 사용할 때 “+” 는 특수 문자로 작용하기 때문입니다. 확장 정규 표현식은 더 강력한 기능을 제공하지만, “+” 를 일반 문자로 취급하는 sed 스크립트는 오류가 발생합니다. 따라서 명령줄 옵션을 사용하여 이 확장을 명시적으로 활성화해야 합니다.
+
+GNU sed는 “-r” 명령줄 옵션을 사용하면 이 기능을 켭니다. 따라서 위의 내용은 다음과 같이 작성할 수도 있습니다.
+
+#+begin_src bsh
+% echo “123 abc” | sed -r 's/[0-9]+/& &/'
+123 123 abc
+#+end_src
+
+Mac OS X와 FreeBSD는 -r 대신 -E 를 사용합니다. 확장 정규 표현식에 대한 자세한 내용은 [[https://www.grymoire.com/Unix/Regular.html][정규 표현식]] 및 -r 명령줄 인수의 설명을 참조하십시오.
+
+
+* Using \1 to keep part of the pattern
+[[https://www.grymoire.com/Unix/Regular.html][정규 표현식에 대한 튜토리얼]]에서 이미 “("”, “)” 및 “1” 의 사용법에 대해 설명한 바 있습니다. 다시 정리하자면, 이스케이프된 괄호(즉, 앞에 백슬래시가 붙은 괄호)는 정규 표현식이 일치시킨 문자열의 일부를 기억해 둡니다. 이를 활용하여 정규 표현식이 일치시킨 문자열의 일부를 제외할 수 있습니다. “\1” 은 첫 번째로 저장된 패턴이고, “\2” 는 두 번째로 저장된 패턴입니다. Sed는 최대 9개의 패턴을 저장할 수 있습니다.
+
+한 줄의 첫 번째 단어만 남기고 나머지 부분을 삭제하려면, 중요한 부분을 괄호로 묶어 표시하면 됩니다:
+
+#+begin_src bash
+sed 's/\([a-z]*\).*/\1/'
+#+end_src
+
+이에 대해 좀 더 자세히 설명하겠습니다. 정규 표현식은 탐욕적(greedy)이어서 가능한 한 많이 일치시키려고 합니다. “[a-z]*” 는 소문자 0개 이상을 일치시키며, 가능한 한 많은 문자를 일치시키려고 합니다. “.*” 는 첫 번째 일치 후의 문자 0개 이상을 일치시킵니다. 첫 번째 부분이 연속된 소문자를 모두 가져가므로, 두 번째 부분은 그 외의 모든 것을 일치시킵니다. 따라서 다음과 같이 입력하면
+
+#+begin_src bash
+echo abcd123 | sed ‘s/\([a-z]*\).*/\1/’
+#+end_src
+
+이렇게 입력하면 “abcd” 가 출력되고 숫자는 삭제됩니다.
+
+두 단어의 순서를 바꾸고 싶다면, 두 가지 패턴을 기억해 두고 순서를 바꾸면 됩니다:
+
+#+begin_src bash
+sed 's/\([a-z]*\) \([a-z]*\)/\2 \1/'
+#+end_src
+
+기억된 두 패턴 사이의 공백에 유의하십시오. 이는 두 단어가 발견되었는지 확인하기 위해 사용됩니다. 하지만, 단어가 하나만 발견되거나 문자가 없는 줄이 있는 경우에는 아무런 효과가 없습니다. 다음 명령어를 사용하여 단어에 최소한 하나의 문자가 포함되도록 제한할 수 있습니다.
+
+#+begin_src bash
+sed 's/\([a-z][a-z]*\) \([a-z][a-z]*\)/\2 \1/'
+#+end_src
+
+를 사용하거나, 확장 정규 표현식을 사용하여 단어에 최소 한 글자가 포함되도록 요구할 수 있습니다(‘(‘ 와 ’)' 앞에 백슬래시를 더 이상 붙일 필요가 없다는 점에 유의하세요):
+
+#+begin_src bash
+sed -r ‘s/([a-z]+) ([a-z]+)/\2 \1/’ # GNU sed 사용 시
+sed -E ‘s/([a-z]+) ([a-z]+)/\2 \1/’ # Apple Mac OS X 사용 시
+#+end_src
+
+“\1” 은 반드시 치환 문자열(오른쪽)에 있을 필요는 없습니다. 검색할 패턴(왼쪽)에 있을 수도 있습니다. 중복된 단어를 제거하려면 다음을 시도해 볼 수 있습니다:
+
+#+begin_src bash
+sed 's/\([a-z]*\) \1/\1/'
+#+end_src
+
+중복된 단어를 탐지하려면 다음을 사용할 수 있습니다.
+
+#+begin_src bash
+sed -n ‘/\([a-z][a-z]*\) \1/p’
+#+end_src
+
+또는 확장 정규식을 사용하여
+
+#+begin_src bash
+sed -rn ‘/([a-z]+) \1/p’ # GNU sed
+sed -En ‘/([a-z]+) \1/p’ # Mac OS X
+#+end_src
+
+이 명령을 필터로 사용하면 중복된 단어가 포함된 줄이 출력됩니다.
+
+숫자 값은 “\1” 부터 “\9” 까지 최대 9개까지 지정할 수 있습니다. 줄의 처음 세 문자를 뒤집으려면 다음을 사용할 수 있습니다.
+
+#+begin_src bash
+sed 's/^\(.\)\(.\)\(.\)/\3\2\1/'
+#+end_src
+
+
+* Sed Pattern Flags
+마지막 구분자 뒤에 추가 플래그를 붙일 수 있습니다. 앞서 소개한 /substitute/ 명령어의 끝에 ‘p' 가 붙어 있는 것을 눈치채셨을지도 모릅니다. 또한 ’-n' 옵션도 추가했습니다. 먼저 'p' 와 다른 패턴 플래그들에 대해 설명해 드리겠습니다. 이 플래그들은 일치하는 부분이 발견되었을 때 어떤 동작이 수행될지 지정할 수 있습니다. 하나씩 설명해 드리겠습니다.
+
+
+** /g - Global replacement 
+대부분의 유닉스 유틸리티는 파일을 처리할 때 한 줄씩 읽어가며 작동합니다. Sed도 기본적으로 같은 방식으로 작동합니다. 특정 단어를 변경하도록 지시하면, 해당 줄에서 그 단어가 처음 나타나는 부분만 변경됩니다. 줄의 첫 번째 단어 대신 모든 단어를 변경하고 싶을 수도 있습니다. 예를 들어, 한 줄에 있는 단어들을 괄호로 묶어 보겠습니다. “won't” 와 같은 단어는 일치하지 않는 “[A-Za-z]*” 와 같은 패턴을 사용하는 대신, 공백을 제외한 모든 것을 일치시키는 “[^ ]*” 패턴을 사용하겠습니다. 사실 “*” 는 0개 이상을 의미하므로 이 패턴도 모든 것을 일치시킵니다. (이 글을 작성하는 시점에서) Solaris의 sed 최신 버전은 이와 같은 패턴을 제대로 처리하지 못해 “Output line too long” 과 같은 오류를 발생시키거나 심지어 무한 루프에 빠질 수도 있습니다. 저는 이를 버그로 간주하여 Sun에 보고했습니다. 임시 해결책으로, sed에 “g” 플래그를 사용할 때 빈 문자열이 일치하지 않도록 해야 합니다. 해결 예는 다음과 같습니다: “[^ ][^ ]*.” 다음 명령어는 첫 번째 단어 주위에 괄호를 씌웁니다:
+
+#+begin_src bash
+sed ‘s/[^ ]*/(&)/’ <old >new
+#+end_src
+
+모든 단어에 대해 변경을 적용하려면, 마지막 구분자 뒤에 “g” 를 추가하고 해결 방법을 사용하십시오:
+
+#+begin_src bash
+sed ‘s/[^ ][^ ]*/(&)/g’ <old >new
+#+end_src
+
+
+** Is sed recursive?
+Sed는 입력 데이터에서 발견된 패턴에 대해서만 작업을 수행합니다. 즉, 입력 행을 읽은 후 패턴이 일치하면 수정된 출력을 생성하고, 나머지 입력 행을 스캔합니다. “s” 명령어는 새로 생성된 출력을 스캔하지 않습니다. 따라서 다음과 같은 표현에 대해 걱정할 필요가 없습니다.
+
+#+begin_src bash
+sed ‘s/loop/loop the loop/g’ <old >new
+#+end_src
+
+이 명령어는 무한 루프를 일으키지 않습니다. 두 번째 “s” 명령어가 실행되면 이전 명령어의 결과를 수정할 수 있습니다. 여러 명령어를 실행하는 방법은 나중에 설명하겠습니다.
+
+
+** /1, /2, etc. Specifying which occurrence
+플래그를 지정하지 않으면, 가장 먼저 일치한 부분만 대체됩니다. “g” 옵션을 사용하면 모든 일치 항목이 대체됩니다. 줄에서 첫 번째가 아닌 특정 패턴을 수정하려면, “\(” 와 “\)” 를 사용하여 각 패턴을 표시하고, “\1” 을 사용하여 첫 번째 패턴을 변경하지 않은 채로 복원할 수 있습니다. 다음 예제는 줄의 첫 번째 단어는 유지하고 두 번째 단어는 삭제합니다.
+
+#+begin_src bash
+sed ‘s/\([a-zA-Z]*\) \([a-zA-Z]*\) /\1 /’ <old >new
+#+end_src
+
+으윽. 이 작업을 더 쉽게 할 수 있는 방법이 있습니다. 치환 명령어 뒤에 숫자를 추가하여 특정 패턴만 일치시키도록 지정할 수 있습니다. 예시:
+
+#+begin_src bash
+sed ‘s/[a-zA-Z]* //2’ <old >new
+#+end_src
+
+숫자를 g(전역) 플래그와 함께 사용할 수도 있습니다. 예를 들어, 첫 번째 단어는 그대로 두고 두 번째, 세 번째 단어 등을 DELETED로 변경하려면 /2g 를 사용합니다:
+
+#+begin_src bash
+sed ‘s/[a-zA-Z]* /DELETED /2g’ <old >new
+#+end_src
+
+MacOS에서는 숫자와 g 명령을 함께 사용하는 것이 작동하지 않는다고 들었으며, 아마도 FreeBSD 버전의 sed에서도 마찬가지일 것입니다.
+
+/2 와 \2 를 혼동하지 마십시오. /2 는 명령어 끝에 사용됩니다. \2 는 치환 필드 내에서 사용됩니다.
+
+“*” 문자 뒤의 공백에 유의하세요. 공백이 없으면 sed가 아주 오랫동안 실행됩니다. (참고: 이 버그는 아마도 지금은 수정되었을 것입니다.) 이는 숫자 플래그와 “g” 플래그에 동일한 버그가 있기 때문입니다. 또한 다음 패턴을 사용할 수도 있습니다.
+
+#+begin_src bash
+sed ‘s/[^ ]*//2’ <old >new
+#+end_src
+
+하지만 이 방법도 CPU 자원을 많이 소모합니다. 만약 이 방법이 여러분의 컴퓨터에서 작동한다면(일부 UNIX 시스템에서는 작동합니다), 암호 파일에서 암호화된 비밀번호를 제거할 수 있습니다:
+
+#+begin_src bash
+sed ‘s/[^:]*//2’ </etc/passwd >/etc/password.new
+#+end_src
+
+하지만 이 글을 작성할 당시에는 이 방법이 제 컴퓨터에서는 작동하지 않았습니다. “[^:][^:]*” 를 우회 방법으로 사용해도 소용이 없습니다. 존재하지 않는 비밀번호와는 일치하지 않을뿐만 아니라, 대신 세 번째 필드인 사용자 ID까지 삭제해 버리기 때문입니다! 대신 다음과 같이 보기 흉한 괄호를 사용해야 합니다:
+
+#+begin_src bash
+sed ‘s/^\([^:]*\):[^:]:/\1::/’  </etc/passwd >/etc/password.new
+#+end_src
+
+또한 첫 번째 패턴에 문자를 하나 추가하여 더 이상 빈 패턴과 일치하지 않도록 할 수도 있습니다:
+
+#+begin_src bash
+sed ‘s/[^:]*:/:/2’  </etc/passwd >/etc/password.new
+#+end_src
+
+숫자 플래그는 한 자릿수로만 제한되지 않습니다. 1부터 512까지의 임의의 숫자를 사용할 수 있습니다. 각 줄의 80번째 문자 뒤에 콜론을 추가하려면 다음과 같이 입력하면 됩니다:
+
+#+begin_src bash
+sed ‘s/./&:/80’ <file >new
+#+end_src
+
+80개의 점을 사용하여 더 복잡한 방법으로 처리할 수도 있습니다:
+
+#+begin_src bash
+sed 's/^............ ..................................................................../&:/' <파일> new
+#+end_src
+
+** /p - print
+기본적으로 sed는 모든 줄을 출력합니다. 치환이 이루어지면 기존 텍스트 대신 새로운 텍스트가 출력됩니다. sed에 선택적 인수인 “sed -n” 을 사용하면, 기본적으로 새로운 줄은 출력되지 않습니다. 이 옵션과 다른 옵션들에 대해서는 나중에 다루겠습니다. “-n” 옵션을 사용할 때 “p” 플래그를 사용하면 수정된 줄이 출력됩니다. 다음은 sed를 사용하여 grep의 기능을 구현하는 한 가지 방법입니다.
+
+#+begin_src bash
+sed -n ‘s/pattern/&/p’ <file
+#+end_src
+
+하지만 더 간단한 방법은 나중에 설명하겠습니다.
+
+** Write to a file with /w filename 
+세 번째 구분자 뒤에 올 수 있는 플래그가 하나 더 있습니다. 이 플래그를 사용하면 수정된 데이터를 받을 파일을 지정할 수 있습니다. 다음은 짝수 숫자로 시작하고 그 뒤에 공백이 오는 모든 줄을 ‘even’ 파일에 기록하는 예시입니다.
+
+#+begin_src bash
+sed -n ‘s/^[0-9]*[02468] /&/w even’ <file
+#+end_src
+
+이 예제에서는 입력이 수정되지 않았으므로 출력 파일이 필요하지 않습니다. w와 파일 이름 사이에는 정확히 하나의 공백이 있어야 합니다. 또한 하나의 sed 인스턴스로 최대 10개의 파일을 열 수 있습니다. 이를 통해 데이터 스트림을 별도의 파일로 분할할 수 있습니다. 앞서 본 예제를 나중에 설명할 다중 치환 명령과 결합하면, 첫 번째 숫자의 마지막 자릿수에 따라 파일을 10개로 분할할 수 있습니다. 또한 이 방법을 사용하여 오류나 디버깅 정보를 별도의 파일에 기록할 수도 있습니다.
+
+
+** /I - Ignore Case
+GNU에 또 다른 패턴 플래그인 /I가 추가되었습니다.
+
+이 플래그는 패턴 일치 시 대소문자를 구분하지 않도록 합니다. 이 플래그를 사용하면 abc, aBc, ABC, AbC 등과 일치합니다:
+
+#+begin_src bash
+sed -n ‘/abc/I p’ <old >new
+#+end_src
+
+‘/I’ 뒤와 ‘p’(출력) 명령어 뒤에 공백이 있는 것은 'p'가 패턴 일치 과정의 수식어가 아니라, 패턴 일치 후 실행할 명령어임을 강조하기 위함입니다.
+
+** Combining substitution flags
+상황에 따라 플래그를 조합하여 사용할 수 있습니다. 단, “w” 플래그는 반드시 마지막에 와야 한다는 점에 유의하십시오. 예를 들어, 다음 명령어는 정상적으로 작동합니다.
+
+#+begin_src bash
+sed -n ‘s/a/A/2pw /tmp/file’ <old >new
+#+end_src
+
+다음 시간에는 sed의 옵션과 sed를 호출하는 다양한 방법에 대해 설명하겠습니다.
+
+
+** Arguments and invocation of sed
+이전에는 대체 명령어를 하나만 사용했습니다. 두 가지 변경을 해야 하는데 설명서를 읽고 싶지 않다면, 여러 sed 명령어를 파이프(pipe)로 연결할 수 있습니다:
+
+#+begin_src bash
+sed ‘s/BEGIN/begin/’ <old | sed ‘s/END/end/’ >new
+#+end_src
+
+이 방법은 하나의 프로세스 대신 두 개의 프로세스를 사용했습니다. sed의 고수는 하나의 프로세스로 해결할 수 있는 일을 두 개의 프로세스로 처리하지 않습니다.
+
+
+** Multiple commands with -e command
+여러 명령을 결합하는 한 가지 방법은 각 명령 앞에 -e 를 사용하는 것입니다:
+
+#+begin_src bash
+sed -e ‘s/a/A/’ -e ‘s/b/B/’ <old >new
+#+end_src
+
+앞서 제시한 예제들에서는 “-e” 가 필요하지 않습니다. sed는 항상 하나의 명령이 있어야 한다는 것을 알고 있기 때문입니다. sed에 하나의 인수를 전달하면, 그 인수는 반드시 명령이어야 하며, sed는 표준 입력에서 읽은 데이터를 편집합니다.
+
+긴 인자 형식은 다음과 같습니다.
+
+#+begin_src bash
+sed --expression=‘s/a/A/’ --expression=‘s/b/B/’ <old >new
+#+end_src
+
+또한 Bourne 셸에서 여러 sed 줄을 따옴표로 묶는 방법도 참조하십시오.
+
+
+** Filenames on the command line
+원한다면 명령줄에서 파일을 지정할 수 있습니다. sed에 옵션으로 시작하지 않는 인수가 두 개 이상 있는 경우, 그 인수는 반드시 파일 이름이어야 합니다. 다음 예제는 “#:” 으로 시작하지 않는 세 개의 파일 내 줄 수를 계산합니다.
+
+#+begin_src bash
+sed ‘s/^#.*//’  f1 f2 f3 | grep -v ‘^$’ | wc -l
+#+end_src
+
+이 명령어를 단계별로 살펴보겠습니다. sed의 /substitute/ 명령어는 “#” 으로 시작하는 모든 줄을 빈 줄로 바꿉니다. ~grep~ 은 빈 줄을 걸러내기(삭제하기) 위해 사용되었습니다. ~wc~ 는 남은 줄의 수를 세어줍니다. ~sed~ 에는 ~grep~ 을 사용하지 않아도 되는 더 많은 명령어가 있습니다. 또한 ~grep -c~ 는 ~wc -l~ 을 대체할 수 있습니다. 나중에 grep의 일부 기능을 어떻게 재현할 수 있는지 설명하겠습니다.
+
+물론 마지막 예제는 “-e” 옵션을 사용하여 다음과 같이 작성할 수도 있습니다:
+
+#+begin_src bash
+sed -e ‘s/^#.*//’  f1 f2 f3 | grep -v ‘^$’ | wc -l
+#+end_src
+
+sed에는 이 외에도 두 가지 옵션이 더 있습니다.
+
+
+** sed -n: no printing
+“-n” 옵션은 명시적인 출력 요청이 발견되지 않는 한 아무것도 출력하지 않습니다. 앞서 /substitute/ 명령어의 “/p” 플래그를 출력 기능을 다시 켜는 한 가지 방법으로 언급한 바 있습니다. 이에 대해 좀 더 명확히 설명해 드리겠습니다. 다음 명령어
+
+#+begin_src bash
+sed  ‘s/PATTERN/&/p’ file
+#+end_src
+
+은 파일에 PATTERN 이 없을 경우 ~cat~ 프로그램처럼 작동합니다. 즉, 아무것도 변경되지 않습니다. 파일에 PATTERN이 포함되어 있다면, 이 패턴이 포함된 각 줄이 두 번 출력됩니다. “-n” 옵션을 추가하면 이 예제는 grep 처럼 동작합니다:
+
+#+begin_src bash
+sed -n ‘s/PATTERN/&/p’ file
+#+end_src
+
+PATTERN 이 포함된 줄을 제외하고는 아무것도 출력되지 않습니다.
+
+-n 명령어의 긴 인수는 다음 중 하나입니다.
+
+#+begin_src bash
+sed --quiet ‘s/PATTERN/&/p’ 파일
+#+end_src
+
+또는
+
+#+begin_src bash
+sed --silent ‘s/PATTERN/&/p’ 파일
+#+end_src
+
+
+** Using 'sed /pattern/'
+Sed는 명령어 앞에 주소를 지정하여 어떤 줄을 검사하거나 수정할지 지정할 수 있는 기능을 가지고 있습니다. 지금은 가장 간단한 버전인 ~/PATTERN/~ 주소에 대해서만 설명하겠습니다. 이 주소를 사용하면 패턴과 일치하는 줄에만 주소 뒤의 명령어가 적용됩니다. 간단히 말해, /p 플래그와 함께 사용하면 일치하는 줄이 두 번 출력됩니다:
+
+#+begin_src bash
+sed ‘/PATTERN/p’ file
+#+end_src
+
+물론 PATTERN 은 어떤 정규 표현식이든 가능합니다.
+
+출력을 위한 “p” 와 같은 명령어를 포함하지 않으면 오류가 발생한다는 점에 유의하십시오. 다음과 같이 입력하면
+
+#+begin_src bash
+echo abc | sed '/a/'
+#+end_src
+다음과 같은 오류가 발생합니다.
+
+#+begin_example
+sed: -e expression #1, char 3: missing command
+#+end_example
+
+또한, 반드시 그럴 필요는 없지만, 패턴과 명령어 사이에 공백을 두는 것을 권장합니다. 이렇게 하면 패턴 일치를 수정하는 플래그와 패턴이 일치한 후 실행할 명령어를 구분하는 데 도움이 됩니다. 따라서 다음과 같은 형식을 권장합니다:
+
+#+begin_src bash
+sed ‘/PATTERN/ p’ file
+#+end_src
+
+
+** Using 'sed -n /pattern/p' to duplicate the function of grep
+grep의 기능을 재현하려면 -n (noprint) 옵션과 /p 출력 플래그를 함께 사용하십시오:
+
+#+begin_src bash
+sed -n ‘/PATTERN/p’ file
+#+end_src
+
+
+** sed -f scriptname
+sed 명령어가 많다면, 이를 파일로 저장한 다음 다음 명령을 사용할 수 있습니다.
+
+#+begin_src bash  
+sed -f sedscript <old >new
+#+end_src
+
+여기서 sedscript 는 다음과 같이 작성할 수 있습니다.
+
+#+begin_src bash
+# sed 주석 - 이 스크립트는 소문자 모음을 대문자로 변경합니다.
+s/a/A/g
+s/e/E/g
+s/i/I/g
+s/o/O/g
+s/u/U/g
+#+end_src
+
+한 파일에 여러 명령어가 있을 경우, 각 명령어는 별도의 줄에 작성해야 합니다.
+
+긴 인자 형식은 다음과 같습니다.
+
+#+begin_src bash
+sed --file=sedscript <old >new
+#+end_src
+
+또한 sed를 직접 실행하는 스크립트 작성 방법에 대해서는 여기를 참조하십시오.
+
+** sed in shell scripts
+명령어가 많아서 한 줄에 깔끔하게 들어가지 않는 경우, 백슬래시를 사용하여 줄을 나눌 수 있습니다:
+
+#+begin_src bash
+sed -e ‘s/a/A/g’ \
+    -e ‘s/e/E/g’ \
+    -e ‘s/i/I/g’ \
+    -e ‘s/o/O/g’ \
+    -e ‘s/u/U/g’  <old >new
+#+end_src
+
+
+** Quoting multiple sed lines in the C shell
+C 셸에서는 여러 줄로 구성된 긴 sed 스크립트를 사용할 수 있지만, 따옴표가 여러 줄에 걸쳐 이어진다는 사실을 C 셸에 알려야 합니다. 이를 위해서는 각 줄의 끝에 백슬래시를 붙이면 됩니다:
+
+#+begin_src bash
+#!/bin/csh -f
+sed 's/a/A/g  \
+s/e/E/g \
+s/i/I/g \
+s/o/O/g \
+s/u/U/g'  <old >new
+#+end_src
+
+** Quoting multiple sed lines in the Bourne shell
+Bourne 셸을 사용하면 따옴표로 여러 줄을 한 번에 감쌀 수 있어 작업이 더 쉬워집니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+s/a/A/g
+s/e/E/g
+s/i/I/g
+s/o/O/g
+s/u/U/g'  <old >new
+#+end_src
+
+
+** sed -V
+-V 옵션을 사용하면 현재 사용 중인 sed의 버전이 표시됩니다. 이 명령어의 긴 형식은 다음과 같습니다.
+
+#+begin_src bash
+sed --version
+#+end_src
+
+
+** sed -h
+-h 옵션을 사용하면 sed 명령어의 요약 정보를 표시합니다. 이 명령어의 long 인수는 다음과 같습니다.
+
+#+begin_src bash
+sed --help
+#+end_src
+
+
+** A sed interpreter script
+sed를 실행하는 또 다른 방법은 인터프리터 스크립트를 사용하는 것입니다. 다음 내용을 포함하는 파일을 만드세요.
+
+#+begin_src bash
+#!/bin/sed -f
+s/a/A/g
+s/e/E/g
+s/i/I/g
+s/o/O/g
+s/u/U/g
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: CapVowel.sed
+이 스크립트를 “CapVowel” 이라는 이름의 파일로 저장하고 실행 권한을 부여했다면, 다음과 같은 간단한 명령어로 사용할 수 있습니다:
+
+#+begin_src bash
+CapVowel <old >new
+#+end_src
+
+
+** Comments
+sed의 주석은 첫 번째 비공백 문자가 “#” 인 줄입니다. 많은 시스템에서 sed는 주석을 하나만 가질 수 있으며, 이 주석은 스크립트의 첫 번째 줄에 위치해야 합니다. Sun 시스템(이 글을 작성한 1988년 당시)에서는 스크립트의 어느 위치에나 여러 개의 주석 줄을 넣을 수 있습니다. 최신 버전의 sed는 이를 지원합니다. 첫 번째 줄에 정확히 “#n” 이 포함되어 있다면, 이는 “-n” 옵션과 동일한 기능을 수행합니다. 즉, 기본적으로 출력 기능을 비활성화합니다. sed 인터프리터 스크립트에서는 이 작업을 수행할 수 없었습니다. 첫 번째 줄은 반드시 “#!/bin/sed -f” 로 시작해야 했기 때문인데, 제 기억에 “#!/bin/sed -nf” 는 오류를 발생시켰던 것으로 보입니다. 이 글을 처음 작성했을 때(2008년)에는 정상적으로 작동했습니다. “#!/bin/sed -fn” 은 sed가 스크립트의 파일 이름을 “n” 으로 인식하기 때문에 작동하지 않는다는 점에 유의하십시오. 그러나, “#!/bin/sed -nf” 는 정상적으로 작동합니다.
+
+
+** Passing arguments into a sed script
+UNIX 따옴표 처리 방식에 대한 제 튜토리얼을 기억하고 계시다면, sed를 호출하는 셸 스크립트에 단어를 전달하는 것은 쉽습니다. 다시 정리하자면, 작은 따옴표를 사용하여 따옴표 처리를 켜고 끌 수 있습니다. sed를 사용하여 grep을 모방하는 간단한 셸 스크립트는 다음과 같습니다.
+
+#+begin_src bash
+#!/bin/sh
+sed -n ‘s/’$1'/&/p'
+#+end_src
+
+하지만 이 스크립트에는 미묘한 문제가 있습니다. 인자에 공백이 포함되어 있으면 스크립트가 다음과 같은 구문 오류를 발생시킵니다.
+
+#+begin_example
+sed: -e expression #1, char 4: unterminated `s' command
+#+end_example
+
+다음과 같은 개선된 버전은 이러한 문제를 방지해 줍니다:
+
+#+begin_src bash
+#!/bin/sh
+sed -n ‘s/’“$1”‘/&/p’
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sedgrep.sed
+이 코드를 sedgrep 이라는 파일명에 저장해 두면 다음과 같이 입력할 수 있습니다.
+
+#+begin_src bash
+sedgrep ‘[A-Z][A-Z]’ <파일
+#+end_src
+
+이렇게 하면 sed 가 grep 명령어처럼 작동하게 됩니다.
+
+
+** Using sed in a shell here-is document
+sed를 사용하여 사용자에게 몇 가지 매개변수를 입력받게 한 다음, 해당 매개변수가 채워진 파일을 생성할 수 있습니다. 미리 가짜 값이 들어 있는 파일을 만들어 놓고, sed를 사용하여 그 가짜 값을 변경할 수도 있습니다. 더 간단한 방법은 쉘 스크립트의 일부를 표준 입력인 것처럼 사용하는 “here is” 문서를 활용하는 것입니다:
+
+#+begin_src bash
+#!/bin/sh
+echo -n ‘값은 무엇입니까? ’
+read value
+sed  ‘s/XYZ/’$value'/' <<EOF
+값은 XYZ입니다
+EOF
+#+end_src
+
+이 스크립트를 실행하면 다음과 같은 메시지가 표시됩니다:
+
+#+begin_example
+값은 무엇입니까?
+#+end_example
+
+“123” 을 입력하면 다음 줄은 다음과 같이 표시됩니다:
+
+#+begin_example
+값은 123입니다
+#+end_example
+
+이 예제가 다소 인위적이라는 점은 인정합니다. “here is” 문서를 사용하면 sed를 사용하지 않고도 값을 평가할 수 있습니다. 다음 예제도 동일한 기능을 수행합니다:
+
+#+begin_src bash
+#!/bin/sh
+echo -n ‘값은 무엇입니까? ’
+read value
+cat <<EOF
+값은 $value입니다
+EOF
+#+end_src
+
+하지만 “here is” 문서를 sed와 결합하면 일부 복잡한 경우에 유용할 수 있습니다.
+
+다음에 유의하십시오.
+
+#+begin_src bash
+sed ‘s/XYZ/’$value'/' <<EOF
+#+end_src
+
+사용자가 “a b c” 처럼 공백이 포함된 답변을 입력하면 구문 오류가 발생합니다. 더 나은 방법은 값을 평가할 때 큰따옴표로 묶는 것입니다:
+
+#+begin_src bash
+#!/bin/sh
+echo -n ‘값은 무엇입니까? ’
+read value
+sed  ‘s/XYZ/’“$value”‘/’ <<EOF
+값은 XYZ입니다
+EOF
+#+end_src
+
+이 내용은 따옴표에 관한 튜토리얼에서 다룬 바 있습니다.
+파일을 다운로드하려면 여기를 클릭하세요: sed_hereis.sed
+
+** Multiple commands and order of execution
+sed의 명령어를 더 깊이 알아갈수록 명령어는 점점 복잡해지고, 실제 실행 순서가 헷갈릴 수 있습니다. 하지만 사실은 아주 간단합니다. 각 줄이 차례로 읽혀 들어옵니다. 사용자가 지정한 순서대로 각 명령어는 입력된 줄에 대해 작업을 수행할 기회를 갖게 됩니다. 치환이 완료된 후에는, 이전 명령어들에 의해 수정되었을 수도 있는 동일한 줄에 대해 다음 명령어가 처리할 기회를 얻습니다. 궁금한 점이 있다면, 어떤 결과가 나올지 알아보는 가장 좋은 방법은 간단한 예제를 만들어 보는 것입니다. 복잡한 명령어가 제대로 작동하지 않는다면, 더 단순하게 만들어 보세요. 복잡한 스크립트를 작동시키는 데 문제가 있다면, 이를 두 개의 작은 스크립트로 나누고 두 스크립트를 파이프로 연결해 보세요.
+
+
+** Addresses and Ranges of Text
+단 하나의 명령어만 배웠을 뿐인데도 sed가 얼마나 강력한지 알 수 있습니다. 하지만 이 명령어가 하는 일은 그저 grep과 substitute를 수행하는 것에 불과합니다. 즉, substitute 명령어는 인접한 줄을 고려하지 않고 각 줄을 개별적으로 처리합니다. 특정 줄로만 작업을 제한할 수 있는 기능이 있다면 유용할 것입니다. 유용한 제한 조건으로는 다음과 같은 것들이 있습니다:
+
+#+begin_example
+Specifying a line by its number.
+Specifying a range of lines by number.
+All lines containing a pattern.
+All lines from the beginning of a file to a regular expression
+All lines from a regular expression to the end of the file.
+All lines between two regular expressions.
+#+end_example
+
+sed는 이 모든 기능과 그 이상의 작업을 수행할 수 있습니다. sed의 모든 명령어 앞에는 위 예시와 같이 주소, 범위 또는 제한 조건이 올 수 있습니다. 제한 조건이나 주소는 명령어 바로 앞에 위치합니다:
+
+#+begin_example
+restriction command
+#+end_example
+
+
+** Restricting to a line number
+가장 간단한 제한 조건은 줄 번호입니다. 3번째 줄의 첫 번째 숫자를 삭제하려면, 명령어 앞에 “3”을 추가하기만 하면 됩니다.
+
+#+begin_src bash
+sed ‘3 s/[0-9][0-9]*//’ <file >new
+#+end_src
+
+
+** Patterns
+vi나 more와 같은 많은 UNIX 유틸리티는 슬래시를 사용하여 정규식을 검색합니다. Sed도 표현식을 슬래시로 끝맺는다면 동일한 규칙을 따릅니다. “#” 으로 시작하는 모든 줄에서 첫 번째 숫자를 삭제하려면 다음을 사용하십시오.
+
+#+begin_src bash
+sed ‘/^#/ s/[0-9][0-9]*//’
+#+end_src
+
+가독성을 높이기 위해 “/표현식/” 뒤에 공백을 넣었습니다. 꼭 필요한 것은 아니지만, 공백이 없으면 명령어를 이해하기가 더 어렵습니다. Sed는 정규 표현식을 지정할 때 몇 가지 추가 옵션을 제공합니다. 하지만 이에 대해서는 나중에 설명하겠습니다. 표현식이 백슬래시로 시작하면 다음 문자가 구분자 역할을 합니다. 슬래시 대신 쉼표를 사용하려면 다음을 입력하세요:
+
+#+begin_src bash
+sed '\,^#, s/[0-9][0-9]*//'
+#+end_src
+
+이 기능의 가장 큰 장점은 슬래시를 검색할 때 유용하다는 점입니다. “/usr/local/bin” 이라는 문자열을 검색하여 “/common/all/bin” 으로 바꾸고 싶다고 가정해 봅시다. 백슬래시를 사용하여 슬래시를 이스케이프 처리할 수 있습니다:
+
+#+begin_src bash
+sed '/\/usr\/local\/bin/ s/\/usr\/local/\/common\/all/'
+#+end_src
+
+검색 시 슬래시 대신 밑줄을 사용하면 이해하기 더 쉬울 것입니다. 이 예제에서는 검색 명령과 치환 명령 모두에 밑줄을 사용합니다:
+
+#+begin_src bash
+sed '\_/usr/local/bin_ s_/usr/local_/common/all_'
+#+end_src
+
+이것이 바로 sed 스크립트가 난해하다는 평판을 받는 이유를 잘 보여줍니다. 제가 좀 고집스럽게 굴어서, “g” 로 시작하는 모든 줄을 찾아내고 해당 줄에 있는 각 “g” 를 “s” 로 바꾸는 예제를 보여드릴 수도 있겠지만:
+
+#+begin_src bash
+sed ‘/^g/s/g/s/g’
+#+end_src
+
+공백을 추가하고 대체 명령어 뒤에 밑줄(_)을 사용하면 훨씬 읽기 쉬워집니다:
+
+#+begin_src bash
+sed ‘/^g/ s_g_s_g’
+#+end_src
+
+아, 그 말은 취소하겠습니다. 이건 도저히 안 되겠네요. 여기서 얻을 수 있는 교훈은, sed 스크립트에서는 주석을 아낌없이 사용해야 한다는 것입니다. 다른 (구형) 운영 체제에서 스크립트를 실행하려면 주석을 제거해야 할 수도 있겠지만, 이제 여러분은 이를 매우 쉽게 수행할 수 있는 sed 스크립트를 작성하는 방법을 알게 되었습니다! 주석은 좋은 것입니다. 스크립트를 작성할 당시에는 완벽하게 이해했을지 모릅니다. 하지만 6개월 후에는 마치 모뎀 잡음처럼 보일 수도 있습니다. 이 비유가 이해되지 않는다면, 8개월 된 아이가 컴퓨터 키보드를 두드리는 모습을 상상해 보세요.
+
+
+** Ranges by line number
+줄 번호 사이에 쉼표를 삽입하여 범위 지정할 수 있습니다. 첫 100줄로만 치환을 제한하려면 다음과 같이 사용할 수 있습니다.
+
+#+begin_src bash
+sed '1,100 s/A/a/'
+#+end_src
+
+파일의 줄 수를 정확히 알고 있다면, 해당 숫자를 명시하여 파일의 나머지 부분에 대해 치환을 수행할 수 있습니다. 이 경우, wc 명령어를 사용하여 파일에 532줄이 있다는 것을 확인했다고 가정해 보겠습니다:
+
+#+begin_src bash
+sed ‘101,532 s/A/a/’
+#+end_src
+
+더 쉬운 방법은 파일의 마지막 줄을 의미하는 특수 문자 “$” 를 사용하는 것입니다.
+
+#+begin_src bash
+sed ‘101,$ s/A/a/’
+#+end_src
+
+“$” 는 cat -e, vi, ed와 같은 유틸리티에서 “마지막”을 의미하는 관례 중 하나입니다. “cat -e” 여러 파일을 편집할 경우 줄 번호는 누적됩니다. 즉,
+
+#+begin_src bash
+sed ‘200,300 s/A/a/’ f1 f2 f3 >new
+#+end_src
+
+는 다음과 동일합니다.
+
+#+begin_src bash
+cat f1 f2 f3 | sed ‘200,300 s/A/a/’ >new
+#+end_src
+
+
+** Ranges by patterns
+범위로 두 개의 정규식을 지정할 수 있습니다. “#”으로 시작하는 부분을 주석으로 가정할 때, 키워드를 검색한 후 두 번째 키워드가 나타날 때까지 모든 주석을 제거할 수 있습니다. 이 경우 두 키워드는 “start”와 “stop”입니다.
+
+#+begin_src bash
+sed '/start/,/stop/ s/#.*//'
+#+end_src
+
+첫 번째 패턴은 sed가 모든 줄에서 대체 명령을 수행하도록 지시하는 플래그를 켭니다. 두 번째 패턴은 이 플래그를 끕니다. “start”와 ‘stop’ 패턴이 두 번 나타나면 두 번 모두 대체가 수행됩니다. “stop” 패턴이 누락된 경우, 플래그는 절대 꺼지지 않으며 파일 끝까지 모든 줄에서 대체가 수행됩니다.
+
+“start” 패턴이 발견되면, “start”가 포함된 해당 줄에서 대체 작업이 수행된다는 점을 알아두어야 합니다. 이는 줄 단위로 작동하는 스위치를 켜는 것입니다. 즉, 다음 줄을 읽어와 대체 명령을 확인합니다. 만약 “stop”이 포함되어 있다면 스위치가 꺼집니다. 스위치는 단어 단위가 아닌 줄 단위로 작동합니다.
+
+줄 번호와 정규식을 결합할 수 있습니다. 다음 예제는 파일 시작 부분부터 “start:” 키워드가 발견될 때까지 주석을 제거합니다.
+
+#+begin_src bash
+sed -e '1,/start/ s/#.*//'
+#+end_src
+
+이 예제는 두 키워드 사이에 있는 줄을 제외한 모든 곳의 주석을 제거합니다:
+
+#+begin_src bash
+sed -e ‘1,/start/ s/#.*//’ -e ‘/stop/,$ s/#.*//’
+#+end_src
+
+마지막 예제에서는 두 범위 모두 키워드가 포함된 줄을 대상으로 하기 때문에, “/start/,/stop/” 범위와 중복되는 부분이 있습니다. 나중에 지정된 패턴이 포함된 줄까지는(해당 줄은 제외) 명령을 제한하는 방법을 보여드리겠습니다. 이는 “패턴을 제외한 패턴 범위에서 작업하기” 섹션에 나와 있습니다. 하지만 그 전에 몇 가지 기본 원리를 더 다루어야 합니다.
+
+다양한 명령에 대해 설명하기 전에, 일부 명령은 줄 범위에 대해 작동할 수 없다는 점을 미리 설명해 두겠습니다. 해당 명령을 언급할 때 따로 알려드리겠습니다. 다음 섹션에서는 세 가지 명령을 설명할 예정이며, 그중 하나는 범위에서 작동할 수 없습니다.
+
+
+** Delete with d
+범위를 사용하는 것은 다소 헷갈릴 수 있으므로, 새로운 스크립트를 시험해 볼 때는 몇 번의 시행착오를 겪을 각오를 해야 합니다. “d” 라는 제한 조건에 맞는 모든 줄을 삭제하는 유용한 명령어가 있습니다. 파일의 처음 10줄을 보고 싶다면 다음을 사용할 수 있습니다.
+
+#+begin_src bash
+sed ‘11,$ d’ <file
+#+end_src
+
+이는 head 명령어와 기능이 비슷합니다. 메일 메시지의 헤더, 즉 첫 번째 빈 줄까지의 모든 내용을 잘라내고 싶다면 다음을 사용하세요.
+
+#+begin_src bash
+sed ‘1,/^$/ d’ <file
+#+end_src
+
+파일의 길이를 알고 있다면 tail 명령어의 기능을 재현할 수 있습니다. wc로 줄 수를 세고, expr로 줄 수에서 10을 뺄 수 있습니다. 파일의 마지막 10줄을 확인하는 Bourne 셸 스크립트는 다음과 같을 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+#print last 10 lines of file
+# First argument is the filename
+lines=$(wc -l "$1" | awk '{print $1}' )
+start=$(( lines - 10))
+sed "1,$start d" "$1"
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_tail.sh
+삭제 범위는 작업의 시작과 끝을 표시하는 정규 표현식 쌍일 수도 있고, 단일 정규 표현식일 수도 있습니다. “#”으로 시작하는 모든 줄을 삭제하는 것은 간단합니다:
+
+#+begin_src bash
+sed '/^#/ d'
+#+end_src
+
+주석과 빈 줄을 제거하려면 두 개의 명령어가 필요합니다. 첫 번째 명령어는 “#”부터 줄 끝까지의 모든 문자를 제거하고, 두 번째 명령어는 모든 빈 줄을 삭제합니다:
+
+#+begin_src bash
+sed -e ‘s/#.*//’ -e ‘/^$/ d’
+#+end_src
+
+줄 끝 바로 앞에 있는 공백과 탭을 모두 제거하려면 세 번째 명령어를 추가해야 합니다:
+
+#+begin_src bash
+sed -e 's/#.*//' -e ‘s/[ ^I]*$//’ -e ‘/^$/ d’
+#+end_src
+
+문자 “^I”는 CTRL-I 또는 탭 문자를 의미합니다. 탭 문자는 직접 입력해야 합니다. 위의 명령어 실행 순서에 유의하십시오. 이 순서는 매우 타당한 이유가 있어서 정해졌습니다. 주석은 줄 중간에서 시작될 수 있으며, 그 앞에 공백 문자가 있을 수 있습니다. 따라서 먼저 줄에서 주석을 제거하며, 이 과정에서 주석 앞에 있던 공백 문자가 남을 수 있습니다. 두 번째 명령어는 줄 끝의 모든 공백을 제거하여, 이제 공백으로만 남은 줄을 빈 줄로 변환합니다. 마지막 명령어는 빈 줄을 삭제합니다. 이 세 명령어를 함께 사용하면 주석, 탭 또는 공백만 포함된 모든 줄을 제거할 수 있습니다.
+
+이는 sed가 줄을 처리할 때 사용하는 패턴 공간을 보여줍니다. sed가 실제로 사용하는 연산은 다음과 같습니다:
+
+#+begin_example
+Copy the input line into the pattern space.
+Apply the first
+sed command on the pattern space, if the address restriction is true.
+Repeat with the next sed expression, again
+operating on the pattern space.
+When the last operation is performed, write out the pattern space
+and read in the next line from the input file.
+#+end_example
+
+** Printing with p
+또 다른 유용한 명령어는 출력 명령어인 “p”입니다. sed를 “-n” 옵션 없이 실행한 경우, “p” 명령어는 입력 내용을 복제합니다. 다음 명령어
+
+#+begin_src bash
+sed ‘p’
+#+end_src
+
+는 모든 줄을 복제합니다. 빈 줄만 두 번 출력하려면 다음을 사용하세요:
+
+#+begin_src bash
+sed ‘/^$/ p’
+#+end_src
+
+“-n” 옵션을 추가하면 명시적으로 요청하지 않는 한 출력이 비활성화됩니다. head 명령어의 기능을 재현하는 또 다른 방법은 원하는 행만 출력하는 것입니다. 다음 예제는 처음 10행을 출력합니다:
+
+#+begin_src bash
+sed -n ‘1,10 p’ <file
+#+end_src
+
+sed는 /print/ 연산자를 조합하여 정규 표현식과 일치하는 모든 행에 대해 작업을 수행함으로써 grep과 같은 역할을 할 수 있습니다:
+
+#+begin_src bash
+sed -n ‘/match/ p’
+#+end_src
+
+이는 다음 명령어와 동일합니다:
+
+#+begin_src bash
+grep match
+#+end_src
+
+
+** Reversing the restriction with !
+때로는 정규 표현식과 일치하는 줄이나 주소 범위 밖에 있는 줄을 제외한 모든 줄에 대해 특정 작업을 수행해야 할 때가 있습니다. UNIX 유틸리티에서 흔히 ‘아님’ 을 의미하는 “!” 문자는 주소 제한 조건을 반전시킵니다. 기억하시겠지만,
+
+#+begin_src bash
+sed -n ‘/match/ p’
+#+end_src
+
+는 grep 명령과 같은 역할을 합니다. grep의 “-v” 옵션은 해당 패턴이 포함되지 않은 모든 줄을 출력합니다. sed에서는 다음 명령을 사용하여 이를 수행할 수 있습니다.
+
+#+begin_src bash
+sed -n ‘/match/ !p’ </tmp/b
+#+end_src
+
+** Relationships between d, p, and !
+아시다시피, sed를 사용하면 같은 문제를 해결하는 방법이 여러 가지인 경우가 많습니다. 이는 /print/ 와 /delete/ 가 서로 반대되는 기능을 하기 때문인데, “!p” 는 “d” 와 비슷하고, “!d” 는 “p” 와 비슷한 것처럼 보입니다. 이를 확인해 보고 싶어서 20줄짜리 테스트 파일을 만들고, 가능한 모든 조합을 시도해 보았습니다. 다음 표는 테스트 결과를 보여주는 것으로, 그 차이를 잘 보여줍니다:
+
+*Relations between d, p, and !*
+
+
+| Sed    | Range | Command | Results                                             |
+|--------+-------+---------+-----------------------------------------------------|
+| sed -n | 1,10  | p       | Print first 10 lines                                |
+| sed -n | 11,$  | !p      | Print first 10 lines                                |
+| sed    | 1,10  | !d      | Print first 10 lines                                |
+| sed    | 11,$  | d       | Print first 10 lines                                |
+| sed -n | 1,10  | !p      | Print last 10 lines of my 20-line file              |
+| sed -n | 11,$  | p       | Print last 10 lines of my 20-line filme             |
+| sed    | 1,10  | d       | Print last 10 lines of my 20-line file              |
+| sed    | 11,$  | !d      | Print last 10 lines of my 20-line file              |
+| sed -n | 1,10  | d       | Nothing printed                                     |
+| sed -n | 1,10  | !d      | Nothing printed                                     |
+| sed -n | 11,$  | d       | Nothing printed                                     |
+| sed -n | 11,$  | !d      | Nothing printed                                     |
+| sed    | 1,10  | p       | Print first 10 lines twice, then next 10 lines once |
+| sed    | 11,$  | !p      | Print first 10 lines twice, then last 10 lines once |
+| sed    | 1,10  | !p      | Print first 10 lines once, then last 10 lines twice |
+| sed    | 11,$  | p       | Print first 10 lines once, then last 10 lines twice |
+
+이 표는 제가 준비한 20줄짜리 테스트 파일을 사용했을 때, 다음 명령어들이 동일한 결과를 보인다는 것을 보여줍니다:
+
+#+begin_src bash
+sed -n ‘1,10 p’
+sed -n ‘11,$ !p’
+sed ‘1,10 !d’
+sed ‘11,$ d’
+#+end_src
+
+또한 “!” 명령어가 주소 범위를 “반전”시켜 다른 줄들을 대상으로 처리한다는 사실도 보여줍니다.
+
+물론 20줄보다 긴 파일의 경우, 마지막 두 예시에서는 10줄 이상이 처리될 것입니다.
+
+
+** The q or quit command
+특정 줄 범위 내에서만 변경을 제한할 수 있는 간단한 명령어가 하나 더 있습니다. 바로 “q” 명령어, 즉 종료(/quit/) 명령어입니다. head 명령어를 모방하는 세 번째 방법은 다음과 같습니다.
+
+#+begin_src bash
+sed ‘11 q’
+#+end_src
+
+이 명령어는 11번째 줄에 도달하면 작업을 종료합니다. 이 명령어는 특정 조건에 도달했을 때 편집을 중단하고 싶을 때 가장 유용합니다.
+
+“q” 명령어는 주소 범위를 지정할 수 없는 유일한 명령어입니다. 당연히 다음 명령어
+
+#+begin_src bash
+sed ‘1,10 q’
+#+end_src
+
+는 10번 종료할 수 없습니다. 대신
+
+#+begin_src bash
+sed ‘1 q’
+#+end_src
+
+또는
+
+#+begin_src bash
+sed ‘10 q’
+#+end_src
+
+가 올바른 명령어입니다.
+
+
+** Grouping with { and }
+중괄호 “{” 와 “}” 는 명령어를 묶는 데 사용됩니다.
+
+이토록 장황하게 설명할 만한 가치가 있을지는 의문입니다. 그렇게 긴 설명을 다 해놓고 정작 해결책은 그저 굽은 선 두 개를 맞추는 것뿐이니까요. 하지만 한 가지 복잡한 점이 있습니다. 각 sed 명령어는 반드시 별도의 줄에서 시작해야 하므로, 중괄호와 중첩된 sed 명령어는 서로 다른 줄에 위치해야 합니다.
+
+앞서 “#” 로 시작하는 주석을 제거하는 방법을 보여드렸습니다. 만약 특수한 “begin” 과 “end” 키워드 사이에 있는 줄만 제거하도록 제한하고 싶다면, 다음과 같이 사용할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+# This is a Bourne shell script that removes #-type comments
+# between 'begin' and 'end' words.
+sed -n '
+	/begin/,/end/ {
+	     s/#.*//
+	     s/[ ^I]*$//
+	     /^$/ d
+	     p
+	}
+'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_begin_end.sh
+이 중괄호는 중첩할 수 있으므로 주소 범위를 결합할 수 있습니다. 앞서와 동일한 작업을 수행하되, 변경 범위를 처음 100줄로 제한할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+# This is a Bourne shell script that removes #-type comments
+# between 'begin' and 'end' words.
+sed -n '
+	1,100 {
+		/begin/,/end/ {
+		     s/#.*//
+		     s/[ ^I]*$//
+		     /^$/ d
+		     p
+		}
+	}
+'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_begin_end1.sh
+중괄호 앞쪽에 “!”를 붙일 수 있습니다. 이렇게 하면 주소가 반전되어, 두 예약어 사이에 있는 줄을 제외한 모든 줄에서 주석이 제거됩니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+	/begin/,/end/ !{
+	     s/#.*//
+	     s/[ ^I]*$//
+	     /^$/ d
+	     p
+	}
+'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_begin_end2.sh
+
+
+** Operating in a pattern range except for the patterns
+제가 패턴 범위에서 대체 작업을 할 수 있다고 언급했던 것을 기억하실지 모르겠습니다. 예를 들어, 시작/종료 패턴 사이에서 “old” 를 “new” 로 바꾸는 것처럼 말이죠:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+	/begin/,/end/ s/old/new/
+'
+#+end_src
+
+이를 작성하는 또 다른 방법은 중괄호를 사용하여 그룹을 묶는 것입니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+	/begin/,/end/ {
+	    s/old/new/
+	}
+'
+#+end_src
+
+아래에서 보시게 되겠지만, 이렇게 하면 코드를 더 명확하게 이해할 수 있고 수정하기도 더 쉬워진다고 생각합니다.
+
+“begin” 이라는 단어가 나오는 부분을 수정하고 싶지 않다면, 해당 줄을 건너뛰도록 새로운 조건을 추가하기만 하면 됩니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+	/begin/,/end/ {
+	    /begin/n # skip over the line that has "begin" on it
+	    s/old/new/
+	}
+'
+#+end_src
+
+하지만 “end” 가 포함된 줄을 건너뛰는 것은 좀 더 까다롭습니다. “begin” 에 적용했던 것과 동일한 방법을 사용하면, sed 엔진이 범위를 중단해야 할 “end” 를 인식하지 못하고 그 줄도 함께 건너뛰게 됩니다. 해결책은 “end” 가 포함되지 않은 모든 줄에 대해 다음 명령을 사용하여 대체 작업을 수행하는 것입니다.
+
+#+begin_src bash
+#!/bin/sh
+sed '
+    /begin/,/end/ {
+      /begin/n # skip over the line that has "begin" on it
+      /end/ !{
+        s/old/new/
+      }  
+    }
+'
+#+end_src
+
+** Writing a file with the 'w' command
+substitute 명령어가 파일에 내용을 쓸 수 있다는 점을 기억하실 겁니다. 다음은 짝수(그 뒤에 공백이 오는)로 시작하는 줄만 ‘even’ 파일에 기록하는 예제입니다.
+
+#+begin_src bash
+sed -n ‘s/^[0-9]*[02468] /&/w even’ <file
+#+end_src
+
+대체 명령어의 대체 부분에서 “&” 를 사용한 이유는 해당 줄이 변경되지 않도록 하기 위해서입니다. 더 간단한 예로는 ‘w’ 명령어를 사용하는 것이 있는데, 이는 /substitute/ 명령어의 “w” 플래그와 구문이 동일합니다:
+
+#+begin_src bash
+sed -n ‘/^[0-9]*[02468]/ w even’ <file
+#+end_src
+
+명심하세요. 명령어 뒤에는 공백이 하나만 와야 합니다. 그 외의 모든 것은 파일 이름의 일부로 간주됩니다. “w” 명령어 역시 “w” 플래그와 동일한 제한 사항이 적용됩니다. 즉, sed에서는 최대 10개의 파일만 열 수 있습니다.
+
+
+** Reading in a file with the 'r' command
+파일을 읽어들이는 명령어도 있습니다. 다음 명령어
+
+#+begin_src bash
+sed ‘$r end’ <in>out
+#+end_src
+
+는 파일의 끝(주소 “$”)에 ‘end’ 파일을 추가합니다. 다음 명령어는 “INCLUDE:”라는 단어가 있는 줄 뒤에 파일을 삽입합니다.
+
+#+begin_src bash
+sed ‘/INCLUDE/ r file’ <in>out
+#+end_src
+
+중괄호를 사용하여 “INCLUDE” 명령어가 포함된 줄을 삭제할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '/INCLUDE/ {
+    r file
+    d
+}'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_include.sh
+
+삭제 명령어 “d” 와 파일 읽기 명령어 “r” 의 순서는 중요합니다. 순서를 바꾸면 작동하지 않습니다. 이 명령어가 작동하지 않게 만드는 두 가지 미묘한 동작이 있습니다. 첫 번째는 “r” 명령어가 파일을 출력 스트림에 기록한다는 점입니다. 파일은 패턴 공간에 삽입되지 않으므로 어떤 명령어로도 수정할 수 없습니다. 따라서 삭제 명령어는 파일에서 읽은 데이터에 영향을 미치지 않습니다.
+
+또 다른 미묘한 점은 “d” 명령어가 패턴 공간에 있는 현재 데이터를 삭제한다는 것입니다. 모든 데이터가 삭제되면 더 이상 다른 작업이 시도되지 않는 것은 당연한 일입니다. 따라서 중괄호({}) 안에서 실행된 “d” 명령어는 이후의 모든 작업을 중단시킵니다. 예를 들어, 아래의 /substitute/ 명령어는 절대 실행되지 않습니다:
+
+#+begin_src bash
+#!/bin/sh
+# 이 예제는 잘못된 것입니다.
+sed -e '1 {
+    d
+    s/.*//
+}'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_bad_example.sh
+
+앞서 소개한 예제는 C 전처리기 프로그램의 조잡한 버전입니다. 포함되는 파일의 이름은 미리 정해져 있습니다. sed가 고정된 파일 이름 대신 변수(예: “\1”)를 사용할 수 있다면 좋겠지만, 아쉽게도 sed에는 이러한 기능이 없습니다. 이 제한 사항을 우회하려면 sed 명령을 즉석에서 생성하거나, 셸 따옴표를 사용하여 변수를 sed 스크립트로 전달할 수 있습니다. cpp와 같은 방식으로 파일을 포함하는 명령을 만들고 싶지만, 파일 이름이 스크립트의 인자라고 가정해 봅시다. 이 스크립트의 예시는 다음과 같습니다:
+
+#+begin_src bash
+% include ‘sys/param.h’ <file.c >file.c.new
+#+end_src
+
+이를 수행하는 셸 스크립트는 다음과 같습니다:
+
+#+begin_src bash
+#!/bin/sh
+# 매개변수 내의 '/'에 주의하세요
+# 대체 검색 구분자를 사용하세요
+sed -e ‘\_#INCLUDE <’“$1”'>_{
+    r ‘“$1”’
+    d
+}'
+#+end_src
+
+자세히 설명해 드리겠습니다. 다음과 같은 내용이 담긴 파일이 있다고 가정해 보겠습니다.
+
+#+begin_example
+첫 번째 테스트 파일
+#INCLUDE <file1>
+두 번째 파일 테스트
+#INCLUDE <file2>
+#+end_example
+
+와 같은 파일이 있다면,
+
+#+begin_src bash
+sed_include1.sh file1<input|sed_include1.sh file2
+#+end_src
+
+명령어를 사용하여 지정된 파일을 포함시킬 수 있습니다.
+
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_include1.sh
+
+** The # Comment Command
+sed를 더 깊이 파고들수록, 주석을 달면 명령어를 이해하기가 더 쉬워집니다. 구버전의 sed는 주석을 한 줄만 허용하며, 반드시 첫 번째 줄에 위치해야 합니다. SunOS(및 GNU의 sed)는 여러 개의 주석을 허용하며, 이러한 주석이 반드시 첫 번째 줄에 있을 필요는 없습니다. 마지막 예제는 다음과 같이 작성할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+# watch out for a '/' in the parameter
+# use alternate search delimiter
+sed -e '\_#INCLUDE <'"$1"'>_{
+
+	# read the file
+	r '"$1"'
+
+	# delete any characters in the pattern space
+	# and read the next line in
+	d
+}'
+#+end_src
+
+
+** Adding, Changing, Inserting new lines
+Sed에는 출력 스트림에 새 줄을 추가하는 데 사용되는 세 가지 명령어가 있습니다. 줄 전체가 추가되기 때문에, 이를 강조하기 위해 새 줄은 별도의 줄에 위치합니다. 별도의 옵션은 없으며, 전체 줄이 사용되며 반드시 별도의 줄에 위치해야 합니다. 많은 UNIX 유틸리티에 익숙한 사용자라면, sed도 비슷한 규칙을 따를 것이라고 예상할 수 있습니다. 즉, 이전 줄의 끝에 “\”를 붙여 줄을 이어가는 방식입니다. 이 명령어들의 구문은 ‘r’ 및 “w” 명령어와 마찬가지로 까다롭습니다.
+
+
+*** Append a line with 'a'
+“a” 명령어는 지정된 범위나 패턴 뒤에 한 줄을 추가합니다. 이 예제는 “WORD:”가 포함된 모든 줄 뒤에 한 줄을 추가합니다.
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/WORD/ a\
+WORD가 포함된 모든 줄 뒤에 이 줄을 추가합니다
+'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_add_line_after_word.sh
+
+원한다면 쉘 스크립트에서 두 줄을 제거할 수도 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '/WORD/ a\
+WORD가 포함된 모든 줄 뒤에 이 줄을 추가합니다'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_add_line_after_word1.sh
+
+저는 첫 번째 형식을 더 선호합니다. 새 줄을 추가하여 새로운 명령을 넣기가 더 쉽고, 의도도 더 명확하기 때문입니다. “\” 뒤에는 공백이 없어야 합니다.
+
+
+*** Insert a line with 'i'
+“i” 명령어를 사용하면 패턴 앞에 새 줄을 삽입할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/WORD/ i\
+WORD가 포함된 모든 줄 앞에 이 줄을 추가합니다
+'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_add_line_before_word.sh
+
+
+*** Change a line with 'c'
+현재 줄을 새로운 줄로 변경할 수 있습니다.
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/WORD/ c\
+현재 줄을 다음 줄로 대체
+'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_change_line.sh
+
+앞서 설명한 바와 같이, “d” 명령어 뒤에 “a” 명령어를 이어서 사용하면 작동하지 않습니다. “d” 명령어는 현재 수행 중인 작업을 종료해 버리기 때문입니다. 중괄호를 사용하여 세 가지 작업을 모두 결합할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/WORD/ {
+i\
+이 줄을 앞에 추가
+a\
+이 줄을 뒤에 추가
+c\
+이 줄로 변경
+}'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_insert_append_change.sh
+
+
+** Leading tabs and spaces in a sed script
+sed는 모든 명령에서 앞쪽에 있는 탭과 공백을 무시합니다. 하지만 이러한 공백 문자가 “a”, “c” 또는 “i” 명령 뒤에 오는 텍스트의 시작 부분에 위치할 경우, 무시될 수도 있고 무시되지 않을 수도 있습니다. SunOS에서는 이 두 가지 “기능”을 모두 사용할 수 있습니다. 버클리(및 리눅스) 스타일의 sed는 /usr/bin에 있으며, AT&T 버전(System V)은 /usr/5bin/에 있습니다.
+
+자세히 설명하자면, /usr/bin/sed 명령어는 공백을 유지하는 반면, /usr/5bin/sed는 앞쪽 공백을 제거합니다. 앞쪽 공백을 유지하고 싶으며, 사용 중인 sed 버전에 상관없다면, 줄의 첫 번째 문자로 “\”를 넣으십시오:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+    a\
+\    이 줄은 탭으로 시작합니다
+'
+#+end_src
+
+
+** Adding more than one line
+이 세 가지 명령어 모두 한 줄 이상을 추가할 수 있게 해줍니다. 각 줄의 끝을 “\:”로 마무리하기만 하면 됩니다.
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/WORD/ a\
+이 줄을 추가\
+이 줄\
+그리고 이 줄
+'
+#+end_src
+
+
+** Adding lines and the pattern space
+앞서 패턴 공간에 대해 언급한 적이 있습니다. 대부분의 명령어는 패턴 공간에서 작동하며, 뒤따르는 명령어는 마지막 수정 결과를 대상으로 동작할 수 있습니다. 앞서 살펴본 세 가지 명령어는 파일 읽기 명령어와 마찬가지로, 패턴 공간을 거치지 않고 출력 스트림에 새 줄을 추가합니다.
+
+
+** Address ranges and the above commands
+앞서 일부 명령어는 줄 범위를 지정할 수 있지만, 다른 명령어는 그렇지 않다고 말씀드렸던 것을 기억하실 겁니다. 정확히 말하자면, “a”, “i”, “r”, “q” 명령어는 “1,100”이나 “/begin/,/end/”와 같은 범위를 지정할 수 없습니다. 설명서에는 read 명령어가 범위를 지정할 수 있다고 나와 있지만, 제가 직접 시도해 보니 오류가 발생했습니다. “c” 또는 change 명령어는 범위를 지정할 수 있으며, 이를 통해 여러 줄을 하나의 줄로 변경할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/begin/,/end/ c\
+,***DELETED***
+'
+#+end_src
+
+이와 같은 작업이 필요한 경우, 중괄호를 사용하면 모든 줄에 대해 해당 작업을 수행할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+# 모든 줄 뒤에 빈 줄 추가
+sed '1,$ {
+    a\
+
+}'
+#+end_src
+
+
+** Multi-Line Patterns
+대부분의 유닉스 유틸리티는 줄 단위로 작동합니다. 정규 표현식도 줄 단위로 작동합니다. 한 줄 이상을 아우르는 패턴을 찾는 것은 쉬운 일이 아닙니다. (힌트: 곧 아주 쉬워질 것입니다.)
+
+Sed는 한 줄의 텍스트를 읽어들이고, 해당 줄을 수정할 수 있는 명령을 수행하며, 필요한 경우 수정된 결과를 출력합니다. sed 스크립트의 주요 루프는 다음과 같습니다:
+
+#+begin_src 
+입력 파일에서 다음 줄을 읽어와 패턴 공간에 저장합니다. 파일 끝이 발견되고 읽을 추가 파일이 있는 경우, 현재 파일을 닫고 다음 파일을 연 다음, 새 파일의 첫 번째 줄을 패턴 공간에 저장합니다.
+줄 수가 1씩 증가합니다. 새 파일을 여는다고 해서 이 숫자가 재설정되지는 않습니다.
+각 sed 명령을 검사합니다. 명령에 제한 조건이 설정되어 있고, 패턴 공간의 현재 줄이 해당 제한 조건을 충족하면 명령이 실행됩니다. “n”이나 “d”와 같은 일부 명령은 sed가 루프의 맨 위로 돌아가게 합니다. “q” 명령은 sed를 중지시킵니다. 그렇지 않은 경우 다음 명령을 검사합니다.
+모든 명령을 검사한 후, sed에 선택적 “-n” 인수가 지정되지 않은 한 패턴 공간이 출력됩니다.
+#+end_src
+
+명령어 앞의 제한 조건에 따라 해당 명령어가 실행될지 여부가 결정됩니다. 제한 조건이 패턴이고 작업이 삭제 명령어인 경우, 다음 명령어는 해당 패턴을 포함하는 모든 줄을 삭제합니다:
+
+#+begin_src bash
+/PATTERN/ d
+#+end_src
+
+제한 조건이 두 개의 숫자 쌍인 경우, 줄 번호가 첫 번째 숫자와 같거나 첫 번째 숫자보다 크고 마지막 숫자 이하일 때 삭제가 이루어집니다:
+
+#+begin_src bash
+10,20 d
+#+end_src
+
+제한 조건이 두 개의 패턴 쌍인 경우, 각 쌍에 대해 변수가 하나씩 유지됩니다. 변수가 false인 상태에서 첫 번째 패턴이 발견되면 변수는 true로 설정됩니다. 변수가 true인 경우 명령어가 실행됩니다. 변수가 true이고 해당 줄에 마지막 패턴이 있다면, 명령어 실행 후 변수는 비활성화됩니다:
+
+#+begin_src bash
+/begin/,/end/ d
+#+end_src
+
+휴! 꽤 긴 설명이었네요. 여기까지 주의 깊게 읽으셨다면 이 내용을 쉽게 이해하셨을 겁니다. 몇 가지 미묘한 점을 다루었으니 다시 한번 되짚어 보시는 것이 좋습니다. 제가 선택한 표현은 의도적인 것입니다. 다음과 같은 특이한 경우들을 다루고 있습니다:
+
+#+begin_src bash
+# 두 번째 숫자가
+# 첫 번째 숫자보다 작으면 어떻게 될까요?
+sed -n ‘20,1 p’ file
+#+end_src
+
+그리고
+
+#+begin_src bash
+# 줄 번호가 포함된 10줄짜리 파일을 생성하고
+# 두 패턴이 겹칠 때 어떤 일이 일어나는지 확인해 봅시다
+yes | head -10 | cat -n | \
+sed -n -e ‘/1/,/7/ p’ -e '/5/,/9/ p'
+#+end_src
+
+이제 정신적 고문은 그만. 이번에는 표 형식으로 또 다른 예제를 살펴보겠습니다. 입력 파일에 다음 줄들이 포함되어 있다고 가정해 봅시다.
+
+#+begin_example
+AB
+CD
+EF
+GH
+IJ
+#+end_example
+
+sed가 시작되면 첫 번째 줄이 패턴 공간에 저장됩니다. 다음 줄은 “CD”입니다. “n”, ‘d’, “p” 명령어의 작동 방식은 다음과 같이 요약할 수 있습니다.
+
+| 패턴 공간 | 다음 입력 | 명령어 | 출력     | 새로운 패턴 공간 | 새로운 텍스트 입력 |
+|-----------+-----------+--------+----------+------------------+--------------------|
+| AB        | CD        | n      | <기본값> | CD               | EF                 |
+| AB        | CD        | d      | -        | CD               | EF                 |
+| AB        | CD        | p      | AB       | CD               | EF                 |
+
+“n” 명령어는 “-n” 플래그의 유무에 따라 출력을 생성할 수도 있고 생성하지 않을 수도 있습니다.
+
+이렇게 정리해 보니 좀 더 이해하기 쉬워졌죠? 여러 줄로 구성된 패턴에 대해 다루기 전에, 세 가지 명령어를 더 설명하고자 합니다:
+
+
+** Print line number with =
+“=” 명령어는 현재 줄 번호를 표준 출력으로 표시합니다. 특정 패턴이 포함된 줄 번호를 확인하는 한 가지 방법은 다음과 같습니다.
+
+#+begin_src bash
+# 먼저 줄 번호를 추가하고,
+# 그 다음 grep을 사용하고,
+# 마지막으로 번호만 출력합니다.
+cat -n file | grep ‘PATTERN’ | awk ‘{print $1}’
+#+end_src
+
+sed를 사용한 해결 방법은 다음과 같습니다.
+
+#+begin_src bash
+sed -n ‘/PATTERN/ =’ file
+#+end_src
+
+앞서 파일의 줄 수를 확인하기 위해 다음과 같은 코드를 사용했습니다.
+
+#+begin_src bash
+#!/bin/sh
+lines=$(wc -l file | awk ‘{print $1}’ )
+#+end_src
+
+“=” 명령어를 사용하면 이를 더 간단하게 만들 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+lines=$(sed -n ‘$=’ file )
+#+end_src
+
+“=” 명령어는 하나의 주소만 허용하므로, 특정 범위의 줄 번호를 출력하려면 중괄호를 사용해야 합니다:
+
+#+begin_src bash
+#!/bin/sh
+# 단순히 줄 번호만 출력
+sed -n '/begin/,/end/ {
+=
+d
+}' file
+#+end_src
+
+“=” 명령어는 표준 출력으로만 출력하므로, 패턴과 같은 줄에 줄 번호를 출력할 수는 없습니다. 이를 위해서는 여러 줄로 구성된 패턴을 수정해야 합니다.
+
+
+** Transform with y
+어떤 단어를 소문자에서 대문자로 바꾸고 싶다면, “a” 를 “A” 로 변환하는 등 26가지 문자 치환 규칙을 직접 작성해야 할 수도 있습니다. Sed에는 tr 프로그램과 유사하게 작동하는 명령어가 있습니다. 이를 “y” 명령어라고 합니다. 예를 들어, “a” 부터 “f” 까지의 문자를 대문자로 바꾸려면 다음을 사용합니다.
+
+#+begin_src bash
+sed ‘y/abcdef/ABCDEF/’ file
+#+end_src
+
+다음은 ~tr~ 명령어와 마찬가지로 모든 대문자를 소문자로 변환하는 sed 예제입니다:
+
+#+begin_src bash
+sed ‘y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/’ <uppercase >lowercase
+#+end_src
+
+16진수(예: 0x1aff)가 포함된 줄을 대문자(0x1AFF)로 변환하려면 다음을 사용할 수 있습니다:
+
+#+begin_src bash
+sed ‘/0x[0-9a-zA-Z]*/ y/abcdef/ABCDEF’ file
+#+end_src
+
+파일에 숫자만 있다면 이 방법은 잘 작동합니다. 하지만 한 줄의 두 번째 단어를 대문자로 바꾸고 싶은데, 클래식 sed를 사용하고 있다면, 다중 줄 편집 기능을 사용하지 않는 한 방법이 없습니다. (어라, 여기엔 뭔가 공통된 주제가 있는 것 같네요!)
+
+하지만 GNU sed에는 대문자 및 소문자 변환을 위한 확장 기능이 있습니다.
+
+
+** Displaying control characters with a l
+“l” 명령어는 현재 패턴 공간을 출력합니다. 따라서 sed 스크립트를 디버깅할 때 유용합니다. 또한 출력할 수 없는 문자를 “\” 문자를 앞에 붙인 8진수 값으로 변환하여 출력합니다. 저는 sed의 미묘한 차이점을 파악해 나가는 과정에서 현재 패턴 공간을 출력하는 기능이 유용하다는 것을 알게 되었습니다.
+
+
+** Working with Multiple Lines
+여러 줄로 구성된 패턴에서 사용되는 세 가지 새로운 명령어인 “N”, “D”, “P”가 있습니다. 이 명령어들이 단일 줄 패턴 명령어인 “n”, “d”, “p”와 어떤 관련이 있는지 설명하겠습니다.
+
+“n” 명령어는 (“-n” 플래그가 사용되지 않는 한) 현재 패턴 공간을 출력하고, 현재 패턴 공간을 비운 다음, 다음 입력 줄을 읽어옵니다. “N” 명령어는 현재 패턴 공간을 출력하지 않으며, 패턴 공간을 비우지도 않습니다. 다음 줄을 읽어들이되, 입력 줄 자체와 함께 줄 바꿈 문자를 패턴 공간에 추가합니다.
+
+“d” 명령어는 현재 패턴 공간을 삭제하고, 다음 줄을 읽어들이며, 새로운 줄을 패턴 공간에 넣은 후 현재 명령어를 중단하고 첫 번째 sed 명령어부터 실행을 시작합니다. 이를 새로운 “사이클”을 시작한다고 합니다. “D” 명령어는 새 줄 문자에 이르는 패턴 공간의 첫 부분을 삭제하고, 나머지 패턴은 그대로 둡니다. “d”와 마찬가지로 현재 명령어를 중지하고 명령어 사이클을 다시 시작합니다. 그러나 현재 패턴 공간을 출력하지는 않습니다. 패턴 공간을 출력하려면 한 단계 앞서 직접 출력해야 합니다. “D” 명령어가 중괄호 안에 다른 명령어 그룹과 함께 실행되면, “D” 명령어 뒤의 명령어들은 무시됩니다. 패턴 공간이 비워지지 않는 한, 다음 sed 명령어 그룹이 실행됩니다. 패턴 공간이 비워지면 사이클이 처음부터 다시 시작되고 새 줄이 읽힙니다.
+
+“p” 명령어는 패턴 공간 전체를 출력합니다. “P” 명령어는 패턴 공간의 첫 부분, 즉 NEWLINE 문자에 이르기까지의 부분만 출력합니다. ‘p’ 명령어와 “P” 명령어 모두 패턴 공간을 변경하지 않습니다.
+
+몇 가지 예시를 통해 “N”을 단독으로 사용하는 것이 그다지 유용하지 않다는 것을 알 수 있습니다. 다음 필터
+
+#+begin_src bash
+sed -e ‘N’
+#+end_src
+
+은 입력 스트림을 수정하지 않습니다. 대신, 첫 번째 줄과 두 번째 줄을 합쳐서 출력하고, 세 번째 줄과 네 번째 줄을 합쳐서 출력하는 식으로 처리합니다. 이 명령어를 사용하면 새로운 “앵커” 문자인 “\n”을 사용할 수 있습니다. 이 문자는 패턴 공간에서 여러 줄을 구분하는 줄바꿈 문자와 일치합니다. “#” 문자로 끝나는 줄을 찾아 그 뒤에 다음 줄을 덧붙이고 싶다면 다음과 같이 사용할 수 있습니다.
+
+#+begin_src bash
+#!/bin/sh
+sed '
+# 줄 끝에서 “#”을 찾습니다.
+/#$/ {
+# “#”을 찾았습니다. 이제 다음 줄을 읽습니다.
+    N
+# “#”과 줄 바꿈 문자를 삭제합니다.
+    s/#\n//
+}' file
+#+end_src
+
+“ONE”과 “TWO”가 포함된 두 줄을 검색하여, 이 두 줄만 연속해서 출력할 수 있습니다:
+
+#+begin_src bash
+#!/bin/sh
+sed -n '
+/ONE/ {
+# “ONE”을 찾음 - 다음 줄을 읽어들임
+    N
+# 두 번째 줄에서 “TWO”를 찾음
+# 있고 있다면 출력함
+    /\n.*TWO/ p
+}' file
+#+end_src
+
+다음 예제는 “ONE”과 “TWO” 사이의 모든 내용을 삭제합니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/ONE/ {
+# 한 줄 추가
+    N
+# 두 번째 줄에서 “TWO”를 검색
+    /\n.*TWO/ {
+# 발견됨 - 이제 한 줄로 편집
+        s/ONE.*\n.*TWO/ONE TWO/
+    }
+}' file
+#+end_src
+
+
+** Matching three lines with sed
+검색 시 여러 줄을 일괄적으로 일치시킬 수 있습니다.
+
+다음은 “skip3”이라는 문자열을 찾아, 해당 문자열이 발견되면 해당 줄과 그 다음 두 줄을 삭제하는 방법입니다.
+
+#+begin_src bash
+#!/bin/sh
+sed '/skip3/ {
+           N
+           N
+           s/skip3\n.*\n.*/# 3 lines deleted/
+}'
+#+end_src
+
+다음 두 줄의 내용이 무엇이든 상관없다는 점에 유의하세요. 특정 3줄을 일치시키고 싶다면, 작업이 조금 더 복잡해집니다.
+
+이 스크립트는 첫 번째 줄에 “one”, 두 번째 줄에 ‘two’, 세 번째 줄에 “three”이 포함된 세 줄을 찾고, 해당 줄이 발견되면 “1+2+3”이라는 문자열로 대체합니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/one/ {
+      N
+      /two/ {
+            N
+            /three/ {
+                    N
+                    s/one\ntwo\nthree/1+2+3/
+                    }
+             }
+       }
+'
+#+end_src
+
+
+** Matching patterns that span multiple lines
+연속된 두 줄에서 특정 패턴을 검색하거나, 줄 경계에서 나뉠 수 있는 연속된 두 단어를 검색할 수 있습니다. 다음 예제는 같은 줄에 있거나, 하나는 줄 끝, 다른 하나는 다음 줄의 시작 부분에 있는 두 단어를 찾습니다. 해당 단어가 발견되면 첫 번째 단어가 삭제됩니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/ONE/ {
+# 줄 하나 추가
+    N
+# 같은 줄에 있는 “ONE TWO”
+    s/ONE TWO/TWO/
+# 두 연속된 줄에 있는 "ONE
+# TWO"
+    s/ONE\nTWO/TWO/
+}' file
+#+end_src
+
+“D” 명령어를 사용해 보겠습니다.
+“ONE”이 포함된 줄 바로 뒤에
+“TWO”가 포함된 줄이 발견되면, 첫 번째 줄을 삭제합니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/ONE/ {
+# 줄 추가
+    N
+# “TWO”가 발견되면 첫 번째 줄 삭제
+    /\n.*TWO/ D
+}' file
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_delete_line_after_word.sh
+
+첫 번째 줄을 삭제하는 대신 출력하고, 격행(매 두 번째 줄)을 출력하지 않으려면 “D”를 “P”로 바꾸고 sed에 “-n”을 인수로 추가하면 됩니다:
+
+#+begin_src bash
+#!/bin/sh
+sed -n '
+# 기본적으로 아무것도 출력하지 않음
+/ONE/ {
+# 줄 하나 추가
+    N
+# TWO가 발견되면, 첫 번째 줄
+	/\n.*TWO/ P
+}' file
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_print_line_after_word.sh
+
+이 세 가지 다중 행 명령을 모두 결합하는 것은 매우 흔한 일입니다. 일반적인 순서는 “N”, ‘P’, 그리고 마지막으로 “D”입니다. 다음 코드는 “ONE”과 “TWO”가 한 줄 또는 두 줄 연속으로 있을 경우, 그 사이의 모든 내용을 삭제합니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+/ONE/ {
+# 다음 줄 추가
+    N
+# “ONE” 뒤에 “TWO”가 오는 부분 찾기
+    /ONE.*TWO/ {
+#    그 사이의 모든 내용 삭제
+        s/ONE.*TWO/ONE TWO/
+#    출력
+        P
+#    그런 다음 첫 번째 줄 삭제
+        D
+    }
+}' file
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_delete_between_two_words.sh
+
+앞서 “=” 명령어와 이를 사용하여 파일에 줄 번호를 추가하는 방법에 대해 설명한 바 있습니다. 이를 위해 sed를 두 번 호출할 수 있습니다(한 번으로 처리하는 방법도 있지만, 그 내용은 다음 섹션에서 다루겠습니다). 첫 번째 sed 명령어는 한 줄에 줄 번호를 출력하고, 다음 줄에 해당 줄의 내용을 출력합니다. 두 번째 sed 호출은 이 두 줄을 하나로 병합합니다:
+
+#+begin_src bash
+#!/bin/sh
+sed ‘=’ file | \
+sed '{
+    N
+    s/\n/ /
+}'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_merge_two_lines.sh
+
+필요하다면 한 줄을 두 줄로 나누고, 각각을 편집한 후 다시 병합할 수도 있습니다. 예를 들어, 16진수 뒤에 단어가 오는 파일이 있고, 첫 번째 단어를 모두 대문자로 변환하고 싶다면 “y” 명령을 사용할 수 있지만, 먼저 해당 줄을 두 줄로 분할한 다음, 그중 하나를 변경하고 다시 병합해야 합니다. 즉,
+
+#+begin_example
+0x1fff table2
+#+end_example
+
+라는 줄은 다음과 같이 두 줄로 변경됩니다:
+
+#+begin_example
+0x1fff
+table2
+#+end_example
+
+그리고 첫 번째 줄은 대문자로 변환됩니다. tr을 사용하여 공백을 새 줄로 변환한 다음, sed를 사용하여 나머지 작업을 수행하겠습니다. 명령어는 다음과 같습니다.
+
+#+begin_src bash
+./sed_split <파일
+그리고 sed_split은 다음과 같습니다.
+#!/bin/sh
+tr ‘ ’ '\012' |
+sed ' {
+    y/abcdef/ABCDEF/
+	N
+    s/\n/ /
+}'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_split.sh
+
+당연해 보이지 않을 수 있지만, tr 대신 sed를 사용할 수도 있습니다. substitute 명령어 내에 줄 바꿈을 삽입할 수 있지만, 백슬래시로 이스케이프 처리해야 합니다. substitute 명령어의 왼쪽에는 “\n”을, 오른쪽에는 삽입된 줄 바꿈을 사용해야 한다는 점이 아쉽습니다. 한숨만 나옵니다. 다음은 예시입니다:
+
+#+begin_src bash
+#!/bin/sh
+sed '
+s/ /\
+/' | \
+sed ' {
+    y/abcdef/ABCDEF/
+    N
+    s/\n/ /
+}'
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_split_merge.sh
+
+때로는 마커로 특수 문자를 추가하고, 입력 스트림에서 해당 문자를 찾기도 합니다. 이 문자가 발견되면, 그곳에 공백이 있었음을 나타냅니다. 백슬래시는 좋은 문자이지만, 백슬래시로 이스케이프 처리해야 하고, sed 스크립트를 난해하게 만든다는 단점이 있습니다. 바보 같은 질문을 계속하는 그 사람한테나 써주세요. 공백을 “\”와 그 뒤의 새 줄로 바꾸는 sed 스크립트는 다음과 같습니다:
+
+#+begin_src bash
+#!/bin/sh
+sed 's/ /\\\
+/' file
+#+end_src
+
+파일을 다운로드하려면 여기를 클릭하세요: sed_addslash_before_blank.sh
+
+네. 바로 그거예요. 아니면 C 셸을 사용해서 그를 완전히 헷갈리게 해보세요!
+
+#+begin_src bash
+#!/bin/csh -f
+sed '\
+s/ /\\\\
+/' file
+#+end_src
+
+
+파일을 받으려면 여기를 클릭하세요: sed_addslash_before_blank.csh
+
+이런 예시를 몇 개 더 보여주면, 그 사람은 다시는 당신에게 질문하지 않을 거예요! 제가 좀 과장한 것 같네요. 지금까지 다룬 기능들을 정리한 표로 마무리하겠습니다:
+
+| Pattern Space | Next Input | Command | Output    | New Pattern Space | New Text Input |
+|---------------+------------+---------+-----------+-------------------+----------------|
+| AB            | CD         | n       | <default> | CD                | EF             |
+| AB            | CD         | N       | -         | AB\nCD            | EF             |
+| AB            | CD         | d       | -         | -                 | EF             |
+| AB            | CD         | D       | -         | -                 | EF             |
+| AB            | CD         | p       | AB        | AB                | CD             |
+| AB            | CD         | P       | AB        | AB                | CD             |
+| AB\nCD        | EF         | n       | <default> | EF                | GH             |
+| AB\nCD        | EF         | N       | -         | AB\nCD\nEF        | GH             |
+| AB\nCD        | EF         | d       | -         | EF                | GH             |
+| AB\nCD        | EF         | D       | -         | CD                | EF             |
+| AB\nCD        | EF         | p       | AB\nCD    | AB\nCD            | EF             |
+| AB\nCD        | EF         | P       | AB        | AB\nCD            | EF             |
+
+
+
+** Using newlines in sed scripts
+때때로 sed 스크립트에서 줄바꿈 문자를 사용하고 싶을 때가 있습니다. 그런데 여기에는 미묘한 문제가 있습니다. 줄바꿈을 검색하려면 “\n”을 사용해야 합니다. 다음은 특정 구문을 검색한 후, 그 구문 뒤의 줄바꿈 문자를 삭제하여 두 줄을 하나로 합치는 예시입니다.
+
+#+begin_src bash
+(echo a;echo x;echo y) | sed '/x$/ {
+N
+s:x\n:x:
+}'
+#+end_src
+
+이 명령어는 다음과 같은 결과를 생성합니다.
+
+#+begin_example
+a
+xy
+#+end_example
+
+하지만 새 줄을 삽입할 때는 “\n”을 사용하지 말고, 대신 리터럴 새 줄 문자를 삽입해야 합니다.
+
+#+begin_src bash
+(echo a;echo x;echo y) | sed 's:x:X\
+:'
+#+end_src
+
+이 명령어는 다음과 같은 결과를 생성합니다.
+
+#+begin_example
+a
+X
+
+y
+#+end_example
+
+
+** The Hold Buffer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
