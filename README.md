@@ -1,6 +1,9 @@
 # edbrowse v3.8.9
 **EDBrowse** Korean site
 
+:rocket: :shipit:&rarr;
+
+
 # 헤더 - h1
 ## 헤더 - h2
 ### 헤더 - h3
@@ -81,3 +84,24 @@ ___
 
 - [ ] 운동 하기
 - [x] 강의 듣기
+
+
+```mermaid
+graph LR
+    A[마크다운 작업] --> B{다이어그램 필요?}
+    B -->|Yes| C[Mermaid 처리]
+    B -->|No| D[Use plain text]
+    C --> E[GitHub renders it]
+```
+
+The quadratic formula is $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$ for any equation $ax^2 + bx + c = 0$.
+ 
+$$
+\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+$$
+
+
+GitHub hosts over 630 million repositories[^1] with 180+ million developers[^2].
+
+[^1]: GitHub Octoverse 2025 report.
+[^2]: Includes both individual and organizational accounts.
