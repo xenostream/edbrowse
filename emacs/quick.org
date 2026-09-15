@@ -37,26 +37,26 @@ make autoloads
 ** 1.2 Activation 
 Emacs 초기화 파일에 다음과 같은 줄을 추가해서 Org 버퍼뿐만 아니라 모든 Emacs 버퍼에 사용할 수 있는 전역 단축키를 정의합니다. 이외의 적절한 단축키는 직접 선택하시기 바랍니다.
 
-#+begin_src emacs-lisp -n 
+#+begin_src emacs-lisp 
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 #+end_src
 
-기본적으로 확장자가 ‘.org’ 인 파일은 자동으로 Org 메이저 모드로 전환됩니다.(또는 ~M-x org-mode~ 명령을 실행합니다)
+기본적으로 확장자가 ‘.org’ 인 파일은 자동으로 Org 메이저 모드로 전환됩니다. (또는 ~M-x org-mode~ 명령을 실행합니다)
 
 ** 1.3 Feedback
-Org에서 문제를 발견했거나 질문, 의견, 제안 사항이 있으면 Org [[mailto:emacs-orgmode@gnu.org][메일링 리스트]] 로 메일을 보내주시기 바랍니다. 버그 보고서를 제출하는 방법은 설명서를 참조합니다.
+Org 사용 중에 문제를 발견했거나 질문, 의견, 제안 사항이 있으면 Org [[mailto:emacs-orgmode@gnu.org][메일링 리스트]] 로 메일을 보내주시기 바랍니다. 버그 보고서를 제출하는 방법은 설명서를 참조합니다.
 
 
 
 * 2 Document Structure
-~Org~ 는 아웃라이너(outliner - 개요)입니다. 아웃라인을 사용하면 문서를 계층 구조로 정리할 수 있는데 제게는 이것이 메모와 생각을 표현하기에 가장 좋은 방법입니다. 
+~Org~ 는 아웃라이너(outliner - 개요)입니다. 아웃라인을 사용하면 문서를 계층 구조로 정리할 수 있는데 제게는 이것이 메모와 생각을 표현하는 가장 좋은 방법입니다. 
 
-문서의 구조나 개요를 쉽게 파악하기 위해 ‘접기(folding)’ 기능을 사용합니다. 즉, 문서 대부분을 숨기고 문서의 전체 구조를 파악하고 현재 작업 중인 부분만 표시하는 방법입니다. Org는 전체 표시 및 숨기기 기능을 ~TAB~ 키에 할당한 단일 명령어인 ~org-cycle~ 로 통합해서 아웃라인의 사용법을 간소화합니다.
+문서의 구조나 개요를 쉽게 파악하기 위해 ‘접기(folding)’ 기능을 사용합니다. 즉, 문서 대부분을 숨기고 문서의 전체 구조를 쉽게 파악하고 작업 중인 부분만 표시하는 방법입니다. Org는 전체 표시 및 숨기기 기능을 ~TAB~ 키에 할당한 단일 명령어인 ~org-cycle~ 로 통합해서 아웃라인의 사용법을 간소화합니다.
 
 ** 2.1 Headlines
-제목(headline)으로 개요 트리(outline tree)의 구조를 정의합니다. Org에서 제목은 줄 왼쪽에 여백[fn:1]없이 하나 이상의 별표와 뒤에 공백을 붙여 시작합니다. 
+제목(headline)으로 개요 트리(outline tree)의 구조를 정의합니다. Org에서 제목은 줄 왼쪽 여백[fn:1]에서 하나 이상의 별표와 뒤에 공백을 붙여 시작합니다. 
 
 [fn:1] 헤드라인에서 ~C-a~ 및 ~C-e~ 동작을 설정하려면 ~org-special-ctrl-a/e~ 변수를 참조합니다.
 
@@ -77,7 +77,7 @@ Org에서 문제를 발견했거나 질문, 의견, 제안 사항이 있으면 O
 ** 2.2 Visibility Cycling
 아웃라인으로 버퍼의 텍스트를 숨길 수 있습니다. Org는 ~TAB~ 및 ~S-TAB~ (~org-cycle~ 및 ~org-shifttab~)에 할당된 두 가지 명령으로 버퍼의 텍스트 표시 여부를 변경합니다.
 
-~TAB~ (~org-cycle~)  
+- ~TAB~ (~org-cycle~) ::
 서브 트리 순환: 현재 서브트리를 순환합니다.
 
 #+begin_src 
@@ -85,9 +85,9 @@ Org에서 문제를 발견했거나 질문, 의견, 제안 사항이 있으면 O
 '-----------------------------------'
 #+end_src
 
-접두사 인자(~C-u TAB~)나 ~Shift~ 키를 누른 상태로 호출하면 전역 순환 기능을 실행합니다.
+접두사 범용 인자(~C-u TAB~)나 ~Shift~ 키를 누른 상태로 호출하면 전역 순환 기능을 실행합니다.
 
-~S-TAB~ (~org-global-cycle~), ~C-u TAB~ (~org-cycle~)  
+- ~S-TAB~ (~org-global-cycle~), ~C-u TAB~ (~org-cycle~) ::
 전역 트리 순환: 버퍼 전체를 순환합니다.
 
 #+begin_src 
@@ -95,7 +95,7 @@ Org에서 문제를 발견했거나 질문, 의견, 제안 사항이 있으면 O
 '--------------------------------------'
 #+end_src
 
-~C-u C-u C-u TAB~ (~org-fold-show-all~)  
+- ~C-u C-u C-u TAB~ (~org-fold-show-all~) :: 
 서랍(drawer)을 포함해서 전체를 표시합니다.
 
 기본적으로 Org 파일을 열면 ~showeverything~ 으로 설정되어 즉, 파일의 모든 내용을 표시합니다. 이는 ~org-startup-folded~ 변수로 설정하며 ~overview, content, showall, showeverything~ 또는 ~show<n>levels~ (n = 2..5)를 ~STARTUP~ 키워드에 설정해서 파일별로 설정할 수 있습니다:
