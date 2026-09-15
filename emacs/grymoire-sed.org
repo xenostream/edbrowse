@@ -6,7 +6,6 @@
 #+KEYWORDS:  grymoire, sed, regex, regular expression
 #+LANGUAGE:  ko
 #+OPTIONS:   H:4
-#+OPTIONS:   toc:2
 #+TOC: headlines 2
 #+TOC: tables
 
