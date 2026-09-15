@@ -16,7 +16,7 @@
 #+begin_quote
 [!IMPORTANT]
 *중요*:
-Emacs에 포함된 Org를 사용할 경우 이번 섹션은 건너뛰고 [[#activation][활성화]] 섹션으로 이동합니다.
+Emacs에 포함된 Org를 사용할 경우 이번 섹션은 건너뛰고 활성화 섹션으로 이동합니다.
 #+end_quote
 
 Org를 인터넷에서 ‘.zip’ 또는 ‘.tar’ (배포) 파일이나 Git 아카이브로 다운로드한 경우 배포 디렉터리에서 실행하는 것이 좋습니다. 이 경우 Emacs 로드 경로에 ‘lisp/’ 디렉터리를 추가해야 합니다.
@@ -34,10 +34,10 @@ make autoloads
 #+end_src
 
 
-** 1.2 Activation <<activation>>
-Emacs 초기화 파일에 다음과 같은 줄을 추가해서 Org 버퍼뿐만 아니라 모든 Emacs 버퍼에 사용할 수 있는 전역 단축키로 정의합니다. 이외의 적절한 단축키는 직접 선택하시기 바랍니다.
+** 1.2 Activation 
+Emacs 초기화 파일에 다음과 같은 줄을 추가해서 Org 버퍼뿐만 아니라 모든 Emacs 버퍼에 사용할 수 있는 전역 단축키를 정의합니다. 이외의 적절한 단축키는 직접 선택하시기 바랍니다.
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp -n 
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
