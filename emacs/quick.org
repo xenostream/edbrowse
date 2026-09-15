@@ -107,43 +107,43 @@ Org 사용 중에 문제를 발견했거나 질문, 의견, 제안 사항이 있
 ** 2.3 Motion
 다음 명령어는 버퍼의 다른 제목으로 이동합니다.
 
-- ~C-c C-n~ (~org-next-visible-heading~)  \\
+- ~C-c C-n~ (~org-next-visible-heading~) ::
 다음 제목으로 이동합니다.
 
-- ~C-c C-p~ (~org-previous-visible-heading~) \\  
+- ~C-c C-p~ (~org-previous-visible-heading~) ::  
 이전 제목으로 이동합니다.
 
-- ~C-c C-f~ (~org-backward-heading-same-level~) \\  
+- ~C-c C-f~ (~org-backward-heading-same-level~) ::  
 같은 수준(형제)의 다음 제목으로 이동합니다.
 
-- ~C-c C-b~ (~outline-backward-same-level~) \\
+- ~C-c C-b~ (~outline-backward-same-level~) ::
 같은 수준(형제)의 이전 제목으로 이동합니다.
 
-- ~C-c C-u~ (~outline-up-heading~) \\
+- ~C-c C-u~ (~outline-up-heading~) ::
 좀 더 높은 수준(부모)의 제목으로 이동합니다.
 
 ** 2.4 Structure Editing
-~M-RET~ (~org-meta-return~) \\  
+- ~M-RET~ (~org-meta-return~) ::  
 현재 제목과 동일한 수준의 새로운 제목을 삽입합니다. 만약 커서가 일반 항목일 경우 새로운 항목을 생성합니다(일반 목록 섹션 참조). 줄 중간에서 사용하면 줄은 분할되고 나머지 부분은 새로운 heading [fn:2]이 됩니다.
 
 [fn:2]: 이렇게 줄을 나누지 않으려면 ~org-M-RET-may-split-line~ 변수를 사용자 정의합니다.
 
-- ~M-S-RET~ (~org-insert-todo-heading~) \\
+- ~M-S-RET~ (~org-insert-todo-heading~) ::
 현재 제목과 동일한 수준의 새로운 ~TODO~ 항목을 삽입합니다.
 
-- ~TAB~ (~org-cycle~) \\  
+- ~TAB~ (~org-cycle~) ::  
 텍스트가 없는 항목에서 ~TAB~ 키를 누르면 적절한 수준으로 순환합니다.
 
-- ~M-LEFT~ (~org-metaleft~), ~M-RIGHT~ (~org-metaright~) \\  
+- ~M-LEFT~ (~org-metaleft~), ~M-RIGHT~ (~org-metaright~) ::  
 현재의 헤딩 수준을 한 단계 올리거나 내립니다.
 
-- ~M-UP~ (~org-move-subtree-up~), ~M-DOWN~ (~org-move-subtree-down~) \\  
+- ~M-UP~ (~org-move-subtree-up~), ~M-DOWN~ (~org-move-subtree-down~) ::  
 서브트리 위나 아래로 이동시킵니다. 즉, 동일한 수준의 이전 또는 다음 서브트리와 위치를 바꿉니다.
 
-- ~C-c C-w~ (~org-refile~) \\  
+- ~C-c C-w~ (~org-refile~) ::  
 항목이나 영역을 다른 위치로 재배치합니다. ‘재배치(Refile)’ 및 ‘복사(Copy)’ 섹션을 참조합니다.
 
-- ~C-x n s~ (~org-narrow-to-subtree~), ~C-x n w~ (widen) \\
+- ~C-x n s~ (~org-narrow-to-subtree~), ~C-x n w~ (widen) ::
 버퍼를 현재 서브트리로 좁히거나 다시 넓힙니다.
 
 활성 영역(Transient Mark Mode)이 설정된 경우 수준 올리기 및 내리기 기능(~M-LEFT~, ~M-RIGHT~)은 영역의 모든 제목에 적용됩니다.
