@@ -1,3 +1,15 @@
+#+TITLE:  Grymoire SED guide   
+#+AUTHOR: PilJin Kwon
+#+EMAIL:  piljin.kwon@gmail.com
+
+#+DESCRIPTION: 이 문서는 Grymoire sed guide 문서의 한국어 버전입니다.
+#+KEYWORDS:  grymoire, sed, regex, regular expression
+#+LANGUAGE:  ko
+#+OPTIONS:   H:4
+#+OPTIONS:   toc:2
+#+TOC: headlines 2
+#+TOC: tables
+
 * Grymoire SED Guide
 파일을 자동으로 수정하는 특수 편집기인 sed 사용법, 파일 내용을 변경하는 프로그램을 작성하려면 ~sed~ 를 사용하면 됩니다.
 
