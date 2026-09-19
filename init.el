@@ -12,6 +12,8 @@
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 
+(setq default-input-method "korean-hangul")
+
 ;; ------------------------------------------------------------
 ;; 1. UI 최소화 / 기본 환경
 ;; ------------------------------------------------------------
