@@ -4983,5 +4983,127 @@ Eshell 은 ANSI-term 보다는 쉘 모드에 좀 더 가깝습니다. top 같은
 
 
 
+* Chapter 7. Conclusion
+
+#+BEGIN_QUOTE
+“Emacs is the ground. We run around and actsilly
+on top of it,and when we die, may our remnants grace
+its ongoing incrementation.”
+
+– Thien-Thi Nguyen, comp.emacs.
+#+END_QUOTE
+
+Emacs처럼 다재다능한 텍스트 편집기를 어떻게 마스터할 수 있을까요?
+
+놀랍게도 해답은 간단합니다!! Emacs에게 올바른 질문을 하는 방법을 아는 것입니다. 제가 『운영체제로서의 Emacs』 장에서 말했듯이 Emacs의 구조 자체는 elisp를 통해 수정하거나 확장할 수 있습니다. 따라서, Emacs에서 무슨 일이 일어나는지 진정으로 이해할 수 있는 유일한 방법은 Emacs에게 직접 물어보는 것 뿐입니다!! 간단하지만 사실입니다.
+
+그리고 이맥스에게 질문하는 것은 모든 이맥스 고수들도 하는 일입니다. 어떤 키에 어떤 기능이 할당된지 확인하든 명령어가 정확히 무엇을 처리하는지 확인하든 이는 이맥스 숙달을 위한 핵심 요소입니다. 물론 엘리스프(Elisp)에 대한 지식도 도움되지만 반드시 필요한 전제 조건은 아닙니다.
+
+이 책 전체에 걸쳐 저는 기능과 함수 그리고 무엇에 집중할 가치가 있고 무엇은 그렇지 않은지에 대한 저만의 개인적인 견해를 적어왔습니다. 바로 이것이 이 책의 진정 실용적이고 포괄적인 측면입니다. 좀 더 깊은 교훈이자 제가 처음 Emacs를 배우기 시작했을 때의 결정적인 전환점이 된 것은 Emacs에게 어떻게 질문하는지? 를 제대로 이해한 것입니다.
+
+키나 명령어를 기억하지 못하는 것은 극히 자연스러운 현상이며 특히 배우는 중이라면 더 더욱 그렇습니다. 하지만, 키 바인딩을 대대적으로 수정하거나 변경했더라도 Emacs가 자신의 기능을 알려줄 수 있다는 사실을 안다는 것은 궁극적으로 Emacs를 마스터하는 데 도움됩니다. ~C-x r l~ 키가 무엇을 처리하는지 잊어버린 것은 ~C-h k~ 로 알아낼 수 있다면 중요하지 않습니다. 그리고 어떤 기능이 무엇을 처리하는지 부분만 기억해도 접두사 키에 ~C-h~ 를 붙여 그 키에 바인딩된 모든 키를 설명할 수 있다면 그 역시 중요하지 않습니다.
+
+모든 Emacs 사용자의 장기적인 목표는 자신의 질문에 대한 답을 Emacs에게 물어볼 수 있는 단계에 도달하는 것입니다. 결국, 자주 사용하는 명령어와 키는 무의식적으로 익힐 것이고 나머지는 언제든지 찾아볼 수 있으니까요...
+
+Emacs를 오래 사용하면–이미 그 단계에 도달한 분은 제 말에 동의하실 겁니다–어느 날 갑자기 모든 것이 딱 맞아 떨어집니다. 그리고 바로 그럴 때 그것은 수천 개의 키 바인딩을 외웠기 때문이 아닙니다. 그것은 Emacs가 더이상 불투명한 상자가 아니라 내부를 훤히 들여다보고 수정하며 그 변화의 결과를 관찰할 수 있는 매우 개방적이고 투명한 상자이기 때문입니다.
+
+이 책의 집필 순서는 누군가가 제 옆에서 Emacs를 배우는 것처럼 제가 가르칠 때와 동일한 방식으로 구성되어 있습니다. 먼저 용어를 이해하는 것은 기초를 다지는 중요한 일입니다; 그 다음은 Emacs를 사용할 수 있는 기본적인 키와 명령어입니다; 그 다음은 이동 및 편집 명령어이며 이어서 배운 내용을 확고히 하고 앞으로 어떻게 나아갈지에 대한 아이디어를 얻을 수 있도록 도와주는 몇 가지 실전 예제가 나옵니다.
+
+마지막으로 이 책에 더 배울 것이 없다고 느껴질 때는 어떻게 할지에 대해 잠시 언급하겠습니다. 그 다음 단계는 엘리스프(Elisp)를 배우는 것입니다. 비록 이 LISP 방언이 현대적인 LISP 언어의 화려한 기능을 많이 결여하고 있지만 여전히 아주 재미있는 언어입니다. LISP 언어를 배우면 까다로운 구세대 프로그래머들이 왜 “현대적인” 프로그래밍 언어를 LISP의 열등한 버전이라 비난하는지 이해할 것입니다. 그리고 그들의 말도 어느 정도는 맞습니다. LISP의 ‘데이터-에즈-코드(data-as-code)’ 개념이 어떻게 작동하는지 본다면—Emacs의 모든 곳에 이 개념이 사용되므로 반드시 보게 됩니다—왜 좀 더 일찍 배우지 않았는지 후회할 것입니다.
+
+*추천 자료* : 제 블로그의 'Mastering Emacs' 는 이 다음 단계에 읽어볼만한 심도있는 글들이 가득합니다. IDO나 Emacs의 Eshell 같은 타사 패키지는 해당 웹사이트에 상세히 설명되어 있습니다.
+
+[[https://www.masteringemacs.org/]]
+
+
+
+** Other Resources
+
+*** Third-Party Packages and Tools
+저도 여러 타사 패키지를 사용합니다. 제가 흥미롭게 생각하는 몇 가지만 간략히 나열하겠습니다.
+
+- *nov* :: Emacs용 훌륭한 EPUB 리더로 이 책을 읽을 때 사용하시길 권합니다.
+
+[[https://depp.brause.cc/nov.el/]]
+
+- *Magit* :: 독특한 코드 기반의 키 시스템을 갖춘 훌륭한 Git UI입니다.
+
+[[https://www.magit.vc]]
+
+- *Multiple Cursors* :: 여러 커서를 배치해서 동시에 편집할 수 있습니다.
+
+[[https://github.com/magnars/multiple-cursors.el]]
+
+- *LSP mode 와 EGlot* :: Emacs용 언어 서버 인터페이스입니다.
+
+[[https://github.com/emacs-lsp/lsp-mode]]
+
+[[https://github.com/joaotavora/eglot]]
+
+- *Helm* :: 다양한 자동 완성 기능을 갖춘 강력한 자동 완성 프레임워크입니다.
+
+[[https://emacs-helm.github.io/helm/]]
+
+- *Flycheck* :: 코드 린팅 및 구문 오류 검사를 위한 범용 프레임워크로 수십 가지 도구가 사전 구성되어 제공됩니다.
+
+[[https://www.flycheck.org/en/latest/]]
+
+- *ORG Mode* :: 뛰어난 정리 도구이며 일기 및 일정 관리자, 리터러시 프로그래밍 도구 등 다양한 기능을 갖춘 프로그램입니다. 기본적으로 내장되어 있지만 반드시 웹사이트를 방문해서 설명서를 읽어보시기 바랍니다.
+
+[[https://orgmode.org/]]
+
+- *YASnippet* :: 텍스트 스니펫 확장 도구입니다.
+
+[[http://joaotavora.github.io/yasnippet/]]
+
+- *Hydra* :: 키 바인딩을 위한 유연한 팝업 UI를 구축할 수 있는 패키지입니다.
+
+[[https://github.com/abo-abo/hydra]]
+
+- *dumb-jump* :: 커서의 심볼 정의로 이동합니다. 프로젝트와 파일, 검색할 정의를 자동 추론합니다. 95%의 사용 사례로 충분히 유용합니다. ripgrep 과 함께 사용하시기 바랍니다.
+
+[[https://github.com/jacktasia/dumb-jump]]
+
+ripgrep 은 매우 빠르기 때문에 여러 번 추천했습니다. 또한, 기본적으로 ORG 모드를 포함하고 다양한 파일 형식도 지원합니다.
+
+
+*** Communities
+인터넷에는 수 많은 커뮤니티 사이트와 블로그가 있습니다. 다음은 제가 추천하는 몇 가지 목록입니다(모든 사이트를 포함하지 않습니다).
+
+- *Reddit* :: ~/r/emacs~ 서브 레딧에는 활기찬 Emacs 사용자 커뮤니티가 있습니다. 제가 2015년에 이 책을 집필한 이후 엄청나게 성장했습니다. 또한, Emacs의 특정 분야를 다루는 전문 서브 레딧도 있습니다. ~/r/orgmode~ 도 방문할만 합니다.
+
+- *StackExchange* :: 이제 Stack Exchange에 자체 사이트를 가집니다:
+
+[[https://emacs.stackexchange.com/]]
+
+질문하기 아주 좋은 곳입니다.
+
+요즘엔 훌륭한 Emacs 관련 블로그도 많습니다. 저는 다음과 같은 블로그를 좋아합니다:
+
+-  *Sacha Chua* :
+
+[[https://sachachua.com/blog/]]
+
+- *Irreal’s Emacs blog* :
+
+[[https://irreal.org/blog/]]
+
+- *Artur Malabarba* :
+
+[[https://endlessparentheses.com/]]
+
+- *Bozhidar Batzov* :
+
+[[https://batsov.com/]]
+
+- *John Kitchin* :
+
+[[https://kitchingroup.cheme.cmu.edu/blog/]]
+
+위의 블로그 대부분과 그 외의 많은 훌륭한 블로그는 Planet Emacs 애그리게이터에서 찾을 수 있습니다:
+
+[[https://planet.emacslife.com/]]
+
+- *Emacs* : 그리고 Emacs가 있습니다. 이는 과거, 현재 그리고 앞으로도 여러분의 Emacs에 대한 가장 권위있는 정보원입니다.
 
 
