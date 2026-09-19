@@ -685,7 +685,7 @@ nospell
 
 *General configuration options:*
 
-- ~set nocompatible~ Vi 설정 대신 Vim 설정 사용. 다른 옵션에 영향을 미치므로 파일 최상단에 설정하는 것이 중요
+- ~set nocompatible~ Vi 설정 대신 Vim 설정 사용. 다른 옵션에 영향을 많이 미치므로 파일 최상단에 설정하는 것이 중요
 - ~set backspace=indent,eol,start~ 백스페이스로 들여쓰기, 줄바꿈, 삽입 시작 위치까지 삭제 가능
 - ~set history=1000~ 실행된 명령어의 히스토리 크기 설정
 - ~set showcmd~ 미완성 명령어를 하단에 표시
@@ -790,7 +790,7 @@ set statusline+=\ %P        "percent through file
 
 위의 형식은 상태표시줄을 실험할 때 유용합니다. 상태표시줄을 구성하기 가장 쉬운 방법은 내장된 플래그를 사용하는 것입니다.
 
-예를 들어, ~%m~ 은 현재 버퍼가 수정된 경우 ~[+]~ 를 표시합니다. ~%L~ 을 사용하면 현재 파일의 전체 줄 수를 표시합니다. 물론 플래그 종류는 다양하며, 이 책의 범위를 벗어납니다. 자세한 내용은 ~:help statusline~ 을 참고합니다.
+예를 들어, ~%m~ 은 현재 버퍼가 수정된 경우 ~[+]~ 를 표시합니다. ~%L~ 을 사용하면 현재 파일의 전체 줄 수를 표시합니다. 물론 플래그 종류는 다양하며 이 책의 범위를 벗어납니다. 자세한 내용은 ~:help statusline~ 을 참고합니다.
 
 #+begin_quote
 [!TIP]
@@ -834,12 +834,12 @@ Vim은 현재 편집 중인 파일의 백업을 생성하므로 데이터 손실
 스왑 파일과 마찬가지로 백업 파일도 체계적으로 관리할 수 있습니다. 디렉터리를 생성하고 /.vimrc/ 파일에 추가합니다:
 
 #+begin_src 
-set backupdir=~/.vim/.backup//
+set backupdir=~/.vim/backup//
 #+end_src
 
 
 *** Project specific .vimrc
-여러 가지 다른 유형의 파일을 다루는 프로젝트를 진행 중이면, 특정 유형의 프로젝트에 별도의 전용 설정을 적용할 수 있습니다. Vim은 프로젝트별 /.vimrc/ 파일을 사용할 수 있습니다. 먼저 /.vimrc/ 파일에 다음 내용을 추가해서 기능을 활성화합니다:
+여러 가지 다른 유형의 파일을 다루는 프로젝트를 진행 중이면 특정 유형의 프로젝트에 별도의 전용 설정을 적용할 수 있습니다. Vim은 프로젝트별 /.vimrc/ 파일을 사용할 수 있습니다. 먼저 /.vimrc/ 파일에 다음 내용을 추가해서 기능을 활성화합니다:
 
 #+begin_src 
 " enable project speficific vimrc
