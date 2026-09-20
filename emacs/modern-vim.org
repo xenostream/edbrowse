@@ -3082,7 +3082,7 @@ filetype plugin indent on " required
 
 
 ** How to install a new plugin
-최고의 플러그인 대부분은 [[github.com]] 에 호스팅됩니다. 고급 Vim 사용자를 위한 훌륭한 플러그인 중 하나는 ~targets.vim~ 이며 다음 주소에서 이용 가능합니다: [[https://github.com/wellle/targets.vim]]
+최고의 플러그인 대부분은 github에 호스팅됩니다. 고급 Vim 사용자를 위한 훌륭한 플러그인 중 하나는 ~targets.vim~ 이며 다음 주소에서 이용 가능합니다: [[https://github.com/wellle/targets.vim]]
 
 이 플러그인을 설치하려면 /.vimrc/ 파일 적절한 위치에 다음과 같이 ~Plugin wellle/targets.vim~ 한 줄을 추가합니다:
 
