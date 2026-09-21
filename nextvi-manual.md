@@ -1,6 +1,6 @@
 # Nextvi(1) General Commands Manual
 
-<details><summary>**NAME**</summary>
+<details><summary><bold>NAME</bold></summary>
 Nextvi - 소형 vi/ex 터미널 텍스트 편집기
 </details>
 
