@@ -1,13 +1,14 @@
 # Nextvi(1) General Commands Manual
 
-<details><summary><bold>NAME</bold></summary>
+<details><summary>NAME</summary>
 Nextvi - 소형 vi/ex 터미널 텍스트 편집기
 </details>
 
-## SYNOPSIS
+<details><summary>SYNOPSIS</summary>
 ```
 vi [-aemsv] [file ...]
 ```
+</details>
 
 ## DESCRIPTION
 `Nextvi` 는 1976년 빌 조이(*Bill Joy*)가 유닉스 기반 시스템을 위해 처음 개발한 명령줄 텍스트 편집기 `vi(1)` 의 현대적인 클론입니다.
