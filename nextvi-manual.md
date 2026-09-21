@@ -1,26 +1,34 @@
 # Nextvi(1) General Commands Manual
 
-<details><summary>NAME</summary>
-Nextvi - 소형 vi/ex 터미널 텍스트 편집기
-</details>
+<details><summary>NAME<\summary>
 
-<details><summary>SYNOPSIS</summary>
-	
+Nextvi - 소형 vi/ex 터미널 텍스트 편집기
+
+<\deatils>
+
+
+<details><summary>SYNOPSIS<\summary>
+
 ```
 vi [-aemsv] [file ...]
 ```
 
-</details>
+<\deatils>
 
-## DESCRIPTION
+
+<details><summary>DESCRIPTION<\summary>
+
 `Nextvi` 는 1976년 빌 조이(*Bill Joy*)가 유닉스 기반 시스템을 위해 처음 개발한 명령줄 텍스트 편집기 `vi(1)` 의 현대적인 클론입니다.
 
 Nextvi는 vi(1)의 다양한 표준 기능을 기반으로 처리하며 사용자의 효율적인 텍스트 편집을 위해 일반 모드(*normal mode*), 삽입 모드(*insert mode*), 명령 모드(*ex mode*)로 전환할 수 있는 독특한 모달 인터페이스가 포함됩니다. 추가 개선 사항은 제한없는 매크로 시스템, 구문 강조, 키맵, 양방향 UTF-8 지원 및 그 밖의 수많은 기능이 포함됩니다. 
 
 Nextvi는 매우 효율적이고 이식성이 뛰어나며 사용자 맞춤형으로 수정하기 쉽고 앞으로도 오랫동안 그 중요성과 높은 품질을 그대로 유지할 것입니다.
 
+<\deatils>
 
-## OPTIONS
+
+<details><summary>OPTIONS<\summary>
+
 ```
 -a      대체 터미널 화면 활성화
 -e      시작 시 ex 모드 진입(구문 강조 등)
@@ -29,8 +37,12 @@ Nextvi는 매우 효율적이고 이식성이 뛰어나며 사용자 맞춤형�
 -v      모든 옵션 해제
 ```
 
+<\deatils>
 
-## MANPAGE NOTATION
+
+
+<details><summary>MANPAGE NOTATION<\summary>
+
 ```
 <x>     x가 문자 리터럴임을 의미하는 클로저
 [x]     x가 선택적 인자임을 의미하는 클로저
@@ -42,8 +54,12 @@ Nextvi는 매우 효율적이고 이식성이 뛰어나며 사용자 맞춤형�
 x-y     x부터 y까지 범위
 ```
 
+<\deatils>
 
-## VI NORMAL
+
+
+<details><summary>VI NORMAL<\summary>
+
 ```
 [#]j          # 줄 아래로 이동
 [#]k          # 줄 위로 이동
@@ -213,7 +229,11 @@ ZZ            종료 및 저장하지 않은 변경 사항 파일에 기록
 <ESC ^C>      보류 중인 입력 또는 명령어 취소
 ```
 
-## VI REGIONS
+<\deatils>
+
+
+<details><summary>VI REGIONS<\summary>
+
 영역은 vi 이동 명령의 [h v] 범위를 정의하는 vi 표준입니다. “move” 는 단어가 포함된 영역을 정의합니다.
 
 ```
@@ -223,7 +243,11 @@ j + <^M> <Enter> - k h l f F t T , ; B E b e W w ( ) { } [ ] ^ 0 $
         All regions
 ```
 
-## VI MOTIONS
+<\deatils>
+
+
+<details><summary>VI MOTIONS<\summary>
+
 이동 명령은 [h v] 범위 내에서 실행되는 vi의 일반 명령입니다. “region” 이란 단어로 설명된 명령은 영역을 소비합니다. 이동 명령 앞이나 뒤에 [#] 을 붙일 수 있습니다.
 
 ```
@@ -243,7 +267,11 @@ d3w     단어 3개 삭제 (접미사 [#])
 "Ayw    <a> 레지스터에 단어 하나 추가
 ```
 
-## VI/EX INSERT
+<\deatils>
+
+
+<details><summary>VI/EX INSERT<\summary>
+
 ```
 <^H>
 <Backspace>   문자 하나 삭제 후 빈 상태일 경우 ex 모드 초기화
@@ -275,11 +303,18 @@ d3w     단어 3개 삭제 (접미사 [#])
 <Enter>       vi 모드는 <줄바꿈> 삽입, ex 모드는 명령 실행
 ```
 
-## EX
+<\deatils>
+
+
+<details><summary>EX<\summary>
+
 Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이(*Bill Joy*)가 처음 개발했습니다. 이 필수적인 도구는 vi의 핵심 역할을 처리하며 vi에서 명령어와 매크로를 실행할 수 있게 해줄 뿐만 아니라 필요할 때 순수 명령줄 인터페이스(CLI)로 전환할 수도 있게 해줍니다.
 
+<\deatils>
 
-## EX PARSING
+
+<details><summary>EX PARSING<\summary>
+
 구문 분석은 다음과 같은 구조를 따릅니다:
 
 ```
@@ -301,7 +336,11 @@ Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이
         “ vi.c” 를 편집합니다. <pad> 는 필수입니다.
 ```
 
-## EX ESCAPES
+<\deatils>
+
+
+<details><summary>EX ESCAPES<\summary>
+
 [args] 및 [prefix] 블록 내의 특수 문자는 `<\>` 로 이스케이프 처리하면 일반 문자로 변환됩니다. 이스케이프 처리는 POSIX와 다른 짝수/홀수 규칙이 적용됩니다. 즉, 특수 문자 바로 앞의 이스케이프는 절반으로 줄어들고 홀수 개일 경우 해당 특수 문자는 일반 문자로 변환되며 그 외 위치의 이스케이프는 리터럴로 처리됩니다.
 
 ```
@@ -313,7 +352,11 @@ Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이
         ex 내의 특수 문자
 ```
 
-## EX EXPANSION
+<\deatils>
+
+
+<details><summary>EX EXPANSION<\summary>
+
 [args] 내의 `<%>` 는 현재 버퍼의 경로명이나 해당 버퍼 번호가 뒤따를 경우 어떤 버퍼의 경로명으로 확장됩니다.
 
 %# 는 마지막으로 전환된 버퍼의 경로명으로 확장됩니다. %@ 는 지정된 레지스터로 확장됩니다.
@@ -342,7 +385,11 @@ Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이
 :;c!ls!<^V><ESC>
 ```
 
-## EX RANGES
+<\deatils>
+
+
+<details><summary>EX RANGES<\summary>
+
 일부 ex 명령어 앞에 범위 지정자를 붙일 수 있습니다.
 
 - [range] 접두사는 수직 및 수평 범위를 지정합니다.
@@ -448,7 +495,11 @@ $       버퍼 마지막 줄 또는 줄 끝
         비결정적 패턴 “a+” 로 둘러싸인 텍스트 출력
 ```
 
-## EX COMMANDS
+<\deatils>
+
+
+<details><summary>EX COMMANDS<\summary>
+
 ```
 [range]f>[regex]
 [vrange]f<[regex]
@@ -1156,7 +1207,11 @@ ph[#clow] [#chigh] [#width] [#blen][<Space>][str]
         :ph:ph0
 ```
 
-## EX OPTIONS
+<\deatils>
+
+
+<details><summary>EX OPTIONS<\summary>
+
 ex 옵션은 전역 변수를 변경하기 위해 고안된 ex 명령어입니다. 변수는 부호 있는 정수로 저장됩니다. 인수는 값을 설정합니다. 숫자가 아닌 인수를 지정하면 첫 번째 바이트를 사용합니다. 별도로 명시되지 않는 한 인수를 지정하지 않으면 현재 값은 논리적으로 반전됩니다.
 
 인수 표기법은 기본값이 표시됩니다.
@@ -1330,7 +1385,11 @@ err[1]  ex 오류 제어
         :err 1
 ```
 
-## EXINIT ENV VAR
+<\deatils>
+
+
+<details><summary>EXINIT ENV VAR<\summary>
+
 `EXINIT` 환경 변수는 프로그램 시작 시 수행할 일련의 ex 명령어를 정의하며 모든 파일이 열린 이후 한 번만 실행됩니다. 
 
 이는 C 언어나 유닉스 파이프를 제외하고 Nextvi를 스크립팅하거나 사용자 정의할 수 있는 **유일한 방법** 입니다. grep, awk, sed 같은 수많은 표준 텍스트 처리 유틸리티는 `EXINIT` 을 고려해서 Nextvi로 대체할 수 있습니다.
@@ -1365,7 +1424,11 @@ err[1]  ex 오류 제어
         `:q` 로 종료하면 매크로가 재개되고 기록 내용을 bugreport.txt 파일에 저장합니다.
 ```
 
-## REGEX
+<\deatils>
+
+
+<details><summary>REGEX<\summary>
+
 `Pikevm` 은 Nextvi를 위해 개발된 백트래킹 없는 초고속 NFA 시뮬레이션 정규식 엔진입니다. 이 엔진은 정규식이 상수 공간과 O(`n * k`) 시간 복잡도 내에서 평가되도록 보장하며 여기서 `<n>` 은 입력 문자열의 길이고 `<k>` 는 정규식의 구조적 복잡도(예: 상태 전환 또는 선택)를 의미합니다. 비록 이것이 엄격한 O(n) 선형 실행 시간 성능을 보장하진 않지만 계산 및 메모리 자원이 입력 전체에 걸쳐 선형적이고 균등하게 분배되도록 보장하며 `<k>` 는 상수 계수에 직접적인 영향을 미칩니다. 이 원리는 기수 정렬 알고리즘에서 활용되는 개념과 유사합니다.
 
 Pikevm의 구문은 Plan 9의 `regexp(7)` 과 유사합니다. 이 섹션의 설명은 매뉴얼 페이지 표기법을 무시합니다.
@@ -1405,7 +1468,11 @@ $       줄 끝 확인
 - 특징 5:
         오프셋이 없거나 0인 룩비하인드는 이전 문자로부터 시작합니다. 오프셋이 지정된 경우, 현재 위치에서 지정된 값을 뺀 위치에서 스캔을 시작합니다. 음수 오프셋은 문자열 시작 부분에서 시작합니다.
 
-## SPECIAL MARKS
+<\deatils>
+
+
+<details><summary>SPECIAL MARKS<\summary>
+
 ```
 *       이전 명령어 체인 위치
 [       이전 변경 사항 첫 번째 위치
@@ -1414,7 +1481,11 @@ $       줄 끝 확인
 `       이전 줄 영역 위치
 ```
 
-## SPECIAL REGISTERS
+<\deatils>
+
+
+<details><summary>SPECIAL REGISTERS<\summary>
+
 ```
 /       이전 정규식 키워드
 :       이전 ex 명령어
@@ -1423,7 +1494,11 @@ $       줄 끝 확인
 <1-9>   기본 레지스터의 이전 값(들) (비원자형)
 ```
 
-## CODE MAP
+<\deatils>
+
+
+<details><summary>CODE MAP<\summary>
+
 
 | 파일        | 설명           |
 |-------------|----------------|
@@ -1442,7 +1517,11 @@ $       줄 끝 확인
 | 7969 총계   | wc -l *.c 정렬 |
 
 
-## COMPILING
+<\deatils>
+
+
+<details><summary>COMPILING<\summary>
+
 - `export CC=‘g++ -x c’`  
         컴파일러 설정, g++ 예시
 - `export CFLAGS=‘-s’`  
@@ -1462,7 +1541,11 @@ $       줄 끝 확인
 - `./cbuild.sh bench`  
         vi.c에서 2000단어 삭제 성능 벤치마크 테스트
 
-## PHILOSOPHY
+<\deatils>
+
+
+<details><summary>PHILOSOPHY<\summary>
+
 대부분의 텍스트 편집기는 상당한 기술적 부채를 안고 있습니다. 이런 편집기들은 빠르게 익히거나 깊이 이해하기 어렵고 쉽게 변경할 수도 없습니다. Nextvi는 ‘기본성’, ‘간결성’, ‘유연성’ 이란 세 가지 개념을 중심으로 설계되었습니다. 
 
 - ‘기본성’ 이란 무제한적인 텍스트 변환을 위한 완전하면서도 최소한의 명령어 세트를 의미합니다. 
@@ -1475,7 +1558,11 @@ $       줄 끝 확인
 > 
 > - 키릴 멜레킨
 
-## SEE ALSO
+<\deatils>
+
+
+<details><summary>SEE ALSO<\summary>
+
 새로운 기능은 ‘patches’ 브랜치에 제공되는 선택적 패치로 이용할 수 있습니다. 의미있는 기여 내용이 있고 이를 공개하고 싶다면 이메일이나 GitHub 풀 리퀘스트를 통해 패치를 제출할 수 있습니다.
 https://github.com/kyx0r/nextvi/tree/patches
 
@@ -1507,7 +1594,14 @@ https://swtch.com/~rsc/regexp/regexp1.html
 https://man.cat-v.org/p9p/7/regexp
 
 
-## AUTHORS
+<\deatils>
+
+
+<details><summary>AUTHORS<\summary>
+
 `Nextvi` 는 *Kyryl Melekhin <k.melekhin@gmail.com>* 이 작성했습니다. 이 프로그램은 *Ali Gholami Rudi <ali@rudi.ir>* 가 작성한 `neatvi(1)` 을 기반으로 합니다. 이 매뉴얼 페이지는 *nepeta <nepeta@canaglie.net>* 의 영감을 받아 작성되었습니다.
+
+<\deatils>
+
 
 **Nextvi 7.7                    September 19, 2026                    Nextvi 7.7**
