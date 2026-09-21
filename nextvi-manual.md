@@ -4,7 +4,7 @@
 
 Nextvi - 소형 vi/ex 터미널 텍스트 편집기
 
-<\deatils>
+<\details>
 
 
 <details><summary>SYNOPSIS<\summary>
@@ -13,7 +13,7 @@ Nextvi - 소형 vi/ex 터미널 텍스트 편집기
 vi [-aemsv] [file ...]
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>DESCRIPTION<\summary>
@@ -24,7 +24,7 @@ Nextvi는 vi(1)의 다양한 표준 기능을 기반으로 처리하며 사용�
 
 Nextvi는 매우 효율적이고 이식성이 뛰어나며 사용자 맞춤형으로 수정하기 쉽고 앞으로도 오랫동안 그 중요성과 높은 품질을 그대로 유지할 것입니다.
 
-<\deatils>
+<\details>
 
 
 <details><summary>OPTIONS<\summary>
@@ -37,7 +37,7 @@ Nextvi는 매우 효율적이고 이식성이 뛰어나며 사용자 맞춤형�
 -v      모든 옵션 해제
 ```
 
-<\deatils>
+<\details>
 
 
 
@@ -54,7 +54,7 @@ Nextvi는 매우 효율적이고 이식성이 뛰어나며 사용자 맞춤형�
 x-y     x부터 y까지 범위
 ```
 
-<\deatils>
+<\details>
 
 
 
@@ -229,7 +229,7 @@ ZZ            종료 및 저장하지 않은 변경 사항 파일에 기록
 <ESC ^C>      보류 중인 입력 또는 명령어 취소
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>VI REGIONS<\summary>
@@ -243,7 +243,7 @@ j + <^M> <Enter> - k h l f F t T , ; B E b e W w ( ) { } [ ] ^ 0 $
         All regions
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>VI MOTIONS<\summary>
@@ -267,7 +267,7 @@ d3w     단어 3개 삭제 (접미사 [#])
 "Ayw    <a> 레지스터에 단어 하나 추가
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>VI/EX INSERT<\summary>
@@ -303,14 +303,14 @@ d3w     단어 3개 삭제 (접미사 [#])
 <Enter>       vi 모드는 <줄바꿈> 삽입, ex 모드는 명령 실행
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>EX<\summary>
 
 Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이(*Bill Joy*)가 처음 개발했습니다. 이 필수적인 도구는 vi의 핵심 역할을 처리하며 vi에서 명령어와 매크로를 실행할 수 있게 해줄 뿐만 아니라 필요할 때 순수 명령줄 인터페이스(CLI)로 전환할 수도 있게 해줍니다.
 
-<\deatils>
+<\details>
 
 
 <details><summary>EX PARSING<\summary>
@@ -336,7 +336,7 @@ Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이
         “ vi.c” 를 편집합니다. <pad> 는 필수입니다.
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>EX ESCAPES<\summary>
@@ -352,7 +352,7 @@ Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이
         ex 내의 특수 문자
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>EX EXPANSION<\summary>
@@ -385,7 +385,7 @@ Ex는 유닉스 시스템의 강력한 라인 에디터로 1976년에 빌 조이
 :;c!ls!<^V><ESC>
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>EX RANGES<\summary>
@@ -495,7 +495,7 @@ $       버퍼 마지막 줄 또는 줄 끝
         비결정적 패턴 “a+” 로 둘러싸인 텍스트 출력
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>EX COMMANDS<\summary>
@@ -1207,7 +1207,7 @@ ph[#clow] [#chigh] [#width] [#blen][<Space>][str]
         :ph:ph0
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>EX OPTIONS<\summary>
@@ -1385,7 +1385,7 @@ err[1]  ex 오류 제어
         :err 1
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>EXINIT ENV VAR<\summary>
@@ -1424,7 +1424,7 @@ err[1]  ex 오류 제어
         `:q` 로 종료하면 매크로가 재개되고 기록 내용을 bugreport.txt 파일에 저장합니다.
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>REGEX<\summary>
@@ -1468,7 +1468,7 @@ $       줄 끝 확인
 - 특징 5:
         오프셋이 없거나 0인 룩비하인드는 이전 문자로부터 시작합니다. 오프셋이 지정된 경우, 현재 위치에서 지정된 값을 뺀 위치에서 스캔을 시작합니다. 음수 오프셋은 문자열 시작 부분에서 시작합니다.
 
-<\deatils>
+<\details>
 
 
 <details><summary>SPECIAL MARKS<\summary>
@@ -1481,7 +1481,7 @@ $       줄 끝 확인
 `       이전 줄 영역 위치
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>SPECIAL REGISTERS<\summary>
@@ -1494,7 +1494,7 @@ $       줄 끝 확인
 <1-9>   기본 레지스터의 이전 값(들) (비원자형)
 ```
 
-<\deatils>
+<\details>
 
 
 <details><summary>CODE MAP<\summary>
@@ -1517,7 +1517,7 @@ $       줄 끝 확인
 | 7969 총계   | wc -l *.c 정렬 |
 
 
-<\deatils>
+<\details>
 
 
 <details><summary>COMPILING<\summary>
@@ -1541,7 +1541,7 @@ $       줄 끝 확인
 - `./cbuild.sh bench`  
         vi.c에서 2000단어 삭제 성능 벤치마크 테스트
 
-<\deatils>
+<\details>
 
 
 <details><summary>PHILOSOPHY<\summary>
@@ -1558,7 +1558,7 @@ $       줄 끝 확인
 > 
 > - 키릴 멜레킨
 
-<\deatils>
+<\details>
 
 
 <details><summary>SEE ALSO<\summary>
@@ -1594,14 +1594,14 @@ https://swtch.com/~rsc/regexp/regexp1.html
 https://man.cat-v.org/p9p/7/regexp
 
 
-<\deatils>
+<\details>
 
 
 <details><summary>AUTHORS<\summary>
 
 `Nextvi` 는 *Kyryl Melekhin <k.melekhin@gmail.com>* 이 작성했습니다. 이 프로그램은 *Ali Gholami Rudi <ali@rudi.ir>* 가 작성한 `neatvi(1)` 을 기반으로 합니다. 이 매뉴얼 페이지는 *nepeta <nepeta@canaglie.net>* 의 영감을 받아 작성되었습니다.
 
-<\deatils>
+<\details>
 
 
 **Nextvi 7.7                    September 19, 2026                    Nextvi 7.7**
