@@ -5,9 +5,11 @@ Nextvi - 소형 vi/ex 터미널 텍스트 편집기
 </details>
 
 <details><summary>SYNOPSIS</summary>
+	
 ```
 vi [-aemsv] [file ...]
 ```
+
 </details>
 
 ## DESCRIPTION
