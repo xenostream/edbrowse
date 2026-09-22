@@ -111,7 +111,7 @@ A stately pleasure dome decree:
 * ADDRESSES: Selecting lines for editing
 함수를 적용할 입력 파일의 줄은 주소(/address/)로 선택할 수 있다. 또한 주소는 줄 번호 또는 컨텍스트 주소일 수 있다.
 
-함수 그룹을 하나의 주소(또는 주소 쌍)로 제어할 수 있으며 함수를 중괄호(~{...}~)로 묶어 그룹화해서 사용 가능하다.
+함수 그룹을 하나의 주소(또는 주소 쌍)에 적용할 수 있으며 함수는 중괄호(~{...}~)로 묶어 그룹화해서 사용한다.
 
 
 ** Line-number Addresses
