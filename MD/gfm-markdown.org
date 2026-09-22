@@ -1,0 +1,242 @@
+* GitHub Markdown: Complete GFM Guide with Examples (2026)
+GitHub 마크다운은 1억 8천만 명 이상의 개발자가 6억 3천만 개의 저장소에서 사용하는 서식 지정 언어입니다([[https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/][GitHub Octoverse, 2025]]). GitHub의 모든 README, 이슈, 풀 리퀘스트, 위키 페이지는 마크다운 프로세서를 통해 렌더링되지만 구문은 기본적인 마크다운을 훨씬 뛰어넘습니다. GitHub의 렌더러는 표, 작업 목록, 알림, 수학 방정식, Mermaid 다이어그램 등을 지원하며 현재 이용 가능한 마크다운 환경 중 가장 기능이 풍부한 환경 중 하나입니다.
+
+대부분의 가이드에서 간과하는 중요한 차이점이 있습니다. /GitHub Flavored Markdown/ (GFM)은 CommonMark 기준에 정확히 다섯 가지 확장을 추가한 공식 사양(v0.29-gfm)입니다. 하지만 GitHub의 실제 렌더러는 해당 사양에 포함되지 않은 훨씬 더 많은 기능을 지원합니다. 이 가이드는 공식 GFM 사양과 독점적인 렌더링 기능을 모두 다루므로 어떤 기능이 어디서 작동하는지 그리고 무엇을 기대할 수 있는지 정확히 알 수 있습니다. GitHub를 넘어 좀 더 광범위한 구문 참조가 필요하면 당사의 [[https://macmdviewer.com/blog/markdown-cheat-sheet][마크다운 치트 시트]]를 참조합니다.
+
+*한 줄로 요약하면*: /GitHub Flavored Markdown/ 은 CommonMark의 공식 슈퍼셋(표, 작업 목록, 취소선, 자동 링크, 태그 필터 등 5가지 사양 확장)에 GitHub에서만 작동하며 공식 GFM 사양에 포함되지 않는 독점 렌더러 기능(알림, 수학 표현, Mermaid 다이어그램, 각주, 이모지)이 추가된 것입니다.
+
+#+begin_quote
+[!NOTE]
+6억 3천만 개의 저장소에서 1억 8천만 명 이상의 개발자가 GitHub Markdown을 사용하고 있으며 2025년 한 해만 1억 2,100만 개의 새로운 저장소가 생성되었습니다([[https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/][GitHub Octoverse, 2025]]). 공식 GFM 사양은 2019년 4월 이후 업데이트되지 않았으나 GitHub은 사양 문서에 명시된 범위를 넘어서는 새로운 렌더링 기능을 지속적으로 제공하고 있습니다.
+#+end_quote
+
+
+* What Is GitHub Flavored Markdown?
+GitHub Flavored Markdown(GFM)은 GitHub에서 관리하는 CommonMark의 엄격한 상위 집합입니다. 2019년 4월 6일 발표된 공식 사양(버전 0.29-gfm)은 CommonMark에 비해 정확히 다섯 가지 확장 기능을 정의하고 있습니다([[https://github.github.com/gfm/][GFM 사양]]). 유효한 모든 CommonMark는 유효한 GFM이지만 GFM은 기본 사양에서 다루지 않는 기능을 추가합니다.
+
+공식 GFM 사양에 포함된 5가지 확장 기능은 다음과 같습니다.
+
+- 표 — 정렬 제어 가능한 파이프(|) 문자로 구분된 열
+- 작업 목록 항목 — ~- [ ]~ 및 ~- [x]~
+- 취소선 — =~~삭제된 텍스트~~= (이중 물결표만 사용)
+- 확장된 자동 링크 — 각괄호 없이 인식되는 URL 및 이메일
+- 허용되지 않는 원시 HTML (/tagfilter/) — 위험한 9가지 HTML 태그 제거
+
+GitHub에서 볼 수 있는 그 밖의 모든 요소—알림, 수학 표현, Mermaid 다이어그램, 각주, 이모지 숏코드, @멘션—는 GFM 사양이 아닌 GitHub만의 독자적인 렌더러의 일부입니다. 다른 플랫폼을 위해 마크다운을 작성할 때 이런 구별은 매우 중요합니다. 해당 기능들은 GitHub 외부에선 제대로 렌더링되지 않을 수 있기 때문입니다. 마크다운의 기본 형식 자체를 이해하려면 ‘[[https://macmdviewer.com/blog/what-is-markdown][마크다운이란 무엇인가]]’에 대한 가이드를 먼저 읽어보시기 바랍니다.
+
+
+* How Do GitHub Markdown Tables Work?#
+GitHub 마크다운의 표는 파이프 기호와 하이픈을 사용해서 구조화된 데이터 그리드를 만듭니다. 이는 5가지 공식 GFM 확장 기능 중 하나입니다([[https://github.github.com/gfm/#tables-extension-][GFM 사양, 표 확장 기능]]). 구문은 간단하지만 초보 사용자들이 자주 실수하게 만드는 분명한 한계가 있습니다.
+
+#+begin_src 
+| 기능           | 지원 여부 | 지원 시기   |
+|:---------------|:---------:|----------:  |
+| 표             | 예        | GFM 사양    |
+| 작업 목록      | 예        | GFM 사양    |
+| 알림           | 예        | 2023년 12월 |
+#+end_src
+
+행은 콜론(:)을 사용해서 열 정렬을 제어합니다. ~:---~ 는 왼쪽 정렬, ~:---:~ 는 중앙 정렬, ~---:~ 는 오른쪽 정렬을 의미합니다. 콜론이 없으면 열은 기본적으로 왼쪽 정렬됩니다.
+
+*주요 제한 사항*: GitHub 마크다운 표는 병합된 셀, 행 스팬 또는 열 스팬은 지원하지 않습니다. 복잡한 표 레이아웃의 경우 ~colspan~ 및 ~rowspan~ 속성을 가진 HTML ~<table>~ 태그를 사용합니다. GitHub는 마크다운 내에서 이런 구조적 HTML 요소를 허용합니다. 생성기 및 서식 지정 요령을 포함한 표 구문에 대한 심층적인 내용은 [[https://macmdviewer.com/blog/markdown-table-guide][전체 마크다운 표 가이드]]를 참조합니다. 표 형식의 데이터가 아닌 나란히 배치된 페이지 레이아웃을 원하신다면 [[https://macmdviewer.com/blog/markdown-columns][마크다운 열]]에서 GitHub에서 작동하는 HTML 접근 방식을 확인할 수 있습니다.
+
+
+* How Do Task List Checkboxes Work in GitHub Markdown?
+작업 목록은 ~- [ ]~ 를 미체크 항목으로, ~- [x]~ 를 체크된 항목으로 사용합니다. 이는 공식 GFM 사양([[https://github.github.com/gfm/#task-list-items-extension-][GFM Spec, Task List Items]])의 일부이며 GitHub 전반에서 시각적인 체크박스로 표시되지만 상황에 따라 동작 방식은 다릅니다.
+
+#+begin_src 
+- [x] 서문 작성
+- [x] 코드 예제 추가
+- [ ] 검토 및 게시
+#+end_src
+
+이슈와 풀 리퀘스트에서 체크박스는 상호작용이 가능합니다. 체크박스를 클릭하면 선택 상태가 전환되고 해당 마크다운 소스도 함께 수정됩니다. 덕분에 작업 목록은 이슈에서 곧바로 사용할 수 있는 간편한 프로젝트 추적 도구가 됩니다. README 파일 및 기타 .md 파일에서 체크박스는 읽기 전용 시각적 요소로 표시됩니다.
+
+*역사에 대한 간단한 참고 사항*: GitHub의 실험적 기능인 “작업 목록 블록”(중첩 추적이 가능한 더 발전된 버전)은 2025년 4월에 중단됬으며 서브 이슈 기능으로 대체됬습니다([[https://github.blog/changelog/2025-02-18-github-issues-projects-february-18th-update/][GitHub 이슈 변경 내역, 2025]]). 기본적인 ~- [ ]~ 구문은 변함없이 유지됩니다. 체크박스 구문, 중첩 규칙 및 문제 해결에 대한 자세한 내용은 [[https://macmdviewer.com/blog/markdown-checkbox-guide][마크다운 체크박스 가이드]]를 참조합니다.
+
+
+
+* How Does Strikethrough Work in GitHub Markdown?
+취소선은 텍스트를 이중 틸드(=~~삭제된 텍스트~~=)로 감싸고 위에 가로선이 그어진 형태로 표시합니다. 이는 5가지 공식 GFM 확장 기능 중 하나입니다([[https://github.github.com/gfm/#strikethrough-extension-][GFM 사양, 취소선]]).
+
+#+begin_src 
+~~이 텍스트는 취소선이 그어져 있습니다~~
+#+end_src
+
+흔히 저지르는 실수 중 하나는 GitHub에선 단일 물결표가 제대로 작동하지 않는다는 점입니다. 일부 마크다운 파서는 =~text~= 형식을 취소선으로 허용하지만 GitHub은 이중 물결표 =~~text~~= 구문을 요구합니다. 취소선이 물결표가 포함된 일반 텍스트로 표시된다면 구분자 개수를 확인합니다. 플랫폼 호환성을 포함한 전체 구문 참조는 [[https://macmdviewer.com/blog/markdown-strikethrough-guide][마크다운 취소선 가이드]]를 참조합니다.
+
+
+* What Are GitHub Markdown Alerts?
+알림("경고" 라고도 함)은 중요한 정보를 강조 표시하는 스타일화된 콜아웃 블록입니다. 이는 GFM 사양의 일부는 아니며 2022년 5월에 시작된 베타 테스트를 거쳐 2023년 12월에 공식 출시된 GitHub 렌더러 기능입니다([[https://github.blog/changelog/2023-12-14-new-markdown-extension-alerts-provide-distinctive-styling-for-significant-content/][GitHub 변경 내역, 2023]]).
+
+구문은 블록 인용문(/blockquote/) 안에 유형 마커를 배치하는 방식입니다:
+
+#+begin_src 
+> [!NOTE]
+> 사용자가 알아야 할 유용한 정보.
+
+> [!TIP]
+> 작업을 더 잘하거나 더 쉽게 수행하는 데 도움이 되는 조언.
+
+> [!IMPORTANT]
+> 사용자가 목표를 달성하기 위해 반드시 알아야 할 핵심 정보.
+
+> [!WARNING]
+> 문제를 방지하기 위해 사용자의 즉각적인 주의가 필요한 긴급 정보.
+
+> [!CAUTION]
+> 특정 행동으로 인해 발생할 수 있는 위험이나 부정적인 결과에 대한 조언입니다.
+#+end_src
+
+각 알림 유형은 고유한 색상의 왼쪽 테두리와 아이콘으로 표시됩니다. /NOTE/ 는 파란색, /TIP/ 은 녹색, /IMPORTANT/ 는 보라색, /WARNING/ 은 노란색, /CAUTION/ 은 빨간색입니다. GitHub은 2024년 모바일 앱에 알림 기능을 추가했습니다([[https://github.blog/changelog/2024-11-25-whats-new-in-mobile-november-update/][GitHub Mobile 변경 내역, 2024]]).
+
+알림은 /blockquote/ 구문에 기반하므로 표준 /blockquote/ 작동 방식을 이해하면 콘텐츠를 올바르게 중첩하는 데 도움됩니다. 기본 구문은 [[https://macmdviewer.com/blog/markdown-blockquote-guide][마크다운 blockquote 가이드]]를 참조합니다.
+
+
+
+* How Do You Write Math Equations in GitHub Markdown?
+GitHub은 2022년 5월 19일, /MathJax/ 를 렌더링 엔진으로 사용해서 LaTeX 수학식 렌더링 기능을 추가했습니다([[https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/][GitHub 변경 내역, 2022]]). 이 기능은 GFM 사양의 일부가 아니며 GitHub 렌더러의 확장 기능입니다. 위키 페이지의 수학식 지원 기능은 2022년 8월 추가되었습니다.
+
+인라인 수학 표현은 달러 기호 하나를 디스플레이 수학 표현은 달러 기호 두 개를 사용합니다:
+
+#+begin_src 
+$ax^2 + bx + c = 0$인 모든 방정식에 대해 이차 방정식의 해는 $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$입니다.
+
+$$
+\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+$$
+#+end_src
+
+이 기능은 구현되기 전 8년 넘게 GitHub에서 가장 많이 요청된 기능 중 하나였습니다. LaTeX이나 수학 표기법을 자주 사용한다면 [[https://macmdviewer.com/blog/markdown-math-equations][마크다운 수학 방정식 가이드]]에서 행렬, 정렬된 방정식, 일반적인 렌더링 오류 등을 포함한 전체 구문 정보를 확인할 수 있습니다.
+
+
+* How Do Mermaid Diagrams Work in GitHub Markdown?
+GitHub은 2022년 2월 14일부터 Mermaid 다이어그램을 기본적으로 렌더링해 왔습니다([[https://github.blog/developer-skills/github/include-diagrams-markdown-files-mermaid/][GitHub 블로그, 2022]]). Mermaid 언어 식별자가 포함된 펜스 코드 블록을 작성하면 GitHub은 해당 구문을 /Mermaid.js/ 로 전달하고 /Mermaid.js/ 는 브라우저에서 클라이언트 측으로 다이어그램을 생성합니다. 이는 GFM 사양의 일부가 아닙니다.
+
+#+begin_src 
+```mermaid
+graph LR
+    A[Write Markdown] --> B{Need a diagram?}
+    B -->|Yes| C[Use Mermaid]
+    B -->|No| D[Use plain text]
+    C --> E[GitHub renders it]
+#+end_src
+
+지원되는 다이어그램 유형은 플로우차트, 시퀀스 다이어그램, 클래스 다이어그램, 상태 다이어그램, 엔티티-관계 다이어그램, 간트 차트, 파이 차트, 사용자 여정 지도, Git 그래프 등이 있습니다. 각 다이어그램 유형의 구문 세부 정보 및 예시는 Mermaid 다이어그램 가이드와 Mermaid 플로우차트 가이드를 참조합니다.
+
+로컬에서 Mermaid 다이어그램을 작업할 경우 MacMD 뷰어는 동일한 /Mermaid.js/ 라이브러리를 사용해서 다이어그램을 네이티브로 렌더링하므로 브라우저를 새로고침하거나 푸시할 필요 없이 데스크톱에서 GitHub과 똑같이 다이어그램을 볼 수 있습니다.
+
+
+
+* How Do Footnotes Work in GitHub Markdown?
+GitHub은 2021년 9월 30일에 각주 지원을 추가했습니다([[https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/][GitHub 변경 내역, 2021]]). 각주는 *GFM 사양의 일부가 아닙니다!*. 이는 렌더러의 확장 기능입니다. 각주는 문서 하단의 각주 섹션으로 연결되는 윗첨자 숫자 형태로 표시됩니다.
+
+#+begin_src 
+```markdown
+GitHub에는 6억 3천만 개 이상의 리포지토리[^1]와 1억 8천만 명 이상의 개발자[^2]가 있습니다.
+
+[^1]: GitHub Octoverse 2025 보고서.
+[^2]: 개인 계정 및 조직 계정을 모두 포함합니다.
+#+end_src
+
+*제한 사항*: GitHub 위키 페이지는 각주가 지원되지 않습니다! 여러 단락으로 구성된 각주 및 일반적인 서식 관련 문제를 포함한 전체 각주 구문은 [[https://macmdviewer.com/blog/markdown-footnotes-guide][마크다운 각주 가이드]]를 참조합니다.
+
+
+* What Code Block Features Does GitHub Markdown Support?
+대괄호로 묶인 코드 블록은 CommonMark 사양의 일부지만 GitHub은 언어 감지를 위해 /Linguist/ 를, 강조 표시 자체를 위해 /TextMate/ 문법 규칙을 사용해서 여기에 구문 강조 기능을 추가합니다. /Linguist v9.5.0/ 은 700개 이상의 언어를 지원합니다([[https://github.com/github-linguist/linguist][github-linguist/linguist, 2026]]).
+
+#+begin_src 
+```python
+def greet(name: str) -> str:
+    return f“Hello, {name}!”
+```
+#+end_src
+
+표준 언어 식별자 외에도 GitHub은 코드 외 렌더링을 트리거하는 특수 식별자를 인식합니다. 다이어그램용 ~mermaid~, 지도용 ~geojson~ 및 ~topojson~, 3D 모델 미리보기용 ~stl~ 등이 이에 해당합니다.
+
+구문 강조는 기술적으로 GFM 사양의 일부가 아닙니다. 사양은 언어 정보 문자열이 포함된 울타리형 코드 블록을 정의하지만 강조 표시의 렌더링은 구현에 따라 다릅니다. 중첩, 들여쓰기 규칙, 인라인 코드를 포함한 코드 블록 구문에 대한 자세한 내용은 [[https://macmdviewer.com/blog/markdown-code-block][마크다운 코드 블록 가이드]]를 참조합니다.
+
+
+* What Other Features Does GitHub's Markdown Renderer Support?
+위에서 언급한 GFM 사양 확장 및 주요 기능 외에도 GitHub 렌더러는 공식 사양에 포함되지 않은 몇 가지 추가 기능이 포함되어 있습니다.
+
+** Emoji Shortcodes
+GitHub은 ~:emoji_name:~ 구문으로 1,500개 이상의 이모지 숏코드([[https://api.github.com/emojis][GitHub 이모지 API]])를 지원합니다. 예를 들어, ~:rocket:~ 은 로켓 이모지로 표시되고, ~:shipit:~ 은 GitHub에서만 볼 수 있는 다람쥐 이모지로 표시됩니다. 직접 입력한 유니코드 이모지 문자(복사-붙여넣기)도 올바르게 표시됩니다. 다만 이모지가 아닌 글리프에 대한 단축 코드는 없습니다. 마크다운에서 [[https://macmdviewer.com/blog/markdown-arrows][화살표 기호를 사용]]하려면 원시 유니코드나 ~&rarr;~ 같은 HTML 엔티티를 사용해야 합니다.
+
+** @Mentions and #References
+이슈, PR, 토론에서 ~@사용자명~ 을 입력하면 해당 사용자에게 알림이 전송됩니다. ~#123~ 은 동일한 저장소의 123번 이슈나 PR로 자동 연결됩니다. 리포지토리 간 참조는 이슈의 경우 ~user/repo#123~ 형식, 커밋의 경우 ~user/repo@SHA~ 형식으로 작동합니다. 이러한 참조는 이슈, PR, 토론 및 댓글에서만 작동하며 GitHub([[https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/autolinked-references-and-urls][GitHub Docs]])에서 렌더링되는 독립형 .md 파일에서는 작동하지 않습니다.
+
+** Collapsed Sections
+GitHub은 HTML ~<details>~ 및 ~<summary>~ 태그로 확장 가능한 섹션을 만들 수 있습니다:
+
+#+begin_src 
+<details>
+<summary>클릭해서 확장</summary>
+
+이 콘텐츠는 기본적으로 숨겨져 있습니다.
+접힌 섹션 내부에는 **전체 마크다운**을 작성할 수 있습니다.
+
+</details>
+#+end_src
+
+마크다운이 제대로 렌더링될려면 닫는 ~</summary>~ 태그와 마크다운 내용 사이에 빈 줄이 하나 있어야 합니다. 섹션을 기본적으로 펼쳐진 상태로 만들려면 ~<details open>~ 에 /open/ 속성을 추가합니다.
+
+** Autolinks
+GFM 사양에는 확장된 자동 링크 기능이 포함되어 있습니다. 즉, ~https://example.com~ 같은 URL은 명시적인 마크다운 링크 구문을 사용하지 않더라도 자동으로 링크로 변환됩니다. GitHub은 이를 한 단계 더 발전시켜 플랫폼별 자동 링크 기능(이슈 번호(~#123~), 커밋 SHA(첫 7자 이상), 리포지토리 간 참조)을 제공합니다. 마크다운의 링크 구문에 대한 자세한 내용은 [[https://macmdviewer.com/blog/links-in-markdown][‘마크다운 링크’ 가이드]]를 참조합니다.
+
+
+* What HTML Tags Does GitHub Markdown Allow?
+GitHub Markdown은 선별된 HTML 태그를 허용하는 한편 *위험한 태그는 차단* 합니다. GFM 태그 필터 확장 기능([[https://github.github.com/gfm/#disallowed-raw-html-extension-][GFM 사양, 허용되지 않는 원시 HTML]])은 9개 태그의 시작 태그인 ~<~ 를 ~&lt;~ 로 대체해서 이를 명시적으로 차단합니다.
+
+#+begin_src 
+<iframe>, <noembed>, <noframes>, <plaintext>, <script>, <style>, <title>, <textarea>, <xmp>
+#+end_src
+
+*허용되는 태그*: 구조적 요소(~<div>, <details>, <summary>, <hr>~), 텍스트 서식(~<b>, <i>, <strong>, <em>, <sub>, <sup>, <kbd>, <mark>~), 표(~<table>, <thead>, <tbody>, <tr>, <th>, <td>~), 미디어(~<img>, <picture>, <source>~), 링크 (~href 속성이 있는 <a>~)로 이 중 두 가지는 GitHub에서 지원하지 않는 효과를 얻을 수 있는 유일한 방법입니다: ~<sub>~ 와 ~<sup>~ 는 마크다운에서 텍스트 크기를 줄여주며 ~<mark>~ 는 GitHub가 ~==text==~ 를 파싱하지 않기 때문에 [[https://macmdviewer.com/blog/markdown-highlight-text마크][마크다운에서 텍스트를 강조 표시하는 방법]]입니다.
+
+*제거된 속성*: /class/ 및 /id/ 속성은 제거됩니다. 인라인 스타일 속성은 제한된 예외를 제외하곤 제거됩니다. 허용되는 URL 스키마는 ~http, https, mailto~ 및 상대 URL 등 안전한 것들 뿐이며 ~javascript:~ URL은 완전히 제거됩니다.
+
+
+* Where Does GitHub Markdown Render Differently?
+GitHub 마크다운은 플랫폼 내 모든 곳에서 동일하게 작동하지 않습니다! 이런 차이점을 이해하면 /README/ 와 이슈 댓글의 서식이 다르게 표시되는 예기치 못한 상황을 방지할 수 있습니다.
+
+| 컨텍스트          | 줄바꿈 동작          | 대화형 체크박스 | @멘션     | 각주             |
+|-------------------+----------------------+-----------------+-----------+------------------|
+| README / .md 파일 | 소프트 줄바꿈 (공백) | 읽기 전용       | 알림 없음 | 예               |
+| 이슈 및 PR        | 하드 줄바꿈(새 줄)   | 클릭 가능       | 예        | 예               |
+| 토론              | 하드 줄바꿈(새 줄)   | 클릭 가능       | 예        | 예               |
+| 위키 페이지       | 소프트 줄바꿈(공백)  | 읽기 전용       | 예        | 아니요           |
+| Gist              | 소프트 줄바꿈(공백)  | 읽기 전용       | 알림 없음 | 예               |
+| GitHub Pages      | Jekyll/kramdown      | 해당 없음       | 해당 없음 | 설정에 따라 다름 |
+
+가장 흔한 함정은 줄바꿈 동작입니다. /README/ 파일에서 한 줄의 줄바꿈은 같은 줄에 공백으로 표시되지만 이슈 댓글에서 같은 줄바꿈은 새 줄을 만듭니다. .md 파일에서 강제 줄바꿈하려면 줄 끝에 공백 두 개를 입력한 뒤 줄바꿈하거나 ~<br>~ 태그를 사용합니다([[https://github.com/orgs/community/discussions/10981][GitHub 커뮤니티 토론]]).
+
+GitHub Pages는 각별한 주의가 필요합니다. Pages는 기본적으로 GFM 모드의 /kramdown/ 을 사용하는 /Jekyll/ 을 적용합니다. 이는 github.com 과 다른 렌더러입니다([[https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/setting-a-markdown-processor-for-your-github-pages-site-using-jekyll][GitHub Docs, Pages]]). 추가 플러그인이나 사용자 정의 GitHub Actions 워크플로우가 없으면 Pages에서 알림, Mermaid 다이어그램 및 기타 GitHub 고유 기능이 렌더링되지 않을 수 있습니다.
+
+
+* What Changed in GitHub Markdown Recently?
+2025년부터 2026년까지 GitHub Markdown에는 중요한 새로운 구문 확장이 추가되지 않았습니다. GFM 사양 자체(v0.29-gfm)는 2019년 4월 이후 업데이트되지 않았으며 GitHub가 사양 외부의 렌더링 기능을 제공하는 동안 사실상 *동결된 상태* 입니다. 최근 변경 사항은 새로운 구문보단 툴링에 중점을 두었습니다.
+
+| 날짜        | 변경 사항                                             | 출처                    |                         |
+|-------------+-------------------------------------------------------+-------------------------+-------------------------|
+| 2023년 12월 | 알림 기능 공식 출시 (5가지 유형)                      | GitHub 변경 내역        |                         |
+| 2024년      | GitHub Mobile에 알림 기능 추가                        | GitHub Mobile 변경 내역 |                         |
+| 2025년 4월  | 태스크리스트 블록 폐지                                | 하위 이슈로 대체        | GitHub Issues 변경 내역 |
+| 2025년 7월  | PR 내 마크다운에 대한 풍부한 diff 미리보기            | GitHub PR 변경 내역     |                         |
+| 2026년 2월  | 일반 마크다운 형식의 Agentic 워크플로 (기술 미리보기) | GitHub 변경 내역        |                         |
+
+2026년 2월의 Agentic 워크플로 기술 미리보기는 주목할 만합니다. 이를 통해 개발자는 /YAML/ 대신 일반 마크다운으로 GitHub Actions 워크플로를 작성할 수 있습니다. 이는 GitHub에서 마크다운의 역할이 문서화를 넘어 운영 자동화 분야로 계속 확장됨을 시사합니다.
+
+
+* How Do You Preview GitHub Markdown Locally?
+브라우저에서 직접 GitHub 마크다운을 작성하는 것은 시간이 많이 걸립니다. 커밋을 푸시하고, 페이지가 다시 로드되기를 기다린 다음, 서식이 제대로 적용되었기를 바랄 뿐이죠. 로컬 미리보기 도구를 사용하면 이런 반복 과정을 완전히 없앨 수 있습니다.
+
+MacMD Viewer는 GitHub에서 보는 것과 동일한 기능(표, 작업 목록, 취소선, 구문 강조가 적용된 코드 블록, Mermaid 다이어그램, 알림 스타일 인용문 등)을 통해 GitHub Flavored Markdown을 렌더링하는 macOS 전용 앱입니다. 이 앱은 읽기 전용 뷰어(파일 편집 기능은 없음)로 사용 중인 편집기(VS Code, Vim, Sublime Text)와 함께 사용할 수 있습니다. 구독료 없이 일회성 결제 19.99달러로 제공되며 매일 마크다운을 작성하고 즉각적인 로컬 렌더링을 원하는 개발자를 위해 특별히 제작되었습니다.
+
+MacMD Viewer는 QuickLook 확장 기능도 포함됩니다. Finder에서 .md 파일을 선택한 상태에서 스페이스 바를 누르면 별도의 앱을 열지 않고 완전히 렌더링된 마크다운을 확인할 수 있습니다. 여러 저장소를 오가면서 작업하는 개발자에게 이는 이미지 썸네일을 훑어보는 것만큼 빠르게 /README/ 와 변경 내역을 확인할 수 있음을 의미합니다.
+
+MacMD Viewer의 가격을 확인하고 푸시하기 전에 GitHub 마크다운을 로컬에서 미리 확인해 보세요. 또는 먼저 다른 대안을 비교해 보고 싶다면 Mac용 최고의 마크다운 뷰어 비교 글을 살펴보세요.
+
+
+
+
