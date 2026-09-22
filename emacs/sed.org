@@ -172,7 +172,11 @@ A stately pleasure dome decree:
 /r*an/         → 1, 3, 4번 줄과 일치 (r의 반복 횟수가 0일 수 있음!)  
 /\(an\).*\1/   → 1번 줄과 일치
 #+end_src
-  
+
+#+begin_quote
+[!NOTE]
+~sed -n '/\(an\).*\1/' example.txt~ 로 실행한다.
+#+end_quote
 
 
 * FUNCTIONS
