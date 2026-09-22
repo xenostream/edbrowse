@@ -202,10 +202,12 @@ A stately pleasure dome decree:
 *예제:*  
 
 #+begin_src 
+sed '{
 n
 a\
 XXXX
 d
+}' example.txt
 #+end_src
 
 위와 같은 함수 목록을 예제 파일에 적용하면 출력은 다음과 같다:
