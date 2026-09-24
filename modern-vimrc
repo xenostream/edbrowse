@@ -1,0 +1,55 @@
+set nocompatible           " Use Vim settings instead of legacy Vi settings
+
+set exrc                   " Enable project-specific .vimrc files
+
+set softtabstop=2          " Number of spaces inserted when pressing Tab
+set shiftwidth=4           " Number of spaces used for indentation
+set tabstop=4              " Display existing tab characters as 4 spaces wide
+
+syntax on                  " Enable syntax highlighting
+
+filetype indent on         " Enable filetype-specific indentation rules
+filetype plugin indent on  " Enable filetype-specific plugins and indentation
+
+set autoindent             " Automatically copy indentation from the previous line
+set number                 " Show absolute line numbers
+set relativenumber         " Show relative line numbers
+
+augroup toggle_relative_number
+    autocmd!
+    autocmd InsertEnter * setlocal norelativenumber
+    autocmd InsertLeave * setlocal relativenumber
+augroup END
+
+colorscheme desert         " Use the built-in 'desert' color scheme
+
+set nobackup               " Disable backup files
+set laststatus=2           " Always show the status line
+
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+                            " Show file name, modified state, file format,
+                            " file type, line number, total lines, and column
+
+set wildmenu               " Show command-line completion options as a menu
+
+
+" Create Vim data directories if they do not already exist
+let s:vim_dirs = [
+    \ expand('$HOME/.vim/swp'),
+    \ expand('$HOME/.vim/undo'),
+    \ expand('$HOME/.vim/backup')
+    \ ]
+
+for s:dir in s:vim_dirs
+    if !isdirectory(s:dir)
+        call mkdir(s:dir, 'p')
+    endif
+endfor
+
+set undofile                         " Enable persistent undo history
+set directory=$HOME/.vim/swp//       " Store swap files in the swap directory
+set undodir=$HOME/.vim/undo//        " Store undo history in the undo directory
+set backupdir=$HOME/.vim/backup//    " Store backup files in the backup directory
+
+let mapleader = " "                  " Use Space as the leader key
+nnoremap <leader>cd :Ex<CR>          " Open the file explorer with <Space>cd
