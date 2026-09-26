@@ -1,4 +1,6 @@
 # Sed Completed Guide
+
+[ref](https://github.com/LCTT/TranslateProject/blob/master/published/201811/20180615%20Complete%20Sed%20Command%20Guide%20%5BExplained%20with%20Practical%20Examples%5D.md)
 ## 먼저 Sed의 작동 방식을 살펴보겠습니다.
 Sed 명령어를 정확히 이해하려면 먼저 이 도구의 작동 방식을 파악해야 합니다.
 
