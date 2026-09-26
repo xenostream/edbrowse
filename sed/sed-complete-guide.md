@@ -1,20 +1,19 @@
-# Sed Completed Guide
+# Sed Complete Guide
 
-[ref](https://github.com/LCTT/TranslateProject/blob/master/published/201811/20180615%20Complete%20Sed%20Command%20Guide%20%5BExplained%20with%20Practical%20Examples%5D.md)
 ## 먼저 Sed의 작동 방식을 살펴보겠습니다.
 Sed 명령어를 정확히 이해하려면 먼저 이 도구의 작동 방식을 파악해야 합니다.
 
-데이터를 처리할 때, Sed는 입력 소스에서 한 줄씩 읽어와 이를 소위 ‘패턴 공간(pattern space)’ 에 저장합니다. Sed의 모든 변환은 패턴 스페이스에서 이루어집니다. 변환은 명령줄이나 외부 Sed 스크립트 파일에서 제공되는 한 글자 명령어로 설명됩니다. 대부분의 Sed 명령어는 주소 하나 또는 주소 범위를 접두사로 지정해서 적용 범위를 제한할 수 있습니다.
+데이터를 처리할 때, Sed는 입력 소스에서 한 줄씩 읽어와 이를 소위 ‘패턴 공간(*pattern space*)’ 에 저장합니다. Sed의 모든 변환 작업은 패턴 스페이스에서 이루어집니다. 변환 작업은 명령줄이나 외부 Sed 스크립트 파일에서 제공된 한 글자 명령어로 설명됩니다. 대부분의 Sed 명령어는 주소 하나 또는 주소 범위를 접두사로 지정해서 적용 범위를 제한합니다.
 
 기본적으로 Sed는 각 처리 루프를 마친 후 패턴 스페이스의 내용을 출력합니다. 즉, 입력의 다음 행이 패턴 스페이스를 덮어쓰기 전에 출력이 이루어집니다. 이런 작동 방식은 다음과 같이 요약할 수 있습니다:
 
 1. 다음 줄을 패턴 공간으로 읽어들이려고 시도한다.
 1. 읽기가 성공하면:
 	1. 스크립트에 명시된 순서대로 해당 주소와 일치하는 현재 입력 줄에 모든 명령을 적용한다.
-	1. sed가 무음 모드(-n)로 실행되지 않는 경우, 패턴 공간의 모든 내용(수정되었을 수도 있음)을 출력한다.
-	1. 1로 돌아갑니다.
+	1. sed가 무음 모드(`-n`)로 실행되지 않는 경우, 패턴 공간의 모든 내용(수정되었을 수도 있음)을 출력한다.
+	1. 1로 다시 돌아갑니다.
 
-따라서 각 행의 처리가 완료된 후, 패턴 공간의 내용은 버려지므로 내용을 장시간 저장하는 데 적합하지 않습니다. 이런 목적을 위해 Sed에는 두 번째 버퍼인 홀드 공간(hold space)이 있습니다. 데이터를 홀드 공간에 넣거나 홀드 공간에서 데이터를 가져오도록 명시적으로 요청하지 않는 한, Sed는 홀드 공간의 내용을 절대 지우지 않습니다. 나중에 exchange, get, hold 명령어를 학습할 때 이에 대해 자세히 살펴보겠습니다.
+따라서 각 행의 처리가 완료된 후, 패턴 공간의 내용은 버려지므로 내용을 장시간 저장하는 데 적합하지 않습니다. 이런 목적을 위해 Sed는 두 번째 버퍼인 홀드 공간(*hold space*)이 있습니다. 데이터를 홀드 공간에 넣거나 홀드 공간에서 데이터를 가져오도록 명시적으로 요청하지 않는 한, Sed는 홀드 공간의 내용을 절대 지우지 않습니다. 나중에 *exchange, get, hold* 명령어를 학습할 때 이에 대해 자세히 살펴보겠습니다.
 
 
 ## sed의 추상화 메커니즘
@@ -130,24 +129,24 @@ sed -n -e ‘/1[0-9]*2/p’ inputfile     # 문자 “1” 뒤에 “0”, “1�
 정규 표현식(정규 표현식 구분자 포함)에서 문자의 특수 의미를 제거하려면 해당 문자 앞에 백슬래시를 붙입니다:
 
 ```
- # “/usr/sbin/nologin”이라는 문자열이 포함된 모든 행을 출력합니다.
-sed -ne ‘//usr/sbin/nologin/p’ inputfile
+# “/usr/sbin/nologin”이라는 문자열이 포함된 모든 행을 출력합니다.
+sed -ne '/\/usr\/sbin\/nologin/p' inputfile
 ```
 
 주소에서 정규 표현식 구분자로 슬래시 문자만 사용해야 하는 것은 아닙니다. 첫 번째 구분자 앞에 백슬래시(`\\`)를 붙이는 방식으로 필요와 선호도에 따라 다른 어떤 문자라도 정규 표현식 구분자로 사용할 수 있습니다. 주소와 파일 경로가 포함된 문자를 함께 매칭할 때 아주 유용합니다:
 
 ```
  # 다음 두 명령은 완전히 동일합니다.
-sed -ne ‘//usr/sbin/nologin/p’ inputfile
-sed -ne ‘=/usr/sbin/nologin=p’ inputfile
+sed -ne '/\/usr\/sbin\/nologin/p' inputfile
+sed -ne '\=/usr/sbin/nologin=p' inputfile
 ```
 
 ### 확장 정규식
 기본적으로 Sed의 정규식 엔진은 POSIX 기본 정규식의 구문만 인식합니다. 확장 정규식을 사용하려면 Sed 명령에 -E 옵션을 추가해야 합니다. 확장 정규식은 기본 정규식에 일련의 추가 기능을 더한 것으로 그 중 상당수는 매우 중요하며 백슬래시 사용 횟수가 훨씬 적습니다. 다음을 비교해 보겠습니다.
 
 ```
-sed -n -e ‘/(www)|(mail)/p’ inputfile
-sed -En -e ‘/(www)|(mail)/p’ inputfile
+sed -ne '/\/usr\/sbin\/nologin/p' inputfile
+sed -ne '\=/usr/sbin/nologin=p' inputfile
 ```
 
 ### 중괄호 수량자
@@ -184,24 +183,24 @@ sed -n -e ‘/www/,/systemd/p’ inputfile  # 정규 표현식 /www/와 일치�
 > (LCTT 번역자 주: 아래는 생성된 목록의 예시이며, 참고용으로 제시합니다:)
 
 ```
-printf “%sn” {a,b,c}{d,e,f} | cat -n
-     1  ad
-     2  ae
-     3  af
-     4  bd
-     5  be
-     6  bf
-     7  cd
-     8  ce
-     9  cf
+printf "%s\n" {a,b,c}{d,e,f} | cat -n
+     1	ad
+     2	ae
+     3	af
+     4	bd
+     5	be
+     6	bf
+     7	cd
+     8	ce
+     9	cf
 ```
 
 시작 주소와 끝 주소에 동일한 행 번호를 사용하면 범위가 해당 행으로 좁혀집니다. 사실, 두 번째 주소의 숫자가 주소 범위에서 선택된 첫 번째 행의 숫자보다 작거나 같다면 단 한 행만 선택됩니다:
 
 ```
-printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne ‘4,4p’
+printf "%s\n" {a,b,c}{d,e,f} | cat -n | sed -ne '4,4p'
      4 bd
-printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne '4,3p'
+printf "%s\n" {a,b,c}{d,e,f} | cat -n | sed -ne '4,3p'
      4 bd
 ```
 
@@ -214,14 +213,14 @@ printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne '4,3p'
  # 일치하는 행의 행 번호가 4 이상이기 때문입니다.
  # (LCTT 번역자 주: 결과는 맞지만 설명이 틀렸습니다. 4, 5, 6행은 시작 정규 표현식과 일치하므로 통과하고, 
  # 7행은 시작 정규 표현식과 일치하지 않으므로 행 수 비교가 시작됩니다: 7 > 4 이므로 중단됩니다.)
-printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne ‘/b/,4p’
+printf "%s\n" {a,b,c}{d,e,f} | cat -n | sed -ne '/b/,4p'
      4  bd
      5  be
      6  bf
 
  # 일치 범위가 얼마인지 직접 확인해 보세요
  # 두 번째 예시:
-printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne '/d/,4p'
+printf "%s\n" {a,b,c}{d,e,f} | cat -n | sed -ne '/d/,4p'
      1  ad
      2  ae
      3  af
@@ -234,13 +233,13 @@ printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne '/d/,4p'
 > (LCTT 번역자 주: 위 번역자 주석에서 언급한 바와 같이 시작 정규 표현식이 충족될 때는 종료 표현식을 테스트하지 않으며 시작 표현식이 충족되지 않을 때만 종료 표현식을 테스트합니다.)
 
 ```
-printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne '/b/,/d/p'
+printf "%s\n" {a,b,c}{d,e,f} | cat -n | sed -ne '/b/,/d/p'
  4 bd
  5 be
  6 bf
  7 cd
 
-printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne ‘4,/d/p’
+printf "%s\n" {a,b,c}{d,e,f} | cat -n | sed -ne '4,/d/p'
  4 bd
  5 be
  6 bf
@@ -269,7 +268,7 @@ sed -n -e '/usb/{
   /daemon/p
 }' inputfile
 
-sed -n -e ‘/usb.*daemon/p’ inputfile
+sed -n -e '/usb.*daemon/p' inputfile
 ```
 
 한 블록 내에서 명령어를 중첩함으로써, “usb” 와 “daemon” 문자열을 모두 포함하는 행을 임의의 순서로 선택하게 됩니다. 반면 정규 표현식 “usb.*daemon” 은 “daemon” 문자열 앞에 “usb” 문자열이 포함된 행만 일치시킵니다.
@@ -303,14 +302,14 @@ sed -e ‘5q’ inputfile
 비슷한 기법을 사용해서 파일에서 특정 한 줄만 출력할 수 있습니다. 이는 명령줄에서 여러 Sed 표현식을 지정하는 몇 가지 방법 중 하나입니다. 다음 세 가지 변형 모두는 Sed에서 여러 명령을 받아들일 수 있으며 서로 다른 -e 옵션을 사용하거나 동일한 표현식 내에서 새 줄을 시작하거나 세미콜론(;)으로 구분할 수 있습니다:
 
 ```
-sed -n -e ‘5p’ -e ' 5q' inputfile
+sed -n -e '5p' -e '5q' inputfile
 
 sed -n -e '
   5p
   5q
 ' inputfile
 
-sed -n -e ‘5p;5q’ inputfile
+sed -n -e '5p;5q' inputfile
 ```
 
 기억하시겠지만 앞서 중괄호를 사용해서 명령을 결합할 수 있다는 것을 살펴봤습니다. 여기서는 동일한 주소가 두 번 반복되는 것을 방지하기 위해 이를 사용합니다:
@@ -354,8 +353,8 @@ sed ‘5{p;q}’ inputfile
 
 ```
 sed < inputfile -E -e '
- s/:/ /               # 첫 번째 필드의 구분자를 공백 20개로 대체
- s/(.{20}).*/1/       # 한 줄의 앞 20자만 남기기
+ s/:/ /                # 첫 번째 필드의 구분자를 공백 20개로 대체
+ s/(.{20}).*/\1/       # 한 줄의 앞 20자만 남기기
  s/.*/| & |/          # 출력 형식을 깔끔하게 하기 위해 수직선을 추가
 '
 ```
@@ -430,8 +429,8 @@ cat -n inputfile | sed -n -e ‘n;n;p’
 
 ```
 cat -n inputfile | sed -n -e '1{p;n;p;n;p;n;p;n;p}'
-cat -n inputfile | sed -n -e ‘p;n;p;n;p;n;p;n;p;q’
-cat -n inputfile | sed -n -e ‘n;n;n;n;q’
+cat -n inputfile | sed -n -e 'p;n;p;n;p;n;p;n;p;q'
+cat -n inputfile | sed -e 'n;n;n;n;q'
 ```
 
 좀 더 흥미로운 점은 특정 주소에 따라 행을 처리할 때 이 명령어가 매우 유용하다는 것입니다:
@@ -516,7 +515,7 @@ get 명령어(g)는 keep 명령어와 정반대입니다. 즉, keep 영역에서
 
 ```
 cat -n inputfile | sed -En -e '
- =(/usr/sbin/nologin|/bin/false)$= { H;d; }
+ \=(/usr/sbin/nologin|/bin/false)$= { H;d; }
             # 일치하는 행을 유지 영역으로 가져옵니다
             # 그런 다음 다음 반복으로 넘어갑니다
  p          # 나머지 행을 출력합니다
@@ -564,9 +563,9 @@ sed < inputfile -En -e '
 
         # 1행의 첫 번째 필드를 공백으로 채우고
         # 나머지 행은 버립니다
- s/:.*n/                    n/
+ s/:.*\n/                    \n/
  s/:.*//            # 2행의 첫 번째 필드를 제외한 나머지 행을 제거
- s/(.{20}).*n/1/  # 행을 잘라내어 연결
+ s/(.{20}).*\n/\1/  # 행을 잘라내어 연결
  p                  # 결과 출력
 '
 ```
@@ -629,10 +628,10 @@ test 명령어를 사용하면 Sed 프로그램에서 루프를 쉽게 실행할
  # 원본 텍스트
 cut -d: -f1 inputfile | sed -Ee '
   :start
-  s/^(.{,19})$/ 1 /    # 20자 미만인 줄의 시작 부분에 공백 하나를 채움
+  s/^(.{,19})$/ \1 /    # 20자 미만인 줄의 시작 부분에 공백 하나를 채움
                         # 그리고 끝 부분에 공백 하나를 추가
   t start               # 이미 공백을 추가했다면 :start 태그로 되돌아가기
-  s/(.{20}).*/| 1 |/   # 한 줄의 앞 20자만 남기기
+  s/(.{20}).*/| \1 |/   # 한 줄의 앞 20자만 남기기
                         # 홀수 줄로 인해 발생하는 오류를 수정하기 위해
 '
 ```
@@ -646,10 +645,10 @@ cat inputfile | sed -Ee '
   s/:.*//               # 첫 번째 필드를 제외한 나머지 필드를 삭제
   t start
   :start
-  s/^(.{,19})$/ 1 /    # 20자 미만인 행의 시작 부분에 공백 하나를 채우고
+  s/^(.{,19})$/ \1 /    # 20자 미만인 행의 시작 부분에 공백 하나를 채우고
                         # 끝 부분에 공백 하나를 추가합니다
   t start               # 이미 공백을 추가한 경우, :start 태그로 돌아갑니다
-  s/(.{20}).*/| 1 |/   # 한 줄의 앞 20자만 남김
+  s/(.{20}).*/| \1 |/   # 한 줄의 앞 20자만 남김
                         # 홀수 줄로 인해 발생하는 오차를 수정하기 위함
 '
 ```
@@ -704,9 +703,9 @@ Sed는 비상호작용형 텍스트 편집기입니다. 비상호작용형이지
 
 ```
 head -5 inputfile | sed '
-1i
+1i\
  # 사용자 계정 목록
-$a
+$a\
  # 끝
 '
 ```
@@ -715,10 +714,10 @@ $a
 
 ```
 head -5 inputfile | sed '
-1i
- # 사용자 계정 목록
+1i)
+ # 사용자 계정 목록\
  # (사용자 1~5)
-$a
+$a\
  # 끝
 '
 ```
@@ -728,8 +727,8 @@ GNU Sed 같은 일부 Sed 구현체는 초기 백슬래시 뒤의 줄바꿈 문�
 ```
  # 비 POSIX 구문:
 head -5 inputfile | sed -e '
-1i# 사용자 계정 목록
-$a# end
+1i#\ 사용자 계정 목록
+$a\# end
 '
 ```
 
@@ -746,9 +745,9 @@ change 명령어(c)는 d 명령어와 마찬가지로 패턴 영역의 내용을
 
 ```
 cat -n inputfile | sed -e '
-/systemd/c
- # :REMOVED:
-s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니다.
+19,22c\
+# :REMOVED:
+s/:.*// # This will NOT be applied to the "changed" text
 '
 ```
 
@@ -756,9 +755,10 @@ s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니�
 
 ```
 cat -n inputfile | sed -e '
-19,22c
- # :REMOVED:
-s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니다
+19,22{c\
+# :REMOVED:
+}
+s/:.*// # This will NOT be applied to the "changed" text
 '
 ```
 
@@ -766,10 +766,10 @@ s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니�
 
 ```
 cat -n inputfile | sed -e '
-19,22{c
- # :REMOVED:
+19,22{c\
+# :REMOVED:
 }
-s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니다
+s/:.*// # This will NOT be applied to the "changed" text
 '
 ```
 
@@ -782,7 +782,7 @@ s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니�
 ```
  # 첫 번째 행에 제목을 붙인 채로 처음 다섯 개의 사용자 이름을 표시합니다.
 sed < inputfile -e '
-1i
+1i\
 USER NAME
 s/:.*//
 5q
@@ -799,7 +799,7 @@ s/:.*//
 
 ```
 sed < inputfile -e '
-5a
+5a\
 USER NAME
 s/:.*//
 5q
@@ -847,8 +847,8 @@ echo | sed -ne '
 
 ```
 sed < inputfile -ne '
-  /:/bin/false$/w server
-  /:/usr/sbin/nologin$/w server
+  /:\/bin\/false$/w server
+  /:\/usr\/sbin\/nologin$/w server
   w output
 '
 cat server
@@ -859,8 +859,8 @@ cat server
 
 ```
 sed < inputfile -ne '
-  s/:.*/nologin$//w server
-  s/:.*/false$//w server
+  s/:.*\/nologin$//w server
+  s/:.*\/false$//w server
 '
 cat server
 ```
@@ -934,7 +934,7 @@ sed < inputfile -e '
  # 이 코드는 무엇을 할까요?
  # 힌트: 정답은 바로 근처에 있습니다...
 sed -E '
-  s/.*W(.*)/1/
+  s/.*\W(.*)/\1/
   h
   ${ x; p; }
   d' < inputfile
