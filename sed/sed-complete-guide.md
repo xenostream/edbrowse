@@ -133,7 +133,7 @@ sed -ne ‘//usr/sbin/nologin/p’ inputfile
 
 주소에서 정규 표현식 구분자로 슬래시 문자만 사용해야 하는 것은 아닙니다. 첫 번째 구분자 앞에 백슬래시(`\\`)를 붙이는 방식으로 필요와 선호도에 따라 다른 어떤 문자라도 정규 표현식 구분자로 사용할 수 있습니다. 주소와 파일 경로가 포함된 문자를 함께 매칭할 때 아주 유용합니다:
 
-``
+```
  # 다음 두 명령은 완전히 동일합니다.
 sed -ne ‘//usr/sbin/nologin/p’ inputfile
 sed -ne ‘=/usr/sbin/nologin=p’ inputfile
