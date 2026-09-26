@@ -1,4 +1,4 @@
-# Sed에 대한 간단한 이론
+# Sed Completed Guide
 ## 먼저 Sed의 작동 방식을 살펴보겠습니다.
 Sed 명령어를 정확히 이해하려면 먼저 이 도구의 작동 방식을 파악해야 합니다.
 
@@ -113,14 +113,14 @@ sed -sn -e ‘1p’ inputfile1 inputfile2 inputfile3
 ```
 sed -n -e ‘/systemd/p’ inputfile        # “systemd”라는 문자열이 포함된 행만 출력
 sed -n -e ‘/nologin$/p’ inputfile       # “nologin”으로 끝나는 행만 출력
-sed -n -e '/ ^bin/p&apos; inputfile     # “bin”으로 시작하는 행만 출력
-sed -n -e &apos;/^$/p&apos; inputfile   # 빈 행(즉, 시작과 끝 사이에 아무것도 없는 행)만 출력
-sed -n -e &apos;/./p&apos; inputfile    # 문자가 포함된 행(즉, 비어 있지 않은 행)만 출력
+sed -n -e '/ ^bin/p' inputfile     # “bin”으로 시작하는 행만 출력
+sed -n -e '/^$/p' inputfile   # 빈 행(즉, 시작과 끝 사이에 아무것도 없는 행)만 출력
+sed -n -e '/./p' inputfile    # 문자가 포함된 행(즉, 비어 있지 않은 행)만 출력
 sed -n -e ‘/^.$/p’ inputfile            # 단 하나의 문자만 포함된 행만 출력
 sed -n -e ‘/admin.*false/p’ inputfile   # 문자열 “admin” 뒤에 문자열 “false”가 오는 행만 출력 (그 사이에 임의의 개수의 임의의 문자가 있을 수 있음)
 sed -n -e ‘/1[0,3]/p’ inputfile         # “1”이 하나 있고 그 뒤에 “0” 또는 “3”이 하나 있는 행만 출력
-sed -n -e '/ 1[0-2]/p&apos; inputfile   # “1”이 하나 있고 그 뒤에 “0”, “1”, “2” 또는 “3”이 오는 행만 출력합니다
-sed -n -e &apos;/1.*2/p&apos; inputfile # 문자 “1” 뒤에 “2”가 오는(그 사이에 임의의 개수의 문자가 있을 수 있음) 행만 출력합니다
+sed -n -e '/ 1[0-2]/p' inputfile   # “1”이 하나 있고 그 뒤에 “0”, “1”, “2” 또는 “3”이 오는 행만 출력합니다
+sed -n -e '/1.*2/p' inputfile # 문자 “1” 뒤에 “2”가 오는(그 사이에 임의의 개수의 문자가 있을 수 있음) 행만 출력합니다
 sed -n -e ‘/1[0-9]*2/p’ inputfile       # 문자 “1” 뒤에 “0”, “1” 또는 더 많은 숫자가 오고, 마지막에 “2”가 오는 행만 출력
 ```
 
@@ -209,7 +209,8 @@ printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne '4,3p'
 ```
  # /b/,4 주소는 세 개의 단일 행과 일치합니다.
  # 일치하는 행의 행 번호가 4 이상이기 때문입니다.
- # (LCTT 번역자 주: 결과는 맞지만 설명이 틀렸습니다. 4, 5, 6행은 시작 정규 표현식과 일치하므로 통과하고, 7행은 시작 정규 표현식과 일치하지 않으므로 행 수 비교가 시작됩니다: 7 > 4 이므로 중단됩니다.)
+ # (LCTT 번역자 주: 결과는 맞지만 설명이 틀렸습니다. 4, 5, 6행은 시작 정규 표현식과 일치하므로 통과하고, 
+ # 7행은 시작 정규 표현식과 일치하지 않으므로 행 수 비교가 시작됩니다: 7 > 4 이므로 중단됩니다.)
 printf “%sn” {a,b,c}{d,e,f} | cat -n | sed -ne ‘/b/,4p’
      4  bd
      5  be
@@ -340,7 +341,7 @@ sed ‘5{p;q}’ inputfile
 
 - 전역 치환(즉, 패턴 공간에서 겹치지 않는 모든 일치 항목에 대해 수행)을 실행하려면 g 플래그를 추가해야 합니다: `sed ‘s/:/-----/g’ inputfile`
 
-- 문자열 치환에서 나타나는 모든 & 기호는 검색 패턴과 일치하는 부분 문자열로 대체됩니다: `sed ‘s/:/-&&&-/g’ inputfile;sed ‘s/.../& /g’ inputfile; s/:/-&&&-/g&apos; inputfile, sed &apos;s/.../& /g&apos; inputfile`
+- 문자열 치환에서 나타나는 모든 & 기호는 검색 패턴과 일치하는 부분 문자열로 대체됩니다: `sed ‘s/:/-&&&-/g’ inputfile;sed ‘s/.../& /g’ inputfile; s/:/-&&&-/g' inputfile, sed 's/.../& /g' inputfile`
 
 - 둥근 괄호(확장 정규 표현식에선 (...), 기본 정규 표현식에선 (...) )는 캡처 그룹(capturing group)으로 간주됩니다. 이는 일치한 문자열의 일부로 치환 문자열에서 참조할 수 있습니다. 1은 첫 번째 캡처 그룹의 내용이고 2는 두 번째 캡처 그룹의 내용이며 이와 같은 순서로 이어집니다: `sed -E ‘s/(.)(.)/21/g’ inputfile`, `sed -E 's/(.):x:(.):(.*)/1:3/' inputfile` (후자가 정상 작동하는 이유는 정규 표현식에서 수량자 별표(*)가 일치하지 않을 때까지 가능한 한 많이 일치함을 나타내며 여러 개의 문자와도 일치할 수 있기 때문입니다)
 
@@ -382,7 +383,7 @@ sed -En -e '
 사실, 치환 후 한 줄을 출력하는 것은 매우 흔한 사용법입니다. 따라서 치환 명령어도 p 옵션을 지원합니다:
 
 ```
-sed -En -e &apos;/sonia/s/[0-9]+/1100/gp&apos; inputfile
+sed -En -e '/sonia/s/[0-9]+/1100/gp' inputfile
 ```
 
 마지막으로, 치환 명령어의 w 옵션은 자세히 설명하지 않겠습니다. 이 내용은 나중에 자세히 다룰 예정입니다.
@@ -450,8 +451,11 @@ cat -n inputfile | sed -n ‘/pulse/{n;n;p}’  # “pulse”가 포함된 줄�
 
 ```
 cat -n inputfile | sed -n -e ‘x;n;p;x;p;q’
+```
+
 물론, 홀드 공간을 설정한 후 그 내용을 즉시 사용하는 것은 아닙니다. 명시적으로 수정하지 않는 한 홀드 공간의 내용은 변하지 않기 때문입니다. 다음 예제에서는 입력 파일의 첫 다섯 줄을 읽은 후, 이를 사용하여 첫 번째 줄을 삭제합니다:
 
+```
 cat -n inputfile | sed -n -e '
  1{x;n} # 홀드 공간과 패턴 공간을 교환
         # 1번째 줄을 홀드 공간에 저장
@@ -540,11 +544,14 @@ cat -n inputfile | sed -En -e '
   N             # 6번째 줄을 큐에 추가
   P             # 큐의 첫 번째 줄 출력
   D             # 큐의 첫 번째 줄 삭제
-&apos;
+'
+```
+
 두 번째 예제로, 입력 데이터를 두 열로 표시할 수 있습니다:
 
+```
  # 두 열로 출력
-sed < inputfile -En -e &apos;
+sed < inputfile -En -e '
  $!N    # 패턴 공간에 새 줄 추가
         # 입력 파일의 마지막 줄을 제외하고
         # 입력 파일의 마지막 줄에서 N 명령을 사용할 때
@@ -596,7 +603,7 @@ echo hello | sed -ne '
 주목할 점은 분기 명령(b)에 매개변수로 태그를 지정하지 않으면 분기는 프로그램의 끝 부분으로 전환된다는 것입니다. 따라서 Sed는 새로운 루프를 시작합니다. 이 특성은 일부 명령을 건너뛰는 데 사용할 수 있으며 결과적으로 “블록” 의 대체 수단으로 활용될 수 있습니다:
 
 ```
-cat -n inputfile | sed -ne &apos;
+cat -n inputfile | sed -ne '
 /usb/!b
 /daemon/!b
 p
@@ -632,7 +639,7 @@ cut -d: -f1 inputfile | sed -Ee '
 하지만 Sed만 사용해서 프로그램을 약간 수정함으로써 동일한 작업을 수행할 수 있습니다:
 
 ```
-cat inputfile | sed -Ee &apos;
+cat inputfile | sed -Ee '
   s/:.*//               # 첫 번째 필드를 제외한 나머지 필드를 삭제
   t start
   :start
@@ -672,7 +679,7 @@ cat inputfile | sed -Ene '
 
 ```
  # 사용자 로그인 프로그램에 따라 사용자 계정 분류
-cat inputfile | sed -Ene &apos;
+cat inputfile | sed -Ene '
   s/^/login=/
 
   t classify # “대체 플래그” 지우기
@@ -704,7 +711,7 @@ $a
 여러 줄의 텍스트를 삽입하려면 각 줄의 끝마다 백슬래시를 사용해야 합니다:
 
 ```
-head -5 inputfile | sed &apos;
+head -5 inputfile | sed '
 1i
  # 사용자 계정 목록
  # (사용자 1~5)
@@ -717,7 +724,7 @@ GNU Sed 같은 일부 Sed 구현체는 초기 백슬래시 뒤의 줄바꿈 문�
 
 ```
  # 비 POSIX 구문:
-head -5 inputfile | sed -e &apos;
+head -5 inputfile | sed -e '
 1i# 사용자 계정 목록
 $a# end
 '
@@ -745,7 +752,7 @@ s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니�
 변경 명령이 주소 범위와 연관된 경우 범위의 마지막 줄에 도달하면 해당 텍스트는 한 번만 출력됩니다. 이는 Sed 명령이 주소 범위 내의 모든 줄에 반복적으로 적용된다는 관례에 대한 일종의 예외입니다:
 
 ```
-cat -n inputfile | sed -e &apos;
+cat -n inputfile | sed -e '
 19,22c
  # :REMOVED:
 s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니다
@@ -755,7 +762,7 @@ s/:.*// # 이 명령은 “변경된” 텍스트에는 적용되지 않습니�
 따라서 변경 명령을 주소 범위 내의 모든 행에 반복 적용하려면 이를 블록으로 묶는 것 외에는 별 다른 방법이 없습니다:
 
 ```
-cat -n inputfile | sed -e &apos;
+cat -n inputfile | sed -e '
 19,22{c
  # :REMOVED:
 }
@@ -804,7 +811,7 @@ s/:.*//
 예를 들어, 다음 절에서 자세히 설명할 쓰기 명령을 사용해서 읽기 명령과 함께 임시 파일에 쓰고 다시 읽는 경우 창의적인 결과를 얻을 수 있습니다(프랑스어판 시리토리 게임을 예로 들면):
 
 ```
-printf “%sn” “Trois p&apos;tits chats” “Chapeau d&apos; paille” “Paillasson” |
+printf “%sn” “Trois p'tits chats” “Chapeau d' paille” “Paillasson” |
 sed -ne '
   r temp
   a
@@ -827,7 +834,7 @@ Sed의 설계 철학은 모든 텍스트 변환 결과가 프로세스의 표준
 따라서 실제로 해당 파일에 데이터를 쓰지 않았더라도 파일은 생성됩니다. 예를 들어, 다음 Sed 프로그램은 쓰기 명령이 실행하지 않았더라도 output 파일을 생성하거나 덮어씁니다:
 
 ```
-echo | sed -ne &apos;
+echo | sed -ne '
   q            # 즉시 종료
   w output     # 이 명령은 실행되지 않음
 '
@@ -911,7 +918,7 @@ sed 명령어는 소스 집합과 대상 집합 간의 일대일 변환을 요�
 
 ```
  # 주의: 이 코드는 생각한 대로 작동하지 않을 수 있습니다!
-sed < inputfile -e &apos;
+sed < inputfile -e '
   s/:.*//
   y/[a-z]/[A-Z]/
 '
