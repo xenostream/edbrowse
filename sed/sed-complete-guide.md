@@ -111,17 +111,18 @@ sed -sn -e ‘1p’ inputfile1 inputfile2 inputfile3
 다음은 Sed를 사용한 몇 가지 예제입니다:
 
 ```
-sed -n -e ‘/systemd/p’ inputfile        # “systemd”라는 문자열이 포함된 행만 출력
-sed -n -e ‘/nologin$/p’ inputfile       # “nologin”으로 끝나는 행만 출력
-sed -n -e '/ ^bin/p' inputfile     # “bin”으로 시작하는 행만 출력
-sed -n -e '/^$/p' inputfile   # 빈 행(즉, 시작과 끝 사이에 아무것도 없는 행)만 출력
-sed -n -e '/./p' inputfile    # 문자가 포함된 행(즉, 비어 있지 않은 행)만 출력
-sed -n -e ‘/^.$/p’ inputfile            # 단 하나의 문자만 포함된 행만 출력
-sed -n -e ‘/admin.*false/p’ inputfile   # 문자열 “admin” 뒤에 문자열 “false”가 오는 행만 출력 (그 사이에 임의의 개수의 임의의 문자가 있을 수 있음)
-sed -n -e ‘/1[0,3]/p’ inputfile         # “1”이 하나 있고 그 뒤에 “0” 또는 “3”이 하나 있는 행만 출력
-sed -n -e '/ 1[0-2]/p' inputfile   # “1”이 하나 있고 그 뒤에 “0”, “1”, “2” 또는 “3”이 오는 행만 출력합니다
-sed -n -e '/1.*2/p' inputfile # 문자 “1” 뒤에 “2”가 오는(그 사이에 임의의 개수의 문자가 있을 수 있음) 행만 출력합니다
-sed -n -e ‘/1[0-9]*2/p’ inputfile       # 문자 “1” 뒤에 “0”, “1” 또는 더 많은 숫자가 오고, 마지막에 “2”가 오는 행만 출력
+sed -n -e ‘/systemd/p’ inputfile      # “systemd”라는 문자열이 포함된 행만 출력
+sed -n -e ‘/nologin$/p’ inputfile     # “nologin”으로 끝나는 행만 출력
+sed -n -e '/ ^bin/p' inputfile        # “bin”으로 시작하는 행만 출력
+sed -n -e '/^$/p' inputfile           # 빈 행(즉, 시작과 끝 사이에 아무것도 없는 행)만 출력
+sed -n -e '/./p' inputfile            # 문자가 포함된 행(즉, 비어 있지 않은 행)만 출력
+sed -n -e ‘/^.$/p’ inputfile          # 단 하나의 문자만 포함된 행만 출력
+sed -n -e ‘/admin.*false/p’ inputfile # 문자열 “admin” 뒤에 문자열 “false”가 오는 행만 출력 
+                                      # (그 사이에 임의의 개수의 임의의 문자가 있을 수 있음)
+sed -n -e ‘/1[0,3]/p’ inputfile       # “1”이 하나 있고 그 뒤에 “0” 또는 “3”이 하나 있는 행만 출력
+sed -n -e '/ 1[0-2]/p' inputfile      # “1”이 하나 있고 그 뒤에 “0”, “1”, “2” 또는 “3”이 오는 행만 출력합니다
+sed -n -e '/1.*2/p' inputfile         # 문자 “1” 뒤에 “2”가 오는(그 사이에 임의의 개수의 문자가 있을 수 있음) 행만 출력합니다
+sed -n -e ‘/1[0-9]*2/p’ inputfile     # 문자 “1” 뒤에 “0”, “1” 또는 더 많은 숫자가 오고, 마지막에 “2”가 오는 행만 출력
 ```
 
 정규 표현식(정규 표현식 구분자 포함)에서 문자의 특수 의미를 제거하려면 해당 문자 앞에 백슬래시를 붙입니다:
