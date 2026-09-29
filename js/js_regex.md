@@ -1,88 +1,90 @@
 # Preface
-이 책은 정규 표현식(*regular expression*)의 특징을 예제를 통해 하나씩 설명하는 방식으로 진행합니다. 따라서, 각 예제는 직접 타이핑하고 실험해보는 것이 좋습니다. 예제 입력과 제시한 해결 방법을 정확히 이해하도록 노력하고, 입력이나 코드 일부를 변경했을 때, 출력이 어떻게 변하는지 직접 확인하시기 바랍니다. 이것은 자동차 운전 배우기에 비유할 수 있는데, 아무리 읽고 듣더라도 실제 경험이 없는 한, 숙련되기 어렵다는 점에서 유사합니다. 
 
-스크립팅과 자동화 작업은 입력 데이터에서 텍스트의 특정 부분을 "추출" 하거나, 한 형식에서 다른 형식으로 변환할 경우가 자주 있습니다. 이 책은 각종 텍스트 처리를 위한 미니 프로그래밍 언어인 "정규 표현식" 을 이해하는 데 도움을 줄 수 있습니다.
+이 책은 정규 표현식(*regular expression*)의 특징을 예제를 통해 하나씩 설명하는 방식으로 진행합니다. 따라서, 각 예제를 직접 타이핑하고 실험해 보는 것이 좋습니다. 예제 입력과 제시한 해결 방법을 정확히 이해하도록 노력하고 입력이나 코드 일부를 변경했을 때 출력이 어떻게 변하는지 직접 확인하시기 바랍니다. 이것은 자동차 운전 배우기에 비유할 수 있는데 아무리 읽고 듣더라도 실제 경험이 없는 한 숙련하기는 어렵다는 점에서 유사합니다. 
 
-이 책은 정규 표현식의 기능을 하나씩 소개할 때 예제에 크게 의존합니다. 각 예제는 직접 타이핑하고 실험해 볼 것을 권장합니다. 제시한 해법만 아니라, 예제를 이해하도록 노력하고, 입력이나 코드의 일부를 바꿀 때, 출력이 변하는지(혹은 변하지 않는지!) 확인하시기 바랍니다. 비유를 들면, 자동차 운전을 배우는 것을 생각해 보세요 — 그것들에 대해 아무리 많이 읽거나 설명을 들어도, 숙련되려면 실습 경험이 필요합니다.
+스크립팅(*scripting*)과 자동화(*automation*) 작업은 입력 데이터의 특정 부분을 "추출" 하거나 한 형식에서 다른 형식으로 변환할 경우가 자주 있습니다. 이 책은 각종 텍스트 처리를 위한 미니 프로그래밍 언어인 "정규 표현식" 을 이해하는 데 도움을 줄 수 있습니다.
+
+이 책은 정규 표현식의 기능을 하나씩 소개할 때 예제에 크게 의존합니다. 각 예제를 직접 타이핑하고 실험할 것을 강력히 권장합니다. 제시한 해법뿐만 아니라 예제를 이해하도록 노력하고 입력이나 코드의 일부를 바꿀 때 출력이 어떻게 변하는지(혹은 변하지 않는지!) 확인합니다. 비유를 들면, 자동차 운전을 배우는 것을 생각합니다 — 그것에 대해 아무리 많이 읽거나 설명을 들어도 숙련되려면 실습 경험이 필요합니다.
 
 
 ## Prerequisites
-먼저, 프로그래밍 기초에 익숙해야 합니다. 또한, JavaScript 문법과 `map`, `filter` 같은 함수형 프로그래밍 개념에 대한 실무 지식도 갖추고 있어야 합니다.  
 
-또한, 도움말 읽는 것, 온라인 검색하기, 추가 학습을 위해 제공된 외부 링크 방문하기, 예제를 직접 만들고 실험하기, 문제에 막혔을 때 도움을 요청하기 등에도 익숙해지는 것도 기대됩니다. 다시 말해, 단순히 수동적으로 내용을 소비하는 대신, 적극적이고 호기심을 가지고 학습에 임해야 합니다.
+먼저, 프로그래밍 기초에 익숙해야 합니다. 또한, JavaScript 문법과 `map`, `filter` 같은 함수형 프로그래밍 개념에 대한 실무 지식도 갖춰야 합니다.  
+
+또한, 도움말 읽는 것, 온라인 검색하기, 추가 학습을 위해 제공된 외부 링크 방문하기, 예제를 직접 만들고 실험하기, 문제에 막혔을 때 도움 요청하기 등에 익숙해지는 것도 기대됩니다. 다시 말해, 단순히 수동적으로 내용을 소비하는 대신 적극적이고 호기심을 가지고 학습에 임해야 합니다.
 
 
 ## Conventions
-- 여기서 제시한 예제는 Chrome/Chromium 콘솔(<kbd>F12</kbd> 또는 <kbd>Ctrl + Shift + J</kbd>)에서 테스트되었으며, 다른 브라우저나 플랫폼에서는 사용할 수 없는 기능들을 포함할 수 있습니다.  
 
-- 코드 조각은 콘솔에 복사·붙여넣기 한 뒤, 설명을 위해 수정한 것입니다. 일부 명령어 앞에는 맥락과 설명을 제공하기 위한 주석이 붙어 있습니다. 가독성을 높이기 위해 빈 줄을 추가했으며, 출력이 `undefined` 이거나, 굳이 보여줄 필요가 없을 경우는 생략했습니다.  
+- 여기서 제시한 예제는 Chrome/Chromium 콘솔(<kbd>F12</kbd> 또는 <kbd>Ctrl + Shift + J</kbd>)에서 테스트했으며 다른 브라우저나 플랫폼에서 사용할 수 없는 기능을 포함할 수도 있습니다.  
 
-- 별도의 언급이 없는 한, 모든 예제와 설명은 ASCII 문자 기준으로 작성되었습니다.
+- 코드 조각은 콘솔에 복사·붙여넣기한 뒤 설명을 위해 수정한 것입니다. 일부 명령어 앞에는 맥락과 설명을 위한 주석이 있습니다. 가독성을 높이기 위해 빈 줄을 추가했으며 출력이 `undefined` 이거나 굳이 보여줄 필요가 없을 경우 생략했습니다.  
 
-- 책 전반에 걸쳐 특정 주제를 더 깊이 탐구할 수 있도록 외부 링크가 제공됩니다.
+- 별도의 언급이 없는 한 모든 예제와 설명은 ASCII 문자 기준으로 작성됩니다.
+
+- 책 전반에 걸쳐 특정 주제를 좀 더 깊이 탐구할 수 있는 외부 링크가 제공됩니다.
   
-- `learn_js_regexp` 저장소에는 이 책과 관련된 모든 코드 조각, 연습 문제, 기타 세부 사항이 담겨 있습니다. 만약 `git` 명령어에 익숙하지 않다면, 웹페이지에서 **Code** 버튼을 클릭해서 파일을 받을 수 있습니다.
+- `learn_js_regexp` 저장소는 모든 코드 조각, 연습 문제, 기타 세부 사항이 담겨 있습니다. 만약 `git` 명령어에 익숙치 않다면 저장소에서 **Code** 버튼을 클릭해서 파일을 받을 수 있습니다.
 
 ## Acknowledgements
-- **[MDN: 정규 표현식 — 문서와 예제](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions)**  
-- **[/r/learnjavascript/](https://old.reddit.com/r/learnjavascript/)** 와 **[/r/regex/](https://old.reddit.com/r/regex/)** — 초보자와 숙련된 프로그래머 모두에게 유용한 포럼  
-- **[stackoverflow](https://stackoverflow.com/)** — JavaScript와 정규 표현식에 관한 적절한 질문에 대한 답변을 얻기 위해  
-- **[tex.stackexchange](https://tex.stackexchange.com/)** — pandoc 및 tex 관련 질문에 대한 도움을 위해  
-- **[canva](https://www.canva.com/)** — 표지 이미지  
-- **[Amada44](https://commons.wikimedia.org/wiki/User:Amada44)의 [Warning](https://commons.wikimedia.org/wiki/File:Warning_icon.svg) 및 [Info](https://commons.wikimedia.org/wiki/File:Info_icon_002.svg) 아이콘 — 퍼블릭 도메인 하에 제공됨**  
-- **[oxipng](https://github.com/shssoichiro/oxipng), [pngquant](https://pngquant.org/) 및 [svgcleaner](https://github.com/RazrFalcon/svgcleaner)** — 이미지 최적화  
-- **[mdBook](https://github.com/rust-lang/mdBook)** — 현재 읽고 있는 책의 웹 버전  
-- **[mdBook-pagetoc](https://github.com/JorelAli/mdBook-pagetoc)** — 각 장의 목차를 추가하기 위해  
-- **[minify-html](https://github.com/wilsonzlin/minify-html)** — html 파일을 최소화하기 위해  
+- [MDN: 정규 표현식 — 문서와 예제](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions)  
+- [/r/learnjavascript/](https://old.reddit.com/r/learnjavascript/) 와 [/r/regex/](https://old.reddit.com/r/regex/) — 초보자와 숙련된 프로그래머 모두에게 유용한 포럼  
+- [stackoverflow](https://stackoverflow.com/) — JavaScript와 정규 표현식에 관한 적절한 질문에 대한 답변을 얻기 위해  
+- [tex.stackexchange](https://tex.stackexchange.com/) — pandoc 및 tex 관련 질문에 대한 도움을 위해  
+- [canva](https://www.canva.com/) — 표지 이미지  
+- [Amada44](https://commons.wikimedia.org/wiki/User:Amada44) 의 [Warning](https://commons.wikimedia.org/wiki/File:Warning_icon.svg) 및 [Info](https://commons.wikimedia.org/wiki/File:Info_icon_002.svg) 아이콘 — 퍼블릭 도메인 하에 제공됨  
+- [oxipng](https://github.com/shssoichiro/oxipng), [pngquant](https://pngquant.org/) 및 [svgcleaner](https://github.com/RazrFalcon/svgcleaner) — 이미지 최적화  
+- [mdBook](https://github.com/rust-lang/mdBook) — 현재 읽고 있는 책의 웹 버전  
+  - [mdBook-pagetoc](https://github.com/JorelAli/mdBook-pagetoc) — 각 장의 목차를 추가하기 위해  
+  - [minify-html](https://github.com/wilsonzlin/minify-html) — html 파일을 최소화하기 위해  
 
 ## Feedback and Errata
-이 책에 대해 어떻게 느꼈는지 알려주시면 대단히 감사하겠습니다. 간단한 감사 인사부터 오탈자 지적, 코드 조각의 실수, 이 책의 어떤 측면이 당신에게 효과적이었는지(혹은 그렇지 않았는지) 등에 이르기까지 무엇이든 좋습니다. 독자 피드백은 필수적이며, 특히 자가 출판 저자에게는 더욱 그렇습니다.
+이 책에 대해 어떻게 느꼈는지 알려주시면 대단히 감사하겠습니다. 간단한 감사 인사부터 오탈자 지적, 코드 조각의 실수, 이 책의 어떤 측면이 당신에게 효과적인지(혹은 그렇지 않은지) 등에 이르기까지 무엇이든 좋습니다. 독자의 피드백은 필수이며 특히 자가 출판 저자는 더 더욱 그렇습니다.
 
-다음 방법으로 연락하실 수 있습니다:
+다음 방법으로 저에게 연락하실 수 있습니다:
 
 Issue Manager: [https://github.com/learnbyexample/learn_js_regexp/issues](https://github.com/learnbyexample/learn_js_regexp/issues)  
 E-mail: learnbyexample.net@gmail.com  
 Twitter: [https://twitter.com/learn_byexample](https://twitter.com/learn_byexample)
 
 ## Author info
-**Sundeep Agarwal** 은 최소한의 노력으로 소박한 생활을 유지하는 것을 선호하는 게으른 존재입니다. 그는 Analog Devices에서 설계 엔지니어로 일하며 막대한 부를 축적했고, 스물여덟 살이라는 이른 나이에 기업에서 은퇴했습니다. 그러나, 몇 년 만에 저축을 탕진하고 생계를 위해 허둥대야 했습니다. 모든 역경을 딛고, 프로그래밍 전자책 판매가 그의 게으른 삶을 다시는 직장을 찾지 않아도 되도록 구해주었습니다. 이제 그는 원하는 판타지 전자책을 모두 살 수 있고, 인터넷을 탐색하는 데 지나치게 많은 시간을 보냅니다.  
+*Sundeep Agarwal* 은 최소한의 노력으로 소박한 생활을 유지하는 것을 선호하는 아주 게으른 존재입니다. 그는 Analog Devices에서 설계 엔지니어로 일하며 막대한 부를 축적했고 스물 여덟 살이라는 이른 나이에 기업에서 은퇴했습니다. 그러나, 몇 년만에 저축을 탕진하고 생계를 위해 허둥대야 했습니다. 모든 역경을 딛고 프로그래밍 전자책 판매가 그의 게으른 삶을 다시는 직장을 찾지 않도록 구해주었습니다. 이제 그는 원하는 판타지 전자책을 모두 살 수 있고 인터넷을 탐색하는 데 지나치게 많은 시간을 보냅니다.  
 
-창작의 영감이 떠오를 때면 그는 또 다른 프로그래밍 전자책을 집필하는데, 그 책에는 어김없이 **정규 표현식** 예제가 최소 하나는 포함됩니다. 전자책 자료 조사와 일상적인 소셜 미디어 사용으로 북마크가 넘쳐나자, 그는 정신 건강을 위해 큐레이션된 자료 목록을 따로 관리합니다. 그는 무료 학습 자료와 오픈 소스 도구에 감사하며, 그의 기여물은 [GitHub 저장소](https://github.com/learnbyexample)에서 확인할 수 있습니다.  
+창작 영감이 떠오를 때면 그는 또 다른 프로그래밍 전자책을 집필하는데 그 책에는 어김없이 정규 표현식 예제가 최소 하나는 포함됩니다. 전자책 자료 조사와 일상적인 소셜 미디어 사용으로 북마크가 넘쳐나자 그는 정신 건강을 위해 큐레이션된 자료 목록을 별도로 관리합니다. 그는 무료 학습 자료와 오픈 소스 도구에 항상 감사하며 그의 기여물은 [GitHub 저장소](https://github.com/learnbyexample)에서 확인할 수 있습니다.  
 
 그가 집필한 프로그래밍 전자책 목록은 [이 페이지](https://learnbyexample.github.io/books/)에서 볼 수 있습니다.
 
 ---
 
 # Why is it needed?
-정규 표현식은 텍스트 처리를 위한 다재다능한 도구입니다. 스크립팅 목적으로 사용하는 대부분의 프로그래밍 언어의 표준 라이브러리에도 포함되어 있으며, 그렇지 않은 경우는 보통 서드파티 라이브러리 형태로 찾을 수 있습니다. 정규 표현식의 문법과 기능은 각 언어마다 다를 수 있습니다. JavaScript 언어의 문법은 Perl 언어와 유사하지만, 기능 면에서 상당한 차이가 있습니다.  
+정규 표현식은 텍스트 처리를 위한 다재다능한 도구입니다. 스크립팅 목적으로 사용하는 대부분의 프로그래밍 언어의 표준 라이브러리에 포함되며 그렇지 않은 경우는 서드파티 라이브러리 형태로 찾을 수 있습니다. 정규 표현식의 문법과 기능은 언어마다 다를 수 있습니다. JavaScript 언어의 문법은 Perl 언어와 유사하지만 기능 면에서 상당한 차이가 있습니다.  
 
-JavaScript 언어의 String 객체는 텍스트를 다루기 위한 다양한 메서드를 지원합니다. 그렇다면, 정규 표현식은 무엇이 특별하며 왜 필요할까요? 학습과 이해의 관점에서 정규 표현식은 텍스트 처리에 특화된 미니 프로그래밍 언어로 볼 수 있습니다. 정규 표현식의 일부를 변수처럼 저장해서 나중에 재사용할 수도 있습니다. AND, OR, NOT 조건을 수행하는 방법도 있으며, 범위, 반복 등과 유사한 연산도 처리 가능합니다.  
+JavaScript 언어의 `String` 객체는 텍스트를 다루기 위한 다양한 메서드를 지원합니다. 그렇다면, 정규 표현식은 무엇이 그렇게 특별하며 왜 필요할까요? 학습과 이해의 관점에서 정규 표현식은 텍스트 처리에 특화된 미니 프로그래밍 언어로 볼 수 있습니다. 정규 표현식의 일부를 변수처럼 저장해서 나중에 재사용할 수 있습니다.(부분 문자열과 역참조) AND, OR, NOT 조건을 수행하는 방법도 있으며 범위, 반복 등과 유사한 연산도 처리 가능합니다.  
 
 다음은 몇 가지 일반적인 사용 사례입니다:  
 
-- 문자열이 정해진 규칙 집합을 만족하는지 확인하기 위해 문자열을 정제하기 (예: 문자열이 비밀번호 규칙에 맞는지 확인)  
-
-- 알파벳, 숫자, 구두점 같은 추상적 수준으로 텍스트를 "필터링" 하거나 "추출" 하기  
-
+- 문자열이 정해진 규칙 집합을 만족하는지 확인하기 위해 문자열 정제하기 (예: 문자열이 비밀번호 규칙에 맞는지 확인)  
+- 알파벳, 숫자, 구두점 같은 추상적인 수준으로 텍스트를 "필터링" 하거나 "추출" 하기  
 - 조건부 문자열 치환 (예: 문자열 시작이나 끝에서, 전체 단어만, 주변 텍스트에 따라 치환하기 등)  
 
-아마 LibreOffice Writer 프로그램의 스크린샷 같은 그래픽 기반의 검색 및 치환 도구에 익숙할 것입니다. **대소문자 구분(Match case)**, **전체 단어만(Whole words only)**, **바꾸기(Replace)**, **모두 바꾸기(Replace All)** 등이 정규 표현식이 지원하는 기본 기능 중 일부입니다.  
+아마 그래픽 기반의 LibreOffice Writer 프로그램의 검색 및 치환 도구에 익숙할 겁니다. 대소문자 구분(Match case), 전체 단어만(Whole words only), 바꾸기(Replace), 모두 바꾸기(Replace All) 등이 정규 표현식이 지원하는 기본 기능 중 일부입니다.  
 
-여기서 언급된 정규 표현식 관련 글들을 정리합니다. 각 링크는 정규 표현식의 역사, 활용 범위, 그리고 주의할 점들을 다루고 있습니다.  
+여기서 언급된 정규 표현식 관련 글들을 정리합니다. 각 링크는 정규 표현식의 역사, 활용 범위 그리고 주의할 점을 다루고 있습니다.  
 
-- 📖 **[The true power of regular expressions](https://www.npopov.com/2012/06/15/The-true-power-of-regular-expressions.html)** — 정규 표현식이 “regular” 하다는 의미를 형식 언어 이론의 맥락에서 설명하며, 실제 구현체가 얼마나 강력한지 보여줍니다.  
-- 💬 **[Is it a must for every programmer to learn regular expressions?](https://stackoverflow.com/questions/887107/are-regular-expressions-a-must-for-programming)** — 모든 프로그래머가 반드시 정규 표현식을 배워야 하는지에 대한 토론입니다. 기본 정도는 알아두는 것이 좋다는 의견이 많습니다.  
-- ⚠️ **[When you should NOT use Regular Expressions?](https://stackoverflow.com/questions/7553722/when-should-i-not-use-regular-expressions)** — HTML, XML 같은 재귀적 구조를 파싱할 때처럼 정규 표현식을 쓰면 안 되는 상황들을 다룹니다. 이미 더 적합한 파서가 있는 경우도 포함됩니다.  
-- 😅 **[Now You Have Two Problems](https://blog.codinghorror.com/regular-expressions-now-you-have-two-problems/)** — “정규 표현식을 쓰면 문제가 두 개가 된다” 는 유명한 밈의 기원을 풀어주며, 남용이 문제인 것이지 정규 표현식 자체는 강력한 도구임을 설명합니다.  
-- 🌐 **[Regular expression — Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)** — 정규 표현식의 역사, 이론적 배경(정규 언어), 다양한 구현체와 문법 차이를 폭넓게 다룹니다.  
+- 📖 [The true power of regular expressions](https://www.npopov.com/2012/06/15/The-true-power-of-regular-expressions.html) — 정규 표현식이 “regular” 하다는 의미를 형식 언어 이론 맥락에서 설명하며 실제 구현체가 얼마나 강력한지 잘 보여줍니다.  
+- 💬 [Is it a must for every programmer to learn regular expressions?](https://stackoverflow.com/questions/887107/are-regular-expressions-a-must-for-programming) — 모든 프로그래머가 반드시 정규 표현식을 배워야 하는지에 대한 토론입니다. 기본 정도는 알아두는 것이 좋다는 의견이 많습니다.  
+- ⚠️ [When you should NOT use Regular Expressions?](https://stackoverflow.com/questions/7553722/when-should-i-not-use-regular-expressions) — HTML, XML 같은 재귀적 구조를 파싱할 때처럼 정규 표현식을 쓰면 안되는 상황들을 다룹니다. 이미 좀 더 적합한 파서가 있는 경우도 포함됩니다.  
+- 😅 [Now You Have Two Problems](https://blog.codinghorror.com/regular-expressions-now-you-have-two-problems/) — “정규 표현식을 쓰면 하나의 문제가 두 개가 된다!” 는 유명한 밈의 기원을 풀어주며 남용이 문제인 것이지 정규 표현식 자체는 강력한 도구임을 설명합니다.  
+- 🌐 [Regular expression — Wikipedia](https://en.wikipedia.org/wiki/Regular_expression) — 정규 표현식의 역사, 이론적 배경(정규 언어), 다양한 구현체와 문법 차이를 폭넓게 다룹니다.  
 
-요약하면, 정규 표현식은 비밀번호 검증 같은 실제 사례에도 매우 유용하지만, 모든 문제에 무조건 적용할 수 있는 만능 도구는 아닙니다. 특히 복잡한 구조적인 데이터를 다룰 때는 적절한 도구를 선택하는 것이 중요하다는 점을 여러 글에서 강조하고 있습니다.  
+요약하면, 정규 표현식은 비밀번호 검증 같은 것에 유용하지만 모든 문제에 무조건 적용할 수 있는 만능 도구는 아닙니다. 특히 복잡한 구조의 데이터를 다룰 때는 적절한 도구를 선택하는 것이 중요하다는 점을 여러 글에서 강조하고 있습니다.  
 
 
 ## How this book is organized
-이 책은 개념을 하나씩 차례대로 소개하며, 각 장 끝의 연습 문제는 그 장에서 다룬 기능만을 사용합니다. 각 개념에는 다양한 문제와 예외적인 경우를 다루는 풍부한 예제가 함께 제공됩니다. 앞서 언급했듯이, 예제를 따라가면서 코드 조각을 직접 타이핑하는 것을 강력히 권장합니다. 샘플 입력 문자열의 특성과 실제 사용된 프로그래밍 명령어를 모두 이해하는 것이 중요합니다.  
 
-또한, 두 개의 간주(Interlude) 장에서는 유용한 도구들을 개괄적으로 소개하며, 마지막 장에는 추가 자료들이 정리되어 있습니다.  
+이 책은 개념을 하나씩 차례대로 소개하며 각 장 끝의 연습 문제는 그 장에서 다룬 기능만 사용합니다. 각 개념은 다양한 문제와 예외적인 경우를 다루는 풍부한 예제가 제공됩니다. 앞서 언급했듯이, 예제를 따라가면서 코드 조각을 직접 타이핑할 것을 강력히 권장합니다. 샘플 입력 문자열의 특성과 실제 사용된 프로그래밍 명령어 모두를 이해하는 것이 중요합니다.  
+
+또한, 두 개의 간주(*Interlude*) 장은 유용한 도구를 개괄적으로 소개하며 마지막 장은 추가 자료들이 정리되어 있습니다.  
 
 이 책에서 다루는 목차는 다음과 같습니다:  
 
@@ -100,34 +102,35 @@ JavaScript 언어의 String 객체는 텍스트를 다루기 위한 다양한 �
 - **Unicode**  
 - **Further Reading**  
 
-이 책을 마칠 즈음에는 정규 표현식을 작성하고 읽는 데 익숙해지고, 그것들을 디버깅하는 방법과 피해야 할 상황까지 잘 알게 될 것입니다.
+이 책을 마칠 즈음엔 정규 표현식을 작성하고 읽는 데 익숙해지고 디버깅 방법과 피해야할 상황까지 잘 알게 될 겁니다.
 
 
 ---
 
 # RegExp introduction
-이 장에는 JavaScript 언어의 `RegExp` 객체를 정의하고, 문자열 메서드에서 사용하는 방법을 설명합니다. 예제는 단순하게 정규 표현식 특수 문자를 사용하지 않습니다. 중요한 것은 "문법" 과 "텍스트 처리" 작업에 익숙해지는 것입니다.  
 
-이번 장에는 두 가지 메서드만 사용합니다:  
+이 장은 JavaScript 언어의 `RegExp` 객체를 정의하고 문자열 메서드로 사용하는 방법을 설명합니다. 예제는 단순하도록 정규 표현식 특수 문자를 사용하지 않습니다. 여기서 중요한 것은 "문법" 과 "텍스트 처리" 작업에 익숙해지는 것입니다.  
+
+이번 장은 두 가지 메서드만 사용합니다:  
 
 - `test()` 메서드 — 입력에 특정 문자열이 포함되어 있는지 검사합니다.  
-
-- `replace()` 메서드 — 입력의 일부 문자열을 다른 문자열로 대체합니다.  
+- `replace()` 메서드 — 입력 문자열을 다른 문자열로 대체합니다.  
 
 > [!NOTE]
-> ℹ️ 이 책에는 `regular expressions` 와 `regexp` 라는 용어를 바꿔가면서 사용합니다. 다만, JavaScript 객체를 지칭할 때는 `RegExp`  라는 표기법을 사용합니다.
+> ℹ️ 이 책은 `regular expressions` 와 `regexp` 라는 용어를 혼용합니다. 다만, JavaScript 객체를 구체적으로 지칭할 때는 `RegExp` 표기법을 사용합니다.
 
 
 ## Console and documentation
-서문에 언급했듯이, 제시한 예제는 Chrome/Chromium 콘솔에서 테스트했습니다. Chromium 기반의 다른 브라우저도 작동합니다. 새로운 탭에서 <kbd>Ctrl+Shift+J</kbd> 단축키로 콘솔을 엽니다.[^1] 
 
-[^1]: 일부 변수는 여러 장에서 재사용하므로, 오류를 피하려면 다른 탭을 열어서 사용하시기 바랍니다.  
+서문에 언급했듯이 예제는 Chrome/Chromium 콘솔에서 테스트했습니다. Chromium 기반의 다른 브라우저도 작동합니다. 새로운 탭에서 <kbd>Ctrl+Shift+J</kbd> 단축키로 콘솔을 엽니다.[^1] 
+
+[^1]: 일부 변수는 여러 장에서 재사용하므로 오류를 피하려면 다른 탭을 열고 사용합니다.  
 
 예제, 도움말, 브라우저 호환성 관련 세부 사항은 [MDN: Regular Expressions Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 및 [MDN: Regular Expressions Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions) 를 참조합니다.
 
 
 ## `test()` method
-먼저, 문자열의 일부인지 테스트하는 간단한 예제부터 시작합니다. 보통 `includes()` 메서드를 사용하고, 문자열은 인자로 전달합니다. 정규 표현식의 경우, 검색 문자열을 `/.../` 구분자 안에 넣어 정의한 `RegExp` 객체의 `test()` 메서드를 사용합니다. 다음과 같습니다.  
+먼저, 문자열의 일부인지 테스트하는 간단한 예제부터 시작합니다. 보통 `String` 객체의 `includes()` 메서드를 사용하고 문자열을 인자로 전달합니다. 정규 표현식의 경우 검색 문자열을 `/.../` 구분자에 넣어 정의한 `RegExp` 객체의 `test()` 메서드를 사용합니다. 다음과 같습니다.  
 
 ```js
 let sentence = 'This is a sample string'
@@ -181,15 +184,14 @@ words.some(w => /stat/.test(w))
 
 
 ## Flags
-JavaScript에서 정규 표현식은 소문자로 사용하는 "플래그" (*flags*)로 활성화합니다. 플래그는 명령줄 옵션과 유사합니다. 예를 들어, `grep -i` 는 대소문자를 구분하지 않는 매칭 작업을 수행합니다.  
+JavaScript의 정규 표현식은 소문자를 사용하는 "플래그" (*flags*)로 기능을 활성화합니다. 플래그는 명령줄 옵션과 유사합니다. 예를 들어, `grep -i` 는 대소문자를 구분하지 않는 매칭 작업을 수행합니다.  
 
-이번 장에는 다음과 같은 플래그에 대해 설명합니다:  
+이번 장은 다음과 같은 플래그에 대해 설명합니다:  
 
-- `i` 플래그: 알파벳을 매칭할 때, 대소문자를 무시함. (기본값은 대소문자를 구분하는 매칭)  
+- `i` 플래그(*ignore case*): 알파벳을 매칭할 때 대소문자를 무시함. (기본값은 대소문자를 구분하는 매칭)  
+- `g` 플래그(*global*): 모든 발생을 매칭함. (기본적으로는 첫 번째만 매칭)  
 
-- `g` 플래그: 모든 발생을 매칭함. (기본적으로는 첫 번째 것만 매칭됨)  
-
-다음은 `i` 플래그를 사용하는 예입니다. `g` 플래그는 `replace()` 메서드에서 설명합니다.  
+다음은 `i` 플래그를 사용한 예입니다. `g` 플래그는 `replace()` 메서드에서 설명합니다.  
 
 ```js
 /cat/.test('CaT')
@@ -203,7 +205,7 @@ JavaScript에서 정규 표현식은 소문자로 사용하는 "플래그" (*fla
 
 
 ## RegExp constructor and reuse
-`RegExp` 객체를 변수에 저장할 수 있습니다. 이 방법은 코드의 명확성을 높이고, 재사용을 가능하다는 장점이 있습니다.  
+`RegExp` 객체를 변수에 저장할 수 있습니다. 이 방법은 코드의 명확성을 높이고 재사용 가능하다는 장점이 있습니다.  
 
 ```js
 const pet = /dog/
@@ -214,7 +216,7 @@ pet.test('A cat crossed their path')
 // false
 ```
 
-`RegExp` 객체는 `RegExp()` 생성자로 만들 수 있습니다. 이 경우, 첫 번째 인자는 문자열 또는 `RegExp` 객체이며, 두 번째 인자는 하나 이상의 플래그를 지정합니다.  
+`RegExp` 객체는 `RegExp()` 생성자로 만들 수 있습니다. 이 경우, 첫 번째 인자는 문자열 또는 `RegExp` 객체이고 두 번째 인자는 하나 이상의 플래그를 지정합니다.  
 
 ```js
 const pat = new RegExp('dog')
@@ -226,7 +228,7 @@ new RegExp('dog', 'i')
 // /dog/i
 ```
 
-`/.../` 형식보다 생성자 형식을 사용하는 장점은 "정규 표현식을 동적으로 구성할 수 있다" 는 점입니다. 예를 들어, 변수나 표현식 결과를 삽입할 수 있습니다.  
+`/.../` 형식보다 생성자 형식의 장점은 "정규 표현식을 동적으로 구성할 수 있다!" 는 점입니다. 예를 들어, 변수나 표현식 결과를 삽입할 수 있습니다.  
 
 ```js
 let greeting = 'hi'
@@ -257,14 +259,14 @@ new RegExp(`${greeting.toUpperCase()} there`)
 // 'c2 P2 t2 m2'
 ```
 
-**문자열은 불변(immutable)이라는 점** 을 잊어 버리는 것이 가장 흔한 실수입니다!! 
+**문자열은 불변(immutable)** 이란 점을 잊어 버리는 것이 가장 흔한 실수입니다!! 
 
-따라서, 동일한 변수에 변경 사항을 다시 저장하려면, 반드시 처리 결과를 해당 변수에 **명시적으로 다시 할당** 해야 합니다.  
+따라서, 동일한 변수에 변경 사항을 다시 저장하려면 반드시 처리 결과를 변수에 **명시적으로 다시 할당** 해야 합니다.  
 
 ```js
 let word = 'cater'
 
-// 이 경우 문자열은 반환하지만, 'word' 변수는 수정되지 않음
+// 이 경우 문자열은 반환하지만 'word' 변수는 수정되지 않음
 word.replace(/cat/, 'hack')
 // 'hacker'
 word
@@ -278,34 +280,35 @@ word
 ```
 
 > [!WARNING]
-> ⚠️ `test()` 메서드에 `g` 플래그를 사용할 수도 있습니다. 사용 예제는 [MDN: test](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test#Examples) 문서를 참고합니다. 그러나, 제 생각에는 `test()` 메소드와 `g` 플래그를 사용하는 것은 원치 않는 결과를 얻을 수도 있습니다. 대신, `match()` 메서드를 사용하고, 필요한 로직은 명시적으로 작성하는 것을 권장합니다.
+> ⚠️ `test()` 메서드에 `g` 플래그를 사용할 수 있습니다. 사용 예제는 [MDN: test](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test#Examples) 문서를 참고합니다. 그러나, 제 생각에는 `test()` 메소드와 `g` 플래그를 사용하면 원치 않는 결과를 얻을 수도 있습니다. 대신, `match()` 메서드를 사용하고 필요한 로직을 명시적으로 작성할 것을 권장합니다.
 
 
 ## Cheatsheet and Summary
+
 | Note                          | Description                                                                 |
 |-------------------------------|-----------------------------------------------------------------------------|
 | [MDN: Regular Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions)      | JavaScript 정규 표현식에 대한 MDN 참고 문서                                |
 | /pat/                         | RegExp 객체                                                                 |
-| const p1 = /pat/              | 정규 표현식을 변수에 저장해서 재사용, 명확성 등을 위해 사용                      |
+| const p1 = /pat/              | 정규 표현식을 변수에 저장해서 재사용. 명확성을 위해 사용                      |
 | /pat/.test(s)                 | 패턴이 입력 문자열 어딘가 존재하는지 확인                                 |
-| returns true or false         | true 또는 false 를 반환                                                      |
-| i                             | 알파벳을 매칭할 때, 대소문자를 무시하는 플래그                               |
+| returns true or false         | `true` 또는 `false` 반환                                                      |
+| i                             | 알파벳을 매칭할 때 대소문자를 무시하는 플래그                               |
 | g                             | 모든 발생을 매칭하는 플래그                                                 |
-| new RegExp('pat', 'i')        | 문자열로부터 RegExp 를 생성                                                  |
-| optional second argument ...  | 두 번째 인자는 선택적으로 플래그 지정                                     |
+| new RegExp('pat', 'i')        | 문자열로 RegExp 객체 생성                                                  |
+| optional second argument ...  | 두 번째 인자는 선택 사항으로 플래그 지정                                     |
 | use backtick strings with ${} | 문자열 보간을 위한 `${}` 가 포함된 백틱 문자 사용                                 |
 | s.replace(/pat/, 'repl')      | 검색 및 치환 메서드                                                  |
 
-이번 장에는 `RegExp` 객체를 정의하고, `test()` 및 `replace()` 메서드 사용법을 소개했습니다. 또한, 정규 표현식의 기본 동작을 변경하는 플래그 사용법도 배웠습니다. 예제는 텍스트 처리 개념을 소개하는 데 초점을 맞췄습니다. 다음 장부터 정규 표현식 문법과 기능에 대해 배웁니다.
+이번 장은 `RegExp` 객체를 정의하고 `test()` 및 `replace()` 메서드 사용법을 소개했습니다. 또한, 정규 표현식의 기본 동작을 변경하는 플래그 사용법도 배웠습니다. 예제는 텍스트 처리 개념을 소개하는 데 초점을 맞췄습니다. 다음 장부터 정규 표현식 문법과 기능에 대해 배웁니다.
 
 
 ## Exercises
 
 > [!NOTE]
-> 각 장의 연습문제는 해당 장에서 설명한 내용으로 풀어보시기 바랍니다. 일부 연습문제는 이후 장의 기법으로 쉽게 풀 수 있지만, 연습문제의 목적은 지금까지 설명한 기능을 깊이 탐구하는 것입니다.  
+> 각 장의 연습 문제는 해당 장에서 설명한 내용으로 풀어보시기 바랍니다. 일부 연습 문제는 이후 장의 기법으로 더 쉽게 풀 수도 있지만 연습 문제의 목적은 지금까지 설명한 기능을 깊이 탐구하는 것입니다.  
 
 > [!NOTE]
-> 모든 연습문제는 [Exercises.md](https://github.com/learnbyexample/learn_js_regexp/blob/master/Exercises.md) 파일에 모아져 있습니다. 해답은 [Exercise_solutions.md](https://github.com/learnbyexample/learn_js_regexp/blob/master/Exercise_solutions.md) 파일을 참조하시기 바랍니다.  
+> 모든 연습문제는 [Exercises.md](https://github.com/learnbyexample/learn_js_regexp/blob/master/Exercises.md) 파일에 모아져 있습니다. 해답은 [Exercise_solutions.md](https://github.com/learnbyexample/learn_js_regexp/blob/master/Exercise_solutions.md) 파일을 참조합니다.  
 
 1) 주어진 입력 문자열에 two 가 대소문자 구분없이 포함되어 있는지 확인합니다.  
 
@@ -314,7 +317,8 @@ word
 > let s2 = 'one plus tw0 is not three'
 > let s3 = 'TRUSTWORTHY'
 
-> const pat1 =  // add your solution here
+> const pat1 =  // add your solution here 
+// const pat1 = /two/i
 
 > pat1.test(s1)
 < true
@@ -330,6 +334,8 @@ word
 > let items = ['goal', 'new', 'user', 'sit', 'eat', 'dinner']
 
 > items.filter(w => test(w))       // add your solution here
+// items.filter(w => !/e/.test(w))
+
 < ['goal', 'sit']
 ```
 
@@ -339,6 +345,8 @@ word
 > let ip = 'They ate 5 apples and 5 oranges'
 
 > ip.replace()       // add your solution here
+// ip.replace(/5/, 'five')
+
 < 'They ate five apples and 5 oranges'
 ```
 
@@ -348,6 +356,8 @@ word
 > let ip = 'They ate 5 apples and 5 oranges'
 
 > ip.replace()      // add your solution here
+// ip.replace(/5/g, 'five')
+
 < 'They ate five apples and five oranges'
 ```
 
@@ -357,6 +367,8 @@ word
 > let ip = 'This note should not be NoTeD'
 
 > ip.replace()     // add your solution here
+// ip.replace(/note/ig, 'X')
+
 < 'This X should not be XD'
 ```
 
@@ -371,9 +383,11 @@ onion 31
 water 10`
 
 > const num =       // add your solution here
+// const num = /2/
 
 > console.log(purchases.split('\n')
                        .filter(e => test(e))       // add your solution here
+                       // .filter(e => !num.test(e))
                        .join('\n'))
 < items qty
   mango 50
@@ -382,7 +396,7 @@ water 10`
 ```
 
 > [!NOTE]
-> 점 메타문자와 수량자를 설명하는 장의 끝 부분에 이 문제를 `replace()` 메서드로 풀 수도 있습니다.  
+> 점 메타 문자와 수량자를 설명하는 장 끝 부분에 이 문제를 `replace()` 메서드로 풀 수 있습니다.  
 
 7) 주어진 배열에 a 또는 w 를 포함하는 모든 항목을 걸러냅니다.  
 
@@ -390,6 +404,8 @@ water 10`
 > let items = ['goal', 'new', 'user', 'sit', 'eat', 'dinner']
 
 > items.filter(w => test(w) || test(w))     // add your solution here
+// items.filter(w => /a/.test(w) || /w/.test(w))
+
 < ['goal', 'new', 'eat']
 ```
 
@@ -399,6 +415,7 @@ water 10`
 > let items = ['goal', 'new', 'user', 'sit', 'eat', 'dinner']
 
 > items.filter(w => test(w) && test(w))     // add your solution here
+// items.filter(w => /e/.test(w) && /n/.test(w))
 < ['new', 'dinner']
 ```
 
@@ -408,6 +425,7 @@ water 10`
 > let ip = 'start address: 0xA0, func1 address: 0xC0'
 
 > ip.replace()        // add your solution here
+// ip.replace(/0xA0/, '0x7F').replace(/0xC0/, '0x1F')
 < 'start address: 0x7F, func1 address: 0x1F'
 ```
 
@@ -416,15 +434,17 @@ water 10`
 
 
 # Anchors
-이번 장에는 패턴을 "한정하는 방법" 을 배웁니다. 입력 문자열 어디서든 일치시키는 대신, 제약 사항을 지정합니다. 지금은 정규 표현식에 포함된 기능만 살펴봅니다. 이후 장에는 사용자 지정 규칙을 정의하는 방법도 배웁니다.
 
-제약 사항은 특정 문자와 이스케이프 시퀀스에 "특별한 의미를 부여" 해서 처리합니다. 특별한 의미를 가진 문자를 정규식 용어로는 "메타문자" (*meta character*)라고 합니다. 이런 메타문자를 문자 그대로 매치할 경우, `\` 문자로 이스케이프합니다. (메타문자 이스케이프 장에서 다시 설명)
+이번 장은 패턴을 "한정하는 방법" 에 대해 배웁니다. 입력 문자열의 어디서든 일치시키는 대신 제약 사항을 지정합니다. 지금은 정규 표현식에 포함된 기능만 살펴봅니다. 이후 장에는 사용자 지정 규칙을 정의하는 방법도 배웁니다.
+
+제약 사항은 특정 문자와 이스케이프 시퀀스에 "특별한 의미를 부여" 해서 처리합니다. 이렇게 특별한 의미를 가진 문자를 정규식 용어로는 "메타 문자" (*meta character*)라고 합니다. 이런 메타 문자를 문자 그대로 매치할 경우, `\` 문자로 이스케이프해야 합니다. (메타 문자 이스케이프 장에서 다시 설명합니다.)
 
 
 ## String anchors
-제약 사항은 입력 문자열의 "시작" 이나 "끝" 에서 일치하는 것 같이, "정규식을 한정하는 것" 에 관한 것입니다. 문자열 메서드인 `startsWith()` 와 `endsWith()` 와 유사한 기능입니다. 
 
-먼저, 문자열의 시작으로 매칭을 제한하는 `^` 메타문자입니다.
+제약 사항은 입력 문자열의 "시작" 이나 "끝" 에서 일치하는 것 같이 "정규식을 한정하는 것" 에 관한 것입니다. 문자열 메서드인 `startsWith()` 와 `endsWith()` 와 유사한 기능입니다. 
+
+먼저, 문자열 시작으로 매칭을 제한하는 `^` 메타 문자입니다.
 
 ```js
 // ^ 문자는 검색어의 접두사로 배치합니다
@@ -439,7 +459,7 @@ water 10`
 < false
 ```
 
-문자열의 끝으로 매칭을 제한하려면, `$` 메타문자를 사용합니다.
+문자열의 끝으로 매칭을 제한하려면 `$` 메타 문자를 사용합니다.
 
 ```js
 // $ 문자는 검색어의 접미사로 배치합니다
@@ -455,7 +475,7 @@ water 10`
 < ['pest']
 ```
 
-문자열의 시작과 끝 앵커를 결합하면, 전체 문자열로 매칭을 정확히 제한할 수 있습니다. 이것은 `==` 연산자로 문자열을 비교하는 것과 유사합니다.
+문자열 시작과 끝 앵커를 결합하면 전체 문자열로 매칭을 정확히 제한할 수 있습니다. 이것은 `==` 연산자로 문자열 비교와 유사합니다.
 
 ```js
 > /^cat$/.test('cat')
@@ -464,7 +484,7 @@ water 10`
 < false
 ```
 
-앵커만 패턴으로 사용해서 문자열 연결 연산을 에뮬레이트할 수 있습니다.
+패턴에 앵커만 사용해서 문자열 연결 연산을 에뮬레이트할 수 있습니다.
 
 ```js
 // 문자열의 시작에 텍스트 삽입
@@ -482,9 +502,10 @@ water 10`
 
 
 ## Line anchors
-입력 문자열은 한 줄 또는 여러 줄을 포함할 수 있습니다. 문자 `\r, \n, \u2028` (줄 구분자) 및 `\u2029` (문단 구분자)는 "줄 구분자로 간주" 합니다. 
 
-`m` (*multi line*)플래그는 `^` 및 `$` 앵커 문자로 모든 줄의 시작과 끝으로 매칭합니다.
+입력 문자열은 한 줄 또는 여러 줄일 수 있습니다. 문자 `\r, \n, \u2028` (줄 구분자) 및 `\u2029` (문단 구분자)는 "줄 구분자로 간주" 합니다. 
+
+`m` (*multi-line*)플래그는 `^` 및 `$` 앵커 문자로 모든 줄의 시작과 끝으로 매칭합니다.
 
 ```js
 // 문자열의 어떤 줄이 'top' 으로 시작하는지 확인
@@ -505,7 +526,7 @@ water 10`
 < true
 ```
 
-"문자열 앵커" 와 마찬가지로, "라인 앵커" 를 단독으로 패턴으로 사용할 수 있습니다.
+"문자열 앵커" 와 마찬가지로 "라인 앵커" 를 단독 패턴으로 사용할 수 있습니다.
 
 ```js
 > let items = 'catapults\nconcatenate\ncat'
@@ -522,10 +543,10 @@ water 10`
 ```
 
 > [!WARNING]
-> 문자열 끝에 줄 구분자 문자가 있을 경우, 구분자 뒤에 추가적인 줄 시작/끝 매칭이 발생합니다.
+> 문자열 끝에 줄 구분자 문자가 있을 경우 구분자 뒤에 추가적인 줄 시작/끝 매칭이 발생합니다.
 
 ```js
-// 'fig ' 가 세 번 삽입됩니다
+// 다음은 'fig ' 가 세 번 삽입됩니다
 > console.log('1\n2\n'.replace(/^/mg, 'fig '))
 < fig 1
   fig 2
@@ -538,13 +559,14 @@ water 10`
 ```
 
 > [!WARNING]
-> Windows OS 에서 생성한 텍스트 파일의 경우, `\r\n` 줄 바꿈 시퀀스를 `\n` 으로 변환합니다. 그렇지 않으면, `\r` 및 `\n` 문자 모두 줄 끝 매칭을 얻게 됩니다. 정규 표현식에서 `\r` 시퀀스를 수량자로 선택적 문자로 만들어 이 문제를 처리할 수 있습니다. (예제는 그리디 수량자 섹션을 참조합니다.)
+> Windows에서 생성한 텍스트 파일의 경우 `\r\n` 줄 바꿈 시퀀스를 `\n` 으로 변환해야 합니다. 그렇지 않으면 `\r` 및 `\n` 문자 모두 줄 끝으로 매칭합니다. 정규 표현식에서 `\r` 시퀀스를 수량자로 선택 문자로 만들어 이 문제를 처리할 수 있습니다. (예제는 그리디 수량자 섹션을 참조합니다.)
 
 
 ## Word anchors
-"단어 앵커" 는 세 번째 유형의 제약 사항입니다. 알파벳(대소문자 구분 없음), 숫자 그리고 밑줄 문자(`_`)는 단어로 간주합니다. 왜 숫자와 밑줄까지 포함하는지, 알파벳만으로는 안 되는지 궁금할 수 있습니다. 이것은 변수와 함수 이름 지정 관례에서 비롯됩니다 — 일반적으로 알파벳, 숫자, 밑줄이 허용됩니다. 그래서, 이런 정의 방식은 자연어보다 프로그래밍 언어에 초점이 맞춰져 있습니다.
 
-이스케이프 시퀀스 `\b` 는 단어 경계를 나타냅니다. 단어의 시작과 단어의 끝 앵커 모두 동일하게 사용합니다. "단어의 시작" 은 단어 앞의 문자가 비단어이거나, 문자가 없는 경우(문자열의 시작)를 의미합니다. 마찬가지로, "단어의 끝" 은 단어 뒤의 문자가 비단어이거나, 문자가 없는 경우(문자열의 끝)를 의미합니다. 따라서, 단어없이 단어 경계 `\b` 를 사용할 수 없음을 암시합니다.
+"단어 앵커" 는 세 번째 유형의 제약 사항입니다. 알파벳(대소문자 구분 없음), 숫자 그리고 밑줄 문자(`_`)는 단어로 간주합니다. 왜 숫자와 밑줄까지 포함하는지? 알파벳만으로 안되는지 궁금할 수 있습니다. 이것은 변수와 함수 이름 지정 관례에서 비롯됩니다 — 일반적으로 알파벳, 숫자, 밑줄이 허용됩니다. 그래서, 이런 정의 방식은 자연어보다 프로그래밍 언어에 초점이 맞춰져 있습니다.
+
+이스케이프 시퀀스 `\b` 는 단어 경계(*word boundary*)를 나타냅니다. 단어 시작과 단어 끝 앵커 모두 동일하게 사용합니다. "단어 시작" 은 단어 앞의 문자가 비-단어이거나, 문자가 없는 경우(문자열의 시작)를 의미합니다. 마찬가지로, "단어 끝" 은 단어 뒤의 문자가 비-단어이거나, 문자가 없는 경우(문자열의 끝)를 의미합니다. 따라서, 단어 없이 단어 경계 `\b` 를 사용할 수 없음을 암시합니다.
 
 ```js
 > let words = 'par spar apparent spare part'
@@ -588,7 +610,8 @@ water 10`
 
 
 ## Opposite Word Anchor
-단어 경계의 반대 앵커도 있습니다. `\B` 는 `\b` 가 "매치되지 않으면" 어디든 매치됩니다. 이런 이중성은 다른 이스케이프 시퀀스에서도 볼 것입니다. "부정 논리" 는 텍스트 처리 상황에서 유용할 수 있습니다. 하지만, 주의해서 사용해야 합니다. 의도치 않은 것까지 매치할 수 있습니다.
+
+단어 경계의 반대 앵커도 있습니다. `\B` 는 `\b` 가 "매치되지 않으면" 어디든 매치됩니다. 이런 이중성은 다른 이스케이프 시퀀스에서 볼 겁니다. "부정 논리" 는 텍스트 처리에 유용합니다. 하지만, 주의해서 사용해야 합니다. 의도치 않은 것까지 매치할 수 있습니다.
 
 ```js
 > let words = 'par spar apparent spare part'
@@ -610,7 +633,7 @@ water 10`
 < 'par spar apXent sXe part'
 ```
 
-다음은 두 단어 앵커를 비교·대조하기 위한 패턴 사용 예입니다.
+다음은 두 단어 앵커를 비교·대조하기 위한 패턴 예제입니다.
 
 ```js
 > 'copper'.replace(/\b/g, ':')
@@ -625,22 +648,24 @@ water 10`
 ```
 
 ## Cheatsheet and Summary
+
 | Note           | Description                                                   |
 |----------------|---------------------------------------------------------------|
-| metacharacter  | 정규 표현식에서 특별한 의미를 가지는 문자들                        |
-| ^              | 문자열의 시작으로 매칭을 제한                                 |
-| $              | 문자열의 끝으로 매칭을 제한                                   |
-| m              | ^ 와 $ 앵커로 줄의 시작/끝을 매칭하기 위한 플래그              |
-| \r, \n, \u2028, \u2029 | 줄 구분자로 간주함                                   |
-| DOS-style files| \r\n 을 사용하며, 특별한 주의가 필요할 수 있음                 |
-| \b             | 단어의 시작과 끝으로 매칭을 제한                              |
+| meta character  | 정규 표현식에서 특별한 의미를 가지는 문자들                        |
+| ^              | 문자열 시작으로 매칭 제한                                 |
+| $              | 문자열 끝으로 매칭 제한                                   |
+| m              | ^ 와 $ 앵커로 여러 줄의 시작/끝을 매칭하는 플래그              |
+| `\r, \n, \u2028, \u2029` | 줄 구분자로 간주함                                   |
+| DOS-style files| `\r\n` 을 사용하며 특별한 주의가 필요할 수 있음                 |
+| `\b`             | 단어의 시작과 끝으로 매칭을 제한                              |
 | word characters| 알파벳, 숫자, 밑줄                                            |
-| \B             | \b 가 매치되지 않는 곳이면 어디든 매치                       | 
+| `\B`             | `\b` 가 매치되지 않는 곳이면 어디든 매치                       | 
 
-이번 장에는 정규 표현식의 구성 요소를 살펴보기 시작했고, 흥미로운 방식으로 사용될 수 있음도 봤습니다. 그와 동시에, 정규 표현식은 텍스트 처리 영역의 도구일 뿐입니다. 종종 정규 표현식과 문자열 메서드 및 표현식과 결합해서 좀 더 단순한 해법을 얻을 수도 있습니다. 연습, 경험, 그리고 상상력이 창의적 해법을 구성하는 데 많은 도움줍니다. 이어지는 장에는 또 다른 정규식 기능과 결합된 앵커의 예를 설명합니다.
+이번 장은 정규 표현식의 구성 요소를 살펴보기 시작했고 흥미로운 방식으로 사용할 수 있음을 봤습니다. 그와 동시에 정규 표현식은 텍스트 처리 영역의 도구일 뿐입니다. 종종 정규 표현식과 문자열 메서드 및 표현식과 결합해서 좀 더 단순한 해법을 얻을 수 있습니다. 연습, 경험 그리고 상상력이 창의적인 해법을 구성하는 데 많은 도움을 줍니다. 이어지는 장은 또 다른 정규식 기능과 결합된 앵커의 예를 설명합니다.
 
 
 ## Exercises
+
 1) 주어진 입력 문자열에 is 또는 the 가 전체 단어로 포함되는지 확인합니다.  
 
 ```js
@@ -651,6 +676,8 @@ water 10`
 
 > const pat1 =      // 여기에 해답을 추가하세요
 > const pat2 =      // 여기에 해답을 추가하세요
+// > const pat1 = /\bis\b/
+// > const pat2 = /\bthe\b/
 
 > pat1.test(str1) || pat2.test(str1)
 < true
@@ -668,6 +695,8 @@ water 10`
 > let ip = 'bred red spread credible red;'
 
 > ip.replace()       // 여기에 해답을 추가하세요
+// ip.replace(/\bred\b/g, 'brown')
+
 < 'bred brown spread credible brown;'
 ```
 
@@ -677,6 +706,8 @@ water 10`
 > let items = ['hi42bye', 'nice1423', 'bad42', 'cool_42a', 'fake4b']
 
 > items.filter(e => test(e))       // 여기에 해답을 추가하세요
+// items.filter(e => /\B42\B/.test(e))
+
 < ['hi42bye', 'nice1423', 'cool_42a']
 ```
 
@@ -686,6 +717,8 @@ water 10`
 > let items = ['lovely', '1\ndentist', '2 lonely', 'eden', 'fly\n', 'dent']
 
 > items.filter(e => test(e) || test(e))        // 여기에 해답을 추가하세요
+// items.filter(e => /^den/.test(e) || /ly$/.test(e))
+
 < ['lovely', '2 lonely', 'dent']
 ```
 
@@ -700,6 +733,8 @@ mallet wallet malls
 mall:call:ball:pall`
 
 > console.log(para.replace())        // 여기에 해답을 추가하세요
+// console.log(para.replace(/^mall\b/gm, '1234'))
+
 < (mall) call ball pall
   ball fall wall tall
   1234 call ball pall
@@ -714,6 +749,8 @@ mall:call:ball:pall`
 > let items = ['lovely', '1\ndentist', '2 lonely', 'eden', 'fly\nfar', 'dent']
 
 > items.filter(e => test(e) || test(e))      // 여기에 해답을 추가하세요
+// items.filter(e => /^den/m.test(e) || /ly$/m.test(e))
+
 < ['lovely', '1\ndentist', '2 lonely', 'fly\nfar', 'dent']
 ```
 
@@ -723,6 +760,8 @@ mall:call:ball:pall`
 > let items = ['12\nthree\n', '12\nThree', '12\nthree\n4', '12\nthree']
 
 > items.filter(e => test(e))     // 여기에 해답을 추가하세요
+// items.filter(e => /^12\nthree$/i.test(e))
+
 < ['12\nThree', '12\nthree']
 ```
 
@@ -732,6 +771,8 @@ mall:call:ball:pall`
 > let items = ['handed', 'hand', 'handy', 'un-handed', 'handle', 'hand-2']
 
 > items.map(w => w.replace())        // 여기에 해답을 추가하세요
+// items.map(w => w.replace(/^hand\B/, 'X'))
+
 < ['Xed', 'hand', 'Xy', 'un-handed', 'Xle', 'hand-2']
 ```
 
@@ -741,6 +782,8 @@ mall:call:ball:pall`
 > let items = ['handed', 'hand', 'handy', 'unhanded', 'handle', 'hand-2']
 
 > items.filter(w => test(w)).map(w => w.replace())        // 여기에 해답을 추가하세요
+// items.filter(w => /^h/.test(w)).map(w => w.replace(/e/g, 'X'))
+
 < ['handXd', 'hand', 'handy', 'handlX', 'hand-2']
 ```
 
@@ -749,6 +792,9 @@ mall:call:ball:pall`
 ```js
 > /end$/.test('bend it\nand send\n')
 < false
+
+> /end$/m.test('bend it\nand send\n')
+< true
 ```
 
 
@@ -756,6 +802,7 @@ mall:call:ball:pall`
 
 
 # Alternation and Grouping
+
 간혹, 입력 문자열이 여러 패턴과 일치하는지 확인할 때가 있습니다. 예를 들어, 어떤 제품의 색상이 green 인지, blue 인지, red 인지 확인하는 경우입니다. 이번 장에는 이러한 경우 사용하는 교대(Alternation)를 사용하는 방법을 보여줍니다.  
 
 패턴들은 서로 공통된 요소를 가질 수도 있는데, 이럴 때는 그룹화(Grouping)로 좀 더 간결한 정규 표현식을 만들 수 있습니다. 또한, 이번 장에는 어떤 교대 항목이 우선권을 갖는지 결정하는 우선순위 규칙(Precedence rules)에 대해서도 다룹니다.  
