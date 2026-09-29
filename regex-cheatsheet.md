@@ -73,21 +73,12 @@ Regular expression syntax cheat sheet
 
 [그룹과 역참조](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Groups_and_backreferences)는 표현식 문자의 그룹을 나타냅니다.
 
+| 문자 | 의미 |
+| :--- | :--- |
+`(x)` | **캡처 그룹**: x와 일치하는 부분을 찾아 해당 일치 결과를 기억합니다. 예를 들어, `/(foo)/` 는 “foo bar” 에서 “foo” 와 일치하고 이를 기억합니다.<br><br>정규 표현식에는 여러 개의 캡처 그룹이 있을 수 있습니다. 결과에서 캡처 그룹에 대한 일치 결과는 일반적으로 캡처 그룹 내 왼쪽 괄호의 순서와 동일한 순서로 배열에 포함됩니다. 이는 대개 캡처 그룹 자체의 순서와 동일합니다. 이는 캡처 그룹이 중첩되어 있을 때 중요해집니다. 일치 결과는 결과 요소의 인덱스(`[1], …, [n]`)를 사용하거나 미리 정의된 `RegExp` 객체의 속성(`$1, …, $9`)을 통해 접근할 수 있습니다.<br><br>캡처 그룹은 성능 저하를 초래합니다. 일치한 부분 문자열을 다시 불러올 필요가 없다면 비캡처 괄호를 사용하는 것이 좋습니다(아래 참조).<br><br>`/.../g` 플래그가 설정된 경우 `String.prototype.match()` 는 캡처 그룹을 반환하지 않습니다. 하지만 `String.prototype.matchAll()` 을 사용하면 모든 일치 결과를 얻을 수 있습니다.
+`(?<Name>x)` | **이름이 지정된 캡처 그룹**: “x” 와 일치하는 부분을 `<Name>` 으로 지정된 이름 아래 반환된 일치 결과의 `groups` 속성에 저장합니다. 그룹 이름을 지정할 때는 각괄호(`<` 및 `>`)가 필수입니다.<br><br>예를 들어, 전화번호에서 미국의 지역 번호를 추출하려면 `/\((?<area>\d\d\d)\)/` 를 사용할 수 있습니다. 결과 번호는 matches.groups.area 에 나타납니다.
 
-(x)
 
-캡처 그룹: x와 일치하는 부분을 찾아 해당 일치 결과를 기억합니다. 예를 들어, /(foo)/는 “foo bar”에서 “foo”와 일치하고 이를 기억합니다.
-
-정규 표현식에는 여러 개의 캡처 그룹이 있을 수 있습니다. 결과에서 캡처 그룹에 대한 일치 결과는 일반적으로 캡처 그룹 내 왼쪽 괄호의 순서와 동일한 순서로 배열에 포함됩니다. 이는 대개 캡처 그룹 자체의 순서와 동일합니다. 이는 캡처 그룹이 중첩되어 있을 때 중요해집니다. 일치 결과는 결과 요소의 인덱스([1], …, [n])를 사용하거나, 미리 정의된 RegExp 객체의 속성($1, …, $9)을 통해 접근할 수 있습니다.
-
-캡처 그룹은 성능 저하를 초래합니다. 일치한 부분 문자열을 다시 불러올 필요가 없다면, 비캡처 괄호를 사용하는 것이 좋습니다(아래 참조).
-
-/.../g 플래그가 설정된 경우 String.prototype.match()는 캡처 그룹을 반환하지 않습니다. 하지만 String.prototype.matchAll()을 사용하면 모든 일치 결과를 얻을 수 있습니다.
-(?<Name>x)
-
-이름이 지정된 캡처 그룹: “x”와 일치하는 부분을 <Name>으로 지정된 이름 아래, 반환된 일치 결과의 groups 속성에 저장합니다. 그룹 이름을 지정할 때는 각괄호(< 및 >)가 필수입니다.
-
-예를 들어, 전화번호에서 미국의 지역 번호를 추출하려면 /\((?<area>\d\d\d)\)/를 사용할 수 있습니다. 결과 번호는 matches.groups.area에 나타납니다.
 (?:x)
 
 비캡처 그룹: “x”와 일치하지만 일치 결과를 저장하지 않습니다. 일치된 부분 문자열은 결과 배열의 요소([1], …, [n])나 미리 정의된 RegExp 객체의 속성($1, …, $9)에서 불러올 수 없습니다.
@@ -113,7 +104,8 @@ Regular expression syntax cheat sheet
 
 참고: 이하에서 ‘항목’은 단수 형태의 문자뿐만 아니라, [문자 클래스](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Character_classes), [그룹 및 역참조](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Groups_and_backreferences)도 포함합니다.
 
-
+| 문자 | 의미 |
+| :--- | :--- |
 x*
 
 앞에 오는 항목 “x”를 0회 이상 일치시킵니다. 예를 들어, /bo*/는 “A ghost booooed”의 “boooo”와 “A bird warbled”의 “b”에는 일치하지만, “A goat grunted”에서는 일치하는 항목이 없습니다.
