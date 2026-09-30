@@ -65,7 +65,7 @@ r filename | *read* 명령어는 주소나 패턴 뒤에 filename의 텍스트�
 s/regex/repl/ | *substitute* 명령어는 정규 표현식(regex)이 나타나는 부분을 repl(대체 문자열)로 바꿉니다.
 t label | *test* 명령어는 패턴이 발견되고 치환이 이루어진 경우만 분기를 실행합니다. 즉, 마지막 substitute 명령어가 패턴 공간을 수정했을 때만 해당 레이블로 분기합니다.
 w filename | *write* 명령어는 수정된 데이터를 저장할 파일 이름을 지정하고 파일에 저장합니다.
-x | exchage* 명령어는 홀드 버퍼와 패턴 버퍼의 위치를 바꿉니다.
+x | *exchange* 명령어는 홀드 버퍼와 패턴 버퍼의 위치를 바꿉니다.
 y/src/dest/ | *translate* 명령어는 소스(src)에 나타나는 패턴 공간의 문자를 대상(dest)의 문자로 변환합니다.
 
 
