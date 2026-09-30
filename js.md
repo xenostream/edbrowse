@@ -1,6 +1,11 @@
 JavaScript Tutorial
 ---
 
+- [About JavaScript](#About-JavaScript)
+- [Getting started ](#Getting-started )
+- [The Basics](#The-Basics)
+- [Regular Expressions](#Regular-Expressions)
+
 # About JavaScript
 
 ## What is JavaScript?
