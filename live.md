@@ -32,6 +32,7 @@
 
   function findView() {
     if (isView(view)) return view;
+
     if (isView(window.__githubView)) {
       view = window.__githubView;
       return view;
@@ -41,17 +42,23 @@
       '[data-testid="codemirror-editor"], .cm-editor'
     );
 
-    if (!cm) throw Error("CodeMirror 편집기를 찾지 못했습니다.");
+    if (!cm)
+      throw Error("CodeMirror 편집기를 찾지 못했습니다.");
 
     const seen = new WeakSet();
     let found = null;
 
     function scan(o, depth = 0) {
-      if (!o || found || depth > 16) return;
+      if (!o || found || depth > 16)
+        return;
 
-      const t = typeof o;
-      if (t !== "object" && t !== "function") return;
-      if (seen.has(o)) return;
+      const type = typeof o;
+
+      if (type !== "object" && type !== "function")
+        return;
+
+      if (seen.has(o))
+        return;
 
       if (isView(o)) {
         found = o;
@@ -60,49 +67,49 @@
 
       seen.add(o);
 
-      let keys;
-      try {
-        keys = Reflect.ownKeys(o);
-      } catch {
-        return;
-      }
+      for (const key of Reflect.ownKeys(o)) {
+        let value;
 
-      for (const k of keys) {
-        let v;
         try {
-          v = o[k];
+          value = o[key];
         } catch {
           continue;
         }
 
         if (
-          v === window ||
-          v === document ||
-          (typeof Node !== "undefined" && v instanceof Node)
-        ) continue;
+          value === window ||
+          value === document ||
+          (typeof Node !== "undefined" &&
+            value instanceof Node)
+        )
+          continue;
 
-        scan(v, depth + 1);
-        if (found) return;
+        scan(value, depth + 1);
+
+        if (found)
+          return;
       }
     }
 
-    for (let el = cm; el && !found; el = el.parentElement) {
-      let keys = [];
-      try {
-        keys = Reflect.ownKeys(el);
-      } catch {}
+    for (
+      let el = cm;
+      el && !found;
+      el = el.parentElement
+    ) {
+      for (const key of Reflect.ownKeys(el)) {
+        const name = String(key);
 
-      for (const k of keys) {
-        const s = String(k);
         if (
-          s.startsWith("__reactFiber$") ||
-          s.startsWith("__reactInternalInstance$")
+          name.startsWith("__reactFiber$") ||
+          name.startsWith("__reactInternalInstance$")
         ) {
           try {
-            scan(el[k]);
+            scan(el[key]);
           } catch {}
         }
-        if (found) break;
+
+        if (found)
+          break;
       }
     }
 
@@ -110,37 +117,176 @@
       throw Error("CodeMirror EditorView를 찾지 못했습니다.");
 
     view = window.__githubView = found;
-    return found;
+
+    return view;
   }
 
   function doc() {
     return findView().state.doc;
   }
 
-  function num(x) {
-    const d = doc();
-    const n = x === "$" ? d.lines : Number(x);
+  function currentLine() {
+    const v = findView();
 
-    if (!Number.isInteger(n) || n < 1 || n > d.lines)
-      throw Error(`잘못된 줄 번호: ${x}`);
+    return v.state.doc.lineAt(
+      v.state.selection.main.head
+    ).number;
+  }
+
+  function line(n) {
+    const d = doc();
+
+    if (
+      !Number.isInteger(n) ||
+      n < 1 ||
+      n > d.lines
+    )
+      throw Error(`잘못된 줄 주소: ${n}`);
+
+    return d.line(n);
+  }
+
+  function address(expr, base = currentLine()) {
+    const d = doc();
+
+    expr = String(expr ?? "").trim();
+
+    if (!expr)
+      return base;
+
+    let pos = 0;
+    let n;
+
+    if (expr[pos] === ".") {
+      n = base;
+      pos++;
+    } else if (expr[pos] === "$") {
+      n = d.lines;
+      pos++;
+    } else if (/\d/.test(expr[pos])) {
+      const m = expr.slice(pos).match(/^\d+/);
+      n = Number(m[0]);
+      pos += m[0].length;
+    } else if (expr[pos] === "+" || expr[pos] === "-") {
+      n = base;
+    } else {
+      throw Error(`잘못된 주소: ${expr}`);
+    }
+
+    while (pos < expr.length) {
+      const m = expr.slice(pos).match(
+        /^([+-])(\d*)/
+      );
+
+      if (!m)
+        throw Error(`잘못된 주소: ${expr}`);
+
+      const amount =
+        m[2] === ""
+          ? 1
+          : Number(m[2]);
+
+      n +=
+        m[1] === "+"
+          ? amount
+          : -amount;
+
+      pos += m[0].length;
+    }
+
+    if (n < 1 || n > d.lines)
+      throw Error(`잘못된 줄 주소: ${n}`);
 
     return n;
   }
 
-  function range(a, b = a) {
-    const d = doc();
-    const s = num(a);
-    const e = num(b);
+  function range(expr) {
+    const base = currentLine();
 
-    if (s > e) throw Error("잘못된 줄 범위입니다.");
+    expr = String(expr ?? "").trim();
 
-    return {
-      d,
-      s,
-      e,
-      from: d.line(s).from,
-      to: d.line(e).to + (e < d.lines ? 1 : 0)
-    };
+    if (!expr)
+      return {
+        s: base,
+        e: base
+      };
+
+    if (expr === ",")
+      return {
+        s: 1,
+        e: doc().lines
+      };
+
+    const m = expr.match(
+      /^(.+?)\s*,\s*(.+)$/
+    );
+
+    if (!m) {
+      const n = address(expr, base);
+
+      return {
+        s: n,
+        e: n
+      };
+    }
+
+    const s = address(
+      m[1],
+      base
+    );
+
+    const e = address(
+      m[2],
+      base
+    );
+
+    if (s > e)
+      throw Error("잘못된 줄 범위입니다.");
+
+    return { s, e };
+  }
+
+  function selectLine(n) {
+    const v = findView();
+    const l = line(n);
+
+    const Transaction =
+      v.state.update({}).constructor;
+
+    v.dispatch(
+      v.state.update({
+        selection: {
+          anchor: l.from
+        },
+        annotations:
+          Transaction.addToHistory.of(false),
+        scrollIntoView: true
+      })
+    );
+  }
+
+  function edit(changes, selection) {
+    const v = findView();
+
+    v.dispatch({
+      changes,
+      selection: selection
+        ? { anchor: selection }
+        : undefined,
+      userEvent: "input.ed",
+      scrollIntoView: true
+    });
+  }
+
+  function cursorAt(n) {
+    return line(n).from;
+  }
+
+  function textOf(s, e) {
+    return doc().sliceString(
+      line(s).from,
+      line(e).to
+    );
   }
 
   function quote(s) {
@@ -152,9 +298,10 @@
         (s[0] === '"' && s.at(-1) === '"') ||
         (s[0] === "'" && s.at(-1) === "'")
       )
-    ) {
-      throw Error('문자열은 "..." 형식이어야 합니다.');
-    }
+    )
+      throw Error(
+        '문자열은 "..." 형식이어야 합니다.'
+      );
 
     return s.slice(1, -1)
       .replace(/\\n/g, "\n")
@@ -165,175 +312,441 @@
       .replace(/\\\\/g, "\\");
   }
 
-  function regex(pattern, flags) {
-    try {
-      return new RegExp(pattern, flags);
-    } catch (e) {
-      throw Error(`RegExp 오류: ${e.message}`);
-    }
+  function remove(addr) {
+    const { s, e } = range(addr);
+    const d = doc();
+
+    const from = line(s).from;
+    const to =
+      line(e).to +
+      (e < d.lines ? 1 : 0);
+
+    const newCurrent =
+      e < d.lines
+        ? s
+        : Math.max(1, s - 1);
+
+    edit(
+      {
+        from,
+        to,
+        insert: ""
+      },
+      cursorAt(newCurrent)
+    );
+
+    console.log(`삭제: ${s}~${e}`);
   }
 
-  function remove(a, b) {
-    const v = findView();
-    const r = range(a, b);
+  function insert(addr, text) {
+    const n = address(
+      addr || "."
+    );
 
-    v.dispatch({
-      changes: { from: r.from, to: r.to, insert: "" }
-    });
+    const l = line(n);
 
-    console.log(`삭제: ${r.s}~${r.e}`);
-  }
-
-  function insert(a, text) {
-    const v = findView();
-    const d = v.state.doc;
-    const n = num(a);
-    const l = d.line(n);
-
-    v.dispatch({
-      changes: {
+    edit(
+      {
         from: l.from,
         insert: text + "\n"
-      }
-    });
+      },
+      cursorAt(n)
+    );
 
     console.log(`삽입: ${n}행`);
   }
 
-  function append(a, text) {
-    const v = findView();
-    const d = v.state.doc;
-    const n = num(a);
-    const l = d.line(n);
+  function append(addr, text) {
+    const n = address(
+      addr || "."
+    );
 
-    v.dispatch({
-      changes: {
+    const l = line(n);
+
+    edit(
+      {
         from: l.to,
         insert: "\n" + text
-      }
-    });
+      },
+      cursorAt(n + 1)
+    );
 
     console.log(`추가: ${n}행`);
   }
 
-  function change(a, text) {
-    const v = findView();
-    const d = v.state.doc;
-    const n = num(a);
-    const l = d.line(n);
+  function change(addr, text) {
+    const { s, e } = range(addr);
 
-    v.dispatch({
-      changes: {
-        from: l.from,
-        to: l.to,
+    const from = line(s).from;
+    const to = line(e).to;
+
+    edit(
+      {
+        from,
+        to,
         insert: text
-      }
-    });
+      },
+      cursorAt(s)
+    );
 
-    console.log(`교체: ${n}행`);
+    console.log(`교체: ${s}~${e}`);
   }
 
-  function print(a, b) {
-    const r = range(a, b);
+  function print(addr) {
+    const { s, e } = range(addr);
+    const d = doc();
 
-    for (let n = r.s; n <= r.e; n++)
-      console.log(`${n}: ${r.d.line(n).text}`);
+    for (let n = s; n <= e; n++)
+      console.log(
+        `${n}: ${d.line(n).text}`
+      );
+
+    selectLine(e);
+  }
+
+  function list(addr) {
+    const { s, e } = range(addr);
+    const d = doc();
+
+    for (let n = s; n <= e; n++) {
+      const text = d.line(n).text
+        .replace(/\t/g, "→")
+        .replace(/ /g, "·");
+
+      console.log(
+        `${n}: ${text}¶`
+      );
+    }
+
+    console.log("$");
+
+    selectLine(e);
   }
 
   function printMatch(pattern, flags) {
     const d = doc();
-    const re = regex(pattern, flags);
+    const re = new RegExp(
+      pattern,
+      flags
+    );
 
     for (let n = 1; n <= d.lines; n++) {
       re.lastIndex = 0;
+
       if (re.test(d.line(n).text))
-        console.log(`${n}: ${d.line(n).text}`);
+        console.log(
+          `${n}: ${d.line(n).text}`
+        );
     }
   }
 
-  function replace(a, b, pattern, flags, text) {
-    const v = findView();
-    const r = range(a, b);
-    const oldText = r.d.sliceString(r.from, r.to);
-    const newText = oldText.replace(
-      regex(pattern, flags),
-      text
-    );
+  function replaceRange(
+    addr,
+    pattern,
+    flags,
+    text
+  ) {
+    const { s, e } = range(addr);
+
+    const from = line(s).from;
+    const to = line(e).to;
+
+    const oldText =
+      doc().sliceString(from, to);
+
+    const newText =
+      oldText.replace(
+        new RegExp(pattern, flags),
+        text
+      );
 
     if (oldText === newText) {
       console.log("치환 없음");
       return;
     }
 
-    v.dispatch({
-      changes: {
-        from: r.from,
-        to: r.to,
+    edit(
+      {
+        from,
+        to,
         insert: newText
-      }
-    });
+      },
+      cursorAt(e)
+    );
 
-    console.log(`치환: ${r.s}~${r.e}`);
+    console.log(
+      `치환: ${s}~${e}`
+    );
   }
 
-  function replaceAll(pattern, flags, text) {
+  function replaceAll(
+    pattern,
+    flags,
+    text
+  ) {
     const v = findView();
-    const d = v.state.doc;
-    const oldText = d.toString();
-    const newText = oldText.replace(
-      regex(pattern, flags),
-      text
-    );
+
+    const oldText =
+      v.state.doc.toString();
+
+    const newText =
+      oldText.replace(
+        new RegExp(pattern, flags),
+        text
+      );
 
     if (oldText === newText) {
       console.log("치환 없음");
       return;
     }
 
-    v.dispatch({
-      changes: {
+    edit(
+      {
         from: 0,
-        to: d.length,
+        to: v.state.doc.length,
         insert: newText
-      }
-    });
+      },
+      0
+    );
 
-    console.log(`전체 치환: /${pattern}/${flags}`);
+    console.log(
+      `전체 치환: /${pattern}/${flags}`
+    );
+  }
+
+  function transfer(
+    addr,
+    dest
+  ) {
+    const { s, e } = range(addr);
+    const target = address(dest);
+
+    if (target >= s && target <= e)
+      throw Error(
+        "복사 대상이 원본 범위 안에 있습니다."
+      );
+
+    const text = textOf(s, e);
+    const pos = line(target).to;
+    const count = e - s + 1;
+
+    edit(
+      {
+        from: pos,
+        insert: "\n" + text
+      },
+      cursorAt(
+        target + count
+      )
+    );
+
+    console.log(
+      `복사: ${s}~${e} -> ${target}`
+    );
+  }
+
+  function move(
+    addr,
+    dest
+  ) {
+    const { s, e } = range(addr);
+    let target = address(dest);
+
+    if (target >= s && target <= e)
+      throw Error(
+        "이동 대상이 원본 범위 안에 있습니다."
+      );
+
+    const d = doc();
+
+    const text = textOf(s, e);
+
+    const from = line(s).from;
+
+    const to =
+      line(e).to +
+      (e < d.lines ? 1 : 0);
+
+    const count = e - s + 1;
+
+    if (target < s) {
+      const pos = line(target).to;
+
+      edit(
+        [
+          {
+            from,
+            to,
+            insert: ""
+          },
+          {
+            from: pos,
+            insert: text + "\n"
+          }
+        ],
+        cursorAt(target + count)
+      );
+    } else {
+      const newTarget =
+        target - count;
+
+      const pos =
+        line(newTarget).to;
+
+      edit(
+        [
+          {
+            from,
+            to,
+            insert: ""
+          },
+          {
+            from: pos,
+            insert: "\n" + text
+          }
+        ],
+        cursorAt(target)
+      );
+    }
+
+    console.log(
+      `이동: ${s}~${e} -> ${target}`
+    );
+  }
+
+  function join(addr) {
+    const { s, e } = range(addr);
+
+    if (s === e) {
+      selectLine(s);
+      return;
+    }
+
+    const from = line(s).from;
+    const to = line(e).to;
+
+    const text =
+      doc().sliceString(from, to);
+
+    edit(
+      {
+        from,
+        to,
+        insert: text.replace(
+          /\r?\n/g,
+          " "
+        )
+      },
+      cursorAt(s)
+    );
+
+    console.log(
+      `합치기: ${s}~${e}`
+    );
+  }
+
+  function undo() {
+    const v = findView();
+
+    const event =
+      new InputEvent(
+        "beforeinput",
+        {
+          inputType: "historyUndo",
+          bubbles: true,
+          cancelable: true
+        }
+      );
+
+    if (
+      v.contentDOM.dispatchEvent(event)
+    )
+      return;
+
+    v.dom.dispatchEvent(
+      new KeyboardEvent(
+        "keydown",
+        {
+          key: "z",
+          code: "KeyZ",
+          ctrlKey: true,
+          bubbles: true,
+          cancelable: true
+        }
+      )
+    );
   }
 
   function help() {
     console.log(`
-GitHub CodeMirror commands
+GitHub CodeMirror ed
 
-삭제
-  3d
-  3,10d
-  $d
+주소
+  .       현재 줄
+  $       마지막 줄
+  3       절대 주소
+  +2      현재 + 2
+  -2      현재 - 2
+  3+2     3 + 2
+  $-1     마지막 - 1
+  .+3     현재 + 3
 
-삽입 / 추가 / 교체
-  3i "hello"
-  3a "hello"
-  3c "hello"
+범위
+  1,$
+  .,$
+  .,+3
+  .-2,.+2
+
+주소 생략
+  p       현재 줄 출력
+  l       현재 줄 표시
+  d       현재 줄 삭제
+  j       현재 줄 합치기
+  a "x"   현재 줄 뒤에 추가
+  i "x"   현재 줄 앞에 삽입
+  c "x"   현재 줄 교체
 
 출력
-  3p
-  3,10p
-  /foo/p
+  p
+  1,$p
+  .,+3p
 
-줄 수
-  =
-  3=
+list
+  l
+  1,$l
+  .,$l
+
+복사
+  3t10
+  3,5t.
+  .t$
+  -2,+1t.
+
+이동
+  3m10
+  3,5m.
+  .m$
+  -2,+1m.
+
+합치기
+  j
+  3,5j
+  .,+2j
 
 치환
   /foo/g, "bar"
-  /has/gim, "Hello"
-  3,10 /foo/g, "bar"
-  10,$ /foo/gi, "bar"
+  1,$ /foo/g, "bar"
+  .,$ /foo/gi, "bar"
 
-JS RegExp
-  /\\d+/g, "NUMBER"
-  /^\\s*$/gm, ""
-  /(foo)=(bar)/g, "$2=$1"
+정규식 출력
+  /foo/p
+  /foo/gi,p
+
+실행 취소
+  u
+
+줄 수
+  =
 
 도움말
   help
@@ -342,85 +755,199 @@ JS RegExp
 
   function runCode(code) {
     code = String(code).trim();
-    if (!code) return;
 
-    try {
-      findView();
+    if (!code)
+      return;
 
-      let m;
+    findView();
 
-      if (code === "help" || code === "?")
-        return help();
+    let m;
 
-      if (code === "=" || /^\d+\s*=$/.test(code))
-        return console.log(`줄 수: ${doc().lines}`);
+    if (
+      code === "help" ||
+      code === "?"
+    )
+      return help();
 
-      m = code.match(
-        /^(\d+|\$)\s*(?:,\s*(\d+|\$))?\s*d$/
-      );
-      if (m) return remove(m[1], m[2]);
+    if (code === "u")
+      return undo();
 
-      m = code.match(
-        /^(\d+|\$)\s*i\s+(.+)$/
-      );
-      if (m) return insert(m[1], quote(m[2]));
-
-      m = code.match(
-        /^(\d+|\$)\s*a\s+(.+)$/
-      );
-      if (m) return append(m[1], quote(m[2]));
-
-      m = code.match(
-        /^(\d+|\$)\s*c\s+(.+)$/
-      );
-      if (m) return change(m[1], quote(m[2]));
-
-      m = code.match(
-        /^(\d+|\$)\s*(?:,\s*(\d+|\$))?\s*p$/
-      );
-      if (m) return print(m[1], m[2]);
-
-      m = code.match(
-        /^\/((?:\\\/|[^\/])*)\/([a-z]*)\s*,?\s*p$/i
-      );
-      if (m) {
-        return printMatch(
-          m[1].replace(/\\\//g, "/"),
-          m[2]
-        );
-      }
-
-      m = code.match(
-        /^(\d+|\$)\s*(?:,\s*(\d+|\$))?\s+\/((?:\\\/|[^\/])*)\/([a-z]*)\s*,\s*(.+)$/i
-      );
-      if (m) {
-        return replace(
-          m[1],
-          m[2],
-          m[3].replace(/\\\//g, "/"),
-          m[4],
-          quote(m[5])
-        );
-      }
-
-      m = code.match(
-        /^\/((?:\\\/|[^\/])*)\/([a-z]*)\s*,\s*(.+)$/i
-      );
-      if (m) {
-        return replaceAll(
-          m[1].replace(/\\\//g, "/"),
-          m[2],
-          quote(m[3])
-        );
-      }
-
-      throw Error(
-        "알 수 없는 명령입니다. help를 입력하세요."
+    if (code === "=")
+      return console.log(
+        `줄 수: ${doc().lines}`
       );
 
-    } catch (e) {
-      console.error("runCode:", e.message || e);
-    }
+    /*
+     * d
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)?\s*d$/i
+    );
+
+    if (m)
+      return remove(
+        m[1] || "."
+      );
+
+    /*
+     * i / a / c
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*)?\s*i\s+(.+)$/i
+    );
+
+    if (m)
+      return insert(
+        m[1] || ".",
+        quote(m[2])
+      );
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*)?\s*a\s+(.+)$/i
+    );
+
+    if (m)
+      return append(
+        m[1] || ".",
+        quote(m[2])
+      );
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)?\s*c\s+(.+)$/i
+    );
+
+    if (m)
+      return change(
+        m[1] || ".",
+        quote(m[2])
+      );
+
+    /*
+     * p
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)?\s*p$/i
+    );
+
+    if (m)
+      return print(
+        m[1] || "."
+      );
+
+    /*
+     * l
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)?\s*l$/i
+    );
+
+    if (m)
+      return list(
+        m[1] || "."
+      );
+
+    /*
+     * t
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)\s*t\s*((?:\.|\$|\d+)(?:[+-]\d+)*)$/i
+    );
+
+    if (m)
+      return transfer(
+        m[1],
+        m[2]
+      );
+
+    /*
+     * m
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)\s*m\s*((?:\.|\$|\d+)(?:[+-]\d+)*)$/i
+    );
+
+    if (m)
+      return move(
+        m[1],
+        m[2]
+      );
+
+    /*
+     * j
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)?\s*j$/i
+    );
+
+    if (m)
+      return join(
+        m[1] || "."
+      );
+
+    /*
+     * regex print
+     */
+
+    m = code.match(
+      /^\/((?:\\\/|[^\/])*)\/([a-z]*)\s*,?\s*p$/i
+    );
+
+    if (m)
+      return printMatch(
+        m[1].replace(
+          /\\\//g,
+          "/"
+        ),
+        m[2]
+      );
+
+    /*
+     * range replace
+     */
+
+    m = code.match(
+      /^((?:\.|\$|\d+)(?:[+-]\d+)*(?:\s*,\s*(?:\.|\$|\d+)(?:[+-]\d+)*)?)?\s+\/((?:\\\/|[^\/])*)\/([a-z]*)\s*,\s*(.+)$/i
+    );
+
+    if (m)
+      return replaceRange(
+        m[1] || ".",
+        m[2].replace(
+          /\\\//g,
+          "/"
+        ),
+        m[3],
+        quote(m[4])
+      );
+
+    /*
+     * whole replace
+     */
+
+    m = code.match(
+      /^\/((?:\\\/|[^\/])*)\/([a-z]*)\s*,\s*(.+)$/i
+    );
+
+    if (m)
+      return replaceAll(
+        m[1].replace(
+          /\\\//g,
+          "/"
+        ),
+        m[2],
+        quote(m[3])
+      );
+
+    throw Error(
+      "알 수 없는 명령입니다. help를 입력하세요."
+    );
   }
 
   view = findView();
@@ -433,7 +960,20 @@ JS RegExp
     `%cGitHub CodeMirror ready — ${view.state.doc.lines} lines`,
     "color:#4caf50;font-weight:bold"
   );
-  console.log("runCode('help')");
 
+  console.log(
+    "runCode('help')"
+  );
+  
+ window.ed = (strings, ...values) => {
+   if (typeof strings === "string")
+     return runCode(strings);
+ 
+   return runCode(
+     String.raw({ raw: strings }, ...values)
+   );
+ };
+ 
 })();
+
 ```
