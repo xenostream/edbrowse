@@ -1127,7 +1127,7 @@
         .map(
           x => x.text
         )
-        .join(" ");
+        .join("");
 
     const joined =
       makeLine(text);
