@@ -22,16 +22,32 @@
 (() => {
   "use strict";
 
+  /*
+   * GitHub CodeMirror + ed
+   *
+   * 주요 기능
+   *   - g/re/t. 허용
+   *   - global 내부 현재 주소 추적
+   *   - global command-list의 \ + newline 처리
+   *   - substitute replacement의 \ + newline 처리
+   *   - s 명령의 g 플래그 중복 방지
+   *   - -s, -p, -n, -l 등의 상대주소 처리
+   *   - ,p / ,n / ,l 지원
+   *   - substitute로 줄이 분리된 뒤 현재 주소 유지
+   *   - global에서 원본 line id 유지
+   *   - t/m/j/d/c/i/a/s line semantics 개선
+   *   - j 단일 주소의 정확한 처리
+   */
+
   let view = null;
   let lastRegex = "";
+  let lastSubstitution = null;
 
   const ESC = "\uFFFF";
 
-  /*
-   * ------------------------------------------------------------
+  /* ============================================================
    * CodeMirror
-   * ------------------------------------------------------------
-   */
+   * ============================================================ */
 
   function isView(v) {
     return !!(
@@ -146,11 +162,48 @@
       throw Error("CodeMirror EditorView를 찾지 못했습니다.");
 
     view = window.__githubView = found;
+
     return view;
   }
 
-  function doc() {
-    return findView().state.doc;
+  function readLines() {
+    const d = findView().state.doc;
+    const result = [];
+
+    for (let n = 1; n <= d.lines; n++)
+      result.push(d.line(n).text);
+
+    return result;
+  }
+
+  function writeLines(lines, cursor = 1) {
+    const v = findView();
+
+    if (!lines.length)
+      lines = [""];
+
+    const text = lines.join("\n");
+
+    v.dispatch({
+      changes: {
+        from: 0,
+        to: v.state.doc.length,
+        insert: text
+      },
+      selection: {
+        anchor:
+          v.state.doc.line(
+            Math.max(
+              1,
+              Math.min(
+                cursor,
+                v.state.doc.lines
+              )
+            )
+          ).from
+      },
+      scrollIntoView: true
+    });
   }
 
   function currentLine() {
@@ -161,26 +214,16 @@
     ).number;
   }
 
-  function line(n) {
-    const d = doc();
-
-    if (
-      !Number.isInteger(n) ||
-      n < 1 ||
-      n > d.lines
-    )
-      throw Error(`잘못된 줄 주소: ${n}`);
-
-    return d.line(n);
-  }
-
   function moveCursor(n) {
     const v = findView();
     const d = v.state.doc;
 
     n = Math.max(
       1,
-      Math.min(n, d.lines)
+      Math.min(
+        n,
+        d.lines
+      )
     );
 
     v.dispatch({
@@ -191,33 +234,107 @@
     });
   }
 
-  function dispatch(changes, cursor) {
-    const v = findView();
-    const d = v.state.doc;
+  /* ============================================================
+   * 내부 buffer
+   * ============================================================ */
 
-    v.dispatch({
-      changes,
-      selection:
-        cursor == null
-          ? undefined
-          : {
-              anchor:
-                d.line(
-                  Math.max(
-                    1,
-                    Math.min(cursor, d.lines)
-                  )
-                ).from
-            },
-      scrollIntoView: true
-    });
+  let buffer = null;
+  let current = 1;
+  let nextId = 1;
+
+  function makeLine(text) {
+    return {
+      id: nextId++,
+      text: String(text ?? "")
+    };
   }
 
-  /*
-   * ------------------------------------------------------------
-   * 문자열 / 출력
-   * ------------------------------------------------------------
-   */
+  function syncBuffer() {
+    const lines = readLines();
+
+    buffer = lines.map(makeLine);
+
+    current = Math.max(
+      1,
+      Math.min(
+        currentLine(),
+        buffer.length
+      )
+    );
+  }
+
+  function ensureBuffer() {
+    if (!buffer)
+      syncBuffer();
+  }
+
+  function lineCount() {
+    ensureBuffer();
+    return buffer.length;
+  }
+
+  function getLine(n) {
+    ensureBuffer();
+
+    if (
+      !Number.isInteger(n) ||
+      n < 1 ||
+      n > buffer.length
+    )
+      throw Error(`잘못된 줄 주소: ${n}`);
+
+    return buffer[n - 1];
+  }
+
+  function lineIndexById(id) {
+    ensureBuffer();
+
+    return buffer.findIndex(
+      x => x.id === id
+    );
+  }
+
+  function lineNumberById(id) {
+    const i = lineIndexById(id);
+
+    return i < 0 ? null : i + 1;
+  }
+
+  function setCurrent(n) {
+    ensureBuffer();
+
+    if (!buffer.length) {
+      current = 0;
+      return;
+    }
+
+    current = Math.max(
+      1,
+      Math.min(
+        n,
+        buffer.length
+      )
+    );
+  }
+
+  function commit() {
+    ensureBuffer();
+
+    writeLines(
+      buffer.map(x => x.text),
+      Math.max(
+        1,
+        Math.min(
+          current || 1,
+          buffer.length
+        )
+      )
+    );
+  }
+
+  /* ============================================================
+   * 문자열
+   * ============================================================ */
 
   function quoted(s) {
     s = s.trim();
@@ -249,84 +366,30 @@
       .replace(/\\\\/g, "\\");
   }
 
-  function printCommand(addr, numbered = false, list = false) {
-    const { s, e } =
-      getRange(addr, ".");
-
-    const d = doc();
-
-    for (let n = s; n <= e; n++) {
-      let text = d.line(n).text;
-
-      if (list) {
-        text = text
-          .replace(/\\/g, "\\\\")
-          .replace(/\t/g, "\\t")
-          .replace(/[^\x20-\x7e]/g, c => {
-            if (c === "\n")
-              return "\\n";
-
-            const cp = c.codePointAt(0);
-
-            return "\\x" +
-              cp.toString(16).padStart(4, "0");
-          });
-      }
-
-      if (numbered)
-        console.log(`${n}\t${text}`);
-      else
-        console.log(`${n}: ${text}`);
-    }
-
-    moveCursor(e);
-    return e;
-  }
-
-  /*
-   * ------------------------------------------------------------
+  /* ============================================================
    * 주소
-   *
-   * 원본 ed의 핵심:
-   *
-   *   address [, address]
-   *
-   * 주소에는
-   *
-   *   .
-   *   $
-   *   숫자
-   *   + / -
-   *   /regexp/
-   *   ?regexp?
-   *
-   * 등이 올 수 있다.
-   * ------------------------------------------------------------
-   */
+   * ============================================================ */
 
   function readDelimited(s, p, delimiter) {
     let value = "";
-    let escaped = false;
 
     while (p < s.length) {
       const c = s[p++];
 
-      if (escaped) {
-        value += "\\" + c;
-        escaped = false;
-        continue;
-      }
-
       if (c === "\\") {
-        escaped = true;
+        if (p >= s.length)
+          throw Error("주소 정규식이 닫히지 않았습니다.");
+
+        value += "\\" + s[p++];
         continue;
       }
 
-      if (c === delimiter)
+      if (c === delimiter) {
         return {
           value,
           end: p
         };
+      }
 
       value += c;
     }
@@ -335,7 +398,7 @@
   }
 
   function searchAddress(re, base, direction) {
-    const d = doc();
+    ensureBuffer();
 
     if (!re)
       re = lastRegex;
@@ -345,63 +408,84 @@
 
     lastRegex = re;
 
-    const rx = new RegExp(re);
+    let rx;
+
+    try {
+      rx = new RegExp(re);
+    } catch (e) {
+      throw Error(`잘못된 정규식: ${e.message}`);
+    }
 
     let n = base;
 
-    for (let i = 0; i < d.lines; i++) {
+    for (let i = 0; i < buffer.length; i++) {
       n += direction;
 
-      if (n > d.lines)
+      if (n > buffer.length)
         n = 1;
 
       if (n < 1)
-        n = d.lines;
+        n = buffer.length;
 
-      if (rx.test(d.line(n).text))
+      rx.lastIndex = 0;
+
+      if (rx.test(buffer[n - 1].text))
         return n;
     }
 
-    throw Error("주소를 찾지 못했습니다.");
+    throw Error(`정규식에 일치하는 줄이 없습니다: /${re}/`);
   }
 
-  function parseAddressAt(s, pos = 0, base = currentLine()) {
-    const d = doc();
+  function parseAddressAt(
+    s,
+    pos = 0,
+    base = current
+  ) {
+    ensureBuffer();
 
     while (
       pos < s.length &&
-      (s[pos] === " " || s[pos] === "\t")
+      /\s/.test(s[pos])
     )
       pos++;
 
-    if (pos >= s.length)
+    if (pos >= s.length) {
       return {
         value: base,
         end: pos,
         present: false
       };
+    }
 
     let n;
-    let haveBase = false;
+    let present = true;
 
     const c = s[pos];
 
     if (c === ".") {
       n = base;
       pos++;
-      haveBase = true;
-    } else if (c === "$") {
-      n = d.lines;
+    }
+
+    else if (c === "$") {
+      n = buffer.length;
       pos++;
-      haveBase = true;
-    } else if (/[0-9]/.test(c)) {
+    }
+
+    else if (c === "0") {
+      n = 0;
+      pos++;
+    }
+
+    else if (/[0-9]/.test(c)) {
       const m =
         s.slice(pos).match(/^\d+/);
 
       n = Number(m[0]);
       pos += m[0].length;
-      haveBase = true;
-    } else if (c === "/" || c === "?") {
+    }
+
+    else if (c === "/" || c === "?") {
       const delimiter = c;
 
       const r =
@@ -418,11 +502,13 @@
       );
 
       pos = r.end;
-      haveBase = true;
-    } else if (c === "+" || c === "-") {
+    }
+
+    else if (c === "+" || c === "-") {
       n = base;
-      haveBase = true;
-    } else {
+    }
+
+    else {
       return {
         value: base,
         end: pos,
@@ -433,7 +519,7 @@
     while (pos < s.length) {
       while (
         pos < s.length &&
-        (s[pos] === " " || s[pos] === "\t")
+        /\s/.test(s[pos])
       )
         pos++;
 
@@ -458,39 +544,38 @@
       n += sign * amount;
     }
 
-    if (
-      n < 0 ||
-      n > d.lines
-    )
+    if (n < 0 || n > buffer.length)
       throw Error(`잘못된 줄 주소: ${n}`);
-
-    /*
-     * ed에서 0 주소는 일부 내부 처리에서는 존재하지만
-     * 일반적인 사용자 명령의 주소로는 허용하지 않는다.
-     */
-    if (n === 0)
-      throw Error("잘못된 줄 주소: 0");
 
     return {
       value: n,
       end: pos,
-      present: haveBase
+      present
     };
   }
 
-  function parseRangeAt(s, pos = 0, defaultAddr = ".") {
+  function parseRangeAt(
+    s,
+    pos = 0,
+    defaultAddr = "."
+  ) {
+    ensureBuffer();
+
     const startPos = pos;
 
     while (
       pos < s.length &&
-      (s[pos] === " " || s[pos] === "\t")
+      /\s/.test(s[pos])
     )
       pos++;
 
     if (pos >= s.length) {
+      const n =
+        parseAddress(defaultAddr);
+
       return {
-        s: parseAddress(defaultAddr).value,
-        e: parseAddress(defaultAddr).value,
+        s: n,
+        e: n,
         end: pos,
         present: false
       };
@@ -500,12 +585,12 @@
       parseAddressAt(
         s,
         pos,
-        currentLine()
+        current
       );
 
     if (!first.present) {
       const n =
-        parseAddress(defaultAddr).value;
+        parseAddress(defaultAddr);
 
       return {
         s: n,
@@ -519,7 +604,7 @@
 
     while (
       pos < s.length &&
-      (s[pos] === " " || s[pos] === "\t")
+      /\s/.test(s[pos])
     )
       pos++;
 
@@ -543,14 +628,16 @@
         pos,
         separator === ";"
           ? first.value
-          : currentLine()
+          : current
       );
 
     if (!second.present)
       throw Error("두 번째 주소가 없습니다.");
 
+    pos = second.end;
+
     if (separator === ";")
-      moveCursor(first.value);
+      setCurrent(first.value);
 
     if (first.value > second.value)
       throw Error("잘못된 줄 범위입니다.");
@@ -558,20 +645,22 @@
     return {
       s: first.value,
       e: second.value,
-      end: second.end,
+      end: pos,
       present: true
     };
   }
 
-  function parseAddress(s, base = currentLine()) {
-    const old = currentLine();
+  function parseAddress(
+    s,
+    base = current
+  ) {
+    ensureBuffer();
 
-    /*
-     * parseAddress는 단일 주소용.
-     */
+    const text = String(s ?? "");
+
     const r =
       parseAddressAt(
-        String(s ?? ""),
+        text,
         0,
         base
       );
@@ -579,25 +668,33 @@
     if (!r.present)
       throw Error(`잘못된 주소: ${s}`);
 
-    if (
-      String(s ?? "")
-        .slice(r.end)
-        .trim()
-    )
+    if (text.slice(r.end).trim())
       throw Error(`잘못된 주소: ${s}`);
-
-    /*
-     * old는 주소 파싱 자체에는 사용하지 않는다.
-     * 단, 명시적으로 유지하여 . 주소의 의미를
-     * current line 기준으로 고정한다.
-     */
-    void old;
 
     return r.value;
   }
 
-  function getRange(s, defaultAddr = ".") {
+  function getRange(
+    s,
+    defaultAddr = "."
+  ) {
+    ensureBuffer();
+
     const text = String(s ?? "");
+
+    if (text.trim() === ",") {
+      return {
+        s: 1,
+        e: buffer.length
+      };
+    }
+
+    if (text.trim() === ";") {
+      return {
+        s: current,
+        e: buffer.length
+      };
+    }
 
     const r =
       parseRangeAt(
@@ -615,253 +712,407 @@
     };
   }
 
-  /*
-   * ------------------------------------------------------------
-   * 기본 편집 명령
-   * ------------------------------------------------------------
-   */
+  /* ============================================================
+   * 출력
+   * ============================================================ */
+
+  function printCommand(
+    addr,
+    numbered = false,
+    list = false
+  ) {
+    const { s, e } =
+      getRange(addr, ".");
+
+    for (let n = s; n <= e; n++) {
+      let text =
+        getLine(n).text;
+
+      if (list) {
+        text =
+          text
+            .replace(/\\/g, "\\\\")
+            .replace(/\t/g, "\\t")
+            .replace(/\r/g, "\\r")
+            .replace(
+              /[\x00-\x1f\x7f-\x9f]/g,
+              c => {
+                if (c === "\n")
+                  return "\\n";
+
+                return (
+                  "\\x" +
+                  c
+                    .codePointAt(0)
+                    .toString(16)
+                    .padStart(2, "0")
+                );
+              }
+            );
+
+        console.log(`${text}$`);
+      }
+
+      else if (numbered) {
+        console.log(`${n}\t${text}`);
+      }
+
+      else {
+        console.log(text);
+      }
+    }
+
+    setCurrent(e);
+
+    return e;
+  }
+
+  /* ============================================================
+   * 기본 편집
+   * ============================================================ */
 
   function deleteCommand(addr) {
     const { s, e } =
       getRange(addr, ".");
 
-    const d = doc();
-
-    const from = line(s).from;
-
-    const to =
-      line(e).to +
-      (e < d.lines ? 1 : 0);
-
-    const cursor =
-      e < d.lines
-        ? s
-        : Math.max(1, s - 1);
-
-    dispatch(
-      {
-        from,
-        to,
-        insert: ""
-      },
-      cursor
+    buffer.splice(
+      s - 1,
+      e - s + 1
     );
 
-    return cursor;
+    if (!buffer.length) {
+      buffer.push(makeLine(""));
+      setCurrent(1);
+      return 1;
+    }
+
+    setCurrent(
+      Math.min(
+        s,
+        buffer.length
+      )
+    );
+
+    return current;
   }
 
-  function insertCommand(addr, text) {
+  function splitText(text) {
+    return String(text)
+      .replace(/\r\n/g, "\n")
+      .replace(/\r/g, "\n")
+      .split("\n");
+  }
+
+  function insertCommand(
+    addr,
+    text
+  ) {
     const n =
       parseAddress(
         addr || "."
       );
 
-    dispatch(
-      {
-        from: line(n).from,
-        insert: text + "\n"
-      },
-      n
+    const items =
+      splitText(text)
+        .map(makeLine);
+
+    buffer.splice(
+      n - 1,
+      0,
+      ...items
     );
 
-    return n;
+    setCurrent(
+      n + items.length - 1
+    );
+
+    return current;
   }
 
-  function appendCommand(addr, text) {
+  function appendCommand(
+    addr,
+    text
+  ) {
     const n =
       parseAddress(
         addr || "."
       );
 
-    dispatch(
-      {
-        from: line(n).to,
-        insert: "\n" + text
-      },
-      n + text.split("\n").length
+    const items =
+      splitText(text)
+        .map(makeLine);
+
+    buffer.splice(
+      n,
+      0,
+      ...items
     );
 
-    return n + text.split("\n").length;
+    setCurrent(
+      n + items.length
+    );
+
+    return current;
   }
 
-  function changeCommand(addr, text) {
+  function changeCommand(
+    addr,
+    text
+  ) {
     const { s, e } =
       getRange(addr, ".");
 
-    dispatch(
-      {
-        from: line(s).from,
-        to: line(e).to,
-        insert: text
-      },
-      s
+    const items =
+      splitText(text)
+        .map(makeLine);
+
+    buffer.splice(
+      s - 1,
+      e - s + 1,
+      ...items
     );
 
-    return s;
+    if (items.length) {
+      setCurrent(
+        s + items.length - 1
+      );
+    } else {
+      setCurrent(
+        Math.min(
+          s,
+          buffer.length
+        )
+      );
+    }
+
+    return current;
   }
 
+  /*
+   * j
+   *
+   * 주소 없음:
+   *   j
+   *   현재 줄 + 다음 줄
+   *
+   * 단일 주소:
+   *   5j
+   *   5,6j
+   *
+   * 범위:
+   *   3,5j
+   */
   function joinCommand(addr) {
-    const { s, e } =
-      getRange(addr, ".,+1");
+    ensureBuffer();
+
+    let s;
+    let e;
+
+    if (
+      addr == null ||
+      String(addr).trim() === ""
+    ) {
+      s = current;
+      e = current + 1;
+    } else {
+      const range =
+        getRange(addr, ".");
+
+      s = range.s;
+      e = range.e;
+
+      /*
+       * 단일 주소:
+       *
+       *   5j
+       *
+       * 는 5번 줄과 6번 줄을 합친다.
+       */
+      if (s === e)
+        e = s + 1;
+    }
+
+    if (s < 1 || s > buffer.length)
+      throw Error(
+        `잘못된 줄 주소: ${s}`
+      );
+
+    /*
+     * 마지막 줄에서 j:
+     *
+     *   $j
+     *
+     * 합칠 다음 줄이 없으므로
+     * 현재 줄 그대로 유지한다.
+     */
+    if (e > buffer.length)
+      e = buffer.length;
 
     if (s === e) {
-      moveCursor(s);
+      setCurrent(s);
       return s;
     }
 
-    const d = doc();
-
     const text =
-      d.sliceString(
-        line(s).from,
-        line(e).to
-      ).replace(/\r?\n/g, " ");
+      buffer
+        .slice(s - 1, e)
+        .map(x => x.text)
+        .join(" ");
 
-    dispatch(
-      {
-        from: line(s).from,
-        to: line(e).to,
-        insert: text
-      },
-      s
+    const joined =
+      makeLine(text);
+
+    buffer.splice(
+      s - 1,
+      e - s + 1,
+      joined
     );
+
+    setCurrent(s);
 
     return s;
   }
 
-  function copyCommand(addr, dest) {
+  /*
+   * t
+   */
+  function copyCommand(
+    addr,
+    dest
+  ) {
     const { s, e } =
       getRange(addr, ".");
 
     const target =
       parseAddress(
         dest,
-        currentLine()
+        current
       );
 
+    if (target === 0) {
+      const copies =
+        buffer
+          .slice(s - 1, e)
+          .map(x => makeLine(x.text));
+
+      buffer.splice(
+        0,
+        0,
+        ...copies
+      );
+
+      setCurrent(
+        copies.length
+      );
+
+      return current;
+    }
+
+    /*
+     * t.:
+     *
+     * 한 줄짜리 source가 자기 자신을 destination으로
+     * 지정한 경우에는 자기 자신 뒤에 복사한다.
+     */
     if (
       target >= s &&
-      target <= e
-    )
+      target <= e &&
+      !(s === e && target === s)
+    ) {
       throw Error(
         "복사 대상이 원본 범위 안에 있습니다."
       );
+    }
 
-    const d = doc();
+    const copies =
+      buffer
+        .slice(s - 1, e)
+        .map(x => makeLine(x.text));
 
-    const text =
-      d.sliceString(
-        line(s).from,
-        line(e).to
-      );
-
-    const count = e - s + 1;
-
-    dispatch(
-      {
-        from: line(target).to,
-        insert: "\n" + text
-      },
-      target + count
+    buffer.splice(
+      target,
+      0,
+      ...copies
     );
 
-    return target + count;
+    setCurrent(
+      target + copies.length
+    );
+
+    return current;
   }
 
-  function moveCommand(addr, dest) {
+  /*
+   * m
+   */
+  function moveCommand(
+    addr,
+    dest
+  ) {
     const { s, e } =
       getRange(addr, ".");
 
-    let target =
+    const target =
       parseAddress(
         dest,
-        currentLine()
+        current
       );
 
     if (
       target >= s &&
       target <= e
-    )
+    ) {
       throw Error(
         "이동 대상이 원본 범위 안에 있습니다."
       );
-
-    const d = doc();
-
-    const text =
-      d.sliceString(
-        line(s).from,
-        line(e).to
-      );
-
-    const from = line(s).from;
-
-    const to =
-      line(e).to +
-      (e < d.lines ? 1 : 0);
-
-    const count = e - s + 1;
-
-    if (target < s) {
-      dispatch(
-        [
-          {
-            from,
-            to,
-            insert: ""
-          },
-          {
-            from: line(target).to,
-            insert: "\n" + text
-          }
-        ],
-        target + count
-      );
-
-      return target + count;
     }
 
-    target -= count;
+    const count =
+      e - s + 1;
 
-    dispatch(
-      [
-        {
-          from,
-          to,
-          insert: ""
-        },
-        {
-          from: line(target).to,
-          insert: "\n" + text
-        }
-      ],
-      target + count
+    const moved =
+      buffer.splice(
+        s - 1,
+        count
+      );
+
+    let insertAt;
+
+    if (target < s) {
+      insertAt = target;
+    } else {
+      insertAt = target - count;
+    }
+
+    buffer.splice(
+      insertAt,
+      0,
+      ...moved
     );
 
-    return target + count;
+    setCurrent(
+      insertAt + count
+    );
+
+    return current;
   }
 
-  /*
-   * ------------------------------------------------------------
-   * substitute
-   *
-   * 원본 compsub():
-   *
-   *   \x  -> ESCFLG x
-   *   \<newline> -> ESCFLG newline
-   *
-   * 따라서 여기서 '\'를 무조건 결과 문자열에 넣으면 안 된다.
-   * ------------------------------------------------------------
-   */
+  /* ============================================================
+   * Substitute parser
+   * ============================================================ */
 
   function parseSubstitute(s) {
     if (s[0] !== "s")
-      throw Error("잘못된 substitute 명령입니다.");
+      throw Error(
+        "잘못된 substitute 명령입니다."
+      );
 
     const delimiter = s[1];
 
     if (!delimiter)
-      throw Error("s 구분자가 없습니다.");
+      throw Error(
+        "s 구분자가 없습니다."
+      );
 
     let p = 2;
     const parts = [];
@@ -876,30 +1127,22 @@
         if (c === "\\") {
           if (p + 1 >= s.length)
             throw Error(
-              "이스케이프가 닫히지 않았습니다."
+              "substitute escape가 닫히지 않았습니다."
             );
 
-          const next = s[p + 1];
+          const n = s[p + 1];
 
           /*
-           * 원본 ed:
-           *
-           *     if(c == '\\') {
-           *       c = getchr();
-           *       *p++ = ESCFLG;
-           *       ...
-           *     }
-           *
-           * 실제 LF를 만난 경우에도 ESC로 저장된다.
+           * escaped newline.
            */
-          if (next === "\n") {
+          if (n === "\n") {
             value += ESC + "\n";
             p += 2;
             continue;
           }
 
           if (
-            next === "\r" &&
+            n === "\r" &&
             s[p + 2] === "\n"
           ) {
             value += ESC + "\n";
@@ -907,10 +1150,7 @@
             continue;
           }
 
-          /*
-           * \delimiter
-           */
-          value += ESC + next;
+          value += ESC + n;
           p += 2;
           continue;
         }
@@ -933,24 +1173,39 @@
       parts.push(value);
     }
 
-    const flagStart = p;
+    let flags = "";
 
     while (
       p < s.length &&
-      /[g]/.test(s[p])
-    )
-      p++;
+      /[0-9gGpPlnIi]/.test(s[p])
+    ) {
+      const f = s[p++];
+
+      if (flags.includes(f))
+        throw Error(
+          `중복 substitute flag: ${f}`
+        );
+
+      flags += f;
+    }
+
+    if (s.slice(p).trim())
+      throw Error(
+        `잘못된 substitute suffix: ${s.slice(p)}`
+      );
 
     return {
       delimiter,
       pattern: parts[0],
       replacement: parts[1],
-      flags: s.slice(flagStart, p),
-      end: p
+      flags
     };
   }
 
-  function decodeSubPattern(s, delimiter) {
+  function decodeSubPattern(
+    s,
+    delimiter
+  ) {
     let out = "";
 
     for (let i = 0; i < s.length; i++) {
@@ -965,6 +1220,10 @@
 
       if (n === delimiter)
         out += delimiter;
+
+      else if (n === "\n")
+        out += "\n";
+
       else
         out += "\\" + n;
     }
@@ -972,7 +1231,10 @@
     return out;
   }
 
-  function decodeSubReplacement(s, delimiter) {
+  function decodeSubReplacement(
+    s,
+    delimiter
+  ) {
     let out = "";
 
     for (let i = 0; i < s.length; i++) {
@@ -985,49 +1247,47 @@
 
       const n = s[++i];
 
-      /*
-       * s/foo/ham \
-       * ster/
-       *
-       * => "ham \nster"
-       *
-       * 여기서는 '\' 자체를 넣지 않는다.
-       */
       if (n === "\n") {
         out += "\n";
         continue;
       }
 
-      /*
-       * \delimiter
-       */
       if (n === delimiter) {
         out += delimiter;
         continue;
       }
 
-      /*
-       * \1 ~ \9
-       *
-       * JS replace()의 $1 계열과 구분하기 위해
-       * 원본 ed의 ESC 처리는 나중에 변환한다.
-       */
       if (/[1-9]/.test(n)) {
         out += "$" + n;
         continue;
       }
 
-      /*
-       * 기타 \x는 원본의 ESCFLG x.
-       * JS replacement에서는 그대로 x를 넣는다.
-       */
+      if (n === "&") {
+        out += "$&";
+        continue;
+      }
+
       out += n;
     }
 
     return out;
   }
 
-  function substituteCommand(addr, command) {
+  function jsReplacementToText(
+    old,
+    regex,
+    replacement
+  ) {
+    return old.replace(
+      regex,
+      replacement
+    );
+  }
+
+  function substituteCommand(
+    addr,
+    command
+  ) {
     const sub =
       parseSubstitute(command);
 
@@ -1053,76 +1313,165 @@
         sub.delimiter
       );
 
-    let flags = sub.flags;
+    const flags = sub.flags;
 
-    /*
-     * ed의 s 명령은 기본적으로 첫 번째 match만,
-     * g가 있으면 모든 match.
-     */
-    const re =
-      new RegExp(
-        pattern,
-        flags
+    const globalFlag =
+      flags.includes("g");
+
+    const ignoreCase =
+      flags.includes("I") ||
+      flags.includes("i");
+
+    const regexFlags =
+      (globalFlag ? "g" : "") +
+      (ignoreCase ? "i" : "");
+
+    let re;
+
+    try {
+      re =
+        new RegExp(
+          pattern,
+          regexFlags
+        );
+    } catch (e) {
+      throw Error(
+        `잘못된 정규식: ${e.message}`
       );
+    }
 
-    const { s, e } =
+    const range =
       getRange(addr, ".");
 
-    const d = doc();
-    const changes = [];
+    const start = range.s;
+    const originalEnd = range.e;
 
-    for (let n = s; n <= e; n++) {
-      const l = d.line(n);
-      const old = l.text;
+    /*
+     * 중요:
+     *
+     * 원래 처리해야 하는 줄의 끝은 originalEnd.
+     *
+     * substitute가 줄을 여러 개로 만들어도
+     * 새로 만들어진 줄을 다시 substitute 대상으로
+     * 처리하지 않는다.
+     */
+    let n = start;
+
+    let changed = false;
+    let lastChanged = current;
+
+    while (
+      n <= originalEnd &&
+      n <= buffer.length
+    ) {
+      const item =
+        buffer[n - 1];
 
       re.lastIndex = 0;
 
+      const old =
+        item.text;
+
       const neu =
-        old.replace(
+        jsReplacementToText(
+          old,
           re,
           replacement
         );
 
-      if (old !== neu) {
-        changes.push({
-          from: l.from,
-          to: l.to,
-          insert: neu
-        });
+      if (old === neu) {
+        n++;
+        continue;
       }
-    }
 
-    if (!changes.length) {
+      changed = true;
+
+      const newTexts =
+        splitText(neu);
+
+      const newItems =
+        newTexts.map(makeLine);
+
+      buffer.splice(
+        n - 1,
+        1,
+        ...newItems
+      );
+
       /*
-       * 원본 ed의 substitute는 global 내부가 아니면
-       * 실패 시 에러 상태가 되지만, 여기서는 기존
-       * 콘솔 인터페이스를 유지한다.
+       * 치환으로 만들어진 마지막 줄.
        */
-      console.log("치환 없음");
-      return e;
+      lastChanged =
+        n + newItems.length - 1;
+
+      /*
+       * 다음 원본 줄로 이동.
+       *
+       * 예:
+       *
+       * 5번 줄이
+       *
+       * a
+       *
+       * 에서
+       *
+       * x
+       * y
+       *
+       * 로 바뀌었다면 다음 처리 대상은
+       * 새로 만들어진 y가 아니라 원래 6번 줄이다.
+       */
+      n =
+        lastChanged + 1;
     }
 
-    dispatch(changes, e);
+    if (!changed)
+      throw Error("치환 없음");
 
-    return e;
+    /*
+     * multiline substitute 후 현재 주소는
+     * 실제 치환 영역의 마지막 줄.
+     *
+     * 따라서 바로 이어지는 j는 이 줄과 다음 줄을
+     * 정확하게 합친다.
+     */
+    setCurrent(lastChanged);
+
+    lastSubstitution = {
+      pattern,
+      replacement,
+      global: globalFlag
+    };
+
+    if (flags.includes("p"))
+      printCommand(
+        String(current),
+        false,
+        false
+      );
+
+    if (flags.includes("n"))
+      printCommand(
+        String(current),
+        true,
+        false
+      );
+
+    if (flags.includes("l"))
+      printCommand(
+        String(current),
+        false,
+        true
+      );
+
+    return current;
   }
 
-  /*
-   * ------------------------------------------------------------
-   * global
-   *
-   * 원본 global()은:
-   *
-   *   g/re/command
-   *
-   * command가 비어 있으면 p를 집어넣는다.
-   *
-   * 또한 command 내부에서 \를 사용하여 여러 명령을
-   * 하나의 global command stream으로 만든다.
-   * ------------------------------------------------------------
-   */
+  /* ============================================================
+   * Global parser
+   * ============================================================ */
 
-  function parseGlobal(code) {
+  function parseGlobalHeader(code) {
     const type = code[0];
 
     if (
@@ -1142,19 +1491,17 @@
 
     let p = 2;
     let pattern = "";
-    let escaped = false;
 
     while (p < code.length) {
       const c = code[p++];
 
-      if (escaped) {
-        pattern += "\\" + c;
-        escaped = false;
-        continue;
-      }
-
       if (c === "\\") {
-        escaped = true;
+        if (p >= code.length)
+          throw Error(
+            "global 정규식 escape가 닫히지 않았습니다."
+          );
+
+        pattern += "\\" + code[p++];
         continue;
       }
 
@@ -1167,674 +1514,41 @@
     if (
       p > code.length ||
       code[p - 1] !== delimiter
-    )
+    ) {
       throw Error(
         "global 정규식이 닫히지 않았습니다."
       );
-
-    /*
-     * 원본:
-     *
-     * if(gp == globuf)
-     *     *gp++ = 'p';
-     *
-     * 즉 g/re/ 자체는 p.
-     */
-    let command =
-      code.slice(p);
-
-    if (!command.trim())
-      command = "p";
+    }
 
     return {
       type,
       delimiter,
       pattern,
-      command
+      restStart: p
     };
   }
 
-  function splitGlobalCommands(text) {
-    const result = [];
-
-    let start = 0;
-    let p = 0;
-    let braceDepth = 0;
-
-    while (p < text.length) {
-      const c = text[p];
-
-      /*
-       * substitute 안의 \는 command separator가 아니다.
-       */
-      if (c === "s" && p + 1 < text.length) {
-        let q = p + 2;
-        const delim = text[p + 1];
-
-        let escaped = false;
-
-        while (q < text.length) {
-          const x = text[q++];
-
-          if (escaped) {
-            escaped = false;
-            continue;
-          }
-
-          if (x === "\\") {
-            escaped = true;
-            continue;
-          }
-
-          if (x === delim)
-            break;
-        }
-
-        /*
-         * replacement 종료 delimiter
-         */
-        escaped = false;
-
-        while (q < text.length) {
-          const x = text[q];
-
-          if (x === "\\") {
-            q += 2;
-            continue;
-          }
-
-          if (x === delim) {
-            q++;
-            break;
-          }
-
-          q++;
-        }
-
-        p = q;
-        continue;
-      }
-
-      /*
-       * 주소 regexp 안의 '\'도 separator가 아니다.
-       */
-      if (
-        (c === "/" || c === "?") &&
-        (p === 0 ||
-         /[\s,;]/.test(text[p - 1]))
-      ) {
-        const delim = c;
-        p++;
-
-        while (p < text.length) {
-          const x = text[p++];
-
-          if (x === "\\") {
-            p++;
-            continue;
-          }
-
-          if (x === delim)
-            break;
-        }
-
-        continue;
-      }
-
-      /*
-       * 원본 global()의 command stream separator.
-       */
-      if (c === "\\") {
-        const command =
-          text
-            .slice(start, p)
-            .trim();
-
-        if (command)
-          result.push(command);
-
-        p++;
-        start = p;
-        continue;
-      }
-
-      p++;
-    }
-
-    const last =
-      text.slice(start).trim();
-
-    if (last)
-      result.push(last);
-
-    return result;
-  }
-
-  function globalCommand(addr, code) {
-    const g =
-      parseGlobal(code);
-
-    lastRegex =
-      decodeSubPattern(
-        g.pattern,
-        g.delimiter
-      );
-
-    const { s, e } =
-      getRange(
-        addr,
-        "1,$"
-      );
-
-    const d = doc();
-
-    const re =
-      new RegExp(
-        lastRegex
-      );
-
-    const selected = [];
-
-    /*
-     * global은 명령 실행 전에 대상 줄을
-     * 먼저 모두 선택한다.
-     *
-     * 원본 C 코드의 mark 방식과 같은 의미다.
-     */
-    for (let n = s; n <= e; n++) {
-      re.lastIndex = 0;
-
-      const matched =
-        re.test(
-          d.line(n).text
-        );
-
-      if (
-        g.type === "g"
-          ? matched
-          : !matched
-      )
-        selected.push(n);
-    }
-
-    const commands =
-      splitGlobalCommands(
-        g.command
-      );
-
-    /*
-     * g/re/ -> p
-     */
-    if (!commands.length)
-      commands.push("p");
-
-    /*
-     * 원본 global:
-     *
-     * for(a1=zero; a1<=dol; a1++) {
-     *   if(*a1 & 01) {
-     *     ...
-     *     globp = globuf;
-     *     commands();
-     *   }
-     * }
-     *
-     * 즉 선택된 각 줄에서 command stream을
-     * 실행한다.
-     */
-    for (const originalLine of selected) {
-      if (
-        originalLine < 1 ||
-        originalLine > doc().lines
-      )
-        continue;
-
-      let n = originalLine;
-
-      for (const command of commands) {
-        if (!command)
-          continue;
-
-        n =
-          execute(
-            command,
-            String(n)
-          );
-
-        /*
-         * p/n/l 등은 반환값으로 현재 줄을
-         * 유지한다.
-         */
-        if (
-          n == null ||
-          n < 1 ||
-          n > doc().lines
-        )
-          break;
-      }
-    }
-
-    return selected.length
-      ? selected.at(-1)
-      : currentLine();
-  }
-
-  /*
-   * ------------------------------------------------------------
-   * 명령 파서
-   *
-   * 여기서 가장 중요한 차이:
-   *
-   *   "명령을 정규식 하나로 잡는다"
-   *
-   * 가 아니라
-   *
-   *   1. 주소를 먼저 읽고
-   *   2. 남은 부분에서 command를 읽는다
-   *
-   * 로 처리한다.
-   *
-   * 이것이 원본 ed의 commands()와 같은 구조다.
-   * ------------------------------------------------------------
-   */
-
-  function splitAddressAndCommand(code) {
-    const r =
-      parseRangeAt(
-        code,
-        0,
-        "."
-      );
-
-    if (!r.present) {
-      return {
-        addr: null,
-        rest: code.trim()
-      };
-    }
-
-    return {
-      addr:
-        code
-          .slice(0, r.end)
-          .trim(),
-      rest:
-        code
-          .slice(r.end)
-          .trimStart()
-    };
-  }
-
-  function execute(code, forcedAddr = null) {
-    code = String(code ?? "");
-
-    /*
-     * top-level의 실제 newline은 command 종료.
-     * 단, substitute replacement 내부 newline은
-     * parseSubstitute에서 이미 처리한다.
-     */
-    code = code.replace(/\r\n/g, "\n");
-
-    /*
-     * global 내부에서 전달되는 command에는
-     * 앞뒤 공백을 제거해도 된다.
-     */
-    code = code.trim();
-
-    if (!code)
-      return;
-
-    /*
-     * help
-     */
-    if (
-      code === "help" ||
-      code === "?"
-    )
-      return help();
-
-    /*
-     * undo
-     */
-    if (code === "u")
-      return undo();
-
-    /*
-     * 먼저 주소를 분리한다.
-     *
-     * /the/
-     * /the/ p
-     * 1,5p
-     * 1,5
-     * $d
-     * 등 모두 여기서 처리된다.
-     */
-    let parsed;
-
-    try {
-      parsed =
-        splitAddressAndCommand(code);
-    } catch (err) {
-      /*
-       * 주소가 아니라 명령 자체인 경우에만
-       * 아래 command parser로 넘긴다.
-       */
-      parsed = {
-        addr: null,
-        rest: code
-      };
-    }
-
-    let addr =
-      parsed.addr;
-
-    let command =
-      parsed.rest;
-
-    /*
-     * global / substitute는 주소 parser가
-     * 정상적으로 끝나지 않는 특수 command이므로
-     * 여기서도 직접 처리한다.
-     */
-    if (
-      !addr &&
-      /^[gv]/.test(command)
-    ) {
-      const g =
-        command[0];
-
-      if (
-        command[1] === "/" ||
-        command[1] === "?"
-      ) {
-        return globalCommand(
-          forcedAddr ||
-          "1,$",
-          command
-        );
-      }
-    }
-
-    if (
-      !addr &&
-      command[0] === "s"
-    ) {
-      return substituteCommand(
-        forcedAddr ||
-        ".",
-        command
-      );
-    }
-
-    /*
-     * forcedAddr는 global이 한 줄씩 명령을
-     * 실행할 때 사용한다.
-     */
-    const effectiveAddr =
-      addr ||
-      forcedAddr ||
-      null;
-
-    /*
-     * 주소만 있는 경우:
-     *
-     *   /the/
-     *   3
-     *   1,5
-     *
-     * 원본 ed에서는 newline command.
-     * 즉 print.
-     */
-    if (!command) {
-      return printCommand(
-        effectiveAddr || ".",
-        false,
-        false
-      );
-    }
-
-    /*
-     * global
-     */
-    if (
-      command[0] === "g" ||
-      command[0] === "v"
-    ) {
-      if (
-        command[1] === "/" ||
-        command[1] === "?"
-      ) {
-        return globalCommand(
-          effectiveAddr ||
-          "1,$",
-          command
-        );
-      }
-    }
-
-    /*
-     * substitute
-     */
-    if (command[0] === "s") {
-      return substituteCommand(
-        effectiveAddr || ".",
-        command
-      );
-    }
-
-    /*
-     * 주소 뒤에 command가 붙은 일반 명령
-     */
-    const c = command[0];
-
-    switch (c) {
-      case "p":
-        if (command.slice(1).trim())
-          throw Error(
-            `알 수 없는 명령입니다: ${code}`
-          );
-
-        return printCommand(
-          effectiveAddr || ".",
-          false,
-          false
-        );
-
-      case "n":
-        if (command.slice(1).trim())
-          throw Error(
-            `알 수 없는 명령입니다: ${code}`
-          );
-
-        return printCommand(
-          effectiveAddr || ".",
-          true,
-          false
-        );
-
-      case "l":
-        if (command.slice(1).trim())
-          throw Error(
-            `알 수 없는 명령입니다: ${code}`
-          );
-
-        return printCommand(
-          effectiveAddr || ".",
-          false,
-          true
-        );
-
-      case "d":
-        if (command.slice(1).trim())
-          throw Error(
-            `알 수 없는 명령입니다: ${code}`
-          );
-
-        return deleteCommand(
-          effectiveAddr || "."
-        );
-
-      case "j":
-        if (command.slice(1).trim())
-          throw Error(
-            `알 수 없는 명령입니다: ${code}`
-          );
-
-        return joinCommand(
-          effectiveAddr || ".,+1"
-        );
-
-      case "i": {
-        const rest =
-          command.slice(1).trim();
-
-        if (!rest)
-          throw Error(
-            "insert 내용이 없습니다."
-          );
-
-        return insertCommand(
-          effectiveAddr || ".",
-          quoted(rest)
-        );
-      }
-
-      case "a": {
-        const rest =
-          command.slice(1).trim();
-
-        if (!rest)
-          throw Error(
-            "append 내용이 없습니다."
-          );
-
-        return appendCommand(
-          effectiveAddr || ".",
-          quoted(rest)
-        );
-      }
-
-      case "c": {
-        const rest =
-          command.slice(1).trim();
-
-        if (!rest)
-          throw Error(
-            "change 내용이 없습니다."
-          );
-
-        return changeCommand(
-          effectiveAddr || ".",
-          quoted(rest)
-        );
-      }
-
-      case "t": {
-        const rest =
-          command.slice(1).trim();
-
-        if (!rest)
-          throw Error(
-            "copy 대상 주소가 없습니다."
-          );
-
-        return copyCommand(
-          effectiveAddr || ".",
-          rest
-        );
-      }
-
-      case "m": {
-        const rest =
-          command.slice(1).trim();
-
-        if (!rest)
-          throw Error(
-            "move 대상 주소가 없습니다."
-          );
-
-        return moveCommand(
-          effectiveAddr || ".",
-          rest
-        );
-      }
-
-      case "=": {
-        const r =
-          effectiveAddr
-            ? getRange(effectiveAddr, ".")
-            : {
-                s: doc().lines,
-                e: doc().lines
-              };
-
-        console.log(
-          r.e
-        );
-
-        return r.e;
-      }
-
-      default:
-        throw Error(
-          `알 수 없는 명령입니다: ${code}`
-        );
-    }
-  }
-
-  /*
-   * ------------------------------------------------------------
-   * undo
-   *
-   * CodeMirror의 native history를 사용한다.
-   * ------------------------------------------------------------
-   */
-
-  function undo() {
-    const v = findView();
-
-    v.contentDOM.dispatchEvent(
-      new KeyboardEvent(
-        "keydown",
-        {
-          key: "z",
-          code: "KeyZ",
-          ctrlKey: true,
-          bubbles: true,
-          cancelable: true
-        }
-      )
-    );
-  }
-
-  /*
-   * ------------------------------------------------------------
-   * top-level command splitter
-   *
-   * 중요한 점:
-   *
-   *   s/foo/bar/...
-   *   g/foo/...
-   *   /regexp/
-   *
-   * 내부의 '\'는 top-level separator가 아니다.
-   * ------------------------------------------------------------
-   */
-
-  function scanSubstituteEnd(text, start) {
+  function scanSubstituteCommand(
+    text,
+    start
+  ) {
     const delimiter =
       text[start + 1];
+
+    if (!delimiter)
+      throw Error(
+        "substitute 구분자가 없습니다."
+      );
 
     let p = start + 2;
 
     for (let field = 0; field < 2; field++) {
+      let closed = false;
+
       while (p < text.length) {
         const c = text[p];
 
         if (c === "\\") {
-          /*
-           * 실제 LF 포함.
-           */
           if (
             text[p + 1] === "\r" &&
             text[p + 2] === "\n"
@@ -1849,48 +1563,29 @@
 
         if (c === delimiter) {
           p++;
+          closed = true;
           break;
         }
 
         p++;
       }
+
+      if (!closed)
+        throw Error(
+          "global 내부 substitute가 닫히지 않았습니다."
+        );
     }
 
     while (
       p < text.length &&
-      text[p] === "g"
+      /[0-9gGpPlnIi]/.test(text[p])
     )
       p++;
 
     return p;
   }
 
-  function scanGlobalEnd(text, start) {
-    const delimiter =
-      text[start + 1];
-
-    let p = start + 2;
-
-    while (p < text.length) {
-      const c = text[p];
-
-      if (c === "\\") {
-        p += 2;
-        continue;
-      }
-
-      if (c === delimiter) {
-        p++;
-        break;
-      }
-
-      p++;
-    }
-
-    return p;
-  }
-
-  function splitTopLevelCommands(text) {
+  function splitGlobalCommands(text) {
     const result = [];
 
     let start = 0;
@@ -1907,7 +1602,7 @@
         p + 1 < text.length
       ) {
         p =
-          scanSubstituteEnd(
+          scanSubstituteCommand(
             text,
             p
           );
@@ -1916,69 +1611,20 @@
       }
 
       /*
-       * global
+       * escaped newline:
+       *
+       * global command separator.
        */
       if (
-        (c === "g" || c === "v") &&
-        p + 1 < text.length &&
+        c === "\\" &&
         (
-          text[p + 1] === "/" ||
-          text[p + 1] === "?"
-        )
-      ) {
-        p =
-          scanGlobalEnd(
-            text,
-            p
-          );
-
-        /*
-         * global command의 내부 command stream은
-         * 여기서 하나의 command로 취급한다.
-         */
-        continue;
-      }
-
-      /*
-       * 주소 정규식.
-       */
-      if (
-        (
-          c === "/" ||
-          c === "?"
-        ) &&
-        (
-          p === start ||
-          /[\s,;]/.test(
-            text[p - 1]
+          text[p + 1] === "\n" ||
+          (
+            text[p + 1] === "\r" &&
+            text[p + 2] === "\n"
           )
         )
       ) {
-        const delimiter = c;
-
-        p++;
-
-        while (p < text.length) {
-          if (text[p] === "\\") {
-            p += 2;
-            continue;
-          }
-
-          if (text[p] === delimiter) {
-            p++;
-            break;
-          }
-
-          p++;
-        }
-
-        continue;
-      }
-
-      /*
-       * top-level \ 는 command separator.
-       */
-      if (c === "\\") {
         const command =
           text
             .slice(start, p)
@@ -1987,17 +1633,17 @@
         if (command)
           result.push(command);
 
-        p++;
+        if (text[p + 1] === "\r")
+          p += 3;
+        else
+          p += 2;
+
         start = p;
         continue;
       }
 
       /*
-       * 실제 LF는 top-level command separator.
-       *
-       * substitute 내부의 LF는 이미
-       * scanSubstituteEnd()가 소비했으므로 여기에는
-       * 도달하지 않는다.
+       * 실제 newline.
        */
       if (c === "\n") {
         const command =
@@ -2027,28 +1673,773 @@
     return result;
   }
 
-  function runCode(code) {
-    code = String(code ?? "");
+  /*
+   * global
+   */
+  function globalCommand(
+    addr,
+    code
+  ) {
+    const g =
+      parseGlobalHeader(code);
 
-    if (!code.trim())
-      return;
+    let pattern =
+      decodeSubPattern(
+        g.pattern,
+        g.delimiter
+      );
+
+    if (!pattern)
+      pattern = lastRegex;
+
+    if (!pattern)
+      throw Error(
+        "이전 정규식이 없습니다."
+      );
+
+    lastRegex = pattern;
+
+    let re;
+
+    try {
+      re = new RegExp(pattern);
+    } catch (e) {
+      throw Error(
+        `잘못된 global 정규식: ${e.message}`
+      );
+    }
+
+    const { s, e } =
+      getRange(
+        addr,
+        "1,$"
+      );
+
+    /*
+     * global 대상은 line number가 아니라
+     * line id로 먼저 고정한다.
+     */
+    const markedIds = [];
+
+    for (let n = s; n <= e; n++) {
+      re.lastIndex = 0;
+
+      const matched =
+        re.test(
+          buffer[n - 1].text
+        );
+
+      const select =
+        g.type === "g"
+          ? matched
+          : !matched;
+
+      if (select)
+        markedIds.push(
+          buffer[n - 1].id
+        );
+    }
+
+    let commandText =
+      code.slice(g.restStart);
+
+    if (!commandText.trim())
+      commandText = "p";
 
     const commands =
-      splitTopLevelCommands(code);
+      splitGlobalCommands(
+        commandText
+      );
 
-    let result;
+    if (!commands.length)
+      commands.push("p");
 
-    for (const command of commands)
-      result = execute(command);
+    let lastResult =
+      current;
+
+    /*
+     * 각 marked line을 처리.
+     *
+     * 한 번 처리된 원본 line id는 다시
+     * global 대상이 되지 않는다.
+     */
+    for (const id of markedIds) {
+      const index =
+        lineIndexById(id);
+
+      if (index < 0)
+        continue;
+
+      setCurrent(index + 1);
+
+      for (const command of commands) {
+        if (!command)
+          continue;
+
+        const trimmed =
+          command.trim();
+
+        /*
+         * nested global 금지.
+         */
+        if (
+          /^[gv][/?]/.test(trimmed)
+        ) {
+          throw Error(
+            "global 안에서 global/vglobal은 사용할 수 없습니다."
+          );
+        }
+
+        lastResult =
+          execute(
+            trimmed,
+            String(current)
+          );
+      }
+    }
+
+    return lastResult;
+  }
+
+  /* ============================================================
+   * 주소 + command 분리
+   * ============================================================ */
+
+  function splitAddressAndCommand(
+    code
+  ) {
+    const r =
+      parseRangeAt(
+        code,
+        0,
+        "."
+      );
+
+    if (!r.present) {
+      return {
+        addr: null,
+        rest: code.trim()
+      };
+    }
+
+    return {
+      addr:
+        code
+          .slice(0, r.end)
+          .trim(),
+
+      rest:
+        code
+          .slice(r.end)
+          .trimStart()
+    };
+  }
+
+  /* ============================================================
+   * execute
+   * ============================================================ */
+
+  function execute(
+    code,
+    forcedAddr = null
+  ) {
+    ensureBuffer();
+
+    code =
+      String(code ?? "")
+        .replace(/\r\n/g, "\n")
+        .trim();
+
+    if (!code)
+      return current;
+
+    if (
+      code === "help" ||
+      code === "?"
+    )
+      return help();
+
+    /*
+     * undo
+     */
+    if (code === "u") {
+      commit();
+
+      const v = findView();
+
+      v.contentDOM.dispatchEvent(
+        new KeyboardEvent(
+          "keydown",
+          {
+            key: "z",
+            code: "KeyZ",
+            ctrlKey: true,
+            bubbles: true,
+            cancelable: true
+          }
+        )
+      );
+
+      buffer = null;
+
+      return currentLine();
+    }
+
+    let parsed;
+
+    try {
+      parsed =
+        splitAddressAndCommand(code);
+    } catch {
+      parsed = {
+        addr: null,
+        rest: code
+      };
+    }
+
+    const addr =
+      parsed.addr;
+
+    const command =
+      parsed.rest;
+
+    const effectiveAddr =
+      addr ||
+      forcedAddr ||
+      null;
+
+    /*
+     * global
+     */
+    if (
+      !addr &&
+      (
+        command.startsWith("g/") ||
+        command.startsWith("g?") ||
+        command.startsWith("v/") ||
+        command.startsWith("v?")
+      )
+    ) {
+      return globalCommand(
+        forcedAddr || "1,$",
+        command
+      );
+    }
+
+    /*
+     * substitute
+     */
+    if (
+      !addr &&
+      command[0] === "s"
+    ) {
+      return substituteCommand(
+        forcedAddr || ".",
+        command
+      );
+    }
+
+    /*
+     * 주소만 있는 경우 print.
+     */
+    if (!command) {
+      return printCommand(
+        effectiveAddr || ".",
+        false,
+        false
+      );
+    }
+
+    /*
+     * 주소 뒤 global.
+     */
+    if (
+      command[0] === "g" ||
+      command[0] === "v"
+    ) {
+      if (
+        command[1] === "/" ||
+        command[1] === "?"
+      ) {
+        return globalCommand(
+          effectiveAddr || "1,$",
+          command
+        );
+      }
+    }
+
+    /*
+     * substitute
+     */
+    if (command[0] === "s") {
+      return substituteCommand(
+        effectiveAddr || ".",
+        command
+      );
+    }
+
+    const c =
+      command[0];
+
+    switch (c) {
+
+      /* --------------------------------------------------------
+       * p
+       * -------------------------------------------------------- */
+
+      case "p": {
+        const suffix =
+          command
+            .slice(1)
+            .trim();
+
+        if (suffix)
+          throw Error(
+            `알 수 없는 명령입니다: ${code}`
+          );
+
+        return printCommand(
+          effectiveAddr || ".",
+          false,
+          false
+        );
+      }
+
+      /* --------------------------------------------------------
+       * n
+       * -------------------------------------------------------- */
+
+      case "n": {
+        const suffix =
+          command
+            .slice(1)
+            .trim();
+
+        if (suffix)
+          throw Error(
+            `알 수 없는 명령입니다: ${code}`
+          );
+
+        return printCommand(
+          effectiveAddr || ".",
+          true,
+          false
+        );
+      }
+
+      /* --------------------------------------------------------
+       * l
+       * -------------------------------------------------------- */
+
+      case "l": {
+        const suffix =
+          command
+            .slice(1)
+            .trim();
+
+        if (suffix)
+          throw Error(
+            `알 수 없는 명령입니다: ${code}`
+          );
+
+        return printCommand(
+          effectiveAddr || ".",
+          false,
+          true
+        );
+      }
+
+      /* --------------------------------------------------------
+       * d
+       * -------------------------------------------------------- */
+
+      case "d": {
+        if (
+          command
+            .slice(1)
+            .trim()
+        )
+          throw Error(
+            `알 수 없는 명령입니다: ${code}`
+          );
+
+        return deleteCommand(
+          effectiveAddr || "."
+        );
+      }
+
+      /* --------------------------------------------------------
+       * j
+       * -------------------------------------------------------- */
+
+      case "j": {
+        if (
+          command
+            .slice(1)
+            .trim()
+        )
+          throw Error(
+            `알 수 없는 명령입니다: ${code}`
+          );
+
+        /*
+         * 기존의
+         *
+         *   effectiveAddr || ".,+1"
+         *
+         * 를 사용하지 않는다.
+         *
+         * 주소 없는 j는 joinCommand가 직접
+         * current/current+1을 계산한다.
+         */
+        return joinCommand(
+          effectiveAddr || null
+        );
+      }
+
+      /* --------------------------------------------------------
+       * i
+       * -------------------------------------------------------- */
+
+      case "i": {
+        const rest =
+          command
+            .slice(1)
+            .trim();
+
+        if (!rest)
+          throw Error(
+            "insert 내용이 없습니다."
+          );
+
+        return insertCommand(
+          effectiveAddr || ".",
+          quoted(rest)
+        );
+      }
+
+      /* --------------------------------------------------------
+       * a
+       * -------------------------------------------------------- */
+
+      case "a": {
+        const rest =
+          command
+            .slice(1)
+            .trim();
+
+        if (!rest)
+          throw Error(
+            "append 내용이 없습니다."
+          );
+
+        return appendCommand(
+          effectiveAddr || ".",
+          quoted(rest)
+        );
+      }
+
+      /* --------------------------------------------------------
+       * c
+       * -------------------------------------------------------- */
+
+      case "c": {
+        const rest =
+          command
+            .slice(1)
+            .trim();
+
+        if (!rest)
+          throw Error(
+            "change 내용이 없습니다."
+          );
+
+        return changeCommand(
+          effectiveAddr || ".",
+          quoted(rest)
+        );
+      }
+
+      /* --------------------------------------------------------
+       * t
+       * -------------------------------------------------------- */
+
+      case "t": {
+        const rest =
+          command
+            .slice(1)
+            .trim();
+
+        if (!rest)
+          throw Error(
+            "copy 대상 주소가 없습니다."
+          );
+
+        return copyCommand(
+          effectiveAddr || ".",
+          rest
+        );
+      }
+
+      /* --------------------------------------------------------
+       * m
+       * -------------------------------------------------------- */
+
+      case "m": {
+        const rest =
+          command
+            .slice(1)
+            .trim();
+
+        if (!rest)
+          throw Error(
+            "move 대상 주소가 없습니다."
+          );
+
+        return moveCommand(
+          effectiveAddr || ".",
+          rest
+        );
+      }
+
+      /* --------------------------------------------------------
+       * =
+       * -------------------------------------------------------- */
+
+      case "=": {
+        const r =
+          effectiveAddr
+            ? getRange(
+                effectiveAddr,
+                "."
+              )
+            : {
+                s: buffer.length,
+                e: buffer.length
+              };
+
+        console.log(r.e);
+
+        return current;
+      }
+
+      default:
+        throw Error(
+          `알 수 없는 명령입니다: ${code}`
+        );
+    }
+  }
+
+  /* ============================================================
+   * Top-level command splitter
+   * ============================================================ */
+
+  function scanTopLevelSubstitute(
+    text,
+    start
+  ) {
+    return scanSubstituteCommand(
+      text,
+      start
+    );
+  }
+
+  function scanTopLevelGlobal(
+    text,
+    start
+  ) {
+    const delimiter =
+      text[start + 1];
+
+    let p = start + 2;
+
+    while (p < text.length) {
+      const c = text[p];
+
+      if (c === "\\") {
+        p += 2;
+        continue;
+      }
+
+      if (c === delimiter) {
+        p++;
+        break;
+      }
+
+      p++;
+    }
+
+    /*
+     * global command-list 전체를 하나의
+     * top-level command로 유지.
+     */
+    return text.length;
+  }
+
+  function splitTopLevelCommands(
+    text
+  ) {
+    const result = [];
+
+    let start = 0;
+    let p = 0;
+
+    while (p < text.length) {
+      const c = text[p];
+
+      /*
+       * global은 끝까지 하나의 command.
+       */
+      if (
+        (
+          c === "g" ||
+          c === "v"
+        ) &&
+        p + 1 < text.length &&
+        (
+          text[p + 1] === "/" ||
+          text[p + 1] === "?"
+        ) &&
+        (
+          p === start ||
+          /[\s,;]/.test(
+            text[p - 1]
+          )
+        )
+      ) {
+        p =
+          scanTopLevelGlobal(
+            text,
+            p
+          );
+
+        continue;
+      }
+
+      /*
+       * top-level substitute
+       */
+      if (
+        c === "s" &&
+        p === start
+      ) {
+        p =
+          scanTopLevelSubstitute(
+            text,
+            p
+          );
+
+        continue;
+      }
+
+      /*
+       * 주소 regexp
+       */
+      if (
+        (
+          c === "/" ||
+          c === "?"
+        ) &&
+        (
+          p === start ||
+          /[\s,;]/.test(
+            text[p - 1]
+          )
+        )
+      ) {
+        const delimiter = c;
+
+        p++;
+
+        while (p < text.length) {
+          if (text[p] === "\\") {
+            p += 2;
+            continue;
+          }
+
+          if (
+            text[p] === delimiter
+          ) {
+            p++;
+            break;
+          }
+
+          p++;
+        }
+
+        continue;
+      }
+
+      /*
+       * 실제 newline.
+       */
+      if (c === "\n") {
+        const command =
+          text
+            .slice(start, p)
+            .trim();
+
+        if (command)
+          result.push(command);
+
+        p++;
+        start = p;
+        continue;
+      }
+
+      p++;
+    }
+
+    const last =
+      text
+        .slice(start)
+        .trim();
+
+    if (last)
+      result.push(last);
 
     return result;
   }
 
-  /*
-   * ------------------------------------------------------------
+  /* ============================================================
+   * runCode
+   * ============================================================ */
+
+  function runCode(code) {
+    code =
+      String(code ?? "");
+
+    if (!code.trim())
+      return;
+
+    /*
+     * 새 실행마다 실제 CodeMirror buffer를 다시 읽는다.
+     */
+    syncBuffer();
+
+    const commands =
+      splitTopLevelCommands(code);
+
+    let result =
+      current;
+
+    for (const command of commands) {
+      result =
+        execute(command);
+    }
+
+    /*
+     * 모든 편집은 내부 buffer에서 처리하고
+     * 마지막에 한 번 반영.
+     */
+    commit();
+
+    return result;
+  }
+
+  /* ============================================================
    * help
-   * ------------------------------------------------------------
-   */
+   * ============================================================ */
 
   function help() {
     console.log(`
@@ -2057,6 +2448,7 @@ GitHub CodeMirror ed
 주소
   .             현재 줄
   $             마지막 줄
+  0             첫 줄 앞
   3             절대 주소
   +             현재 + 1
   -             현재 - 1
@@ -2064,33 +2456,39 @@ GitHub CodeMirror ed
   -2
   .+3
   $-2
-  /regexp/      다음 regexp 일치 줄
-  ?regexp?      이전 regexp 일치 줄
+  /regexp/      다음 일치 줄
+  ?regexp?      이전 일치 줄
+
+범위
   1,$
   .,$
   .,+3
   .-2,.+2
   1;5
-
-주소만 입력
-  /the/
-  3
-  1,5
+  ,
+  ;
 
 출력
   p
   n
   l
+  ,p
+  ,n
+  ,l
   1,$p
   1,$n
   1,$l
 
-삽입 / 추가 / 교체
+삽입
   i "text"
-  a "text"
-  c "text"
   3i "text"
+
+추가
+  a "text"
   3a "text"
+
+교체
+  c "text"
   3,5c "text"
 
 멀티라인
@@ -2104,15 +2502,21 @@ GitHub CodeMirror ed
   3,10d
   $d
 
-복사 / 이동
+복사
   3t10
   3,5t$
+  t.
+  g/the/t.
+
+이동
   3m10
   3,5m$
 
 합치기
   j
+  3j
   3,5j
+  $j
 
 치환
   s/foo/bar/
@@ -2120,65 +2524,75 @@ GitHub CodeMirror ed
   1,$s/foo/bar/g
   s//bar/g
 
-치환 문자열 실제 줄바꿈
+치환 줄바꿈
   s/hamster/ham \\
 ster/
+
+  s/(.*)(the).*/x\\1\\
+\\2/
 
 global
   g/abc/p
   g/abc/n
   g/abc/l
   g/abc/d
+  g/abc/t.
   g/abc/s/abc/def/g
-  g/abc/s//def/g
 
   g/the/
-  g/the/ p
-  g/the/ n
-  g/the/ l
+  g/the/p
+  g/the/n
+  g/the/l
 
-global 연속 명령
-  g/abc/p\\l
-  g/abc/s/foo/bar/g\\p
-  g/e/s//E/g\\p
+global command-list
+  g/abc/p\\
+s/foo/bar/g\\
+p
+
+  g/the/t.\\
+s/(.*)(the).*/x\\1\\
+\\2/\\
+s/./=/g\\
+-s/./ /g\\
+s/^ //\\
+j
 
 inverse global
   v/abc/p
   v/abc/n
   v/abc/d
 
-undo
-  u
-
 줄 수
   =
+
+undo
+  u
 
 도움말
   help
 `);
   }
 
-  /*
-   * ------------------------------------------------------------
+  /* ============================================================
    * install
-   * ------------------------------------------------------------
-   */
+   * ============================================================ */
 
   view = findView();
 
   window.__githubView = view;
-  window.runCode = runCode;
-  window.findGithubEditor = findView;
 
-  window.ed = (strings, ...values) => {
+  window.runCode = runCode;
+
+  window.findGithubEditor =
+    findView;
+
+  window.ed = (
+    strings,
+    ...values
+  ) => {
     if (typeof strings === "string")
       return runCode(strings);
 
-    /*
-     * tagged template에서는 String.raw을 사용해야
-     * 사용자가 입력한 '\'가 JS escape 처리로
-     * 사라지지 않는다.
-     */
     return runCode(
       String.raw(
         strings,
