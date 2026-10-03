@@ -33,10 +33,12 @@
    *   - s 명령의 g 플래그 중복 방지
    *   - -s, -p, -n, -l 등의 상대주소 처리
    *   - ,p / ,n / ,l 지원
+   *   - ;p / ;n / ;l 지원
    *   - substitute로 줄이 분리된 뒤 현재 주소 유지
    *   - global에서 원본 line id 유지
    *   - t/m/j/d/c/i/a/s line semantics 개선
    *   - j 단일 주소의 정확한 처리
+   *   - CodeMirror 문서 교체 시 cursor RangeError 방지
    */
 
   let view = null;
@@ -176,13 +178,75 @@
     return result;
   }
 
+  /*
+   * 중요:
+   *
+   * 기존 구현은 새 buffer의 cursor line을
+   * 기존 CodeMirror document에서 v.state.doc.line(cursor)
+   * 로 찾았다.
+   *
+   * 예:
+   *
+   *   기존 CodeMirror = 7줄
+   *   내부 buffer     = 13줄
+   *
+   * 이 상태에서 line(13)을 호출하면
+   *
+   *   RangeError: Invalid line number 13 in 7-line document
+   *
+   * 가 발생한다.
+   *
+   * 따라서 cursor는 새로 삽입될 text 기준의 offset으로
+   * 직접 계산한다.
+   */
   function writeLines(lines, cursor = 1) {
     const v = findView();
 
-    if (!lines.length)
+    if (!Array.isArray(lines) || !lines.length)
       lines = [""];
 
-    const text = lines.join("\n");
+    const normalized =
+      lines.map(
+        x => String(x ?? "")
+      );
+
+    const text =
+      normalized.join("\n");
+
+    const newLineCount =
+      Math.max(
+        1,
+        normalized.length
+      );
+
+    const targetLine =
+      Math.max(
+        1,
+        Math.min(
+          Number(cursor) || 1,
+          newLineCount
+        )
+      );
+
+    let anchor = 0;
+
+    for (
+      let i = 0;
+      i < targetLine - 1;
+      i++
+    ) {
+      anchor +=
+        normalized[i].length + 1;
+    }
+
+    anchor =
+      Math.max(
+        0,
+        Math.min(
+          anchor,
+          text.length
+        )
+      );
 
     v.dispatch({
       changes: {
@@ -190,18 +254,11 @@
         to: v.state.doc.length,
         insert: text
       },
+
       selection: {
-        anchor:
-          v.state.doc.line(
-            Math.max(
-              1,
-              Math.min(
-                cursor,
-                v.state.doc.lines
-              )
-            )
-          ).from
+        anchor
       },
+
       scrollIntoView: true
     });
   }
@@ -252,15 +309,17 @@
   function syncBuffer() {
     const lines = readLines();
 
-    buffer = lines.map(makeLine);
+    buffer =
+      lines.map(makeLine);
 
-    current = Math.max(
-      1,
-      Math.min(
-        currentLine(),
-        buffer.length
-      )
-    );
+    current =
+      Math.max(
+        1,
+        Math.min(
+          currentLine(),
+          buffer.length
+        )
+      );
   }
 
   function ensureBuffer() {
@@ -295,9 +354,12 @@
   }
 
   function lineNumberById(id) {
-    const i = lineIndexById(id);
+    const i =
+      lineIndexById(id);
 
-    return i < 0 ? null : i + 1;
+    return i < 0
+      ? null
+      : i + 1;
   }
 
   function setCurrent(n) {
@@ -308,20 +370,23 @@
       return;
     }
 
-    current = Math.max(
-      1,
-      Math.min(
-        n,
-        buffer.length
-      )
-    );
+    current =
+      Math.max(
+        1,
+        Math.min(
+          n,
+          buffer.length
+        )
+      );
   }
 
   function commit() {
     ensureBuffer();
 
     writeLines(
-      buffer.map(x => x.text),
+      buffer.map(
+        x => x.text
+      ),
       Math.max(
         1,
         Math.min(
@@ -370,7 +435,11 @@
    * 주소
    * ============================================================ */
 
-  function readDelimited(s, p, delimiter) {
+  function readDelimited(
+    s,
+    p,
+    delimiter
+  ) {
     let value = "";
 
     while (p < s.length) {
@@ -378,9 +447,13 @@
 
       if (c === "\\") {
         if (p >= s.length)
-          throw Error("주소 정규식이 닫히지 않았습니다.");
+          throw Error(
+            "주소 정규식이 닫히지 않았습니다."
+          );
 
-        value += "\\" + s[p++];
+        value +=
+          "\\" + s[p++];
+
         continue;
       }
 
@@ -394,17 +467,25 @@
       value += c;
     }
 
-    throw Error("주소 정규식이 닫히지 않았습니다.");
+    throw Error(
+      "주소 정규식이 닫히지 않았습니다."
+    );
   }
 
-  function searchAddress(re, base, direction) {
+  function searchAddress(
+    re,
+    base,
+    direction
+  ) {
     ensureBuffer();
 
     if (!re)
       re = lastRegex;
 
     if (!re)
-      throw Error("이전 정규식이 없습니다.");
+      throw Error(
+        "이전 정규식이 없습니다."
+      );
 
     lastRegex = re;
 
@@ -413,12 +494,18 @@
     try {
       rx = new RegExp(re);
     } catch (e) {
-      throw Error(`잘못된 정규식: ${e.message}`);
+      throw Error(
+        `잘못된 정규식: ${e.message}`
+      );
     }
 
     let n = base;
 
-    for (let i = 0; i < buffer.length; i++) {
+    for (
+      let i = 0;
+      i < buffer.length;
+      i++
+    ) {
       n += direction;
 
       if (n > buffer.length)
@@ -429,11 +516,17 @@
 
       rx.lastIndex = 0;
 
-      if (rx.test(buffer[n - 1].text))
+      if (
+        rx.test(
+          buffer[n - 1].text
+        )
+      )
         return n;
     }
 
-    throw Error(`정규식에 일치하는 줄이 없습니다: /${re}/`);
+    throw Error(
+      `정규식에 일치하는 줄이 없습니다: /${re}/`
+    );
   }
 
   function parseAddressAt(
@@ -479,13 +572,21 @@
 
     else if (/[0-9]/.test(c)) {
       const m =
-        s.slice(pos).match(/^\d+/);
+        s
+          .slice(pos)
+          .match(/^\d+/);
 
-      n = Number(m[0]);
-      pos += m[0].length;
+      n =
+        Number(m[0]);
+
+      pos +=
+        m[0].length;
     }
 
-    else if (c === "/" || c === "?") {
+    else if (
+      c === "/" ||
+      c === "?"
+    ) {
       const delimiter = c;
 
       const r =
@@ -495,16 +596,22 @@
           delimiter
         );
 
-      n = searchAddress(
-        r.value,
-        base,
-        delimiter === "/" ? 1 : -1
-      );
+      n =
+        searchAddress(
+          r.value,
+          base,
+          delimiter === "/"
+            ? 1
+            : -1
+        );
 
       pos = r.end;
     }
 
-    else if (c === "+" || c === "-") {
+    else if (
+      c === "+" ||
+      c === "-"
+    ) {
       n = base;
     }
 
@@ -530,22 +637,35 @@
         break;
 
       const sign =
-        s[pos++] === "+" ? 1 : -1;
+        s[pos++] === "+"
+          ? 1
+          : -1;
 
       const m =
-        s.slice(pos).match(/^\d+/);
+        s
+          .slice(pos)
+          .match(/^\d+/);
 
       const amount =
-        m ? Number(m[0]) : 1;
+        m
+          ? Number(m[0])
+          : 1;
 
       if (m)
-        pos += m[0].length;
+        pos +=
+          m[0].length;
 
-      n += sign * amount;
+      n +=
+        sign * amount;
     }
 
-    if (n < 0 || n > buffer.length)
-      throw Error(`잘못된 줄 주소: ${n}`);
+    if (
+      n < 0 ||
+      n > buffer.length
+    )
+      throw Error(
+        `잘못된 줄 주소: ${n}`
+      );
 
     return {
       value: n,
@@ -554,6 +674,23 @@
     };
   }
 
+  /*
+   * 범위 파싱
+   *
+   * 추가:
+   *
+   *   ,  = 1,$
+   *   ;  = current,$
+   *
+   * 이 처리가 parseRangeAt에도 들어가야
+   *
+   *   ,p
+   *   ,n
+   *   ,l
+   *
+   * 같은 명령이 splitAddressAndCommand에서
+   * 정상적으로 분리된다.
+   */
   function parseRangeAt(
     s,
     pos = 0,
@@ -569,9 +706,43 @@
     )
       pos++;
 
+    /*
+     * 특별한 전체 범위:
+     *
+     *   ,p
+     *   ,n
+     *   ,l
+     *
+     *   ;
+     */
+    if (
+      s[pos] === "," ||
+      s[pos] === ";"
+    ) {
+      const separator =
+        s[pos++];
+
+      const first =
+        separator === ","
+          ? 1
+          : current;
+
+      const second =
+        buffer.length;
+
+      return {
+        s: first,
+        e: second,
+        end: pos,
+        present: true
+      };
+    }
+
     if (pos >= s.length) {
       const n =
-        parseAddress(defaultAddr);
+        parseAddress(
+          defaultAddr
+        );
 
       return {
         s: n,
@@ -590,7 +761,9 @@
 
     if (!first.present) {
       const n =
-        parseAddress(defaultAddr);
+        parseAddress(
+          defaultAddr
+        );
 
       return {
         s: n,
@@ -600,7 +773,8 @@
       };
     }
 
-    pos = first.end;
+    pos =
+      first.end;
 
     while (
       pos < s.length &&
@@ -620,7 +794,8 @@
       };
     }
 
-    const separator = s[pos++];
+    const separator =
+      s[pos++];
 
     const second =
       parseAddressAt(
@@ -632,15 +807,23 @@
       );
 
     if (!second.present)
-      throw Error("두 번째 주소가 없습니다.");
+      throw Error(
+        "두 번째 주소가 없습니다."
+      );
 
-    pos = second.end;
+    pos =
+      second.end;
 
     if (separator === ";")
       setCurrent(first.value);
 
-    if (first.value > second.value)
-      throw Error("잘못된 줄 범위입니다.");
+    if (
+      first.value >
+      second.value
+    )
+      throw Error(
+        "잘못된 줄 범위입니다."
+      );
 
     return {
       s: first.value,
@@ -656,7 +839,8 @@
   ) {
     ensureBuffer();
 
-    const text = String(s ?? "");
+    const text =
+      String(s ?? "");
 
     const r =
       parseAddressAt(
@@ -666,10 +850,18 @@
       );
 
     if (!r.present)
-      throw Error(`잘못된 주소: ${s}`);
+      throw Error(
+        `잘못된 주소: ${s}`
+      );
 
-    if (text.slice(r.end).trim())
-      throw Error(`잘못된 주소: ${s}`);
+    if (
+      text
+        .slice(r.end)
+        .trim()
+    )
+      throw Error(
+        `잘못된 주소: ${s}`
+      );
 
     return r.value;
   }
@@ -680,7 +872,8 @@
   ) {
     ensureBuffer();
 
-    const text = String(s ?? "");
+    const text =
+      String(s ?? "");
 
     if (text.trim() === ",") {
       return {
@@ -703,8 +896,14 @@
         defaultAddr
       );
 
-    if (text.slice(r.end).trim())
-      throw Error(`잘못된 주소: ${s}`);
+    if (
+      text
+        .slice(r.end)
+        .trim()
+    )
+      throw Error(
+        `잘못된 주소: ${s}`
+      );
 
     return {
       s: r.s,
@@ -722,18 +921,34 @@
     list = false
   ) {
     const { s, e } =
-      getRange(addr, ".");
+      getRange(
+        addr,
+        "."
+      );
 
-    for (let n = s; n <= e; n++) {
+    for (
+      let n = s;
+      n <= e;
+      n++
+    ) {
       let text =
         getLine(n).text;
 
       if (list) {
         text =
           text
-            .replace(/\\/g, "\\\\")
-            .replace(/\t/g, "\\t")
-            .replace(/\r/g, "\\r")
+            .replace(
+              /\\/g,
+              "\\\\"
+            )
+            .replace(
+              /\t/g,
+              "\\t"
+            )
+            .replace(
+              /\r/g,
+              "\\r"
+            )
             .replace(
               /[\x00-\x1f\x7f-\x9f]/g,
               c => {
@@ -745,16 +960,23 @@
                   c
                     .codePointAt(0)
                     .toString(16)
-                    .padStart(2, "0")
+                    .padStart(
+                      2,
+                      "0"
+                    )
                 );
               }
             );
 
-        console.log(`${text}$`);
+        console.log(
+          `${text}$`
+        );
       }
 
       else if (numbered) {
-        console.log(`${n}\t${text}`);
+        console.log(
+          `${n}\t${text}`
+        );
       }
 
       else {
@@ -773,7 +995,10 @@
 
   function deleteCommand(addr) {
     const { s, e } =
-      getRange(addr, ".");
+      getRange(
+        addr,
+        "."
+      );
 
     buffer.splice(
       s - 1,
@@ -781,8 +1006,12 @@
     );
 
     if (!buffer.length) {
-      buffer.push(makeLine(""));
+      buffer.push(
+        makeLine("")
+      );
+
       setCurrent(1);
+
       return 1;
     }
 
@@ -798,8 +1027,14 @@
 
   function splitText(text) {
     return String(text)
-      .replace(/\r\n/g, "\n")
-      .replace(/\r/g, "\n")
+      .replace(
+        /\r\n/g,
+        "\n"
+      )
+      .replace(
+        /\r/g,
+        "\n"
+      )
       .split("\n");
   }
 
@@ -823,7 +1058,9 @@
     );
 
     setCurrent(
-      n + items.length - 1
+      n +
+      items.length -
+      1
     );
 
     return current;
@@ -849,7 +1086,8 @@
     );
 
     setCurrent(
-      n + items.length
+      n +
+      items.length
     );
 
     return current;
@@ -860,7 +1098,10 @@
     text
   ) {
     const { s, e } =
-      getRange(addr, ".");
+      getRange(
+        addr,
+        "."
+      );
 
     const items =
       splitText(text)
@@ -874,9 +1115,13 @@
 
     if (items.length) {
       setCurrent(
-        s + items.length - 1
+        s +
+        items.length -
+        1
       );
-    } else {
+    }
+
+    else {
       setCurrent(
         Math.min(
           s,
@@ -888,20 +1133,10 @@
     return current;
   }
 
-  /*
+  /* ============================================================
    * j
-   *
-   * 주소 없음:
-   *   j
-   *   현재 줄 + 다음 줄
-   *
-   * 단일 주소:
-   *   5j
-   *   5,6j
-   *
-   * 범위:
-   *   3,5j
-   */
+   * ============================================================ */
+
   function joinCommand(addr) {
     ensureBuffer();
 
@@ -914,38 +1149,38 @@
     ) {
       s = current;
       e = current + 1;
-    } else {
+    }
+
+    else {
       const range =
-        getRange(addr, ".");
+        getRange(
+          addr,
+          "."
+        );
 
       s = range.s;
       e = range.e;
 
       /*
-       * 단일 주소:
+       * 5j
        *
-       *   5j
-       *
-       * 는 5번 줄과 6번 줄을 합친다.
+       * 5번 줄 + 6번 줄
        */
       if (s === e)
         e = s + 1;
     }
 
-    if (s < 1 || s > buffer.length)
+    if (
+      s < 1 ||
+      s > buffer.length
+    )
       throw Error(
         `잘못된 줄 주소: ${s}`
       );
 
-    /*
-     * 마지막 줄에서 j:
-     *
-     *   $j
-     *
-     * 합칠 다음 줄이 없으므로
-     * 현재 줄 그대로 유지한다.
-     */
-    if (e > buffer.length)
+    if (
+      e > buffer.length
+    )
       e = buffer.length;
 
     if (s === e) {
@@ -955,8 +1190,13 @@
 
     const text =
       buffer
-        .slice(s - 1, e)
-        .map(x => x.text)
+        .slice(
+          s - 1,
+          e
+        )
+        .map(
+          x => x.text
+        )
         .join(" ");
 
     const joined =
@@ -973,15 +1213,19 @@
     return s;
   }
 
-  /*
+  /* ============================================================
    * t
-   */
+   * ============================================================ */
+
   function copyCommand(
     addr,
     dest
   ) {
     const { s, e } =
-      getRange(addr, ".");
+      getRange(
+        addr,
+        "."
+      );
 
     const target =
       parseAddress(
@@ -992,8 +1236,14 @@
     if (target === 0) {
       const copies =
         buffer
-          .slice(s - 1, e)
-          .map(x => makeLine(x.text));
+          .slice(
+            s - 1,
+            e
+          )
+          .map(
+            x =>
+              makeLine(x.text)
+          );
 
       buffer.splice(
         0,
@@ -1008,16 +1258,13 @@
       return current;
     }
 
-    /*
-     * t.:
-     *
-     * 한 줄짜리 source가 자기 자신을 destination으로
-     * 지정한 경우에는 자기 자신 뒤에 복사한다.
-     */
     if (
       target >= s &&
       target <= e &&
-      !(s === e && target === s)
+      !(
+        s === e &&
+        target === s
+      )
     ) {
       throw Error(
         "복사 대상이 원본 범위 안에 있습니다."
@@ -1026,8 +1273,14 @@
 
     const copies =
       buffer
-        .slice(s - 1, e)
-        .map(x => makeLine(x.text));
+        .slice(
+          s - 1,
+          e
+        )
+        .map(
+          x =>
+            makeLine(x.text)
+        );
 
     buffer.splice(
       target,
@@ -1036,21 +1289,26 @@
     );
 
     setCurrent(
-      target + copies.length
+      target +
+      copies.length
     );
 
     return current;
   }
 
-  /*
+  /* ============================================================
    * m
-   */
+   * ============================================================ */
+
   function moveCommand(
     addr,
     dest
   ) {
     const { s, e } =
-      getRange(addr, ".");
+      getRange(
+        addr,
+        "."
+      );
 
     const target =
       parseAddress(
@@ -1078,11 +1336,11 @@
 
     let insertAt;
 
-    if (target < s) {
+    if (target < s)
       insertAt = target;
-    } else {
-      insertAt = target - count;
-    }
+    else
+      insertAt =
+        target - count;
 
     buffer.splice(
       insertAt,
@@ -1117,7 +1375,11 @@
     let p = 2;
     const parts = [];
 
-    for (let field = 0; field < 2; field++) {
+    for (
+      let field = 0;
+      field < 2;
+      field++
+    ) {
       let value = "";
       let closed = false;
 
@@ -1125,19 +1387,25 @@
         const c = s[p];
 
         if (c === "\\") {
-          if (p + 1 >= s.length)
+          if (
+            p + 1 >= s.length
+          )
             throw Error(
               "substitute escape가 닫히지 않았습니다."
             );
 
-          const n = s[p + 1];
+          const n =
+            s[p + 1];
 
           /*
-           * escaped newline.
+           * escaped newline
            */
           if (n === "\n") {
-            value += ESC + "\n";
+            value +=
+              ESC + "\n";
+
             p += 2;
+
             continue;
           }
 
@@ -1145,13 +1413,19 @@
             n === "\r" &&
             s[p + 2] === "\n"
           ) {
-            value += ESC + "\n";
+            value +=
+              ESC + "\n";
+
             p += 3;
+
             continue;
           }
 
-          value += ESC + n;
+          value +=
+            ESC + n;
+
           p += 2;
+
           continue;
         }
 
@@ -1177,7 +1451,9 @@
 
     while (
       p < s.length &&
-      /[0-9gGpPlnIi]/.test(s[p])
+      /[0-9gGpPlnIi]/.test(
+        s[p]
+      )
     ) {
       const f = s[p++];
 
@@ -1189,7 +1465,11 @@
       flags += f;
     }
 
-    if (s.slice(p).trim())
+    if (
+      s
+        .slice(p)
+        .trim()
+    )
       throw Error(
         `잘못된 substitute suffix: ${s.slice(p)}`
       );
@@ -1208,7 +1488,11 @@
   ) {
     let out = "";
 
-    for (let i = 0; i < s.length; i++) {
+    for (
+      let i = 0;
+      i < s.length;
+      i++
+    ) {
       const c = s[i];
 
       if (c !== ESC) {
@@ -1216,7 +1500,8 @@
         continue;
       }
 
-      const n = s[++i];
+      const n =
+        s[++i];
 
       if (n === delimiter)
         out += delimiter;
@@ -1225,7 +1510,8 @@
         out += "\n";
 
       else
-        out += "\\" + n;
+        out +=
+          "\\" + n;
     }
 
     return out;
@@ -1237,7 +1523,11 @@
   ) {
     let out = "";
 
-    for (let i = 0; i < s.length; i++) {
+    for (
+      let i = 0;
+      i < s.length;
+      i++
+    ) {
       const c = s[i];
 
       if (c !== ESC) {
@@ -1245,7 +1535,8 @@
         continue;
       }
 
-      const n = s[++i];
+      const n =
+        s[++i];
 
       if (n === "\n") {
         out += "\n";
@@ -1258,7 +1549,8 @@
       }
 
       if (/[1-9]/.test(n)) {
-        out += "$" + n;
+        out +=
+          "$" + n;
         continue;
       }
 
@@ -1313,7 +1605,8 @@
         sub.delimiter
       );
 
-    const flags = sub.flags;
+    const flags =
+      sub.flags;
 
     const globalFlag =
       flags.includes("g");
@@ -1323,8 +1616,16 @@
       flags.includes("i");
 
     const regexFlags =
-      (globalFlag ? "g" : "") +
-      (ignoreCase ? "i" : "");
+      (
+        globalFlag
+          ? "g"
+          : ""
+      ) +
+      (
+        ignoreCase
+          ? "i"
+          : ""
+      );
 
     let re;
 
@@ -1341,24 +1642,22 @@
     }
 
     const range =
-      getRange(addr, ".");
+      getRange(
+        addr,
+        "."
+      );
 
-    const start = range.s;
-    const originalEnd = range.e;
+    const start =
+      range.s;
 
-    /*
-     * 중요:
-     *
-     * 원래 처리해야 하는 줄의 끝은 originalEnd.
-     *
-     * substitute가 줄을 여러 개로 만들어도
-     * 새로 만들어진 줄을 다시 substitute 대상으로
-     * 처리하지 않는다.
-     */
+    const originalEnd =
+      range.e;
+
     let n = start;
 
     let changed = false;
-    let lastChanged = current;
+    let lastChanged =
+      current;
 
     while (
       n <= originalEnd &&
@@ -1390,7 +1689,9 @@
         splitText(neu);
 
       const newItems =
-        newTexts.map(makeLine);
+        newTexts.map(
+          makeLine
+        );
 
       buffer.splice(
         n - 1,
@@ -1398,44 +1699,29 @@
         ...newItems
       );
 
-      /*
-       * 치환으로 만들어진 마지막 줄.
-       */
       lastChanged =
-        n + newItems.length - 1;
+        n +
+        newItems.length -
+        1;
 
       /*
+       * 새로 생성된 줄은 다시 같은 substitute의
+       * 대상이 되지 않는다.
+       *
        * 다음 원본 줄로 이동.
-       *
-       * 예:
-       *
-       * 5번 줄이
-       *
-       * a
-       *
-       * 에서
-       *
-       * x
-       * y
-       *
-       * 로 바뀌었다면 다음 처리 대상은
-       * 새로 만들어진 y가 아니라 원래 6번 줄이다.
        */
       n =
         lastChanged + 1;
     }
 
     if (!changed)
-      throw Error("치환 없음");
+      throw Error(
+        "치환 없음"
+      );
 
-    /*
-     * multiline substitute 후 현재 주소는
-     * 실제 치환 영역의 마지막 줄.
-     *
-     * 따라서 바로 이어지는 j는 이 줄과 다음 줄을
-     * 정확하게 합친다.
-     */
-    setCurrent(lastChanged);
+    setCurrent(
+      lastChanged
+    );
 
     lastSubstitution = {
       pattern,
@@ -1482,7 +1768,8 @@
         "잘못된 global 명령입니다."
       );
 
-    const delimiter = code[1];
+    const delimiter =
+      code[1];
 
     if (!delimiter)
       throw Error(
@@ -1493,15 +1780,20 @@
     let pattern = "";
 
     while (p < code.length) {
-      const c = code[p++];
+      const c =
+        code[p++];
 
       if (c === "\\") {
-        if (p >= code.length)
+        if (
+          p >= code.length
+        )
           throw Error(
             "global 정규식 escape가 닫히지 않았습니다."
           );
 
-        pattern += "\\" + code[p++];
+        pattern +=
+          "\\" + code[p++];
+
         continue;
       }
 
@@ -1540,13 +1832,21 @@
         "substitute 구분자가 없습니다."
       );
 
-    let p = start + 2;
+    let p =
+      start + 2;
 
-    for (let field = 0; field < 2; field++) {
+    for (
+      let field = 0;
+      field < 2;
+      field++
+    ) {
       let closed = false;
 
-      while (p < text.length) {
-        const c = text[p];
+      while (
+        p < text.length
+      ) {
+        const c =
+          text[p];
 
         if (c === "\\") {
           if (
@@ -1554,14 +1854,18 @@
             text[p + 2] === "\n"
           ) {
             p += 3;
-          } else {
+          }
+
+          else {
             p += 2;
           }
 
           continue;
         }
 
-        if (c === delimiter) {
+        if (
+          c === delimiter
+        ) {
           p++;
           closed = true;
           break;
@@ -1578,7 +1882,9 @@
 
     while (
       p < text.length &&
-      /[0-9gGpPlnIi]/.test(text[p])
+      /[0-9gGpPlnIi]/.test(
+        text[p]
+      )
     )
       p++;
 
@@ -1591,8 +1897,11 @@
     let start = 0;
     let p = 0;
 
-    while (p < text.length) {
-      const c = text[p];
+    while (
+      p < text.length
+    ) {
+      const c =
+        text[p];
 
       /*
        * substitute
@@ -1611,9 +1920,9 @@
       }
 
       /*
-       * escaped newline:
+       * escaped newline
        *
-       * global command separator.
+       * global command separator
        */
       if (
         c === "\\" &&
@@ -1627,28 +1936,37 @@
       ) {
         const command =
           text
-            .slice(start, p)
+            .slice(
+              start,
+              p
+            )
             .trim();
 
         if (command)
           result.push(command);
 
-        if (text[p + 1] === "\r")
+        if (
+          text[p + 1] === "\r"
+        )
           p += 3;
         else
           p += 2;
 
         start = p;
+
         continue;
       }
 
       /*
-       * 실제 newline.
+       * 실제 newline
        */
       if (c === "\n") {
         const command =
           text
-            .slice(start, p)
+            .slice(
+              start,
+              p
+            )
             .trim();
 
         if (command)
@@ -1656,6 +1974,7 @@
 
         p++;
         start = p;
+
         continue;
       }
 
@@ -1673,9 +1992,10 @@
     return result;
   }
 
-  /*
+  /* ============================================================
    * global
-   */
+   * ============================================================ */
+
   function globalCommand(
     addr,
     code
@@ -1702,7 +2022,8 @@
     let re;
 
     try {
-      re = new RegExp(pattern);
+      re =
+        new RegExp(pattern);
     } catch (e) {
       throw Error(
         `잘못된 global 정규식: ${e.message}`
@@ -1717,11 +2038,15 @@
 
     /*
      * global 대상은 line number가 아니라
-     * line id로 먼저 고정한다.
+     * line id로 고정.
      */
     const markedIds = [];
 
-    for (let n = s; n <= e; n++) {
+    for (
+      let n = s;
+      n <= e;
+      n++
+    ) {
       re.lastIndex = 0;
 
       const matched =
@@ -1741,9 +2066,13 @@
     }
 
     let commandText =
-      code.slice(g.restStart);
+      code.slice(
+        g.restStart
+      );
 
-    if (!commandText.trim())
+    if (
+      !commandText.trim()
+    )
       commandText = "p";
 
     const commands =
@@ -1757,22 +2086,22 @@
     let lastResult =
       current;
 
-    /*
-     * 각 marked line을 처리.
-     *
-     * 한 번 처리된 원본 line id는 다시
-     * global 대상이 되지 않는다.
-     */
-    for (const id of markedIds) {
+    for (
+      const id of markedIds
+    ) {
       const index =
         lineIndexById(id);
 
       if (index < 0)
         continue;
 
-      setCurrent(index + 1);
+      setCurrent(
+        index + 1
+      );
 
-      for (const command of commands) {
+      for (
+        const command of commands
+      ) {
         if (!command)
           continue;
 
@@ -1780,10 +2109,12 @@
           command.trim();
 
         /*
-         * nested global 금지.
+         * nested global 금지
          */
         if (
-          /^[gv][/?]/.test(trimmed)
+          /^[gv][/?]/.test(
+            trimmed
+          )
         ) {
           throw Error(
             "global 안에서 global/vglobal은 사용할 수 없습니다."
@@ -1808,6 +2139,11 @@
   function splitAddressAndCommand(
     code
   ) {
+    /*
+     * ,p / ,n / ,l
+     *
+     * parseRangeAt에서 특별하게 처리한다.
+     */
     const r =
       parseRangeAt(
         code,
@@ -1825,12 +2161,17 @@
     return {
       addr:
         code
-          .slice(0, r.end)
+          .slice(
+            0,
+            r.end
+          )
           .trim(),
 
       rest:
         code
-          .slice(r.end)
+          .slice(
+            r.end
+          )
           .trimStart()
     };
   }
@@ -1847,7 +2188,10 @@
 
     code =
       String(code ?? "")
-        .replace(/\r\n/g, "\n")
+        .replace(
+          /\r\n/g,
+          "\n"
+        )
         .trim();
 
     if (!code)
@@ -1865,7 +2209,8 @@
     if (code === "u") {
       commit();
 
-      const v = findView();
+      const v =
+        findView();
 
       v.contentDOM.dispatchEvent(
         new KeyboardEvent(
@@ -1889,7 +2234,9 @@
 
     try {
       parsed =
-        splitAddressAndCommand(code);
+        splitAddressAndCommand(
+          code
+        );
     } catch {
       parsed = {
         addr: null,
@@ -1940,7 +2287,7 @@
     }
 
     /*
-     * 주소만 있는 경우 print.
+     * 주소만 있는 경우 print
      */
     if (!command) {
       return printCommand(
@@ -1951,7 +2298,7 @@
     }
 
     /*
-     * 주소 뒤 global.
+     * 주소 뒤 global
      */
     if (
       command[0] === "g" ||
@@ -1971,7 +2318,9 @@
     /*
      * substitute
      */
-    if (command[0] === "s") {
+    if (
+      command[0] === "s"
+    ) {
       return substituteCommand(
         effectiveAddr || ".",
         command
@@ -2083,14 +2432,9 @@
           );
 
         /*
-         * 기존의
-         *
-         *   effectiveAddr || ".,+1"
-         *
-         * 를 사용하지 않는다.
-         *
-         * 주소 없는 j는 joinCommand가 직접
-         * current/current+1을 계산한다.
+         * 주소 없는 j는
+         * joinCommand가 직접 current/current+1을
+         * 계산한다.
          */
         return joinCommand(
           effectiveAddr || null
@@ -2251,17 +2595,23 @@
     const delimiter =
       text[start + 1];
 
-    let p = start + 2;
+    let p =
+      start + 2;
 
-    while (p < text.length) {
-      const c = text[p];
+    while (
+      p < text.length
+    ) {
+      const c =
+        text[p];
 
       if (c === "\\") {
         p += 2;
         continue;
       }
 
-      if (c === delimiter) {
+      if (
+        c === delimiter
+      ) {
         p++;
         break;
       }
@@ -2270,8 +2620,8 @@
     }
 
     /*
-     * global command-list 전체를 하나의
-     * top-level command로 유지.
+     * global command-list 전체를
+     * 하나의 top-level command로 유지.
      */
     return text.length;
   }
@@ -2284,11 +2634,14 @@
     let start = 0;
     let p = 0;
 
-    while (p < text.length) {
-      const c = text[p];
+    while (
+      p < text.length
+    ) {
+      const c =
+        text[p];
 
       /*
-       * global은 끝까지 하나의 command.
+       * global은 끝까지 하나의 command
        */
       if (
         (
@@ -2351,8 +2704,12 @@
 
         p++;
 
-        while (p < text.length) {
-          if (text[p] === "\\") {
+        while (
+          p < text.length
+        ) {
+          if (
+            text[p] === "\\"
+          ) {
             p += 2;
             continue;
           }
@@ -2371,12 +2728,15 @@
       }
 
       /*
-       * 실제 newline.
+       * 실제 newline
        */
       if (c === "\n") {
         const command =
           text
-            .slice(start, p)
+            .slice(
+              start,
+              p
+            )
             .trim();
 
         if (command)
@@ -2384,6 +2744,7 @@
 
         p++;
         start = p;
+
         continue;
       }
 
@@ -2418,19 +2779,23 @@
     syncBuffer();
 
     const commands =
-      splitTopLevelCommands(code);
+      splitTopLevelCommands(
+        code
+      );
 
     let result =
       current;
 
-    for (const command of commands) {
+    for (
+      const command of commands
+    ) {
       result =
         execute(command);
     }
 
     /*
      * 모든 편집은 내부 buffer에서 처리하고
-     * 마지막에 한 번 반영.
+     * 마지막에 한 번만 반영.
      */
     commit();
 
@@ -2475,6 +2840,9 @@ GitHub CodeMirror ed
   ,p
   ,n
   ,l
+  ;p
+  ;n
+  ;l
   1,$p
   1,$n
   1,$l
@@ -2579,9 +2947,11 @@ undo
 
   view = findView();
 
-  window.__githubView = view;
+  window.__githubView =
+    view;
 
-  window.runCode = runCode;
+  window.runCode =
+    runCode;
 
   window.findGithubEditor =
     findView;
@@ -2590,7 +2960,9 @@ undo
     strings,
     ...values
   ) => {
-    if (typeof strings === "string")
+    if (
+      typeof strings === "string"
+    )
       return runCode(strings);
 
     return runCode(
