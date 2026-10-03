@@ -1662,7 +1662,7 @@ theeeeeen
 [^8]: Ed는 《스타 트렉》 에 나오는 원시적인 AI가 아닙니다. 재귀나 역설로 그의 머리를 터뜨릴 순 없습니다. Ed는 각 줄을 딱 한 번만 복제한 뒤 다음으로 넘어가기 때문입니다.
 
 ```
-*g/there/t. n
+*g/there/t.
 6 there
 9 thereafter
 13 4 theremin
