@@ -631,19 +631,41 @@
        if (c === "\\") {
          if (p + 1 >= s.length)
            throw Error("이스케이프가 닫히지 않았습니다.");
- 
+       
          const next = s[p + 1];
- 
+       
+         // backslash + LF:
+         // 대체 문자열에서 줄바꿈
+         if (next === "\n") {
+           value += "\n";
+           p += 2;
+           continue;
+         }
+       
+         // backslash + CRLF:
+         // 대체 문자열에서 줄바꿈
+         if (
+           next === "\r" &&
+           s[p + 2] === "\n"
+         ) {
+           value += "\n";
+           p += 3;
+           continue;
+         }
+       
+         // 구분자 escape
          if (next === delimiter) {
            value += delimiter;
            p += 2;
            continue;
          }
- 
+       
+         // 그 밖의 backslash는 그대로 보존
          value += "\\";
          p++;
          continue;
        }
+
  
        if (c === delimiter) {
          p++;
