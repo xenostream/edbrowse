@@ -1304,12 +1304,9 @@ undo
   window.ed = (strings, ...values) => {
     if (typeof strings === "string")
       return runCode(strings);
-
+  
     return runCode(
-      String.raw(
-        { raw: strings },
-        ...values
-      )
+      String.raw(strings, ...values)
     );
   };
 
