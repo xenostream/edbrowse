@@ -22,25 +22,6 @@
 (() => {
   "use strict";
 
-  /*
-   * GitHub CodeMirror + ed
-   *
-   * 주요 기능
-   *   - g/re/t. 허용
-   *   - global 내부 현재 주소 추적
-   *   - global command-list의 \ + newline 처리
-   *   - substitute replacement의 \ + newline 처리
-   *   - s 명령의 g 플래그 중복 방지
-   *   - -s, -p, -n, -l 등의 상대주소 처리
-   *   - ,p / ,n / ,l 지원
-   *   - ;p / ;n / ;l 지원
-   *   - substitute로 줄이 분리된 뒤 현재 주소 유지
-   *   - global에서 원본 line id 유지
-   *   - t/m/j/d/c/i/a/s line semantics 개선
-   *   - j 단일 주소의 정확한 처리
-   *   - CodeMirror 문서 교체 시 cursor RangeError 방지
-   */
-
   let view = null;
   let lastRegex = "";
   let lastSubstitution = null;
@@ -178,27 +159,7 @@
     return result;
   }
 
-  /*
-   * 중요:
-   *
-   * 기존 구현은 새 buffer의 cursor line을
-   * 기존 CodeMirror document에서 v.state.doc.line(cursor)
-   * 로 찾았다.
-   *
-   * 예:
-   *
-   *   기존 CodeMirror = 7줄
-   *   내부 buffer     = 13줄
-   *
-   * 이 상태에서 line(13)을 호출하면
-   *
-   *   RangeError: Invalid line number 13 in 7-line document
-   *
-   * 가 발생한다.
-   *
-   * 따라서 cursor는 새로 삽입될 text 기준의 offset으로
-   * 직접 계산한다.
-   */
+
   function writeLines(lines, cursor = 1) {
     const v = findView();
 
@@ -674,23 +635,6 @@
     };
   }
 
-  /*
-   * 범위 파싱
-   *
-   * 추가:
-   *
-   *   ,  = 1,$
-   *   ;  = current,$
-   *
-   * 이 처리가 parseRangeAt에도 들어가야
-   *
-   *   ,p
-   *   ,n
-   *   ,l
-   *
-   * 같은 명령이 splitAddressAndCommand에서
-   * 정상적으로 분리된다.
-   */
   function parseRangeAt(
     s,
     pos = 0,
@@ -706,15 +650,6 @@
     )
       pos++;
 
-    /*
-     * 특별한 전체 범위:
-     *
-     *   ,p
-     *   ,n
-     *   ,l
-     *
-     *   ;
-     */
     if (
       s[pos] === "," ||
       s[pos] === ";"
@@ -1161,11 +1096,6 @@
       s = range.s;
       e = range.e;
 
-      /*
-       * 5j
-       *
-       * 5번 줄 + 6번 줄
-       */
       if (s === e)
         e = s + 1;
     }
@@ -1397,9 +1327,6 @@
           const n =
             s[p + 1];
 
-          /*
-           * escaped newline
-           */
           if (n === "\n") {
             value +=
               ESC + "\n";
@@ -1704,12 +1631,6 @@
         newItems.length -
         1;
 
-      /*
-       * 새로 생성된 줄은 다시 같은 substitute의
-       * 대상이 되지 않는다.
-       *
-       * 다음 원본 줄로 이동.
-       */
       n =
         lastChanged + 1;
     }
@@ -1903,9 +1824,6 @@
       const c =
         text[p];
 
-      /*
-       * substitute
-       */
       if (
         c === "s" &&
         p + 1 < text.length
@@ -1919,11 +1837,6 @@
         continue;
       }
 
-      /*
-       * escaped newline
-       *
-       * global command separator
-       */
       if (
         c === "\\" &&
         (
@@ -1957,9 +1870,6 @@
         continue;
       }
 
-      /*
-       * 실제 newline
-       */
       if (c === "\n") {
         const command =
           text
@@ -2036,10 +1946,6 @@
         "1,$"
       );
 
-    /*
-     * global 대상은 line number가 아니라
-     * line id로 고정.
-     */
     const markedIds = [];
 
     for (
@@ -2108,9 +2014,6 @@
         const trimmed =
           command.trim();
 
-        /*
-         * nested global 금지
-         */
         if (
           /^[gv][/?]/.test(
             trimmed
@@ -2139,11 +2042,6 @@
   function splitAddressAndCommand(
     code
   ) {
-    /*
-     * ,p / ,n / ,l
-     *
-     * parseRangeAt에서 특별하게 처리한다.
-     */
     const r =
       parseRangeAt(
         code,
@@ -2203,12 +2101,7 @@
     )
       return help();
 
-    /*
-     * undo
-     */
     if (code === "u") {
-      commit();
-
       const v =
         findView();
 
@@ -2255,9 +2148,6 @@
       forcedAddr ||
       null;
 
-    /*
-     * global
-     */
     if (
       !addr &&
       (
@@ -2273,9 +2163,6 @@
       );
     }
 
-    /*
-     * substitute
-     */
     if (
       !addr &&
       command[0] === "s"
@@ -2286,9 +2173,6 @@
       );
     }
 
-    /*
-     * 주소만 있는 경우 print
-     */
     if (!command) {
       return printCommand(
         effectiveAddr || ".",
@@ -2297,9 +2181,6 @@
       );
     }
 
-    /*
-     * 주소 뒤 global
-     */
     if (
       command[0] === "g" ||
       command[0] === "v"
@@ -2315,9 +2196,6 @@
       }
     }
 
-    /*
-     * substitute
-     */
     if (
       command[0] === "s"
     ) {
@@ -2331,10 +2209,6 @@
       command[0];
 
     switch (c) {
-
-      /* --------------------------------------------------------
-       * p
-       * -------------------------------------------------------- */
 
       case "p": {
         const suffix =
@@ -2354,10 +2228,6 @@
         );
       }
 
-      /* --------------------------------------------------------
-       * n
-       * -------------------------------------------------------- */
-
       case "n": {
         const suffix =
           command
@@ -2375,10 +2245,6 @@
           false
         );
       }
-
-      /* --------------------------------------------------------
-       * l
-       * -------------------------------------------------------- */
 
       case "l": {
         const suffix =
@@ -2398,10 +2264,6 @@
         );
       }
 
-      /* --------------------------------------------------------
-       * d
-       * -------------------------------------------------------- */
-
       case "d": {
         if (
           command
@@ -2417,10 +2279,6 @@
         );
       }
 
-      /* --------------------------------------------------------
-       * j
-       * -------------------------------------------------------- */
-
       case "j": {
         if (
           command
@@ -2431,19 +2289,10 @@
             `알 수 없는 명령입니다: ${code}`
           );
 
-        /*
-         * 주소 없는 j는
-         * joinCommand가 직접 current/current+1을
-         * 계산한다.
-         */
         return joinCommand(
           effectiveAddr || null
         );
       }
-
-      /* --------------------------------------------------------
-       * i
-       * -------------------------------------------------------- */
 
       case "i": {
         const rest =
@@ -2462,10 +2311,6 @@
         );
       }
 
-      /* --------------------------------------------------------
-       * a
-       * -------------------------------------------------------- */
-
       case "a": {
         const rest =
           command
@@ -2482,10 +2327,6 @@
           quoted(rest)
         );
       }
-
-      /* --------------------------------------------------------
-       * c
-       * -------------------------------------------------------- */
 
       case "c": {
         const rest =
@@ -2504,10 +2345,6 @@
         );
       }
 
-      /* --------------------------------------------------------
-       * t
-       * -------------------------------------------------------- */
-
       case "t": {
         const rest =
           command
@@ -2525,10 +2362,6 @@
         );
       }
 
-      /* --------------------------------------------------------
-       * m
-       * -------------------------------------------------------- */
-
       case "m": {
         const rest =
           command
@@ -2545,10 +2378,6 @@
           rest
         );
       }
-
-      /* --------------------------------------------------------
-       * =
-       * -------------------------------------------------------- */
 
       case "=": {
         const r =
@@ -2619,10 +2448,6 @@
       p++;
     }
 
-    /*
-     * global command-list 전체를
-     * 하나의 top-level command로 유지.
-     */
     return text.length;
   }
 
@@ -2640,9 +2465,6 @@
       const c =
         text[p];
 
-      /*
-       * global은 끝까지 하나의 command
-       */
       if (
         (
           c === "g" ||
@@ -2669,9 +2491,6 @@
         continue;
       }
 
-      /*
-       * top-level substitute
-       */
       if (
         c === "s" &&
         p === start
@@ -2685,9 +2504,6 @@
         continue;
       }
 
-      /*
-       * 주소 regexp
-       */
       if (
         (
           c === "/" ||
@@ -2727,9 +2543,6 @@
         continue;
       }
 
-      /*
-       * 실제 newline
-       */
       if (c === "\n") {
         const command =
           text
@@ -2773,9 +2586,6 @@
     if (!code.trim())
       return;
 
-    /*
-     * 새 실행마다 실제 CodeMirror buffer를 다시 읽는다.
-     */
     syncBuffer();
 
     const commands =
@@ -2793,10 +2603,6 @@
         execute(command);
     }
 
-    /*
-     * 모든 편집은 내부 buffer에서 처리하고
-     * 마지막에 한 번만 반영.
-     */
     commit();
 
     return result;
