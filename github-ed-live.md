@@ -16,7 +16,9 @@
 
 ## runCode with Github's Editor
 
-- <kbd>Ctrl+Shift+J</kbd> open Console => Sources => github-ed.js => Run
+1. Login => Select File => "Edit" button
+
+1. <kbd>Ctrl+Shift+J</kbd> open Console => Sources => github-ed.js => Run
 
 ```js
 (() => {
