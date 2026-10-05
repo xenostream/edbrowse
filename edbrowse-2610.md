@@ -1,4 +1,4 @@
-edbrowse Documentation, a User's Guide
+edbrowse 3.8.17 Documentation, a User's Guide
 ---
 
 # Preface
