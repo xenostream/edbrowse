@@ -134,7 +134,7 @@ localizeweb = fr
 
 <details><summary>Quick Reference Guide</summary>
         
-**Leave the Program** \
+**▣ Leave the Program** \
 `q` : 현재 세션 종료\
 `qt` : 파일 저장 여부와 관계없이 프로그램을 완전히 종료\
 `q7` : 세션 7을 종료\
@@ -166,7 +166,7 @@ localizeweb = fr
 `pwd` : 작업 디렉터리 출력\
 `config` : 설정 파일을 다시 읽음
 
-**Input** \
+**▣ Input** \
 `~c2~b1` : 바이트를 16진수로 입력합니다. 이 경우 plussminus에 대한 utf8입니다.\
 `~u1f600` : 유니코드를 16진수로 입력합니다. 이 경우 웃는 표정 기호입니다.\
 `~jfood.carrot` : 음식 그룹의 당근 이모지를 입력합니다.\
@@ -175,7 +175,7 @@ localizeweb = fr
 `P=foo` : 프롬프트를 foo로 설정\
 `rl` : 입력 시 readline() 사용 (토글), $HISTCONTROL을 따름
 
-**Display Lines in the Buffer** \
+**▣ Display Lines in the Buffer** \
 `p` : 현재 줄을 출력\
 `4,7p` : 4번째 줄부터 7번째 줄까지 출력\
 `+3p` : 3줄을 건너뛰고 출력\
@@ -203,12 +203,12 @@ localizeweb = fr
 `B(` : 짝을 이루는 닫는 괄호가 있는 줄 찾기\
 `B{2` : (안쪽에서 바깥쪽으로 세어) 두 번째로 불균형한 중괄호의 짝을 이루는 줄 찾기
 
-**Help Messages** \
+**▣ Help Messages** \
 `h` : 도움말, 마지막 물음표에 대한 설명\
 `H` : 모든 오류 메시지 표시 (토글)\
 `help` : 이 참조 가이드를 edbrowse 버퍼에 넣어 확인하기
 
-**Search and Substitute** \
+**▣ Search and Substitute** \
 `s/x/y/` : 현재 줄에서 x를 y로 치환\
 `s/x/y` : x를 y로 치환하고 결과를 출력\
 `s//y/` : 마지막 치환 문자열(이 경우 x)을 사용\
@@ -255,7 +255,7 @@ localizeweb = fr
 `s/\bfoo\b/mc/g` : foo를 Foo로 변환하되, foobar는 변환하지 않음\
 `,s/$/ %line/` : 각 줄의 끝에 줄 번호를 추가
 
-**Files and Sessions** \
+**▣ Files and Sessions** \
 `f` : 현재 파일의 이름을 출력합니다.\
 `f foo` : 파일 이름을 foo로 설정합니다.\
 `f/` : 파일 이름의 마지막 구성 요소만 남깁니다.\
@@ -329,7 +329,7 @@ localizeweb = fr
 `bd` : 파일의 바이너리 감지 (토글)\
 `iu` : iso8859와 utf8 간 자동 변환 (토글)
 
-**Text Editing, much like ed** \
+**▣ Text Editing, much like ed** \
 `u` : 마지막 명령을 취소합니다.\
 `d` : 현재 줄을 삭제합니다.\
 `1,$d` : 1번 줄부터 파일 끝(eof)까지 모든 줄을 삭제합니다.\
@@ -345,7 +345,7 @@ localizeweb = fr
 `4,7m11` : 4~7행을 11행으로 이동\
 `4,7t11` : 4~7행을 11행으로 복사
 
-**Directory Scan** \
+**▣ Directory Scan** \
 `dr` : 디렉터리가 읽기 전용입니다.\
 `dw` : 디렉터리가 쓰기 가능하며, ‘d’ 키를 누르면 파일이 휴지통으로 이동합니다.\
 `dx` : 디렉터리가 쓰기 가능하며, ‘d’ 키를 누르면 파일이 삭제됩니다.\
@@ -388,7 +388,7 @@ localizeweb = fr
 `.m+2` : 이 파일을 편집 이력에서 2단계 위로 이동합니다. 대상은 반드시 디렉터리여야 합니다. 파일은 항상 목록의 맨 끝에 배치되므로 여기서는 @ 기호를 사용할 필요가 없습니다. 정렬된 순서로 보려면 up2를 실행한 후 새로 고침하십시오.\
 `.t-3` : 이 파일을 편집 이력에서 3단계 아래로 복사합니다
 
-**Browse an html file or a web page** \
+**▣ Browse an html file or a web page** \
 `b` : 현재 파일(html, 이메일 또는 플러그인으로 렌더링된 파일)을 열어서 봅니다.\
 `b.pdf` : 플러그인 pdf를 사용해서 현재 파일을 열어서 봅니다.\
 `b foo.html` : foo.html 파일을 편집하고 열어서 봅니다.\
@@ -414,7 +414,7 @@ localizeweb = fr
 `can` : (curl auth negotiate) SPNEGO 유형 인증 토글, Kerberos(krb5/gss)에 필수\
 `crs` : (curl restart) 특정 curl 또는 SSL 버그로부터 복구
 
-**FTP or HTTP Downloads** \
+**▣ FTP or HTTP Downloads** \
 `pdd` : 점으로 다운로드 진행 상황을 표시\
 `pdc` : 메가바이트 단위로 다운로드 진행 상황을 표시\
 `pdq` : 다운로드 진행 상황을 표시하지 않음 (지시등 없음)\
@@ -425,7 +425,7 @@ localizeweb = fr
 `bglist` : 완료되었거나 진행 중인 백그라운드 다운로드 목록 표시\
 `jsbg` : 자바스크립트 파일을 백그라운드에서 다운로드 (토글)
 
-**Interact with a Web Page** \
+**▣ Interact with a Web Page** \
 `g` : 현재 줄에 있는 링크로 이동\
 `g-` : 링크로 이동하되, 브라우징, 렌더링 또는 재생은 하지 않음\
 `g2` : 현재 줄에 있는 두 번째 링크로 이동\
@@ -474,7 +474,7 @@ localizeweb = fr
 `showall` : 모든 호버 텍스트 및 보이지 않는 텍스트 표시 (토글)\
 `colors` : 페이지의 색상 표시
 
-**Mail Client** \
+**▣ Mail Client** \
 `sm` : 메일 보내기 [계정 번호]\
 `re` : 이 메일에 답장하기\
 `rea` : 모두에게 답장하기\
@@ -491,7 +491,7 @@ localizeweb = fr
 `d` : 폴더 삭제 - 단, 시스템 폴더는 제외! 해당 폴더의 모든 메일이 삭제됩니다.\
 `g` : 폴더로 이동 (디렉터리 모드와 유사)
 
-**Envelopes** \
+**▣ Envelopes** \
 `rf` : 이 버퍼에 있는 엔벨로프를 새로 고침\
 `d` : 이 이메일 삭제\
 `m abc` : 이메일을 abc 폴더로 이동\
@@ -514,7 +514,7 @@ localizeweb = fr
 `t` : 이 이메일을 열어 일반 텍스트 MIME 구성 요소를 표시합니다\
 `g-` : 이 이메일을 열지만 내용을 탐색하지 않습니다
 
-**Reading an email beneath Imap** \
+**▣ Reading an email beneath Imap** \
 `rf` : 현재 읽고 있는 이메일 새로 고침\
 `d` : 현재 읽고 있는 이메일 삭제\
 `m abc` : 현재 읽고 있는 이메일 이동\
@@ -524,7 +524,7 @@ localizeweb = fr
 `^` : 폴더 상위 수준으로 이동\
 `^^` : 폴더 상위 수준으로 이동
 
-**IRC Client** \
+**▣ IRC Client** \
 `irc m n 도메인 닉네임` : 지정된 도메인과 닉네임을 사용해서 세션 m 및 n을 통해 IRC 채팅을 설정합니다.\
 `irc m n 도메인 닉네임 그룹` : IRC 채팅을 설정하고 지정된 그룹에 가입합니다.\
 `irc m n 도메인:포트 닉네임:비밀번호 그룹` : 포트와 비밀번호를 지정합니다.\
@@ -533,19 +533,19 @@ localizeweb = fr
 `lst` : 출력 버퍼에 이 줄이 수신된 날짜와 시간을 표시합니다\
 `lsc` : 이 메시지의 채널을 표시합니다
 
-**Plugins** \
+**▣ Plugins** \
 `pb` : 버퍼 재생 (일반적으로 오디오)\
 `pb.mp3` : 현재 버퍼를 MP3 파일로 재생\
 `pg` : 플러그인 활성화 (토글)
 
-**Database Access** \
+**▣ Database Access** \
 `ds=source,login,password` : 데이터 소스 설정\
 `sht` : 테이블 표시\
 `shc` : 현재 테이블의 열(및 기본 키) 표시\
 `shf` : 현재 테이블의 외래 키 표시\
 `fbc` : BLOB 열 가져오기 (토글)
 
-**Edbrowse Functions** \
+**▣ Edbrowse Functions** \
 `<foo arg1 arg2 …` : .ebrc 파일에 정의된 foo 함수를 호출합니다.\
 `<7` : 세션 7의 명령을 실행합니다.\
 `<*7` : 명령을 실행하되 오류가 발생하면 중지합니다.\
@@ -570,7 +570,7 @@ localizeweb = fr
 `[ $(x) = $(y) ]` : 등가 여부를 검사합니다.\
 `[ $(x) != $(y) 및 관련 연산 ]` : 부등가 여부를 검사합니다.
 
-**Debug** \
+**▣ Debug** \
 `db3` : 디버그 수준 설정 (0~9)\
 `db` : 디버그 수준 표시\
 `db>/tmp/edbrowse.out` : 디버깅 출력을 파일로 리디렉션\
