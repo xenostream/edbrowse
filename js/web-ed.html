@@ -1238,6 +1238,71 @@ let buffer = null;
 let current = 1;
 let nextId = 1;
 
+/* ============================================================
+   BOOKMARK / MARK SUPPORT
+   ============================================================ */
+
+const marks = new Map();
+
+function clearMarks() {
+  marks.clear();
+}
+
+function setMark(name, line = current) {
+  ensureBuffer();
+
+  name = String(name ?? "").trim();
+
+  if (!/^[a-zA-Z]$/.test(name))
+    throw Error("mark 이름은 한 글자여야 합니다.");
+
+  if (
+    !Number.isInteger(line) ||
+    line < 1 ||
+    line > buffer.length
+  )
+    throw Error(`잘못된 mark 줄 주소: ${line}`);
+
+  marks.set(name, getLine(line).id);
+
+  return line;
+}
+
+function getMarkLine(name) {
+  name = String(name ?? "").trim();
+
+  if (!/^[a-zA-Z]$/.test(name))
+    throw Error(`잘못된 mark 이름: ${name}`);
+
+  if (!marks.has(name))
+    throw Error(`설정되지 않은 mark입니다: '${name}`);
+
+  const id = marks.get(name);
+  const line = lineNumberById(id);
+
+  if (line == null) {
+    marks.delete(name);
+    throw Error(`mark '${name}가 가리키는 줄이 없습니다.`);
+  }
+
+  return line;
+}
+
+function removeMarksForIds(ids) {
+  const idSet = ids instanceof Set
+    ? ids
+    : new Set(ids);
+
+  for (const [name, id] of marks) {
+    if (idSet.has(id))
+      marks.delete(name);
+  }
+}
+
+/* ============================================================
+   END BOOKMARK / MARK SUPPORT
+   ============================================================ */
+
 function makeLine(text) {
   return {
     id: nextId++,
@@ -1248,7 +1313,30 @@ function makeLine(text) {
 function syncBuffer() {
   const lines = readLines();
 
+  /*
+   * 기존 buffer와 editor 내용이 동일하면 기존 line ID를 유지한다.
+   * 이 때문에 mark가 명령 실행 때마다 사라지지 않는다.
+   */
+  if (
+    buffer &&
+    buffer.length === lines.length &&
+    buffer.every((line, i) => line.text === lines[i])
+  ) {
+    current = Math.max(
+      1,
+      Math.min(currentLine(), buffer.length)
+    );
+
+    return;
+  }
+
   buffer = lines.map(makeLine);
+
+  /*
+   * Monaco에서 직접 편집된 경우 기존 줄과 새 줄의 대응을
+   * 확실하게 알 수 없으므로 mark를 초기화한다.
+   */
+  clearMarks();
 
   current = Math.max(
     1,
@@ -1425,6 +1513,20 @@ function parseAddressAt(s, pos = 0, base = current) {
   } else if (c === "$") {
     n = buffer.length;
     pos++;
+  } else if (c === "'") {
+    /*
+     * ed mark 주소:
+     * 'a
+     * 'a+1
+     * 'a-2
+     */
+    const markName = s[pos + 1];
+
+    if (!markName || !/[a-zA-Z]/.test(markName))
+      throw Error("mark 이름이 필요합니다.");
+
+    n = getMarkLine(markName);
+    pos += 2;
   } else if (c === "0") {
     n = 0;
     pos++;
@@ -1642,6 +1744,14 @@ function printCommand(addr, numbered = false, list = false) {
 function deleteCommand(addr) {
   const { s, e } = getRange(addr, ".");
 
+  const deletedIds = new Set(
+    buffer
+      .slice(s - 1, e)
+      .map(x => x.id)
+  );
+
+  removeMarksForIds(deletedIds);
+
   buffer.splice(s - 1, e - s + 1);
 
   if (!buffer.length) {
@@ -1683,6 +1793,15 @@ function appendCommand(addr, text) {
 
 function changeCommand(addr, text) {
   const { s, e } = getRange(addr, ".");
+
+  const deletedIds = new Set(
+    buffer
+      .slice(s - 1, e)
+      .map(x => x.id)
+  );
+
+  removeMarksForIds(deletedIds);
+
   const items = splitText(text).map(makeLine);
 
   buffer.splice(
@@ -1728,6 +1847,14 @@ function joinCommand(addr) {
     setCurrent(s);
     return s;
   }
+
+  const deletedIds = new Set(
+    buffer
+      .slice(s - 1, e)
+      .map(x => x.id)
+  );
+
+  removeMarksForIds(deletedIds);
 
   const text = buffer
     .slice(s - 1, e)
@@ -2516,6 +2643,8 @@ function editFileCommand(command) {
 
   buffer = newLines.map(makeLine);
 
+  clearMarks();
+
   if (!buffer.length)
     buffer = [makeLine("")];
 
@@ -2719,6 +2848,36 @@ function execute(code, forcedAddr = null) {
       return joinCommand(
         effectiveAddr || null
       );
+
+    case "k": {
+      /*
+       * ed mark
+       *
+       * ka
+       * 26ka
+       * 'a 는 주소 파서에서 처리
+       */
+      const rest = command.slice(1).trim();
+
+      if (!/^[a-zA-Z]$/.test(rest))
+        throw Error("mark 이름은 한 글자여야 합니다.");
+
+      let markLine = current;
+
+      if (effectiveAddr) {
+        markLine = parseAddress(effectiveAddr);
+
+        if (
+          markLine < 1 ||
+          markLine > buffer.length
+        )
+          throw Error(`잘못된 mark 줄 주소: ${markLine}`);
+
+        setCurrent(markLine);
+      }
+
+      return setMark(rest, markLine);
+    }
 
     case "i": {
       const rest = command.slice(1).trim();
@@ -2964,6 +3123,10 @@ Monaco ed Editor
   $             마지막 줄
   0             첫 줄 앞
   3             절대 주소
+  'a            mark a가 가리키는 줄
+  'b            mark b가 가리키는 줄
+  'a+2          mark a에서 2줄 아래
+  'a-2          mark a에서 2줄 위
   +             현재 + 1
   -             현재 - 1
   +2
@@ -2978,6 +3141,7 @@ Monaco ed Editor
   .,$
   .,+3
   .-2,.+2
+  'a,'b
   1;5
   ,
   ;
@@ -2995,6 +3159,23 @@ Monaco ed Editor
   1,$p
   1,$n
   1,$l
+  'a,'bp
+
+mark / 북마크
+  ka            현재 줄을 mark a로 지정
+  kb            현재 줄을 mark b로 지정
+  kc            현재 줄을 mark c로 지정
+
+  26ka          26번 줄을 mark a로 지정
+  40kb          40번 줄을 mark b로 지정
+
+  'a            mark a 주소
+  'a+2          mark a에서 2줄 아래
+  'a-2          mark a에서 2줄 위
+  'a,'b         mark a부터 mark b까지
+
+  'a,'bm'c      mark a~b 범위를 mark c 위치로 이동
+  'a,'bt.       mark a~b 범위를 현재 줄 뒤로 복사
 
 삽입
   i "text"
@@ -3024,10 +3205,12 @@ Monaco ed Editor
   3,5t$
   t.
   g/the/t.
+  'a,'bt.
 
 이동
   3m10
   3,5m$
+  'a,'bm'c
 
 합치기
   j
