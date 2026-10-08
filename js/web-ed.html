@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>Mini FS Editor - Monaco ed</title>
-
 <style>
 :root {
   --console-h: 150px;
 }
-
 html, body {
   margin: 0;
   padding: 0;
@@ -19,17 +17,11 @@ html, body {
   background: #1e1e1e;
   color: #ddd;
 }
-
 #container {
   display: flex;
   height: 100vh;
   width: 100vw;
 }
-
-/* ============================================================
- * Sidebar
- * ============================================================ */
-
 #sidebar {
   width: 250px;
   min-width: 0;
@@ -40,11 +32,9 @@ html, body {
   transition: width 0.2s ease;
   overflow: hidden;
 }
-
 #sidebar.collapsed {
   width: 0;
 }
-
 #sidebar-toggle {
   width: 12px;
   background: #333;
@@ -53,11 +43,6 @@ html, body {
   cursor: pointer;
   padding: 0;
 }
-
-/* ============================================================
- * Main
- * ============================================================ */
-
 #main {
   flex: 1;
   display: flex;
@@ -65,17 +50,11 @@ html, body {
   min-width: 0;
   min-height: 0;
 }
-
 #editor {
   height: calc(100vh - var(--console-h));
   width: 100%;
   transition: height 0.2s ease;
 }
-
-/* ============================================================
- * Console
- * ============================================================ */
-
 #console-toggle {
   background: #333;
   border: none;
@@ -86,7 +65,6 @@ html, body {
   text-align: left;
   width: 100%;
 }
-
 #console {
   height: var(--console-h);
   background: #111;
@@ -97,7 +75,6 @@ html, body {
   overflow: hidden;
   position: relative;
 }
-
 #console-resizer {
   position: absolute;
   top: -3px;
@@ -108,15 +85,12 @@ html, body {
   z-index: 100;
   background: transparent;
 }
-
 #console-resizer:hover {
   background: #555;
 }
-
 #console-resizer.dragging {
   background: #007acc;
 }
-
 #console-output {
   flex: 1;
   overflow-y: auto;
@@ -125,40 +99,28 @@ html, body {
   color: #0f0;
   white-space: pre-wrap;
 }
-
 #console-output::-webkit-scrollbar {
   width: 10px;
 }
-
 #console-output::-webkit-scrollbar-track {
   background: #111;
 }
-
 #console-output::-webkit-scrollbar-thumb {
   background: #444;
   border-radius: 5px;
 }
-
 #console-output::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-
 #console-input {
   height: 60px;
 }
-
-/* ============================================================
- * Toolbar
- * ============================================================ */
-
 #toolbar {
   display: flex;
   justify-content: space-around;
   padding: 6px;
   border-bottom: 1px solid #333;
 }
-
 #toolbar button {
   background: none;
   border: none;
@@ -166,43 +128,30 @@ html, body {
   font-size: 18px;
   cursor: pointer;
 }
-
-/* ============================================================
- * File list
- * ============================================================ */
-
 #file-list {
   flex: 1;
   overflow-y: auto;
   padding: 6px;
   font-size: 13px;
 }
-
 .file-item {
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 3px;
   user-select: none;
 }
-
 .file-item:hover {
   background: #333;
 }
-
 .file-item.active {
   background: #444;
 }
 </style>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.56.0/min/vs/loader.min.js"></script>
 </head>
-
 <body>
-
 <div id="container">
-
   <div id="sidebar">
-
     <div id="toolbar">
       <button id="btnNew" title="New">✨</button>
       <button id="btnDelete" title="Delete">🗑️</button>
@@ -210,964 +159,1007 @@ html, body {
       <button id="btnOpen" title="Open">📂</button>
       <button id="btnDownload" title="Download">⬇️</button>
     </div>
-
     <div id="file-list" aria-label="Files"></div>
-
   </div>
-
   <button id="sidebar-toggle">◀</button>
-
   <div id="main">
-
     <div id="editor"></div>
-
-    <button id="console-toggle">
-      ▼ Console
-    </button>
-
+    <button id="console-toggle">▼ Console</button>
     <div id="console">
-
       <div id="console-resizer"></div>
-
       <div id="console-output"></div>
-
       <div id="console-input"></div>
-
     </div>
-
   </div>
-
 </div>
-
-<input
-  type="file"
-  id="fileInput"
-  style="display:none"
-/>
-
+<input type="file" id="fileInput" style="display:none">
 <script>
-
 require.config({
   paths: {
-    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs"
+    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.56.0/min/vs"
   }
 });
 
-
-/* ============================================================
- * Monaco / Virtual FS
- * ============================================================ */
-
 let editor = null;
 let jsConsole = null;
-
 let currentFile = null;
-
 const files = {};
-
-
-/* ============================================================
- * ed file name
- *
- * 추가:
- * r / w / f / e 명령에서 사용하는 ed식 현재 파일명
- * ============================================================ */
-
 let edFileName = null;
-
-
-/* ============================================================
- * Console
- * ============================================================ */
+const editorFileSettings = {};
+let currentEditorFont = "Cascadia Code";
+let currentEditorLanguage = "plaintext";
 
 function log(msg) {
-
-  const out =
-    document.getElementById("console-output");
-
-  out.textContent +=
-    String(msg) + "\n";
-
-  out.scrollTop =
-    out.scrollHeight;
+  const out = document.getElementById("console-output");
+  out.textContent += String(msg) + "\n";
+  out.scrollTop = out.scrollHeight;
 }
 
-
 const origLog = console.log;
-
 console.log = (...args) => {
-
   origLog(...args);
-
-  log(
-    args
-      .map(x => String(x))
-      .join(" ")
-  );
+  log(args.map(x => String(x)).join(" "));
 };
 
+const fallbackSystemFonts = [
+  "Cascadia Code",
+  "Cascadia Mono",
+  "Consolas",
+  "Courier New",
+  "Lucida Console",
+  "Menlo",
+  "Monaco",
+  "SFMono-Regular",
+  "Source Code Pro",
+  "JetBrains Mono",
+  "Fira Code",
+  "Roboto Mono",
+  "Ubuntu Mono",
+  "DejaVu Sans Mono",
+  "Liberation Mono",
+  "Arial",
+  "Helvetica",
+  "Helvetica Neue",
+  "Segoe UI",
+  "Tahoma",
+  "Verdana",
+  "Noto Sans",
+  "Noto Sans Mono",
+  "Noto Sans KR",
+  "Malgun Gothic",
+  "맑은 고딕",
+  "Apple SD Gothic Neo",
+  "NanumGothic",
+  "Nanum Gothic"
+];
 
-/* ============================================================
- * Monaco initialization
- * ============================================================ */
+let localFontCache = null;
+let localFontQueryPromise = null;
 
-require(
-  ["vs/editor/editor.main"],
-  function () {
+async function getAvailableFonts() {
+  if (localFontCache)
+    return localFontCache;
+  if (localFontQueryPromise)
+    return localFontQueryPromise;
 
-    editor =
-      monaco.editor.create(
-        document.getElementById("editor"),
-        {
-          value: "",
-          language: "plaintext",
-          theme: "vs-dark",
-          fontSize: 14,
-          wordWrap: "on",
-          folding: true,
-          minimap: {
-            enabled: true
-          },
-          automaticLayout: false
+  localFontQueryPromise = (async () => {
+    const fonts = new Set(fallbackSystemFonts);
+    try {
+      if (typeof window.queryLocalFonts === "function") {
+        const localFonts = await window.queryLocalFonts();
+        for (const font of localFonts) {
+          if (font && font.family)
+            fonts.add(String(font.family));
+          if (font && font.fullName)
+            fonts.add(String(font.fullName));
         }
-      );
-
-
-    jsConsole =
-      monaco.editor.create(
-        document.getElementById("console-input"),
-        {
-          value:
-            "// ed 명령 예) 1,$p   g/the/t.   s/foo/bar/g",
-          language: "javascript",
-          theme: "vs-dark",
-          fontSize: 13,
-          minimap: {
-            enabled: false
-          },
-          lineNumbers: "off",
-          automaticLayout: false
-        }
-      );
-
-
-    jsConsole.onKeyDown(e => {
-
-      if (
-        e.keyCode ===
-        monaco.KeyCode.Enter
-      ) {
-
-        if (e.shiftKey)
-          return;
-
-        const code =
-          jsConsole
-            .getValue()
-            .trim();
-
-        jsConsole.setValue("");
-
-        if (code)
-          runCode(code);
-
-        e.preventDefault();
-
       }
+    } catch (e) {}
 
-    });
+    localFontCache = Array.from(fonts)
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
 
+    return localFontCache;
+  })();
 
-    const ro =
-      new ResizeObserver(() => {
+  return localFontQueryPromise;
+}
 
-        if (editor)
-          editor.layout();
+function normalizeEditorName(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_\-./\\]+/g, "");
+}
 
-        if (jsConsole)
-          jsConsole.layout();
+function findMonacoLanguage(value) {
+  if (!window.monaco)
+    return null;
 
-      });
+  const wanted = normalizeEditorName(value);
+  if (!wanted)
+    return null;
 
+  const languages = monaco.languages.getLanguages();
 
-    ro.observe(
-      document.getElementById("main")
-    );
+  const aliases = {
+    "markdown": "markdown",
+    "md": "markdown",
+    "markdowndocument": "markdown",
+    "javascript": "javascript",
+    "js": "javascript",
+    "ecmascript": "javascript",
+    "typescript": "typescript",
+    "ts": "typescript",
+    "json": "json",
+    "html": "html",
+    "htm": "html",
+    "css": "css",
+    "scss": "scss",
+    "sass": "scss",
+    "less": "less",
+    "xml": "xml",
+    "xhtml": "xml",
+    "plaintext": "plaintext",
+    "text": "plaintext",
+    "txt": "plaintext",
+    "csharp": "csharp",
+    "cs": "csharp",
+    "csharpcode": "csharp",
+    "cpp": "cpp",
+    "cplusplus": "cpp",
+    "cxx": "cpp",
+    "c": "c",
+    "java": "java",
+    "python": "python",
+    "py": "python",
+    "ruby": "ruby",
+    "rb": "ruby",
+    "php": "php",
+    "go": "go",
+    "golang": "go",
+    "rust": "rust",
+    "rs": "rust",
+    "sql": "sql",
+    "shell": "shell",
+    "bash": "shell",
+    "sh": "shell",
+    "powershell": "powershell",
+    "ps": "powershell",
+    "yaml": "yaml",
+    "yml": "yaml",
+    "dockerfile": "dockerfile",
+    "graphql": "graphql",
+    "ini": "ini",
+    "bat": "bat",
+    "batch": "bat",
+    "coffeescript": "coffeescript",
+    "coffee": "coffeescript"
+  };
 
-    ro.observe(
-      document.getElementById("editor")
-    );
-
-    ro.observe(
-      document.getElementById("console")
-    );
-
-
-    window.addEventListener(
-      "resize",
-      () => {
-
-        if (editor)
-          editor.layout();
-
-        if (jsConsole)
-          jsConsole.layout();
-
-      }
-    );
-
-
-    refreshList();
-
+  if (aliases[wanted]) {
+    const direct = languages.find(lang => lang.id === aliases[wanted]);
+    if (direct)
+      return direct;
   }
-);
 
+  for (const lang of languages) {
+    const candidates = [
+      lang.id,
+      ...(Array.isArray(lang.aliases) ? lang.aliases : []),
+      ...(Array.isArray(lang.extensions) ? lang.extensions : []),
+      ...(Array.isArray(lang.mimetypes) ? lang.mimetypes : [])
+    ];
 
-/* ============================================================
- * Virtual FS
- * ============================================================ */
+    for (const candidate of candidates) {
+      let normalized = normalizeEditorName(candidate);
+      if (normalized.startsWith("dot"))
+        normalized = normalized.slice(3);
+      if (normalized === wanted)
+        return lang;
+    }
+  }
+
+  return null;
+}
+
+function getLanguageDisplayName(language) {
+  if (!language)
+    return "";
+  if (Array.isArray(language.aliases) && language.aliases.length)
+    return language.aliases[0];
+  return language.id;
+}
+
+function getCurrentFileSettings() {
+  const fname = edFileName || currentFile;
+  if (!fname)
+    return null;
+
+  if (!editorFileSettings[fname])
+    editorFileSettings[fname] = {};
+
+  return editorFileSettings[fname];
+}
+
+function setEditorFont(fontName, remember = true) {
+  if (!editor)
+    return;
+
+  fontName = String(fontName ?? "").trim();
+
+  if (!fontName)
+    throw Error("font 이름이 없습니다.");
+
+  editor.updateOptions({
+    fontFamily: fontName
+  });
+
+  currentEditorFont = fontName;
+
+  if (remember) {
+    const settings = getCurrentFileSettings();
+    if (settings)
+      settings.font = fontName;
+  }
+}
+
+function setEditorSyntax(syntaxName, remember = true) {
+  if (!editor)
+    return;
+
+  const language = findMonacoLanguage(syntaxName);
+
+  if (!language)
+    throw Error(`지원하지 않는 syntax입니다: ${syntaxName}`);
+
+  monaco.editor.setModelLanguage(editor.getModel(), language.id);
+  currentEditorLanguage = language.id;
+
+  if (remember) {
+    const settings = getCurrentFileSettings();
+    if (settings)
+      settings.syntax = language.id;
+  }
+
+  return language.id;
+}
+
+function applyCurrentFileEditorSettings() {
+  if (!editor)
+    return;
+
+  const settings = getCurrentFileSettings();
+
+  if (settings && settings.font)
+    setEditorFont(settings.font, false);
+  else
+    setEditorFont("Cascadia Code", false);
+
+  if (settings && settings.syntax) {
+    const language = findMonacoLanguage(settings.syntax);
+    if (language) {
+      monaco.editor.setModelLanguage(editor.getModel(), language.id);
+      currentEditorLanguage = language.id;
+    }
+  }
+}
+
+function readEditorSettingValue(text, start) {
+  let p = start;
+
+  while (p < text.length && /\s/.test(text[p]))
+    p++;
+
+  if (p >= text.length)
+    throw Error("설정 값이 없습니다.");
+
+  const quote = text[p];
+
+  if (quote === '"' || quote === "'") {
+    p++;
+    let value = "";
+
+    while (p < text.length) {
+      const c = text[p++];
+
+      if (c === "\\") {
+        if (p >= text.length)
+          break;
+
+        const next = text[p++];
+
+        if (next === "n")
+          value += "\n";
+        else if (next === "r")
+          value += "\r";
+        else if (next === "t")
+          value += "\t";
+        else
+          value += next;
+
+        continue;
+      }
+
+      if (c === quote)
+        return { value, end: p };
+
+      value += c;
+    }
+
+    throw Error("설정 문자열의 따옴표가 닫히지 않았습니다.");
+  }
+
+  let value = "";
+
+  while (p < text.length && text[p] !== ",")
+    value += text[p++];
+
+  value = value.trim();
+
+  if (!value)
+    throw Error("설정 값이 없습니다.");
+
+  return { value, end: p };
+}
+
+function splitEditorSettingParts(text) {
+  const parts = [];
+  let start = 0;
+  let quote = null;
+  let escaped = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+
+    if (c === "\\") {
+      escaped = true;
+      continue;
+    }
+
+    if (quote) {
+      if (c === quote)
+        quote = null;
+      continue;
+    }
+
+    if (c === '"' || c === "'") {
+      quote = c;
+      continue;
+    }
+
+    if (c === ",") {
+      parts.push(text.slice(start, i).trim());
+      start = i + 1;
+    }
+  }
+
+  const last = text.slice(start).trim();
+  if (last)
+    parts.push(last);
+
+  return parts;
+}
+
+function runEditorSettingCommand(code) {
+  const text = String(code ?? "").trim();
+
+  if (!/^(font|syntax)\s*=/i.test(text))
+    return false;
+
+  const parts = splitEditorSettingParts(text);
+
+  if (!parts.length)
+    return false;
+
+  const settings = [];
+
+  for (const part of parts) {
+    const match = part.match(/^(font|syntax)\s*=/i);
+
+    if (!match)
+      throw Error(`잘못된 editor 설정: ${part}`);
+
+    const key = match[1].toLowerCase();
+    const valueInfo = readEditorSettingValue(part, match[0].length);
+
+    if (part.slice(valueInfo.end).trim())
+      throw Error(`잘못된 editor 설정: ${part}`);
+
+    settings.push({
+      key,
+      value: valueInfo.value
+    });
+  }
+
+  let syntaxLanguage = null;
+
+  for (const setting of settings) {
+    if (setting.key === "font" && !setting.value.trim())
+      throw Error("font 이름이 없습니다.");
+
+    if (setting.key === "syntax") {
+      syntaxLanguage = findMonacoLanguage(setting.value);
+
+      if (!syntaxLanguage)
+        throw Error(`지원하지 않는 syntax입니다: ${setting.value}`);
+    }
+  }
+
+  for (const setting of settings) {
+    if (setting.key === "font") {
+      setEditorFont(setting.value);
+      log(`폰트 변경: ${setting.value}`);
+    } else if (setting.key === "syntax") {
+      setEditorSyntax(setting.value);
+      log(`문법 강조 변경: ${getLanguageDisplayName(syntaxLanguage)} (${syntaxLanguage.id})`);
+    }
+  }
+
+  return true;
+}
+
+function registerEditorSettingCompletionProvider() {
+  if (!window.monaco || !monaco.languages)
+    return;
+
+  monaco.languages.registerCompletionItemProvider("javascript", {
+    triggerCharacters: ["=", '"', "'", " "],
+    provideCompletionItems: async (model, position) => {
+      const line = model.getLineContent(position.lineNumber);
+      const before = line.slice(0, position.column - 1);
+
+      const settingMatch = before.match(
+        /(?:^|[,\s])(font|syntax)\s*=\s*(?:"[^"]*|[^,\s]*)$/i
+      );
+
+      if (!settingMatch)
+        return { suggestions: [] };
+
+      const type = settingMatch[1].toLowerCase();
+
+      const lastQuote = Math.max(
+        before.lastIndexOf('"'),
+        before.lastIndexOf("'")
+      );
+
+      let typed = "";
+
+      if (lastQuote >= 0) {
+        typed = before.slice(lastQuote + 1);
+      } else {
+        const valueMatch = before.match(
+          /(?:font|syntax)\s*=\s*([^\s,]*)$/i
+        );
+        typed = valueMatch ? valueMatch[1] : "";
+      }
+
+      const normalizedTyped = normalizeEditorName(typed);
+      const suggestions = [];
+
+      if (type === "font") {
+        const fonts = await getAvailableFonts();
+
+        for (const font of fonts) {
+          if (
+            normalizedTyped &&
+            !normalizeEditorName(font).includes(normalizedTyped)
+          )
+            continue;
+
+          suggestions.push({
+            label: font,
+            kind: monaco.languages.CompletionItemKind.Value,
+            insertText: font,
+            detail: "System Font",
+            documentation: `font="${font}"`,
+            range: getCompletionReplaceRange(model, position, typed)
+          });
+        }
+      } else {
+        const languages = monaco.languages.getLanguages();
+        const seen = new Set();
+
+        for (const language of languages) {
+          const names = [
+            language.id,
+            ...(Array.isArray(language.aliases) ? language.aliases : [])
+          ];
+
+          for (const name of names) {
+            if (!name)
+              continue;
+
+            const normalizedName = normalizeEditorName(name);
+
+            if (
+              normalizedTyped &&
+              !normalizedName.includes(normalizedTyped)
+            )
+              continue;
+
+            const key = language.id + "::" + normalizedName;
+
+            if (seen.has(key))
+              continue;
+
+            seen.add(key);
+
+            suggestions.push({
+              label: name,
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: name,
+              detail: `syntax → ${language.id}`,
+              documentation: `syntax="${name}"`,
+              range: getCompletionReplaceRange(model, position, typed)
+            });
+          }
+        }
+      }
+
+      return { suggestions };
+    }
+  });
+}
+
+function getCompletionReplaceRange(model, position, typed) {
+  const startColumn = Math.max(
+    1,
+    position.column - typed.length
+  );
+
+  return {
+    startLineNumber: position.lineNumber,
+    startColumn,
+    endLineNumber: position.lineNumber,
+    endColumn: position.column
+  };
+}
+
+require(["vs/editor/editor.main"], function() {
+  editor = monaco.editor.create(
+    document.getElementById("editor"),
+    {
+      value: "",
+      language: "plaintext",
+      theme: "vs-dark",
+      fontSize: 14,
+      fontFamily: "Cascadia Code",
+      wordWrap: "on",
+      folding: true,
+      minimap: {
+        enabled: true
+      },
+      automaticLayout: false
+    }
+  );
+
+  currentEditorFont = "Cascadia Code";
+  currentEditorLanguage = "plaintext";
+
+  jsConsole = monaco.editor.create(
+    document.getElementById("console-input"),
+    {
+      value: "// ed 명령 예) 1,$p   g/the/t.   s/foo/bar/g",
+      language: "javascript",
+      theme: "vs-dark",
+      fontSize: 13,
+      minimap: {
+        enabled: false
+      },
+      lineNumbers: "off",
+      automaticLayout: false
+    }
+  );
+
+  registerEditorSettingCompletionProvider();
+
+  jsConsole.onKeyDown(e => {
+    if (e.keyCode !== monaco.KeyCode.Enter)
+      return;
+    if (e.shiftKey)
+      return;
+
+    const code = jsConsole.getValue();
+
+    if (/\\$/.test(code))
+      return;
+
+    const trimmed = code.trim();
+    jsConsole.setValue("");
+
+    if (trimmed)
+      runCode(trimmed);
+
+    e.preventDefault();
+  });
+
+  const ro = new ResizeObserver(() => {
+    if (editor)
+      editor.layout();
+    if (jsConsole)
+      jsConsole.layout();
+  });
+
+  ro.observe(document.getElementById("main"));
+  ro.observe(document.getElementById("editor"));
+  ro.observe(document.getElementById("console"));
+
+  window.addEventListener("resize", () => {
+    if (editor)
+      editor.layout();
+    if (jsConsole)
+      jsConsole.layout();
+  });
+
+  refreshList();
+});
 
 function refreshList() {
+  const list = document.getElementById("file-list");
+  list.inerHTML = "";
 
-  const list =
-    document.getElementById("file-list");
-
-  list.innerHTML = "";
-
-  const names =
-    Object.keys(files);
+  const names = Object.keys(files);
 
   if (!names.length) {
-
-    list.innerHTML =
+    list.inerHTML =
       "<div style='color:#888;padding:6px'>" +
       "파일이 없습니다. ✨ 또는 📂 버튼을 사용하세요." +
       "</div>";
-
     return;
   }
 
-
   names.forEach(fname => {
-
-    const div =
-      document.createElement("div");
-
+    const div = document.createElement("div");
     div.className =
       "file-item" +
-      (
-        fname === currentFile
-          ? " active"
-          : ""
-      );
-
-    div.textContent =
-      fname;
-
-    div.onclick =
-      () => openFile(fname);
-
+      (fname === currentFile ? " active" : "");
+    div.textContent = fname;
+    div.onclick = () => openFile(fname);
     list.appendChild(div);
-
   });
-
 }
 
-
 function detectLanguage(fname) {
-
-  const ext =
-    fname
-      .split(".")
-      .pop()
-      .toLowerCase();
+  const ext = fname.split(".").pop().toLowerCase();
 
   if (ext === "js")
     return "javascript";
-
   if (ext === "ts")
     return "typescript";
-
   if (ext === "md")
     return "markdown";
-
   if (ext === "cs")
     return "csharp";
-
-  if (
-    ext === "html" ||
-    ext === "htm"
-  )
+  if (ext === "html" || ext === "htm")
     return "html";
-
   if (ext === "css")
     return "css";
-
   if (ext === "json")
     return "json";
-
   if (ext === "xml")
     return "xml";
 
   return "plaintext";
 }
 
-
 function setEditorLanguage(fname) {
-
   if (!editor)
     return;
 
+  const detected = detectLanguage(fname);
+
   monaco.editor.setModelLanguage(
     editor.getModel(),
-    detectLanguage(fname)
+    detected
   );
 
-}
+  currentEditorLanguage = detected;
 
+  const settings = getCurrentFileSettings();
 
-/* ============================================================
- * New
- * ============================================================ */
+  if (settings && settings.syntax) {
+    const language = findMonacoLanguage(settings.syntax);
 
-document
-  .getElementById("btnNew")
-  .addEventListener(
-    "click",
-    () => {
-
-      const fname =
-        prompt(
-          "새 파일 이름:",
-          "untitled.txt"
-        );
-
-      if (
-        !fname ||
-        files[fname]
-      ) {
-
-        alert("파일 존재");
-
-        return;
-      }
-
-      files[fname] = "";
-
-      currentFile =
-        fname;
-
-      edFileName =
-        fname;
-
-      editor.setValue("");
-
-      setEditorLanguage(fname);
-
-      refreshList();
-
-      log(
-        `생성됨: ${fname}`
-      );
-
-    }
-  );
-
-
-/* ============================================================
- * Open virtual file
- * ============================================================ */
-
-function openFile(fname) {
-
-  currentFile =
-    fname;
-
-  edFileName =
-    fname;
-
-  const content =
-    files[fname] ?? "";
-
-  editor.setValue(
-    content
-  );
-
-  setEditorLanguage(fname);
-
-  refreshList();
-
-  log(
-    `열림: ${fname}`
-  );
-
-}
-
-
-/* ============================================================
- * Delete
- * ============================================================ */
-
-document
-  .getElementById("btnDelete")
-  .addEventListener(
-    "click",
-    () => {
-
-      if (!currentFile) {
-
-        alert(
-          "열린 파일 없음"
-        );
-
-        return;
-      }
-
-      delete files[currentFile];
-
-      currentFile =
-        null;
-
-      edFileName =
-        null;
-
-      editor.setValue("");
-
+    if (language) {
       monaco.editor.setModelLanguage(
         editor.getModel(),
-        "plaintext"
+        language.id
       );
-
-      refreshList();
-
-      log(
-        "삭제됨 (가상 FS)"
-      );
-
+      currentEditorLanguage = language.id;
     }
-  );
-
-
-/* ============================================================
- * Save
- * ============================================================ */
-
-document
-  .getElementById("btnSave")
-  .addEventListener(
-    "click",
-    () => {
-
-      if (!currentFile) {
-
-        alert(
-          "열린 파일 없음"
-        );
-
-        return;
-      }
-
-      files[currentFile] =
-        editor.getValue();
-
-      edFileName =
-        currentFile;
-
-      log(
-        "저장됨: " +
-        currentFile
-      );
-
-    }
-  );
-
-
-/* ============================================================
- * Local Open
- * ============================================================ */
-
-document
-  .getElementById("btnOpen")
-  .addEventListener(
-    "click",
-    () => {
-
-      const input =
-        document.getElementById(
-          "fileInput"
-        );
-
-      input.value = "";
-
-      input.click();
-
-    }
-  );
-
-
-document
-  .getElementById("fileInput")
-  .addEventListener(
-    "change",
-    e => {
-
-      const file =
-        e.target.files[0];
-
-      if (!file)
-        return;
-
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        () => {
-
-          files[file.name] =
-            reader.result;
-
-          currentFile =
-            file.name;
-
-          edFileName =
-            file.name;
-
-          editor.setValue(
-            reader.result
-          );
-
-          setEditorLanguage(
-            file.name
-          );
-
-          refreshList();
-
-          log(
-            `로컬 파일 로드: ${file.name}`
-          );
-
-        };
-
-      reader.readAsText(
-        file,
-        "UTF-8"
-      );
-
-    }
-  );
-
-
-/* ============================================================
- * Download
- * ============================================================ */
-
-document
-  .getElementById("btnDownload")
-  .addEventListener(
-    "click",
-    () => {
-
-      if (!currentFile) {
-
-        alert(
-          "열린 파일 없음"
-        );
-
-        return;
-      }
-
-      const text =
-        editor.getValue();
-
-      const blob =
-        new Blob(
-          [text],
-          {
-            type:
-              "text/plain;charset=utf-8"
-          }
-        );
-
-      const url =
-        URL.createObjectURL(
-          blob
-        );
-
-      const a =
-        document.createElement(
-          "a"
-        );
-
-      a.href =
-        url;
-
-      a.download =
-        currentFile ||
-        "untitled.txt";
-
-      a.click();
-
-      URL.revokeObjectURL(
-        url
-      );
-
-      log(
-        `다운로드 완료: ${a.download}`
-      );
-
-    }
-  );
-
-
-/* ============================================================
- * Sidebar toggle
- * ============================================================ */
-
-const sidebar =
-  document.getElementById(
-    "sidebar"
-  );
-
-const sidebarToggle =
-  document.getElementById(
-    "sidebar-toggle"
-  );
-
-
-sidebarToggle.addEventListener(
-  "click",
-  () => {
-
-    sidebar.classList.toggle(
-      "collapsed"
-    );
-
-    sidebarToggle.textContent =
-      sidebar.classList.contains(
-        "collapsed"
-      )
-        ? "▶"
-        : "◀";
-
-
-    requestAnimationFrame(
-      () => {
-
-        if (editor)
-          editor.layout();
-
-        if (jsConsole)
-          jsConsole.layout();
-
-        requestAnimationFrame(
-          () => {
-
-            if (editor)
-              editor.layout();
-
-            if (jsConsole)
-              jsConsole.layout();
-
-          }
-        );
-
-      }
-    );
-
   }
-);
+}
 
+document.getElementById("btnNew").addEventListener("click", () => {
+  const fname = prompt("새 파일 이름:", "untitled.txt");
 
-/* ============================================================
- * Console toggle
- * ============================================================ */
+  if (!fname || files[fname]) {
+    alert("파일 존재");
+    return;
+  }
 
-const rootStyle =
-  document.documentElement.style;
+  files[fname] = "";
+  currentFile = fname;
+  edFileName = fname;
+  editor.setValue("");
+  setEditorLanguage(fname);
+  applyCurrentFileEditorSettings();
+  refreshList();
+  log(`생성됨: ${fname}`);
+});
 
-const toggleBtn =
-  document.getElementById(
-    "console-toggle"
+function openFile(fname) {
+  currentFile = fname;
+  edFileName = fname;
+
+  const content = files[fname] ?? "";
+
+  editor.setValue(content);
+  setEditorLanguage(fname);
+  applyCurrentFileEditorSettings();
+  refreshList();
+  log(`열림: ${fname}`);
+}
+
+document.getElementById("btnDelete").addEventListener("click", () => {
+  if (!currentFile) {
+    alert("열린 파일 없음");
+    return;
+  }
+
+  delete files[currentFile];
+  delete editorFileSettings[currentFile];
+
+  currentFile = null;
+  edFileName = null;
+
+  editor.setValue("");
+
+  monaco.editor.setModelLanguage(
+    editor.getModel(),
+    "plaintext"
   );
 
-let consoleCollapsed =
-  false;
+  currentEditorLanguage = "plaintext";
 
+  refreshList();
+  log("삭제됨 (가상 FS)");
+});
 
-function setConsoleHeight(px) {
+document.getElementById("btnSave").addEventListener("click", () => {
+  if (!currentFile) {
+    alert("열린 파일 없음");
+    return;
+  }
 
-  rootStyle.setProperty(
-    "--console-h",
-    px
+  files[currentFile] = editor.getValue();
+  edFileName = currentFile;
+  log("저장됨: " + currentFile);
+});
+
+document.getElementById("btnOpen").addEventListener("click", () => {
+  const input = document.getElementById("fileInput");
+  input.value = "";
+  input.click();
+});
+
+document.getElementById("fileInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+
+  if (!file)
+    return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    files[file.name] = reader.result;
+    currentFile = file.name;
+    edFileName = file.name;
+
+    editor.setValue(reader.result);
+    setEditorLanguage(file.name);
+    applyCurrentFileEditorSettings();
+    refreshList();
+
+    log(`로컬 파일 로드: ${file.name}`);
+  };
+
+  reader.readAsText(file, "UTF-8");
+});
+
+document.getElementById("btnDownload").addEventListener("click", () => {
+  if (!currentFile) {
+    alert("열린 파일 없음");
+    return;
+  }
+
+  const text = editor.getValue();
+
+  const blob = new Blob(
+    [text],
+    {
+      type: "text/plain;charset=utf-8"
+    }
   );
 
-  requestAnimationFrame(
-    () => {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
 
+  a.href = url;
+  a.download = currentFile || "untitled.txt";
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+  log(`다운로드 완료: ${a.download}`);
+});
+
+const sidebar = document.getElementById("sidebar");
+const sidebarToggle = document.getElementById("sidebar-toggle");
+
+sidebarToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+
+  sidebarToggle.textContent =
+    sidebar.classList.contains("collapsed")
+      ? "▶"
+      : "◀";
+
+  requestAnimationFrame(() => {
+    if (editor)
+      editor.layout();
+    if (jsConsole)
+      jsConsole.layout();
+
+    requestAnimationFrame(() => {
       if (editor)
         editor.layout();
-
       if (jsConsole)
         jsConsole.layout();
+    });
+  });
+});
 
-      requestAnimationFrame(
-        () => {
+const rootStyle = document.documentElement.style;
+const toggleBtn = document.getElementById("console-toggle");
+let consoleCollapsed = false;
 
-          if (editor)
-            editor.layout();
+function setConsoleHeight(px) {
+  rootStyle.setProperty("--console-h", px);
 
-          if (jsConsole)
-            jsConsole.layout();
+  requestAnimationFrame(() => {
+    if (editor)
+      editor.layout();
+    if (jsConsole)
+      jsConsole.layout();
 
-        }
-      );
-
-    }
-  );
-
+    requestAnimationFrame(() => {
+      if (editor)
+        editor.layout();
+      if (jsConsole)
+        jsConsole.layout();
+    });
+  });
 }
 
+toggleBtn.addEventListener("click", () => {
+  consoleCollapsed = !consoleCollapsed;
 
-toggleBtn.addEventListener(
-  "click",
-  () => {
-
-    consoleCollapsed =
-      !consoleCollapsed;
-
-    if (consoleCollapsed) {
-
-      setConsoleHeight(
-        "0px"
-      );
-
-      toggleBtn.textContent =
-        "▶ Console";
-
-    }
-
-    else {
-
-      setConsoleHeight(
-        "150px"
-      );
-
-      toggleBtn.textContent =
-        "▼ Console";
-
-    }
-
+  if (consoleCollapsed) {
+    setConsoleHeight("0px");
+    toggleBtn.textContent = "▶ Console";
+  } else {
+    setConsoleHeight("150px");
+    toggleBtn.textContent = "▼ Console";
   }
-);
+});
 
+const consoleElement = document.getElementById("console");
+const consoleResizer = document.getElementById("console-resizer");
 
-/* ============================================================
- * Console mouse resize
- * ============================================================ */
+let consoleResizing = false;
+let consoleResizeStartY = 0;
+let consoleResizeStartHeight = 0;
 
-const consoleElement =
-  document.getElementById(
-    "console"
+consoleResizer.addEventListener("mousedown", e => {
+  if (consoleCollapsed)
+    return;
+
+  consoleResizing = true;
+  consoleResizeStartY = e.clientY;
+  consoleResizeStartHeight =
+    consoleElement.getBoundingClientRect().height;
+
+  consoleResizer.classList.add("dragging");
+  document.body.style.cursor = "ns-resize";
+  document.body.style.userSelect = "none";
+
+  e.preventDefault();
+});
+
+document.addEventListener("mousemove", e => {
+  if (!consoleResizing)
+    return;
+
+  const delta =
+    consoleResizeStartY - e.clientY;
+
+  let newHeight =
+    consoleResizeStartHeight + delta;
+
+  const minHeight = 60;
+  const main = document.getElementById("main");
+  const toggleHeight =
+    toggleBtn.getBoundingClientRect().height;
+  const minEditorHeight = 80;
+
+  const maxHeight = Math.max(
+    minHeight,
+    main.clientHeight -
+    toggleHeight -
+    minEditorHeight
   );
 
-const consoleResizer =
-  document.getElementById(
-    "console-resizer"
+  newHeight = Math.max(
+    minHeight,
+    Math.min(newHeight, maxHeight)
   );
 
-let consoleResizing =
-  false;
+  setConsoleHeight(
+    `${Math.round(newHeight)}px`
+  );
+});
 
-let consoleResizeStartY =
-  0;
+document.addEventListener("mouseup", () => {
+  if (!consoleResizing)
+    return;
 
-let consoleResizeStartHeight =
-  0;
-
-
-consoleResizer.addEventListener(
-  "mousedown",
-  e => {
-
-    if (consoleCollapsed)
-      return;
-
-    consoleResizing =
-      true;
-
-    consoleResizeStartY =
-      e.clientY;
-
-    consoleResizeStartHeight =
-      consoleElement.getBoundingClientRect().height;
-
-    consoleResizer.classList.add(
-      "dragging"
-    );
-
-    document.body.style.cursor =
-      "ns-resize";
-
-    document.body.style.userSelect =
-      "none";
-
-    e.preventDefault();
-
-  }
-);
-
-
-document.addEventListener(
-  "mousemove",
-  e => {
-
-    if (!consoleResizing)
-      return;
-
-    const delta =
-      consoleResizeStartY -
-      e.clientY;
-
-    let newHeight =
-      consoleResizeStartHeight +
-      delta;
-
-    const minHeight =
-      60;
-
-    const main =
-      document.getElementById(
-        "main"
-      );
-
-    const toggleHeight =
-      toggleBtn.getBoundingClientRect().height;
-
-    const minEditorHeight =
-      80;
-
-    const maxHeight =
-      Math.max(
-        minHeight,
-        main.clientHeight -
-        toggleHeight -
-        minEditorHeight
-      );
-
-    newHeight =
-      Math.max(
-        minHeight,
-        Math.min(
-          newHeight,
-          maxHeight
-        )
-      );
-
-    setConsoleHeight(
-      `${Math.round(newHeight)}px`
-    );
-
-  }
-);
-
-
-document.addEventListener(
-  "mouseup",
-  () => {
-
-    if (!consoleResizing)
-      return;
-
-    consoleResizing =
-      false;
-
-    consoleResizer.classList.remove(
-      "dragging"
-    );
-
-    document.body.style.cursor =
-      "";
-
-    document.body.style.userSelect =
-      "";
-
-  }
-);
-
-
-/* ============================================================
- * Monaco Adapter
- * ============================================================ */
+  consoleResizing = false;
+  consoleResizer.classList.remove("dragging");
+  document.body.style.cursor = "";
+  document.body.style.userSelect = "";
+});
 
 function readLines() {
-
-  const model =
-    editor.getModel();
-
+  const model = editor.getModel();
   return model.getLinesContent();
-
 }
 
-
-function writeLines(
-  lines,
-  cursor = 1
-) {
-
-  if (
-    !Array.isArray(lines) ||
-    !lines.length
-  ) {
+function writeLines(lines, cursor = 1) {
+  if (!Array.isArray(lines) || !lines.length)
     lines = [""];
-  }
 
-  const normalized =
-    lines.map(
-      x => String(x ?? "")
-    );
-
-  const text =
-    normalized.join("\n");
-
-  const model =
-    editor.getModel();
+  const normalized = lines.map(x => String(x ?? ""));
+  const text = normalized.join("\n");
+  const model = editor.getModel();
 
   const newLineCount =
-    Math.max(
-      1,
-      normalized.length
-    );
+    Math.max(1, normalized.length);
 
-  const targetLine =
-    Math.max(
-      1,
-      Math.min(
-        Number(cursor) || 1,
-        newLineCount
-      )
-    );
+  const targetLine = Math.max(
+    1,
+    Math.min(
+      Number(cursor) || 1,
+      newLineCount
+    )
+  );
 
   let anchor = 0;
 
-  for (
-    let i = 0;
-    i < targetLine - 1;
-    i++
-  ) {
+  for (let i = 0; i < targetLine - 1; i++)
+    anchor += normalized[i].length + 1;
 
-    anchor +=
-      normalized[i].length + 1;
-
-  }
-
-  anchor =
-    Math.max(
-      0,
-      Math.min(
-        anchor,
-        text.length
-      )
-    );
+  anchor = Math.max(
+    0,
+    Math.min(anchor, text.length)
+  );
 
   editor.pushUndoStop();
 
@@ -1175,216 +1167,134 @@ function writeLines(
     "ed",
     [
       {
-        range:
-          model.getFullModelRange(),
-
+        range: model.getFullModelRange(),
         text,
-
-        forceMoveMarkers:
-          true
+        forceMoveMarkers: true
       }
     ]
   );
 
-  const newModel =
-    editor.getModel();
+  const newModel = editor.getModel();
 
-  const line =
-    Math.max(
-      1,
-      Math.min(
-        targetLine,
-        newModel.getLineCount()
-      )
-    );
-
-  const column =
+  const line = Math.max(
+    1,
     Math.min(
-      1,
-      newModel.getLineMaxColumn(line)
-    );
+      targetLine,
+      newModel.getLineCount()
+    )
+  );
+
+  const column = Math.min(
+    1,
+    newModel.getLineMaxColumn(line)
+  );
 
   editor.setPosition({
     lineNumber: line,
     column
   });
 
-  editor.revealLineInCenter(
-    line
-  );
-
+  editor.revealLineInCenter(line);
   editor.pushUndoStop();
-
 }
 
-
 function currentLine() {
-
   if (!editor)
     return 1;
 
-  return editor
-    .getPosition()
-    .lineNumber;
-
+  return editor.getPosition().lineNumber;
 }
 
-
 function moveCursor(n) {
+  const model = editor.getModel();
 
-  const model =
-    editor.getModel();
-
-  n =
-    Math.max(
-      1,
-      Math.min(
-        n,
-        model.getLineCount()
-      )
-    );
+  n = Math.max(
+    1,
+    Math.min(n, model.getLineCount())
+  );
 
   editor.setPosition({
     lineNumber: n,
     column: 1
   });
 
-  editor.revealLineInCenter(
-    n
-  );
-
+  editor.revealLineInCenter(n);
 }
-
-
-/* ============================================================
- * 내부 buffer
- * ============================================================ */
 
 let buffer = null;
 let current = 1;
 let nextId = 1;
 
-
 function makeLine(text) {
-
   return {
     id: nextId++,
     text: String(text ?? "")
   };
-
 }
-
 
 function syncBuffer() {
+  const lines = readLines();
 
-  const lines =
-    readLines();
+  buffer = lines.map(makeLine);
 
-  buffer =
-    lines.map(makeLine);
-
-  current =
-    Math.max(
-      1,
-      Math.min(
-        currentLine(),
-        buffer.length
-      )
-    );
-
+  current = Math.max(
+    1,
+    Math.min(currentLine(), buffer.length)
+  );
 }
-
 
 function ensureBuffer() {
-
   if (!buffer)
     syncBuffer();
-
 }
-
 
 function lineCount() {
-
   ensureBuffer();
-
   return buffer.length;
-
 }
 
-
 function getLine(n) {
-
   ensureBuffer();
 
   if (
     !Number.isInteger(n) ||
     n < 1 ||
     n > buffer.length
-  ) {
-    throw Error(
-      `잘못된 줄 주소: ${n}`
-    );
-  }
+  )
+    throw Error(`잘못된 줄 주소: ${n}`);
 
   return buffer[n - 1];
-
 }
-
 
 function lineIndexById(id) {
-
   ensureBuffer();
-
-  return buffer.findIndex(
-    x => x.id === id
-  );
-
+  return buffer.findIndex(x => x.id === id);
 }
-
 
 function lineNumberById(id) {
-
-  const i =
-    lineIndexById(id);
-
-  return i < 0
-    ? null
-    : i + 1;
-
+  const i = lineIndexById(id);
+  return i < 0 ? null : i + 1;
 }
 
-
 function setCurrent(n) {
-
   ensureBuffer();
 
   if (!buffer.length) {
-
     current = 0;
-
     return;
   }
 
-  current =
-    Math.max(
-      1,
-      Math.min(
-        n,
-        buffer.length
-      )
-    );
-
+  current = Math.max(
+    1,
+    Math.min(n, buffer.length)
+  );
 }
 
-
 function commit() {
-
   ensureBuffer();
 
   writeLines(
-    buffer.map(
-      x => x.text
-    ),
+    buffer.map(x => x.text),
     Math.max(
       1,
       Math.min(
@@ -1393,178 +1303,78 @@ function commit() {
       )
     )
   );
-
 }
 
-
-/* ============================================================
- * 문자열
- * ============================================================ */
-
 function quoted(s) {
-
   s = s.trim();
 
   if (
     s.length < 2 ||
     !(
-      (
-        s[0] === '"' &&
-        s.at(-1) === '"'
-      ) ||
-      (
-        s[0] === "'" &&
-        s.at(-1) === "'"
-      )
+      (s[0] === '"' && s.at(-1) === '"') ||
+      (s[0] === "'" && s.at(-1) === "'")
     )
-  ) {
-
-    throw Error(
-      '문자열은 "..." 형식이어야 합니다.'
-    );
-
-  }
+  )
+    throw Error('문자열은 "..." 형식이어야 합니다.');
 
   return s
     .slice(1, -1)
-    .replace(
-      /\\n/g,
-      "\n"
-    )
-    .replace(
-      /\\r/g,
-      "\r"
-    )
-    .replace(
-      /\\t/g,
-      "\t"
-    )
-    .replace(
-      /\\"/g,
-      '"'
-    )
-    .replace(
-      /\\'/g,
-      "'"
-    )
-    .replace(
-      /\\\\/g,
-      "\\"
-    );
-
+    .replace(/\\n/g, "\n")
+    .replace(/\\r/g, "\r")
+    .replace(/\\t/g, "\t")
+    .replace(/\\"/g, '"')
+    .replace(/\\'/g, "'")
+    .replace(/\\\\/g, "\\");
 }
 
-
-/* ============================================================
- * 주소
- * ============================================================ */
-
-function readDelimited(
-  s,
-  p,
-  delimiter
-) {
-
+function readDelimited(s, p, delimiter) {
   let value = "";
 
-  while (
-    p < s.length
-  ) {
-
-    const c =
-      s[p++];
+  while (p < s.length) {
+    const c = s[p++];
 
     if (c === "\\") {
+      if (p >= s.length)
+        throw Error("주소 정규식이 닫히지 않았습니다.");
 
-      if (
-        p >= s.length
-      ) {
-
-        throw Error(
-          "주소 정규식이 닫히지 않았습니다."
-        );
-
-      }
-
-      value +=
-        "\\" + s[p++];
-
+      value += "\\" + s[p++];
       continue;
     }
 
-    if (
-      c === delimiter
-    ) {
-
-      return {
-        value,
-        end: p
-      };
-
-    }
+    if (c === delimiter)
+      return { value, end: p };
 
     value += c;
-
   }
 
-  throw Error(
-    "주소 정규식이 닫히지 않았습니다."
-  );
-
+  throw Error("주소 정규식이 닫히지 않았습니다.");
 }
 
-
-function searchAddress(
-  re,
-  base,
-  direction
-) {
-
+function searchAddress(re, base, direction) {
   ensureBuffer();
 
   if (!re)
     re = lastRegex;
 
-  if (!re) {
-
-    throw Error(
-      "이전 정규식이 없습니다."
-    );
-
-  }
+  if (!re)
+    throw Error("이전 정규식이 없습니다.");
 
   lastRegex = re;
 
   let rx;
 
   try {
-
-    rx =
-      new RegExp(re);
-
-  }
-
-  catch (e) {
-
-    throw Error(
-      `잘못된 정규식: ${e.message}`
-    );
-
+    rx = new RegExp(re);
+  } catch (e) {
+    throw Error(`잘못된 정규식: ${e.message}`);
   }
 
   let n = base;
 
-  for (
-    let i = 0;
-    i < buffer.length;
-    i++
-  ) {
-
+  for (let i = 0; i < buffer.length; i++) {
     n += direction;
 
-    if (
-      n > buffer.length
-    )
+    if (n > buffer.length)
       n = 1;
 
     if (n < 1)
@@ -1572,236 +1382,104 @@ function searchAddress(
 
     rx.lastIndex = 0;
 
-    if (
-      rx.test(
-        buffer[n - 1].text
-      )
-    )
+    if (rx.test(buffer[n - 1].text))
       return n;
-
   }
 
-  throw Error(
-    `정규식에 일치하는 줄이 없습니다: /${re}/`
-  );
-
+  throw Error(`정규식에 일치하는 줄이 없습니다: /${re}/`);
 }
 
-
-function parseAddressAt(
-  s,
-  pos = 0,
-  base = current
-) {
-
+function parseAddressAt(s, pos = 0, base = current) {
   ensureBuffer();
 
-  while (
-    pos < s.length &&
-    /\s/.test(s[pos])
-  )
+  while (pos < s.length && /\s/.test(s[pos]))
     pos++;
 
-  if (
-    pos >= s.length
-  ) {
-
+  if (pos >= s.length)
     return {
       value: base,
       end: pos,
       present: false
     };
-
-  }
 
   let n;
   let present = true;
-
-  const c =
-    s[pos];
+  const c = s[pos];
 
   if (c === ".") {
-
     n = base;
     pos++;
-
-  }
-
-  else if (c === "$") {
-
+  } else if (c === "$") {
     n = buffer.length;
     pos++;
-
-  }
-
-  else if (c === "0") {
-
+  } else if (c === "0") {
     n = 0;
     pos++;
+  } else if (/[0-9]/.test(c)) {
+    const m = s.slice(pos).match(/^\d+/);
+    n = Number(m[0]);
+    pos += m[0].length;
+  } else if (c === "/" || c === "?") {
+    const delimiter = c;
+    const r = readDelimited(s, pos + 1, delimiter);
 
-  }
+    n = searchAddress(
+      r.value,
+      base,
+      delimiter === "/" ? 1 : -1
+    );
 
-  else if (
-    /[0-9]/.test(c)
-  ) {
-
-    const m =
-      s
-        .slice(pos)
-        .match(/^\d+/);
-
-    n =
-      Number(m[0]);
-
-    pos +=
-      m[0].length;
-
-  }
-
-  else if (
-    c === "/" ||
-    c === "?"
-  ) {
-
-    const delimiter =
-      c;
-
-    const r =
-      readDelimited(
-        s,
-        pos + 1,
-        delimiter
-      );
-
-    n =
-      searchAddress(
-        r.value,
-        base,
-        delimiter === "/"
-          ? 1
-          : -1
-      );
-
-    pos =
-      r.end;
-
-  }
-
-  else if (
-    c === "+" ||
-    c === "-"
-  ) {
-
+    pos = r.end;
+  } else if (c === "+" || c === "-") {
     n = base;
-
-  }
-
-  else {
-
+  } else {
     return {
       value: base,
       end: pos,
       present: false
     };
-
   }
 
-
-  while (
-    pos < s.length
-  ) {
-
-    while (
-      pos < s.length &&
-      /\s/.test(s[pos])
-    )
+  while (pos < s.length) {
+    while (pos < s.length && /\s/.test(s[pos]))
       pos++;
 
-    if (
-      s[pos] !== "+" &&
-      s[pos] !== "-"
-    )
+    if (s[pos] !== "+" && s[pos] !== "-")
       break;
 
-    const sign =
-      s[pos++] === "+"
-        ? 1
-        : -1;
-
-    const m =
-      s
-        .slice(pos)
-        .match(/^\d+/);
-
-    const amount =
-      m
-        ? Number(m[0])
-        : 1;
+    const sign = s[pos++] === "+" ? 1 : -1;
+    const m = s.slice(pos).match(/^\d+/);
+    const amount = m ? Number(m[0]) : 1;
 
     if (m)
-      pos +=
-        m[0].length;
+      pos += m[0].length;
 
-    n +=
-      sign * amount;
-
+    n += sign * amount;
   }
 
-
-  if (
-    n < 0 ||
-    n > buffer.length
-  ) {
-
-    throw Error(
-      `잘못된 줄 주소: ${n}`
-    );
-
-  }
-
+  if (n < 0 || n > buffer.length)
+    throw Error(`잘못된 줄 주소: ${n}`);
 
   return {
     value: n,
     end: pos,
     present
   };
-
 }
 
-
-function parseRangeAt(
-  s,
-  pos = 0,
-  defaultAddr = "."
-) {
-
+function parseRangeAt(s, pos = 0, defaultAddr = ".") {
   ensureBuffer();
 
-  const startPos =
-    pos;
+  const startPos = pos;
 
-  while (
-    pos < s.length &&
-    /\s/.test(s[pos])
-  )
+  while (pos < s.length && /\s/.test(s[pos]))
     pos++;
 
+  if (s[pos] === "," || s[pos] === ";") {
+    const separator = s[pos++];
 
-  if (
-    s[pos] === "," ||
-    s[pos] === ";"
-  ) {
-
-    const separator =
-      s[pos++];
-
-    const first =
-      separator === ","
-        ? 1
-        : current;
-
-    const second =
-      buffer.length;
+    const first = separator === "," ? 1 : current;
+    const second = buffer.length;
 
     return {
       s: first,
@@ -1809,18 +1487,10 @@ function parseRangeAt(
       end: pos,
       present: true
     };
-
   }
 
-
-  if (
-    pos >= s.length
-  ) {
-
-    const n =
-      parseAddress(
-        defaultAddr
-      );
+  if (pos >= s.length) {
+    const n = parseAddress(defaultAddr);
 
     return {
       s: n,
@@ -1828,26 +1498,12 @@ function parseRangeAt(
       end: pos,
       present: false
     };
-
   }
 
+  const first = parseAddressAt(s, pos, current);
 
-  const first =
-    parseAddressAt(
-      s,
-      pos,
-      current
-    );
-
-
-  if (
-    !first.present
-  ) {
-
-    const n =
-      parseAddress(
-        defaultAddr
-      );
+  if (!first.present) {
+    const n = parseAddress(defaultAddr);
 
     return {
       s: n,
@@ -1855,84 +1511,40 @@ function parseRangeAt(
       end: startPos,
       present: false
     };
-
   }
 
+  pos = first.end;
 
-  pos =
-    first.end;
-
-
-  while (
-    pos < s.length &&
-    /\s/.test(s[pos])
-  )
+  while (pos < s.length && /\s/.test(s[pos]))
     pos++;
 
-
-  if (
-    s[pos] !== "," &&
-    s[pos] !== ";"
-  ) {
-
+  if (s[pos] !== "," && s[pos] !== ";") {
     return {
       s: first.value,
       e: first.value,
       end: pos,
       present: true
     };
-
   }
 
+  const separator = s[pos++];
 
-  const separator =
-    s[pos++];
+  const second = parseAddressAt(
+    s,
+    pos,
+    separator === ";" ? first.value : current
+  );
 
+  if (!second.present)
+    throw Error("두 번째 주소가 없습니다.");
 
-  const second =
-    parseAddressAt(
-      s,
-      pos,
-      separator === ";"
-        ? first.value
-        : current
-    );
+  pos = second.end;
 
+  if (separator === ";")
+    setCurrent(first.value);
 
-  if (
-    !second.present
-  ) {
-
-    throw Error(
-      "두 번째 주소가 없습니다."
-    );
-
-  }
-
-
-  pos =
-    second.end;
-
-
-  if (
-    separator === ";"
-  )
-    setCurrent(
-      first.value
-    );
-
-
-  if (
-    first.value >
-    second.value
-  ) {
-
-    throw Error(
-      "잘못된 줄 범위입니다."
-    );
-
-  }
-
+  if (first.value > second.value)
+    throw Error("잘못된 줄 범위입니다.");
 
   return {
     s: first.value,
@@ -1940,367 +1552,125 @@ function parseRangeAt(
     end: pos,
     present: true
   };
-
 }
 
-
-function parseAddress(
-  s,
-  base = current
-) {
-
+function parseAddress(s, base = current) {
   ensureBuffer();
 
-  const text =
-    String(s ?? "");
+  const text = String(s ?? "");
+  const r = parseAddressAt(text, 0, base);
 
-  const r =
-    parseAddressAt(
-      text,
-      0,
-      base
-    );
+  if (!r.present)
+    throw Error(`잘못된 주소: ${s}`);
 
-
-  if (
-    !r.present
-  ) {
-
-    throw Error(
-      `잘못된 주소: ${s}`
-    );
-
-  }
-
-
-  if (
-    text
-      .slice(r.end)
-      .trim()
-  ) {
-
-    throw Error(
-      `잘못된 주소: ${s}`
-    );
-
-  }
-
+  if (text.slice(r.end).trim())
+    throw Error(`잘못된 주소: ${s}`);
 
   return r.value;
-
 }
 
-
-function getRange(
-  s,
-  defaultAddr = "."
-) {
-
+function getRange(s, defaultAddr = ".") {
   ensureBuffer();
 
-  const text =
-    String(s ?? "");
+  const text = String(s ?? "");
 
+  if (text.trim() === ",")
+    return { s: 1, e: buffer.length };
 
-  if (
-    text.trim() === ","
-  ) {
+  if (text.trim() === ";")
+    return { s: current, e: buffer.length };
 
-    return {
-      s: 1,
-      e: buffer.length
-    };
+  const r = parseRangeAt(text, 0, defaultAddr);
 
-  }
-
-
-  if (
-    text.trim() === ";"
-  ) {
-
-    return {
-      s: current,
-      e: buffer.length
-    };
-
-  }
-
-
-  const r =
-    parseRangeAt(
-      text,
-      0,
-      defaultAddr
-    );
-
-
-  if (
-    text
-      .slice(r.end)
-      .trim()
-  ) {
-
-    throw Error(
-      `잘못된 주소: ${s}`
-    );
-
-  }
-
+  if (text.slice(r.end).trim())
+    throw Error(`잘못된 주소: ${s}`);
 
   return {
     s: r.s,
     e: r.e
   };
-
 }
 
+function printCommand(addr, numbered = false, list = false) {
+  const { s, e } = getRange(addr, ".");
 
-/* ============================================================
- * 출력
- * ============================================================ */
-
-function printCommand(
-  addr,
-  numbered = false,
-  list = false
-) {
-
-  const { s, e } =
-    getRange(
-      addr,
-      "."
-    );
-
-
-  for (
-    let n = s;
-    n <= e;
-    n++
-  ) {
-
-    let text =
-      getLine(n).text;
-
+  for (let n = s; n <= e; n++) {
+    let text = getLine(n).text;
 
     if (list) {
+      text = text
+        .replace(/\\/g, "\\\\")
+        .replace(/\t/g, "\\t")
+        .replace(/\r/g, "\\r")
+        .replace(/[\x00-\x1f\x7f-\x9f]/g, c => {
+          if (c === "\n")
+            return "\\n";
 
-      text =
-        text
-          .replace(
-            /\\/g,
-            "\\\\"
-          )
-          .replace(
-            /\t/g,
-            "\\t"
-          )
-          .replace(
-            /\r/g,
-            "\\r"
-          )
-          .replace(
-            /[\x00-\x1f\x7f-\x9f]/g,
-            c => {
-
-              if (
-                c === "\n"
-              )
-                return "\\n";
-
-              return (
-                "\\x" +
-                c
-                  .codePointAt(0)
-                  .toString(16)
-                  .padStart(
-                    2,
-                    "0"
-                  )
-              );
-
-            }
+          return (
+            "\\x" +
+            c.codePointAt(0)
+              .toString(16)
+              .padStart(2, "0")
           );
+        });
 
-
-      console.log(
-        `${text}$`
-      );
-
+      console.log(`${text}$`);
+    } else if (numbered) {
+      console.log(`${n}\t${text}`);
+    } else {
+      console.log(text);
     }
-
-    else if (numbered) {
-
-      console.log(
-        `${n}\t${text}`
-      );
-
-    }
-
-    else {
-
-      console.log(
-        text
-      );
-
-    }
-
   }
 
-
   setCurrent(e);
-
   return e;
-
 }
 
-
-/* ============================================================
- * 기본 편집
- * ============================================================ */
-
 function deleteCommand(addr) {
+  const { s, e } = getRange(addr, ".");
 
-  const { s, e } =
-    getRange(
-      addr,
-      "."
-    );
+  buffer.splice(s - 1, e - s + 1);
 
-
-  buffer.splice(
-    s - 1,
-    e - s + 1
-  );
-
-
-  if (
-    !buffer.length
-  ) {
-
-    buffer.push(
-      makeLine("")
-    );
-
+  if (!buffer.length) {
+    buffer.push(makeLine(""));
     setCurrent(1);
-
     return 1;
   }
 
-
-  setCurrent(
-    Math.min(
-      s,
-      buffer.length
-    )
-  );
-
-
+  setCurrent(Math.min(s, buffer.length));
   return current;
-
 }
-
 
 function splitText(text) {
-
   return String(text)
-    .replace(
-      /\r\n/g,
-      "\n"
-    )
-    .replace(
-      /\r/g,
-      "\n"
-    )
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
     .split("\n");
-
 }
 
+function insertCommand(addr, text) {
+  const n = parseAddress(addr || ".");
+  const items = splitText(text).map(makeLine);
 
-function insertCommand(
-  addr,
-  text
-) {
+  buffer.splice(n - 1, 0, ...items);
 
-  const n =
-    parseAddress(
-      addr || "."
-    );
-
-
-  const items =
-    splitText(text)
-      .map(makeLine);
-
-
-  buffer.splice(
-    n - 1,
-    0,
-    ...items
-  );
-
-
-  setCurrent(
-    n +
-    items.length -
-    1
-  );
-
-
+  setCurrent(n + items.length - 1);
   return current;
-
 }
 
+function appendCommand(addr, text) {
+  const n = parseAddress(addr || ".");
+  const items = splitText(text).map(makeLine);
 
-function appendCommand(
-  addr,
-  text
-) {
+  buffer.splice(n, 0, ...items);
 
-  const n =
-    parseAddress(
-      addr || "."
-    );
-
-
-  const items =
-    splitText(text)
-      .map(makeLine);
-
-
-  buffer.splice(
-    n,
-    0,
-    ...items
-  );
-
-
-  setCurrent(
-    n +
-    items.length
-  );
-
-
+  setCurrent(n + items.length);
   return current;
-
 }
 
-
-function changeCommand(
-  addr,
-  text
-) {
-
-  const { s, e } =
-    getRange(
-      addr,
-      "."
-    );
-
-
-  const items =
-    splitText(text)
-      .map(makeLine);
-
+function changeCommand(addr, text) {
+  const { s, e } = getRange(addr, ".");
+  const items = splitText(text).map(makeLine);
 
   buffer.splice(
     s - 1,
@@ -2308,118 +1678,50 @@ function changeCommand(
     ...items
   );
 
-
   if (items.length) {
-
-    setCurrent(
-      s +
-      items.length -
-      1
-    );
-
+    setCurrent(s + items.length - 1);
+  } else {
+    setCurrent(Math.min(s, buffer.length));
   }
-
-  else {
-
-    setCurrent(
-      Math.min(
-        s,
-        buffer.length
-      )
-    );
-
-  }
-
 
   return current;
-
 }
 
-
-/* ============================================================
- * j
- * ============================================================ */
-
 function joinCommand(addr) {
-
   ensureBuffer();
 
   let s;
   let e;
 
-
-  if (
-    addr == null ||
-    String(addr).trim() === ""
-  ) {
-
+  if (addr == null || String(addr).trim() === "") {
     s = current;
     e = current + 1;
-
-  }
-
-  else {
-
-    const range =
-      getRange(
-        addr,
-        "."
-      );
-
+  } else {
+    const range = getRange(addr, ".");
     s = range.s;
     e = range.e;
 
-    if (
-      s === e
-    )
+    if (s === e)
       e = s + 1;
-
   }
 
+  if (s < 1 || s > buffer.length)
+    throw Error(`잘못된 줄 주소: ${s}`);
 
-  if (
-    s < 1 ||
-    s > buffer.length
-  ) {
-
-    throw Error(
-      `잘못된 줄 주소: ${s}`
-    );
-
-  }
-
-
-  if (
-    e > buffer.length
-  )
+  if (e > buffer.length)
     e = buffer.length;
 
-
-  if (
-    s === e
-  ) {
-
+  if (s === e) {
     setCurrent(s);
-
     return s;
   }
 
+  const text = buffer
+    .slice(s - 1, e)
+    .map(x => x.text)
+    .join("");
 
-  const text =
-    buffer
-      .slice(
-        s - 1,
-        e
-      )
-      .map(
-        x => x.text
-      )
-      .join("");
-
-
-  const joined =
-    makeLine(text);
-
+  const joined = makeLine(text);
 
   buffer.splice(
     s - 1,
@@ -2427,384 +1729,146 @@ function joinCommand(addr) {
     joined
   );
 
-
   setCurrent(s);
-
   return s;
-
 }
 
+function copyCommand(addr, dest) {
+  const { s, e } = getRange(addr, ".");
+  const target = parseAddress(dest, current);
 
-/* ============================================================
- * t
- * ============================================================ */
+  if (target === 0) {
+    const copies = buffer
+      .slice(s - 1, e)
+      .map(x => makeLine(x.text));
 
-function copyCommand(
-  addr,
-  dest
-) {
-
-  const { s, e } =
-    getRange(
-      addr,
-      "."
-    );
-
-
-  const target =
-    parseAddress(
-      dest,
-      current
-    );
-
-
-  if (
-    target === 0
-  ) {
-
-    const copies =
-      buffer
-        .slice(
-          s - 1,
-          e
-        )
-        .map(
-          x =>
-            makeLine(x.text)
-        );
-
-
-    buffer.splice(
-      0,
-      0,
-      ...copies
-    );
-
-
-    setCurrent(
-      copies.length
-    );
-
-
+    buffer.splice(0, 0, ...copies);
+    setCurrent(copies.length);
     return current;
-
   }
-
 
   if (
     target >= s &&
     target <= e &&
-    !(
-      s === e &&
-      target === s
-    )
-  ) {
+    !(s === e && target === s)
+  )
+    throw Error("복사 대상이 원본 범위 안에 있습니다.");
 
-    throw Error(
-      "복사 대상이 원본 범위 안에 있습니다."
-    );
+  const copies = buffer
+    .slice(s - 1, e)
+    .map(x => makeLine(x.text));
 
-  }
-
-
-  const copies =
-    buffer
-      .slice(
-        s - 1,
-        e
-      )
-      .map(
-        x =>
-          makeLine(x.text)
-      );
-
-
-  buffer.splice(
-    target,
-    0,
-    ...copies
-  );
-
-
-  setCurrent(
-    target +
-    copies.length
-  );
-
+  buffer.splice(target, 0, ...copies);
+  setCurrent(target + copies.length);
 
   return current;
-
 }
 
+function moveCommand(addr, dest) {
+  const { s, e } = getRange(addr, ".");
+  const target = parseAddress(dest, current);
 
-/* ============================================================
- * m
- * ============================================================ */
+  if (target >= s && target <= e)
+    throw Error("이동 대상이 원본 범위 안에 있습니다.");
 
-function moveCommand(
-  addr,
-  dest
-) {
+  const count = e - s + 1;
 
-  const { s, e } =
-    getRange(
-      addr,
-      "."
-    );
-
-
-  const target =
-    parseAddress(
-      dest,
-      current
-    );
-
-
-  if (
-    target >= s &&
-    target <= e
-  ) {
-
-    throw Error(
-      "이동 대상이 원본 범위 안에 있습니다."
-    );
-
-  }
-
-
-  const count =
-    e - s + 1;
-
-
-  const moved =
-    buffer.splice(
-      s - 1,
-      count
-    );
-
+  const moved = buffer.splice(
+    s - 1,
+    count
+  );
 
   let insertAt;
 
-
-  if (
-    target < s
-  )
+  if (target < s)
     insertAt = target;
-
   else
-    insertAt =
-      target - count;
+    insertAt = target - count;
 
+  buffer.splice(insertAt, 0, ...moved);
 
-  buffer.splice(
-    insertAt,
-    0,
-    ...moved
-  );
-
-
-  setCurrent(
-    insertAt + count
-  );
-
-
+  setCurrent(insertAt + count);
   return current;
-
 }
 
-
-/* ============================================================
- * Substitute parser
- * ============================================================ */
-
 const ESC = "\uFFFF";
-
 let lastRegex = "";
 let lastSubstitution = null;
 
-
 function parseSubstitute(s) {
+  if (s[0] !== "s")
+    throw Error("잘못된 substitute 명령입니다.");
 
-  if (
-    s[0] !== "s"
-  ) {
+  const delimiter = s[1];
 
-    throw Error(
-      "잘못된 substitute 명령입니다."
-    );
-
-  }
-
-
-  const delimiter =
-    s[1];
-
-
-  if (!delimiter) {
-
-    throw Error(
-      "s 구분자가 없습니다."
-    );
-
-  }
-
+  if (!delimiter)
+    throw Error("s 구분자가 없습니다.");
 
   let p = 2;
   const parts = [];
 
-
-  for (
-    let field = 0;
-    field < 2;
-    field++
-  ) {
-
+  for (let field = 0; field < 2; field++) {
     let value = "";
     let closed = false;
 
+    while (p < s.length) {
+      const c = s[p];
 
-    while (
-      p < s.length
-    ) {
+      if (c === "\\") {
+        if (p + 1 >= s.length)
+          throw Error("substitute escape가 닫히지 않았습니다.");
 
-      const c =
-        s[p];
+        const n = s[p + 1];
 
-
-      if (
-        c === "\\"
-      ) {
-
-        if (
-          p + 1 >= s.length
-        ) {
-
-          throw Error(
-            "substitute escape가 닫히지 않았습니다."
-          );
-
-        }
-
-
-        const n =
-          s[p + 1];
-
-
-        if (
-          n === "\n"
-        ) {
-
-          value +=
-            ESC + "\n";
-
+        if (n === "\n") {
+          value += ESC + "\n";
           p += 2;
-
           continue;
-
         }
 
-
-        if (
-          n === "\r" &&
-          s[p + 2] === "\n"
-        ) {
-
-          value +=
-            ESC + "\n";
-
+        if (n === "\r" && s[p + 2] === "\n") {
+          value += ESC + "\n";
           p += 3;
-
           continue;
-
         }
 
-
-        value +=
-          ESC + n;
-
+        value += ESC + n;
         p += 2;
-
         continue;
-
       }
 
-
-      if (
-        c === delimiter
-      ) {
-
+      if (c === delimiter) {
         p++;
-
         closed = true;
-
         break;
-
       }
-
 
       value += c;
-
       p++;
-
     }
 
-
-    if (!closed) {
-
-      throw Error(
-        "substitute 구분자가 닫히지 않았습니다."
-      );
-
-    }
-
+    if (!closed)
+      throw Error("substitute 구분자가 닫히지 않았습니다.");
 
     parts.push(value);
-
   }
-
 
   let flags = "";
 
-
   while (
     p < s.length &&
-    /[0-9gGpPlnIi]/.test(
-      s[p]
-    )
+    /[0-9gGpPlnIi]/.test(s[p])
   ) {
+    const f = s[p++];
 
-    const f =
-      s[p++];
-
-
-    if (
-      flags.includes(f)
-    ) {
-
-      throw Error(
-        `중복 substitute flag: ${f}`
-      );
-
-    }
-
+    if (flags.includes(f))
+      throw Error(`중복 substitute flag: ${f}`);
 
     flags += f;
-
   }
 
-
-  if (
-    s
-      .slice(p)
-      .trim()
-  ) {
-
-    throw Error(
-      `잘못된 substitute suffix: ${s.slice(p)}`
-    );
-
-  }
-
+  if (s.slice(p).trim())
+    throw Error(`잘못된 substitute suffix: ${s.slice(p)}`);
 
   return {
     delimiter,
@@ -2812,326 +1876,150 @@ function parseSubstitute(s) {
     replacement: parts[1],
     flags
   };
-
 }
 
-
-function decodeSubPattern(
-  s,
-  delimiter
-) {
-
+function decodeSubPattern(s, delimiter) {
   let out = "";
 
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
 
-  for (
-    let i = 0;
-    i < s.length;
-    i++
-  ) {
-
-    const c =
-      s[i];
-
-
-    if (
-      c !== ESC
-    ) {
-
+    if (c !== ESC) {
       out += c;
-
       continue;
-
     }
 
+    const n = s[++i];
 
-    const n =
-      s[++i];
-
-
-    if (
-      n === delimiter
-    )
+    if (n === delimiter)
       out += delimiter;
-
-    else if (
-      n === "\n"
-    )
+    else if (n === "\n")
       out += "\n";
-
     else
-      out +=
-        "\\" + n;
-
+      out += "\\" + n;
   }
 
-
   return out;
-
 }
 
-
-function decodeSubReplacement(
-  s,
-  delimiter
-) {
-
+function decodeSubReplacement(s, delimiter) {
   let out = "";
 
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
 
-  for (
-    let i = 0;
-    i < s.length;
-    i++
-  ) {
-
-    const c =
-      s[i];
-
-
-    if (
-      c !== ESC
-    ) {
-
+    if (c !== ESC) {
       out += c;
-
       continue;
-
     }
 
+    const n = s[++i];
 
-    const n =
-      s[++i];
-
-
-    if (
-      n === "\n"
-    ) {
-
+    if (n === "\n") {
       out += "\n";
-
       continue;
-
     }
 
-
-    if (
-      n === delimiter
-    ) {
-
+    if (n === delimiter) {
       out += delimiter;
-
       continue;
-
     }
 
-
-    if (
-      /[1-9]/.test(n)
-    ) {
-
-      out +=
-        "$" + n;
-
+    if (/[1-9]/.test(n)) {
+      out += "$" + n;
       continue;
-
     }
 
-
-    if (
-      n === "&"
-    ) {
-
+    if (n === "&") {
       out += "$&";
-
       continue;
-
     }
-
 
     out += n;
-
   }
 
-
   return out;
-
 }
 
+function jsReplacementToText(old, regex, replacement) {
+  return old.replace(regex, replacement);
+}
 
-function jsReplacementToText(
-  old,
-  regex,
-  replacement
-) {
+function substituteCommand(addr, command) {
+  const sub = parseSubstitute(command);
 
-  return old.replace(
-    regex,
-    replacement
+  let pattern = decodeSubPattern(
+    sub.pattern,
+    sub.delimiter
   );
-
-}
-
-
-function substituteCommand(
-  addr,
-  command
-) {
-
-  const sub =
-    parseSubstitute(command);
-
-
-  let pattern =
-    decodeSubPattern(
-      sub.pattern,
-      sub.delimiter
-    );
-
 
   if (!pattern)
     pattern = lastRegex;
 
+  if (!pattern)
+    throw Error("이전 정규식이 없습니다.");
 
-  if (!pattern) {
+  lastRegex = pattern;
 
-    throw Error(
-      "이전 정규식이 없습니다."
-    );
+  const replacement = decodeSubReplacement(
+    sub.replacement,
+    sub.delimiter
+  );
 
-  }
-
-
-  lastRegex =
-    pattern;
-
-
-  const replacement =
-    decodeSubReplacement(
-      sub.replacement,
-      sub.delimiter
-    );
-
-
-  const flags =
-    sub.flags;
-
-
-  const globalFlag =
-    flags.includes("g");
-
-
+  const flags = sub.flags;
+  const globalFlag = flags.includes("g");
   const ignoreCase =
     flags.includes("I") ||
     flags.includes("i");
 
-
   const regexFlags =
-    (
-      globalFlag
-        ? "g"
-        : ""
-    ) +
-    (
-      ignoreCase
-        ? "i"
-        : ""
-    );
-
+    (globalFlag ? "g" : "") +
+    (ignoreCase ? "i" : "");
 
   let re;
 
-
   try {
-
-    re =
-      new RegExp(
-        pattern,
-        regexFlags
-      );
-
+    re = new RegExp(
+      pattern,
+      regexFlags
+    );
+  } catch (e) {
+    throw Error(`잘못된 정규식: ${e.message}`);
   }
 
-  catch (e) {
+  const range = getRange(addr, ".");
+  const start = range.s;
+  const originalEnd = range.e;
 
-    throw Error(
-      `잘못된 정규식: ${e.message}`
-    );
-
-  }
-
-
-  const range =
-    getRange(
-      addr,
-      "."
-    );
-
-
-  const start =
-    range.s;
-
-  const originalEnd =
-    range.e;
-
-
-  let n =
-    start;
-
-
+  let n = start;
   let changed = false;
-
-  let lastChanged =
-    current;
-
+  let lastChanged = current;
 
   while (
     n <= originalEnd &&
     n <= buffer.length
   ) {
-
-    const item =
-      buffer[n - 1];
-
+    const item = buffer[n - 1];
 
     re.lastIndex = 0;
 
+    const old = item.text;
 
-    const old =
-      item.text;
+    const neu = jsReplacementToText(
+      old,
+      re,
+      replacement
+    );
 
-
-    const neu =
-      jsReplacementToText(
-        old,
-        re,
-        replacement
-      );
-
-
-    if (
-      old === neu
-    ) {
-
+    if (old === neu) {
       n++;
-
       continue;
-
     }
-
 
     changed = true;
 
-
-    const newTexts =
-      splitText(neu);
-
-
-    const newItems =
-      newTexts.map(
-        makeLine
-      );
-
+    const newTexts = splitText(neu);
+    const newItems = newTexts.map(makeLine);
 
     buffer.splice(
       n - 1,
@@ -3139,32 +2027,16 @@ function substituteCommand(
       ...newItems
     );
 
-
     lastChanged =
-      n +
-      newItems.length -
-      1;
+      n + newItems.length - 1;
 
-
-    n =
-      lastChanged + 1;
-
+    n = lastChanged + 1;
   }
 
+  if (!changed)
+    throw Error("치환 없음");
 
-  if (!changed) {
-
-    throw Error(
-      "치환 없음"
-    );
-
-  }
-
-
-  setCurrent(
-    lastChanged
-  );
-
+  setCurrent(lastChanged);
 
   lastSubstitution = {
     pattern,
@@ -3172,134 +2044,54 @@ function substituteCommand(
     global: globalFlag
   };
 
+  if (flags.includes("p"))
+    printCommand(String(current), false, false);
 
-  if (
-    flags.includes("p")
-  )
-    printCommand(
-      String(current),
-      false,
-      false
-    );
+  if (flags.includes("n"))
+    printCommand(String(current), true, false);
 
-
-  if (
-    flags.includes("n")
-  )
-    printCommand(
-      String(current),
-      true,
-      false
-    );
-
-
-  if (
-    flags.includes("l")
-  )
-    printCommand(
-      String(current),
-      false,
-      true
-    );
-
+  if (flags.includes("l"))
+    printCommand(String(current), false, true);
 
   return current;
-
 }
 
-
-/* ============================================================
- * Global parser
- * ============================================================ */
-
 function parseGlobalHeader(code) {
+  const type = code[0];
 
-  const type =
-    code[0];
+  if (type !== "g" && type !== "v")
+    throw Error("잘못된 global 명령입니다.");
 
+  const delimiter = code[1];
 
-  if (
-    type !== "g" &&
-    type !== "v"
-  ) {
-
-    throw Error(
-      "잘못된 global 명령입니다."
-    );
-
-  }
-
-
-  const delimiter =
-    code[1];
-
-
-  if (!delimiter) {
-
-    throw Error(
-      "global 구분자가 없습니다."
-    );
-
-  }
-
+  if (!delimiter)
+    throw Error("global 구분자가 없습니다.");
 
   let p = 2;
   let pattern = "";
 
+  while (p < code.length) {
+    const c = code[p++];
 
-  while (
-    p < code.length
-  ) {
+    if (c === "\\") {
+      if (p >= code.length)
+        throw Error("global 정규식 escape가 닫히지 않았습니다.");
 
-    const c =
-      code[p++];
-
-
-    if (
-      c === "\\"
-    ) {
-
-      if (
-        p >= code.length
-      ) {
-
-        throw Error(
-          "global 정규식 escape가 닫히지 않았습니다."
-        );
-
-      }
-
-
-      pattern +=
-        "\\" + code[p++];
-
+      pattern += "\\" + code[p++];
       continue;
-
     }
 
-
-    if (
-      c === delimiter
-    )
+    if (c === delimiter)
       break;
 
-
     pattern += c;
-
   }
-
 
   if (
     p > code.length ||
     code[p - 1] !== delimiter
-  ) {
-
-    throw Error(
-      "global 정규식이 닫히지 않았습니다."
-    );
-
-  }
-
+  )
+    throw Error("global 정규식이 닫히지 않았습니다.");
 
   return {
     type,
@@ -3307,143 +2099,71 @@ function parseGlobalHeader(code) {
     pattern,
     restStart: p
   };
-
 }
 
+function scanSubstituteCommand(text, start) {
+  const delimiter = text[start + 1];
 
-function scanSubstituteCommand(
-  text,
-  start
-) {
+  if (!delimiter)
+    throw Error("substitute 구분자가 없습니다.");
 
-  const delimiter =
-    text[start + 1];
+  let p = start + 2;
 
-
-  if (!delimiter) {
-
-    throw Error(
-      "substitute 구분자가 없습니다."
-    );
-
-  }
-
-
-  let p =
-    start + 2;
-
-
-  for (
-    let field = 0;
-    field < 2;
-    field++
-  ) {
-
+  for (let field = 0; field < 2; field++) {
     let closed = false;
 
+    while (p < text.length) {
+      const c = text[p];
 
-    while (
-      p < text.length
-    ) {
-
-      const c =
-        text[p];
-
-
-      if (
-        c === "\\"
-      ) {
-
+      if (c === "\\") {
         if (
           text[p + 1] === "\r" &&
           text[p + 2] === "\n"
         )
           p += 3;
-
         else
           p += 2;
 
         continue;
-
       }
 
-
-      if (
-        c === delimiter
-      ) {
-
+      if (c === delimiter) {
         p++;
-
         closed = true;
-
         break;
-
       }
-
 
       p++;
-
     }
 
-
-    if (!closed) {
-
-      throw Error(
-        "global 내부 substitute가 닫히지 않았습니다."
-      );
-
-    }
-
+    if (!closed)
+      throw Error("global 내부 substitute가 닫히지 않았습니다.");
   }
-
 
   while (
     p < text.length &&
-    /[0-9gGpPlnIi]/.test(
-      text[p]
-    )
+    /[0-9gGpPlnIi]/.test(text[p])
   )
     p++;
 
-
   return p;
-
 }
 
-
-function splitGlobalCommands(
-  text
-) {
-
+function splitGlobalCommands(text) {
   const result = [];
-
   let start = 0;
   let p = 0;
 
-
-  while (
-    p < text.length
-  ) {
-
-    const c =
-      text[p];
-
+  while (p < text.length) {
+    const c = text[p];
 
     if (
       c === "s" &&
       p + 1 < text.length
     ) {
-
-      p =
-        scanSubstituteCommand(
-          text,
-          p
-        );
-
+      p = scanSubstituteCommand(text, p);
       continue;
-
     }
-
 
     if (
       c === "\\" &&
@@ -3455,335 +2175,155 @@ function splitGlobalCommands(
         )
       )
     ) {
-
-      const command =
-        text
-          .slice(
-            start,
-            p
-          )
-          .trim();
-
+      const command = text.slice(start, p).trim();
 
       if (command)
         result.push(command);
 
-
-      if (
-        text[p + 1] === "\r"
-      )
+      if (text[p + 1] === "\r")
         p += 3;
-
       else
         p += 2;
 
-
       start = p;
-
       continue;
-
     }
 
-
-    if (
-      c === "\n"
-    ) {
-
-      const command =
-        text
-          .slice(
-            start,
-            p
-          )
-          .trim();
-
+    if (c === "\n") {
+      const command = text.slice(start, p).trim();
 
       if (command)
         result.push(command);
 
-
       p++;
-
       start = p;
-
       continue;
-
     }
 
-
     p++;
-
   }
 
-
-  const last =
-    text
-      .slice(start)
-      .trim();
-
+  const last = text.slice(start).trim();
 
   if (last)
     result.push(last);
 
-
   return result;
-
 }
 
+function globalCommand(addr, code) {
+  const g = parseGlobalHeader(code);
 
-/* ============================================================
- * global
- * ============================================================ */
-
-function globalCommand(
-  addr,
-  code
-) {
-
-  const g =
-    parseGlobalHeader(code);
-
-
-  let pattern =
-    decodeSubPattern(
-      g.pattern,
-      g.delimiter
-    );
-
+  let pattern = decodeSubPattern(
+    g.pattern,
+    g.delimiter
+  );
 
   if (!pattern)
     pattern = lastRegex;
 
+  if (!pattern)
+    throw Error("이전 정규식이 없습니다.");
 
-  if (!pattern) {
-
-    throw Error(
-      "이전 정규식이 없습니다."
-    );
-
-  }
-
-
-  lastRegex =
-    pattern;
-
+  lastRegex = pattern;
 
   let re;
 
-
   try {
-
-    re =
-      new RegExp(pattern);
-
+    re = new RegExp(pattern);
+  } catch (e) {
+    throw Error(`잘못된 global 정규식: ${e.message}`);
   }
 
-  catch (e) {
-
-    throw Error(
-      `잘못된 global 정규식: ${e.message}`
-    );
-
-  }
-
-
-  const { s, e } =
-    getRange(
-      addr,
-      "1,$"
-    );
-
+  const { s, e } = getRange(
+    addr,
+    "1,$"
+  );
 
   const markedIds = [];
 
-
-  for (
-    let n = s;
-    n <= e;
-    n++
-  ) {
-
+  for (let n = s; n <= e; n++) {
     re.lastIndex = 0;
 
-
     const matched =
-      re.test(
-        buffer[n - 1].text
-      );
-
+      re.test(buffer[n - 1].text);
 
     const select =
       g.type === "g"
         ? matched
         : !matched;
 
-
     if (select)
       markedIds.push(
         buffer[n - 1].id
       );
-
   }
 
-
   let commandText =
-    code.slice(
-      g.restStart
-    );
+    code.slice(g.restStart);
 
-
-  if (
-    !commandText.trim()
-  )
+  if (!commandText.trim())
     commandText = "p";
 
-
   const commands =
-    splitGlobalCommands(
-      commandText
-    );
-
+    splitGlobalCommands(commandText);
 
   if (!commands.length)
     commands.push("p");
 
+  let lastResult = current;
 
-  let lastResult =
-    current;
+  for (const id of markedIds) {
+    const index = lineIndexById(id);
 
-
-  for (
-    const id of markedIds
-  ) {
-
-    const index =
-      lineIndexById(id);
-
-
-    if (
-      index < 0
-    )
+    if (index < 0)
       continue;
 
+    setCurrent(index + 1);
 
-    setCurrent(
-      index + 1
-    );
-
-
-    for (
-      const command of commands
-    ) {
-
+    for (const command of commands) {
       if (!command)
         continue;
 
+      const trimmed = command.trim();
 
-      const trimmed =
-        command.trim();
-
-
-      if (
-        /^[gv][/?]/.test(
-          trimmed
-        )
-      ) {
-
+      if (/^[gv][/?]/.test(trimmed))
         throw Error(
           "global 안에서 global/vglobal은 사용할 수 없습니다."
         );
 
-      }
-
-
-      lastResult =
-        execute(
-          trimmed,
-          String(current)
-        );
-
+      lastResult = execute(
+        trimmed,
+        String(current)
+      );
     }
-
   }
 
-
   return lastResult;
-
 }
 
+function splitAddressAndCommand(code) {
+  const r = parseRangeAt(
+    code,
+    0,
+    "."
+  );
 
-/* ============================================================
- * 주소 + command 분리
- * ============================================================ */
-
-function splitAddressAndCommand(
-  code
-) {
-
-  const r =
-    parseRangeAt(
-      code,
-      0,
-      "."
-    );
-
-
-  if (
-    !r.present
-  ) {
-
+  if (!r.present) {
     return {
       addr: null,
       rest: code.trim()
     };
-
   }
 
-
   return {
-
-    addr:
-      code
-        .slice(
-          0,
-          r.end
-        )
-        .trim(),
-
-    rest:
-      code
-        .slice(
-          r.end
-        )
-        .trimStart()
-
+    addr: code.slice(0, r.end).trim(),
+    rest: code.slice(r.end).trimStart()
   };
-
 }
 
-
-/* ============================================================
- * ed file commands
- *
- * 추가된 부분
- *
- * r  : virtual FS 파일을 현재 버퍼 뒤에 읽기
- * w  : 현재 버퍼/주소 범위를 virtual FS에 쓰기
- * f  : 현재 ed 파일명 확인/지정
- * e  : virtual FS 파일을 현재 버퍼로 열기
- *
- * 주소는 기존 parseRangeAt() / getRange()를 그대로 사용한다.
- * ============================================================ */
-
-
-/*
- * 현재 버퍼가 수정되었는지 검사
- */
 function edBufferModified() {
-
-  const fname =
-    edFileName ||
-    currentFile;
+  const fname = edFileName || currentFile;
 
   if (!fname)
     return false;
@@ -3800,287 +2340,107 @@ function edBufferModified() {
     editor.getValue() !==
     String(files[fname] ?? "")
   );
-
 }
 
-
-/*
- * ed 현재 파일명 설정
- */
 function setEdFileName(fname) {
-
-  fname =
-    String(fname ?? "").trim();
+  fname = String(fname ?? "").trim();
 
   if (!fname)
-    throw Error(
-      "파일 이름이 없습니다."
-    );
+    throw Error("파일 이름이 없습니다.");
 
-  edFileName =
-    fname;
-
-  currentFile =
-    fname;
-
+  edFileName = fname;
+  currentFile = fname;
   refreshList();
-
 }
 
+function readFileCommand(addr, filename) {
+  filename = String(filename ?? "").trim();
 
-/*
- * r filename
- *
- * 주소가 없으면 현재 줄 뒤.
- *
- * 0r file
- * .r file
- * 3r file
- * $r file
- * /abc/r file
- */
-function readFileCommand(
-  addr,
-  filename
-) {
-
-  filename =
-    String(filename ?? "").trim();
-
-
-  if (
-    !filename
-  ) {
-
-    throw Error(
-      "r: 파일 이름이 없습니다."
-    );
-
-  }
-
+  if (!filename)
+    throw Error("r: 파일 이름이 없습니다.");
 
   if (
     !Object.prototype.hasOwnProperty.call(
       files,
       filename
     )
-  ) {
-
-    throw Error(
-      `파일이 없습니다: ${filename}`
-    );
-
-  }
-
+  )
+    throw Error(`파일이 없습니다: ${filename}`);
 
   const content =
-    String(
-      files[filename] ?? ""
-    );
-
+    String(files[filename] ?? "");
 
   const items =
     content === ""
       ? []
-      : splitText(content)
-          .map(makeLine);
+      : splitText(content).map(makeLine);
 
+  const n = parseAddress(addr || ".");
 
-  const n =
-    parseAddress(
-      addr || "."
-    );
-
-
-  /*
-   * 0r -> 맨 앞
-   * .r -> 현재 줄 뒤
-   * $r -> 마지막 줄 뒤
-   */
   if (items.length) {
-
-    buffer.splice(
-      n,
-      0,
-      ...items
-    );
-
+    buffer.splice(n, 0, ...items);
+    setCurrent(n + items.length);
+  } else {
     setCurrent(
-      n + items.length
+      Math.min(n, buffer.length)
     );
-
-  }
-  else {
-
-    /*
-     * 빈 파일을 읽은 경우
-     * 버퍼 내용은 바꾸지 않는다.
-     */
-    setCurrent(
-      Math.min(
-        n,
-        buffer.length
-      )
-    );
-
   }
 
-
-  /*
-   * ed의 r은 파일명 자체를 바꾸지 않는다.
-   */
-
-  console.log(
-    `${content.length}`
-  );
-
+  console.log(`${content.length}`);
 
   return current;
-
 }
 
+function writeFileCommand(addr, filename) {
+  filename = String(filename ?? "").trim();
 
-/*
- * w
- * w filename
- * 1,$w filename
- * 3,5w filename
- */
-function writeFileCommand(
-  addr,
-  filename
-) {
+  if (!filename)
+    filename = edFileName || currentFile;
 
-  filename =
-    String(filename ?? "").trim();
-
-
-  /*
-   * 파일명이 없으면 현재 ed 파일명 사용
-   */
-  if (!filename) {
-
-    filename =
-      edFileName ||
-      currentFile;
-
-  }
-
-
-  if (!filename) {
-
-    throw Error(
-      "w: 파일 이름이 없습니다."
-    );
-
-  }
-
+  if (!filename)
+    throw Error("w: 파일 이름이 없습니다.");
 
   let s;
   let e;
 
-
-  /*
-   * 주소가 지정되면 그 범위만 기록
-   */
-  if (
-    addr &&
-    String(addr).trim()
-  ) {
-
-    const range =
-      getRange(
-        addr,
-        "1,$"
-      );
-
+  if (addr && String(addr).trim()) {
+    const range = getRange(addr, "1,$");
     s = range.s;
     e = range.e;
-
-  }
-
-  else {
-
+  } else {
     s = 1;
     e = buffer.length;
-
   }
 
+  const text = buffer
+    .slice(s - 1, e)
+    .map(x => x.text)
+    .join("\n");
 
-  const text =
-    buffer
-      .slice(
-        s - 1,
-        e
-      )
-      .map(
-        x => x.text
-      )
-      .join("\n");
-
-
-  files[filename] =
-    text;
-
-
-  /*
-   * w filename은 ed의 현재 파일명을 filename으로 갱신
-   */
-  edFileName =
-    filename;
-
-  currentFile =
-    filename;
-
+  files[filename] = text;
+  edFileName = filename;
+  currentFile = filename;
 
   refreshList();
 
-
-  console.log(
-    `${text.length}`
-  );
-
-  console.log(
-    `"${filename}"에 저장됨`
-  );
-
+  console.log(`${text.length}`);
+  console.log(`"${filename}"에 저장됨`);
 
   return current;
-
 }
 
+function fileNameCommand(filename) {
+  filename = String(filename ?? "").trim();
 
-/*
- * f
- * f filename
- */
-function fileNameCommand(
-  filename
-) {
-
-  filename =
-    String(filename ?? "").trim();
-
-
-  /*
-   * f만 입력하면 현재 파일명 출력
-   */
   if (!filename) {
-
     console.log(
       edFileName ||
       currentFile ||
       ""
     );
-
     return current;
-
   }
 
-
-  /*
-   * 따옴표 파일명 지원
-   */
   if (
     (
       filename.startsWith('"') &&
@@ -4090,296 +2450,121 @@ function fileNameCommand(
       filename.startsWith("'") &&
       filename.endsWith("'")
     )
-  ) {
+  )
+    filename = quoted(filename);
 
-    filename =
-      quoted(filename);
-
-  }
-
-
-  setEdFileName(
-    filename
-  );
-
-
-  console.log(
-    filename
-  );
-
+  setEdFileName(filename);
+  console.log(filename);
 
   return current;
-
 }
 
+function editFileCommand(command) {
+  let text = String(command ?? "").trim();
+  let force = false;
 
-/*
- * e filename
- * e! filename
- * e
- * e!
- */
-function editFileCommand(
-  command
-) {
-
-  let text =
-    String(command ?? "").trim();
-
-
-  let force =
-    false;
-
-
-  if (
-    text === "!"
-  ) {
-
+  if (text === "!") {
     force = true;
-
     text = "";
-
-  }
-
-  else if (
-    text.startsWith("!")
-  ) {
-
+  } else if (text.startsWith("!")) {
     force = true;
-
-    text =
-      text
-        .slice(1)
-        .trim();
-
+    text = text.slice(1).trim();
   }
 
+  let filename = text;
 
-  let filename =
-    text;
+  if (!filename)
+    filename = edFileName || currentFile;
 
+  if (!filename)
+    throw Error("e: 파일 이름이 없습니다.");
 
-  if (!filename) {
-
-    filename =
-      edFileName ||
-      currentFile;
-
-  }
-
-
-  if (!filename) {
-
-    throw Error(
-      "e: 파일 이름이 없습니다."
-    );
-
-  }
-
-
-  /*
-   * 수정된 버퍼를 일반 e로 버리는 것을 방지
-   */
-  if (
-    !force &&
-    edBufferModified()
-  ) {
-
+  if (!force && edBufferModified())
     throw Error(
       `수정된 버퍼입니다. 강제 열기: e! ${filename}`
     );
 
-  }
-
-
-  /*
-   * virtual FS에 존재하면 내용 로드.
-   *
-   * 존재하지 않으면 빈 파일로 새로 생성.
-   */
   const exists =
     Object.prototype.hasOwnProperty.call(
       files,
       filename
     );
 
-
   let content;
 
-
   if (exists) {
-
-    content =
-      String(
-        files[filename] ?? ""
-      );
-
+    content = String(files[filename] ?? "");
+  } else {
+    files[filename] = "";
+    content = "";
   }
 
-  else {
+  const newLines = splitText(content);
 
-    files[filename] =
-      "";
+  buffer = newLines.map(makeLine);
 
-    content =
-      "";
+  if (!buffer.length)
+    buffer = [makeLine("")];
 
-  }
+  current = 1;
+  edFileName = filename;
+  currentFile = filename;
 
-
-  const newLines =
-    splitText(
-      content
-    );
-
-
-  buffer =
-    newLines.map(
-      makeLine
-    );
-
-
-  if (
-    !buffer.length
-  ) {
-
-    buffer = [
-      makeLine("")
-    ];
-
-  }
-
-
-  current =
-    1;
-
-
-  edFileName =
-    filename;
-
-  currentFile =
-    filename;
-
-
-  /*
-   * Monaco에도 실제 버퍼를 반영
-   */
   writeLines(
-    buffer.map(
-      x => x.text
-    ),
+    buffer.map(x => x.text),
     1
   );
 
-
-  setEditorLanguage(
-    filename
-  );
-
-
+  setEditorLanguage(filename);
+  applyCurrentFileEditorSettings();
   refreshList();
 
-
-  console.log(
-    `"${filename}" 편집 중`
-  );
-
+  console.log(`"${filename}" 편집 중`);
 
   return current;
-
 }
 
-
-/* ============================================================
- * execute
- *
- * 기존 dispatcher + r/w/f/e 추가
- * ============================================================ */
-
-function execute(
-  code,
-  forcedAddr = null
-) {
-
+function execute(code, forcedAddr = null) {
   ensureBuffer();
 
-
-  code =
-    String(code ?? "")
-      .replace(
-        /\r\n/g,
-        "\n"
-      )
-      .trim();
-
+  code = String(code ?? "")
+    .replace(/\r\n/g, "\n")
+    .trim();
 
   if (!code)
     return current;
 
-
-  if (
-    code === "help" ||
-    code === "?"
-  )
-    return help();
-
-
-  /* ----------------------------------------------------------
-   * undo
-   * ---------------------------------------------------------- */
-
-  if (
-    code === "u"
-  ) {
-
-    editor.trigger(
-      "ed",
-      "undo",
-      null
-    );
-
-    buffer = null;
-
-    return currentLine();
-
+  if (/^(font|syntax)\s*=/i.test(code)) {
+    runEditorSettingCommand(code);
+    return current;
   }
 
+  if (code === "help" || code === "?")
+    return help();
+
+  if (code === "u") {
+    editor.trigger("ed", "undo", null);
+    buffer = null;
+    return currentLine();
+  }
 
   let parsed;
 
-
   try {
-
-    parsed =
-      splitAddressAndCommand(
-        code
-      );
-
-  }
-
-  catch {
-
+    parsed = splitAddressAndCommand(code);
+  } catch {
     parsed = {
       addr: null,
       rest: code
     };
-
   }
 
-
-  const addr =
-    parsed.addr;
-
-
-  const command =
-    parsed.rest;
-
-
+  const addr = parsed.addr;
+  const command = parsed.rest;
   const effectiveAddr =
     addr ||
     forcedAddr ||
     null;
-
 
   if (
     !addr &&
@@ -4389,501 +2574,250 @@ function execute(
       command.startsWith("v/") ||
       command.startsWith("v?")
     )
-  ) {
-
+  )
     return globalCommand(
       forcedAddr || "1,$",
       command
     );
 
-  }
-
-
-  if (
-    !addr &&
-    command[0] === "s"
-  ) {
-
+  if (!addr && command[0] === "s")
     return substituteCommand(
       forcedAddr || ".",
       command
     );
 
-  }
-
-
-  if (!command) {
-
+  if (!command)
     return printCommand(
       effectiveAddr || ".",
       false,
       false
     );
 
-  }
-
-
   if (
     command[0] === "g" ||
     command[0] === "v"
   ) {
-
     if (
       command[1] === "/" ||
       command[1] === "?"
-    ) {
-
+    )
       return globalCommand(
         effectiveAddr || "1,$",
         command
       );
-
-    }
-
   }
 
-
-  if (
-    command[0] === "s"
-  ) {
-
+  if (command[0] === "s")
     return substituteCommand(
       effectiveAddr || ".",
       command
     );
 
-  }
-
-
-  /* ==========================================================
-   * r / w / f / e
-   *
-   * 주소가 splitAddressAndCommand()를 먼저 거쳤기 때문에
-   * 다음과 같은 명령이 모두 가능하다.
-   *
-   * 3r abc.txt
-   * 3,5w abc.txt
-   * /foo/,$w abc.txt
-   * f
-   * f abc.txt
-   * e abc.txt
-   * e! abc.txt
-   * ========================================================== */
-
-  /*
-   * f
-   */
   if (
     command === "f" ||
     command.startsWith("f ")
-  ) {
-
+  )
     return fileNameCommand(
-      command
-        .slice(1)
-        .trim()
+      command.slice(1).trim()
     );
 
-  }
-
-
-  /*
-   * e / e!
-   */
   if (
     command === "e" ||
     command === "e!" ||
     command.startsWith("e ") ||
     command.startsWith("e! ")
-  ) {
-
+  )
     return editFileCommand(
-      command
-        .slice(1)
-        .trim()
+      command.slice(1).trim()
     );
 
-  }
-
-
-  /*
-   * r
-   */
   if (
     command === "r" ||
     command.startsWith("r ")
-  ) {
-
+  )
     return readFileCommand(
       effectiveAddr || ".",
-      command
-        .slice(1)
-        .trim()
+      command.slice(1).trim()
     );
 
-  }
-
-
-  /*
-   * w
-   */
   if (
     command === "w" ||
     command.startsWith("w ")
-  ) {
-
+  )
     return writeFileCommand(
       effectiveAddr,
-      command
-        .slice(1)
-        .trim()
+      command.slice(1).trim()
     );
 
-  }
-
-
-  const c =
-    command[0];
-
+  const c = command[0];
 
   switch (c) {
-
     case "p": {
-
-      const suffix =
-        command
-          .slice(1)
-          .trim();
-
+      const suffix = command.slice(1).trim();
 
       if (suffix)
-        throw Error(
-          `알 수 없는 명령입니다: ${code}`
-        );
-
+        throw Error(`알 수 없는 명령입니다: ${code}`);
 
       return printCommand(
         effectiveAddr || ".",
         false,
         false
       );
-
     }
 
-
     case "n": {
-
-      const suffix =
-        command
-          .slice(1)
-          .trim();
-
+      const suffix = command.slice(1).trim();
 
       if (suffix)
-        throw Error(
-          `알 수 없는 명령입니다: ${code}`
-        );
-
+        throw Error(`알 수 없는 명령입니다: ${code}`);
 
       return printCommand(
         effectiveAddr || ".",
         true,
         false
       );
-
     }
 
-
     case "l": {
-
-      const suffix =
-        command
-          .slice(1)
-          .trim();
-
+      const suffix = command.slice(1).trim();
 
       if (suffix)
-        throw Error(
-          `알 수 없는 명령입니다: ${code}`
-        );
-
+        throw Error(`알 수 없는 명령입니다: ${code}`);
 
       return printCommand(
         effectiveAddr || ".",
         false,
         true
       );
-
     }
 
-
-    case "d": {
-
-      if (
-        command
-          .slice(1)
-          .trim()
-      )
-        throw Error(
-          `알 수 없는 명령입니다: ${code}`
-        );
-
+    case "d":
+      if (command.slice(1).trim())
+        throw Error(`알 수 없는 명령입니다: ${code}`);
 
       return deleteCommand(
         effectiveAddr || "."
       );
 
-    }
-
-
-    case "j": {
-
-      if (
-        command
-          .slice(1)
-          .trim()
-      )
-        throw Error(
-          `알 수 없는 명령입니다: ${code}`
-        );
-
+    case "j":
+      if (command.slice(1).trim())
+        throw Error(`알 수 없는 명령입니다: ${code}`);
 
       return joinCommand(
         effectiveAddr || null
       );
 
-    }
-
-
     case "i": {
-
-      const rest =
-        command
-          .slice(1)
-          .trim();
-
+      const rest = command.slice(1).trim();
 
       if (!rest)
-        throw Error(
-          "insert 내용이 없습니다."
-        );
-
+        throw Error("insert 내용이 없습니다.");
 
       return insertCommand(
         effectiveAddr || ".",
         quoted(rest)
       );
-
     }
 
-
     case "a": {
-
-      const rest =
-        command
-          .slice(1)
-          .trim();
-
+      const rest = command.slice(1).trim();
 
       if (!rest)
-        throw Error(
-          "append 내용이 없습니다."
-        );
-
+        throw Error("append 내용이 없습니다.");
 
       return appendCommand(
         effectiveAddr || ".",
         quoted(rest)
       );
-
     }
 
-
     case "c": {
-
-      const rest =
-        command
-          .slice(1)
-          .trim();
-
+      const rest = command.slice(1).trim();
 
       if (!rest)
-        throw Error(
-          "change 내용이 없습니다."
-        );
-
+        throw Error("change 내용이 없습니다.");
 
       return changeCommand(
         effectiveAddr || ".",
         quoted(rest)
       );
-
     }
 
-
     case "t": {
-
-      const rest =
-        command
-          .slice(1)
-          .trim();
-
+      const rest = command.slice(1).trim();
 
       if (!rest)
-        throw Error(
-          "copy 대상 주소가 없습니다."
-        );
-
+        throw Error("copy 대상 주소가 없습니다.");
 
       return copyCommand(
         effectiveAddr || ".",
         rest
       );
-
     }
 
-
     case "m": {
-
-      const rest =
-        command
-          .slice(1)
-          .trim();
-
+      const rest = command.slice(1).trim();
 
       if (!rest)
-        throw Error(
-          "move 대상 주소가 없습니다."
-        );
-
+        throw Error("move 대상 주소가 없습니다.");
 
       return moveCommand(
         effectiveAddr || ".",
         rest
       );
-
     }
-
 
     case "=": {
-
-      const r =
-        effectiveAddr
-          ? getRange(
-              effectiveAddr,
-              "."
-            )
-          : {
-              s: buffer.length,
-              e: buffer.length
-            };
-
+      const r = effectiveAddr
+        ? getRange(effectiveAddr, ".")
+        : {
+            s: buffer.length,
+            e: buffer.length
+          };
 
       console.log(r.e);
-
       return current;
-
     }
-
 
     default:
-
-      throw Error(
-        `알 수 없는 명령입니다: ${code}`
-      );
-
+      throw Error(`알 수 없는 명령입니다: ${code}`);
   }
-
 }
 
-
-/* ============================================================
- * Top-level command splitter
- * ============================================================ */
-
-function scanTopLevelSubstitute(
-  text,
-  start
-) {
-
-  return scanSubstituteCommand(
-    text,
-    start
-  );
-
+function scanTopLevelSubstitute(text, start) {
+  return scanSubstituteCommand(text, start);
 }
 
+function scanTopLevelGlobal(text, start) {
+  const delimiter = text[start + 1];
+  let p = start + 2;
 
-function scanTopLevelGlobal(
-  text,
-  start
-) {
+  while (p < text.length) {
+    const c = text[p];
 
-  const delimiter =
-    text[start + 1];
-
-
-  let p =
-    start + 2;
-
-
-  while (
-    p < text.length
-  ) {
-
-    const c =
-      text[p];
-
-
-    if (
-      c === "\\"
-    ) {
-
+    if (c === "\\") {
       p += 2;
-
       continue;
-
     }
 
-
-    if (
-      c === delimiter
-    ) {
-
+    if (c === delimiter) {
       p++;
-
       break;
-
     }
-
 
     p++;
-
   }
 
-
   return text.length;
-
 }
 
-
-function splitTopLevelCommands(
-  text
-) {
-
+function splitTopLevelCommands(text) {
   const result = [];
-
   let start = 0;
   let p = 0;
 
-
-  while (
-    p < text.length
-  ) {
-
-    const c =
-      text[p];
-
+  while (p < text.length) {
+    const c = text[p];
 
     if (
       (
@@ -4897,38 +2831,17 @@ function splitTopLevelCommands(
       ) &&
       (
         p === start ||
-        /[\s,;]/.test(
-          text[p - 1]
-        )
+        /[\s,;]/.test(text[p - 1])
       )
     ) {
-
-      p =
-        scanTopLevelGlobal(
-          text,
-          p
-        );
-
+      p = scanTopLevelGlobal(text, p);
       continue;
-
     }
 
-
-    if (
-      c === "s" &&
-      p === start
-    ) {
-
-      p =
-        scanTopLevelSubstitute(
-          text,
-          p
-        );
-
+    if (c === "s" && p === start) {
+      p = scanTopLevelSubstitute(text, p);
       continue;
-
     }
-
 
     if (
       (
@@ -4937,169 +2850,98 @@ function splitTopLevelCommands(
       ) &&
       (
         p === start ||
-        /[\s,;]/.test(
-          text[p - 1]
-        )
+        /[\s,;]/.test(text[p - 1])
       )
     ) {
-
-      const delimiter =
-        c;
-
-
+      const delimiter = c;
       p++;
 
-
-      while (
-        p < text.length
-      ) {
-
-        if (
-          text[p] === "\\"
-        ) {
-
+      while (p < text.length) {
+        if (text[p] === "\\") {
           p += 2;
-
           continue;
-
         }
 
-
-        if (
-          text[p] === delimiter
-        ) {
-
+        if (text[p] === delimiter) {
           p++;
-
           break;
-
         }
-
 
         p++;
-
       }
 
-
       continue;
-
     }
 
-
-    if (
-      c === "\n"
-    ) {
-
+    if (c === "\n") {
       const command =
-        text
-          .slice(
-            start,
-            p
-          )
-          .trim();
-
+        text.slice(start, p).trim();
 
       if (command)
         result.push(command);
 
-
       p++;
-
       start = p;
-
       continue;
-
     }
 
-
     p++;
-
   }
 
-
-  const last =
-    text
-      .slice(start)
-      .trim();
-
+  const last = text.slice(start).trim();
 
   if (last)
     result.push(last);
 
-
   return result;
-
 }
 
-
-/* ============================================================
- * runCode
- * ============================================================ */
-
 function runCode(code) {
+  code = String(code ?? "");
 
-  code =
-    String(code ?? "");
-
-
-  if (
-    !code.trim()
-  )
+  if (!code.trim())
     return;
 
+  if (
+    /^(font|syntax)\s*=/i.test(
+      code.trim()
+    )
+  ) {
+    try {
+      runEditorSettingCommand(
+        code.trim()
+      );
+    } catch (err) {
+      log("Error: " + err.message);
+    }
+
+    return;
+  }
+
+  if (!code.trim())
+    return;
 
   syncBuffer();
 
-
   const commands =
-    splitTopLevelCommands(
-      code
-    );
+    splitTopLevelCommands(code);
 
-
-  let result =
-    current;
-
+  let result = current;
 
   try {
-
-    for (
-      const command of commands
-    ) {
-
-      result =
-        execute(command);
-
-    }
-
+    for (const command of commands)
+      result = execute(command);
 
     commit();
-
-
     return result;
-
+  } catch (err) {
+    log("Error: " + err.message);
   }
-
-  catch (err) {
-
-    log(
-      "Error: " +
-      err.message
-    );
-
-  }
-
 }
 
-
-/* ============================================================
- * help
- * ============================================================ */
-
 function help() {
-
   console.log(`
-GitHub CodeMirror ed → Monaco
+Monaco ed Editor
 
 주소
   .             현재 줄
@@ -5252,156 +3094,107 @@ inverse global
 undo
   u
 
-도움말
-  help
-`);
+에디터 모양 / 문법
+  font="Consolas"
+  font="Cascadia Code"
+  font="JetBrains Mono"
 
+  syntax="Markdown"
+  syntax="Mark down"
+  syntax="JavaScript"
+  syntax="TypeScript"
+  syntax="HTML"
+  syntax="CSS"
+  syntax="JSON"
+  syntax="Python"
+  syntax="C#"
+
+  font="Consolas", syntax="Markdown"
+
+font
+  로컬 폰트 접근이 지원되는 브라우저에서는
+  설치된 시스템 폰트를 자동으로 검색하여
+  자동완성 목록에 표시합니다.
+
+syntax
+  Monaco에 등록된 언어 및 별칭을 기준으로
+  자동완성 목록을 제공합니다.
+`);
 }
 
-
-/* ============================================================
- * ed 공개 API
- * ============================================================ */
-
-window.ed = (
-  strings,
-  ...values
-) => {
-
-  if (
-    typeof strings === "string"
-  )
+window.ed = (strings, ...values) => {
+  if (typeof strings === "string")
     return runCode(strings);
 
-
   return runCode(
-    String.raw(
-      strings,
-      ...values
-    )
+    String.raw(strings, ...values)
   );
-
 };
 
+window.runCode = runCode;
 
-/* ============================================================
- * 외부 접근용
- * ============================================================ */
+window.addEventListener("keydown", e => {
+  if (!editor)
+    return;
 
-window.runCode =
-  runCode;
+  if (
+    e.ctrlKey &&
+    !e.shiftKey &&
+    e.key.toLowerCase() === "z"
+  )
+    return;
 
+  if (
+    e.ctrlKey &&
+    e.shiftKey &&
+    e.key.toLowerCase() === "z"
+  ) {
+    e.preventDefault();
 
-/* ============================================================
- * Ctrl+Z / Ctrl+Shift+Z
- * ============================================================ */
-
-window.addEventListener(
-  "keydown",
-  e => {
-
-    if (!editor)
-      return;
-
-
-    if (
-      e.ctrlKey &&
-      !e.shiftKey &&
-      e.key.toLowerCase() === "z"
-    ) {
-
-      return;
-
-    }
-
-
-    if (
-      e.ctrlKey &&
-      e.shiftKey &&
-      e.key.toLowerCase() === "z"
-    ) {
-
-      e.preventDefault();
-
-      editor.trigger(
-        "keyboard",
-        "redo",
-        null
-      );
-
-    }
-
-
-    if (
-      e.ctrlKey &&
-      !e.shiftKey &&
-      e.key.toLowerCase() === "y"
-    ) {
-
-      e.preventDefault();
-
-      editor.trigger(
-        "keyboard",
-        "redo",
-        null
-      );
-
-    }
-
+    editor.trigger(
+      "keyboard",
+      "redo",
+      null
+    );
   }
-);
 
+  if (
+    e.ctrlKey &&
+    !e.shiftKey &&
+    e.key.toLowerCase() === "y"
+  ) {
+    e.preventDefault();
 
-/* ============================================================
- * F5 / Ctrl+R 방지
- * ============================================================ */
+    editor.trigger(
+      "keyboard",
+      "redo",
+      null
+    );
+  }
+});
 
 window.addEventListener(
   "beforeunload",
-  function (e) {
-
+  function(e) {
     e.preventDefault();
-
     e.returnValue = "";
-
   }
 );
 
-
-/* ============================================================
- * ready
- * ============================================================ */
-
 function waitForEditorReady() {
-
   if (!editor) {
-
     requestAnimationFrame(
       waitForEditorReady
     );
-
     return;
-
   }
 
-
   console.log(
-    `%cMonaco ed ready — ${editor.getModel().getLineCount()} lines`,
-    "color:#4caf50;font-weight:bold"
+    "Monaco ed ready — help"
   );
-
-
-  console.log(
-    "ed\`help\` 또는 ed('help')"
-  );
-
-
 }
 
-
 waitForEditorReady();
-
 </script>
-
 </body>
 </html>
