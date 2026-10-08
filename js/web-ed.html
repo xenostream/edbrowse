@@ -2549,7 +2549,7 @@ function execute(code, forcedAddr = null) {
     return help();
 
   if (code === "u") {
-    editor.trigger("ed", "undo", null);
+    editor.getModel().undo();
     buffer = null;
     return currentLine();
   }
@@ -2937,6 +2937,9 @@ function runCode(code) {
   try {
     for (const command of commands)
       result = execute(command);
+      
+    if (commands.length === 1 && commands[0] === "u")
+      return result;
 
     commit();
     return result;
