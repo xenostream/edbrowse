@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <title>Mini FS Editor - Monaco ed</title>
 <style>
+@font-face {
+  font-family: "Sarasa Mono K Nerd Font";
+  src: url("./sarasa-fixed-k-regular-nerd-font.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
   --console-h: 150px;
 }
@@ -13,7 +20,7 @@ html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  font-family: "Cascadia Code", monospace;
+  font-family: "Sarasa Mono K Nerd Font", monospace;
   background: #1e1e1e;
   color: #ddd;
 }
@@ -186,7 +193,7 @@ let currentFile = null;
 const files = {};
 let edFileName = null;
 const editorFileSettings = {};
-let currentEditorFont = "Cascadia Code";
+let currentEditorFont = "Sarasa Mono K Nerd Font";
 let currentEditorLanguage = "plaintext";
 
 function log(msg) {
@@ -202,7 +209,7 @@ console.log = (...args) => {
 };
 
 const fallbackSystemFonts = [
-  "Cascadia Code",
+  "Sarasa Mono K Nerd Font",
   "Cascadia Mono",
   "Consolas",
   "Courier New",
@@ -435,7 +442,7 @@ function applyCurrentFileEditorSettings() {
   if (settings && settings.font)
     setEditorFont(settings.font, false);
   else
-    setEditorFont("Cascadia Code", false);
+    setEditorFont("Sarasa Mono K Nerd Font", false);
 
   if (settings && settings.syntax) {
     const language = findMonacoLanguage(settings.syntax);
@@ -729,8 +736,8 @@ require(["vs/editor/editor.main"], function() {
       value: "",
       language: "plaintext",
       theme: "vs-dark",
-      fontSize: 14,
-      fontFamily: "Cascadia Code",
+      fontSize: 15,
+      fontFamily: "Sarasa Mono K Nerd Font",
       wordWrap: "on",
       folding: true,
       minimap: {
@@ -740,7 +747,7 @@ require(["vs/editor/editor.main"], function() {
     }
   );
 
-  currentEditorFont = "Cascadia Code";
+  currentEditorFont = "Sarasa Mono K Nerd Font";
   currentEditorLanguage = "plaintext";
 
   jsConsole = monaco.editor.create(
@@ -3105,7 +3112,7 @@ undo
 
 에디터 모양 / 문법
   font="Consolas"
-  font="Cascadia Code"
+  font="Sarasa Mono K Nerd Font"
   font="JetBrains Mono"
 
   syntax="Markdown"
