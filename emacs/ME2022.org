@@ -182,7 +182,7 @@ Emacs나 수많은 패키지 중 하나를 수정하려면 ~Emacs Lisp~ (비공�
 
 다음 스타터 키트 중 하나를 살펴보시길 권장합니다:
 
-• [[Steve Purcell의 .emacs.d] - https://github.com/purcell/emacs.d
+• Steve Purcell의 .emacs.d - https://github.com/purcell/emacs.d
 • Bozhidar Batzov의 Prelude - https://github.com/bbatsov/prelude
 
 Vim에 강한 애착을 가진 독창적인 키트를 원하신다면:
