@@ -106,7 +106,7 @@ namespace ConsoleApp1
 
 이제 처음 라인부터 시작하겠습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -122,7 +122,7 @@ using System.Threading.Tasks;
 
 보시다시피 프로그램에서 사용하는 네임스페이스도 포함되어 있습니다.
 
-```
+```csharp
 namespace ConsoleApp1
 ```
 
@@ -130,7 +130,7 @@ namespace ConsoleApp1
 
 다음으로 **클래스를 정의** 합니다. **C# 언어는 진정한 객체 지향 언어** 이기 때문에 실제 모든 작업을 수행하는 코드는 모두 클래스 내에 래핑됩니다. 이 경우 클래스는 단순히 `Program` 이라고 합니다.
 
-```
+```csharp
 class Program
 ```
 
@@ -138,7 +138,7 @@ class Program
 
 다음과  같이 선언합니다.
 
-```
+```csharp
 static void Main(string[] args)
 ```
 
@@ -170,31 +170,31 @@ static void Main(string[] args)
 ## Variables
 변수는 창고에 비유할 수 있으며 프로그래머에게 **필수적** 입니다. C#에서 변수는 다음과 같이 선언합니다.
 
-```
+```csharp
 <데이터 유형> <이름>;
 ```
 
 변수 선언 예제는 다음과 같습니다.
 
-```
+```csharp
 string name;
 ```
 
 가장 기본적이지만 이 변수에는 아직까지 지정한 값이 없습니다. 다음과 같이 나중에 또는 선언과 동시에 할당할 수 있습니다.
 
-```
+```csharp
 <data type> <name> = <value>;
 ```
 
 이 변수가 현재 작업중인 메서드(예: 클래스 멤버 변수)에 로컬 범위가 아닐 경우에는 **변수에 가시성을 할당** 할 수 있습니다.
 
-```
+```csharp
 <visibility> <데이터 유형> <이름> = <값>;
 ```
 
 그리고 완전한 변수 정의의 예는 다음과 같습니다:
 
-```
+```csharp
 private string name = "John Doe";
 ```
 
@@ -202,7 +202,7 @@ private string name = "John Doe";
 
 실제로 몇 가지를 사용하는 예를 통해서 변수 부분에 집중해 보겠습니다.
 
-```
+```csharp
 using System;
 
 namespace ConsoleApplication1
@@ -241,7 +241,7 @@ namespace ConsoleApplication1
 > [!NOTE]
 > 설명의 편의상 프로그램의 기본적인 코드는 생략하고 Main 메소드 내부의 코드만 표시했습니다.
 
-```
+```csharp
 int number1, number2;
 
 Console.WriteLine("Please enter a number:");
@@ -265,7 +265,7 @@ Console.ReadLine();
 
 다른 프로그래밍 언어에 익숙하다면 더 많은 위치에서 액세스할 수 있는 **전역 변수** 에 대해서도 알고 있겠지만 **C# 언어는 전역 변수의 개념을 지원하지 않습니다!!** 대신 이 클래스의 모든 메서드에서 액세스할 수 있는 클래스의 필드로 정의할 수 있습니다. 예를 들어 보여 드리겠습니다.
 
-```
+```csharp
 using System;
 
 namespace VariableScope
@@ -336,7 +336,7 @@ C#이든 다른 프로그래밍 언어이든 코드 중 일부에서 이미 주�
 ### 한 줄 주석
 C#에서 가장 기본적인 주석 유형은 바로 **한 줄 주석** 입니다. 이름으로 알 수 있듯이 한 줄을 주석으로 바꿉니다.
 
-```
+```csharp
 // My comments about the class name could go here...
 class Program
 {
@@ -347,7 +347,7 @@ class Program
 
 두 개의 슬래시(`//`)를 접두사로 붙이면 컴파일러가 이를 확인하고 완전히 무시하는 것으로 바뀝니다. 이것은 접두사가 붙은 줄에만 적용되지만 기본적으로 한 줄 주석을 사용해서 여러 주석 줄을 만들 수 있는 다음과 같이 자유롭게 사용할 수 있습니다.
 
-```
+```csharp
 // My comments about the class name could go here...
 // Add as many lines as you would like
 // ...Seriously!
@@ -360,7 +360,7 @@ class Program
 ### 여러 줄 주석
 여러 줄의 주석을 많이 작성할 경우 C#에서 제공하는 여러 줄 주석을 사용하는 것이 합리적일 수 있습니다. 모든 줄에 접두사를 붙일 필요 없이 시작 및 중지 문자 시퀀스를 입력하기만 하면 됩니다.
 
-```
+```csharp
 /*  
 My comments about the class name could go here...  
 Add as many lines of comments as you want  
@@ -379,7 +379,7 @@ class Program
 ### 문서 주석
 문서 주석(*XML 문서 주석* 이라 함)은 일반 주석처럼 보이지만 XML 구문이 포함되어 있습니다. 이것은 일반 주석과 마찬가지로 한 줄과 여러 줄 두 가지 형태로 제공됩니다. 또한 같은 방식으로 사용하지만 추가적인 문자를 사용합니다. 따라서, **한 줄 XML 문서 주석** 은 두 개의 슬래시 대신 **세 개의 슬래시(`///`)를 사용** 하며 여러 줄 주석의 변형은 시작 구분 기호에 추가적인 별표를 추가합니다. 어떻게 생겼는지 보겠습니다.
 
-```
+```csharp
 class User
 {
     /// <summary>
@@ -404,7 +404,7 @@ Visual Studio를 사용할 경우 코드 내의 주석을 추적하는 데 도�
 
 작업 목록 창(메뉴에서 액세스하며 **보기 > 작업 목록**)은 조금 특별하지만 매우 간단한 작업 목록 주석 구문을 사용할 경우 주석 형태로 나타납니다.
 
-```
+```csharp
 //TODO: Change "world" to "universe"
 Console.WriteLine("Hello, world!");
 //HACK: Don't try this at home....
@@ -443,7 +443,7 @@ int answerToLife = 42;
 
 이전 장에서 변수를 살펴봤으므로 예제 중 하나를 확장해서 조건부 논리를 사용하는 방법을 살펴보겠습니다.
 
-```
+```csharp
 using System;
 
 namespace VariableScope
@@ -478,7 +478,7 @@ namespace VariableScope
 
 눈치채셨겠지만 `{` 및 `}` 문자를 사용해서 코드의 조건부 블록을 정의하지 않았습니다!! 규칙은 블록에 한 줄의 코드만 포함된 경우 블록 문자는 필요하지 않다는 것입니다. 자, 단순히 숫자를 확인하는 데 많은 줄을 사용한 것처럼 보이지 않습니까? 다음과 같이 더 적은 코드로 수행할 수 있습니다.
 
-```
+```csharp
 if((number > 10) || (number < 0))
     Console.WriteLine("Hey! The number should be 0 or more and 10 or less!");
 else
@@ -487,7 +487,7 @@ else
 
 각 조건을 괄호에 넣은 다음 `||` (*or*) 단순히 "또는" 을 의미하는 연산자로 숫자가 10보다 크거나 0보다 작은지 확인합니다. 많이 사용하게 될 또 다른 연산자는 `&&` AND 연산자입니다. OR 대신 AND 연산자를 사용할 수 있을까요? 물론 다음과 같이 약간 뒤집어 사용합니다.
 
-```
+```csharp
 if((number <= 10) && (number >= 0))
     Console.WriteLine("Good job!");
 else
@@ -503,7 +503,7 @@ else
 ## The switch statement
 `switch` 문은 `if` 문과 같습니다. 각 가능성에 대한 작업과 다른 것은 `true` 로 평가되지 않는 경우를 대비한 선택적 기본 작업이 있는 가능성 목록입니다. 간단한 `switch` 문은 다음과 같습니다.
 
-```
+```csharp
 int number = 1;
 switch(number)
 {
@@ -520,7 +520,7 @@ switch(number)
 
 이 경우 정수를 사용하지만 문자열 또는 다른 간단한 데이터 유형일 수도 있습니다. 또한 여러 케이스에 동일한 작업을 지정할 수 있습니다. 다음 예제에서 이를 수행해서 사용자의 입력을 가져와 `switch` 문에서 사용합니다.
 
-```
+```csharp
 Console.WriteLine("Do you enjoy C# ? (yes/no/maybe)");
 string input = Console.ReadLine();
 switch(input.ToLower())
@@ -539,7 +539,7 @@ switch(input.ToLower())
 
 그래도 사용자는 오타를 만들거나 완전히 다른 것을 작성할 수 있으며, 이 경우 `switch` 문의 `default` 문에 의해 출력은 생성되지 않습니다. 기본 키워드를 입력하세요!
 
-```
+```csharp
 Console.WriteLine("Do you enjoy C# ? (yes/no/maybe)");
 string input = Console.ReadLine();
 switch(input.ToLower())
@@ -568,7 +568,7 @@ switch(input.ToLower())
 ### while 루프
 `while` 루프는 가장 간단한 것이므로 그것부터 시작하겠습니다. `while` 루프는 주어진 조건이 참인 동안만 코드 블록을 실행합니다. 작은 예와 몇 가지 추가 설명입니다:
 
-```
+```csharp
 using System;
 
 namespace ConsoleApplication1
@@ -597,7 +597,7 @@ namespace ConsoleApplication1
 ### do 루프
 `do` 루프의 경우 그 반대이며, `while` 루프처럼 작동합니다. `do` 루프는 루프가 먼저 실행된 후 조건을 평가하며 코드 블록이 **항상 한 번 이상 실행** 되도록 합니다.
 
-```
+```csharp
 int number = 0;
 do  
 {  
@@ -612,7 +612,7 @@ do
 ### for 루프
 `for` 루프는 약간 다릅니다. **정확한 반복 횟수** 를 알고 있거나 반복 횟수를 알고 있을 때 선호됩니다. 다음은 `for` 루프의 예입니다.
 
-```
+```csharp
 using System;
 
 namespace ConsoleApplication1
@@ -642,7 +642,7 @@ namespace ConsoleApplication1
 ### foreach 루프
 우리가 살펴볼 마지막 루프는 `foreach` 루프입니다. 배열 또는 기타 기본 제공되는 목록 유형 같은 항목 모음에서 작동합니다. 이 예에서는 `ArrayList` 라는 간단한 목록을 사용합니다. 이는 배열과 매우 유사하게 작동하지만 걱정하지 마시길 바랍니다.
 
-```
+```csharp
 using System;
 using System.Collections;
 
@@ -689,7 +689,7 @@ namespace ConsoleApplication1
 
 Hello world 장에서는 C#의 모든 것이 클래스를 기반으로 구축되었기 때문에 처음으로 사용되는 클래스를 보았습니다. Hello world 예제를 자체적으로 빌드한 클래스로 확장해 보겠습니다.
 
-```
+```csharp
 using System;
 
 namespace ConsoleApplication1
@@ -755,7 +755,7 @@ namespace ConsoleApplication1
 
 필드는 종종 클래스의 맨 위 근처에서 선언되며 가시성은 종종 비공개로 설정됩니다(이 장의 뒷부분에서 가시성에 대해 논의할 것입니다). 다음과 같을 수 있습니다.
 
-```
+```csharp
 public class FieldsSample
 {
     private string name;
@@ -766,7 +766,7 @@ public class FieldsSample
 
 위의 예에서 또는 "name" 변수에는 초기 값이 없으므로 사용하려면 먼저 무언가를 할당해야 합니다. 필드가 어떤 값으로 시작해야 하는지 이미 알고 있는 경우 선언하는 동시에 쉽게 할당할 수 있습니다.
 
-```
+```csharp
 public class FieldsSample
 {
     private string name = "John Doe";
@@ -777,7 +777,7 @@ public class FieldsSample
 
 앞서 이야기했듯이 클래스의 멤버는 "class.member"와 같은 점 표기법으로 액세스할 수 있습니다. 그러나 현재 클래스의 멤버에 액세스할 때 "this.member"와 같은 "this" 키워드를 사용합니다. 다음은 몇 개의 필드를 선언하고 메서드 내에서 사용하는 보다 완전한 예입니다.
 
-```
+```csharp
 public class Fields1
 {
     private string name = "John Doe";
@@ -806,7 +806,7 @@ Describe() 메서드에서 (걱정하지 마세요. 다음 섹션 중 하나에�
 
 속성은 가시성, 데이터 유형 및 이름이 있는 필드와 매우 유사하게 선언되기 때문에 필드와 메서드 사이의 교차처럼 보이지만 동작을 제어하기위한 메서드와 같은 본문도 있습니다.
 
-```
+```csharp
 public string Name
 {
     get { return _name; }
@@ -818,7 +818,7 @@ public string Name
 
 또한 _name라는 필드를 언급한다는 것을 알 수 있습니다. 속성이 사용할 수 있도록 클래스에서도 선언해야 합니다. 필드 및 속성에 대한 일반적인 사용 패턴은 다음과 같습니다.
 
-```
+```csharp
 private string _name = "John Doe";
 
 public string Name
@@ -832,7 +832,7 @@ public string Name
 
 따라서 이것은 거의 기본적인 일이며 이 시점에서 우리는 단순한 공공 분야로는 달성할 수 없는 일을 하지 않습니다. 그러나 나중에 다른 클래스가 이름으로 작동하는 방법을 더 많이 제어하고 싶다고 결정할 수 있으며 이것을 속성으로 구현했으므로 클래스를 사용하는 사람을 방해하지 않고 구현을 자유롭게 수정할 수 있습니다. 예를 들어 Name 속성을 다음과 같이 수정할 수 있습니다.
 
-```
+```csharp
 private string _name = "John Doe";
 
 public string Name
@@ -855,7 +855,7 @@ public string Name
 ### 읽기 전용 속성
 이 자습서의 예제에서 볼 수 있는 대부분의 속성은 속성의 가장 일반적인 사용법이기 때문에 읽을 수 있고 쓸 수 있지만 항상 그럴 필요는 없습니다. 우선, 다음과 같이 get-메서드만 사용해서 속성을 선언할 수 있습니다.
 
-```
+```csharp
 private string _name = "John Doe";
 
 public string Name
@@ -868,7 +868,7 @@ public string Name
 
 다행스럽게도 C#은 이에 대한 해결책을 제공합니다. 속성에 set 메서드를 정의할 수 있지만 예를 들어 private 또는 protected 키워드를 사용해서 가시성을 제한할 수 있습니다. 이렇게 하면 클래스 내부(또는 protected 키워드를 사용하는 경우 상속된 클래스)에서 속성에 값을 할당하고 그에 따라 유효성을 검사할 수 있는 두 가지 장점을 모두 제공합니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 private string _name = "John Doe";
 
 public string Name
@@ -896,7 +896,7 @@ public bool IsValidName(string name)
 
 **선언된 지원 필드가 있는 일반 속성:**
 
-```
+```csharp
 private string _name;
 
 public string Name
@@ -908,7 +908,7 @@ public string Name
 
 **똑같은 동작이지만 자동 구현 된 속성이 있습니다.**
 
-```
+```csharp
 public string Name { get; set; }
 ```
 
@@ -917,7 +917,7 @@ get 및 set 메서드가 비어 있고 개인 지원 필드가 선언되지 않�
 
 자동 구현 된 속성을 사용할 때 일반 속성에서 제어하는 중요한 메커니즘이 여전히 남아 있습니다. set 키워드를 생략해서 읽기 전용 속성을 만들 수 있습니다.
 
-```
+```csharp
 public string ReadOnlyProperty { get; }
 ```
 
@@ -926,7 +926,7 @@ public string ReadOnlyProperty { get; }
 #### 기본값이 있는 자동 구현 속성
 C# 버전 6 이전에는 자동 구현 속성에 대한 기본값을 정의할 수 없었습니다.
 
-```
+```csharp
 private string _name = "John Doe";
 
 public string Name
@@ -938,14 +938,14 @@ public string Name
 
 그러나 C# 버전 6에서 Microsoft는 마침내 다음과 같이 기본값으로 자동 구현 속성을 초기화하는 기능을 추가했습니다.
 
-```
+```csharp
 public string Name { get; set; } = "John Doe";
 ```
 
 ### 표현식 본문 속성
 Microsoft가 C# 6.0 및 7.0에서 구현한 또 다른 속성 관련 기능은 식 본문 멤버입니다. 단순히 속성과 메서드에 대한 한 줄 표현식을 작성할 수 있습니다 - 이 경우 공간을 덜 차지하고 약간 덜 입력이 필요한 방식으로 get / set 메서드에 사용하는 방법을 살펴 보겠습니다.
 
-```
+```csharp
 private string name;
 public string Name
 {
@@ -956,13 +956,13 @@ public string Name
 
 속성이 읽기 전용인 경우 구문이 더 짧을 수 있습니다.
 
-```
+```csharp
 public string Name => "John Doe";
 ```
 
 물론 이것은 다음과 같이 값을 반환하기 전에 실제로 무언가를 수행해야하는 경우에도 작동합니다.
 
-```
+```csharp
 public string Name { get; set; } = "John Doe";
 
 public string FirstName => this.Name.Substring(0, this.Name.IndexOf(" "));
@@ -982,7 +982,7 @@ public string FirstName => this.Name.Substring(0, this.Name.IndexOf(" "));
 
 메서드는 다음과 같이 정의됩니다.
 
-```
+```csharp
 <visibility> <return type> <name>(<parameters>)
 {
     <method code>
@@ -991,7 +991,7 @@ public string FirstName => this.Name.Substring(0, this.Name.IndexOf(" "));
 
 다음은 매우 기본적인 예입니다.
 
-```
+```csharp
 public int AddNumbers(int number1, int number2)
 {
     return number1 + number2;
@@ -1008,13 +1008,13 @@ public int AddNumbers(int number1, int number2)
 
 메서드를 호출하려면 이름 뒤에 괄호 집합을 작성하기만 하면 됩니다. 괄호 안에 다음과 같이 매개변수(메서드가 허용하는 경우)를 작성해야 합니다.
 
-```
+```csharp
 AddNumbers(3, 39);
 ```
 
 메서드는 클래스에 정의되어 있으므로 현재 있는 클래스가 아닌 다른 클래스에서 메서드를 호출할 수 있습니다. 그렇다면 메서드 호출 앞에 객체 이름을 붙이거나 정적 메소드의 경우 클래스 이름을 붙여야 합니다(나중에 자세히 설명). 다음은 MathHelper라는 다른 클래스에 배치된 AddNumbers() 메서드를 호출하는 예입니다.
 
-```
+```csharp
 public void DoMath()
 {
     MathHelper mathHelper = new MathHelper();
@@ -1030,7 +1030,7 @@ public void DoMath()
 
 메소드에 대한 반환 유형을 선언 할 때 무언가를 반환해야한다는 것을 알아야합니다 - 그렇지 않으면 컴파일러가 즉시 불평 할 것입니다.
 
-```
+```csharp
 public int AddNumbers(int number1, int number2)
 {
     Console.WriteLine(number1 + number2);
@@ -1041,7 +1041,7 @@ Compiler error: AddNumbers(int, int)': not all code paths return a value
 
 즉, 선언 된 반환 유형이있는 경우 메서드 내에 하나 (또는 여러 개) return 키워드가 필요합니다. 다음과 같이 가능한 코드 경로가 여러 개 있는 상황에는 둘 이상이 필요할 수 있습니다.
 
-```
+```csharp
 public int AddLargeNumbers(int number1, int number2)
 {            
     if((number1 > 1000) && (number2 > 1000))
@@ -1066,7 +1066,7 @@ public int AddLargeNumbers(int number1, int number2)
 
 이전 섹션에서 매개변수에 대한 매우 간단한 사용 시나리오를 이미 살펴보았습니다. 두 개의 숫자를 매개변수로 사용하고 이 두 숫자의 합계를 반환하는 AddNumbers() 메서드입니다.
 
-```
+```csharp
 public int AddNumbers(int number1, int number2)
 {
     return number1 + number2;
@@ -1075,7 +1075,7 @@ public int AddNumbers(int number1, int number2)
 
 이것은 메소드를 사용하면 메소드의 기능을 캡슐화할 수 있지만 매개변수를 통해 이 메소드를 호출할 때 결과에 영향을 줄 수 있기 때문에 영리한 개념 메소드가 무엇인지 보여주는 데 큰 도움이 됩니다.
 
-```
+```csharp
 AddNumbers(2, 3);
 
 Result: 5
@@ -1094,7 +1094,7 @@ Result: 42
 
 다음은 선택적 매개 변수가 있는 메서드의 예입니다.
 
-```
+```csharp
 public int AddNumbers(int number1, int number2, int number3 = 0)
 {
     return number1 + number2 + number3;
@@ -1103,7 +1103,7 @@ public int AddNumbers(int number1, int number2, int number3 = 0)
 
 마지막 매개변수(number3)는 기본값(0)을 제공했기 때문에 이제 선택 사항입니다. 호출할 때 이제 다음과 같이 두세 개의 값을 제공할 수 있습니다.
 
-```
+```csharp
 public void Main(string[] args)
 {
     AddNumbers(38, 4);
@@ -1116,19 +1116,19 @@ public void Main(string[] args)
 **params 수정자**
 여러 선택적 매개 변수 대신 params 한정자를 사용해서 임의의 수의 매개 변수를 허용할 수 있습니다. 다음과 같을 수 있습니다.
 
-```
+```csharp
 public void GreetPersons(params string[] names) { }
 ```
 
 호출하면 다음과 같이 보일 수 있습니다.
 
-```
+```csharp
 GreetPersons("John", "Jane", "Tarzan");
 ```
 
 params 접근 방식을 사용하는 또 다른 이점은 메서드에 0 매개 변수를 전달할 수 있다는 것입니다. params 수정자가 있는 매개 변수가 마지막 매개 변수인 한 params가 있는 메서드는 일반 매개 변수를 사용할 수도 있습니다. 그 외에도 메서드당 params 키워드를 사용하는 매개변수는 하나만 사용할 수 있습니다. 다음은 params 수정자를 사용해서 GreetPersons() 메서드로 가변 수의 이름을 인쇄하는 완전한 예입니다.
 
-```
+```csharp
 public void Main(string[] args)
 {
     GreetPersons("John", "Jane", "Tarzan");
@@ -1146,7 +1146,7 @@ C# 및 기타 프로그래밍 언어도 "값별"과 "참조별"의 두 가지 �
 
 예를 들어 이 동작을 쉽게 시연할 수 있습니다.
 
-```
+```csharp
 public void Main(string[] args)
 {
     int number = 20;
@@ -1167,7 +1167,7 @@ public void AddFive(int number)
 **ref 수정자**
 ref 수정자는 "reference"의 줄임말이며 기본적으로 매개변수의 동작을 "값으로"의 기본 동작에서 "참조로"로 변경하므로 이제 값의 복사본 대신 원래 변수에 대한 참조를 전달합니다. 다음은 수정된 예입니다.
 
-```
+```csharp
 public void Main(string[] args)
 {
     int number = 20;
@@ -1189,7 +1189,7 @@ ref 수정자와 마찬가지로 out 수정자는 매개 변수가 값 대신 �
 
 C#에서 메서드는 하나의 값만 반환할 수 있지만 out 한정자를 사용하는 경우 out 한정자와 함께 여러 매개 변수를 전달해서 이를 우회할 수 있습니다. 다음은 두 개의 숫자를 전달한 다음 out 수정자를 사용해서 이 숫자를 사용해서 덧셈과 뺄셈을 모두 반환하는 예입니다.
 
-```
+```csharp
 public void Main(string[] args)
 {
     int addedValue, subtractedValue;
@@ -1211,7 +1211,7 @@ Output:
 
 예제의 시작 부분에서 볼 수 있듯이 두 변수 (addedValue 및 subtractedValue)를 아웃 매개 변수로 전달하기 전에 선언합니다. 이는 이전 버전의 C# 언어의 요구 사항이었지만 C# 버전 6에서는 다음과 같이 메서드 호출에서 직접 선언할 수 있습니다.
 
-```
+```csharp
 DoMath(10, 5, out int addedValue, out int subtractedValue);
 Console.WriteLine(addedValue);
 Console.WriteLine(subtractedValue);
@@ -1227,7 +1227,7 @@ out 한정자와 마찬가지로 in 한정자는 매개 변수가 값의 복사�
 
 다음은 in 수정자를 사용하는 예입니다.
 
-```
+```csharp
 public void Main(string[] args)
 {
     string aVeryLargeString = "Lots of text...";
@@ -1242,7 +1242,7 @@ public void InMethod(in string largeString)
 
 우리 메서드인 InMethod()에서 largeString 매개변수는 이제 원래 변수(aVeryLargeString)에 대한 읽기 전용 참조이므로 사용할 수 있지만 수정할 수는 없습니다. 시도하면 컴파일러가 불평할 것입니다.
 
-```
+```csharp
 public void InMethod(in string largeString)
 {
     largeString = "We can't do this...";
@@ -1254,13 +1254,13 @@ Error: Cannot assign to variable 'in string' because it is a readonly variable
 ### 명명된 매개변수
 위의 모든 예제에서 보았듯이 각 매개 변수에는 메서드 선언에서 고유한 이름이 있습니다. 이를 통해 메서드 내부의 매개변수를 참조할 수 있습니다. 그러나 메서드를 호출할 때 이러한 이름을 사용하지 않고 선언된 순서와 동일한 순서로 값을 제공합니다. 이것은 2-3개의 매개변수를 사용하는 간단한 방법에는 문제가 되지 않지만 일부 방법은 더 복잡하고 더 많은 매개변수가 필요합니다. 이러한 상황에서는 다음 예와 같이 메서드 호출의 다양한 값이 무엇을 참조하는지 파악하기가 매우 어려울 수 있습니다.
 
-```
+```csharp
 PrintUserDetails(1, "John", 42, null);
 ```
 
 이 메서드 호출에서 다양한 매개 변수가 무엇을 의미하는지는 명확하지 않지만 메서드 선언을 보면 다음을 알 수 있습니다.
 
-```
+```csharp
 public void PrintUserDetails(int userId, string name, int age = -1, List<string> addressLines = null)
 {
     // Print details...
@@ -1269,19 +1269,19 @@ public void PrintUserDetails(int userId, string name, int age = -1, List<string>
 
 그러나 매개 변수가 수행하는 작업을 이해하기 위해 메서드 선언을 지속적으로 조회해야하는 경우 성가신 일이므로 더 복잡한 메서드의 경우 메서드 호출에서 직접 매개 변수 이름을 제공 할 수 있습니다. 또한 선언 순서를 강제로 사용하는 대신 매개변수 이름을 임의의 순서로 제공할 수 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 PrintUserDetails(name: "John Doe", userId: 1);
 ```
 
 추가 보너스로, 선언에서 이전의 모든 선택적 매개변수에 대한 값을 제공할 필요 없이 선택적 매개변수에 대한 값을 제공할 수 있습니다. 즉, 이 예제에서 addressLines 매개 변수에 대한 값을 제공하려면 메서드 선언에서 먼저 오기 때문에 age 매개 변수에 대한 값도 제공해야 합니다. 그러나 명명된 매개변수를 사용하는 경우 순서는 더 이상 중요하지 않으며 필수 매개변수에 대한 값과 하나 또는 여러 개의 선택적 매개변수에 대한 값만 제공할 수 있습니다.
 
-```
+```csharp
 PrintUserDetails(addressLines: new List<string>() { }, name: "Jane Doe", userId: 2);
 ```
 
 명명된 매개변수를 사용하는 전체 예는 다음과 같습니다.
 
-```
+```csharp
 public void Main(string[] args)
 {
     PrintUserDetails(1, "John", 42, null);
@@ -1306,19 +1306,19 @@ public void PrintUserDetails(int userId, string name, int age = -1, List<string>
 ## Constructors and destructors
 생성자는 클래스를 인스턴스화할 때 사용되는 특수 메서드입니다. 생성자는 아무 것도 반환 할 수 없으므로 반환 유형을 정의 할 필요가 없습니다. 일반 메서드는 다음과 같이 정의됩니다.
 
-```
+```csharp
 public string Describe()
 ```
 
 생성자는 다음과 같이 정의할 수 있습니다.
 
-```
+```csharp
 public Car()
 ```
 
 이 장의 예에는 문자열을 인수로 사용하는 생성자가 있는 Car 클래스가 있습니다. 물론 생성자도 오버로드될 수 있으므로 이름은 같지만 매개변수는 다른 여러 생성자를 가질 수 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 public Car()
 {
 
@@ -1332,7 +1332,7 @@ public Car(string color)
 
 생성자는 여러 상황에서 유용할 수 있는 다른 생성자를 호출할 수 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 public Car()
 {
     Console.WriteLine("Constructor with no parameters called!");
@@ -1347,7 +1347,7 @@ public Car(string color) : this()
 
 이 코드를 실행하면 매개 변수가없는 생성자가 먼저 호출되는 것을 볼 수 있습니다. 이는 클래스의 다른 생성자에서 호출할 수 있는 기본 생성자에서 클래스에 대한 다양한 객체를 인스턴스화하는 데 사용할 수 있습니다. 호출하려는 생성자가 매개 변수를 사용하는 경우 그렇게 할 수도 있습니다. 다음은 간단한 예입니다.
 
-```
+```csharp
 public Car(string color) : this()
 {
     this.color = color;
@@ -1365,7 +1365,7 @@ public Car(string param1, string param2) : this(param1)
 ### 소멸자
 C#은 가비지 수집되므로 프레임워크가 더 이상 사용하지 않는 개체를 해제하므로 수동 정리를 수행해야 하는 경우가 있을 수 있습니다. 객체가 삭제되면 호출되는 메서드인 소멸자는 객체에서 사용하는 리소스를 정리하는 데 사용할 수 있습니다. 소멸자는 C #의 다른 메서드와 크게 다릅니다. 다음은 Car 클래스에 대한 소멸자의 예입니다.
 
-```
+```csharp
 ~Car() 
 {
     Console.WriteLine("Out..");
@@ -1385,7 +1385,7 @@ C#은 가비지 수집되므로 프레임워크가 더 이상 사용하지 않�
 
 기본 매개 변수는 C# 버전 4.0에서 도입되었지만 그때까지 C# 코더는 기본적으로 동일한 작업을 수행하는 메서드 오버로딩이라는 다른 기술을 사용해 왔습니다. 이를 통해 프로그래머는 다른 매개변수 세트를 사용하는 한 동일한 이름으로 여러 메서드를 정의할 수 있습니다. .NET Framework의 클래스를 사용하면 메서드 오버로드가 모든 곳에서 사용된다는 것을 곧 알게 될 것입니다. 이에 대한 좋은 예는 String 클래스의 Substring() 메서드입니다. 다음과 같이 추가 오버로드가 있습니다.
 
-```
+```csharp
 string Substring (int startIndex)
 string Substring (int startIndex, int length)
 ```
@@ -1394,7 +1394,7 @@ string Substring (int startIndex, int length)
 
 그렇다면 동일한 함수의 여러 버전을 정의함으로써 여러 곳에서 동일한 코드가 있는 것을 어떻게 방지할 수 있습니까? 그것은 실제로 매우 간단합니다: 우리는 메서드의 간단한 버전이 복잡한 버전이 모든 작업을 수행하도록 합니다. 다음 예를 고려하십시오.
 
-```
+```csharp
 class SillyMath
 {
     public static int Plus(int number1, int number2)
@@ -1413,7 +1413,7 @@ class SillyMath
 
 이제 총 4개의 숫자를 더해서 고급 수학을 하고 싶을 때마다 (농담입니다) 새 오버로드를 추가하는 것은 매우 간단합니다.
 
-```
+```csharp
 class SillyMath
 {
     public static int Plus(int number1, int number2)
@@ -1467,7 +1467,7 @@ Class2가 Class1에서 상속되는 경우 Class2 내부에서 비공개 멤버�
 
 먼저 정적 클래스의 예는 다음과 같습니다.
 
-```
+```csharp
 public static class Rectangle
 {
     public static int CalculateArea(int width, int height)
@@ -1481,7 +1481,7 @@ public static class Rectangle
 
 이 메서드를 사용하려면 다음과 같이 클래스에서 직접 호출합니다.
 
-```
+```csharp
 Console.WriteLine("The area is: " + Rectangle.CalculateArea(5, 4));
 ```
 
@@ -1489,7 +1489,7 @@ Rectangle 클래스에 다른 유용한 메서드를 추가할 수 있지만 클
 
 대신 클래스를 비정적 클래스로 만든 다음 CalculateArea 를 이 클래스의 유틸리티 함수로 사용할 수 있습니다.
 
-```
+```csharp
 public class Rectangle
 {
     private int width, height;
@@ -1525,7 +1525,7 @@ C#이 구축되는 개념인 OOP(객체 지향 프로그래밍)의 절대적인 
 
 이 주제는 이해하기 약간 어려울 수 있지만 때로는 몇 가지 예에 도움이 되므로 그 중 간단한 항목부터 시작하겠습니다.
 
-```
+```csharp
 public class Animal
 {
     public void Greet()
@@ -1542,7 +1542,7 @@ public class Dog : Animal
 
 먼저 인사말을 출력하는 간단한 메서드를 사용해서 Animal 클래스를 정의합니다. 그런 다음 Dog 클래스를 정의하고 콜론을 사용해서 C#에 Dog 클래스가 Animal 클래스에서 상속되어야 한다고 지시합니다. 이것의 아름다운 점은 현실 세계에서도 의미가 있다는 것입니다 - 개는 분명히 동물입니다. 클래스를 사용해 봅시다.
 
-```
+```csharp
 Animal animal = new Animal();
 animal.Greet();
 Dog dog = new Dog();
@@ -1551,7 +1551,7 @@ dog.Greet();
 
 이 예제를 실행하면 Dog 클래스에 대한 Greet() 메서드를 정의하지 않았지만 Animal 클래스에서 이 메서드를 상속하기 때문에 여전히 인사하는 방법을 알고 있음을 알 수 있습니다. 그러나 이 인사말은 약간 익명이므로 어떤 동물인지 알면 사용자 지정해 보겠습니다.
 
-```
+```csharp
 public class Animal
 {
     public virtual void Greet()
@@ -1573,7 +1573,7 @@ Dog 클래스에 추가된 메서드 외에도 두 가지 사항을 확인해야
 
 C#에서는 가상으로 표시되지 않는 한 클래스의 멤버를 재정의할 수 없습니다. 원하는 경우 base 키워드를 사용해서 재정의하는 경우에도 상속된 메서드에 계속 액세스할 수 있습니다.
 
-```
+```csharp
 public override void Greet()
 {
     base.Greet();
@@ -1596,7 +1596,7 @@ public override void Greet()
 
 이 예에서는 다리가 네 개인 동물에 대한 기본 클래스를 만든 다음 다음과 같이 상속되는 Dog 클래스를 만듭니다.
 
-```
+```csharp
 namespace AbstractClasses
 {
     class Program
@@ -1626,7 +1626,7 @@ namespace AbstractClasses
 
 상속에 관한 장의 예와 비교해 보면 큰 차이는 보이지 않을 것입니다. 사실 FourLeggedAnimal 정의 앞에 있는 추상 키워드가 가장 큰 차이점입니다. 보시다시피 Dog 클래스의 새 인스턴스를 만든 다음 FourLeggedAnimal 클래스에서 상속된 Describe() 메서드를 호출합니다. 이제 대신 FourLeggedAnimal 클래스의 인스턴스를 만들어 보십시오.
 
-```
+```csharp
 FourLeggedAnimal someAnimal = new FourLeggedAnimal();
 ```
 
@@ -1636,7 +1636,7 @@ FourLeggedAnimal someAnimal = new FourLeggedAnimal();
 
 보시다시피 Describe() 메서드를 상속했지만 Dog 클래스의 현재 형태로는 그다지 유용하지 않습니다. 재정의해 보겠습니다.
 
-```
+```csharp
 class Dog : FourLeggedAnimal
 {
     public override string Describe()
@@ -1648,7 +1648,7 @@ class Dog : FourLeggedAnimal
 
 이 경우 전체 재정의를 수행하지만 경우에 따라 새 기능 외에 기본 클래스의 동작을 사용할 수 있습니다. 이것은 우리가 상속받은 클래스를 참조하는 base 키워드를 사용해서 수행할 수 있습니다.
 
-```
+```csharp
 abstract class FourLeggedAnimal
 {
     public virtual string Describe()
@@ -1678,7 +1678,7 @@ class Dog : FourLeggedAnimal
 ## More abstract classes
 이전 장에서는 추상 클래스에 대해 살펴보았습니다. 이 장에서는 예제를 약간 확장하고 몇 가지 추상적인 방법도 던질 것입니다. 추상 메서드는 추상 클래스 내에서만 허용됩니다. 정의는 일반 메서드처럼 보이지만 내부에는 코드가 없습니다.
 
-```
+```csharp
 abstract class FourLeggedAnimal
 {
     public abstract string Describe();
@@ -1687,7 +1687,7 @@ abstract class FourLeggedAnimal
 
 그렇다면 아무것도하지 않는 빈 메서드를 정의하려는 이유는 무엇입니까? 추상 메서드는 모든 하위 클래스에서 바로 그 메서드를 구현해야 할 의무이기 때문입니다. 실제로 컴파일 타임에 확인되어 하위 클래스에 이 메서드가 정의되어 있는지 확인합니다. 다시 한 번, 이것은 하위 클래스가 수행할 수 있어야 하는 작업에 대한 어느 정도의 제어를 유지하면서 무언가에 대한 기본 클래스를 만드는 좋은 방법입니다. 이를 염두에 두고 기본 클래스에서 추상 메서드로 정의된 메서드를 사용해야 할 때마다 항상 하위 클래스를 기본 클래스로 처리할 수 있습니다. 예를 들어 다음 예를 고려하십시오.
 
-```
+```csharp
 namespace AbstractClasses
 {
     class Program
@@ -1741,7 +1741,7 @@ namespace AbstractClasses
 
 그렇다면 이 모든 것이 코드에서 어떻게 보일까요? 다음은 매우 완전한 예입니다. 살펴보고 직접 사용해 본 다음 전체 설명을 읽으십시오.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 
@@ -1820,7 +1820,7 @@ namespace Interfaces
 ## Namespaces
 첫 번째 섹션 중 하나에서 네임스페이스에 대해 간략하게 논의했습니다. 키워드는 C# 코드가 포함된 대부분의 파일에서 일반적으로 거의 맨 위에 있기 때문에 인식할 수 있습니다. 네임스페이스는 본질적으로 클래스와 같은 유형 집합을 자체 명명된 공간에 그룹화하는 방법입니다. Visual Studio에서 새 프로젝트를 생성할 때 첫 번째 파일을 배치하는 기본 네임스페이스도 생성합니다(적어도 콘솔 앱 프로젝트 형식의 경우). 다음과 같을 수 있습니다.
 
-```
+```csharp
 using System;  
 
 namespace MyProject  
@@ -1833,13 +1833,13 @@ namespace MyProject
 ```
 이 경우 네임스페이스 "MyProject"는 이제 애플리케이션의 일부이며 외부에서 해당 클래스를 사용할 때 클래스 이름 앞에 네임스페이스 이름을 붙여야 합니다. 다음과 같이 .NET 프레임워크 깊숙이 묻혀 있는 것을 사용하려는 경우에도 똑같은 내용이 표시됩니다.
 
-```
+```csharp
 System.IO.File.ReadAllText("test.txt");
 ```
 
 이 경우 System.IO 네임스페이스에 있는 File 클래스에 있는 ReadAllText() 메서드를 사용합니다. 물론 네임스페이스의 클래스를 사용할 때마다 이렇게 긴 이름을 작성하는 것은 지루할 수 있으므로 C#을 사용하면 using 문을 사용해서 전체 네임스페이스를 파일 범위로 "가져 올 수 있습니다". 다시 말하지만, 일반적으로 C# 파일의 맨 위에서 찾을 수 있기 때문에 이미 알고 있을 수 있습니다. 위의 예에서 File 클래스가 두 번 이상 필요한 경우 다음과 같은 using 문을 사용해서 System.IO 네임스페이스를 가져오는 것이 좋습니다.
 
-```
+```csharp
 using System;
 using System.IO;
 // More using statements here...
@@ -1853,7 +1853,7 @@ using System.IO;
 ### 네임스페이스와 이름 충돌
 앞서 언급했듯이 네임스페이스는 유형(일반적으로 클래스)을 캡슐화해서 자체 도메인 내에 존재할 수 있도록 하는 데에도 있습니다. 이는 또한 프로젝트의 다른 곳이나 .NET Framework에서 찾을 수 있는 클래스와 동일한 이름의 클래스를 자유롭게 만들 수 있음을 의미합니다. 예를 들어 사용자 고유의 File 클래스가 필요하다고 결정할 수 있습니다. 이전 예제에서 보았듯이 이러한 클래스는 이미 System.IO 네임스페이스에 존재하지만 다음과 같이 자신의 네임스페이스에 자유롭게 만들 수 있습니다.
 
-```
+```csharp
 using System;  
 
 namespace MyProject.IO  
@@ -1870,13 +1870,13 @@ namespace MyProject.IO
 
 이제 프로젝트에서 사용하려는 경우, 예를 들어 Program.cs Main 메서드 (저처럼 콘솔 앱에서 작업하는 경우) 전체 이름을 작성할 수 있습니다.
 
-```
+```csharp
 MyProject.IO.File.HelloWorld();
 ```
 
 그러나 using 문 덕분에 다른 네임스페이스(내장 또는 사용자 정의)와 마찬가지로 네임스페이스를 가져올 수도 있습니다. 다음은 더 완전한 예입니다.
 
-```
+```csharp
 using System;
 using MyProject.IO;
 
@@ -1894,7 +1894,7 @@ namespace MyProject
 
 지금까지는 좋았어요! 그러나 System.IO 네임스페이스의 File 클래스도 사용하려면 어떻게 해야 할까요? 글쎄, using 문을 사용해서 해당 네임 스페이스도 가져 오면 컴파일러는 더 이상 참조하는 File 클래스 (우리 자신의 클래스 또는 System.IO 네임 스페이스의 클래스)를 알지 못하기 때문에 문제가 시작됩니다. 이 문제는 네임스페이스 중 하나(이상적으로는 가장 많은 유형을 사용하는 네임스페이스)만 가져온 다음 다음 예제와 같이 다른 네임스페이스의 이름을 완전히 한정화해서 해결할 수 있습니다.
 
-```
+```csharp
 using System;
 using System.IO;
 
@@ -1915,7 +1915,7 @@ namespace MyProject
 ### 별칭 지시문 사용
 네임스페이스의 이름을 많이 줄이려면 Using Alias 지시문을 사용해서 다른 이름으로 네임스페이스를 가져올 수 있습니다. 다음 예제에서 어떻게 수행하는지 확인하십시오.
 
-```
+```csharp
 using System;
 using System.IO;
 using MyIO = MyProject.IO;
@@ -1947,13 +1947,13 @@ namespace MyProject
 
 프레임워크 자체에서 많은 상수를 찾을 수 있습니다 (예 : PI에 대한 상수가 정의 된 Math 클래스에서).
 
-```
+```csharp
 Console.WriteLine(Math.PI);
 ```
 
 그러나 물론 흥미로운 부분은 우리 자신의 상수를 선언하는 것입니다. 상수는 다음과 같이 메서드 범위에서 정의할 수 있습니다.
 
-```
+```csharp
 static void Main(string[] args)
 {
     const int TheAnswerToLife = 42;
@@ -1963,7 +1963,7 @@ static void Main(string[] args)
 
 그러나 대부분의 상수는 클래스 수준에서 선언되므로 가시성에 따라 클래스의 모든 메서드와 클래스 외부에서도 액세스할 수 있습니다(물론 변경은 할 수 없음). 상수는 클래스의 정적 멤버처럼 작동하므로 클래스를 인스턴스화하지 않고도 액세스할 수 있습니다. 이를 염두에 두고 두 개의 상수가 정의되는 전체 예제(개인 상수와 공개 상수)를 사용해 보겠습니다.
 
-```
+```csharp
 using System;
 
 namespace Constants
@@ -1997,7 +1997,7 @@ namespace Constants
 
 컴파일러는 값을 즉시 알아야 하기 때문에 값을 설정할 때 수행할 수 있는 작업에 몇 가지 제한이 있음을 의미하기도 합니다. 예를 들어, 다음은 당신이 할 수 있는 일의 완벽한 예입니다.
 
-```
+```csharp
 const int a = 10;  
 const float b = a * 2.5f;
 
@@ -2007,7 +2007,7 @@ const string s2 = s1 + " How are you?";
 
 반면에 메서드 호출의 결과나 상수가 아닌 클래스 멤버는 상수 표현식이 아니기 때문에 사용할 수 없습니다. 다음은 할 수 없는 일에 대한 몇 가지 예입니다.
 
-```
+```csharp
 // NOT possible:
 const int a = Math.Cos(4) * 2;
 // Possible:
@@ -2021,7 +2021,7 @@ const string s2 = s1.Substring(0, 6) + " Universe";
 ### 지속적인 대안: 읽기 전용 필드
 클래스 상수의 약간 덜 제한적인 버전을 찾고 있다면 readonly 키워드를 살펴보는 것이 좋습니다. 메서드 수준에서는 사용할 수 없지만 클래스 수준에서 사용해서 선언 또는 클래스의 생성자 메서드 실행 중에만 수정할 수 있는 필드를 정의할 수 있습니다. 따라서 개체를 사용할 수 있게 되면 읽기 전용 필드는 영원히 동일한 값을 가지며 사용자가 수정할 수 없습니다. 사용해 봅시다:
 
-```
+```csharp
 class SomeClass
 {
     private readonly DateTime rightNow;
@@ -2056,7 +2056,7 @@ partial 키워드로 클래스를 정의하면 사용자 또는 다른 사람이
 
 *PartialClass1.cs*
 
-```
+```csharp
 using System;
 
 namespace PartialClasses
@@ -2073,7 +2073,7 @@ namespace PartialClasses
 
 *PartialClass2.cs*
 
-```
+```csharp
 using System;
 
 namespace PartialClasses
@@ -2090,7 +2090,7 @@ namespace PartialClasses
 
 두 클래스 모두 partial 키워드로 정의되고 이름이 동일합니다. 또한 각각은 HelloWorld() 및 HelloUniverse() 메서드를 정의합니다. 우리 Program.cs에서는 이제 다른 클래스와 마찬가지로 이 클래스가 한 곳에서만 정의된 것처럼 사용할 수 있습니다.
 
-```
+```csharp
 using System;
 
 namespace PartialClasses
@@ -2119,7 +2119,7 @@ namespace PartialClasses
 
 로컬 함수는 기존 메서드 내에서 선언되며 이 메서드에서만 액세스할 수 있습니다. 이렇게 하면 기능이 매우 긴밀하게 캡슐화되며 코드 독자에게 이 기능이 선언 메서드에만 관련되어 있음을 분명히 알 수 있습니다. 로컬 함수는 일반 메서드처럼 보이지만 로컬 함수는 항상 선언 메서드 내에서만 액세스할 수 있기 때문에 가시성 수정자가 없습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 public void MethodWithLocalFunction()
 {
     bool doesNameStartWithUppercaseChar(string name)
@@ -2145,7 +2145,7 @@ public void MethodWithLocalFunction()
 
 내 예에서 볼 수 있듯이 메서드의 시작 부분에서 로컬 함수를 선언합니다. 예를 들어 메서드의 중간이나 끝에서 선언해서 자유롭게 변경할 수 있습니다. 한 가지 경우에만 차이가 있습니다: 로컬 함수는 선언 메서드 내에서 선언된 변수에 액세스할 수 있지만 로컬 함수 이전에 선언된 경우에만 가능합니다. 따라서 이 동작을 활용하려면 다음과 같이 메서드를 수정해야합니다.
 
-```
+```csharp
 public void MethodWithLocalFunction()
 {
     int nameMaxLength = 10;
@@ -2177,7 +2177,7 @@ public void MethodWithLocalFunction()
 ### 정적 로컬 함수
 C# 버전 8에서는 정적 로컬 함수에 대한 지원이 추가되었습니다. 글을 쓰는 시점에서 일반 로컬 함수와 정적 로컬 함수의 유일한 차이점은 정적 로컬 함수가 선언 메서드의 변수를 사용할 수 없다는 사실입니다. 따라서 로컬 함수가 메서드에서 변수를 참조하거나 변경할 수 없도록 하려면 다음과 같이 static으로 선언하십시오.
 
-```
+```csharp
 public void MethodWithLocalStaticFunction()
 {
     int nameMaxLength = 10;
@@ -2209,19 +2209,19 @@ public void MethodWithLocalStaticFunction()
 
 배열은 변수와 매우 유사하게 선언되며 다음과 같이 데이터 유형 뒤에 [] 대괄호 집합이 있습니다.
 
-```
+```csharp
 string[] names;
 ```
 
 배열을 사용하려면 배열을 인스턴스화해야하며 다음과 같이 수행됩니다.
 
-```
+```csharp
 string[] names = new string[2];
 ```
 
 숫자(2)는 배열의 크기, 즉 배열에 넣을 수 있는 항목의 양입니다. 배열에 항목을 넣는 것도 매우 간단합니다.
 
-```
+```csharp
 names[0] = "John Doe";
 ```
 
@@ -2229,7 +2229,7 @@ names[0] = "John Doe";
 
 이전에 우리는 루프에 대해 배웠고 분명히 이것은 배열과 잘 어울립니다. 배열에서 데이터를 가져오는 가장 일반적인 방법은 배열을 반복하고 각 값에 대해 일종의 작업을 수행하는 것입니다. 실제 예를 만들기 위해 이전의 배열을 사용해 보겠습니다.
 
-```
+```csharp
 using System;
 using System.Collections;
 
@@ -2255,7 +2255,7 @@ namespace ConsoleApplication1
 
 가장 쉽기 때문에 foreach 루프를 사용하지만 물론 다른 유형의 루프 중 하나를 대신 사용할 수도 있습니다. for 루프는 배열에도 적합합니다. 예를 들어 다음과 같이 각 항목을 계산해야하는 경우:
 
-```
+```csharp
 for(int i = 0; i < names.Length; i++)
     Console.WriteLine("Item number " + i + ": " + names[i]);
 ```
@@ -2264,7 +2264,7 @@ for(int i = 0; i < names.Length; i++)
 
 앞서 배열을 사용해서 값 범위를 정렬할 수 있다고 말했는데 실제로 매우 쉽습니다. Array 클래스에는 배열 작업을 위한 여러 가지 스마트 메서드가 포함되어 있습니다. 이 예제는 다른 것을 시도하기 위해 문자열 대신 숫자를 사용하지만 쉽게 문자열일 수 있습니다. 배열을 채우는 또 다른 방법을 보여 드리고 싶은데, 배열에 넣고자 하는 작은 미리 정의 된 항목 세트가있는 경우 훨씬 쉽습니다. 보세요:
 
-```
+```csharp
 int[] numbers = new int[5] { 4, 3, 8, 0, 5 };
 ```
 
@@ -2272,7 +2272,7 @@ int[] numbers = new int[5] { 4, 3, 8, 0, 5 };
 
 실제로 다음과 같이 더 짧게 수행할 수 있습니다.
 
-```
+```csharp
 int[] numbers = { 4, 3, 8, 0, 5 };
 ```
 
@@ -2280,7 +2280,7 @@ int[] numbers = { 4, 3, 8, 0, 5 };
 
 배열을 정렬해 봅시다 - 다음은 완전한 예입니다.
 
-```
+```csharp
 using System;
 using System.Collections;
 
@@ -2318,19 +2318,19 @@ List는 C#에서 제네릭 목록을 지원하기 전에 List 선택이었던 Ar
 
 앞서 언급했듯이 T는 유형을 나타내며 목록에 포함할 개체의 유형을 지정하는 데 사용됩니다. 첫 번째 예에서는 문자열을 포함해야 하는 목록을 만드는 방법을 보여 드리겠습니다.
 
-```
+```csharp
 List<string> listOfStrings = new List<string>();
 ```
 
 이렇게 하면 빈 목록이 생성되지만 나중에 Add 메서드를 사용해서 항목을 추가하는 것은 매우 쉽습니다.
 
-```
+```csharp
 listOfStrings.Add("a string");
 ```
 
 그러나 문자열이 아닌 것을 추가하려고하면 컴파일러는 즉시 이에 대해 불평합니다.
 
-```
+```csharp
 listOfStrings.Add(2);
 Error   CS1503  Argument 1: cannot convert from 'int' to 'string'
 ```
@@ -2338,7 +2338,7 @@ Error   CS1503  Argument 1: cannot convert from 'int' to 'string'
 ### 항목으로 목록 초기화
 위의 예에서는 목록을 만든 다음 여기에 항목을 추가했습니다. 그러나 C#에서는 실제로 컬렉션 이니셜라이저라는 기술을 사용해서 동일한 문 내에서 목록을 만들고 항목을 추가할 수 있습니다. 어떻게 수행되는지 봅시다.
 
-```
+```csharp
 List<string> listOfNames = new List<string>()
 {
     "John Doe",
@@ -2352,7 +2352,7 @@ List<string> listOfNames = new List<string>()
 ### 항목 작업
 일반 목록의 항목으로 작업하는 방법에는 여러 가지가 있으며 그 중 일부를 보여주기 위해 더 큰 예제를 만들었습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 
@@ -2393,7 +2393,7 @@ namespace Lists
 ### 항목 추가, 삽입 및 제거
 이미 목록에 단일 항목을 추가하려고 시도했지만 이를 위한 더 많은 옵션이 있습니다. 우선, 항목을 추가하는 대신 항목을 삽입할 수 있습니다 - 차이점은 Add 메서드는 항상 목록 끝에 추가되는 반면 Insert 메서드를 사용하면 특정 위치에 항목을 삽입할 수 있다는 것입니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 List<string> listOfNames = new List<string>()
 {
     "Joe Doe"
@@ -2411,7 +2411,7 @@ listOfNames.Insert(1, "Jane Doe");
 
 Range 메서드의 예로 AddRange 메서드와 컬렉션 이니셜라이저를 결합해서 단일 문에서 기존 목록에 여러 새 이름을 추가합니다.
 
-```
+```csharp
 listOfNames.AddRange(new string[]
         {
         "Jenna Doe",
@@ -2427,7 +2427,7 @@ listOfNames.AddRange(new string[]
 
 Remove() 메서드는 제거하려는 항목이라는 하나의 매개 변수만 사용합니다. 이것은 예를 들어 문자열 또는 정수 목록에 유용한데, 제거하려는 항목을 간단히 쓸 수 있기 때문입니다. 반면에 복잡한 객체 목록이있는 경우 Remove() 메서드에 전달할 수 있는 참조를 갖기 위해 먼저 해당 객체를 찾아야합니다. ̈나중에 처리합시다 - 다음은 Remove() 메서드로 단일 항목을 제거하는 방법에 대한 매우 기본적인 예입니다.
 
-```
+```csharp
 List<string> listOfNames = new List<string>()
 {
     "John Doe",
@@ -2443,13 +2443,13 @@ Remove() 메서드는 제거를 위해 지정한 객체의 첫 번째 인스턴�
 
 RemoveAt() 메서드는 목록의 인덱스/위치에 따라 항목을 제거할 수 있도록 해서 일반 목록이 인덱스 기반이라는 사실을 활용합니다. 예를 들어 다음과 같이 목록에서 첫 번째 항목을 제거할 수 있습니다.
 
-```
+```csharp
 listOfNames.RemoveAt(0);
 ```
 
 또는 다음과 같이 목록의 마지막 항목:
 
-```
+```csharp
 listOfNames.RemoveAt(listOfNames.Count - 1);
 ```
 
@@ -2457,7 +2457,7 @@ listOfNames.RemoveAt(listOfNames.Count - 1);
 
 RemoveAll()은 제거 메소드 중 가장 복잡하지만 확실히 가장 강력합니다. 메서드에 대한 대리자를 매개 변수로 사용하고이 메서드는 true 또는 false를 반환해서 항목을 제거해야 하는지 여부를 결정합니다. 이렇게 하면 항목을 제거할 때 고유한 논리를 적용할 수 있으며 한 번에 두 개 이상의 항목을 제거할 수도 있습니다. 대리자는 크고 복잡한 주제이기 때문에이 자습서의 다른 곳에서 다루겠지만 RemoveAll 메서드가 얼마나 멋진지 느끼기를 원하므로 여기에 예가 있습니다.
 
-```
+```csharp
 List<string> listOfNames = new List<string>()
 {
     "John Doe",
@@ -2480,7 +2480,7 @@ listOfNames.RemoveAll(name =>
 ### 목록 항목 정렬
 지금까지 우리가 작업한 목록의 항목은 목록에 추가된 순서대로 사용되었습니다. 그러나 특정 방식(예: 이름 목록의 경우 알파벳순)으로 항목을 정렬하고 싶을 수도 있습니다. List<T>에는 이를 위해 사용할 수 있는 Sort() 메서드가 있습니다.
 
-```
+```csharp
 List<string> listOfNames = new List<string>()
 {
     "John Doe",
@@ -2495,14 +2495,14 @@ foreach (string name in listOfNames)
 
 출력에서 볼 수 있듯이 목록의 항목은 이제 알파벳순으로 정렬되었으며 대신 내림차순(Z에서 A까지)으로 정렬하려면 정렬을 수행한 후 Reverse() 메서드를 호출하기만 하면 됩니다.
 
-```
+```csharp
 listOfNames.Sort();
 listOfNames.Reverse();
 ```
 
 그래서 목록을 정렬하는 것은 꽤 쉬웠죠? 글쎄요, 문자열 목록이 있고 .NET 프레임워크가 두 문자열을 비교하는 방법을 정확히 알고 있기 때문에 주로 매우 쉬웠습니다. 숫자 목록이있는 경우 .NET은 물론 이를 정렬하는 방법도 알고 있습니다. 반면에 .NET에서 비교하는 방법을 알 수 없는 사용자 지정 개체 목록(List<T>에는 모든 개체가 포함될 수 있기 때문에)가 있을 수 있습니다. 이 문제에 대한 몇 가지 솔루션이 있습니다(예: IComparable 인터페이스를 구현하거나 LINQ를 사용하여(이 자습서의 뒷부분에서 둘 다 살펴보겠습니다) 빠른 수정으로 다음과 같이 두 항목이 서로 어떻게 쌓이는지 알아보기 위해 Sort() 메서드를 호출할 메서드를 제공할 수도 있습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 
@@ -2551,7 +2551,7 @@ C#의 사전은 모두 IDictionary 인터페이스를 구현합니다. 여러 �
 
 사전이 무엇인지 더 자세히 알아보겠지만 먼저 간단한 예를 들어 사전이 무엇인지 보여드리겠습니다.
 
-```
+```csharp
 Dictionary<string, int> users = new Dictionary<string, int>();  
 users.Add("John Doe", 42);  
 users.Add("Jane Doe", 38);  
@@ -2567,7 +2567,7 @@ Console.WriteLine("John Doe is " + users["John Doe"] + " years old");
 
 사전에서 값에 액세스 할 때 기억해야하는 또 다른 사항은 키가 해당 값에 액세스하려고할 때 컬렉션에 존재해야한다는 것입니다. 즉, 내 예제는 목록에 포함된 내용을 완전히 제어 할 수있을까 안전했습니다 - 대부분의 상황에서 키를 사용하기 전에 항상 키가 존재하는지 확인해야합니다.
 
-```
+```csharp
 string key = "John Doe";
 if(users.ContainsKey(key))
     Console.WriteLine("John Doe is " + users[key] + " years old");
@@ -2578,7 +2578,7 @@ if(users.ContainsKey(key))
 ### 항목 작업
 단일 항목에 액세스하는 것은 매우 유용 할 수 있지만 컬렉션을 반복하고 예를 들어 무언가를 찾으려면 어떻게해야합니까? 이 경우 가장 먼저 알아야 할 것은 목록의 항목이 단순한 객체가 아니라 Dictionary 가 KeyValuePair<TKey, TValue> 형식의 항목을 보유한다는 것입니다. T는 목록을 선언하는 데 사용한 유형입니다 - 이 경우 문자열과 정수입니다. 따라서 foreach 루프를 사용해서 컬렉션을 반복하면 다음과 같이 표시됩니다.
 
-```
+```csharp
 Dictionary<string, int> users = new Dictionary<string, int>()
 {
     { "John Doe", 42 },
@@ -2602,7 +2602,7 @@ foreach (KeyValuePair<string, int> user in users)
 
 Dictionary 클래스는 Sort() 메서드와 함께 제공되지 않는데, 결국 정렬하더라도 다시 작업을 시작하자마자 순서가 변경될 수 있기 때문입니다. 대신 LINQ의 OrderBy() 및 OrderByDescending() 메서드를 사용해서 (자세한 내용은 다른 장에서 참조) 정렬된 사전의 복사본을 가져올 수 있습니다. 또한 키 또는 값별로 정렬할 수 있으며, 이는 이 예에서 유용할 수 있으며 사용자를 연령 순서대로 가져옵니다.
 
-```
+```csharp
 Dictionary<string, int> users = new Dictionary<string, int>()
 {
     { "John Doe", 42 },
@@ -2641,19 +2641,19 @@ foreach (KeyValuePair<string, int> user in users.OrderBy(user => user.Value))
 ## Booleans
 bool(부울) 데이터 형식은 false 또는 true의 두 가지 가능한 값만 있기 때문에 .NET Framework에서 발견되는 가장 간단한 데이터 형식 중 하나입니다. 다음과 같이 부울 변수를 선언할 수 있습니다.
 
-```
+```csharp
 bool isAdult;
 ```
 
 기본적으로 bool 의 값은 false 이지만 변수를 선언 할 때 또는 나중에 변경할 수 있습니다.
 
-```
+```csharp
 bool isAdult = true;
 ```
 
 부울 값으로 작업한다는 것은 일반적으로 현재 상태를 확인한 다음 if-문을 사용해서 반응하는 것을 의미합니다.
 
-```
+```csharp
 bool isAdult = true;  
 if (isAdult == true)  
     Console.WriteLine("An adult");  
@@ -2663,7 +2663,7 @@ else
 
 그러나 실제로는 부울 값을 확인할 때 실제 부분을 생략할 수 있기 때문에 조금 더 짧게 수행할 수 있습니다.
 
-```
+```csharp
 bool isAdult = true;  
 if (isAdult)  
     Console.WriteLine("An adult");  
@@ -2673,7 +2673,7 @@ else
 
 명시적인 접근 방식을 사용하는지 여부는 일반적으로 취향의 문제일 뿐입니다. 물론 false 를 확인할 수도 있습니다 - 키워드 true 를 false 키워드로 전환하거나 느낌표 연산자로 변수를 부정해서 할 수 있습니다.
 
-```
+```csharp
 bool isAdult = true;  
 if (!isAdult)  
     Console.WriteLine("NOT an adult");  
@@ -2686,7 +2686,7 @@ if 문은 이제 기본적으로 "변수 isAdult 가 true의 반대입니까?", 
 ### 유형 변환
 부울을 다른 유형으로 변환해야 할 필요성을 발견하는 경우는 매우 간단하기 때문에 흔하지 않습니다. 그러나 부울은 때때로 0(거짓) 또는 1(참)으로 표시되기 때문에 정수와 부울 사이를 변환해야 할 수도 있습니다. 이를 위해 대부분의 변환 작업에 도움이 될 수 있는 내장 Convert 클래스를 권장합니다. ToBoolean() 메서드를 사용해서 정수를 부울로 변환하고 다른 방법으로 이동하려면 ToInt32() 메서드를 사용하십시오. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 int val = 1;
 bool isAdult = Convert.ToBoolean(val);
 Console.WriteLine("Bool: " + isAdult.ToString());
@@ -2706,13 +2706,13 @@ bool 데이터 형식에는 false 또는 true의 두 가지 값만 있을 수 �
 ### Int32 - 기본 정수
 잠시 후에 논의하겠지만 C#에는 다양한 정수 형식이 제공되지만 대부분의 경우 사용할 수 있는 정수는 32비트 정수인 Int32입니다. 다음과 같이 선언할 수 있습니다.
 
-```
+```csharp
 Int32 number;
 ```
 
 그러나 이것은 실제로 C#에서 가장 많이 사용되는 정수 유형이기 때문에 바로 가기가 있습니다 - "int"를 쓰면 C#은 Int32에 대해 이야기하고 있다는 것을 자동으로 알 수 있습니다. 물론 선언하는 것과 동일한 명령문에서 값을 할당할 수도 있습니다.
 
-```
+```csharp
 int number = 42;
 ```
 
@@ -2732,7 +2732,7 @@ long 유형이 허용하는 것보다 더 큰 숫자를 보유해야 하는 경�
 ### 정수를 사용한 수학
 일반적으로 정수와 숫자로 작업할 때 몇 가지 계산을 수행하려고 할 수 있습니다. 이것은 가장 일반적인 수학 연산자를 모두 그대로 사용할 수 있는 C#을 포함한 대부분의 프로그래밍 언어에서 매우 쉽습니다. 예를 들어 다음과 같은 계산을 수행할 수 있습니다.
 
-```
+```csharp
 int a = 42;  
 int b = 8;  
 
@@ -2743,7 +2743,7 @@ Console.WriteLine(a + b);
 
 다른 수학 연산자를 사용하려는 경우에도 마찬가지이며 물론 아직 변수로 정의되지 않은 숫자도 사용할 수 있습니다.
 
-```
+```csharp
 int a = 42;  
 int b = 8;  
 
@@ -2755,7 +2755,7 @@ Console.WriteLine(200 - ((a + b) * 2));
 #### 정수와 나눗셈
 이제 더하기, 빼기, 곱하기를 마쳤으니 나눗셈에 대해 조금 이야기해 보겠습니다. 다음 예를 고려하십시오.
 
-```
+```csharp
 int a = 10;
 int b = 3;
 
@@ -2764,7 +2764,7 @@ Console.WriteLine(a / b);
 
 당신은 아마도 당신의 머리로 그것을 계산할 수 있으므로 결과가 3.3333333333333 일 것이라는 것을 알 수 있습니다. 그러나 예제를 실행하면 이상한 것을 볼 수 있습니다 - 결과는 대신 3입니다. 그 이유는 두 정수를 나누면 C#에서도 정수를 반환하고 정수에는 분수를 포함할 수 없기 때문에 결과가 반올림되기 때문입니다(이 경우 3으로 축소). 따라서 분수로 결과를 원하면 변수 중 하나를 부동 소수점 변수로 선언하거나(나중에 자세히 설명) 그 중 하나를 즉석에서 타입캐스트해야 합니다.
 
-```
+```csharp
 int a = 10;
 int b = 3;
 
@@ -2774,14 +2774,14 @@ Console.WriteLine((float)a / b);
 ### 유형 변환/캐스팅
 정수에서 정수로 변환하는 방법에 대해 자세히 이야기해 보겠습니다. 우선, C#에서는 다양한 정수 유형 간의 암시적 및 명시적 변환을 허용합니다. 암시적 변환의 예는 다음과 같습니다.
 
-```
+```csharp
 int a = 10;
 long b = a;
 ```
 
 즉, 정수가 있으면 긴 것으로 취급할 수 있습니다. 이것은 C#이 정수 값이 long 안에 들어갈 수 있다는 것을 알고 있기 때문에 가능합니다. 반면에 그 반대는 사실이 아닐 수 있으므로 명시적 변환을 사용해야 합니다.
 
-```
+```csharp
 long a = 10;
 int b = (int)a;
 ```
@@ -2800,19 +2800,19 @@ int b = (int)a;
 
 부동 소수점 값을 사용하는 것은 정수를 사용하는 것만큼 쉽지만 부동 소수점 값에 대한 몇 가지 우려 사항이 더 있으며 이에 대해서는 나중에 설명합니다. 지금은 가장 일반적으로 사용되는 부동 소수점 데이터 유형 중 하나인 double을 선언할 때 어떻게 보이는지 살펴보겠습니다.
 
-```
+```csharp
 double number;
 ```
 
 정수와 마찬가지로 선언하는 동시에 값을 할당할 수 있습니다.
 
-```
+```csharp
 double number = 42.0;
 ```
 
 float 및 decimal 유형도 마찬가지이며 잠시 후에 논의되지만 여기서는 표기법이 약간 다릅니다.
 
-```
+```csharp
 double doubleVal = 42.0;
 float floatVal = 42.0f;
 decimal decimalVal = 42.0m;
@@ -2833,7 +2833,7 @@ decimal decimalVal = 42.0m;
 
 그 모든 정밀도가 필요한 것이 무엇인지 궁금할 수 있지만 대답은 "수학 문제"입니다. 차이점을 이해하는 고전적인 예는 10을 3으로 나누는 것입니다. 우리 대부분은 머릿속으로 그렇게 하고 결과가 3.33이라고 말하지만, 많은 사람들이 그것이 완전히 정확하지 않다는 것을 알고 있습니다. 진짜 답은 3.33 다음에 추가 3 의 양이 뒤따르는 것입니다 - C #으로이 계산을 수행 할 때 데이터 유형에 따라 결정됩니다. 이 예제를 확인하십시오.
 
-```
+```csharp
 float a = 10f / 3;
 Console.WriteLine(a);
 double b = 10d / 3;
@@ -2844,7 +2844,7 @@ Console.WriteLine(c);
 
 정확히 동일한 계산을 수행하지만 데이터 유형이 다릅니다. 결과는 다음과 같습니다.
 
-```
+```csharp
 a: 3.333333
 b: 3.33333333333333
 c: 3.3333333333333333333333333333
@@ -2871,19 +2871,19 @@ c: 3.3333333333333333333333333333
 ## The Char type
 System.Char 데이터 형식은 단일 유니코드 문자를 보유하는 데 사용됩니다. C#에는 char 변수를 선언할 때 사용할 수 있는 char라는 별칭이 있습니다.
 
-```
+```csharp
 char ch;
 ```
 
 물론 원하는 경우 즉시 값을 할당할 수 있습니다. C#에서 char는 작은따옴표 집합으로 묶여 있습니다.
 
-```
+```csharp
 char ch = 'H';
 ```
 
 문자열(다음 장에서 설명)은 기본적으로 문자 범위일 뿐이므로 NET은 실제로 문자열을 나타내기 위해 char 목록을 사용합니다. 이는 또한 문자열에서 단일 char를 가져오거나 문자열을 반복해서 각 문자를 char 데이터 유형으로 가져올 수 있음을 의미합니다.
 
-```
+```csharp
 string helloWorld = "Hello, world!";
 foreach(char c in helloWorld)
 {
@@ -2893,7 +2893,7 @@ foreach(char c in helloWorld)
 
 헬멧 아래에서 char는 숫자 값으로, 각 문자에는 유니코드 "알파벳"의 특정 숫자가 있습니다. 이 글을 쓰는 시점에는 라틴어/서양 알파벳에서 역사적 문자에 이르기까지 130.000개 이상의 다양한 유니코드 문자가 있습니다. 따라서 C#에서는 이전 예제의 약간 확장된 버전에서 볼 수 있듯이 char 데이터 형식에서 숫자 표현으로 매우 쉽게 이동할 수 있습니다.
 
-```
+```csharp
 string helloWorld = "Hello, world!";
 foreach(char c in helloWorld)
 {
@@ -2903,7 +2903,7 @@ foreach(char c in helloWorld)
 
 문자를 출력한 다음 숫자 표현을 출력하기만 하면 char를 정수로 캐스팅하기만 하면 됩니다. 이것은 또한 숫자에서 문자로 반대 방향으로 쉽게 이동할 수 있음을 의미합니다. 그런데 왜 그렇게 하겠습니까? 글쎄, 대부분의 키보드에서 직접 사용할 수 없는 많은 문자가 있습니다(예: copyright (©) 문자). 대신 유니코드 조회 테이블을 사용해서 필요한 문자의 숫자 버전을 찾은 다음 char로 만들 수 있습니다.
 
-```
+```csharp
 char ch = (char)169;
 Console.WriteLine(ch);
 ```
@@ -2911,7 +2911,7 @@ Console.WriteLine(ch);
 ### Char 도우미 메서드
 Char 클래스에는 현재 다루고있는 char 유형을 결정하는 데 도움이 될 수 있는 몇 가지 정말 멋진 도우미 메서드가 있습니다. 이것은 입력을 검증할 때와 같은 많은 상황에서 매우 유용합니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 Console.WriteLine("Enter a single number:");
 char ch = Console.ReadKey(true).KeyChar;
 if (Char.IsDigit(ch))
@@ -2922,7 +2922,7 @@ else
 
 사용자가 누른 첫 번째 키를 읽은 다음 Char.IsDigit() 메서드를 사용해서 숫자인지 여부를 확인합니다. 그리고 캐릭터의 유형을 확인하는 이와 같은 많은 방법이 있습니다. 이것을 사용해서 매우 간단한 문자열 유효성 검사를 수행할 수 있습니다.
 
-```
+```csharp
 Console.WriteLine("Write your name:");
 string name = Console.ReadLine();  
 bool isValid = true;  
@@ -2958,13 +2958,13 @@ char 데이터 형식(System.Char의 별칭)은 단일 유니코드 문자를 �
 ## Strings
 문자열은 텍스트 조각입니다. 일반적으로 2자 이상으로 구성되는데, 1자만 있으면 대신 char를 사용하는 것을 고려해야 합니다. 그러나 문자열은 참조 유형이기 때문에 비어 있거나 null일 수도 있습니다. 문자열은 이미 작업한 다른 데이터 유형과 매우 유사하게 선언할 수 있습니다.
 
-```
+```csharp
 string s;
 ```
 
 또는 즉시 값을 할당하려는 경우 :
 
-```
+```csharp
 string name = "John Doe";
 ```
 
@@ -2973,7 +2973,7 @@ C #에서 큰따옴표 집합 내의 모든 것은 위의 예에서와 같이 �
 ### 문자열은 변경할 수 없습니다.
 C#에서 문자열은 변경할 수 없으며, 이는 기본적으로 문자열이 생성되면 변경할 수 없음을 의미합니다. 이는 일상적인 사용에서는 분명히 실용적이지 않으므로 프레임워크는 우리를 돕습니다 - 변경하기 위해 새 문자열을 계속 선언할 필요 없이 기존 문자열을 변경할 때마다 새 문자열을 생성합니다. 이렇게 하면 프로세스가 원활하게 이루어지지만 자신도 모르게 코드의 효율성이 떨어질 수도 있습니다. 이를 설명하는 예는 다음과 같습니다.
 
-```
+```csharp
 string numbers = "";
 for (int i = 0; i < 10000; i++)
     numbers += i.ToString();
@@ -2981,7 +2981,7 @@ for (int i = 0; i < 10000; i++)
 
 이 경우 10.000번 반복하며 매번 현재 인덱스를 문자열에 추가합니다. 방금 얻은 지식을 통해 이제 최신 숫자를 포함하도록 기존 문자열을 변경하는 대신 새 문자열이 생성된 다음 이전 변수에 할당되어 프레임워크에서 이전 값을 정리할 수 있다는 것을 알 수 있습니다. 그리고 이것은 10.000번 발생합니다! 대신 일반적으로 여러 작업을 통해 문자열을 작성할 것이라는 것을 알고 있는 경우 소위 StringBuilder를 사용하는 것이 좋습니다.
 
-```
+```csharp
 StringBuilder numbers = new StringBuilder();
 for (int i = 0; i < 10000; i++)
     numbers.Append(i);
@@ -2993,13 +2993,13 @@ Console.WriteLine(numbers.ToString());
 
 두 개 이상의 문자열을 "추가"하기만 하면 연결할 수 있습니다(더하기 연산자 사용).
 
-```
+```csharp
 string name = "John" + " " + "Doe";
 ```
 
 물론 큰따옴표로 묶인 문자열과 문자열이거나 문자열로 바꿀 수 있는 변수를 혼합하는 변수에 대해서도 동일한 작업을 수행할 수 있습니다(모든 객체에 있는 ToString() 메서드 사용). 그러나 더 "깨끗한"방법은 String 클래스에있는 Format 메서드를 사용하는 것입니다.
 
-```
+```csharp
 string name = "John Doe";
 int age = 42;
 string userString = String.Format("{0} is {1} years old and lives in {2}", name, age, "New York");
@@ -3009,7 +3009,7 @@ string userString = String.Format("{0} is {1} years old and lives in {2}", name,
 
 Length 속성을 사용하면 예를 들어 유효성 검사 목적으로 문자열의 현재 길이를 확인할 수 있습니다. Length 속성은 Substring() 및 IndexOf() 메서드와 같은 다른 속성 및 메서드와 함께 사용할 때도 매우 유용합니다. Substring 메서드를 사용하면 문자열의 일부를 검색할 수 있고 IndexOf 메서드를 사용하면 주어진 문자/문자열의 첫 번째 인덱스를 찾을 수 있습니다. 예를 들어 설명하겠습니다.
 
-```
+```csharp
 string name = "John Doe";
 int indexOfSpace = name.IndexOf(' ') + 1;
 string lastName = name.Substring(indexOfSpace, name.Length - indexOfSpace);
@@ -3021,14 +3021,14 @@ Console.WriteLine(lastName);
 
 String 클래스의 또 다른 멋진 도우미 메서드는 Replace() 메서드입니다. 문자열을 가져온 다음 다음과 같이 검색/바꾸기 작업을 실행할 수 있습니다.
 
-```
+```csharp
 string name = "John Doe";
 Console.WriteLine(name.Replace("John", "Jane"));
 ```
 
 Replace() 메서드는 전혀 엄격하지 않습니다 - 검색중인 문자열 (첫 번째 매개 변수)이 없으면 아무 일도 일어나지 않습니다 (예외가 발생하지 않음 또는 이와 유사한 것이 발생하지 않음). 있는 경우 두 번째 매개변수로 대체됩니다. 그러나 바꾸기 전에 확인하려면 Contains() 메서드를 사용할 수 있습니다.
 
-```
+```csharp
 string name = "John Doe";
 if (name.Contains("John"))
     Console.WriteLine(name.Replace("John", "Jane"));
@@ -3038,7 +3038,7 @@ else
 
 때로는 문자열이 특정 char 또는 문자열로 시작하는지 또는 끝나는지 알고 싶을 때가 있습니다. 이를 위해 String 클래스는 이름에서 알 수 있듯이 작동하는 StartsWith() 및 EndsWith() 메서드를 사용할 수 있습니다.
 
-```
+```csharp
 string name = "John Doe";
 if ((name.StartsWith("John")) && (name.EndsWith("Doe")))
     Console.WriteLine("Hello, Mr. Doe!");
@@ -3049,25 +3049,25 @@ if ((name.StartsWith("John")) && (name.EndsWith("Doe")))
 ### 축어적 문자열 및 이스케이프
 문자열을 정의할 때 특정 문자가 특별한 목적을 가지고 있음을 곧 알 수 있습니다. 이것의 가장 중요한 예는 큰 따옴표 자체입니다., 컴파일러에 문자열의 시작과 끝을 표시하는 데 사용되기 때문에 문자열 내에서 어떻게 사용할 수 있습니까? 이에 대한 가장 간단한 대답은 컴파일러에 특수 문자를 일반적인 함수 대신 문자 그대로 처리해야 한다는 신호를 보내는 이스케이프입니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 Console.WriteLine("What do you mean by \"Hello, world\" ??");
 ```
 
 실행되면 결과는 다음과 같습니다.
 
-```
+```csharp
 What do you mean by "Hello, world" ??
 ```
 
 즉, 우리는 단순히 큰따옴표 앞에 백슬래시를 사용해서 이것이 문자열의 끝이 아니라 실제로 큰따옴표가 필요함을 나타냅니다. 그렇게... 백슬래시를 원하고 다른 문자를 이스케이프하는 데 사용하는 것이 아니라 실제로 원한다면 어떻게 될까요? 그럼 당신도 그것에서 벗어나야 할 것입니다 - 또 다른 백슬래시를 사용합니다.
 
-```
+```csharp
 Console.WriteLine("Right here \\ Right now");
 ```
 
 결과:
 
-```
+```csharp
 Right here \ Right now
 ```
 
@@ -3076,25 +3076,25 @@ Right here \ Right now
 ### 축어적 문자열
 이 모든 이스케이프의 대안으로 축어적 문자열을 사용할 수 있습니다. 일반 문자열 선언과 비슷하지만 @ 문자 접두사가 붙고 그 안에서 모든 문자는 문자 그대로 처리됩니다.
 
-```
+```csharp
 Console.WriteLine(@"In a verbatim string \ everything is literal: \n & \t");
 ```
 
 출력은 입력과 똑같이 보입니다.
 
-```
+```csharp
 In a verbatim string \ everything is literal: \n & \t
 ```
 
 이 규칙에는 단 한 가지 예외가 있습니다 : 큰따옴표는 여전히 이스케이프 되어야하지만 그렇지 않으면 컴파일러가 문자열을 끝내려고 하는지 여부를 어떻게 알 수 있기 때문에 꽤 의미가 있습니다. 그러나 축어적 문자열에서 큰따옴표는 백슬래시로 이스케이프되지 않고 대신 다음과 같이 다른 큰따옴표로 이스케이프됩니다.
 
-```
+```csharp
 Console.WriteLine(@"What do you mean by ""Hello, world"" ??");
 ```
 
 결과는 다음과 같습니다.
 
-```
+```csharp
 What do you mean by "Hello, world" ??
 
 ```
@@ -3111,21 +3111,21 @@ C#에는 날짜와 시간 작업을 위한 정말 훌륭한 구조체가 포함�
 
 새 DateTime 객체를 인스턴스화하는 것부터 시작하겠습니다.
 
-```
+```csharp
 DateTime dt = new DateTime();
 Console.WriteLine(dt.ToString());
 ```
 
 결과는 꽤 지루합니다: 01-01-0001 00:00:00. 이는 DateTime.MinValue 필드에 해당하지만 DateTime에는 더 많은 도움이 되는 속성이 있습니다.
 
-```
+```csharp
 DateTime dt = DateTime.Now;
 Console.WriteLine(dt.ToString());
 ```
 
 이렇게 하면 현재 날짜와 시간이 남게 되며, 이는 종종 매우 관련성이 높습니다. 그러나 많은 상황에서 특정 날짜와 시간을 나타내려고 할 수 있습니다 - 다행스럽게도 DateTime에는 이를 도와주는 여러 생성자가 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 DateTime dt = new DateTime(2042, 12, 24);
 Console.WriteLine(dt.ToString());
 ```
@@ -3135,7 +3135,7 @@ Console.WriteLine(dt.ToString());
 ### DateTime - 시간이 있거나 없습니까?
 하지만 시간은 어떻습니까? 글쎄, 하나를 지정하지 않으면 이전 예에서 볼 수 있듯이 기본적으로 00:00:00이 됩니다. 시간도 쉽게 지정할 수 있습니다.
 
-```
+```csharp
 DateTime dt = new DateTime(2042, 12, 24, 18, 42, 0);
 Console.WriteLine(dt.ToString());
 ```
@@ -3144,7 +3144,7 @@ Console.WriteLine(dt.ToString());
 
 남은 질문은 날짜 부분에만 관심이 있다면 어떻게 해야 합니까? 명백한 대답은 DateTime 클래스 대신 Date 클래스를 사용하는 것이지만 실제로는 그런 것이 존재하지 않습니다. 대신 DateTime 클래스에는 Date 속성이 있습니다.
 
-```
+```csharp
 DateTime dt = new DateTime(2042, 12, 24, 18, 42, 0);
 DateTime date = dt.Date;
 Console.WriteLine(date.ToString());
@@ -3157,13 +3157,13 @@ DateTime의 출력을 얻는 것은 가장 중요한 측면 중 하나이지만 
 
 출력을 더 잘 제어하려는 경우 여러 가지 방법이 있습니다. 가장 빠른 방법은 To* 메서드 중 하나를 사용하는 것입니다(예: ToShortDateString() 메서드).
 
-```
+```csharp
 Console.WriteLine(DateTime.Now.ToShortDateString());
 ```
 
 이렇게 하면 시간 부분을 완전히 생략한 짧은 버전의 날짜가 출력됩니다. ToLongDateString() 메서드를 사용할 수도 있습니다.
 
-```
+```csharp
 Console.WriteLine(DateTime.Now.ToLongDateString());
 ```
 
@@ -3171,7 +3171,7 @@ Console.WriteLine(DateTime.Now.ToLongDateString());
 
 날짜/시간 정보를 특정 지역에 맞게 조정하려는 경우 ToString() 메서드의 오버로드 중 하나를 사용할 수 있습니다.
 
-```
+```csharp
 var usCulture = new System.Globalization.CultureInfo("en-US");
 Console.WriteLine(DateTime.Now.ToString(usCulture.DateTimeFormat));
 ```
@@ -3181,7 +3181,7 @@ CultureInfo 클래스를 사용하면 언어에 대한 전체 정보 상자(예:
 ### 표준 날짜 및 시간 형식 문자열
 출력을 더 세부적으로 제어하려면 .NET Framework에서 제공하는 표준 날짜 및 시간 형식 문자열을 사용할 수 있습니다. 날짜 및/또는 시간을 표시하는 방법을 나타내는 데 사용되는 한 글자입니다. 전체 목록은 문서를 살펴보는 것이 좋지만 지금은 몇 가지 예가 있습니다.
 
-```
+```csharp
 DateTime dt = new DateTime(2042, 12, 24, 18, 42, 0);  
 
 Console.WriteLine("Short date pattern (d): " + dt.ToString("d"));  
@@ -3192,7 +3192,7 @@ Console.WriteLine("Year/month pattern (y): " + dt.ToString("y"));
 
 출력은 다음과 같습니다.
 
-```
+```csharp
 Short date pattern (d):         24-12-2042
 Long date pattern (D):      24. december 2042
 Full date/time pattern (F):     24. december 2042 18:42:00
@@ -3204,7 +3204,7 @@ Year/month pattern (y):         december 2042
 #### 사용자 지정 날짜 및 시간 형식 문자열
 모든 권한을 위해 사용자 지정 형식 문자열이 있습니다. 이는 ToString() 메서드에 전달하는 문자와 특수 문자의 조합으로, 날짜 및/또는 시간에 대해 원하는 정확한 형식을 표시합니다. 분명히 이것은 당신에게 많은 옵션을 남기므로 사용 가능한 형식 지정자의 전체 목록은 문서를 확인하되 어떻게 작동하는지 바로 살펴 보겠습니다.
 
-```
+```csharp
 DateTime dt = new DateTime(2042, 12, 24, 18, 42, 0);
 
 Console.WriteLine(dt.ToString("MM'/'dd yyyy"));
@@ -3216,7 +3216,7 @@ Console.WriteLine(dt.ToString("dddd @ hh:mm tt", System.Globalization.CultureInf
 
 출력은 다음과 같습니다.
 
-```
+```csharp
 12/24 2042
 24.12.2042
 12.24.2042 18:42
@@ -3229,7 +3229,7 @@ Wednesday @ 06:42 PM
 ### 날짜 구문 분석
 지금까지 코드에서 직접 정의된 날짜로 작업했지만 사용자가 지정한 날짜로 작업해야 하는 상황에 빠르게 직면하게 될 것입니다. 날짜를 쓰는 방법은 너무 많기 때문에 이것은 놀라울 정도로 복잡한 주제입니다. .NET Framework는 이전 예제에서 설명한 것처럼 모든 문화권을 지원하므로 이 작업을 수행할 수 있지만 사용자가 예상한 형식으로 날짜를 지정할 수 있도록 도와야 합니다. 그런 다음 Parse() 메서드를 사용해서 다음과 같이 사용자 지정 문자열을 DateTime 개체로 변환할 수 있습니다.
 
-```
+```csharp
 var usCulture = new System.Globalization.CultureInfo("en-US");
 Console.WriteLine("Please specify a date. Format: " + usCulture.DateTimeFormat.ShortDatePattern);
 string dateString = Console.ReadLine();
@@ -3241,7 +3241,7 @@ Console.WriteLine("Date entered (long date format):" + userDate.ToLongDateString
 
 그러나 Parse() 메서드는 매우 엄격합니다 - 사용자가 예상 형식으로 날짜를 입력하지 않으면 예외가 발생합니다. 이러한 이유로 일반적으로 TryParse() 메서드를 대신 사용하는 것이 좋습니다 - 똑같은 작업을 수행하지만 날짜를 구문 분석할 수 있는지 여부를 확인할 수 있으며 예외를 발생시키지 않습니다. 다음은 이전 예제의 수정된 버전입니다.
 
-```
+```csharp
 var usCulture = new System.Globalization.CultureInfo("en-US");
 Console.WriteLine("Please specify a date. Format: " + usCulture.DateTimeFormat.ShortDatePattern);
 string dateString = Console.ReadLine();
@@ -3268,7 +3268,7 @@ NULL은 자신의 객체와 문자열을 다룰 때 특히 관련이 있습니�
 
 따라서 정의되지 않은 / NULL 값을 나타내는 숫자를 원하면 정수 변수에 null을 할당 할 수 없기 때문에 막혔다고 느낄 수 있습니다. 물론 그 정수가 nullable 로 정의되지 않는 한 - 이와 같은 상황을 위해 만들어진 특수 언어 구조입니다. 물음표를 사용해서 형식을 사후 수정해서 nullable 변수를 정의합니다. 다음은 차이점을 설명하는 예입니다.
 
-```
+```csharp
 int notNullable = null; // Will cause an error from the compiler
 
 int? nullable = null; // Just fine - it's nullable!
@@ -3279,7 +3279,7 @@ int? nullable = null; // Just fine - it's nullable!
 ### null에 대한 null 허용 확인
 이제 null 일 수있는 변수를 정의했으므로 이것이 사실인지 확인하는 것이 분명히 중요합니다. 다른 형식과 마찬가지로 변수를 null kewyord와 비교하거나 nullable 개체가 System.Nullable 구조체에서 상속하는 HasValue 속성을 사용하는 두 가지 방법으로 이 작업을 수행할 수 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 int? nullable = null;  
 if (nullable == null)  
     Console.WriteLine("It's a null!");  
@@ -3292,7 +3292,7 @@ if (!nullable.HasValue)
 ### nullable 값 사용
 System.Nullable에서 nullable 개체도 Value 속성을 상속합니다. 이는 nullable 개체의 실제 값을 검색하는 데 사용할 수 있습니다. 그러나 == 및 != 연산자를 사용하는 것과 같은 간단한 비교 작업의 경우 C#을 사용하면 Value 속성을 생략하고 nullable 객체를 직접 비교할 수 있습니다. 즉, 이 두 예제는 모두 동일한 작업을 수행합니다.
 
-```
+```csharp
 int? nullable = 42;
 
 if (nullable.Value == 42)  
@@ -3304,7 +3304,7 @@ if (nullable == 42)
 
 Nullable 객체는 항상 기본 데이터 형식(예: 이전 예제와 같이 정수)에서 가져옵니다. 이러한 데이터 형식에는 기본값이 있을 수 있지만 nullable 기본값은 항상 null입니다. 그렇기 때문에 앞에서 설명한 대로 값을 사용하기 전에 null 참조를 확인해야 합니다. 그러나 nullable 유형은 사용할 수있는 매우 멋진 도우미 메서드 인 GetValueOrDefault()를 상속합니다. null이 아닌 한 nullable 개체의 값을 반환하며, 이 경우 기본 형식의 기본값을 반환합니다. 따라서 nullable 정수의 경우 0을 반환하고 nullable 부울의 경우 false 등을 반환합니다. 이를 통해 단일 문에서 값의 확인과 검색을 모두 처리할 수 있습니다.
 
-```
+```csharp
 if ((nullable.HasValue) && (nullable.Value == 42))
     Console.WriteLine("It's 42!");
 
@@ -3324,7 +3324,7 @@ if(nullable.GetValueOrDefault() == 42)
 ## Implicitly typed variables (the var keyword)
 C# 버전 3.0부터는 변수의 형식을 명시적으로 선언하는 대신 변수 선언의 왼쪽에 var 키워드를 사용할 수 있습니다. 이것은 항상 유형을 지정해야하는 클래스 수준이 아닌 메서드 내부에서만 가능합니다. var 키워드를 사용할 때 어떻게 보이는지 봅시다.
 
-```
+```csharp
 int age = 42; // Explicitly typed variable
 
 var name = "John Doe"; // Implicitly typed variable
@@ -3336,7 +3336,7 @@ var name = "John Doe"; // Implicitly typed variable
 
 우리의 첫 번째 예는 매우 사소합니다 - "string" 대신 "var"를 작성하는 데 많은 시간이 절약되지 않습니다. 그러나 때로는 훨씬 더 복잡한 유형을 새 변수로 선언하거나 함수(사용자 정의 또는 프레임워크)의 로컬 결과로 선언할 수도 있습니다. 다음과 같은 예에서 상당한 양의 키 입력을 저장할 수 있는 기회가 있습니다.
 
-```
+```csharp
 Dictionary<int, List<string>> dict1 = new Dictionary<int, List<string>>();
 
 var dict2 = new Dictionary<int, List<string>>();
@@ -3346,13 +3346,13 @@ var dict2 = new Dictionary<int, List<string>>();
 
 메서드 호출의 결과로 지역 변수를 선언할 때 var 키워드를 사용할 수도 있습니다.
 
-```
+```csharp
 var s = DateTime.Now.ToString();
 ```
 
 다시 말하지만, 더 빠르고 무슨 일이 일어나는지, 변수가 어떤 유형(문자열)을 보유할 것인지 여전히 매우 명확합니다. 하지만 이와 같은 경우에는 그렇지 않을 수도 있습니다.
 
-```
+```csharp
 var myVar = SomeMethodWithANameWhichDoesntIndicateTheReturnType();
 ```
 
@@ -3361,7 +3361,7 @@ var myVar = SomeMethodWithANameWhichDoesntIndicateTheReturnType();
 ### var 키워드 및 익명 유형
 지금까지 var 키워드로 본 예제는 대부분 "구문 설탕" 부서에서 가져온 것입니다. 그러나 익명 유형으로 작업할 때(나중에 자세히 설명) var 키워드를 사용해서 객체를 선언하는 것이 좋습니다.
 
-```
+```csharp
 var myObj = new
 {
     Name = "John Doe",
@@ -3384,7 +3384,7 @@ C# 버전 4.0에서 Microsoft는 새로운 형식인 동적을 도입했습니�
 
 동적 선언은 다른 유형을 선언하는 것과 같습니다 - 데이터 유형 대신 dynamic 키워드를 사용하면 됩니다.
 
-```
+```csharp
 dynamic d1;
 dynamic d2 = "A string";
 dynamic d3 = 42;
@@ -3392,7 +3392,7 @@ dynamic d3 = 42;
 
 이제 세 개의 다른 객체가 있습니다 - 첫 번째는 이 시점에서 실제로 아무것도 아니고 (null), 두 번째는 문자열이고 세 번째는 정수입니다. 인터프리터는 변수에 할당한 내용에 따라 런타임에 이를 자동으로 결정합니다. 이는 또한 컴파일러가 다음 예제와 같이 이러한 변수로 수행하는 작업을 확인하지 않는다는 것을 의미합니다.
 
-```
+```csharp
 dynamic d1;
 dynamic d2 = "A string";
 dynamic d3 = 42;
@@ -3407,7 +3407,7 @@ Console.WriteLine(d3.Length);
 ### 동적 개체
 물론 dynamic 키워드는 정수 및 문자열보다 더 복잡한 유형에 사용할 수 있습니다. 이에 대한 좋은 예는 다음과 같이 익명 객체를 보유하는 데 사용되는 경우입니다.
 
-```
+```csharp
 dynamic user = new
 {
     Name = "John Doe",
@@ -3420,7 +3420,7 @@ Console.WriteLine(user.Name + " is " + user.Age + " years old");
 
 유형이 동적이기 때문에 나중에 다음과 같이 속성을 추가 할 수 있다고 생각할 수 있습니다.
 
-```
+```csharp
 dynamic user = new
 {
     Name = "John Doe",
@@ -3434,7 +3434,7 @@ user.HomeTown = "New York";
 ### 유형 변경
 동적으로 선언된 변수는 전혀 형식이 없습니다. 대신 C#은 내부적으로 할당한 개체의 종류로 처리합니다. 첫 번째 예에서는 변수를 동적으로 선언하고 문자열 또는 정수를 할당한 다음 이러한 유형에 속하는 속성을 사용하기 시작하는 방법을 볼 수 있습니다. 그러나 동적 변수의 유형을 쉽게 변경할 수 있습니다 - 새 값을 할당하기만 하면 됩니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 dynamic user = new
 {
     Name = "John Doe",
@@ -3459,7 +3459,7 @@ dynamic 키워드를 사용하면 유형별로 지정되지 않은 변수를 사
 ## The ExpandoObject
 이전 섹션에서 보았듯이 dynamic 키워드를 사용해서 클래스를 먼저 정의하지 않고도 속성을 정의할 수 있는 객체를 보유할 수 있습니다. 동적 객체로 할 수 없는 것은 객체가 초기화된 후 동적으로 속성을 추가하는 것입니다. 이 특정 기능이 필요한 경우 C#에는 ExpandoObject라는 솔루션이 함께 제공됩니다. 사용이 얼마나 쉬운지 알 수 있도록 예로 바로 이동해 보겠습니다.
 
-```
+```csharp
 dynamic user = new System.Dynamic.ExpandoObject();
 user.Name = "John Doe";
 user.Age = 42;
@@ -3471,7 +3471,7 @@ ExpandoObject 를 인스턴스화하더라도 동적 유형으로 객체를 선�
 
 멋진 점은 ExpandoObject 가 ExpandoObject 의 속성이기도 가질 수 있으므로 다음 예제와 같이 즉석에서 복잡한 유형을 만들 수 있다는 것입니다.
 
-```
+```csharp
 dynamic user = new System.Dynamic.ExpandoObject();
 user.Name = "John Doe";
 user.Age = 42;
@@ -3485,7 +3485,7 @@ Console.WriteLine(user.Name + " is " + user.Age + " years old and lives in " + u
 
 HomeTown 속성을 문자열에서 ExpandoObject로 변경 한 다음 속성 (이 경우 도시의 이름과 우편 번호)을 추가하기 만하면됩니다. 그러나 그것으로 끝날 필요는 없습니다 - 우리는 또한 몇 가지 매우 정교한 트릭을 사용해서 즉석에서 객체에 메서드를 추가할 수도 있습니다.
 
-```
+```csharp
 user.DescribeUser = (Func<String>)(() => {
     return user.Name + " is " + user.Age + " years old and lives in " + user.HomeTown.Name + " [" + user.HomeTown.ZipCode + "]";
 });
@@ -3495,7 +3495,7 @@ Console.WriteLine(user.DescribeUser());
 
 꽤 깔끔한 것이지만 ExpandoObject 는 실제로 무엇입니까? 몇 가지 흥미로운 인터페이스를 구현하지만 그 중 하나는 IDictionary<string, object> - 이것은 모든 구문 설탕 아래에서 ExpandoObject 는 기본적으로 문자열 키를 기반으로 객체 값을 보유하는 사전이라는 것을 의미합니다. 이는 또한 ExpandoObject를 반복하는 것이 일반 사전을 반복하는 것만큼 쉽다는 것을 의미합니다. 이것은 매우 실용적입니다.
 
-```
+```csharp
 dynamic user = new System.Dynamic.ExpandoObject();  
 user.Name = "John Doe";  
 user.Age = 42;  
@@ -3518,7 +3518,7 @@ ExpandoObject 형식을 사용하면 즉석에서 개체를 정의한 다음 원
 
 익명 유형은 객체 이니셜라이저와 함께 new 연산자를 사용해서 초기화됩니다 - 그런 점에서 클래스를 인스턴스화하는 것과 매우 유사하며 클래스 이름만 생략합니다. 또한 객체 뒤에 클래스가 없으므로 객체에 대한 참조를 검색할 때 var 키워드를 사용해야 합니다. 복잡하게 들릴 수 있지만 다음 예제는 전혀 복잡하지 않다는 것을 보여줍니다.
 
-```
+```csharp
 var user = new    
 {    
     Name = "John Doe",    
@@ -3535,7 +3535,7 @@ Console.WriteLine(user.Name + " - " + user.Age + " years old");
 
 그러나 익명 유형은 여전히 많은 작업에 매우 실용적입니다. 일반적인 사용 시나리오는 복잡한 객체 (정의 된 클래스에서)가 있고 예를 들어 브라우저로 보내기 위해 객체를 가능한 한 작게 유지해야하거나 전체 객체에 소비자에게 노출하고 싶지 않은 민감한 정보가 있기 때문에 단순화해야하는 경우입니다. 익명 형식은 다음 예제와 같이 이에 적합합니다.
 
-```
+```csharp
 using System;
 using System.IO;
 
@@ -3562,7 +3562,7 @@ namespace AnonymousTypes
 
 아마도 익명 유형(Filename 및 FileSize)에 정의된 각 속성에 이름을 부여한다는 것을 눈치채셨을 것입니다. 그러나 기존 객체의 정보를 기반으로 객체를 만들 때 실제로 우리 자신의 이름을 생략하고 컴파일러가 다음과 같이 할당한 속성의 이름만 사용하도록 할 수 있습니다.
 
-```
+```csharp
 var simpleFileInfo = new
 {
     fileInfo.Name,
@@ -3603,7 +3603,7 @@ C#에는 많은 연산자가 있으며 그 중 일부는 값을 비교하는 데
 ### 같음 연산자: ==
 두 값을 비교하는 것은 분명히 여러 가지 방법으로 수행할 수 있지만 실제로 같은지 확인하려면 이중 등호(==) 연산자를 사용할 수 있습니다. 방법을 보여드리겠습니다.
 
-```
+```csharp
 int val1 = 42;
 int val2 = 42;
 if(val1 == val2)
@@ -3615,7 +3615,7 @@ if(val1 == val2)
 ### NOT equal 연산자: !=
 때로는 두 값이 같지 않고 같지 않은지 확인해야 합니다. C #에는 이에 대한 연산자가 있습니다 - 첫 번째 등호를 느낌표로 바꾸기만 하면 됩니다. 다음은 이전의 예제이지만 대신 not equal 연산자를 사용합니다.
 
-```
+```csharp
 int val1 = 42;
 int val2 = 43;
 if(val1 != val2)
@@ -3625,7 +3625,7 @@ if(val1 != val2)
 ### 작고 큰 연산자: < 및 >
 특히 숫자를 비교할 때 한 값이 다른 값보다 크거나 작은지 확인하고 싶어하는 경우가 많습니다. 다음과 같이 보다 큼 및 보다 작은 기호를 사용합니다.
 
-```
+```csharp
 int val1 = 42;
 int val2 = 43;
 if(val1 > val2)
@@ -3642,7 +3642,7 @@ else
 ### 작거나 크다: <= 및 >=
 위의 예에서는 값이 다른 값보다 작거나 큰지 확인하지만 때로는 더 작거나 큰 대신 어떤 것이 작거나 같거나 크거나 같은지 확인하고 싶을 때가 있습니다. 이 경우 다음과 같이 smaller/bigger-than 연산자 뒤에 등호를 넣으십시오.
 
-```
+```csharp
 int val1 = 42;
 if (val1 >= 42)
     Console.WriteLine("val1 is larger than or equal to 42");
@@ -3660,21 +3660,21 @@ if (val1 <= 42)
 ## Increment/decrement operators
 값, 특히 숫자 종류를 다룰 때 종종 1을 더하거나 빼야 할 필요가 있습니다. 물론 이것은 매우 쉽습니다 – 값을 가져와 1을 더한 다음 원래 변수에 다시 할당하기만 하면 됩니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 int userAge = 41; 
 userAge = userAge + 1; 
 ```
 
 userAge 변수에는 이제 41 대신 42 값이 포함됩니다. 물론 1로 빼고 싶을 때도 같은 작업을 수행 할 수 있습니다.
 
-```
+```csharp
 userAge = userAge - 1; 
 ```
 
 ### 접미사 증가/감소
 그러나 C#에는 이 작업을 처리하기 위한 훨씬 짧은 연산자인 증가/감소 연산자가 있습니다. 단순히 두 개의 더하기 또는 두 개의 빼기 기호로 구성됩니다. 다음은 이 연산자를 사용하도록 다시 작성된 첫 번째 예제입니다.
 
-```
+```csharp
 int userAge = 41; 
 userAge++; 
 Console.WriteLine("Age of user: " + userAge); 
@@ -3682,7 +3682,7 @@ Console.WriteLine("Age of user: " + userAge);
 
 결과는 똑같지만 얼마나 짧은지 보세요! 그리고 이 연산자는 물론 기존 문 내부에서 사용할 수 있기 때문에 더 짧게 만들 수 있습니다.
 
-```
+```csharp
 int userAge = 41; 
 Console.WriteLine("Age of user: " + userAge++); 
 ```
@@ -3692,14 +3692,14 @@ Console.WriteLine("Age of user: " + userAge++);
 ### 접두사 증가/감소
 이 연산자는 접미사 버전과 똑같이 보이지만 변수 뒤에 나타나는 대신 앞에 나타나 인터프리터가 주변 문을 평가하기 전에 변수를 평가하도록 지시합니다.
 
-```
+```csharp
 int userAge = 41; 
 Console.WriteLine("Age of user: " + ++userAge); 
 ```
 
 이렇게 하면 줄이 인쇄되기 전에 userAge가 증가하는 원하는 효과를 얻을 수 있습니다. 이제 세 개의 + 기호로 약간 혼란스러워 보일 수 있지만 첫 번째는 문자열 연결용이고 마지막 두 개는 실제 연산자입니다. 원하는 경우 increment 문을 괄호로 묶어 함께 속하는 항목을 명확하게 할 수 있습니다.
 
-```
+```csharp
 Console.WriteLine("Age of user: " + (++userAge)); 
 ```
 
@@ -3707,14 +3707,14 @@ Console.WriteLine("Age of user: " + (++userAge));
 
 물론 위에서 설명한 것과 똑같은 방식으로 감소 연산자를 사용할 수 있습니다. 접미사 버전은 다음과 같습니다.
 
-```
+```csharp
 int userAge = 41; 
 Console.WriteLine("Age of user: " + (userAge--)); 
 ```
 
 그리고 접두사 버전:
 
-```
+```csharp
 int userAge = 41; 
 Console.WriteLine("Age of user: " + (--userAge)); 
 ```
@@ -3732,28 +3732,28 @@ Console.WriteLine("Age of user: " + (--userAge));
 ## Addition assignment operators
 이전에 단순히 값에 1을 더하거나 빼는 증가/감소 연산자를 살펴보았지만 대부분의 경우 더하거나 빼려는 양에 더 많은 유연성을 원할 수 있습니다. 이를 위해 덧셈 할당 연산자를 사용할 수 있습니다. 그것이없으면 값에 더하는 것은 다음과 같습니다.
 
-```
+```csharp
 int userAge = 38; 
 userAge = userAge + 4; 
 ```
 
 그리 길거나 복잡하지는 않지만 코드를 더 짧게 만들 수 있는 방법을 항상 찾고 있기 때문에 대신 덧셈 할당 연산자를 사용할 수 있습니다.
 
-```
+```csharp
 int userAge = 38; 
 userAge += 4; 
 ```
 
 차이점을 확인하십시오: 값의 이름을 다시 명시하는 대신, 값에 무언가를 추가하고 동일한 변수에 다시 할당하려고 한다는 것을 나타내기 위해 연산자 +=(더하기-같음)로 모든 것을 말합니다. 물론 값을 빼고 싶을 때도 똑같이 할 수 있습니다.
 
-```
+```csharp
 int userAge = 42;   
 userAge -= 4; 
 ```
 
 이것은 아마도 명백해 보일 수 있지만 덜 분명할 수 있는 것은 곱셈과 나눗셈으로 할 수 있고 그만큼 쉽다는 것입니다.
 
-```
+```csharp
 int userAge = 42;   
 
 userAge *= 2;   
@@ -3768,14 +3768,14 @@ Console.ReadKey();
 ### 문자열에 추가
 지금까지 우리는 숫자로만 작업했지만 덧셈 할당 연산자는 문자열에도 똑같은 방식으로 사용할 수 있습니다. 비슷한 예제 세트로 설명하겠습니다 – 먼저 덧셈 할당 연산자 없이:
 
-```
+```csharp
 string userName = "John";   
 userName = userName + " Doe"; 
 ```
 
 물론 짧고 간결하지만 덧셈 배열 연산자를 사용하면 더 짧게 만들 수 있습니다.
 
-```
+```csharp
 string userName = "John"; 
 userName += " Doe";  
 ```
@@ -3792,7 +3792,7 @@ userName += " Doe";
 ## The NULL coalescing operator
 그만큼 ?? 연산자는 NULL 값을 확인하고 한 줄의 코드에서 대체 값을 할당할 수 있기 때문에 "null 병합 연산자"라고도 합니다. 이 연산자 없이 수행하는 것은 사소해 보일 수 있지만 다음 예제를 고려하십시오.
 
-```
+```csharp
 string userSuppliedName = null; 
 
 if (userSuppliedName == null) 
@@ -3805,7 +3805,7 @@ userSuppliedName 변수는 대화 상자 또는 데이터 파일과 같이 사�
 
 위의 예에서는 고전적인 if-else 접근 방식을 사용하지만 null-병합 연산자를 사용하면 한 줄로 훨씬 더 짧게 수행할 수 있습니다.
 
-```
+```csharp
 Console.WriteLine("Hello, " + (userSuppliedName ?? "Anonymous")); 
 ```
 
@@ -3823,7 +3823,7 @@ null 병합 연산자와 같은 모든 "구문 설탕"과 마찬가지로 항상
 
 문자열 보간은 매우 쉽게 달성할 수 있습니다 - 문자열 앞에 $ 문자를 붙이기만 하면 됩니다. 항상 그렇듯이 바로 예로 넘어가겠습니다.
 
-```
+```csharp
 string name = "John Doe";
 int age = 42;
 
@@ -3835,7 +3835,7 @@ Console.WriteLine($"{name} is {age} years old");
 
 또한 사용하는 변수는 단순한 유형일 필요는 없습니다 - 일반 문자열 연결을 수행하는 경우와 마찬가지로 복잡한 객체의 속성도 사용할 수 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 var user = new
 {
     Name = "John Doe",
@@ -3847,14 +3847,14 @@ Console.WriteLine($"{user.Name} is {user.Age} years old");
 ### 문자열 형식 지정
 기본적으로 포함하는 변수는 ToString() 메서드를 호출해서 필요한 문자열 표현으로 변환됩니다. 그러나 때로는 각 변수가 표시되는 방식을 좀 더 제어하려고 할 수 있으며 다행히도 형식 문자열 덕분에 이 작업을 매우 간단하게 수행할 수 있습니다. 변수 뒤에 콜론(:)을 넣은 다음 다음 예제와 같이 사용할 형식 문자열을 입력하기만 하면 됩니다.
 
-```
+```csharp
 double daysSinceMillenium = (DateTime.Now - new DateTime(2000, 1, 1)).TotalDays;  
 Console.WriteLine($"Today is {DateTime.Now:d} and {daysSinceMillenium:N2} days have passed since the last millennium!");
 ```
 
 결과는 날짜와 숫자에 대한 시스템 설정에 따라 다음과 같습니다.
 
-```
+```csharp
 Today is Friday, June 29, 2018 and 6,754.49 days have passed since the last millenium!
 ```
 
@@ -3862,7 +3862,7 @@ Today is Friday, June 29, 2018 and 6,754.49 days have passed since the last mill
 
 더 많은 제어를 원하면 기본 형식 문자열에서 사용자 지정 형식 문자열(예: 날짜)으로 변경할 수 있습니다.
 
-```
+```csharp
 Console.WriteLine($"Today is {DateTime.Now:yyyy-MM-dd}");
 ```
 
@@ -3871,7 +3871,7 @@ Console.WriteLine($"Today is {DateTime.Now:yyyy-MM-dd}");
 ### 변수 너머
 이제 문자열에 변수와 객체의 속성까지 포함시켰고 결과 문자열의 형식을 얼마나 쉽게 지정할 수 있는지 확인했습니다. 그러나 문자열 보간은 문자열에 추가할 수 있는 결과를 생성하는 한 실제로 문자열 안에 전체 C# 표현식을 가질 수 있기 때문에 그 이상입니다. 그 좋은 예는 "1 year old" 또는 "2 years old"의 문자열을 만들어야하는 고전적인 "어미 s 유무에 관계없이" 상황입니다. 문자열 내부에서 삼항 연산자를 사용해서 문자열 보간을 사용해서 직접 수행할 수 있습니다.
 
-```
+```csharp
 string name = "John Doe";
 int age = 42;
 
@@ -3880,7 +3880,7 @@ Console.WriteLine($"{name} is {age} year{(age == 1 ? "" : "s")} old");
 
 괄호 집합 안에 간단한 if-then-else 문을 문자열에 삽입한 방법을 확인하십시오. 표현식의 결과가 문자열(빈 문자열 또는 "s")이기 때문에 그렇게 할 수 있습니다. 수학도 할 수 있습니다.
 
-```
+```csharp
 Console.WriteLine($"5 + 5 * 2 = {((5 + 5) * 2)}");
 ```
 
@@ -3889,13 +3889,13 @@ Console.WriteLine($"5 + 5 * 2 = {((5 + 5) * 2)}");
 ### 문자열 보간 및 이스케이프
 매우 명백한 질문이 떠오르기 전에 문자열 보간으로 오래 작업하지 않았을 것입니다: 중괄호와 같은 특정 의미를 가진 문자를 어떻게 포함하고 문자 그대로 처리 할 수 있습니까? 이에 대한 대답은 일반적으로 특별한 목적을 무효화하기 위해 캐릭터에 다른 문자로 접두사/접미사를 붙이는 행위인 탈출입니다. 이것은 문자열 보간에도 해당되며, 중괄호를 문자 그대로 처리하려면 다음과 같이 두 번 작성해야합니다.
 
-```
+```csharp
 Console.WriteLine($"Insert {name} between curly braces: {{name here}}");
 ```
 
 결과:
 
-```
+```csharp
 Insert John Doe between curly braces: {name here}
 ```
 
@@ -3914,7 +3914,7 @@ Insert John Doe between curly braces: {name here}
 ## Introduction
 Language-Integrated Query의 약자인 LINQ는 .NET 프레임워크에 내장된 기술로, 다양한 소스에서 데이터를 쉽게 쿼리하고 조작할 수 있습니다. 즉, 소스가 단순 목록, 사전, XML 파일 또는 데이터베이스 테이블인지 여부에 관계없이 동일한 방식으로 데이터로 작업할 수 있습니다. LINQ는 Query 구문과 Method 구문의 두 가지 구문 버전으로 제공됩니다. 다음 섹션에서는 두 가지 방법에 대해 자세히 설명하겠지만 LINQ에 대해 자세히 알아볼 수 있도록 LINQ가 간단한 데이터 원본을 쿼리하는 방법을 간단히 보여 드리겠습니다.
 
-```
+```csharp
 var names = new List<string>()  
 {  
     "John Doe",  
@@ -3935,7 +3935,7 @@ LINQ 쿼리 구문을 사용해서 한 줄로 8자 이하의 목록의 모든 �
 ### 지연된 실행
 대부분의 프로그래머는 코드가 한 줄씩 실행되는 것을 보는 데 익숙하므로 쿼리 부분이 있는 줄에 도달하자마자 LINQ 쿼리가 실행되지 않는다는 사실에 놀랄 수도 있습니다. 대신 LINQ는 데이터 사용을 시작하자마자 실행됩니다 (예 : 데이터를 반복하거나 ToList () 또는 Count ()와 같은 메서드를 호출 할 때). 이는 또한 여러 줄에 걸쳐 쿼리를 작성해서 여러 작업을 수행할 수 있지만 필요할 때까지 데이터가 실제로 가져오지 않는다는 것을 의미합니다. 이전 쿼리 구문 대신 메서드 구문으로 전환하는 이전 예제의 확장 버전을 사용해서 설명하겠습니다.
 
-```
+```csharp
 var names = new List<string>()
 {
     "John Doe",
@@ -3971,7 +3971,7 @@ LINQ를 사용하면 다음 문서에서 설명할 쿼리 구문 또는 메서�
 ## LINQ: Query Syntax vs. Method syntax
 이전 섹션에서는 두 LINQ 구문이 어떻게 표시되는지 간략하게 살펴보았지만 이 문서에서 논의할 내용을 확신할 수 있도록 다시 바로 옆에 테이블에 배치해 보겠습니다.
 
-```
+```csharp
  var listOfNames = new List<string>()
 {
     "John Doe",
@@ -3993,7 +3993,7 @@ var mNames = listOfNames.Where(name => name.Length <= 8);
 ### 람다 표현식
 메서드 구문 예제에서 이전에 못한 것을 Where() 메서드의 매개 변수로 볼 수 있습니다. 다음과 같습니다.
 
-```
+```csharp
 name => name.Length <= 8
 ```
 
@@ -4005,7 +4005,7 @@ name => name.Length <= 8
 
 오른쪽에는 표현/명령문 부분이 있습니다. 여기에서 예상 결과를 생성합니다 - 이 경우 Where() 메서드에 문제의 이름을 포함할지 여부를 알려주는 부울 값입니다. 길이가 8자(이하)인 경우 이름을 포함하고 싶다는 표현식으로 대답합니다. 입력(왼쪽)을 사용해서 이를 결정할 수 있습니다(반드시 필요한 것은 아닙니다). 다시 말하지만, 우리는 그것을 "이름"이라고 부르지만 대신 "x"라고 부를 수 있었습니다 - 이 경우 명령문은 다음과 같았을 것입니다.
 
-```
+```csharp
 var mNames = listOfNames.Where(x => x.Length <= 8);
 ```
 
@@ -4021,7 +4021,7 @@ LINQ는 Query 구문과 Method 구문의 두 가지 구문 버전으로 제공�
 ## Filtering data: the Where() method
 데이터 집합에 대해 수행할 수 있는 가장 기본적인(그러나 가장 강력한) 작업 중 하나는 데이터 중 일부를 필터링하는 것입니다. LINQ 소개 문서에서 Where() 메서드로 수행할 수 있는 작업에 대해 이미 살펴보았지만 이 문서에서는 좀 더 자세히 살펴보겠습니다. 람다 표현식을 사용해서 작업을 수행할 수 있는 LINQ 메서드의 수에 대해 이미 논의했으며 Where() 메서드는 그 중 하나입니다 - 각 항목을 입력으로 제공한 다음 항목이 포함될지(true 반환) 또는 제외(false 반환)을 결정하는 논리를 제공합니다. 다음은 기본적인 예입니다.
 
-```
+```csharp
 List<int> numbers = new List<int>()
 {
     1, 2, 4, 8, 16, 32
@@ -4035,7 +4035,7 @@ foreach (var n in smallNumbers)
 
 그러나 표현식은 그렇게 간단할 필요가 없습니다 - 일반 if 문인 것처럼 더 많은 요구 사항을 쉽게 추가 할 수 있습니다.
 
-```
+```csharp
 List<int> numbers = new List<int>()
 {
     1, 2, 4, 8, 16, 32
@@ -4049,7 +4049,7 @@ foreach (var n in smallNumbers)
 
 물론 표현식에서 다양한 메서드 call 을 사용할 수도 있습니다 - 최종 결과가 부울 값인 한 Where() 메서드가 문제의 항목을 포함할지 여부를 알 수 있도록 하면 됩니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 List<int> numbers = new List<int>()
 {
     1, 2, 4, 7, 8, 16, 29, 32, 64, 128
@@ -4067,7 +4067,7 @@ foreach (var n in validNumbers)
 
 물론 숫자와 문자열보다 더 복잡한 개체에 대해 작동하며 여전히 사용하기 매우 쉽습니다. 숫자 대신 사용자 정보가 있는 객체를 사용하고 Where() 메서드를 사용해서 39세 이하의 문자 "J"로 시작하는 이름을 가진 사용자 목록을 가져오는 이 예제를 살펴보십시오.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4104,7 +4104,7 @@ namespace LinqWhere2
 
 비교를 위해 메서드 기반 대신 쿼리 기반 구문을 사용한 경우 where 연산은 다음과 같습니다.
 
-```
+```csharp
 // Method syntax
 var filteredUsers = listOfUsers.Where(user => user.Name.StartsWith("J") && user.Age < 40);
 
@@ -4115,7 +4115,7 @@ var filteredUsersQ = from user in listOfUsers where user.Name.StartsWith("J") &&
 ### 여러 Where() 메서드 연결
 LINQ 소개에서 이에 대해 간략하게 논의했습니다. LINQ 표현식의 실제 결과는 실제로 데이터가 필요할 때까지(예: 데이터를 반복하거나 계산하거나 반복할 때까지) 실현되지 않습니다(예제에서와 같이). 이는 또한 여러 Where() 메서드를 함께 연결한다는 것을 의미하며, 읽기 쉽다고 생각되면 매우 복잡한 표현식에서 확실히 그럴 수 있습니다! 다음은 이전 예제의 수정된 버전입니다.
 
-```
+```csharp
 List<int> numbers = new List<int>()
 {
     1, 2, 4, 8, 16, 32
@@ -4137,7 +4137,7 @@ Where() 메서드를 사용하면 데이터 원본에서 원하지 않는 항목
 ## Sorting data: the OrderBy() & ThenBy() methods
 이제 이전 문서를 통해 LINQ를 사용해서 데이터 원본에서 데이터를 가져오고 Where() 메서드로 필터링하는 방법을 배웠으므로 다음 단계는 데이터를 정렬하는 것일 수 있습니다. 우리는 숫자 또는 예를 들어 User 클래스를 기반으로 하는 객체 목록을 사용했으므로 항목을 가져온 순서는 목록에 추가된 순서와 동일했습니다. 그러나 앞에서 설명했듯이 LINQ 작업에 대한 데이터 원본은 XML 문서 또는 데이터베이스일 수도 있습니다. 따라서 필요한 데이터가 확보되면 데이터를 적절하게 정렬하는 능력이 중요합니다. 다행스럽게도 LINQ에는 데이터를 정렬하는 데 사용하기 쉬운 몇 가지 방법이 있습니다.
 
-```
+```csharp
 List<int> numbers = new List<int>()
 {
     1, 7, 2, 61, 14
@@ -4149,7 +4149,7 @@ foreach (int number in sortedNumbers)
 
 쉬웠죠? OrderBy() 메서드를 호출하고 정렬 기준이 되는 객체 또는 객체의 멤버를 제공하면 정렬된 목록이 반환됩니다. 물론 다음 예제에서 볼 수 있듯이 문자열을 사용해서 쉽게 수행할 수 있지만 항목을 내림차순(가장 큰 것에서 가장 작은 것으로/Z에서 A로) 순서로 가져와 보겠습니다.
 
-```
+```csharp
 List<string> cityNames = new List<string>()
 {
     "Amsterdam", "Berlin", "London", "New York"
@@ -4161,7 +4161,7 @@ foreach (string cityName in sortedCityNames)
 
 OrderBy() 메서드 대신 OrderByDescending() 메서드를 사용한다는 점을 제외하고는 이전과 똑같은 작업을 수행합니다. 그러나 물론 정수와 문자열 목록을 쉽게 정렬할 수 있습니다. 그러나 LINQ 덕분에 더 복잡한 개체를 정렬하는 것도 거의 쉽습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4200,7 +4200,7 @@ namespace LinqOrder2
 ### ThenBy() 및 ThenByDescending()
 위의 예에서는 사용자 목록을 연령별로 정렬했는데, 같은 나이의 사용자가 여러 명 있다면 어떻게 될까요? 우리의 작은 예에서도 꽤 일반적인 시나리오는 Jane과 John이 동갑이고 그들의 자녀가 쌍둥이라고 상상해 보십시오. 이 경우 데이터 소스가 연령별로 정렬된 후에도 순서를 제어하는 것이 실용적입니다. 이를 위해 ThenBy() 및 ThenByDescending() 메서드를 사용할 수 있습니다. 그들은 이름에서 알 수 있듯이 초기 정렬 후 순서를 제어합니다. 이를 사용해서 사용자 목록을 먼저 연령별로 정렬한 다음 이름별로 알파벳순으로 정렬할 수 있습니다.
 
-```
+```csharp
 List<User> listOfUsers = new List<User>()
 {
     new User() { Name = "John Doe", Mail = "john@doe.com", Age = 42 },
@@ -4216,7 +4216,7 @@ foreach (User user in sortedUsers)
 
 아주 간단하지만 매우 효과적입니다! 데이터가 테스트 케이스의 데이터보다 더 복잡한 경우 여러 ThenBy() 메서드 호출을 연결할 수도 있습니다. 물론 필요한 방식으로 OrderBy(), OrderByDescending(), ThenBy() 및 ThenByDescending() 메서드를 혼합하고 일치시킬 수 있습니다.
 
-```
+```csharp
 List<User> sortedUsers = listOfUsers.OrderBy(user => user.Age).ThenByDescending(user => user.Name).ToList();
 foreach (User user in sortedUsers)  
     Console.WriteLine(user.Name + ": " + user.Age + " years");
@@ -4224,7 +4224,7 @@ foreach (User user in sortedUsers)
 
 이 자습서에서는 주로 LINQ의 메서드 기반 구문을 사용하지만 항상 그렇듯이 섹션의 예제 중 하나를 사용해서 쿼리 구문으로 어떻게 표시되는지 보여 드리겠습니다.
 
-```
+```csharp
 // Method syntax
 List<User> sortedUsers = listOfUsers.OrderBy(user => user.Age).ThenByDescending(user => user.Name).ToList();
 
@@ -4246,7 +4246,7 @@ OrderBy() 및 ThenBy() 메서드(및 "내림차순" 메서드)를 사용하면 �
 
 이 섹션에서 논의할 메서드는 Take() 및 Skip()이라고 하며, 조합하면 웹 사이트에서 페이지 매김과 같은 작업을 수행하는 데 적합합니다. 사실 함께 사용하는 경우가 많지만 물론 단독으로 사용할 수도 있습니다. Take() 메서드는 데이터 소스에서 X 개의 항목을 가져오는 반면 Skip() 을 사용하면 처음 X 항목을 무시할 수 있습니다. 간단한 예는 다음과 같습니다.
 
-```
+```csharp
 List<string> names = new List<string>()
 {
     "John Doe",
@@ -4264,7 +4264,7 @@ foreach (var name in middleNames)
 ### Skip() 및 Take()를 사용한 기본 페이지 매김
 보시다시피 Take() 및 Skip() 메서드는 모두 사용하기가 매우 간단하지만 이전에 사용한 것보다 더 많은 데이터로 시연하는 것이 더 흥미롭기 때문에 이러한 방법이 어떻게 도움이 될 수 있는지 더 잘 보여줄 약간 더 복잡한 예제를 자유롭게 만들었습니다. 먼저 코드는 다음과 같습니다.
 
-```
+```csharp
 using System;
 using System.Globalization;
 using System.Linq;
@@ -4322,7 +4322,7 @@ Skip() 및 Take() 메서드는 사용하기가 매우 간단하지만 그럼에�
 
 이 섹션에서는 데이터 소스에서 데이터를 가져와 다른 것으로 만들 수 있는 Select() 메서드에 대해 설명합니다. 위에서 언급한 것과 같이 더 크고 복잡한 데이터 소스에서 더 분명하게 유용 할 수 있지만 Select() 메서드가 어떻게 작동하고 무엇을해야하는지 보여주려고 노력하는 동안 어쨌든 참아주세요. 평소와 같이 바로 예로 넘어가겠습니다.
 
-```
+```csharp
 using System;  
 using System.Collections.Generic;  
 using System.Linq;  
@@ -4358,7 +4358,7 @@ namespace LinqSelect1
 
 개체 목록(이 경우 User 형식)을 가져온 다음 Select() 메서드를 사용해서 이 목록을 새 형식의 목록으로 만드는 방법을 확인합니다. 이 예에서는 객체 목록을 사용자 이름이 포함된 문자열 목록으로 변환합니다. 이는 데이터를 다르게 보여야 하거나 데이터의 하위 집합만 필요한 경우 매우 실용적입니다. 물론 그 반대의 방법으로도 작동합니다 - 이름 목록에서 User 객체 목록을 쉽게 만들 수 있습니다 (나중에 수동으로 나이를 추가해야합니다).
 
-```
+```csharp
 List<User> listOfUsers = new List<User>()
 {
     new User() { Name = "John Doe", Age = 42 },
@@ -4377,7 +4377,7 @@ foreach (User user in users)
 
 Select() 메서드로 새 객체를 만드는 방법을 주목하십시오 - 그것은 매우 강력한 기능으로, 즉석에서 데이터로 거의 모든 것을 할 수 있습니다! 이 기능의 일반적인 용도는 웹 서비스를 통해 JSON 또는 XML로 반환하는 것과 같이 개체의 덜 복잡한 버전을 만드는 것입니다. 많은 속성 (생일, 성별, 메일, 주소, 국가 등)을 가진 User 클래스가 있지만 이러한 속성의 제한된 집합 만 반환하려고한다고 상상해보십시오. 다음은 단순화 된 예입니다 - 훨씬 더 복잡한 User 클래스를 상상해보십시오.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4420,7 +4420,7 @@ namespace LinqSelect2
 
 이미 논의한 것처럼 이 예제에서는 주로 LINQ의 메서드 구문을 사용하지만 물론 이 예제에서 수행하는 작업은 LINQ 쿼리 구문으로도 표현할 수 있습니다.
 
-```
+```csharp
 // Method syntax
 var simpleUsers = listOfUsers.Select(user => new
 {
@@ -4452,7 +4452,7 @@ Select() 메서드를 사용하면 예를 들어 단일 속성만 선택하거�
 ## Grouping data: the GroupBy() Method
 지금까지 우리는 주로 데이터 목록으로 작업했습니다. 우리는 그것을 정렬하고, 제한하고, 새로운 개체로 형성했지만 한 가지 중요한 작업이 여전히 누락되어 있습니다. 데이터를 그룹화할 때 항목을 가져온 다음 하나 이상의 속성에 따라 여러 그룹으로 나눕니다. 다음과 같은 데이터 소스가 있다고 상상해 보십시오.
 
-```
+```csharp
 var users = new List<User>()
 {
     new User { Name = "John Doe", Age = 42, HomeCountry = "USA" },
@@ -4465,7 +4465,7 @@ var users = new List<User>()
 
 사용자 개체의 플랫 목록이지만 이러한 사용자를 모국이나 나이에 따라 그룹화하는 것이 흥미로울 수 있습니다. LINQ를 사용하면 처음에는 GroupBy() 메서드를 사용하는 것이 약간 혼란스러울 수 있지만 이 작업은 매우 쉽습니다. 작동 방식을 살펴보겠습니다.
 
-```
+```csharp
 using System;    
 using System.Collections.Generic;    
 using System.Linq;    
@@ -4507,7 +4507,7 @@ namespace LinqGroup
 
 결과 출력은 다음과 같습니다.
 
-```
+```csharp
 Users from USA:
 * John Doe
 * Jane Doe
@@ -4524,7 +4524,7 @@ Users from Germany:
 ### 사용자 지정 그룹 키
 보시다시피 기존 속성을 기준으로 그룹화하는 것은 쉽지만 지금쯤 알고 계시겠지만 LINQ 메서드는 매우 유연합니다. 원하는 것을 기반으로 자신만의 사용자 지정 그룹을 만드는 것도 간단합니다 - 사용자 이름의 처음 두 글자를 기반으로 그룹을 만드는 예는 다음과 같습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4566,7 +4566,7 @@ namespace LinqGroup
 
 이름에 대해 Substring() 메서드를 호출해서 처음 두 글자를 가져온 다음 LINQ는 이를 기반으로 사용자 그룹을 만듭니다. 결과는 다음과 같습니다.
 
-```
+```csharp
 Users starting with Jo:
 * John Doe
 * Joe Doe
@@ -4579,7 +4579,7 @@ Users starting with Je:
 
 보시다시피 GroupBy() 메서드 내에서 메서드를 자유롭게 호출 할 수 있습니다 - 사실, LINQ가 항목을 그룹화하는 데 사용할 수있는 것을 반환하는 한 원하는 거의 모든 작업을 수행 할 수 있습니다. 다음 예제에서와 같이 항목에 대한 새 정보를 반환하는 메서드를 만든 다음 이를 사용해서 그룹을 만들 수도 있습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4630,7 +4630,7 @@ namespace LinqGroup
 
 User 클래스에서 GetAgeGroup() 메서드를 구현한 방법을 확인하십시오. 사용자의 연령 그룹을 정의하는 문자열을 반환하고 GroupBy() 메서드에서 호출해서 그룹 키로 사용하기 만합니다. 결과는 다음과 같습니다.
 
-```
+```csharp
 Adults:
 * John Doe [42 years]
 * Jane Doe [38 years]
@@ -4643,7 +4643,7 @@ Children:
 
 다른 곳에서 유용 할 수 있기 때문에 User 클래스에서 GetAgeGroup() 메서드를 구현하기로 선택했지만 때로는 다른 곳에서 재사용하지 않고 그룹을 만들기 위해 빠른 논리가 필요합니다. 이러한 상황에서는 다음과 같이 GroupBy() 메서드에 직접 로직을 람다 식으로 자유롭게 제공할 수 있습니다.
 
-```
+```csharp
 var usersGroupedByAgeGroup = users.GroupBy(user =>
         {
         if (user.Age < 13)
@@ -4659,7 +4659,7 @@ var usersGroupedByAgeGroup = users.GroupBy(user =>
 ### 복합 키로 그룹화
 지금까지 우리 그룹의 키는 속성이나 메서드 호출 결과와 같은 단일 값이었습니다. 그러나 여러 값을 포함하는 고유한 키를 자유롭게 만들 수 있습니다. 사용 예는 다음과 같이 모국과 연령을 기준으로 사용자를 그룹화하려는 경우일 수 있습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4703,7 +4703,7 @@ namespace LinqGroup2
 
 GroupBy() 메서드에서 사용하는 구문에 주목하세요 - 단일 속성을 제공하는 대신 HomeCountry 및 Age 속성을 포함하는 새 익명 개체를 만듭니다. 이제 LINQ는 이러한 두 속성을 기반으로 그룹을 만들고 익명 개체를 그룹의 Key 속성에 연결합니다. 보시다시피 그룹을 반복할 때 두 속성을 모두 자유롭게 사용할 수 있습니다. 결과는 다음과 같습니다.
 
-```
+```csharp
 Users from USA at the age of 42:
 * John Doe [42 years]
 Users from USA at the age of 38:
@@ -4717,7 +4717,7 @@ Users from USA at the age of 8:
 
 항상 그렇듯이 이 섹션에서는 LINQ 메서드 구문을 사용했지만 LINQ 쿼리 구문을 사용해서 수행하는 방법에 대한 비교 예제를 제공하겠습니다.
 
-```
+```csharp
 // Method syntax
 var usersGroupedByCountryAndAge = users.GroupBy(user => new { user.HomeCountry, user.Age });
 // Query syntax
@@ -4743,7 +4743,7 @@ var usersGroupedByCountryAndAgeQ = from user in users group user by new { user.H
 
 이 주제는 여러 언어를 지원해야하는 응용 프로그램에서 작업하는 경우 특히 중요하지만, 그렇지 않더라도 예를 들어 날짜 및 숫자에 대해 동일한 표기법을 사용하지 않는 장치에서 사용될 수 있다는 사실을 처리해야 합니다. 이것이 얼마나 중요한지 설명하기 위해 다음 예를 고려하십시오.
 
-```
+```csharp
 string inputNumber = "1.425";
 double usNumber = double.Parse(inputNumber, CultureInfo.GetCultureInfo("en-US"));
 double germanNumber = double.Parse(inputNumber, CultureInfo.GetCultureInfo("de-DE"));
@@ -4752,7 +4752,7 @@ Console.WriteLine(usNumber.ToString() + " is not the same as " + germanNumber);
 
 inputNumber 변수는 애플리케이션 사용자로부터 방금 받은 것(예: 웹 양식의 텍스트 필드에 입력된 것)으로 생각하십시오. 우리는 더블을 사용합니다. Parse() 메서드를 사용해서 float로 변환하지만 CultureInfo 유형의 두 번째 매개변수를 전달합니다 - 이 매개변수를 전달하지 않으면 시스템 설정이 사용되며 영어, 독일어 또는 완전히 다른 것이 될 수 있습니다. 이제 출력을 확인하십시오.
 
-```
+```csharp
 1,425 is not the same as 1425
 ```
 
@@ -4768,7 +4768,7 @@ inputNumber 변수는 애플리케이션 사용자로부터 방금 받은 것(�
 ## Application Culture & UICulture
 이전 섹션에서 논의했듯이 문화를 다루는 것은 특히 날짜와 숫자를 다룰 때 매우 중요합니다. 이러한 이유로 응용 프로그램에는 항상 "CurrentCulture"로 정의된 CultureInfo 클래스의 인스턴스가 있습니다. CultureInfo 클래스에 있는 이 속성을 변경하지 않는 한 운영 체제에서 사용하는 문화권과 동일합니다. 이를 확인하는 간단한 방법은 다음과 같습니다.
 
-```
+```csharp
 Console.WriteLine("Current culture: " + CultureInfo.CurrentCulture.Name);
 ```
 
@@ -4778,7 +4778,7 @@ Console.WriteLine("Current culture: " + CultureInfo.CurrentCulture.Name);
 
 그러나 응용 프로그램에서 사용하는 문화권을 더 많이 제어해야 할 수도 있습니다. 예를 들어, 응용 프로그램이 모든 곳에서 영어를 사용하는 경우 사용자의 컴퓨터가 지정했다는 이유만으로 독일어 또는 스웨덴어 형식으로 숫자를 출력하는 것이 합리적입니까? 아마도 그럴 수 있지만 그렇지 않은 경우 CurrentCulture 속성을 다시 사용해서 새 기본값/대체 문화권을 매우 쉽게 지정할 수 있습니다.
 
-```
+```csharp
 CultureInfo.CurrentCulture = new CultureInfo("en-US");
 Console.WriteLine("Current culture: " + CultureInfo.CurrentCulture.Name);
 
@@ -4791,7 +4791,7 @@ Console.WriteLine("Number format (German): " + largeNumber.ToString(germanCultur
 
 기본적으로 CurrentCulture 속성을 en-US 문화권으로 설정해서 재정의합니다. 그런 다음 큰 부동 소수점 숫자와 함께 출력합니다. 결과는 영어 형식의 숫자임을 알 수 있습니다. 마지막 몇 줄에서는 다른 CultureInfo 인스턴스를 ToString() 메서드에 전달해서 대체 문화권을 무효화하는 방법을 보여 줍니다. 이 경우 숫자도 독일어 형식으로 출력됩니다. 이 예제의 결과 출력은 다음과 같아야 합니다.
 
-```
+```csharp
 Current culture: en-US
 Number format (Current culture): 12345.67
 Number format (German): 12345,67
@@ -4805,7 +4805,7 @@ CultureInfo에는 CurrentUICulture라는 속성도 있습니다. 이 속성은 �
 
 .NET Framework 버전 4.5 이전에는 만든 각 새 스레드의 문화권을 수동으로 지정해야 했습니다. 그러나 .NET 4.5에서는 CultureInfo.DefaultThreadCurrentCulture 속성이 도입되었습니다. 설정하면 생성된 각 새 스레드도 이 문화권을 사용하며 CurrentCulture 속성만큼 사용하기 쉽습니다.
 
-```
+```csharp
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("de-DE");
 ```
 
@@ -4823,7 +4823,7 @@ CultureInfo.CurrentCulture 및/또는 CultureInfo.DefaultThreadCurrentCulture �
 
 시작하기 전에 빠른 알림: CultureInfo 클래스는 System.Globalization 네임스페이스의 일부이므로 예제를 시도할 때마다 가져와야 합니다.
 
-```
+```csharp
 using System.Globalization;
 ```
 
@@ -4832,7 +4832,7 @@ using System.Globalization;
 
 이러한 차이점이 중요한 경우가 있으며, 이 경우 이러한 지역별 버전의 CultureInfo 클래스를 사용해야 합니다. 반면에 영어가 언어일 뿐이고 이 언어를 특정 국가나 지역에 묶고 싶지 않은 상황도 있을 것입니다. 이를 위해 .NET Framework는 언어만 지정하는 소위 중립 문화권을 정의합니다. 실제로 en-US와 en-GB는 모두 이러한 중립 문화권에서 상속되며(동일한 언어를 공유하기 때문에 완벽하게 의미가 있습니다!) Parent 속성에서 액세스할 수 있습니다. 예를 들어 설명하겠습니다.
 
-```
+```csharp
 CultureInfo enGb = new CultureInfo("en-GB");
 CultureInfo enUs = new CultureInfo("en-US");
 Console.WriteLine(enGb.DisplayName);
@@ -4843,7 +4843,7 @@ Console.WriteLine(enUs.Parent.DisplayName);
 
 매우 유용한 예제는 아니지만 CultureInfo 클래스의 내부 구조에 대한 더 나은 아이디어를 제공합니다. 출력은 다음과 같아야 합니다.
 
-```
+```csharp
 English (United Kingdom)
 English (United States)
 English
@@ -4853,7 +4853,7 @@ English
 ### 올바른 CultureInfo 가져오기
 이전 예제에서 언어-국가/지역 식별자를 클래스의 생성자에 전달해서 원하는 CultureInfo 클래스를 가져올 수 있음을 확인했습니다. 그러나 위에서 설명한 것처럼 중립 문화권을 찾고 있을 수 있으므로 언어 식별자를 전달할 수도 있습니다.
 
-```
+```csharp
 CultureInfo en = new CultureInfo("en");
 ```
 
@@ -4861,7 +4861,7 @@ CultureInfo en = new CultureInfo("en");
 
 특정 문화권을 식별하는 또 다른 방법은 소위 LCID(LoCale ID)를 사용하는 것입니다. 기존 CultureInfo 인스턴스의 속성으로 찾을 수 있지만 ID를 알고 있는 경우 CultureInfo 개체를 인스턴스화하는 데 사용할 수도 있습니다. 예를 들어 en-US의 LCID는 1033입니다.
 
-```
+```csharp
 CultureInfo enUs = new CultureInfo(1033);
 ```
 
@@ -4870,7 +4870,7 @@ CultureInfo enUs = new CultureInfo(1033);
 ### 사용 가능한 문화권 목록 가져오기
 이제 특정 문화권을 가져와 다양한 용도로 사용할 수 있지만 사용자가 언어 및/또는 국가/지역을 선택할 수 있도록 하기 위해 사용 가능한 문화권 목록이 필요할 수 있습니다. 다행히도 .NET 프레임워크를 사용하면 이러한 작업을 쉽게 수행할 수 있습니다.
 
-```
+```csharp
 CultureInfo[] specificCultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
 foreach (CultureInfo ci in specificCultures)
     Console.WriteLine(ci.DisplayName);
@@ -4881,7 +4881,7 @@ Console.WriteLine("Total: " + specificCultures.Length);
 
 하지만 중립적인 문화에 더 관심이 있으신가요? 예를 들어, 사용 가능한 언어 목록을 작성하면서 해당 언어가 어느 국가나 지역과 관련이 있는지 신경 쓰지 않는 경우 이는 완벽하게 의미가 있을 것입니다. 이 작업은 CultureTypes 매개 변수를 변경하는 것만큼 간단합니다.
 
-```
+```csharp
 CultureInfo[] neutralCultures = CultureInfo.GetCultures(CultureTypes.NeutralCultures);
 foreach (CultureInfo ci in neutralCultures)
     Console.WriteLine(ci.DisplayName);
@@ -4896,7 +4896,7 @@ CultureInfo 클래스의 인스턴스가 있으면 즉시 사용 가능한 매�
 #### 날짜/시간 형식
 DateTimeFormat 속성을 사용하면 날짜 및 시간의 서식을 지정하는 방법에 대한 정보와 지정된 문화권의 달력에 대한 많은 유용한 정보에 액세스할 수 있습니다. 이에 대한 좋은 예는 FirstDayOfWeek 및 CalendarWeekRule 속성입니다 - 일주일이 시작되는 요일(보통 일요일 또는 월요일)과 연도의 첫 번째 달력 주가 결정되는 방법(예: 첫날 또는 첫 번째 전체 주)을 알려줄 수 있습니다.
 
-```
+```csharp
 CultureInfo enUs = new CultureInfo("en-US");
 Console.WriteLine("First day of the: " + enUs.DateTimeFormat.FirstDayOfWeek.ToString());
 Console.WriteLine("First calendar week starts with: " + enUs.DateTimeFormat.CalendarWeekRule.ToString());
@@ -4906,7 +4906,7 @@ CultureInfo 인스턴스를 자신의 문화권 또는 알고 있는 다른 문�
 
 또 다른 멋진 점은 MonthNames와 같은 속성과 GetMonthName()과 같은 메서드를 사용해서 특정 문화권의 월 및 일 이름에 대한 정보를 얻을 수 있다는 것입니다. 다음은 간단한 예입니다.
 
-```
+```csharp
 CultureInfo enUs = new CultureInfo("en-US");
 
 foreach (string monthName in enUs.DateTimeFormat.MonthNames)
@@ -4916,7 +4916,7 @@ Console.WriteLine("Current month: " + enUs.DateTimeFormat.GetMonthName(DateTime.
 
 그리고 DayNames 속성과 GetDayName() 메서드를 사용해서 며칠 동안 똑같은 작업을 수행할 수 있습니다.
 
-```
+```csharp
 CultureInfo enUs = new CultureInfo("en-US");
 
 foreach (string dayName in enUs.DateTimeFormat.DayNames)
@@ -4929,7 +4929,7 @@ DateTimeFormat 속성에는 DateSeparator, YearMonthPattern 등과 같은 더 �
 #### 숫자 형식
 DateTimeFormat에 날짜에 대한 정보가 있는 것처럼 특정 문화권이 NumberFormat 속성에서 숫자를 처리하는 방법에 대한 정보에 액세스할 수 있습니다. 이 정보는 숫자의 시각적 표현을 요청할 때마다(예: 문자열로 변환하고 콘솔에 쓸 때) 사용되지만 NumberFormat 속성의 속성과 메서드를 사용해서 정보에 직접 액세스할 수도 있습니다.
 
-```
+```csharp
 CultureInfo enUs = new CultureInfo("en-US");  
 Console.WriteLine(enUs.DisplayName + ":");  
 Console.WriteLine("NumberGroupSeparator: " + enUs.NumberFormat.NumberGroupSeparator);  
@@ -4945,7 +4945,7 @@ NumberGroupSeparator 및 NumberDecimalSeparator 속성을 사용해서 영어 �
 
 통화에 대해 말하자면, NumberFormat 속성은 주어진 문화권이 통화 금액을 표시하는 데 사용하는 기호를 알려줄 수도 있습니다.
 
-```
+```csharp
 CultureInfo enUs = new CultureInfo("en-US");
 Console.WriteLine(enUs.DisplayName + " - currency symbol: " + enUs.NumberFormat.CurrencySymbol);
 CultureInfo deDe = new CultureInfo("de-DE");
@@ -4978,14 +4978,14 @@ CultureInfo 클래스에 대한 이전 섹션에서는 국가/지역 부분에 �
 ### RegionInfo 인스턴스 가져오기
 지역 정보에 액세스하려면 RegionInfo 클래스의 인스턴스가 필요합니다. ISO 3166 코드 또는 지역의 언어 코드/지역-국가 코드(예: "en-US")를 사용할 수 있는 생성자가 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 RegionInfo regionInfo = new RegionInfo("en-US");
 Console.WriteLine(regionInfo.EnglishName);
 ```
 
 즉, CultureInfo 클래스에 대한 참조가 이미 있는 경우 이를 사용해서 일치하는 RegionInfo를 쉽게 가져올 수 있습니다. 이전 섹션에서 배운 것처럼 애플리케이션에는 항상 참조할 수 있는 대체 CultureInfo 인스턴스가 있습니다.
 
-```
+```csharp
 RegionInfo regionInfo = new RegionInfo(CultureInfo.CurrentCulture.Name);
 Console.WriteLine(regionInfo.EnglishName);
 ```
@@ -4995,7 +4995,7 @@ Console.WriteLine(regionInfo.EnglishName);
 ### RegionInfo 클래스의 중요한 속성
 우리는 이미 EnglishName 속성을 체크아웃했습니다 - 단순히 지역 이름을 영어로 반환합니다. 그러나 물론 거기에는 더 좋은 것들이 있습니다 - 예를 들어 통화와 관련된 몇 가지 속성:
 
-```
+```csharp
 RegionInfo regionInfo = new RegionInfo("sv-SE");
 Console.WriteLine(regionInfo.CurrencySymbol);
 Console.WriteLine(regionInfo.ISOCurrencySymbol);
@@ -5005,7 +5005,7 @@ Console.WriteLine(regionInfo.CurrencyNativeName);
 
 CurrencySymbol, ISOCurrencySymbol, CurrencyEnglishName 및/또는 CurrencyNativeName을 사용해서 금전적으로 관련된 메시지를 출력하는 데 필요한 정보를 얻습니다. 결과는 다음과 같습니다(이 경우 스웨덴어/스웨덴의 경우).
 
-```
+```csharp
 kr
 SEK
 Swedish Krona
@@ -5014,7 +5014,7 @@ Svensk krona
 
 IsMetric 속성을 사용해서 지정된 지역에서 미터법을 사용하는지 쉽게 확인할 수도 있습니다.
 
-```
+```csharp
 RegionInfo regionInfo = new RegionInfo(CultureInfo.CurrentCulture.Name);
 Console.WriteLine("Is the metric system used in " + regionInfo.EnglishName + "? " + (regionInfo.IsMetric ? "Yes" : "No"));
 ```
@@ -5033,7 +5033,7 @@ Console.WriteLine("Is the metric system used in " + regionInfo.EnglishName + "? 
 ### RegionInfo를 사용해서 국가 목록 가져오기
 이전 섹션에서는 기본적으로 언어-국가/지역 조합 목록을 남기는 .NET Framework에서 정의된 모든 문화권 목록을 가져오는 방법을 보여 주었습니다. RegionInfo 클래스와 함께 사용해서 국가/지역 목록을 가져올 수 있습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -5110,7 +5110,7 @@ else
 ### Match 클래스 및 메서드
 다음 예제에서는 테스트 문자열에 발견된 숫자를 캡처해서 사용자에게 제시합니다.
 
-```
+```csharp
 string testString = "John Doe, 42 years";
 Regex regex = new Regex("[0-9]+");
 Match match = regex.Match(testString);
@@ -5122,7 +5122,7 @@ if (match.Success)
 
 Match 클래스에는 일치하는 문자열보다 유용한 정보가 더 포함되어 있습니다 - 예를 들어, 일치 항목이 발견 된 위치나 길이 등을 쉽게 찾을 수 있습니다.
 
-```
+```csharp
 string testString = "John Doe, 42 years";
 Regex regex = new Regex("[0-9]+");
 Match match = regex.Match(testString);
@@ -5136,7 +5136,7 @@ if (match.Success)
 #### 캡처 그룹(하위 문자열)
 처음 몇 가지 예에서는 검색 문자열에서 단일 값을 찾았지만 정규식은 물론 그 이상의 작업을 수행할 수 있습니다! 예를 들어, 테스트 문자열에서 이름과 나이를 모두 찾는 동시에 명령 및 "years" 텍스트와 같은 관련 없는 항목을 정렬할 수 있습니다. 이와 같은 작업을 수행하는 것은 정규식의 경우 식은 죽 먹기지만 구문에 익숙하지 않다면 매우 복잡해 보일 수 있지만 어쨌든 시도해 보겠습니다.
 
-```
+```csharp
 string testString = "John Doe, 42 years";
 Regex regex = new Regex(@"^([^,]+),\s([0-9]+)");
 Match match = regex.Match(testString);
@@ -5150,7 +5150,7 @@ if (match.Success)
 #### 명명된 캡처 그룹
 방금 사용한 정규식보다 더 고급에 길어지면 번호가 매겨진 캡처 그룹의 순서와 인덱스를 지속적으로 기억해야 하기 때문에 관리하기 어려워질 수 있습니다. 다행히 정규식과 .NET  Framework는 명명된 캡처 그룹 기능을 지원하므로 정규식에서 각 캡처 그룹에 이름을 지정한 다음 Groups 속성에서 이름으로 참조할 수 있습니다. 번호가 매겨진 대신 명명된 그룹 이름을 사용하는 다음 예제를 확인하십시오.
 
-```
+```csharp
 string testString = "John Doe, 42 years";
 Regex regex = new Regex(@"^(?<name>[^,]+),\s(?<age>[0-9]+)");
 Match match = regex.Match(testString);
@@ -5164,7 +5164,7 @@ if (match.Success)
 ### MatchCollection 클래스
 Match 클래스는 단일 일치 항목으로만 작업할 경우(이전 예제에서 본 것처럼 일치 항목에는 여러 값이 포함될 수 있음) 한 번에 여러 일치 항목으로 작업할 경우에 적합합니다. 이를 위해 MatchCollection 클래스를 반환하는 Matches() 메서드가 있습니다. 일치하는 모든 값을 찾은 순서대로 포함합니다. 어떻게 사용할 수 있는지 살펴보겠습니다.
 
-```
+```csharp
 string testString = "123-456-789-0";
 Regex regex = new Regex(@"([0-9]+)");
 MatchCollection matchCollection = regex.Matches(testString);
@@ -5174,7 +5174,7 @@ foreach (Match match in matchCollection)
 
 이전 예제에 정규식과 테스트 문자열을 변경했습니다. 이제 여러 숫자를 포함하는 테스트 문자열과 하나 이상의 숫자로 구성된 문자열을 구체적으로 찾는 정규식이 있습니다. Matches() 메서드를 사용해서 문자열에서 발견된 일치 항목을 포함하는 MatchCollection 을 가져옵니다. 이 경우 4개의 일치 항목이 있으며 foreach 루프로 차례대로 출력합니다. 결과는 다음과 같습니다.
 
-```
+```csharp
 Number found at index 0: 123
 Number found at index 4: 456
 Number found at index 8: 789
@@ -5197,13 +5197,13 @@ String 클래스에는 이미 Replace() 메서드가 있지만 간단한 검색�
 
 이전 문서에서와 마찬가지로 모든 예제에서는 다음과 같이 RegularExpressions 네임스페이스를 선언했다고 가정합니다.
 
-```
+```csharp
 using System.Text.RegularExpressions;
 ```
 
 그런 다음 정규식 기반 문자열 교체로 작업해 보겠습니다. Regex 클래스에 있는 Replace() 메서드를 사용합니다.
 
-```
+```csharp
 string testString = "<b>Hello, <i>world</i></b>";
 Regex regex = new Regex("<[^>]+>");
 string cleanString = regex.Replace(testString, "");
@@ -5216,7 +5216,7 @@ Console.WriteLine(cleanString);
 ### 캡처된 값으로 바꾸기
 그러나 실제로 제거하고 싶지 않고 대신 꺾쇠 괄호(`<...>`)를 대괄호(`[...]`)로 바꾸는 등 브라우저에서 해석되지 않는 것으로 태그를 변환한다고 가정해 보겠습니다. 이것은 정규식이 실제로 그 힘을 보여주는 곳인데, 이전 예제에서 다시 작성한 버전에서 알 수 있듯이 실제로 매우 사용하기 쉽습니다.
 
-```
+```csharp
 string testString = "<b>Hello, <i>world</i></b>";
 Regex regex = new Regex("<([^>]+)>");
 string cleanString = regex.Replace(testString, "[$1]");
@@ -5225,14 +5225,14 @@ Console.WriteLine(cleanString);
 
 실제로 두 가지 사소한 세부 사항을 변경했습니다. 정규식에 괄호 세트를 추가해서 캡처 그룹을 만들고 기본적으로 꺾쇠 괄호 사이의 값을 첫 번째 캡처 그룹으로 캡처했습니다. Replace() 메서드에서는 기본적으로 캡처 그룹 번호 1을 의미하는 특수 표기법 `$1` 을 사용해서 이것을 역참조합니다. 이 작업을 수행하면 출력은 다음과 같습니다.
 
-```
+```csharp
 [b]Hello, [i]world[/i][/b]
 ```
 
 #### 명명된 캡처 그룹
 물론 명명된 캡처 그룹(이전 섹션에서 설명)을 사용할 때도 다음과 같이 똑같은 작업을 수행할 수 있습니다.
 
-```
+```csharp
 string testString = "<b>Hello, <i>world</i></b>";
 Regex regex = new Regex("<(?<tagName>[^>]+)>");
 string cleanString = regex.Replace(testString, "[${tagName}]");
@@ -5245,7 +5245,7 @@ Console.WriteLine(cleanString);
 ### MatchEvaluator 메서드 사용
 그러나 값이 대체되는 방법에 대해 보다 많은 제어를 원한다면? 이를 위해 MatchEvaluator 매개변수를 사용할 수 있습니다 - 기본적으로 대체가 이루어질 때마다 호출되는 메서드에 대한 참조(대리자)일 뿐이므로 대체 값을 사용하기 전에 수정할 수 있습니다. 이미 몇 번 사용한 HTML 태그 예제를 고수하겠지만 이번에는 어떤 HTML 태그가 사용되는지 제어합니다. 전체 예는 다음과 같습니다.
 
-```
+```csharp
 using System;
 using System.Text.RegularExpressions;
 
@@ -5305,7 +5305,7 @@ MatchEvaluator 파라미터를 사용하는 것은 분명히 매우 강력하며
 
 첫 번째 예제에서 볼 수 있듯이 Regex 수정자는 일반적으로 Regex 인스턴스를 만들 때 두 번째 매개변수로 지정됩니다. 다음과 같이 파이프(|) 문자로 구분해서 둘 이상의 옵션을 지정할 수 있습니다.
 
-```
+```csharp
 new Regex("[a-z]+", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 ```
 
@@ -5314,7 +5314,7 @@ new Regex("[a-z]+", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 ### RegexOptions.IgnoreCase
 이것은 아마도 가장 많이 사용되는 수정자 중 하나일 것입니다. 위에서 설명한 대로 정규식이 대소문자를 구분하는 것에서 대소문자를 구분하지 않는 것으로 변경됩니다. 이 예에서 볼 수 있듯이 큰 차이가 있습니다.
 
-```
+```csharp
 public void IgnoreCaseModifier()
 {
     string testString = "Hello World";
@@ -5329,7 +5329,7 @@ public void IgnoreCaseModifier()
 
 문자(a-z)와 공백만 일치하도록 설계된 간단한 정규식을 지정합니다. RegexOptions.IgnoreCase 수정자가 없는 인스턴스와 RegexOptions.IgnoreCase 수정자가 있는 인스턴스를 만든 다음 소문자와 대문자와 단일 공백으로 구성된 동일한 테스트 문자열을 일치시키려고 합니다. 출력은 놀랍지 않게 다음과 같습니다.
 
-```
+```csharp
 Case-sensitive match: False
 Case-insensitive match: True
 ```
@@ -5337,7 +5337,7 @@ Case-insensitive match: True
 ### RegexOptions.Singleline
 정규식에서 점 (.) 은 기본적으로 포괄적 인 문자입니다. 그러나 기본적으로 줄 바꿈과 일치하지 않으므로 점을 사용해서 문자, 숫자, 특수 문자 등의 전체 줄을 일치시킬 수 있지만 줄 바꿈이 발견되는 즉시 일치가 종료됩니다. 그러나 Singleline 수정자를 제공하면 점도 줄 바꿈과 일치합니다. 차이점을 보여 드리겠습니다.
 
-```
+```csharp
 public void SinglelineModifier()
 {
     string testString = 
@@ -5356,7 +5356,7 @@ public void SinglelineModifier()
 
 출력은 다음과 같습니다.
 
-```
+```csharp
 Normal regex: Hello World
 
 Singleline regex: Hello World
@@ -5367,7 +5367,7 @@ Singleline regex: Hello World
 ### RegexOptions.Multiline
 이 장에서 이야기했듯이 정규식은 특별한 목적을 가진 다양한 문자로 구성됩니다. 이에 대한 또 다른 예는 ^ 및 $ 두 문자입니다. 실제로 위의 대소문자 구분 예제에서 문자열의 시작과 끝을 일치시키기 위해 사용했습니다. 그러나 여러 줄 한정자를 제공하면 이 동작을 문자열의 시작/끝과 일치시키는 것에서 줄의 시작/끝과 일치하도록 변경할 수 있습니다. 이는 일치하는 라인을 개별적으로 처리하려는 경우에 매우 유용합니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 public void MultilineModifier()
 {
     string testString =
@@ -5393,7 +5393,7 @@ public void MultilineModifier()
 ### RegexOptions.컴파일됨
 정규식은 일반적으로 매우 빠르지만 매우 복잡하고 루프와 같이 여러 번 실행되는 경우 속도가 약간 느려질 수 있습니다. 이러한 상황에서는 프레임워크가 Regex를 어셈블리로 컴파일할 수 있도록 하는 RegexOptions.Compiled 한정자를 사용할 수 있습니다. 이것은 Regex 객체를 정상적으로 인스턴스화하는 것과 비교해서 만들 때 약간의 추가 시간이 걸리지만 모든 후속 Regex 작업(일치 등)을 더 빠르게 만듭니다.
 
-```
+```csharp
 Regex compiledRegex = new Regex("[a-z]*", RegexOptions.Compiled);
 ```
 
@@ -5423,7 +5423,7 @@ Regex compiledRegex = new Regex("[a-z]*", RegexOptions.Compiled);
 
 대부분의 경우 특정 범위 내에서 하나 이상의 난수를 생성할 수 있는 Random 클래스로 시작합니다. 사용하기도 매우 간단합니다.
 
-```
+```csharp
 Random random = new Random();
 Console.WriteLine("A random number: " + random.Next());
 ```
@@ -5432,7 +5432,7 @@ Random 클래스의 새 인스턴스를 초기화한 다음 Next() 메서드를 
 
 정수 대신 소수점이있는 숫자가 필요한 경우 NextDouble() 메서드를 대신 사용할 수 있습니다 - 0.0 (포함)에서 0.99 사이의 숫자 (실제로 1.0 미만)를 제공합니다.
 
-```
+```csharp
 Random random = new Random();
 Console.WriteLine("A random number with decimals: " + random.NextDouble());
 ```
@@ -5440,14 +5440,14 @@ Console.WriteLine("A random number with decimals: " + random.NextDouble());
 ### 랜덤 범위
 대부분의 경우 난수를 원하는 것이 아니라 1에서 100 사이와 같은 일종의 범위 내에서 원합니다. 걱정하지 마세요, Random 클래스는 매우 쉽게 할 수 있습니다.
 
-```
+```csharp
 Random random = new Random();
 Console.WriteLine("A random number between 1 and 100: " + random.Next(1, 101));
 ```
 
 Next() 호출을 최소값과 최대 수를 포함하는 호출로 변경하기만 하면 됩니다. 최소값은 포함 되지만(이 숫자는 가능한 결과에 포함됨) 최대값은 배타적 인 (이 숫자는 가능한 결과에 포함되지 않음) 100 대신 101을 사용하는 이유입니다. 숫자를 0에서 99 사이로 만들고 싶다면 대신 다음과 같습니다.
 
-```
+```csharp
 Console.WriteLine("A random number between 0 and 99: " + random.Next(0, 100));
 ```
 
@@ -5456,13 +5456,13 @@ Random 클래스는 항상 시드로 인스턴스화되며, 시드를 제공하�
 
 시드는 다음과 같이 생성자 오버로드를 사용해서 Random 클래스에 제공됩니다.
 
-```
+```csharp
 Random random = new Random(1000);
 ```
 
 이것을 사용해서 서로 5개의 난수를 생성하면 어떻게 되는지 봅시다.
 
-```
+```csharp
 Random random = new Random(1000);
 for(int i = 0; i < 5; i++)
     Console.WriteLine("A random number between 1 and 100: " + random.Next(1, 101));
@@ -5470,7 +5470,7 @@ for(int i = 0; i < 5; i++)
 
 이 코드를 몇 번이나 실행해도 얻을 수 있는 5 개의 "난수"숫자는 다음과 같을 것이라고 확신합니다.
 
-```
+```csharp
 A random number between 1 and 100: 16
 A random number between 1 and 100: 24
 A random number between 1 and 100: 76
@@ -5500,19 +5500,19 @@ Random 클래스를 사용해서 난수를 생성하지만 예측 가능한 무�
 ### Process 클래스 사용
 다른 응용 프로그램을 인스턴스화하려면 Process 클래스를 사용할 수 있습니다. Process 클래스는 System.Diagnostics 네임스페이스에 포함되어 있으므로 포함해야 합니다.
 
-```
+```csharp
 using System.Diagnostics;
 ```
 
 가장 기본적인 형태는 정적 Start() 메서드를 사용해서 응용 프로그램을 시작할 수 있습니다.
 
-```
+```csharp
 Process.Start("https://www.google.com/");
 ```
 
 URL을 제공한다는 사실을 알 수 있습니다. 다음과 같이 로컬 응용 프로그램(예: 메모장에 대한 경로일 수 있습니다.
 
-```
+```csharp
 Process.Start(@"C:\Windows\notepad.exe");
 ```
 
@@ -5521,7 +5521,7 @@ Process.Start(@"C:\Windows\notepad.exe");
 #### 인수/매개변수를 사용해서 애플리케이션 시작
 응용 프로그램을 시작할 때 하나 이상의 인수/매개 변수를 제공하는 것이 유용한 경우가 많습니다. 콘솔 응용 프로그램은 일반적으로 다양한 매개 변수를 사용하지만 Windows 응용 프로그램도 일반적으로 명령줄을 통해서 제공되는 **매개 변수를 처리** 할 수 있습니다. 예를 들어, 메모장을 시작하면서 편집할 파일을 함께 제공할 수 있습니다.
 
-```
+```csharp
 Process.Start(@"C:\Windows\notepad.exe", @"C:\Windows\win.ini");
 ```
 
@@ -5531,7 +5531,7 @@ Process.Start(@"C:\Windows\notepad.exe", @"C:\Windows\win.ini");
 ### ProcessStartInfo 클래스 사용
 Process 클래스는 응용 프로그램을 시작하는 것보다 훨씬 더 많은 작업을 수행할 수 있는 매우 복잡한 클래스입니다. 이 섹션에서는 새로운 프로세스를 시작하는 기능에만 중점을 두지 않겠습니다. 그렇게 처리할 때는 때때로 수행 방법을 좀 더 자세히 제어해야하며 바로 ProcessStartInfo 클래스가 작동하는 곳입니다. Start() 메서드에 경로를 제공하는 대신 다음과 같이 ProcessStartInfo 클래스의 인스턴스를 전달할 수 있습니다.
 
-```
+```csharp
 ProcessStartInfo processStartInfo = new ProcessStartInfo();
 processStartInfo.FileName = @"C:\Windows\notepad.exe";
 processStartInfo.Arguments = @"C:\Windows\win.ini";
@@ -5545,7 +5545,7 @@ Process.Start(processStartInfo);
 #### 창 스타일
 WindowStyle 속성을 사용해서 시작할 응용 프로그램의 창이 화면에 표시되는 방식을 제어합니다. 예를 들어 다음과 같이 최대화 또는 최소화로 시작할 수 있습니다.
 
-```
+```csharp
 processStartInfo.WindowStyle = ProcessWindowStyle.Minimized;
 ```
 
@@ -5560,7 +5560,7 @@ UseShellExecute 속성을 사용하면 시스템 셸을 사용해서 프로세�
 #### 워킹디렉토리
 WorkingDirectory 속성을 사용해서 작업을 실행할 디렉터리 경로를 설정합니다. 그러나 UseShellExecute 가 true 로 설정되어 있는지 false 로 설정된지에 따라 다르게 사용된다는 점에 유의하시기 바랍니다. UseShellExecute가 true 로 설정되면 WorkingDirectory 속성은 단순히 실행 파일의 위치를 지정하고 실행 파일을 시작하는 애플리케이션의 작업 디렉터리는 실행 파일의 작업 디렉터리로 설정합니다. UseShellExecute 가 false 로 설정되면 WorkingDirectory 속성은 실행 파일을 찾는 데 사용하지 않고 대신 해당 값을 시작한 프로세스에 적용하며 새로운 프로세스의 컨텍스트 내에서만 의미가 있습니다.
 
-```
+```csharp
 RedirectStandardInput, RedirectStandardOutput 및 RedirectStandardError
 ```
 
@@ -5570,7 +5570,7 @@ RedirectStandardInput, RedirectStandardOutput 및 RedirectStandardError
 ### 종합 예제
 논의할 속성이 조금 더 있지만 지금까지 설명한 속성이 가장 흥미롭습니다. 대신 방금 논의한 몇 가지 기술을 모두 결합한 예제를 보여 드리겠습니다. 먼저 전체 예제 코드를 제공한 다음 이에 대해 논의하겠습니다.
 
-```
+```csharp
 Console.WriteLine("Press any key to run CMD...");
 Console.ReadKey();
 
@@ -5627,7 +5627,7 @@ Process 클래스는 매우 강력한 도구로, 다른 프로세스를 시작�
 ## Breakpoints
 디버깅에 대해 가장 먼저 알아야 할 것은 중단점입니다. 그것은 실제로 이름에서 알 수 있듯이 실행이 중단되는 코드의 지점을 표시합니다 (아니요, 실제로 코드를 중단하지는 않습니다. 걱정하지 마십시오). Visual Studio 또는 Express 버전 중 하나에 중단점을 배치하는 것은 코드 왼쪽에 있는 회색 여백을 마우스 왼쪽 버튼으로 클릭하는 것만큼 간단합니다. 클릭하면 반짝이는 빨간색 원이 보상으로 표시됩니다 - 이 원은 응용 프로그램을 실행할 때 디버거가 중지되는 위치를 표시합니다. 자신을 살펴보는 것이 좋으며 효과를 확인하기 위해 다음 코드를 사용합니다.
 
-```
+```csharp
 namespace DebugTest
 {
     class Program
@@ -5658,7 +5658,7 @@ namespace DebugTest
 ## Stepping through the code
 이 장에서는 디버깅의 또 다른 매우 필수적인 부분인 코드를 단계별로 실행하는 방법을 살펴보겠습니다. 이를 위해 이 간단한 응용 프로그램을 작성했습니다.
 
-```
+```csharp
 namespace DebugTest
 {
     class Program
@@ -5679,7 +5679,7 @@ namespace DebugTest
 
 자, 그것은 매우 기본적이었지만 더 복잡한 코드를 작성하기 시작하면 깨닫게 될 것처럼 매우 유용합니다. 이 예에서는 단일 함수 내에 머물렀기 때문에 코드의 흐름이 매우 간단했지만 코드가 여러 클래스 및/또는 함수에 걸쳐 퍼지기 시작하면 어떻게 될까요? 이 예제를 시도하십시오.
 
-```
+```csharp
 namespace DebugTest
 {
     class Program
@@ -5733,7 +5733,7 @@ Watch 창은 Locals 창과 약간 비슷하지만, 여기에서만 어떤 변수
 ### 조건
 이 옵션을 사용하면 중단점에 적중하기 위해 true이거나 변경되어야 하는 조건을 지정할 수 있습니다. 이것은 특정 상황에서만 실행을 중지하려는 고급 코드를 처리할 때 정말 유용할 수 있습니다. 예를 들어, 관련 코드에 도달하기 전에 많은 시간을 반복하는 루프가 있을 수 있습니다 - 이와 같은 상황에서는 중단점을 배치한 다음 적절한 조건을 구성할 수 있습니다. 다음은 작동 방식을 보여주는 다소 지루한 예입니다.
 
-```
+```csharp
 static void Main(string[] args)
 {
     for(int i = 0; i < 10; i++)
@@ -5743,7 +5743,7 @@ static void Main(string[] args)
 
 콘솔에 출력하는 줄에 중단점을 설정합니다. 이제 응용 프로그램을 실행하십시오 - 루프가 반복될 때마다 중단점이 트리거됩니다. 그러나 아마도 그것은 우리가 원하는 것이 아닐 것입니다. 어쩌면 우리는 i가 4(5번째 반복)와 같을 때만 적중되기를 원할 수도 있습니다. 다음과 같은 간단한 조건을 정의해서 이를 수행합니다.
 
-```
+```csharp
 나 == 4
 ```
 
@@ -5770,13 +5770,13 @@ static void Main(string[] args)
 
 다음은 모든 내용을 보여주는 간단한 열거형의 예입니다.
 
-```
+```csharp
 public enum Days { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 ```
 
 이러한 가능한 값은 모두 숫자에 해당합니다. 구체적으로 설정하지 않으면 첫 번째 값은 0이고 다음 값은 1과 같습니다. 다음 코드 조각은 이를 증명하고 열거형에서 가능한 값 중 하나를 사용하는 방법을 보여줍니다.
 
-```
+```csharp
 using System;
 
 namespace ConsoleApplication1
@@ -5797,13 +5797,13 @@ namespace ConsoleApplication1
 
 월요일 값이 숫자 0에 직접 매핑되므로 출력은 0이 됩니다. 분명히 우리는 그것을 변경할 수 있습니다 - 줄을 다음과 같이 변경하십시오.
 
-```
+```csharp
 public enum Days { Monday = 1, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 ```
 
 코드를 다시 실행하면 월요일이 0이 아닌 1과 같은 것을 볼 수 있습니다. 다른 모든 값은 결과뿐만 아니라 한 숫자 더 높습니다. 다른 값에도 다른 숫자를 할당할 수 있습니다. 숫자에 대한 직접 매핑으로 인해 숫자를 사용해서 다음과 같이 열거형에서 해당 값을 가져올 수도 있습니다.
 
-```
+```csharp
 Days day = (Days)5;
 Console.WriteLine(day);
 Console.ReadLine();
@@ -5811,7 +5811,7 @@ Console.ReadLine();
 
 열거형의 또 다른 멋진 기능은 값의 문자열 표현도 첨부할 수 있다는 사실입니다. 위의 예제를 다음과 같이 변경하십시오.
 
-```
+```csharp
 static void Main(string[] args)
 {
     string[] values = Enum.GetNames(typeof(Days));
@@ -5831,7 +5831,7 @@ Enum 클래스에는 열거형 작업에 유용한 메서드가 많이 포함되
 ## Exception handling
 모든 프로그램에서 때때로 문제가 발생합니다. C#을 사용하면 가장 일반적인 실수를 방지하는 데 도움이 되는 우수한 컴파일러가 있습니다. 분명히 발생할 수있는 모든 오류를 볼 수는 없으며 이러한 경우 .NET 프레임워크는 예외를 발생시켜 문제가 발생했음을 알려줍니다. 배열에 대한 이전 장에서 너무 많은 항목을 배열에 채우려고 할 경우 예외가 발생하는 방법을 설명했습니다. 예를 들어 보겠습니다.
 
-```
+```csharp
 using System;
 using System.Collections;
 
@@ -5857,7 +5857,7 @@ namespace ConsoleApplication1
 
 좋아, 이 예제를 실행해 보면 내가 말하는 것을 알 수 있을 것입니다. 우리가 뭘 잘못하고 있는지 아시나요? 우리는 2개의 항목을 위한 공간이 있는 정수 배열을 정의했지만 그 안에 3개의 공백을 사용하려고 합니다. 분명히 이로 인해 오류가 발생하며, 이 예제를 실행하려고 하면 표시됩니다. Visual Studio 내에서 실행할 때 IDE는 예외에 대한 몇 가지 옵션을 제공하지만 EXE 파일을 두 번 클릭해서 프로그램을 실행하려고 하면 불쾌한 오류가 발생합니다. 오류가 발생할 수 있다는 것을 알고 있다면 이를 처리해야 합니다. 여기에서 예외가 사용됩니다. 다음은 위의 코드의 약간 수정된 버전입니다.
 
-```
+```csharp
 int[] numbers = new int[2];
 try
 {
@@ -5877,7 +5877,7 @@ Console.ReadLine();
 
 오류 처리와 관련해서 새로운 가장 친한 친구인 시도를 소개하겠습니다.. catch 블록. 지금 프로그램을 실행해 보고 차이점을 확인하십시오 - Visual Studio / Windows가 심각한 문제가 발생했다고 말하는 대신 우리 자신의 이야기를 들려줍니다. 하지만 무엇이 잘못되었는지 알 수 있다면 좋지 않을까요? 문제 없어요:
 
-```
+```csharp
 catch(Exception ex)
 {
     Console.WriteLine("An error occured: " + ex.Message);
@@ -5888,13 +5888,13 @@ catch(Exception ex)
 
 내가 말했듯이 예외는 가장 일반적인 유형의 예외입니다. 예외 처리 규칙은 항상 가장 일반적인 유형의 예외를 사용해야 한다고 말하며, 이 경우 실제로 코드에서 생성된 정확한 유형의 예외를 알고 있습니다. 어떻게? Visual Studio가 우리가 처리하지 않았을 때 알려주었기 때문입니다. 확실하지 않은 경우 문서는 일반적으로 메서드가 throw할 수 있는 예외를 설명합니다. 알아내는 또 다른 방법은 Exception 클래스를 사용해서 출력 줄을 다음과 같이 변경하는 것입니다.
 
-```
+```csharp
 Console.WriteLine("An error occured: " + ex.GetType().ToString());
 ```
 
 결과는 예상대로 IndexOutOfRangeException입니다. 따라서 이 예외를 처리해야 하지만 둘 이상의 예외를 처리하는 것을 막을 수 있는 것은 없습니다. 어떤 상황에서는 어떤 예외가 발생했는지에 따라 다른 작업을 수행하려고 할 수도 있습니다. catch 블록을 다음과 같이 변경하기만 하면 됩니다.
 
-```
+```csharp
 catch(IndexOutOfRangeException ex)
 {
     Console.WriteLine("An index was out of range!");
@@ -5909,7 +5909,7 @@ catch(Exception ex)
 
 예외와 관련해서 알아야 할 한 가지 사항은 finally 블록입니다. finally 블록은 필요에 따라 catch 블록 집합에 추가하거나 독점적으로 사용할 수 있습니다. finally 블록 내의 코드는 항상 예외 또는 예외 없음으로 실행됩니다. 파일 참조를 닫거나 더 이상 필요하지 않은 개체를 삭제해야 하는 경우 좋은 위치입니다. 지금까지 예제가 매우 간단했기 때문에 가비지 수집기가 처리하기 때문에 정리가 필요하지 않았습니다. 그러나 finally 블록이 필요한 상황에 직면할 가능성이 높기 때문에 예제의 확장 버전은 다음과 같습니다.
 
-```
+```csharp
 int[] numbers = new int[2];
 try
 {
@@ -5950,7 +5950,7 @@ C# 구조체는 클래스에 대한 경량 대안입니다. 클래스와 거의 
 
 먼저 구조체를 사용하는 예를 보여 드린 다음 클래스 대신 구조체를 사용할 때의 몇 가지 제한 사항에 대해 논의하겠습니다.
 
-```
+```csharp
 class Program
 {
     static void Main(string[] args)
@@ -5993,7 +5993,7 @@ struct Car
 
 우선, 필드에는 이니셜라이저가 있을 수 없으므로 다음과 같이 멤버를 선언할 수 없습니다.
 
-```
+```csharp
 private string color = "Blue";
 ```
 
@@ -6013,7 +6013,7 @@ private string color = "Blue";
 ## Introduction to XML with C#
 XML은 eXtensible Markup Language의 약자입니다. 주로 인간과 기계 모두가 쉽게 읽을 수 있기 때문에 데이터 교환에 매우 널리 사용되는 형식입니다. HTML로 웹 사이트를 작성해 본 적이 있다면 XML은 기본적으로 HTML의 더 엄격한 버전이기 때문에 매우 친숙해 보일 것입니다. XML은 태그, 속성 및 값으로 구성되며 다음과 같습니다.
 
-```
+```csharp
 <users>
 <user name="John Doe" age="42" />
 <user name="Jane Doe" age="39" />
@@ -6033,7 +6033,7 @@ XmlReader는 더 빠르고 메모리 소모가 적은 대안입니다. XML 콘�
 
 환율이 포함된 XML 문서를 읽는 작은 예를 들어 보겠습니다. 다행스럽게도 유럽중앙은행(ECB)은 우리가 사용할 수 있는 것을 가지고 있습니다. 다운로드해서 하드 드라이브에서 읽을 수 있지만 실제로 XmlReader 및 XmlDocument 클래스 모두 로컬 파일뿐만 아니라 원격 URL에서도 XML을 읽을 수 있습니다. 여기에서 XML ( http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml )을 볼 수 있으며 여기에 몇 가지 코드와 설명이 있습니다.
 
-```
+```csharp
 using System;
 using System.Text;
 using System.Xml;
@@ -6078,7 +6078,7 @@ namespace ParsingXml
 
 XML은 현재 URL(http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml)에서 찾을 수 있으며 필요한 데이터는 <cube> 요소에 있습니다. 트리 구조에서는 다음과 같습니다.
 
-```
+```csharp
 <gesmes:Envelope>
     [other child nodes]
     <Cube>
@@ -6089,7 +6089,7 @@ XML은 현재 URL(http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml)에서 
 ```
 gesmes:Envelope는 DocumentElement 속성을 사용해서 액세스할 수 있는 루트 요소입니다. 그런 다음 ChildNodes 컬렉션 속성을 사용해서 이 노드의 자식에 액세스할 수 있습니다. 이 예에서는 자식 노드가 루트/문서 요소 아래의 세 수준에 있기를 원합니다. 기본적으로 이전 장의 XmlReader 기반 코드와 동일한 다음 코드를 사용해서 이 작업을 수행할 수 있습니다.
 
-```
+```csharp
 using System;
 using System.Text;
 using System.Xml;
@@ -6124,7 +6124,7 @@ namespace ParsingXml
 
 Name 속성은 단순히 노드의 이름을 제공합니다. 예를 들어 다음 예제에서는 "user"라는 텍스트를 출력합니다.
 
-```
+```csharp
 XmlDocument xmlDoc = new XmlDocument();
 xmlDoc.LoadXml("<user name=\"John Doe\">A user node</user>");
 Console.WriteLine(xmlDoc.DocumentElement.Name);
@@ -6133,7 +6133,7 @@ Console.ReadKey();
 
 InnerText 속성은 다음과 같이 시작 및 끝 태그 내에 포함된 텍스트를 보유합니다.
 
-```
+```csharp
 XmlDocument xmlDoc = new XmlDocument();
 xmlDoc.LoadXml("<test>InnerText is here</test>");
 Console.WriteLine(xmlDoc.DocumentElement.InnerText);
@@ -6142,7 +6142,7 @@ Console.ReadKey();
 
 InnerXml 속성은 InnerText 속성과 약간 비슷하지만 InnerText는 그 안의 모든 XML을 제거하지만 InnerXml 속성은 분명히 제거하지 않습니다. 다음 예제는 차이점을 설명해야 합니다.
 
-```
+```csharp
 XmlDocument xmlDoc = new XmlDocument();
 xmlDoc.LoadXml("<users><user>InnerText/InnerXml is here</user></users>");
 Console.WriteLine("InnerXml: " + xmlDoc.DocumentElement.InnerXml);
@@ -6152,7 +6152,7 @@ Console.ReadKey();
 
 OuterXml 속성은 InnerXml과 동일하지만 노드 자체의 XML도 포함됩니다. 다음 예제는 차이점을 설명해야 합니다.
 
-```
+```csharp
 XmlDocument xmlDoc = new XmlDocument();
 xmlDoc.LoadXml("<users><user>InnerText/InnerXml is here</user></users>");
 Console.WriteLine("InnerXml: " + xmlDoc.DocumentElement.InnerXml);
@@ -6162,7 +6162,7 @@ Console.ReadKey();
 
 이전 장에서 속성으로 작업했지만 여기에 다른 예가 있습니다.
 
-```
+```csharp
 XmlDocument xmlDoc = new XmlDocument();
 xmlDoc.LoadXml("<user name=\"John Doe\" age=\"42\"></user>");
 if(xmlDoc.DocumentElement.Attributes["name"] != null)
@@ -6186,13 +6186,13 @@ XmlDocument 클래스에는 XPath 쿼리를 매개 변수로 사용한 다음 �
 
 다음 예제에서는 SelectSingleNode() 메서드를 사용해서 피드의 제목을 가져옵니다. XML을 보면 <channel> 요소의 하위 요소로 <title> 요소가 있으며, 이 요소는 <rss> 요소의 하위 요소인 루트임을 알 수 있습니다. 해당 쿼리는 XPath에서 다음과 같이 설명할 수 있습니다.
 
-```
+```csharp
 RSS/채널/제목
 ```
 
 우리는 단순히 찾고 있는 요소의 이름을 슬래시(/)로 구분해서 작성하며, 이는 요소가 이전 슬래시 앞의 요소의 자식이어야 함을 나타냅니다. 이 XPath를 사용하는 것은 다음과 같이 간단합니다.
 
-```
+```csharp
 using System;
 using System.Text;
 using System.Xml;
@@ -6218,7 +6218,7 @@ SelectSingleNode() 메서드를 사용해서 XPath를 문자열 매개변수로 
 
 다음 예에서는 SelectNodes() 메서드를 사용해서 RSS 피드의 모든 항목 노드를 찾은 다음 이에 대한 정보를 인쇄합니다.
 
-```
+```csharp
 using System;
 using System.Text;
 using System.Xml;
@@ -6249,13 +6249,13 @@ SelectNodes() 메서드는 이전 예제에서 본 것처럼 XPath 쿼리를 문
 
 이 예에서는 각 항목 노드에서 두 개의 서로 다른 값을 원했기 때문에 항목 노드를 요청한 다음 각각을 처리했습니다. 그러나 예를 들어 각 항목의 제목만 필요한 경우 XPath 쿼리를 다음과 같이 변경할 수 있습니다.
 
-```
+```csharp
 RSS/채널/항목/제목
 ```
 
 각 항목 노드의 각 타이틀 노드와 일치합니다. 다음은 모든 작업을 수행하기 위한 일부 C# 코드가 포함된 쿼리입니다.
 
-```
+```csharp
 XmlDocument xmlDoc = new XmlDocument();
 xmlDoc.Load("http://rss.cnn.com/rss/edition_world.rss");
 XmlNodeList titleNodes = xmlDoc.SelectNodes("//rss/channel/item/title");
@@ -6275,7 +6275,7 @@ Console.ReadKey();
 
 다음은 XmlWriter 클래스를 사용해서 XML을 작성하는 예입니다.
 
-```
+```csharp
 using System;
 using System.Text;
 using System.Xml;
@@ -6309,7 +6309,7 @@ namespace WritingXml
 
 위의 코드는 다음 XML을 생성합니다.
 
-```
+```csharp
 <users>
   <user age="42">John Doe</user>
   <user age="39">Jane Doe</user>
@@ -6333,7 +6333,7 @@ XmlWriter가 디스크에 데이터를 쓰도록 하려면 Close() 메서드를 
 ## Writing XML with the XmlDocument class
 이전 장에서는 XmlWriter 클래스를 사용해서 XML을 작성했습니다. 그러나 일부 상황, 특히 기존 XML을 업데이트할 때 XmlDocument 클래스를 사용하는 것이 유용할 수 있습니다. 그러나 주로 큰 XML 문서의 경우 더 높은 메모리 소비를 알고 있어야 합니다. 다음은 몇 가지 코드입니다.
 
-```
+```csharp
 using System;
 using System.Text;
 using System.Xml;
@@ -6371,7 +6371,7 @@ namespace WritingXml
 
 그리고 결과 XML은 다음과 같습니다.
 
-```
+```csharp
 <users>
   <user age="42">John Doe</user>
   <user age="39">Jane Doe</user>
@@ -6382,7 +6382,7 @@ namespace WritingXml
 
 이제 이미 언급했듯이 XmlWriter를 사용할 때보다 약간 더 많은 코드가 필요하지만 기존 XML 문서로 이동해서 몇 가지 값을 변경하기만 하면 되는 상황을 상상해 보십시오. XmlWriter 접근 방식을 사용하면 먼저 XmlReader를 사용해서 모든 정보를 읽고, 저장하고, 변경한 다음 XmlWriter를 사용해서 전체 정보를 다시 써야 합니다. XmlDocument는 메모리에 모든 것을 보관하기 때문에 기존 XML 파일을 업데이트하는 것이 훨씬 간단해집니다. 다음 예제에서는 이전 장에서 만든 "test-doc.xml" 파일을 열고 모든 사용자의 나이를 1씩 늘립니다. 얼마나 쉬운지 확인하십시오.
 
-```
+```csharp
 using System;
 using System.Text;
 using System.Xml;
@@ -6428,7 +6428,7 @@ Microsoft .NET Framework 3.5 및 Visual Studio 2008(코드명 "Orcas")이 출시
 ## Automatic properties
 객체 지향 코드를 작성하는 모든 프로그래머에게 정말 골치 아픈 것은 항상 모든 개인 필드에 대한 공용 속성을 선언하는 것입니다. 이것은 특히 거의 모든 속성이 다음과 같이 영리하게 추가되지 않고 개인 필드에 대한 간단한 가져오기 및 설정 매핑이기 때문에 많이 지루한 작업입니다.
 
-```
+```csharp
 private string name;
 
 public string Name
@@ -6440,7 +6440,7 @@ public string Name
 
 이와 같은 간단한 속성을 사용하면 속성의 추가 레이어를 추가하는 대신 필드를 public 으로 선언하고 직접 사용할 수 있습니다. 그러나 OOP의 지침은 우리에게 이런식으로 처리하라고 말하고 있으며 우리 대부분은 보다 쉬운 방법으로 처리하고 싶은 유혹에 저항합니다. C# 3.0을 사용하면 더 이상 이런 딜레마를 처리할 필요가 없습니다! 위의 예제는 이제 다음과 같이 작성할 수 있습니다.
 
-```
+```csharp
 public string Name
 {
     get;
@@ -6450,7 +6450,7 @@ public string Name
 
 또는 다음과 같이 더 적은 공간을 사용합니다.
 
-```
+```csharp
 public string Name { get; set; }
 ```
 
@@ -6461,7 +6461,7 @@ public string Name { get; set; }
 ## Object Initializers
 C# 3.0을 사용하면 개체와 컬렉션을 모두 초기화하는 것이 훨씬 쉬워졌습니다. 이전 장에서 설명한 자동 속성을 사용하는 간단한 Car 클래스를 고려하십시오.
 
-```
+```csharp
 class Car
 {
     public string Name { get; set; }
@@ -6471,7 +6471,7 @@ class Car
 
 이제 C# 2.0에서는 Car 인스턴스를 만들고 해당 속성을 설정하기 위해 다음과 같은 코드를 작성해야 합니다.
 
-```
+```csharp
 Car car = new Car();
 car.Name = "Chevrolet Corvette";
 car.Color = Color.Yellow;
@@ -6479,13 +6479,13 @@ car.Color = Color.Yellow;
 
 실제로는 괜찮지만 C # 3.0에서는 새로운 객체 이니셜 라이저 구문 덕분에 좀 더 깔끔하게 수행 할 수 있습니다.
 
-```
+```csharp
 Car car = new Car { Name = "Chevrolet Corvette", Color = Color.Yellow };
 ```
 
 보시다시피 새 Car 객체를 인스턴스화한 후 중괄호 세트를 사용하며, 그 안에서 Car 클래스의 모든 공용 속성에 액세스할 수 있습니다. 이렇게 하면 약간의 타이핑과 약간의 공간도 절약됩니다. 멋진 부분은 중첩도 할 수 있다는 것입니다. 다음과 같이 Car 클래스에 새 복합 속성을 추가하는 다음 예를 고려하십시오.
 
-```
+```csharp
 class Car
 {
     public string Name { get; set; }
@@ -6502,7 +6502,7 @@ class CarManufacturer
 
 C# 2.0으로 새 차를 초기화하려면 다음과 같은 작업을 수행해야 합니다.
 
-```
+```csharp
 Car car = new Car();
 car.Name = "Corvette";
 car.Color = Color.Yellow;
@@ -6513,7 +6513,7 @@ car.Manufacturer.Country = "USA";
 
 C# 3.0에서는 다음과 같이 할 수 있습니다.
 
-```
+```csharp
 Car car = new Car { 
                 Name = "Chevrolet Corvette", 
                 Color = Color.Yellow, 
@@ -6526,7 +6526,7 @@ Car car = new Car {
 
 또는 가독성에 대해 크게 걱정하지 않는 경우:
 
-```
+```csharp
 Car car = new Car { Name = "Chevrolet Corvette", Color = Color.Yellow, Manufacturer = new CarManufacturer { Name = "Chevrolet", Country = "USA" } };
 ```
 
@@ -6539,7 +6539,7 @@ Car car = new Car { Name = "Chevrolet Corvette", Color = Color.Yellow, Manufactu
 ## Collection Initializers
 C# 3.0이 개체를 초기화하는 새로운 방법을 제공하는 것처럼 특정 항목 집합이 추가된 목록을 초기화하기 위한 새로운 구문이 포함되었습니다. 마지막 장의 Car 클래스를 사용할 수 있습니다.
 
-```
+```csharp
 class Car
 {
     public string Name { get; set; }
@@ -6549,7 +6549,7 @@ class Car
 
 자동차 범위를 포함하는 목록을 만들려면 C# 2.0에서 다음과 같은 작업을 수행해야 합니다.
 
-```
+```csharp
 Car car;
 List<Car> cars = new List<Car>();
 
@@ -6566,7 +6566,7 @@ cars.Add(car);
 
 객체 이니셜라이저를 사용하면 조금 더 짧게 수행할 수 있습니다.
 
-```
+```csharp
 List<Car> cars = new List<Car>();
 cars.Add(new Car { Name = "Corvette", Color = Color.Yellow });
 cars.Add(new Car { Name = "Golf", Color = Color.Blue});
@@ -6574,7 +6574,7 @@ cars.Add(new Car { Name = "Golf", Color = Color.Blue});
 
 그러나 컬렉션 이니셜라이저와 결합하면 훨씬 더 간단할 수 있습니다.
 
-```
+```csharp
 List<Car> cars = new List<Car> 
 { 
     new Car { Name = "Corvette", Color = Color.Yellow },
@@ -6584,7 +6584,7 @@ List<Car> cars = new List<Car>
 
 또는 정확히 동일한 작업을 수행하는 한 줄 버전에서:
 
-```
+```csharp
 List<Car> cars = new List<Car> { new Car { Name = "Corvette", Color = Color.Yellow }, new Car { Name = "Golf", Color = Color.Blue} };
 ```
 
@@ -6597,7 +6597,7 @@ List<Car> cars = new List<Car> { new Car { Name = "Corvette", Color = Color.Yell
 ## Extension Methods
 C# 3.0의 또 다른 멋진 기능은 확장 메서드입니다. 이를 통해 이전 형식을 서브클래싱하거나 다시 컴파일할 필요 없이 기존 형식을 새로운 기능으로 확장할 수 있습니다. 예를 들어, 특정 문자열이 숫자인지 아닌지를 알고 싶을 수 있습니다. 일반적인 접근 방식은 함수를 정의한 다음 매번 호출하는 것이며, 이러한 종류의 함수를 많이 얻으면 다음과 같이 유틸리티 클래스에 함께 넣습니다.
 
-```
+```csharp
 public class MyUtils
 {
     public static bool IsNumeric(string s)
@@ -6610,7 +6610,7 @@ public class MyUtils
 
 이제 다음과 같은 코드 줄을 실행해서 문자열을 확인할 수 있습니다.
 
-```
+```csharp
 string test = "4";
 if (MyUtils.IsNumeric(test))
     Console.WriteLine("Yes");
@@ -6620,7 +6620,7 @@ else
 
 그러나 확장 메서드를 사용하면 실제로 String 클래스를 확장해서 이를 직접 지원할 수 있습니다. 확장 메서드 라이브러리가 될 정적 메서드 집합을 사용해서 정적 클래스를 정의해서 이를 수행합니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 public static class MyExtensionMethods
 {
     public static bool IsNumeric(this string s)
@@ -6633,7 +6633,7 @@ public static class MyExtensionMethods
 
 이것을 다른 정적 메서드와 구분하는 유일한 것은 메서드의 매개 변수 섹션에있는 "this"키워드입니다. 컴파일러에게 이것이 문자열 클래스의 확장 메서드이며 실제로 확장 메서드를 만드는 데 필요한 전부임을 알려줍니다. 이제 다음과 같이 문자열에서 직접 IsNumeric() 메서드를 호출할 수 있습니다.
 
-```
+```csharp
 string test = "4";
 if (test.IsNumeric())
     Console.WriteLine("Yes");
@@ -6653,7 +6653,7 @@ else
 
 첫 번째 예에서는 매우 미니멀한 텍스트 편집기를 구성합니다. 사실, 너무 간단해서 하나의 파일만 읽은 다음 새 콘텐츠를 쓸 수 있으며 한 번에 한 줄의 텍스트만 쓸 수 있습니다. 그러나 File 클래스를 사용하는 것이 얼마나 쉬운지 보여줍니다.
 
-```
+```csharp
 using System;
 using System.IO;
 
@@ -6679,13 +6679,13 @@ namespace FileHandlingArticleApp
 
 파일 클래스를 사용해서 파일이 있는지 확인하고, ReadAllText() 메서드를 사용해서 파일 내용을 읽고, WriteAllText() 메서드를 사용해서 파일에 새 콘텐츠를 씁니다. 절대 경로가 아니라 간단한 파일 이름을 사용하고 있음을 알 수 있습니다. 이렇게 하면 파일이 실행 파일과 동일한 디렉토리에 배치되며 현재로서는 괜찮습니다. 그 외에는 예제가 이해하기 쉬워야 합니다. 파일을 확인하고 존재하는 경우 내용을 읽고 콘솔에 출력합니다. 그런 다음 사용자에게 새 콘텐츠를 입력하라는 메시지를 표시하고 콘텐츠가 있으면 파일에 씁니다. 분명히 이전 내용을 덮어쓰겠지만 지금은 괜찮습니다. 그러나 대신 AppendAllText 메서드를 사용할 수 있습니다. 대신 WriteAllText 줄을 다음과 같이 변경해 보십시오.
 
-```
+```csharp
 File.AppendAllText("test.txt", newContent);
 ```
 
 실행하면 새 텍스트를 덮어쓰지 않고 기존 텍스트에 추가되는 것을 볼 수 있습니다. 그렇게 간단합니다. 그러나 여전히 응용 프로그램 실행당 한 줄의 텍스트만 가져옵니다. 조금 창의력을 발휘해서 그것을 바꾸자. 예제의 마지막 줄을 다음과 같이 바꿉니다.
 
-```
+```csharp
 Console.WriteLine("Please enter new content for the file - type exit and press enter to finish editing:");
 string newContent = Console.ReadLine();
 while(newContent != "exit")
@@ -6699,7 +6699,7 @@ while(newContent != "exit")
 
 그러나 매번 파일에 쓰는 대신 더 예쁜 솔루션은 다음과 같이 보일 것입니다.
 
-```
+```csharp
 Console.WriteLine("Please enter new content for the file - type exit and press enter to finish editing:");
 using(StreamWriter sw = new StreamWriter("test.txt"))
 {
@@ -6723,7 +6723,7 @@ Streams의 사용법은 이 장의 범위를 약간 벗어났지만 이 예제�
 
 이 장에서는 바로 그러한 일을 하는 수많은 예를 제공할 것입니다. 사용된 방법이 매우 간단하고 사용하기 쉽기 때문에 설명은 제한적입니다. 두 가지 사항을 알고 있어야 합니다. 우선, 다음과 같이 System.IO 네임스페이스를 가져와야 합니다.
 
-```
+```csharp
 using System.IO;
 ```
 
@@ -6734,7 +6734,7 @@ using System.IO;
 ### 파일 삭제
 이 예제를 다운로드, 편집 및 실행하십시오!
 
-```
+```csharp
 if(File.Exists("test.txt"))
 {
     File.Delete("test.txt");
@@ -6749,7 +6749,7 @@ Console.ReadKey();
 ### 디렉토리 삭제
 이 예제를 다운로드, 편집 및 실행하십시오!
 
-```
+```csharp
 if(Directory.Exists("testdir"))
 {
     Directory.Delete("testdir");
@@ -6763,7 +6763,7 @@ Console.ReadKey();
 
 testdir이 비어 있지 않으면 예외가 표시됩니다. 왜? Directory 클래스의이 버전의 Delete()는 빈 디렉토리에서만 작동하기 때문입니다. 하지만 변경하기는 매우 쉽습니다.
 
-```
+```csharp
 Directory.Delete("testdir", true);
 ```
 
@@ -6772,7 +6772,7 @@ Directory.Delete("testdir", true);
 ### 파일 이름 바꾸기
 이 예제를 다운로드, 편집 및 실행하십시오!
 
-```
+```csharp
 if(File.Exists("test.txt"))
 {
     Console.WriteLine("Please enter a new name for this file:");
@@ -6794,7 +6794,7 @@ Move() 메서드를 사용해서 파일 이름을 바꾼다는 것을 알 수 �
 ### 디렉토리 이름 바꾸기
 디렉토리로 동일한 작업을 수행하는 것도 쉽습니다.
 
-```
+```csharp
 if(Directory.Exists("testdir"))
 {
     Console.WriteLine("Please enter a new name for this directory:");
@@ -6814,7 +6814,7 @@ if(Directory.Exists("testdir"))
 ### 새 디렉터리 만들기
 새로운 디렉토리를 만드는 것도 쉽습니다 - 다음 예와 같이 Directory 클래스에서 CreateDirectory() 메서드를 사용하십시오.
 
-```
+```csharp
 Console.WriteLine("Please enter a name for the new directory:");
 string newDirName = Console.ReadLine();
 if(newDirName != String.Empty)
@@ -6831,7 +6831,7 @@ if(newDirName != String.Empty)
 ### 파일 읽기 및 쓰기
 마지막 예로 File 클래스를 사용해서 파일을 매우 쉽게 읽고 쓸 수 있는 방법을 보여 드리겠습니다. 이 작업은 C#을 사용해서 여러 가지 방법으로 수행할 수 있지만 File 클래스에 있는 Read* 및 Write* 메서드가 아마도 사용하기 가장 쉬운 메서드일 것입니다. WriteAllBytes(), WriteAllLines() 및 WriteAllText()의 세 가지 버전과 해당 Read 메서드가 있습니다. 사용하기 가장 간단한 것은 간단한 문자열을 입력으로 사용하는 마지막 것입니다. 간단한 예를 들어 어떻게 작동하는지 설명하겠습니다.
 
-```
+```csharp
 string fileContents = "John Doe & Jane Doe sitting in a tree...";
 File.WriteAllText("test.txt", fileContents);
 
@@ -6856,7 +6856,7 @@ Console.WriteLine(fileContentsFromFile);
 ### FileInfo 클래스
 먼저 FileInfo 클래스를 사용하는 간단한 방법을 살펴보겠습니다.
 
-```
+```csharp
 static void Main(string[] args)
 {
     FileInfo fi = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -6873,7 +6873,7 @@ FileInfo 인스턴스가 있으면 이에 대한 모든 종류의 정보를 출�
 ### DirectoryInfo 클래스
 이제 단일 파일에 대한 정보는 괜찮지만 DirectoryInfo 클래스를 사용하면 디렉토리 내의 모든 파일과 디렉토리에 대한 정보를 얻을 수 있으며 이는 분명히 매우 일반적인 시나리오입니다. 간단한 예를 들어 보여드리겠습니다.
 
-```
+```csharp
 DirectoryInfo di = new DirectoryInfo(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
 if(di != null)
 {
@@ -6894,7 +6894,7 @@ FileInfo 인스턴스 대신 DirectoryInfo 인스턴스를 만듭니다. 동일�
 
 아마도 우리는 디렉토리도 원할 것입니다. 그것은 마찬가지로 쉽습니다.
 
-```
+```csharp
 DirectoryInfo[] subDirs = di.GetDirectories();
 if(subDirs.Length > 0)
 {
@@ -6910,25 +6910,25 @@ if(subDirs.Length > 0)
 
 이렇게 하면 확장자가 .exe 디렉토리의 모든 파일이 제공됩니다.
 
-```
+```csharp
 FileInfo[] subFiles = di.GetFiles("*.exe");
 ```
 
 이렇게 하면 이름 어딘가에 "test"라는 단어가 있는 모든 디렉토리가 제공됩니다.
 
-```
+```csharp
 DirectoryInfo[] subDirs = di.GetDirectories("*test*");
 ```
 
 파일과 디렉토리를 모두 재귀적으로 찾을 수도 있는데, 이는 하위 디렉토리의 하위 디렉토리에서 검색한다는 것을 의미합니다.... 원래 디렉토리:
 
-```
+```csharp
 FileInfo[] subFiles = di.GetFiles("*.exe", SearchOption.AllDirectories);
 ```
 
 최상위 디렉터리만 검색하려면 코드가 다음과 같아야 합니다.
 
-```
+```csharp
 FileInfo[] subFiles = di.GetFiles("*.exe", SearchOption.TopDirectoryOnly);
 ```
 
@@ -6970,7 +6970,7 @@ MemoryStream 은 꽤 많이 사용되는 기본 Stream 클래스 중 하나입�
 
 따라서 MemoryStream이 다른 소스에서 오는 바이트 배열(byte[])으로 초기화되는 것을 종종 볼 수 있으며, 인스턴스화된 MemoryStream이 MemoryStream을 활용하는 다른 메커니즘(예: StreamReader 유형 중 하나)에 전달되는 것을 종종 볼 수 있습니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 public void UseMemoryStream()
 {
     byte[] fileContents = File.ReadAllBytes("test.txt");
@@ -6990,7 +6990,7 @@ public void UseMemoryStream()
 
 StreamReader / StreamWriter 클래스를 사용하는 것은 기본 Stream 작업을위한 좋은 단축키이지만, 고집한다면 MemoryStream 에서 직접 바이트를 읽고 작업 할 수 있습니다. MemoryStream 클래스에는 ReadByte() 메서드와 같은 몇 가지 메서드가 있습니다. 현재 위치에서 바이트를 읽고 반환한 다음 Position 속성을 진행해서 다음 바이트를 읽을 수 있도록 MemoryStream을 준비합니다. 예를 들면 다음과 같습니다.
 
-```
+```csharp
 public void UseMemoryStream()
 {
     byte[] fileContents = File.ReadAllBytes("test.txt");
@@ -7023,7 +7023,7 @@ Wikipedia는 "컴퓨터 과학에서 반사는 컴퓨터 프로그램이 자신�
 
 그러나 시작하고 관심을 갖기를 위해 여기에 작은 예가 있습니다. 그것은 내가 모든 프로그래밍 언어를 처음 접하는 많은 사람들로부터 본 질문을 해결합니다 : 런타임 중에 변수의 이름을 아는 것만으로는 변수의 값을 어떻게 변경할 수 있습니까? 솔루션에 대해이 작은 데모 응용 프로그램을 살펴보고 다음 장에서 사용된 다양한 기술에 대한 설명을 읽으십시오.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7070,7 +7070,7 @@ namespace ReflectionTest
 ## The right Type
 Type 클래스는 Reflection의 기초입니다. 어셈블리, 모듈 또는 형식에 대한 런타임 정보 역할을 합니다. 다행히도 객체의 Type에 대한 참조를 얻는 것은 Object 클래스에서 상속되는 모든 클래스에 GetType() 메서드가 있기 때문에 매우 간단합니다. 인스턴스화되지 않은 유형에 대한 정보가 필요한 경우 전역적으로 사용 가능한 typeof() 메서드를 사용할 수 있습니다. 두 가지 접근 방식을 모두 사용하는 다음 예를 고려하십시오.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7095,7 +7095,7 @@ namespace ReflectionTest
 
 어느 시점에서는 찾고 있는 유형의 이름만 있을 수도 있습니다. 이 경우 적절한 어셈블리에서 참조를 가져와야 합니다. 다음 예제에서는 실행 중인 어셈블리, 즉 현재 코드가 실행되는 어셈블리에 대한 참조를 가져온 다음 모든 형식을 나열합니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7131,7 +7131,7 @@ namespace ReflectionTest
 ## Instantiating a class
 지금까지 이미 인스턴스화된 .NET 형식 또는 개체로 작업했습니다. 그러나 Reflection을 사용하면 인스턴스화하려는 클래스의 이름을 알고 실제로 런타임에도 인스턴스화를 수행할 수 있습니다. 여러 가지 방법이 있지만 사용하려는 생성자에 대한 참조를 가져 와서 호출 한 다음 반환 된 값을 인스턴스로 사용하는 것을 선호합니다. 다음은 바로 그 방법의 예입니다. 먼저 코드를 만든 다음 모든 것을 설명하겠습니다.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7189,7 +7189,7 @@ TestClass 라는 간단한 클래스를 정의했습니다. 여기에는 전용 
 
 자, 시작하겠습니다. 첫째, Person 클래스는 단순히 이름을 설정 또는 이와 유사한 것으로 바꿔 더 유용하게 만들 수 있습니다.
 
-```
+```csharp
 public class Person
 {
     private int age = -1;
@@ -7271,7 +7271,7 @@ Save() 메서드는 Person 클래스에 정의된 각 속성에 대해 하나씩
 
 이제 이 클래스를 사용하기 위한 몇 가지 코드만 있으면 됩니다. 이 작은 응용 프로그램은 설정 파일에서 사람을로드하려고 시도하고 성공하지 못하면 사용자에게 정보를 입력하라는 메시지가 표시됩니다.
 
-```
+```csharp
 class Program
 {
     static void Main(string[] args)
