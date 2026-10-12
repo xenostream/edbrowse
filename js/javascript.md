@@ -11,9 +11,9 @@ JavaScript Tutorial
 - [Classes:](#Classes-)
 - [Error handling:](#Error-handling-)
 - [Regular Expressions](#Regular-Expressions)
-- [JavaScript for Web: General:](#JavaScript-for-Web:-General-)
-- [JavaScript for Web: The BOM:](#JavaScript-for-Web:-The-BOM-)
-- [JavaScript for Web: The DOM:](#JavaScript-for-Web:-The-DOM-)
+- [JavaScript for Web: General:](#JavaScript-for-Web--General-)
+- [JavaScript for Web: The BOM:](#JavaScript-for-Web--The-BOM-)
+- [JavaScript for Web: The DOM:](#JavaScript-for-Web--The-DOM-)
   
 # About JavaScript
 
