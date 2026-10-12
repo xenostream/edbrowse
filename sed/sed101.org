@@ -1,3 +1,14 @@
+#+TITLE:  SED 50 Hacks   
+#+AUTHOR: PilJin Kwon
+#+EMAIL:  piljin.kwon@gmail.com
+
+#+DESCRIPTION: 이 문서는 sed 50 Hacks 입니다.
+#+KEYWORDS:    sed, regex, regular expression, regex, gnu sed
+#+LANGUAGE:    ko
+#+OPTIONS:     H:2
+#+OPTIONS:     toc:1
+#+TOC:         tables
+
 * Sed Syntax and Basic
 
 ** Commands
