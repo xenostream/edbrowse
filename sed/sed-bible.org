@@ -1,3 +1,14 @@
+#+TITLE:  SED Bible with Regular Expression   
+#+AUTHOR: PilJin Kwon
+#+EMAIL:  piljin.kwon@gmail.com
+
+#+DESCRIPTION: 이 문서는 sed Bible 입니다.
+#+KEYWORDS:    sed, regex, regular expression, regex, gnu sed
+#+LANGUAGE:    ko
+#+OPTIONS:     H:2
+#+OPTIONS:     toc:1
+#+TOC:         tables
+
 * Perface
 사람들이 쉘 스크립트를 사용하는 가장 일반적인 기능 중 하나는 텍스트 파일을 다루는 것이다. 로그 파일을 검사하거나 설정 파일을 읽거나 데이터를 처리하는 등 쉘 스크립트는 텍스트 파일에 포함된 모든 유형의 데이터를 조작하는 지루한 작업을 "자동화" 하는 데 도움될 수 있다. 
 
