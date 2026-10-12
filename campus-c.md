@@ -8345,43 +8345,41 @@ int *ma_dangbal = (int *)100;       (0)
 
 초기화를 이렇게 해 놓으면 현재는 아무것도 가리키지 않는 상태이다. 따라서, 비상 연락망을 짤 때는 당연히 옆 사람의 주소를 넣어주는데 보통 다음과 같이 한다.
 
-enumerate
-    \item 보통의 경우 위에서 본 것 같이 일일이 지정해준다.
-    ```c
-     main()
-     {
-        mazinga.next = &atom;
-        atom.next = &robocop[0];
-        robocop[0].next = &robocop[1];          <-- <배열 부분>
-        robocop[1].next = &robocop[2];
-        robocop[2].next = 0x00;
-     }        
-    ```
+- 보통의 경우 위에서 본 것 같이 일일이 지정해준다.
+```c
+main()
+{
+   mazinga.next = &atom;
+   atom.next = &robocop[0];
+   robocop[0].next = &robocop[1];          <-- <배열 부분>
+   robocop[1].next = &robocop[2];
+   robocop[2].next = 0x00;
+}        
+```
 
-    \item 위의 “<-- <배열 부분>” 은 순환문을 사용해서 “돌려” 버린다.
-    ```c
-     main()
-     {
-        int i;
-     
-        for(i = 0; i <= 1; i++) {                 <-- 요기
-            robocop[i].next = &robocop[i + 1];
-        }
-        robocop[2].next = 0x00;
-     }        
-    ```
+- 위의 “<-- <배열 부분>” 은 순환문을 사용해서 “돌려” 버린다.
+```c
+main()
+{
+   int i;
+
+   for(i = 0; i <= 1; i++) {                 <-- 요기
+       robocop[i].next = &robocop[i + 1];
+   }
+   robocop[2].next = 0x00;
+}        
+```
     
     위의 for 문을 일반적으로 써 보면 다음과 같다.
-    ```c
-     main()
-     {
-        for(i = 0; i < sizeof(robocop)/sizeof(struct robot) - 1; i++) {
-            robocop[i].next = &robocop[i + 1];
-        }
-        robocop[sizeof(robocop)/sizeof(struct robot) - 1].next = 0x00;
-     }
-    ```
-enumerate
+```c
+main()
+{
+   for(i = 0; i < sizeof(robocop)/sizeof(struct robot) - 1; i++) {
+       robocop[i].next = &robocop[i + 1];
+   }
+   robocop[sizeof(robocop)/sizeof(struct robot) - 1].next = 0x00;
+}
+```
 
 실제적으로 프로그램을 짜게될 때는 거의 “배열” 을 쓰게되므로 이런 순환문(반복문)을 많이 쓰게될 것이다.
 
