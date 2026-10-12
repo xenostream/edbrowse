@@ -1,13 +1,3 @@
-#+TITLE:  SED Reference Guide  
-#+AUTHOR: PilJin Kwon
-#+EMAIL:  piljin.kwon@gmail.com
-
-#+DESCRIPTION: 이 문서는 sed Reference Guide 입니다.
-#+KEYWORDS:    sed, regex, regular expression, regex, gnu sed
-#+LANGUAGE:    ko
-#+OPTIONS:     H:2
-#+OPTIONS:     toc:1
-#+TOC:         tables
 
 [ref](https://github.com/LCTT/TranslateProject/blob/master/published/201811/20180615%20Complete%20sed%20Command%20Guide%20%5BExplained%20with%20Practical%20Examples%5D.md)
 
