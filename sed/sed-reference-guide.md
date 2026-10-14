@@ -1008,7 +1008,7 @@ via: https://linuxhandbook.com/sed-reference-guide/
 본 글은 [LCTT](https://github.com/LCTT/TranslateProject)에서 원문을 번역·편집하였으며, [Linux 중국](https://linux.cn/)이 자랑스럽게 소개합니다.g
 
 [^a]:https://linuxhandbook.com/author/sylvain/
-[^1]:[https://linuxhandbook.com/sed-command-basics/](https://github.com/xenostream/edbrowse/blob/main/sed/sed-beginners-guide.md)
+[^1]:https://github.com/xenostream/edbrowse/blob/main/sed/sed-beginners-guide.md
 [^2]:https://gist.github.com/s-leroux/5cb36435bac46c10cfced26e4bf5588c
 [^3]:https://linuxhandbook.com/wp-content/plugins/jetpack/modules/lazy-images/images/1x1.trans.gif
 [^9]:https://www.computerhope.com/jargon/f/flag.htm
