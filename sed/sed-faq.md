@@ -29,7 +29,7 @@ sed FAQ의 최신 버전은 다음 위치에서 확인할 수 있습니다:
 
 일반 텍스트 버전은 변경된 부분이 해당 줄의 78번째 열에 수직 막대(|)로 표시됩니다. 수직 막대를 제거하려면 (MS-DOS의 경우 큰따옴표를 사용하십시오):
 
-  sed ‘s/  *|$//’ sedfaq.txt > sedfaq2.txt
+	sed ‘s/  *|$//’ sedfaq.txt > sedfaq2.txt
 
 HTML 버전은 수직 막대가 표시되지 않습니다. FAQ의 새로 추가되거나 수정된 부분은 진한 파란색 글씨로 표시됩니다.
 
@@ -41,13 +41,13 @@ HTML 버전은 수직 막대가 표시되지 않습니다. FAQ의 새로 추가�
 
 ## 1.5. FAQ 약어
 
-    files = 공백으로 구분된 하나 이상의 파일 이름
-    gsed  = GNU sed
-    ssed  = super-sed
-    RE    = sed에서 지원하는 정규 표현식
-    LHS   = “s/find/repl/” 명령어의 왼쪽 부분(“find” 부분)
-    RHS   = “s/find/repl/” 명령어의 오른쪽 부분(“repl” 부분)
-    nn+   = 버전 _nn_ 이상 (예: “15+” = 버전 1.5 이상)
+- files = 공백으로 구분된 하나 이상의 파일 이름
+- gsed  = GNU sed
+- ssed  = super-sed
+- RE    = sed에서 지원하는 정규 표현식
+- LHS   = “s/find/repl/” 명령어의 왼쪽 부분(“find” 부분)
+- RHS   = “s/find/repl/” 명령어의 오른쪽 부분(“repl” 부분)
+- nn+   = 버전 _nn_ 이상 (예: “15+” = 버전 1.5 이상)
 
 files: “files” 는 명령줄에 입력된 하나 이상의 파일 이름을 의미합니다. 파일 이름은 셸이 인식하는 모든 와일드카드(예: `zork*` 또는 `Aug[4-9].let`)를 포함할 수 있습니다. sed는 셸을 통해 전달된 각 파일 이름을 처리합니다.
 
@@ -57,27 +57,30 @@ RE: 정규 표현식에 대한 자세한 내용은 아래 3.1.1절을 참조하�
 
 이 FAQ에 담긴 아이디어 중 상당수는 다음 Awk FAQ에서 발췌한 것입니다:
  
-    http://www.faqs.org/faqs/computer-lang/awk/faq/
-    ftp://rtfm.mit.edu/pub/usenet/comp.lang.awk/faq
+- http://www.faqs.org/faqs/computer-lang/awk/faq/
+- ftp://rtfm.mit.edu/pub/usenet/comp.lang.awk/faq
 
 그리고 구 버전의 Perl FAQ:
 
-    http://www.perl.com/doc/FAQs/FAQ/oldfaq-html/index.html
+- http://www.perl.com/doc/FAQs/FAQ/oldfaq-html/index.html
 
 다음의 분들은 이 문서에 크게 기여하셨으며, 질문, 답변 및 스크립트 예제에 대한 의견과 문구 제안을 제공해 주셨습니다. 이 기여자분들께 감사를 표합니다
 (성씨 알파벳 순):
 
-Al Aab, Yiorgos Adamopoulos, Paolo Bonzini, Walter Briscoe, Jim
-Dennis, Carlos Duarte, Otavio Exel, Sven Guckes, Aurelio Jargas,
-Mark Katz, Toby Kelsey, Eric Pement, Greg Pfeiffer, Ken Pizzini,
-Niall Smart, Simon Taylor, Peter Tillier, Greg Ubben, Laurent
-Vogel.
+	Al Aab, Yiorgos Adamopoulos, Paolo Bonzini, Walter Briscoe, Jim
+	Dennis, Carlos Duarte, Otavio Exel, Sven Guckes, Aurelio Jargas,
+	Mark Katz, Toby Kelsey, Eric Pement, Greg Pfeiffer, Ken Pizzini,
+	Niall Smart, Simon Taylor, Peter Tillier, Greg Ubben, Laurent
+	Vogel.
 
 ## 1.7. 표준 면책 조항
 
 본 문서에 제시된 정보의 정확성을 보장하기 위해 진지한 노력을 기울였으나, 이 문서의 기여자 및 관리자는 오류가 전혀 없다고 주장하지 않으며, 제공된 정보에 대해 어떠한 보증도 하지 않습니다. 오류를 발견하신 경우, 수정할 수 있도록 저희에게 알려 주시기 바랍니다.
 
 -----------------------------
+
+
+
 
 
 
