@@ -1,10 +1,13 @@
-#+OPTIONS: toc:2
-#+TITLE: Org mode compact guide
-#+AUTHOR: PilJin-Kwon
-#+DATE: 2026-08-31
-#+EMAIL: piljin.kwon@gmail.com
+#+TITLE:  org-mode compact guide  
+#+AUTHOR: PilJin Kwon
+#+EMAIL:  piljin.kwon@gmail.com
 
-* ■ Org Mode Compact Guide ■
+#+DESCRIPTION: 이 문서는 org-mode의 compact guide 의 한국어 버전입니다.
+#+KEYWORDS:    emacs, org-mode, org-mode compact guide
+#+LANGUAGE:    ko
+#+OPTIONS:     H:2
+#+OPTIONS:     toc:1
+#+TOC:         tables
 
 
 * 1 Introduction
