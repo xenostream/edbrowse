@@ -183,7 +183,12 @@ i 개 이상의 시퀀스와 일치합니다.
 
 * Default Output
 
-GIST | sed는 기본적으로 결과를 화면으로 출력합니다
+GIST | sed는 기본적으로 결과를 화면으로 출력합니다.
+
+#+begin_quote
+[!IMPORTANT]
+예제의 첫 줄은 입력할 명령이고 이후는 실행 결과입니다!!
+#+end_quote
 
 #+begin_src
 ''
