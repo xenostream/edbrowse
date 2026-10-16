@@ -538,7 +538,7 @@ Thomas Jefferson, 1801-1809 James Madison, 1809-1817
 
 [[https://sed.js.org/index.html?gist=15b029034c0c5d287b91e732fc2ea9c4][GIST]] | 궁금한 분들을 위해 말씀드리면, 앞서 설명대로 ~N~ 명령어를 사용하면 이 과정을 상당히 단축할 수 있습니다. 이 명령어를 사용하면 방금 본 것과 동일한 결과를 얻을 수 있습니다.
 
-#+being_src
+#+begin_src
 -n 'N;s/\n/ /p'
 George Washington, 1789-1797
 John Adams, 1797-1801
