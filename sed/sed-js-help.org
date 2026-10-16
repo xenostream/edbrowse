@@ -183,7 +183,7 @@ i 개 이상의 시퀀스와 일치합니다.
 
 * Default Output
 
-GIST | sed는 기본적으로 결과를 화면으로 출력합니다.
+[[https://sed.js.org/index.html?gist=a794d768907cca6c2e97bc1ae2706147][GIST]] | sed는 기본적으로 결과를 화면으로 출력합니다.
 
 #+begin_quote
 [!IMPORTANT]
