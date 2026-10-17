@@ -33,7 +33,7 @@
 
 이 문서는 ~.org~ 확장자를 사용하는 Org 모드 문서입니다(GitHub에서 지원됨).
 
-*Org 모드* 는 메모, 기사, LaTeX 문서, 책, 웹 페이지, Beamer 슬라이드 데크 등을 작성하기 위한, */일반 텍스트/* 서식 구문입니다!
+*Org 모드* 는 메모, 기사, LaTeX 문서, 책, 웹 페이지, Beamer 슬라이드 데크 등을 작성하기 위한, /일반 텍스트/ 서식 구문입니다!
 
 이 문서는 *Org 모드 9* 용 치트 시트입니다(Org 모드 7 이후 마크업 구문이 일부 변경), [[https://github.com/fniessen/org-html-themes][ReadTheOrg CSS]]를 기반으로 한 *Org 모드 8* 용 요약 자료입니다.
 
