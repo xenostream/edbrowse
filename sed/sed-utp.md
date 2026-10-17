@@ -17,8 +17,8 @@ sed 프로그램은 ex에서 사용하는 구문과 매우 유사하므로 배�
 먼저, 사용법에 대해 간략히 설명하겠습니다. sed 명령어에는 두 가지 형식이 있습니다:
 
 ```
-sed -e 명령어 편집할파일
-sed -f 스크립트파일 편집할파일
+sed -e command editfiles
+sed -f scriptfile editfiles
 ```
 
 - 첫 번째 형식인 `-e` 를 사용하면 명령줄에서 바로 편집 명령을 지정할 수 있습니다. 같은 줄에 여러 개의 `-e` 옵션을 지정할 수도 있습니다.
@@ -28,17 +28,17 @@ sed -f 스크립트파일 편집할파일
 
 ```
 sed ’
-여기서 편집 스크립트가 시작됩니다
+Editing script begins here
 .
 .
 .
-여기서 편집 스크립트가 끝납니다’ editfiles
+Editing script ends here’ editfiles
 ```
 
 이 마지막 형식은 곧 보게 되겠지만, 셸 스크립트에서 특히 유용합니다. 하지만 이 형식은 대화형으로도 사용할 수 있습니다. Bourne 셸은 첫 번째 작은 따옴표를 감지하면 “다음 줄을 입력하라” 는 프롬프트를 표시합니다. 또한 세미콜론으로 구분해서 같은 줄에 여러 명령을 결합할 수도 있습니다:
 
 ```
-sed -e ’명령1; 명령2; ...’ editfiles
+sed -e ’command1; command2; ...’ editfiles
 ```
 
 마지막으로 한 가지 더: `sed -e` 를 사용할 때는 표현식을 따옴표로 묶어야 합니다. 비록 이것이 꼭 필수적인 것은 아니지만, 나중에 심각한 문제를 예방할 수 있습니다. 다음 예제를 살펴보겠습니다.
@@ -102,7 +102,7 @@ ex와 sed를 사용했을 때 나타나는 매우 다른 결과는 다음과 같
 $ ex - junk < edscript
 The files were writeable by their owner, not by all.
 The files were writable by thier owner, not by all.
-The files were writeable by their owner, not by all.
+The files were writeable by thier owner, not by all.
 $ sed -f edscript junk
 The files were writable by their owner, not by all.
 The files were writable by their owner, not by all.
@@ -139,8 +139,8 @@ s/writeable/writable/
 ```
 for file in $*
 do
-sed -f sedscr $file > $file.tmp
-mv $file.tmp $file
+    sed -f sedscr $file > $file.tmp
+    mv $file.tmp $file
 done
 ```
 
@@ -153,13 +153,13 @@ done
 ```
 for file in $*
 do
-sed -f sedscr $file > $file.tmp
-if [ -s $file.tmp ]
-then
-mv $file.tmp $file
-else
-echo “Sed가 빈 파일을 생성했습니다.”
-fi
+    sed -f sedscr $file > $file.tmp
+    if [ -s $file.tmp ]
+    then
+        mv $file.tmp $file
+    else
+        echo "Sed produced an empty file."
+    fi
 done
 ```
 
@@ -168,12 +168,12 @@ done
 sed를 사용하여 간단한 오류를 수정하는 또 다른 간단한 셸 스크립트를 만들 수 있습니다. 이 스크립트의 이름을 change 라고 하겠습니다:
 
 ```
-sed -e “s/$1/$2/g” $3 > $3.tmp
+sed -e "s/$1/$2/g" $3 > $3.tmp
 if [ -s $3.tmp ]
 then
-mv $3.tmp $3
+    mv $3.tmp $3
 else
-echo “정규 표현식 구문 사용 시 오류가 발생했을 수 있습니다.”
+    echo "Possible error using regular expression syntax."
 ```
 
 이 스크립트는 세 번째 인수로 지정된 파일에서 첫 번째 인수를 두 번째 인수로 간단히 변경합니다.
@@ -207,17 +207,17 @@ eqn=""; pic=""; macros="ms"; col=""; roff="ditroff -Tlj"
 sed="| sed -e ’s/--/\\(em/g’"
 while [ $# -gt 0 ]
 do
-case $1 in
-    -E) eqn="| eqn";;
-    -P) pic="| pic";;
-    -N) roff="nroff"; col="| col"; sed="";;
-    -*) options="$options $1";;
-    *) if [ -f $1 ]; then
-        files="$files $1"
-       else echo "format: $1: file not found"; exit
-       fi;;
-esac
-shift
+    case $1 in
+        -E) eqn="| eqn";;
+        -P) pic="| pic";;
+        -N) roff="nroff"; col="| col"; sed="";;
+        -*) options="$options $1";;
+        *) if [ -f $1 ]; then
+            files="$files $1"
+           else echo "format: $1: file not found"; exit
+           fi;;
+    esac
+    shift
 done
 eval "cat $files $sed | tbl $eqn $pic | $roff $options $col | lp"
 ```
@@ -518,12 +518,12 @@ sed 스크립트 do.outline 은 명령줄에 지정된 모든 파일(`$*`)을 �
 
 ```
 sed -n ’/ˆ\.[CH][H12]/ {
-s/"//g
-s/ˆ\.CH /\
+    s/"//g
+    s/ˆ\.CH /\
 CHAPTER /
-s/ˆ\.H1/  A. /
-s/ˆ\.H2/  B. /
-p
+    s/ˆ\.H1/  A. /
+    s/ˆ\.H2/  B. /
+    p
 }’ $*
 ```
 
@@ -540,15 +540,16 @@ do.outline 스크립트의 처리 결과는 다음과 같습니다:
 
 ```
 $ do.outline ch13/sect1
+
 CHAPTER 13 Let the Computer Do the Dirty Work
-    A. Shell Programming
-    B. Stored Commands
-    B. Passing Arguments to Shell Scripts
-    B. Conditional Execution
-    B. Discarding Used Arguments
-    B. Repetitive Execution
-    B. Setting Default Values
-    B. What We’ve Accomplished
+    A.   Shell Programming
+    B.   Stored Commands
+    B.   Passing Arguments to Shell Scripts
+    B.   Conditional Execution
+    B.   Discarding Used Arguments
+    B.   Repetitive Execution
+    B.   Setting Default Values
+    B.   What We’ve Accomplished
 ```
 
 이 명령은 일련의 파일이나 “챕터” 에 실행할 수 있으므로, 책 전체의 목차를 단 몇 초 만에 생성할 수 있습니다. 이 스크립트를 ms 또는 mm 섹션 제목 매크로에 맞게 수정하거나, C급 제목을 포함하도록 조정할 수도 있습니다.
@@ -756,20 +757,20 @@ search=$1
 shift
 for file
 do
-sed ’
-/’“$search”’/b
-N
-h
-s/.*\n//
-/’“$search”’/b
-g
-s/ *\n/ /
-/’“$search”’/ {
-g
-b
-}
-g
-D’ $file
+    sed ’
+    /’"$search"’/b
+    N
+    h
+    s/.*\n//
+    /’"$search"’/b
+    g
+    s/ *\n/ /
+    /’"$search"’/ {
+    g
+    b
+    }
+    g
+    D’ $file
 done
 ```
 
