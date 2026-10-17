@@ -35,7 +35,7 @@
 
 *Org 모드* 는 메모, 기사, LaTeX 문서, 책, 웹 페이지, Beamer 슬라이드 데크 등을 작성하기 위한, /일반 텍스트/ 서식 구문입니다!
 
-이 문서는 *Org 모드 9* 용 치트 시트입니다(Org 모드 7 이후 마크업 구문이 일부 변경), [[https://github.com/fniessen/org-html-themes][ReadTheOrg CSS]]를 기반으로 한 *Org 모드 8* 용 요약 자료입니다.
+이 문서는 *Org 모드 8* 용 치트 시트입니다(Org 모드 7 이후 마크업 구문이 일부 변경), [[https://github.com/fniessen/org-html-themes][ReadTheOrg CSS]]를 기반으로 한 *Org 모드 8* 용 요약 자료입니다.
 
 공식 매뉴얼([[http://orgmode.org/org.pdf][문서)]] 전체를 꼼꼼히 읽어볼 것을 강력히 권장하지만, 인내심 없는 분을 위해 간단한 단계를 아래에 정리했습니다.
 
