@@ -4,6 +4,7 @@ The Acme Editor - A Comprehensive Guide
 
 [*Based on the standalone acme derived from Plan 9*](https://github.com/blakemcbride/Acme)
 
+
 > [!CAUTION]
 > 윈도우에서 MSYS로 새로 컴파일 \
 > `acme.exe -f MalgunGothic/12a/font` 로 실행 가능(`acme.exe -f Gulim/12/font`)\
@@ -18,7 +19,7 @@ Acme는 1993년 Bell Labs의 Rob Pike가 개발한 텍스트 편집기이자 프
 
 Acme는 여러분이 사용해 본 그 어떤 편집기와도 많이 다릅니다. 메뉴도, 도구 모음도, 설정 파일도, 플러그인 시스템도 없으며,
 외워야 할 키 바인딩도 없습니다. 대신, 모든 명령이 마우스 클릭 한 번으로 실행되는 일반 텍스트로 표시되는 빈 화면을 제공합니다. 화면상의 어느 곳에나 있는 텍스트는 명령어가 될 수 있습니다. 어떤 텍스트든 파일 이름이 될 수 있습니다. 어떤 텍스트든 검색어가 될 수 있습니다. 전체 인터페이스는 세 개의 마우스 버튼과 텍스트로 구성되어 있습니다.
-z
+
 
 ## 1.1 Philosophy
 
@@ -869,70 +870,1475 @@ git status          # 버전 관리 상태 확인
 
 ## 7.2 Pipe Prefixes: <, >, |
 
+<, > 또는 | 로 시작하는 명령은 현재 선택 영역과 상호 작용합니다:
 
+접두사 | 동작
+--- | ---
+`<cmd` | cmd 를 실행하고, 선택 영역을 해당 명령의 표준 출력으로 대체합니다.
+`>cmd` | cmd 를 실행하고, 선택 영역을 표준 입력으로 보냅니다. 선택 영역은 변경되지 않습니다.
+`|cmd` | cmd 를 실행하고, 선택 영역을 표준 입력으로 보낸 뒤 표준 출력으로 대체합니다.
 
 
+### 7.2.1 Examples
 
+**선택 영역을 명령어 출력으로 대체하기 ( < ):** 
+```
+<date                # 현재 날짜 삽입
+<seq 1 10            # 1부터 10까지의 숫자 삽입
+<cat /etc/hostname   # 호스트명 삽입
+```
 
+**선택 영역을 명령어로 전송하기 ( > ):** 
+```
+>wc                  # 선택 영역의 단어/줄 수 세기
+>lp                  # 선택 영역 인쇄
+>xclip               # X 클립보드에 복사
+>mail user@x         # 선택 영역 이메일 전송
+```
 
+**명령을 통해 선택 영역 필터링 ( | ):**
+```
+|sort                # 선택한 줄 정렬
+|sort -u             # 중복 제거 후 정렬
+|fmt -w 72           # 텍스트를 72열로 재조정
+|tr a-z A-Z          # 선택 영역을 대문자로 변환
+|awk ‘{print NR, $0}’   # 줄 번호 추가
+|sed ‘s/old/new/g’   # 검색 및 교체
+|column -t           # 열 정렬
+|indent              # C 코드 서식 재조정
+|gofmt               # Go 코드 서식 재조정
+```
 
+이런 파이프 명령어는 acme를 확장하는 주요 방법입니다. 플러그인 대신 표준 유닉스 툴킷을 사용합니다.
 
 
 
+## 7.3 The +Errors Window
 
+명령어 실행 결과는 디렉터리 경로에 “+Errors” 가 추가된 이름의 창에 표시됩니다. 예를 들어, /home/user/project/main.c 에서 실행된 명령어의
+출력 결과는 /home/user/project/+Errors 에 표시됩니다.
 
+“+Errors” 창은 일반적인 acme 창입니다. 다음 작업을 수행할 수 있습니다:
 
+- B3 키를 사용해서 창 내에서 검색할 수 있습니다.
+- main.c:42: error 같은 오류 메시지를 마우스 오른쪽 버튼으로 클릭해서 소스 위치로 바로 이동할 수 있습니다.
+- Del 키를 눌러 창을 닫을 수 있습니다.
+- 전체를 선택하고 삭제해서 내용을 지울 수 있습니다.
 
 
+## 7.4 The Win Command
 
+Win 명령어는 acme 창 내에서 대화형 셸 세션을 엽니다. 이 명령어는 사용자의 셸(일반적으로 bash 이거나 $SHELL 이 설정된 셸)에 연결된 의사 터미널(PTY)을 생성합니다.
 
 
+### 7.4.1 How It Works
 
+1. Win을 실행합니다(태그 바에서 마우스 중간 버튼을 클릭하세요).
+2. 현재 디렉토리 이름에 -win 접미사가 붙은 새 창이 열립니다.
+3. 명령어를 입력하고 Enter 키를 눌러 셸로 전송합니다.
+4. 셸의 출력 결과가 창 본문에 표시됩니다.
 
 
+### 7.4.2 Behavior
 
+Win 창은 터미널 에뮬레이터가 아니라, PTY를 통해 셸에 연결된 acme 텍스트 버퍼입니다.
 
+이는 다음을 의미합니다:
 
+- Enter 키를 누르기 전에 텍스트를 편집할 수 있습니다. Enter 키를 누르기 전까지는 셸이 사용자의 키 입력을 인식하지 못합니다.
+- 출력된 텍스트를 선택해서 다른 acme 텍스트와 마찬가지로 사용할 수 있습니다(파일 이름에 우클릭, 명령어에 중간 클릭 등).
+- ANSI 이스케이프 시퀀스는 제거됩니다. 색상 및 커서 위치 지정은 작동하지 않습니다.
+- PTY는 단일 열 너비로 설정되어 있으므로, ls 및 이와 유사한 명령은 한 줄에 한 항목씩 출력됩니다.
+- 에코 기능이 비활성화되어 있습니다. 입력한 내용은 터미널이 아닌 acme에 표시됩니다.
 
 
+### 7.4.3 Shell Configuration
 
+Win 명령어는 최소한의 환경으로 셸을 시작합니다:
 
+- TERM=dumb — 이스케이프 시퀀스를 억제합니다.
+- PS1="$ " — 간단한 프롬프트입니다.
+- PROMPT_COMMAND, COLORTERM 및 LS_COLORS는 설정되지 않습니다.
 
+이 셸은 간섭을 최소화하기 위해 --noediting --norc --noprofile -i 플래그(bash의 경우)와 함께 시작됩니다.
 
 
+### 7.4.4 Closing
 
+다른 창과 마찬가지로 Del 키를 눌러 Win 창을 닫습니다. 셸 프로세스는 SIGHUP 신호를 수신하고 종료됩니다.
 
 
 
+## When to Use What
 
+필요성 | 작업
+--- | ---
+일회성 명령 실행 | 태그에 명령어를 입력한 후 B2를 클릭
+선택한 텍스트 변환 | `|cmd` 사용
+명령어 출력 삽입 | `<cmd` 사용
+텍스트를 명령어로 전송 | `>cmd` 사용
+대화형 세션 | Win 사용
+컴파일러 오류 탐색 | +Errors에서 오류 줄을 마우스 오른쪽 버튼으로 클릭
 
 
 
 
+# CHAPTER 8 The Edit Command
 
+‘Edit’ 명령어는 acme에 Rob Pike의 sam 편집기에서 계승된 완벽한 텍스트 처리 언어를 제공합니다. 이는 acme에서 가장 강력한 기능으로, 일상적인 사용에는 필수적이지는 않지만 익혀두면 큰 도움이 됩니다.
 
+이 기능을 사용하려면, 태그나 본문 내에서 ‘Edit’ 뒤에 sam 명령어를 입력한 후, 전체 영역을 선택한 후 중간 클릭(B2)하십시오. 예를 들면 다음과 같습니다.
 
+```
+Edit ,s/old/new/g
+```
 
+이렇게 하면 현재 창에서 “old” 가 나타나는 모든 부분을 “new” 로 바꿉니다.
 
 
+## 8.1 Addresses
 
+주소는 파일의 일부 문자열을 식별합니다. 주소는 명령어 앞에 나타나며, 해당 명령어가 어떤 텍스트를 대상으로 하는지 지정합니다.
 
+주소 | 의미
+--- | ---
+`.` 점 | 현재 선택된 부분.
+`0` | 파일 시작 부분의 빈 문자열.
+`$` | 파일 끝 부분의 빈 문자열.
+`n` | n번째 줄.
+`#n` | n번째 문자 위치 (0부터 계산).
+`/regexp/` | 점(.) 뒤에서 regexp 와 일치하는 다음 부분.
+`?regexp?` | 점(.) 앞에서 regexp 와 일치하는 이전 부분.
+`a,b` | 주소 a부터 주소 b까지.
+`a;b` | a부터 b까지. b를 평가하기 전에 점(.)을 a로 설정합니다.
+`a+b` | a의 끝에서 b를 평가한 결과.
+`a-b` | a의 시작점에서 b를 평가한 결과로, 뒤로 검색합니다.
 
+예시:
 
+- `1,5` — 1행부터 5행까지.
+- `,` — 파일 전체 (0,$의 약어).
+- `.+1` — 현재 선택 영역 바로 다음 행.
+- `/func/` — “func” 이 다음에 나타나는 위치.
+- `0,/^package/` — 파일 시작 부분부터 “package” 와 일치하는 행까지.
 
 
+## 8.2 Simple Commands
 
+명령 | 동작
+--- | ---
+`a/text/` | 추가: 지정한 텍스트 뒤에 text를 삽입합니다.
+`i/text/` | 삽입: 지정한 텍스트 앞에 text를 삽입합니다.
+`c/text/` | 변경: 지정한 텍스트를 text로 대체합니다.
+`d` | 삭제: 지정한 텍스트를 삭제합니다.
+`s/regexp/text/` 치환: 지정한 텍스트에서 regexp와 일치하는 첫 번째 부분을 text로 대체합니다.
+`s/정규식/텍스트/g` | 전역: 모든 일치 항목을 대체합니다(전역 플래그).
+`m addr` | 이동: 지정된 텍스트를 addr 위치 뒤로 이동합니다.
+`t addr` | 복사: 지정된 텍스트를 addr 위치 뒤에 복사합니다.
+`p` | 출력: 지정된 텍스트를 표시합니다(+Errors 내).
+`=` | 지정된 위치의 줄 번호와 문자 오프셋을 출력합니다.
 
+a, i, c, s 명령의 구분자는 `/` 뿐만 아니라 어떤 문자라도 사용할 수 있습니다. 텍스트 내의 줄 바꿈은 그대로 입력됩니다(텍스트는 다음
+줄로 이어지며, 또 다른 구분자로 종료됩니다).
 
+예시:
 
+```
+Edit 1 i/// Copyright 2024\n/
+Edit ,d
+Edit ,s/colour/color/g
+Edit 5 a/\nnew line after lin\n/
+Edit /ERROR/ p
+```
 
 
+## 8.3 Structural Commands
 
+구조적 명령어야말로 sam의 언어를 진정으로 강력하게 만드는 요소입니다. 이 명령어들은 줄 단위가 아닌, 패턴에 일치하는 각 부분에 명령을 적용합니다.
 
+명령어 | 동작
+`x/정규식/cmd` | 추출: 처리 대상 텍스트 내 정규식에 일치하는 각 부분에 대해, dot 변수에 해당 일치 부분을 할당하고 cmd를 실행합니다.
+`y/정규식/명령어` | 보완: 정규식의 일치 항목들 사이에 있는 각 텍스트 조각에 대해 dot을 설정하고 명령어를 실행합니다.
+`g/정규식/명령어` | 가드: 대상 텍스트에 정규식의 일치 항목이 포함된 경우에만 명령어를 실행합니다.
+`v/정규식/명령어` | 역가드: 대상 텍스트에 정규식의 일치 항목이 포함되지 않은 경우에만 명령어를 실행합니다.
 
+Pike의 “구조적 정규 표현식(Structural Regular Expressions)” 논문에서 얻을 수 있는 핵심 통찰은 x 명령은 기존의 줄 중심 접근 방식을 대체한다는 점입니다. “각 줄마다” 대신 “각 일치 항목마다” 라고 표현합니다.
 
+관용구: “각 줄마다” 는 `x/.*\n/` 입니다. x는 임의의 패턴과 일치하므로, 줄이 아닌 구조를 대상으로 작동합니다. 단어, 문장, 단락, 함수 본문 또는 어떤 텍스트 패턴이든 반복 처리할 수 있습니다.
 
 
+## 8.4 Grouping
 
+중괄호를 사용해서 여러 명령을 그룹화할 수 있습니다:
+
+```
+Edit ,x/.*\n/ {
+g/TODO/ p
+}
+```
+
+이렇게 하면 “TODO” 가 포함된 모든 줄이 출력됩니다.
+
+
+## 8.5 Multi-File Commands
+
+명령 | 동작
+--- | ---
+`X/정규식/명령어` | 이름이 정규식과 일치하는 모든 열린 파일에 대해 명령어를 실행합니다.
+`Y/정규식/명령어` | 이름이 정규식과 일치하지 않는 모든 열린 파일에 대해 명령어를 실행합니다.
+
+이 명령어들은 현재 창뿐만 아니라 열려 있는 모든 창에서 작동합니다.
+
+예시: 열려 있는 모든 .c 파일에서 “foo”를 “bar”로 바꾸려면:
+
+```
+Edit X/\.c$/ ,s/foo/bar/g
+```
+
+
+## 8.6 Substitution Details
+
+대치 명령어는 역참조를 지원합니다:
+
+- \1, \2, …는 정규 표현식에서 캡처된 그룹을 가리킵니다.
+- & 는 전체 일치 결과를 가리킵니다.
+
+예시: 두 단어로 구성된 변수 이름의 순서를 바꾸기:
+
+```
+Edit ,s/([a-z]+)_([a-z]+)/\2_\1/g
+```
+
+
+## 8.7 Worked Examples
+
+이 예시들은 Edit 명령을 사용해서 수행하는 일반적인 편집 작업을 보여줍니다.
+
+
+### 8.7.1 Delete All Blank Lines
+
+```
+,x/\n\n+/ c/\n/ 편집
+```
+
+번역: 파일 전체에서(`,`), 두 개 이상의 줄바꿈이 연속된 부분마다 (`x/\n\n+/`), 이를 하나의 줄바꿈으로 대체합니다(`c/\n/`).
+
+
+### 8.7.2 Indent Selected Lines
+
+```
+Edit x/.*\n/ i/\t/
+```
+
+선택한 각 줄의 맨 앞에 탭을 삽입합니다. (먼저 줄을 선택한 다음, 이 편집 명령을 실행하십시오.)
+
+
+### 8.7.3 Remove Trailing Whitespace
+
+```
+Edit ,s/[ \t]+$//g
+```
+
+### 8.7.4 Rename a Variable
+
+```
+Edit ,s/\boldName\b/newName/g
+```
+
+\b(단어 경계)를 지정하면 부분 일치가 방지됩니다.
+
+
+### 8.7.5 Delete Lines Containing “DEBUG”
+
+```
+Edit ,x/.*\n/ g/DEBUG/ d
+```
+
+각 줄에서 “DEBUG”가 포함되어 있으면 해당 줄을 삭제합니다.
+
+
+### 8.7.6 Extract Function Signatures from a C File
+
+```
+Edit ,x/^[a-zA-Z].*\n{/ p
+```
+
+문자로 시작하고 { 로 끝나는 모든 줄을 출력합니다. 이는 C 함수 정의와 대략적으로 일치합니다.
+
+
+### 8.7.7 Number All Lines
+
+텍스트를 선택한 다음, 다음을 실행하세요:
+
+```
+Edit | awk ‘{printf “%4d %s\n”, NR, $0}’
+```
+
+때로는 유닉스 도구를 파이프(|)로 연결하는 것이 가장 간단한 “편집” 명령일 수 있습니다.
+
+
+## 8.8 What Is Not Implemented
+
+Acme는 sam 명령어의 대부분을 구현하고 있으나, 다음의 예외가 있습니다:
+
+- k (표시) — 구현되지 않았습니다.
+- n (파일 목록 출력) — 구현되지 않았습니다.
+- q (종료) — 대신 Exit 를 사용하십시오.
+- ! (셸 명령어) — Acme의 기본 셸 실행 기능을 사용하십시오.
+
+
+## 8.9 Further Reading
+
+Edit 명령어의 언어에 대한 자세한 설명은 다음 문헌에서 확인할 수 있습니다.
+
+- Rob Pike, “The Text Editor sam,” Software—Practice and Experience, 제17권, 제11호, 1987년 11월.
+- Rob Pike, “Structural Regular Expressions,” Proc. EUUG Spring 1987 Conference.
+- sam(1) 매뉴얼 페이지.
+
+
+
+
+# CHAPTER 9 Plumbing
+
+acme에서 텍스트를 마우스 오른쪽 버튼으로 클릭(B3)하면, ‘플럼버’ 가 해당 텍스트를 어떻게 처리할지 결정합니다. 파일 이름인가요? 파일을 엽니다. URL인가요? 브라우저를 실행합니다. 컴파일러 오류인가요? 소스 코드의 해당 줄로 이동합니다. 
+
+‘플럼버’ 는 텍스트를 적절한 작업으로 전달하는 패턴 매칭 시스템입니다. 이 독립형 acme는 플럼버가 내장되어 있어 별도의 외부 데몬이나 구성이 필요하지 않습니다. 합리적인 기본 설정이 제공되며 사용자 정의 규칙도 지원합니다.
+
+
+## 9.1 How Plumbing Works
+
+텍스트를 마우스 오른쪽 버튼으로 클릭하면, acme는:
+
+1. 클릭된 위치의 텍스트를 식별합니다(단어/파일명 경계까지 확장됨).
+2. 해당 텍스트, 유형, 소스 디렉터리 및 주소와 같은 속성을 포함하는 플럼 메시지를 생성합니다.
+3. 메시지를 플럼 규칙에 따라 순서대로 대조합니다.
+4. 가장 먼저 일치하는 규칙에 따라 편집기에서 열기, 외부 프로그램 실행 또는 검색과 같은 작업이 결정됩니다.
+
+
+## 9.2 Default Rules
+
+내장된 규칙은 일반적인 패턴을 처리합니다:
+
+패턴 | 동작
+--- | ---
+URL (http://, https:// 등) | 웹 브라우저에서 엽니다.
+이미지 파일 (.jpg, .png, .gif 등) | 이미지 뷰어에서 엽니다.
+문서 파일 (.pdf, .ps, .dvi) | 문서 뷰어에서 엽니다.
+file:line.col,line.col | 지정된 행과 열 범위에서 파일을 엽니다.
+file:line.col | 지정된 행과 열에서 파일을 엽니다.
+file:line 또는 file:/regexp/ | 지정된 주소에서 파일을 엽니다.
+일반 파일 이름 | acme에서 파일을 엽니다.
+<file.h> 형식의 포함 파일 | /usr/include 및 /usr/local/include를 검색합니다.
+
+
+### 9.2.1 Platform Differences
+
+URL, 이미지, PDF 파일을 여는 데 사용되는 명령어는 플랫폼에 따라 다릅니다:
+
+- Linux: xdg-open
+- macOS: open
+- Windows: explorer (ShellExecute를 통해 호출됨)
+
+
+## 9.3 Custom Rules
+
+기본 규칙을 재정의하거나 확장하려면 ~/lib/plumbing 파일을 생성하십시오. 이 파일이 존재하면 내장된 기본값을 완전히 대체합니다.
+
+
+### 9.3.1 Rule Syntax
+
+배관 규칙은 빈 줄로 구분된 일련의 패턴과 동작으로 구성됩니다. 각 규칙은 다음 요소들로 이루어집니다:
+
+```
+,# Optional comment
+type is text
+data matches '<regexp>'
+arg isfile $1
+plumb to <port>
+plumb start <command> $file
+```
+
+**패턴 줄** 은 plumb 메시지의 속성을 테스트합니다:
+
+패턴 | 의미
+--- | ---
+type is text | 메시지 유형이 “text” 입니다.
+data가 're'와 일치합니다. | 메시지 데이터가 정규식과 일치합니다. 캡처 그룹은 $1, $2 등으로 설정됩니다.
+data set $file | 데이터가 일치하는 파일 경로로 설정됩니다.
+arg isfile $n | 캡처된 그룹이 존재하는 파일 경로인지 확인합니다. 그렇다면 $file을 설정합니다.
+attr add addr=$n | 속성(예: 줄 번호 주소)을 추가합니다.
+
+**액션 줄** 은 수행할 작업을 지정합니다:
+
+동작 | 의미
+--- | ---
+plumb to edit | acme 편집기에서 엽니다.
+plumb to web | URL로 엽니다.
+plumb to image | 이미지로 엽니다.
+plumb client $editor | acme 편집기에서 엽니다(“edit” 포트용).
+plumb start cmd $file | 외부 명령을 실행합니다.
+
+
+### 9.3.2 Variables
+
+변수 | 의미
+--- | ---
+$0 | 일치된 데이터 전체.
+$1, $2, … | 데이터 일치 결과에서 추출된 그룹.
+$file | 해결된 파일 경로(arg isfile로 설정됨).
+$editor | 편집기 변수(규칙 상단에서 설정됨).
+
+
+### 9.3.3 Example Custom Rules
+
+```
+,# Go import paths -> go doc
+type is text
+data matches '[a-zA-Z0-9./\-]+'
+data matches '([a-z]+\.[a-z]+/[a-zA-Z0-9./\-]+)'
+plumb to web
+plumb start xdg-open https://pkg.go.dev/$1
+```
+
+```
+type is text
+data matches 'File "([^"]+)", line ([0-9]+)'
+arg isfile $1
+data set $file
+attr add addr=$2
+plumb to edit
+plumb client $editor
+```
+
+```
+type is text
+data matches '([a-zA-Z0-9_\-]+)\(([0-9])\)'
+plumb to none
+plumb start xterm -e man $2 $1
+```
+
+
+## 9.4 Debugging Plumbing
+
+**매뉴얼 페이지 열기**: 마우스 오른쪽 버튼을 클릭했을 때 예상한 결과가 나오지 않는 경우:
+
+1. ~/lib/plumbing 디렉터리에 구문 오류가 있는지 확인하십시오.
+2. 사용자 정의 규칙이 기본 규칙을 대체한다는 점을 기억하십시오. 기본 규칙을 유지하려면 파일에 표준 규칙을 포함시켜야 합니다.
+3. 규칙은 순서대로 일치 여부가 확인되며, 가장 먼저 일치하는 규칙이 적용됩니다.
+4. 파일 존재 여부 확인(arg isfile) 시 상대 경로는 소스 창의 디렉터리를 기준으로 합니다.
+
+
+
+
+
+# CHAPTER 10 Practical Workflows
+
+이 장은 일반적인 프로그래밍 작업에 acme를 사용하는 방법을 설명합니다. 이 장의 목적은 특정 워크플로를 규정하는 것이 아니라, acme의
+간단한 도구들이 어떻게 결합되어 효과적인 패턴을 형성하는지 보여주는 데 있습니다.
+
+
+## 10.1 Editing Code
+
+
+### 10.1.1 Opening a Project
+
+편집하려는 파일을 지정해서 acme를 실행하세요:
+
+```
+acme src/*.c include/*.h Makefile
+```
+
+또는 acme를 빈 상태로 실행한 후, 디렉터리 이름을 마우스 오른쪽 버튼(B3)으로 클릭해서 탐색한 다음, 파일 이름을 마우스 오른쪽 버튼으로 클릭해서 열 수 있습니다.
+
+
+### 10.1.2 Navigating
+
+- 함수 이름을 마우스 오른쪽 버튼으로 클릭하면 현재 파일에서 해당 함수를 검색할 수 있습니다.
+- header.h 를 마우스 오른쪽 버튼으로 클릭하면 파일을 열 수 있습니다.
+- :42 를 마우스 오른쪽 버튼으로 클릭하면 42번째 줄로 이동합니다.
+- :/pattern/ 을 마우스 오른쪽 버튼으로 클릭하면 정규 표현식을 사용하여 검색할 수 있습니다.
+- 2-1 코드 조합과 함께 ‘Look’ 을 사용하면 특정 텍스트를 검색할 수 있습니다.
+
+
+### 10.1.3 Multiple Columns
+
+관련 파일을 한 눈에 볼 수 있도록 두 개 또는 세 개의 열을 사용하세요:
+
+- 왼쪽 열: 헤더 파일 및 인터페이스.
+- 가운데 열: 편집 중인 구현 파일.
+- 오른쪽 열: +오류, Win 셸 또는 테스트 결과.
+
+Newcol 을 사용해서 열을 생성하세요. 레이아웃 버튼을 끌어서 창을 열 간에 이동할 수 있습니다.
+
+
+## 10.2 Building and Testing
+
+
+### 10.2.1 Running Make
+
+태그 표시줄에 'make' 를 입력하고 중간 클릭하세요. 결과가 +Errors에 표시됩니다.
+
+다음과 같은 오류로 빌드가 실패할 경우:
+
+```
+main.c:42: error: undeclared identifier ‘x’
+```
+
+해당 줄을 마우스 오른쪽 버튼으로 클릭하면 main.c의 42번째 줄로 바로 이동합니다. 오류를 수정한 후, 다시 make를 중간 클릭하세요.
+
+
+### 10.2.2 Running Tests
+
+```
+make test
+go test ./...
+python -m pytest
+cargo test
+```
+
+이 중 어느 것이든 태그에 입력해서 실행할 수 있습니다. 파일:줄 번호가 표시된 테스트 결과는 클릭할 수 있습니다.
+
+
+### 10.2.3 Continuous Workflow
+
+전형적인 편집-빌드-수정 주기:
+
+1. 창에서 코드를 편집합니다.
+2. ‘Put’을 중클릭하여 저장합니다.
+3. 태그에서 ‘make’를 중클릭합니다.
+4. 오류가 발생한 줄을 우클릭하여 문제 위치로 이동합니다.
+5. 수정하고 이 과정을 반복합니다.
+
+더 빠른 반복 작업을 위해 Win 창을 열고 빌드 명령을 대화형으로 실행하세요.
+
+
+## 10.3 Version Control
+
+
+### 10.3.1 Checking Status
+
+원하는 태그를 입력한 후 중간 클릭하세요:
+
+```
+git status
+git diff
+git log --oneline -20
+```
+
+### 10.3.2 Committing
+
+```
+git add -p
+git commit
+```
+
+git add -p 나 git commit 같이 (편집기를 여는) 대화형 명령의 경우, Windows 창을 사용하십시오.
+
+
+### 10.3.3 Viewing Diffs
+
+git diff 명령을 실행하면 결과가 +Errors에 표시됩니다. diff 헤더에 있는 파일 이름을 마우스 오른쪽 버튼으로 클릭하면 해당 파일을 열 수 있습니다.
+
+
+
+## 10.4 Writing Prose
+
+
+### 10.4.1 Proportional Fonts
+
+좀 더 편안하게 읽으려면 비례 글꼴로 변경하세요:
+
+1. 태그 내의 ‘Font’ 를 중간 버튼으로 클릭해서 고정폭과 비례폭 글꼴을 전환하세요.
+2. 또는 글꼴을 직접 지정하세요: `Font /mnt/font/DejaVuSerif/14a/font`
+
+
+### 10.4.2 Reflowing Text
+
+단락을 하나 선택하고 다음 명령을 실행하세요:
+
+```
+|fmt -w 72
+```
+
+이렇게 하면 텍스트가 72열로 재배치되어 이메일이나 일반 텍스트 문서에 적합해집니다.
+
+
+### 10.4.3 Spell Checking
+
+텍스트를 선택하고 다음 명령을 실행하세요:
+
+```
+>aspell list
+```
+
+이렇게 하면 선택한 텍스트가 aspell 로 전송되고, 철자가 틀린 단어들이 +Errors 항목에 표시됩니다.
+
+
+## 10.5 Multi-File Search and Replace
+
+
+### 10.5.1 Using Edit X
+
+열려 있는 모든 .c 파일에서 “oldFunc” 를 “newFunc” 로 바꾸려면:
+
+```
+X/\.c$/ ,s/oldFunc/newFunc/g
+```
+
+
+### 10.5.2 Using Grep
+
+태그에서 `grep -rn pattern *.c` 명령을 실행합니다. 출력된 줄을 클릭할 수 있습니다:
+
+```
+src/main.c:42: oldFunc(x, y);
+src/util.c:17: oldFunc(a, b);
+```
+
+각 줄을 마우스 오른쪽 버튼으로 클릭하면 해당 위치로 이동해서 수정을 하고, 다음 줄로 넘어갈 수 있습니다.
+
+
+
+## 10.6 Session Management
+
+
+### 10.6.1 Saving Your Workspace
+
+종료하기 전에 상단 태그에서 ‘Dump’ 를 중간 마우스 버튼으로 클릭하세요. 이렇게 하면 전체 상태—모든 창, 창의 위치, 글꼴, 열 레이아웃—가
+$HOME/acme.dump 에 저장됩니다.
+
+
+### 10.6.2 Restoring
+
+다음에 acme를 시작할 때는 다음과 같이 합니다:
+
+```
+acme -l $HOME/acme.dump
+```
+
+또는 평소처럼 acme를 시작한 후, 상단 태그에서 ‘Load’ 를 중간 마우스 버튼으로 클릭하세요.
+
+
+### 10.6.3 Multiple Sessions
+
+서로 다른 세션을 각기 다른 파일에 저장하려면:
+
+```
+Dump project-a.dump
+Dump project-b.dump
+```
+
+그런 다음 적절한 파일을 불러오려면:
+
+```
+Load project-a.dump
+```
+
+
+## 10.7 Tips
+
+- 자주 사용하는 명령어를 상단 태그 바에 추가하세요. 예를 들어, ‘make’ 나 ‘git diff’ 를 입력해 두면 클릭 한 번으로 바로 실행할 수 있습니다.
+- 디렉터리 창을 파일 탐색기로 활용하세요. 디렉터리 경로를 마우스 오른쪽 버튼으로 클릭하면 해당 경로의 내용을 나열할 수 있습니다.
+- +Errors 출력에서 단어를 마우스 오른쪽 버튼으로 클릭하면 해당 단어를 검색할 수 있으며, 이는 오류 메시지를 추적하는 데 유용합니다.
+- Zerox 명령을 사용하면 파일의 두 번째 보기를 생성할 수 있어, 한 부분을 편집하는 동안 다른 부분을 확인하는 데 편리합니다.
+- 열 태그를 알파벳순으로 정렬하면 창을 알파벳순으로 정렬해서 파일을 쉽게 찾을 수 있습니다.
+
+
+
+
+# CHAPTER 11 Customization
+
+Acme는 의도적으로 설정할 수 있는 항목을 극히 최소화했습니다. 설정 파일도, 테마도, 플러그인 시스템도 없습니다. 이는 의도된 설계입니다. Acme의 진정한 힘은 편집기를 설정하는 데서 오는 것이 아니라, 외부 도구를 조합하는 데서 비롯됩니다. 그럼에도 불구하고, 몇 가지는 조정할 수 있는 항목이 있습니다
+
+
+## 11.1 Fonts
+
+Acme는 비례(가변 폭) 글꼴과 고정 폭 글꼴, 두 가지 글꼴을 지원합니다. 시작 시 두 글꼴을 모두 설정할 수 있으며, 창별로 글꼴을 전환할 수 있습니다.
+
+
+### 11.1.1 Startup Fonts
+
+```
+acme -f ‘DejaVuSans/14a/font’ -F ‘DejaVuSansMono/14a/font’
+```
+
+글꼴 이름 형식은 fontconfig 이름 뒤에 크기가 따라오는 형태입니다. 접미사 'a' 는 앤티앨리어싱 렌더링을 나타냅니다. 시작 시 사용되는 글꼴은 $font 환경 변수를 통해 설정할 수도 있으며, 이는 비례 글꼴과 고정폭 글꼴 모두에 적용됩니다. -f 및 -F 옵션은 이 환경 변수보다 우선합니다:
+
+```
+export font=‘DejaVuSansMono/13a/font’
+acme
+```
+
+내장된 defaultfont 가 설치되어 있지 않은 경우, acme는 설치된 글꼴 중 가장 가까운 고정폭 글꼴로 대체하고 경고를 출력합니다. -f, -F 또는 $font 를 통해 명시적으로 요청된 글꼴이 없는 경우, 이는 치명적인 오류로 간주되며 해결 방법이 제안됩니다.
+
+
+### 11.1.2 Per-Window Fonts
+
+어떤 창에서든 “Font” 태그를 중간 클릭하면 비례 글꼴과 고정폭 글꼴을 전환할 수 있습니다.
+
+특정 창에 특정 글꼴을 설정하려면 다음을 입력하세요:
+
+```
+Font /mnt/font/GoMono/13a/font
+```
+
+그리고 전체 내용을 중간 클릭하세요.
+
+
+### 11.1.3 Available Fonts
+
+Acme는 fontconfig 를 통해 글꼴을 검색합니다. 시스템에 설치된 모든 TrueType 또는 OpenType 글꼴을 사용할 수 있습니다. Acme가 지원하는 글꼴 이름을 확인하려면 다음 명령을 실행하세요:
+
+```
+acme --fonts
+```
+
+
+## 11.2 Tab Width
+
+기본 탭 너비는 4열입니다. 이를 변경하려면:
+
+**창별로:** \
+창 태그에서 Tab 8 (또는 임의의 숫자)을 중간 클릭합니다.
+
+**시작 시:** \
+$tabstop 환경 변수를 다음과 같이 설정합니다:
+
+```
+tabstop=8 acme
+```
+
+
+## 11.3 Auto-Indentation
+
+자동 들여쓰기는 기본적으로 꺼져 있습니다. 이 기능을 활성화하면 Enter 키를 누를 때 현재 줄의 앞부분 공백이 새 줄로 복사됩니다.
+
+**시작 시:** \
+-a 플래그를 사용하세요:
+
+```
+acme -a
+```
+
+**창별 설정:** \
+태그에서 ‘Indent on’ 또는 ‘Indent off’ 를 중간 클릭하세요.
+
+**전체 설정:** \
+‘ Indent ON’ 또는 ‘Indent OFF’(대문자)를 중간 클릭하세요.
+
+
+## 11.4 Plumbing Rules
+
+가장 중요한 사용자 정의는 사용자 지정 플럼빙 규칙을 작성하는 것입니다. 규칙을 ~/lib/plumbing 에 생성하세요. 전체 구문과 예제는 제9장을
+참조하세요.
+
+일반적인 사용자 지정 사항:
+
+- 사용 중인 프로그래밍 언어의 오류 형식에 대한 규칙을 추가합니다.
+- 문서 URL에 대한 규칙을 추가합니다(예: Go 임포트 경로, Rust crate 문서).
+- 프로젝트의 티켓 시스템에 대한 규칙을 추가합니다(예: “JIRA-1234” 를 클릭하면 브라우저에서 티켓이 열립니다).
+- 파일 열기 명령을 변경합니다.
+
+
+
+## 11.5 Shell
+
+
+### 11.5.1 Command Shell
+
+명령 실행에 사용되는 셸(텍스트를 중간 클릭)은 $acmeshell 변수에 의해 제어됩니다:
+
+```
+acmeshell=bash acme
+```
+
+이 변수가 설정되어 있지 않으면, acme는 기본적으로 sh 를 사용합니다.
+
+
+### 11.5.2 Win Shell
+
+Win 명령어는 $SHELL 을 사용합니다:
+
+```
+SHELL=/bin/zsh acme
+```
+
+
+## 11.6 Helper Scripts
+
+acme는 자식 프로세스의 환경에 $winid 와 $% 를 설정하므로, 현재 창과 상호작용하는 스크립트를 작성할 수 있습니다.
+
+
+### 11.6.1 Example: Format on Save
+
+태그에 추가:
+
+```
+Fmt
+```
+
+여기서 Fmt 는 PATH 에 있는 스크립트입니다:
+
+```
+#!/bin/sh
+,# Fmt: 현재 파일의 서식을 정리하고 다시 불러오기
+case “$%” in
+    *.go) gofmt -w “$%” ;;
+    *.py) black “$%” ;;
+    *.c) indent -kr “$%” ;;
+    *.rs) rustfmt “$%” ;;
+esac
+```
+
+Fmt 를 실행한 후, Get 을 중간 클릭해서 서식이 적용된 파일을 다시 불러오세요.
+
+
+### 11.6.2 Example: Run Tests for Current File
+
+```
+#!/bin/sh
+,# 테스트: 현재 파일과 관련된 테스트 실행
+case “$%” in
+    *_test.go) go test -run . -v “$(dirname ”$%“)” ;;
+    *.py) python -m pytest “$%” -v ;;
+    *.c) make test ;;
+esac
+```
+
+### 11.6.3 Example: Open Documentation
+
+```
+#!/bin/sh
+,# 문서: ‘word’ 인자에 대한 open 문서
+word="$1"
+case “$%” in
+    *.go) xdg-open “https://pkg.go.dev/search?q=$word” ;;
+    *.py) xdg-open "https://docs.python.org/3/search.html?q=$word" ;;
+    *.rs) xdg-open "https://docs.rs/releases/search?query=$word" ;;
+esac
+```
+
+
+## 11.7 Window Size
+
+-W 플래그를 사용해서 초기 창 크기를 설정합니다:
+
+```
+acme -W 1400x900
+```
+
+
+## 11.8 Scrollbar Direction
+
+-r 플래그는 스크롤바 버튼의 동작을 반대로 바꿉니다. 기본적으로 스크롤바의 B1 버튼은 위쪽으로 스크롤하고, B3 버튼은 아래쪽으로 스크롤합니다. -r 옵션을 사용하면 이 동작이 반대로 바뀝니다.
+
+```
+acme -r
+```
+
+## 11.9 Startup Script
+
+흔히 사용되는 방법은 원하는 설정으로 acme를 실행하는 셸 별칭이나 스크립트를 만드는 것입니다.
+
+```
+#!/bin/sh
+,# ~/bin/a - 내 선호 설정으로 acme 시작
+export tabstop=4
+export acmeshell=bash
+exec acme -a \
+    -f ‘GoRegular/13a/font’ \
+    -F ‘GoMono/13a/font’ \
+    “$@”
+```
+
+설계상 .acmerc 나 설정 파일은 없습니다. 셸 스크립트를 사용하면 완전한 투명성을 유지하면서 동일한 효과를 얻을 수 있습니다.
+
+
+
+
+# APPENDIX A Command Reference
+
+알파벳 순으로 나열된 모든 내장 명령어입니다. 명령어는 명령어 이름을 마우스 중간 버튼(B2)으로 클릭하면 실행됩니다.
+
+명령 | 설명
+--- | ---
+디버그 명령을 중단합니다. 첫 번째 실행 시 경고 메시지를 표시하고,
+두 번째 실행 시 abort()를 호출하여 코어 덤프를 생성합니다.
+Cut 선택한 텍스트를 삭제하고 snarf 버퍼에 복사합니다. 창을
+변경된 상태로 표시합니다.
+Del 창을 닫습니다. 변경된 상태인 경우 경고를 표시하며, 강제로 닫으려면 다시 실행하십시오.
+Delcol 열과 해당 열의 모든 창을 삭제합니다. 변경된 상태가 있는 경우
+경고를 표시합니다.
+Delete 변경 여부 확인 없이 창을 닫습니다.
+Dump [파일] 세션 상태를 저장합니다. 기본값: $HOME/acme.dump.
+Edit cmd 창 본문에 sam 편집 명령을 실행합니다.
+8장을 참조하십시오.
+Exit acme를 종료합니다. 변경된 창이 있으면 경고 메시지가 표시되며,
+다시 실행하면 강제로 종료됩니다.
+Font [이름] 비례/고정폭 글꼴을 전환하거나, 이름으로 글꼴을 설정합니다.
+Get [파일] 디스크에서 파일을 다시 불러옵니다. 인수가 있으면 지정된 파일을 불러옵니다.
+ID 창 ID 번호를 출력합니다.
+Incl [디렉터리...] <file.h> 해결을 위한 보조 포함 디렉터리를 나열하거나 추가합니다.
+Indent [on|off|ON|OFF] 자동 들여쓰기를 설정합니다. 소문자: 현재 창. 대문자:
+모든 창.
+Kill [이름...] 지정된 실행 중인 명령에 종료 신호를 보냅니다.
+Load [파일] 세션 상태를 복원합니다. 기본값: $HOME/acme.dump.
+Look [텍스트] 창 본문에서 문자 그대로의 텍스트를 검색합니다. 선택 영역 또는
+인수를 사용합니다.
+New [파일...] 새 창을 만듭니다. 인수가 지정된 경우, 지정된
+파일을 엽니다.
+Newcol 새 열을 만듭니다.
+붙여넣기: 선택 영역을 스나프 버퍼의 내용으로 대체합니다.
+Put [파일]: 창 내용을 디스크에 기록합니다. 인수를 지정하면 지정한
+파일에 기록합니다.
+Putall: 이름이 실제 파일인 모든 변경된 창을 기록합니다.
+다시 실행: 마지막으로 취소된 변경 사항을 다시 실행합니다.
+Send: Win 창에서: 대기 중인 입력을 셸로 전송합니다. 일반
+창에서: 스나프 버퍼를 본문에 추가합니다.
+Snarf: 선택한 텍스트를 삭제하지 않고 스나프 버퍼로 복사합니다.
+정렬(Sort) 열 내의 창을 이름의 알파벳 순서로 정렬합니다.
+탭([n]) 현재 창의 탭 너비를 출력하거나 설정합니다.
+되돌리기(Undo) 마지막 변경 사항 또는 변경 그룹을 되돌립니다.
+Win 새 창에서 대화형 셸 세션을 엽니다. 7.4절을 참조하십시오.
+Zerox 창을 복제합니다(동일한 파일의 두 번째 보기).
+
+
+
+# APPENDIX B Edit Command Reference
+
+이 부록은 ACME의 ‘Edit’ 명령어를 통해 사용할 수 있는 편집 언어를 요약해서 설명합니다. 사용법에 대한 자세한 내용은 8장을 참조하십시오.
+
+
+## B.1 Addresses
+
+주소 | 의미
+--- | ---
+. 현재 선택 항목 (점).
+0 파일 시작.
+$ 파일 끝.
+n n번째 줄 (1부터 시작).
+#n n번째 문자 (0부터 시작).
+/re/ 정규 표현식 re의 다음 일치 항목을 앞으로 검색.
+?re? 정규 표현식 re의 다음 일치 항목을 뒤로 검색.
+a,b a부터 b까지의 범위.
+a;b 범위; b를 평가하기 전에 a에 점을 설정.
+a+b a의 끝을 기준으로 b.
+a-b a의 시작을 기준으로 b, 뒤로.
+, 0,$ (전체 파일)의 약어.
+
+
+## B.2 Commands
+
+명령 | 동작
+--- | ---
+a/text/ 지정된 범위 뒤에 텍스트를 추가합니다.
+c/text/ 변경: 지정된 범위를 text로 대체합니다.
+d 지정된 범위를 삭제합니다.
+i/text/ 지정된 범위 앞에 text를 삽입합니다.
+m addr 지정된 범위를 addr 뒤쪽으로 이동합니다.
+p 지정된 범위를 출력합니다.
+s/re/text/ re의 첫 번째 일치 항목을 text로 치환합니다.
+s/re/text/g 모든 일치 항목을 text로 치환합니다.
+t addr 지정된 범위를 addr 뒤쪽으로 복사합니다.
+= 주소(줄 번호 및 문자 오프셋)를 출력합니다.
+
+
+## B.3 Structural Commands
+
+명령 | 동작
+--- | ---
+x/re/cmd 추출: foreachmatchofre, setdottomatchandrun
+cmd.
+y/re/cmd 보완: 일치하는 부분들 사이의 각 구간마다,
+dot을 설정하고 cmd를 실행합니다.
+g/re/cmd 가드: 지정된 텍스트가 re와 일치하면 cmd를 실행합니다.
+v/re/cmd 역가드: 지정된 텍스트가 re와 일치하지 않으면
+cmd를 실행합니다.
+{ cmds } 여러 명령을 그룹화합니다.
+
+
+## B.4 Multi-File Commands
+
+명령 | 동작
+--- | ---
+X/re/cmd 이름이 re와 일치하는 각 파일에 대해 cmd를 실행합니다.
+Y/re/cmd 이름이 re와 일치하지 않는 각 파일에 대해 cmd를 실행합니다.
+
+
+## B.5 Substitute Backreferences
+
+s 명령어의 대체 텍스트에서:
+
+토큰 | 의미
+--- | ---
+& 전체 일치 부분.
+\1 … \9 캡처된 부분식.
+\n 리터럴 개행.
+\t 리터럴 탭.
+\\ 리터럴 백슬래시.
+
+
+
+
+# APPENDIX C Mouse Reference
+
+
+## C.1 Single-Button Actions
+
+버튼 | 위치 | 동작
+--- | --- | ---
+B1 본문/태그: 커서를 놓거나 텍스트를 선택합니다.
+B1 스크롤바: 위로 스크롤합니다(클릭한 줄이 맨 위로 이동합니다).
+B1 레이아웃 버튼: 드래그하여 창을 이동합니다.
+B1 본문/태그에서 더블 클릭: 단어를 선택합니다.
+B1 괄호에서 더블 클릭: 대응되는 괄호까지 선택합니다.
+B1 따옴표에서 더블 클릭: 대응되는 따옴표까지 선택합니다.
+B1 본문/태그에서 트리플 클릭: 줄을 선택합니다.
+B2 본문/태그 텍스트를 명령으로 실행합니다.
+B2 스크롤바 비례 스크롤로 이동합니다.
+B3 본문/태그 파일을 열거나, 주소를 따라가거나, 검색합니다.
+B3 스크롤바 아래로 스크롤합니다(클릭한 위치로 맨 위 줄이 이동).
+위로 스크롤 본문 텍스트를 위로 스크롤합니다.
+아래로 스크롤 본문 텍스트를 아래로 스크롤합니다.
+
+
+## C.2 Chords
+
+마우스 코드 | 동작
+--- | ---
+B1–B2 잘라내기: 선택 영역을 삭제하고 스나프 버퍼에 저장합니다.
+B1–B3 붙여넣기: 선택 영역을 스나프 버퍼의 내용으로 대체합니다.
+B1–B2+B3 스나프: 선택 영역을 스나프 버퍼에 복사합니다(삭제 없음).
+B2를 누른 상태에서 B1을 클릭하여 2-1 코드를 입력: B1의 텍스트를 B2 명령의 인수로 전달합니다.
+
+
+## C.3 Modifier-Click Emulation
+
+버튼이 3개 미만인 마우스의 경우:
+
+수정 키 | 클릭 대응 기능
+--- | ---
+Ctrl+B1 B2 (실행)
+Alt+B1 B3 (보기/열기)
+
+
+## C.4 Button 3 Decision Table
+
+다양한 종류의 텍스트에서 마우스 오른쪽 버튼을 클릭(B3)하면 다음과 같은 동작이 발생합니다.
+
+텍스트 | 동작
+--- | ---
+filename 파일을 열거나(또는 기존 창으로 이동).
+filename:N 파일의 N행으로 이동.
+filename:N.M 파일의 N행 M열로 이동.
+filename:N.M,N.M 지정된 행/열 범위로 이동.
+filename:/re/ 파일을 열고 정규식을 검색합니다.
+:N 현재 파일의 N번째 줄로 이동합니다.
+:/re/ 현재 파일에서 정규식을 검색합니다.
+http://... 브라우저에서 URL을 엽니다.
+<file.h> 포함 디렉터리를 검색합니다.
+기타 텍스트 현재 본문에서 문자 그대로 검색합니다.
+
+
+
+
+# APPENDIX D Keyboard Reference
+
+## D.1 Cursor Movement
+
+키 | 동작
+--- | ---
+왼쪽 화살표: 한 글자 왼쪽으로 이동.
+오른쪽 화살표: 한 글자 오른쪽으로 이동.
+위쪽 화살표: 한 줄 위로 이동 (고정 열; 가장자리에서 스크롤됨).
+아래쪽 화살표: 한 줄 아래로 이동 (고정 열; 가장자리에서 스크롤됨).
+Ctrl+왼쪽 화살표: 줄의 시작 부분.
+Ctrl+오른쪽 화살표: 줄의 끝 부분.
+Ctrl+A: 줄의 시작 부분.
+Ctrl+E: 줄의 끝 부분.
+
+
+
+## D.2 Page and File Navigation
+
+키 | 동작
+--- | ---
+Page Up 한 화면 위로 스크롤합니다.
+Page Down 한 화면 아래로 스크롤합니다.
+Ctrl+Up 한 화면 위로 스크롤합니다.
+Ctrl+Down 한 화면 아래로 스크롤합니다.
+Home 커서를 화면에 표시된 첫 번째 문자로 이동합니다.
+End 커서를 화면에 표시된 마지막 줄의 시작 부분으로 이동합니다.
+Ctrl+Home 파일의 시작 부분으로 이동합니다.
+Ctrl+End 파일의 끝 부분으로 이동합니다.
+Ctrl+Page Up 파일의 시작 부분으로 이동합니다.
+Ctrl+Page Down 파일의 끝 부분으로 이동합니다.
+
+
+## D.3 Editing
+
+키 | 동작
+--- | ---
+Backspace: 왼쪽의 문자를 삭제합니다.
+Delete: 오른쪽의 문자를 삭제합니다.
+Ctrl+H: 왼쪽의 문자를 삭제합니다(Backspace와 동일).
+Ctrl+W: 왼쪽의 단어를 삭제합니다.
+Ctrl+U: 줄의 시작 부분까지 삭제합니다.
+Enter: 새 줄을 삽입합니다(자동 들여쓰기가 활성화된 경우).
+Tab: 탭 문자를 삽입합니다.
+Escape: 최근에 입력한 텍스트를 선택합니다(두 번 누르면 잘라내기).
+
+
+
+## D.4 Composition
+
+키 | 동작
+--- | ---
+Alt 키(누르고 놓기)를 눌러 합성 모드를 전환합니다.
+그런 다음 입력 순서를 따라 합성된 유니코드 문자를 삽입합니다.
+Alt 키를 다시 누르면 합성을 취소합니다.
+
+
+합성 순서에 대해서는 부록 E를 참조하십시오.
+
+
+
+
+
+# APPENDIX E Unicode Composition Table
+
+문자를 입력하려면 Alt 키를 눌렀다가 놓아 입력 모드로 전환한 다음, 표시된 순서대로 키를 입력하십시오. 입력한 문자가 삽입됩니다. Alt 키를 다시 누르면 입력 모드가 해제됩니다.
+
+아래의 입력 순서는 범주별로 정리되어 있습니다. 전체 표에는 500개 이상의 항목이 포함되어 있으며, 여기에는 가장 흔히 사용되는 항목들만 나열되어 있습니다.
+
+
+## E.1 Latin Accented Characters
+
+시퀀스 | 문자 | 설명
+--- | --- | ---
+'A Á A acute
+'E É E acute
+'I Í I acute
+'O Ó O acute
+'U Ú U acute
+'a á a acute
+'e é e acute
+'i í i acute
+'o ó o acute
+'u ú u acute
+`A À A grave
+`E È E grave
+`a à a grave
+`e è e grave
+`o ò o grave
+`u ù u grave
+^A Â A circumflex
+^E Ê E circumflex
+^a â a circumflex
+^e ê e circumflex
+^o ô o circumflex
+^u û u circumflex
+"A Ä A diaeresis
+"O Ö O diaeresis
+"U Ü U diaeresis
+"a ä a diaeresis
+"o ö o diaeresis
+"u ü u diaeresis
+~N Ñ N tilde
+~n ñ n tilde
+~A Ã A tilde
+~a ã a tilde
+~O Õ O tilde
+~o õ o tilde
+,C Ç C cedilla
+,c ç c cedilla
+ss ß sharp s (eszett)
+
+
+## E.2 Punctuation and Symbols
+
+시퀀스 | 문자 | 설명
+--- | --- | ---
+!! ¡ Inverted exclamation
+?? ¿ Inverted question
+<< « Left guillemet
+>> » Right guillemet
+oo ° Degree sign
++- ± Plus-minus
+xx × Multiplication
+-: ÷ Division
+co © Copyright
+ro ® Registered
+
+
+## E.3 Greek Letters
+
+Upper | Lower | Name
+--- | --- | ---
+*A ⇒ A *a ⇒ α Alpha
+*B ⇒ B *b ⇒ β Beta
+*G ⇒ Γ *g ⇒ γ Gamma
+*D ⇒ ∆ *d ⇒ δ Delta
+*E ⇒ E *e ⇒ ϵ Epsilon
+*Z ⇒ Z *z ⇒ ζ Zeta
+*Y ⇒ H *y ⇒ η Eta
+*H ⇒ Θ *h ⇒ θ Theta
+*I ⇒ I *i ⇒ ι Iota
+*K ⇒ K *k ⇒ κ Kappa
+*L ⇒ Λ *l ⇒ λ Lambda
+*M ⇒ M *m ⇒ µ Mu
+*N ⇒ N *n ⇒ ν Nu
+*C ⇒ Ξ *c ⇒ ξ Xi
+*P ⇒ Π *p ⇒ π Pi
+*R ⇒ P *r ⇒ ρ Rho
+*S ⇒ Σ *s ⇒ σ Sigma
+*T ⇒ T *t ⇒ τ Tau
+*U ⇒ Υ *u ⇒ υ Upsilon
+*F ⇒ Φ *f ⇒ ϕ Phi
+*X ⇒ X *x ⇒ χ Chi
+*Q ⇒ Ψ *q ⇒ ψ Psi
+*W ⇒ Ω *w ⇒ ω Omega
+
+
+## E.4 Mathematical Symbols
+
+시퀸스 | 문자 | 설명
+--- | --- | ---
+!= ̸= Not equal
+== ≡ Identical / equivalent
+<= ≤ Less than or equal
+>= ≥ Greater than or equal
+<< ≪ Much less than
+>> ≫ Much greater than
+sr √ Square root
+if ∞ Infinity
++- ± Plus-minus
+no ¬ Logical not
+an ∧ Logical and
+or ∨ Logical or
+el ∈ Element of
+mo ∋ Contains as member
+sb ⊂ Subset
+sp ⊃ Superset
+ca ∩ Intersection
+cu ∪ Union
+fa ∀ For all
+te ∃ There exists
+pd ∂ Partial derivative
+nb ∇ Nabla / gradient
+es ∅ Empty set
+
+
+## E.5 Arrows
+
+시퀸스 | 문자 | 설명
+--- | --- | ---
+<- ← Left arrow
+-> → Right arrow
+ua ↑ Up arrow
+da ↓ Down arrow
+ab ↔ Left-right arrow
+=> ⇒ Double right arrow
+
+
+## E.6 Currency
+
+시퀸스 | 문자 | 설명
+--- | --- | ---
+eu € Euro sign
+l- £ Pound sterling
+y= ¥ Yen
+c| ¢ Cent
+
+500개가 넘는 곡이 모두 수록된 전체 표는 acme 소스 배포본의 lib/keyboard 파일에 있습니다.
+
+
+
+
+
+# APPENDIX F Default Plumbing Rules
+
+다음은 acme에 컴파일된 내장 플러빙 규칙입니다. 이 규칙들은 ~/lib/plumbing 이 존재하지 않을 때 사용됩니다. 사용자 정의 플러빙 파일을 생성할 경우, 이 규칙들을 복사하여 시작점으로 삼으십시오.
+
+opener 명령어는 플랫폼에 따라 다릅니다. Linux는 xdg-open, macOS는 open, 네이티브 Windows는 explorer(ShellExecute를 통해 호출됨)입니다. 아래 규칙에서 OPENER 는 해당 플랫폼에 적합한 명령어를 나타냅니다.
+
+
+## F.1 Variable Definitions
+
+```
+addrelem = ‘((#?[0-9]+)|(/[A-Za-z0-9_\^]+/?)|[.$])’
+addr = :($addrelem([,;+\-]$addrelem)*)
+twocolonaddr = ([0-9]+)[:.] ([0-9]+)
+editor = acme
+```
+
+addrelem 패턴은 :42, :/pattern/, :$ 등과 같은 sam 스타일의 주소를 일치시킵니다. twocolonaddr 패턴은 line:col 또는 line.col 쌍을 일치시킵니다.
+
+
+## F.2 URLs
+
+```
+type is text
+data matches '(https?|ftp|file|gopher|mailto|news
+|nntp|telnet|wais|prospero)://...'
+plumb to web
+plumb start OPENER $0
+```
+
+HTTP, HTTPS, FTP 및 기타 URL 스키마와 일치합니다. 기본 웹 브라우저에서 엽니다.
+
+
+## F.3 Image Files
+
+```
+type is text
+data matches '[a-zA-Z0-9_\-./@]+'
+data matches '(...)\.(jpe?g|JPE?G|gif|GIF|tiff?
+|TIFF?|ppm|bit|png|PNG)'
+arg isfile $0
+plumb to image
+plumb start OPENER $file
+```
+
+시스템 이미지 뷰어로 이미지 파일을 엽니다.
+
+
+## F.4 PDF / PostScript / DVI Files
+
+```
+type is text
+data matches '[a-zA-Z0-9_\-./@]+'
+data matches '(...)\.(ps|PS|eps|EPS|pdf|PDF|dvi|DVI)'
+arg isfile $0
+plumb to postscript
+plumb start OPENER $file
+```
+
+시스템 문서 뷰어를 사용해 문서 파일을 엽니다.
+
+
+## F.5 File Addresses with Two-Part Line:Column
+
+```
+,# file:line.col,line.col
+type is text
+data matches '(filename_pattern)':$twocolonaddr,$twocolonaddr
+arg isfile $1
+data set $file
+attr add addr=$2-#0+#$3-#1,$4-#0+#$5-#1
+plumb to edit
+plumb client $editor
+```
+
+main.c:10.5,20.3 같은 패턴(양쪽 끝이 행.열로 지정된 범위)을 처리합니다.
+
+
+## F.6 File Addresses with Line:Column
+
+```
+,# file:line.col
+type is text
+data matches '(filename_pattern)':$twocolonaddr
+arg isfile $1
+data set $file
+attr add addr=$2-#0+#$3-#1
+plumb to edit
+plumb client $editor
+```
+
+main.c:42.10(단일 행.열) 같은 패턴을 처리합니다.
+
+
+## F.7 Existing Files with Optional Address
+
+```
+type is text
+data matches '(filename_pattern)'($addr)?
+arg isfile $1
+data set $file
+attr add addr=$3
+plumb to edit
+plumb client $editor
+```
+
+포괄적인 파일 규칙입니다. 일반 파일 이름과 sam 스타일의 주소 접미사가 붙은 파일 이름( main.c:42 , main.c:/re/ )을 일치시킵니다.
+
+
+## F.8 Include Files
+
+```
+,# .h files in /usr/include
+type is text
+data matches '([a-zA-Z0-9/_\-]+\.h)'($addr)?
+arg isfile /usr/include/$1
+data set $file
+attr add addr=$3
+plumb to edit
+plumb client $editor
+
+,# .h files in /usr/local/include
+type is text
+data matches '([a-zA-Z0-9/_\-]+\.h)'($addr)?
+arg isfile /usr/local/include/$1
+data set $file
+attr add addr=$3
+plumb to edit
+plumb client $editor
+```
+
+두 가지 규칙 검색 표준 시스템에는 디렉터리가 포함됩니다. 추가 디렉터리는 Incl 명령을 사용하거나 사용자 정의 플럼빙 규칙을 통해 추가할 수 있습니다.
+
+
+
+
+# Bibliography
+
+**Pike, Rob. “Acme: A User Interface for Programmers.”** \
+Proceedings of the Winter 1994 USENIX Conference, San Francisco, 1994.
+https://research.swtch.com/acme.pdf
+acme의 설계, 철학 및 인터페이스를 설명하는 기초 논문입니다. acme가 왜 그런 방식으로 작동하는지 이해하기 위해 꼭 읽어야 할 자료입니다.
+
+**Pike, Rob. “The Text Editor sam.”** \
+Software—Practice and Experience, Vol. 17, No. 11, pp. 813–845, November 1987.
+https://doc.cat-v.org/plan_9/4th_edition/papers/sam/
+ACME의 Edit 명령어가 구현하고 있는 Sam의 설계 및 명령어 언어에 관한 전체 논문.
+
+**Pike, Rob. “Structural Regular Expressions.”** \
+Proceedings of the EUUG Spring 1987 Conference, Helsinki, 1987.
+https://doc.cat-v.org/bell_labs/structural_regexps/
+줄이 아닌 구조에 정규 표현식을 적용하는 sam의 x 및 y 명령어에 대한 이론적 근거를 설명합니다.
+
+**Cox, Russ. “A Tour of Acme” (screencast).** \
+https://research.swtch.com/acme
+https://www.youtube.com/watch?v=dP1xVpMPn8M
+Acme의 주요 유지보수자 중 한 명이 Acme를 일상적으로 사용하는 모습을 보여주는 데모 영상입니다. 신규 사용자에게 가장 좋은 입문 자료입니다.
+
+**acme(1) manual page.** \
+https://9fans.github.io/plan9port/man/man1/acme.html
+plan9port의 공식 매뉴얼 페이지.
+
+**sam(1) manual page.** \
+https://9fans.github.io/plan9port/man/man1/sam.html
+acme의 Edit 명령어에서 사용되는 sam 명령어 언어에 대한 참조 자료.
+
+**Pike, Rob. “Plumbing and Other Utilities.”** \
+https://doc.cat-v.org/plan_9/4th_edition/papers/plumb/
+Plan 9의 애플리케이션 간 메시지 라우팅 시스템인 ‘plumber’의 설계 및 구현.
+
+**Pike, Rob. “A Minimalist Global User Interface.”** \
+https://doc.cat-v.org/plan_9/4th_edition/papers/rio/
+‘rio’에 대해 설명한다. 이는 ‘Plan 9’의 창 시스템으로, 텍스트와 파일을 보편적인 인터페이스로 간주한다는 ‘acme’의 철학을 공유한다.
+
+**Plan 9 from User Space (plan9port).** \
+https://github.com/9fans/plan9port
+Plan9의 사용자 공간 도구를 Unix로 이식한 것으로, 이 독립형 acme는 이를 기반으로 개발되었습니다.
+
+**Plan 9 Fourth Edition Papers.** \
+https://doc.cat-v.org/plan_9/4th_edition/papers/
+Plan 9 문서의 전체 모음.
+
+**Acme community resources.** \
+https://acme.cat-v.org/
+커뮤니티에서 관리하는 Acme 관련 팁, 스크립트 및 링크 모음입니다.
 
 
