@@ -4,6 +4,11 @@ The Acme Editor - A Comprehensive Guide
 
 [*Based on the standalone acme derived from Plan 9*](https://github.com/blakemcbride/Acme)
 
+> [!CAUTION]
+> 윈도우에서 MSYS로 새로 컴파일
+> `acme.exe -f MalgunGothic/12a/font` 로 실행 가능(`acme.exe -f Gulim/12/font`)
+> `acme.exe -fonts`, `acme.exe --help` 둘 다 먹통
+
 
 # CHAPTER 1 Introduction
 
