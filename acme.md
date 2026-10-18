@@ -13,6 +13,42 @@ The Acme Editor - A Comprehensive Guide
 > `C:\Temp\acme.exe -f Sarasa-Mono-K-Nerd-Font-Regular/12a/font` 로 실행
 
 
+```
+$ ./acme.exe --help
+usage: acme [options] [file ...]
+
+Options:
+        -a              autoindent in all windows
+        -b              typing goes to the most recently clicked text,
+                        not the text under the mouse
+        -c ncol         start with ncol columns
+        -f font         main font (see below)
+        -F font         alternate font, switched to by the Font command
+        -l file         restore the session saved in file by Dump
+        -m mtpt         mount point for acme's file system
+        -r              swap mouse scroll buttons
+        -W size         window size/position: WIDTHxHEIGHT or WIDTHxHEIGHT@X,Y
+        -D              libthread debugging
+        --fonts         list the names of all installed fonts and exit
+        -h, --help      print this message and exit
+
+Fonts:
+        A font is written Name/Size/font, e.g. DejaVuSansMono/13a/font:
+        Name is a font name as listed by 'acme --fonts', Size is the
+        height in pixels, and a trailing 'a' turns on antialiasing.
+        The path of a Plan 9 bitmap font file also works.
+
+        The font is chosen by, in decreasing precedence:
+        1. the -f and -F command-line options
+        2. the $font environment variable (sets both fonts)
+        3. the built-in default, Consolas/13a/font
+
+        If the built-in default is not installed, acme falls back to the
+        closest installed monospace font and prints a warning.  A missing
+        font requested with -f, -F or $font is a fatal error.
+```
+
+
 # CHAPTER 1 Introduction
 
 Acme는 1993년 Bell Labs의 Rob Pike가 개발한 텍스트 편집기이자 프로그래밍 환경입니다. 이 프로그램은 Plan9 운영 체제의 일부로 설계되었으며, 편집기이자 셸—즉, 모든 작업이 이루어지는 작업 공간—의 역할을 동시에 수행했습니다.
