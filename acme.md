@@ -1,5 +1,4 @@
 The Acme Editor - A Comprehensive Guide
-
 ---
 
 [*Based on the standalone acme derived from Plan 9*](https://github.com/blakemcbride/Acme)
@@ -47,6 +46,8 @@ Fonts:
         closest installed monospace font and prints a warning.  A missing
         font requested with -f, -F or $font is a fatal error.
 ```
+
+---
 
 
 # CHAPTER 1 Introduction
