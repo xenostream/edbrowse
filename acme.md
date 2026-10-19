@@ -9,7 +9,8 @@ The Acme Editor - A Comprehensive Guide
 > `acme.exe -f MalgunGothic/12a/font` 로 실행 가능(`acme.exe -f Gulim/12/font`)\
 > `acme.exe -fonts`, `acme.exe --help` 둘 다 먹통(MSYS2 콘솔에서만 출력됨)
 >
-> `C:\Temp\acme.exe -f Sarasa-Mono-K-Nerd-Font-Regular/12a/font` 로 실행
+> `C:\Temp\acme.exe -a -f NotoSansKR-Regular/12a/font` 로 실행(Win10이상)
+> `C:\Temp\acme.exe -a -f Sarasa-Mono-K-Nerd-Font-Regular/12a/font` 로 실행
 
 
 ```
