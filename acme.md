@@ -2039,59 +2039,59 @@ Alt 키를 다시 누르면 | 합성을 취소합니다.
 
 시퀀스 | 문자 | 설명
 --- | --- | ---
-'A | Á  | A acute
-'E | É  | E acute
-'I | Í  | I acute
-'O | Ó  | O acute
-'U | Ú  | U acute
-'a | á  | a acute
-'e | é  | e acute
-'i | í  | i acute
-'o | ó  | o acute
-'u | ú  | u acute
-`A | À  | A grave
-`E | È  | E grave
-`a | à  | a grave
-`e | è  | e grave
-`o | ò  | o grave
-`u | ù  | u grave
-^A | Â  | A circumflex
-^E | Ê  | E circumflex
-^a | â  | a circumflex
-^e | ê  | e circumflex
-^o | ô  | o circumflex
-^u | û  | u circumflex
-"A | Ä  | A diaeresis
-"O | Ö  | O diaeresis
-"U | Ü  | U diaeresis
-"a | ä  | a diaeresis
-"o | ö  | o diaeresis
-"u | ü  | u diaeresis
-~N | Ñ  | N tilde
-~n | ñ  | n tilde
-~A | Ã  | A tilde
-~a | ã  | a tilde
-~O | Õ  | O tilde
-~o | õ  | o tilde
-,C | Ç  | C cedilla
-,c | ç  | c cedilla
-ss | ß  | sharp s (eszett)
+`'A` | Á  | A acute
+`'E` | É  | E acute
+`'I` | Í  | I acute
+`'O` | Ó  | O acute
+`'U` | Ú  | U acute
+`'a` | á  | a acute
+`'e` | é  | e acute
+`'i` | í  | i acute
+`'o` | ó  | o acute
+`'u` | ú  | u acute
+``A` | À  | A grave
+``E` | È  | E grave
+``a` | à  | a grave
+``e` | è  | e grave
+``o` | ò  | o grave
+``u` | ù  | u grave
+`^A` | Â  | A circumflex
+`^E` | Ê  | E circumflex
+`^a` | â  | a circumflex
+`^e` | ê  | e circumflex
+`^o` | ô  | o circumflex
+`^u` | û  | u circumflex
+`"A` | Ä  | A diaeresis
+`"O` | Ö  | O diaeresis
+`"U` | Ü  | U diaeresis
+`"a` | ä  | a diaeresis
+`"o` | ö  | o diaeresis
+`"u` | ü  | u diaeresis
+`~N` | Ñ  | N tilde
+`~n` | ñ  | n tilde
+`~A` | Ã  | A tilde
+`~a` | ã  | a tilde
+`~O` | Õ  | O tilde
+`~o` | õ  | o tilde
+`,C` | Ç  | C cedilla
+`,c` | ç  | c cedilla
+`ss` | ß  | sharp s (eszett)
 
 
 ## E.2 Punctuation and Symbols
 
 시퀀스 | 문자 | 설명
 --- | --- | ---
-!!  | ¡  | Inverted exclamation
-??  | ¿  | Inverted question
-<<  | «  | Left guillemet
->>  | »  | Right guillemet
-oo  | °  | Degree sign
-+-  | ±  | Plus-minus
-xx  | ×  | Multiplication
--:  | ÷  | Division
-co  | ©  | Copyright
-ro  | ®  | Registered
+`!!` | ¡  | Inverted exclamation
+`??` | ¿  | Inverted question
+`<<` | «  | Left guillemet
+`>>` | »  | Right guillemet
+`oo` | °  | Degree sign
+`+-` | ±  | Plus-minus
+`xx` | ×  | Multiplication
+`-:` | ÷  | Division
+`co` | ©  | Copyright
+`ro` | ®  | Registered
 
 
 ## E.3 Greek Letters
@@ -2127,51 +2127,51 @@ Upper | Lower | Name
 
 시퀸스 | 문자 | 설명
 --- | --- | ---
-!=  |  ̸= | Not equal
-==  | ≡  | Identical / equivalent
-<=  | ≤  | Less than or equal
->=  | ≥  | Greater than or equal
-<<  | ≪  | Much less than
->>  | ≫  | Much greater than
-sr  | √  | Square root
-if  | ∞ |  Infinity
-+-  | ±  | Plus-minus
-no  | ¬  | Logical not
-an  | ∧  | Logical and
-or  | ∨  | Logical or
-el  | ∈  | Element of
-mo  | ∋  | Contains as member
-sb  | ⊂  | Subset
-sp  | ⊃  | Superset
-ca  | ∩  | Intersection
-cu  | ∪  | Union
-fa  | ∀  | For all
-te  | ∃  | There exists
-pd  | ∂  | Partial derivative
-nb  | ∇  | Nabla / gradient
-es  | ∅  | Empty set
+`!=`  |  ̸= | Not equal
+`==`  | ≡  | Identical / equivalent
+`<=`  | ≤  | Less than or equal
+`>=`  | ≥  | Greater than or equal
+`<<`  | ≪  | Much less than
+`>>`  | ≫  | Much greater than
+`sr`  | √  | Square root
+`if`  | ∞ |  Infinity
+`+-`  | ±  | Plus-minus
+`no`  | ¬  | Logical not
+`an`  | ∧  | Logical and
+`or`  | ∨  | Logical or
+`el`  | ∈  | Element of
+`mo`  | ∋  | Contains as member
+`sb`  | ⊂  | Subset
+`sp`  | ⊃  | Superset
+`ca`  | ∩  | Intersection
+`cu`  | ∪  | Union
+`fa`  | ∀  | For all
+`te`  | ∃  | There exists
+`pd`  | ∂  | Partial derivative
+`nb`  | ∇  | Nabla / gradient
+`es`  | ∅  | Empty set
 
 
 ## E.5 Arrows
 
 시퀸스 | 문자 | 설명
 --- | --- | ---
-<-  | ←  | Left arrow
-->  | →  | Right arrow
-ua  | ↑  | Up arrow
-da  | ↓  | Down arrow
-ab  | ↔  | Left-right arrow
-=>  | ⇒  | Double right arrow
+`<-`  | ←  | Left arrow
+`->`  | →  | Right arrow
+`ua`  | ↑  | Up arrow
+`da`  | ↓  | Down arrow
+`ab`  | ↔  | Left-right arrow
+`=>`  | ⇒  | Double right arrow
 
 
 ## E.6 Currency
 
 시퀸스 | 문자 | 설명
 --- | --- | ---
-eu  | €  | Euro sign
-l-  | £  | Pound sterling
-y=  | ¥  | Yen
-c|  | ¢  | Cent
+`eu`  | €  | Euro sign
+`l-`  | £  | Pound sterling
+`y=`  | ¥  | Yen
+`c|`  | ¢  | Cent
 
 500개가 넘는 곡이 모두 수록된 전체 표는 acme 소스 배포본의 lib/keyboard 파일에 있습니다.
 
