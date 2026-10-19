@@ -5,7 +5,7 @@ The Acme Editor - A Comprehensive Guide
 
 
 > [!CAUTION]
-> 윈도우에서 MSYS로 새로 컴파일 \
+> 윈도우에서 MSYS로 새로 컴파일 - [My Env](https://github.com/xenostream/edbrowse/raw/refs/heads/main/acme.exe) \
 > `acme.exe -f MalgunGothic/12a/font` 로 실행 가능(`acme.exe -f Gulim/12/font`)\
 > `acme.exe -fonts`, `acme.exe --help` 둘 다 먹통(MSYS2 콘솔에서만 출력됨)
 >
