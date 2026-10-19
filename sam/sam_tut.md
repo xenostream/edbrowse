@@ -54,7 +54,7 @@ sam 편집기를 `‑d` 플래그(옵션)로 실행하면 마우스가 없더라
 **명명법:** sam은 **편집 파일의 복사본을 메모리에 보관** 합니다. 설명상 혼동을 피하기 위해 원본 파일 (*file*)에 대한 sam 내부의 복사본을 **파일** 이라 명명합니다. 또한 영구 저장소인 디스크의 실제 파일은 **Unix 파일** 로 명명합니다.
 
 
-<br><br><br><br>
+<br><br>
 
 
 # Text
@@ -215,7 +215,7 @@ general introduction to the commands in Emacs and to try to show
 실행 취소 명령은 백업만 가능합니다. 즉, 이전에 사용한 `u` 명령을 다시 실행 취소할 수 없습니다!!
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -349,7 +349,7 @@ general introduction to the commands in Emacs and to try to show
 `+‑` 구문은 sam 편집기만의 특별한 **관용구** 입니다.
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -488,7 +488,7 @@ the method in the madness that is the Emacs command structure.
 이 예제는 주소 (전체 파일) 를 직접 지정해 처리했지만 실제 이와 같은 작업은 그래픽 모드에서 마우스로 특정 텍스트를 선택한 후 현재텍스트로 설정해서 별도의 주소 지정없이 곧바로 처리할 가능성이 큽니다.
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -519,7 +519,7 @@ sam에는 **조건부** `g` (*guard*) 명령이 존재합니다. `g/pattern/comm
 두 명령 모두 단독으로 사용할 땐 별로 흥미롭지 않지만 `x` 명령과 결합해서 사용할 경우에는 매우 유용할 수 있습니다.
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -659,7 +659,7 @@ C언어의 변수는 **0 개 이상의 영문자나 밑줄 문자로 시작** �
 사실, 처리할 일이 하나 더 있습니다. 예를 들어, 주석문내에 포함된 것까지 처리 대상에서 제외하기 위해서 또 다른 `y` 명령을 추가로 사용할 수 있습니다. 하지만 더 이상의 자세한 설명을 하진 않겠지만 sam의 반복 및 조건부 명령으로 보다 흥미로운 작업을 처리할 수 있는 여러 가지 처리 방법에 대한 자신만의 아이디어가 있어야 합니다.
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -714,7 +714,7 @@ the method in the madness that is the Emacs command structure.
 단어에 부분적으로 포함된 문자열은 변경하지 않도록 `v` 명령을 이용해서 처리 대상에서 제외합니다.
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -728,7 +728,7 @@ the method in the madness that is the Emacs command structure.
 
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -808,7 +808,7 @@ the method in the madness that is the EMACS command structure.
 
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
@@ -928,7 +928,7 @@ sam 편집기는 이와 같이 ed 편집기와 전혀 다른 규칙으로 처리
 
 
 [:arrow_up:](#top)
-<br><br><br><br>
+<br><br>
 
 
 
