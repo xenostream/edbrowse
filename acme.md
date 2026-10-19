@@ -2318,51 +2318,51 @@ plumb client $editor
 # Bibliography
 
 **Pike, Rob. “Acme: A User Interface for Programmers.”** \
-Proceedings of the Winter 1994 USENIX Conference, San Francisco, 1994.\
-https://research.swtch.com/acme.pdf\
+Proceedings of the Winter 1994 USENIX Conference, San Francisco, 1994. \
+https://research.swtch.com/acme.pdf \
 acme의 설계, 철학 및 인터페이스를 설명하는 기초 논문입니다. acme가 왜 그런 방식으로 작동하는지 이해하기 위해 꼭 읽어야 할 자료입니다.
 
 **Pike, Rob. “The Text Editor sam.”** \
-Software—Practice and Experience, Vol. 17, No. 11, pp. 813–845, November 1987.\
-https://doc.cat-v.org/plan_9/4th_edition/papers/sam/\
+Software—Practice and Experience, Vol. 17, No. 11, pp. 813–845, November 1987. \
+https://doc.cat-v.org/plan_9/4th_edition/papers/sam/ \
 ACME의 Edit 명령어가 구현하고 있는 Sam의 설계 및 명령어 언어에 관한 전체 논문.
 
 **Pike, Rob. “Structural Regular Expressions.”** \
-Proceedings of the EUUG Spring 1987 Conference, Helsinki, 1987.\
-https://doc.cat-v.org/bell_labs/structural_regexps/\
+Proceedings of the EUUG Spring 1987 Conference, Helsinki, 1987. \
+https://doc.cat-v.org/bell_labs/structural_regexps/ \
 줄이 아닌 구조에 정규 표현식을 적용하는 sam의 x 및 y 명령어에 대한 이론적 근거를 설명합니다.
 
 **Cox, Russ. “A Tour of Acme” (screencast).** \
-https://research.swtch.com/acme\
-https://www.youtube.com/watch?v=dP1xVpMPn8M\
+https://research.swtch.com/acme \
+https://www.youtube.com/watch?v=dP1xVpMPn8M \
 Acme의 주요 유지보수자 중 한 명이 Acme를 일상적으로 사용하는 모습을 보여주는 데모 영상입니다. 신규 사용자에게 가장 좋은 입문 자료입니다.
 
 **acme(1) manual page.** \
-https://9fans.github.io/plan9port/man/man1/acme.html\
+https://9fans.github.io/plan9port/man/man1/acme.html \
 plan9port의 공식 매뉴얼 페이지.
 
 **sam(1) manual page.** \
-https://9fans.github.io/plan9port/man/man1/sam.html\
+https://9fans.github.io/plan9port/man/man1/sam.html \
 acme의 Edit 명령어에서 사용되는 sam 명령어 언어에 대한 참조 자료.
 
 **Pike, Rob. “Plumbing and Other Utilities.”** \
-https://doc.cat-v.org/plan_9/4th_edition/papers/plumb/\
+https://doc.cat-v.org/plan_9/4th_edition/papers/plumb/ \
 Plan 9의 애플리케이션 간 메시지 라우팅 시스템인 ‘plumber’의 설계 및 구현.
 
 **Pike, Rob. “A Minimalist Global User Interface.”** \
-https://doc.cat-v.org/plan_9/4th_edition/papers/rio/\
+https://doc.cat-v.org/plan_9/4th_edition/papers/rio/ \
 ‘rio’에 대해 설명한다. 이는 ‘Plan 9’의 창 시스템으로, 텍스트와 파일을 보편적인 인터페이스로 간주한다는 ‘acme’의 철학을 공유한다.
 
 **Plan 9 from User Space (plan9port).** \
-https://github.com/9fans/plan9port\
+https://github.com/9fans/plan9port \
 Plan9의 사용자 공간 도구를 Unix로 이식한 것으로, 이 독립형 acme는 이를 기반으로 개발되었습니다.
 
 **Plan 9 Fourth Edition Papers.** \
-https://doc.cat-v.org/plan_9/4th_edition/papers/\
+https://doc.cat-v.org/plan_9/4th_edition/papers/ \
 Plan 9 문서의 전체 모음.
 
 **Acme community resources.** \
-https://acme.cat-v.org/\
+https://acme.cat-v.org/ \
 커뮤니티에서 관리하는 Acme 관련 팁, 스크립트 및 링크 모음입니다.
 
 
