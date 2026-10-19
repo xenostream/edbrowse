@@ -1,6 +1,5 @@
 # A tutorial for the sam command language
 
-<br><br>
 [**Rob Pike**]
 <br><br>
 
