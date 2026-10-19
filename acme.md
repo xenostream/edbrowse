@@ -1799,106 +1799,94 @@ exec acme -a \
 
 명령 | 설명
 --- | ---
-디버그 명령을 중단합니다. 첫 번째 실행 시 경고 메시지를 표시하고,
-두 번째 실행 시 abort()를 호출하여 코어 덤프를 생성합니다.
-Cut 선택한 텍스트를 삭제하고 snarf 버퍼에 복사합니다. 창을
-변경된 상태로 표시합니다.
-Del 창을 닫습니다. 변경된 상태인 경우 경고를 표시하며, 강제로 닫으려면 다시 실행하십시오.
-Delcol 열과 해당 열의 모든 창을 삭제합니다. 변경된 상태가 있는 경우
-경고를 표시합니다.
-Delete 변경 여부 확인 없이 창을 닫습니다.
-Dump [파일] 세션 상태를 저장합니다. 기본값: $HOME/acme.dump.
-Edit cmd 창 본문에 sam 편집 명령을 실행합니다.
-8장을 참조하십시오.
-Exit acme를 종료합니다. 변경된 창이 있으면 경고 메시지가 표시되며,
-다시 실행하면 강제로 종료됩니다.
-Font [이름] 비례/고정폭 글꼴을 전환하거나, 이름으로 글꼴을 설정합니다.
-Get [파일] 디스크에서 파일을 다시 불러옵니다. 인수가 있으면 지정된 파일을 불러옵니다.
-ID 창 ID 번호를 출력합니다.
-Incl [디렉터리...] <file.h> 해결을 위한 보조 포함 디렉터리를 나열하거나 추가합니다.
-Indent [on|off|ON|OFF] 자동 들여쓰기를 설정합니다. 소문자: 현재 창. 대문자:
-모든 창.
-Kill [이름...] 지정된 실행 중인 명령에 종료 신호를 보냅니다.
-Load [파일] 세션 상태를 복원합니다. 기본값: $HOME/acme.dump.
-Look [텍스트] 창 본문에서 문자 그대로의 텍스트를 검색합니다. 선택 영역 또는
-인수를 사용합니다.
-New [파일...] 새 창을 만듭니다. 인수가 지정된 경우, 지정된
-파일을 엽니다.
-Newcol 새 열을 만듭니다.
-붙여넣기: 선택 영역을 스나프 버퍼의 내용으로 대체합니다.
-Put [파일]: 창 내용을 디스크에 기록합니다. 인수를 지정하면 지정한
-파일에 기록합니다.
-Putall: 이름이 실제 파일인 모든 변경된 창을 기록합니다.
-다시 실행: 마지막으로 취소된 변경 사항을 다시 실행합니다.
-Send: Win 창에서: 대기 중인 입력을 셸로 전송합니다. 일반
-창에서: 스나프 버퍼를 본문에 추가합니다.
-Snarf: 선택한 텍스트를 삭제하지 않고 스나프 버퍼로 복사합니다.
-정렬(Sort) 열 내의 창을 이름의 알파벳 순서로 정렬합니다.
-탭([n]) 현재 창의 탭 너비를 출력하거나 설정합니다.
-되돌리기(Undo) 마지막 변경 사항 또는 변경 그룹을 되돌립니다.
-Win 새 창에서 대화형 셸 세션을 엽니다. 7.4절을 참조하십시오.
-Zerox 창을 복제합니다(동일한 파일의 두 번째 보기).
+`Abort`  | 디버그 명령. 첫 번째 실행 시 경고 메시지를 표시하고, 두 번째 실행 시 abort() 를 호출해서 코어 덤프를 생성합니다.
+`Cut` | 선택한 텍스트를 삭제하고 snarf 버퍼에 복사합니다. 창을 변경된 상태로 표시합니다.
+`Del` | 창을 닫습니다. 변경된 상태인 경우 경고를 표시하며, 강제로 닫으려면 다시 실행합니다.
+`Delcol` | 열과 해당 열의 모든 창을 삭제합니다. 변경된 상태가 있는 경우 경고를 표시합니다.
+`Delete` | 변경 여부 확인 없이 창을 닫습니다.
+`Dump [파일]` | 세션 상태를 저장합니다. 기본값: `$HOME/acme.dump`
+`Edit cmd` | 창 본문에 sam 편집 명령을 실행합니다. 8장을 참조합니다.
+`Exit` | acme를 종료합니다. 변경된 창이 있으면 경고 메시지가 표시되며, 다시 실행하면 강제로 종료됩니다.
+`Font [이름]` | 비례/고정폭 글꼴을 전환하거나, 지정한 이름으로 글꼴을 설정합니다.
+`Get [파일]`  | 디스크에서 파일을 다시 불러옵니다. 인수가 있으면 지정된 파일을 불러옵니다.
+`ID` | 창 ID 번호를 출력합니다.
+`Incl [디렉터리...]` | <file.h> 해결을 위한 보조 포함 디렉터리를 나열하거나 추가합니다.
+`Indent [on|off|ON|OFF]` | 자동 들여쓰기를 설정합니다. 소문자: 현재 창. 대문자: 모든 창.
+`Kill [이름...]` | 지정된 실행 중인 명령에 종료 신호를 보냅니다.
+`Load [파일] |` 세션 상태를 복원합니다. 기본값: `$HOME/acme.dump`
+`Look [텍스트]` | 창 본문에서 문자 그대로의 텍스트를 검색합니다. 선택 영역 또는 인수를 사용합니다.
+`New [파일...]` | 새 창을 만듭니다. 인수가 지정된 경우, 지정된 파일을 엽니다.
+`Newcol` | 새 열을 만듭니다.
+`Paste` | 선택 영역을 스나프 버퍼의 내용으로 대체합니다.
+`Put [파일]` | 창 내용을 디스크에 기록합니다. 인수를 지정하면 지정한 파일에 기록합니다.
+`Putall` | 이름이 실제 파일인 모든 변경된 창을 기록합니다.
+`Redo` | 마지막으로 취소된 변경 사항을 다시 실행합니다.
+`Send` | Win 창에서: 대기 중인 입력을 셸로 전송합니다. 일반 창에서: 스나프 버퍼를 본문에 추가합니다.
+`Snarf` | 선택한 텍스트를 삭제하지 않고 스나프 버퍼로 복사합니다.
+`Sort` | 열의 창을 이름의 알파벳 순서로 정렬합니다.
+`Tab [n]` | 현재 창의 탭 너비를 출력하거나 설정합니다.
+`Undo` | 마지막 변경 사항 또는 변경 그룹을 되돌립니다.
+`Win` | 새 창에서 대화형 셸 세션을 엽니다. 7.4절을 참조합니다.
+`Zerox` | 창을 복제합니다(동일한 파일의 두 번째 창으로 보기).
 
 
 
 # APPENDIX B Edit Command Reference
 
-이 부록은 ACME의 ‘Edit’ 명령어를 통해 사용할 수 있는 편집 언어를 요약해서 설명합니다. 사용법에 대한 자세한 내용은 8장을 참조하십시오.
+이 부록은 ACME의 ‘Edit’ 명령어를 통해 사용할 수 있는 편집 언어를 요약해서 설명합니다. 사용법에 대한 자세한 내용은 8장을 참조합니다.
 
 
 ## B.1 Addresses
 
 주소 | 의미
 --- | ---
-. | 현재 선택 항목 (점).
-0 | 파일 시작.
-$ | 파일 끝.
-n | n번째 줄 (1부터 시작).
-#n | n번째 문자 (0부터 시작).
-/re/ | 정규 표현식 re의 다음 일치 항목을 앞으로 검색.
-?re? | 정규 표현식 re의 다음 일치 항목을 뒤로 검색.
-a,b | a부터 b까지의 범위.
-a;b | 범위; b를 평가하기 전에 a에 점을 설정.
-a+b | a의 끝을 기준으로 b.
-a-b | a의 시작을 기준으로 b, 뒤로.
-,  | 0,$ (전체 파일)의 약어.
+`.` | 현재 선택 항목 (점-닷).
+`0` | 파일 시작.
+`$` | 파일 끝.
+`n` | n번째 줄 (1부터 시작).
+`#n` | n번째 문자 (0부터 시작).
+`/re/` | 정규 표현식 re의 다음 일치 항목을 앞으로 검색.
+`?re?` | 정규 표현식 re의 다음 일치 항목을 뒤로 검색.
+`a,b` | a부터 b까지의 범위.
+`a;b` | 범위; b를 평가하기 전에 a에 점을 설정.
+`a+b` | a의 끝을 기준으로 b.
+`a-b` | a의 시작을 기준으로 b, 뒤로.
+`,` | 0,$ (전체 파일)의 약어.
 
 
 ## B.2 Commands
 
 명령 | 동작
 --- | ---
-a/text/ | 지정된 범위 뒤에 텍스트를 추가합니다.
-c/text/ | 변경: 지정된 범위를 text로 대체합니다.
-d | 지정된 범위를 삭제합니다.
-i/text/ | 지정된 범위 앞에 text를 삽입합니다.
-m addr | 지정된 범위를 addr 뒤쪽으로 이동합니다.
-p | 지정된 범위를 출력합니다.
-s/re/text/ | re의 첫 번째 일치 항목을 text로 치환합니다.
-s/re/text/g | 모든 일치 항목을 text로 치환합니다.
-t addr | 지정된 범위를 addr 뒤쪽으로 복사합니다.
-= | 주소(줄 번호 및 문자 오프셋)를 출력합니다.
+`a/text/` | 지정된 범위 뒤에 텍스트를 추가합니다.
+`c/text/` | 변경: 지정된 범위를 text로 대체합니다.
+`d` | 지정된 범위를 삭제합니다.
+`i/text/` | 지정된 범위 앞에 text를 삽입합니다.
+`m addr` | 지정된 범위를 addr 뒤쪽으로 이동합니다.
+`p` | 지정된 범위를 출력합니다.
+`s/re/text/` | re의 첫 번째 일치 항목을 text로 치환합니다.
+`s/re/text/g` | 모든 일치 항목을 text로 치환합니다.
+`t addr` | 지정된 범위를 addr 뒤쪽으로 복사합니다.
+`=` | 주소(줄 번호 및 문자 오프셋)를 출력합니다.
 
 
 ## B.3 Structural Commands
 
 명령 | 동작
 --- | ---
-x/re/cmd | 추출: for each matchofre, setdottomatchandrun cmd.
-y/re/cmd 보완: 일치하는 부분들 사이의 각 구간마다,
-dot을 설정하고 cmd를 실행합니다.
-g/re/cmd 가드: 지정된 텍스트가 re와 일치하면 cmd를 실행합니다.
-v/re/cmd 역가드: 지정된 텍스트가 re와 일치하지 않으면
-cmd를 실행합니다.
-{ cmds } 여러 명령을 그룹화합니다.
+`x/re/cmd` | 추출: re와 일치하는 항목마다 dot을 match로 설정하고 cmd를 실행합니다.
+`y/re/cmd` | 보완: 일치하는 부분들 사이의 각 구간마다, dot을 설정하고 cmd를 실행합니다.
+`g/re/cmd` | 가드: 지정된 텍스트가 re와 일치하면 cmd를 실행합니다.
+`v/re/cmd` | 역가드: 지정된 텍스트가 re와 일치하지 않으면 cmd를 실행합니다.
+`{ cmds }` | 여러 명령을 그룹화합니다.
 
 
 ## B.4 Multi-File Commands
 
 명령 | 동작
 --- | ---
-X/re/cmd | 이름이 re와 일치하는 각 파일에 대해 cmd를 실행합니다.
-Y/re/cmd | 이름이 re와 일치하지 않는 각 파일에 대해 cmd를 실행합니다.
+`X/re/cmd` | 이름이 re와 일치하는 각 파일에 대해 cmd를 실행합니다.
+`Y/re/cmd` | 이름이 re와 일치하지 않는 각 파일에 대해 cmd를 실행합니다.
 
 
 ## B.5 Substitute Backreferences
@@ -1907,11 +1895,11 @@ s 명령어의 대체 텍스트에서:
 
 토큰 | 의미
 --- | ---
-& | 전체 일치 부분.
-\1 … \9 | 캡처된 부분식.
-\n | 리터럴 개행.
-\t |리터럴 탭.
-\\ | 리터럴 백슬래시.
+`&` | 전체 일치 부분.
+`\1 … \9` | 캡처된 부분식.
+`\n` | 리터럴 개행.
+`\t` |리터럴 탭.
+`\\` | 리터럴 백슬래시.
 
 
 
@@ -1923,29 +1911,29 @@ s 명령어의 대체 텍스트에서:
 
 버튼 | 위치 | 동작
 --- | --- | ---
-B1 본문/태그: 커서를 놓거나 텍스트를 선택합니다.
-B1 스크롤바: 위로 스크롤합니다(클릭한 줄이 맨 위로 이동합니다).
-B1 레이아웃 버튼: 드래그하여 창을 이동합니다.
-B1 본문/태그에서 더블 클릭: 단어를 선택합니다.
-B1 괄호에서 더블 클릭: 대응되는 괄호까지 선택합니다.
-B1 따옴표에서 더블 클릭: 대응되는 따옴표까지 선택합니다.
-B1 본문/태그에서 트리플 클릭: 줄을 선택합니다.
-B2 본문/태그 텍스트를 명령으로 실행합니다.
-B2 스크롤바 비례 스크롤로 이동합니다.
-B3 본문/태그 파일을 열거나, 주소를 따라가거나, 검색합니다.
-B3 스크롤바 아래로 스크롤합니다(클릭한 위치로 맨 위 줄이 이동).
-위로 스크롤 본문 텍스트를 위로 스크롤합니다.
-아래로 스크롤 본문 텍스트를 아래로 스크롤합니다.
+B1 | 본문/태그 | 커서를 놓거나 텍스트를 선택합니다.
+B1 | 스크롤바 | 위로 스크롤합니다(클릭한 줄이 맨 위로 이동합니다).
+B1 | 레이아웃 버튼 | 드래그해서 창을 이동합니다.
+B1 | 본문/태그에서 더블 클릭 | 단어를 선택합니다.
+B1 | 괄호에서 더블 클릭 | 대응되는 괄호까지 선택합니다.
+B1 | 따옴표에서 더블 클릭 | 대응되는 따옴표까지 선택합니다.
+B1 | 본문/태그에서 트리플 클릭 | 줄을 선택합니다.
+B2 | 본문/태그 | 텍스트를 명령으로 실행합니다.
+B2 | 스크롤바 | 비례 스크롤로 이동합니다.
+B3 | 본문/태그 | 파일을 열거나, 주소로 이동하거나, 검색합니다.
+B3 | 스크롤바 | 아래로 스크롤합니다(클릭 위치로 맨 위 줄이 이동).
+위로 스크롤 | 본문 | 텍스트를 위로 스크롤합니다.
+아래로 스크롤 | 본문 | 텍스트를 아래로 스크롤합니다.
 
 
 ## C.2 Chords
 
 마우스 코드 | 동작
 --- | ---
-B1–B2 잘라내기: 선택 영역을 삭제하고 스나프 버퍼에 저장합니다.
-B1–B3 붙여넣기: 선택 영역을 스나프 버퍼의 내용으로 대체합니다.
-B1–B2+B3 스나프: 선택 영역을 스나프 버퍼에 복사합니다(삭제 없음).
-B2를 누른 상태에서 B1을 클릭하여 2-1 코드를 입력: B1의 텍스트를 B2 명령의 인수로 전달합니다.
+B1–B2 | 잘라내기 : 선택 영역을 삭제하고 스나프 버퍼에 저장합니다.
+B1–B3 | 붙여넣기 : 선택 영역을 스나프 버퍼의 내용으로 대체합니다.
+B1–B2+B3 | 스나프: 선택 영역을 스나프 버퍼에 복사합니다(삭제 없음).
+B2를 누른 상태에서 B1을 클릭 | 2-1 코드 입력: B1의 텍스트를 B2 명령의 인수로 전달합니다.
 
 
 ## C.3 Modifier-Click Emulation
@@ -1954,8 +1942,8 @@ B2를 누른 상태에서 B1을 클릭하여 2-1 코드를 입력: B1의 텍스�
 
 수정 키 | 클릭 대응 기능
 --- | ---
-Ctrl+B1 B2 (실행)
-Alt+B1 B3 (보기/열기)
+Ctrl+B1 | B2 (실행)
+Alt+B1  | B3 (보기/열기)
 
 
 ## C.4 Button 3 Decision Table
@@ -1964,16 +1952,16 @@ Alt+B1 B3 (보기/열기)
 
 텍스트 | 동작
 --- | ---
-filename 파일을 열거나(또는 기존 창으로 이동).
-filename:N 파일의 N행으로 이동.
-filename:N.M 파일의 N행 M열로 이동.
-filename:N.M,N.M 지정된 행/열 범위로 이동.
-filename:/re/ 파일을 열고 정규식을 검색합니다.
-:N 현재 파일의 N번째 줄로 이동합니다.
-:/re/ 현재 파일에서 정규식을 검색합니다.
-http://... 브라우저에서 URL을 엽니다.
-<file.h> 포함 디렉터리를 검색합니다.
-기타 텍스트 현재 본문에서 문자 그대로 검색합니다.
+filename | 파일을 열거나(또는 기존 창으로 이동).
+filename:N | 파일의 N행으로 이동.
+filename:N.M | 파일의 N행 M열로 이동.
+filename:N.M,N.M | 지정된 행/열 범위로 이동.
+filename:/re/ | 파일을 열고 정규식을 검색합니다.
+:N | 현재 파일의 N번째 줄로 이동합니다.
+:/re/ | 현재 파일에서 정규식을 검색합니다.
+http://... | 브라우저에서 URL을 엽니다.
+<file.h>  | 포함 디렉터리를 검색합니다.
+기타 텍스트 | 현재 본문에서 문자 그대로 검색합니다.
 
 
 
@@ -1999,30 +1987,30 @@ Ctrl+E: 줄의 끝 부분.
 
 키 | 동작
 --- | ---
-Page Up 한 화면 위로 스크롤합니다.
-Page Down 한 화면 아래로 스크롤합니다.
-Ctrl+Up 한 화면 위로 스크롤합니다.
-Ctrl+Down 한 화면 아래로 스크롤합니다.
-Home 커서를 화면에 표시된 첫 번째 문자로 이동합니다.
-End 커서를 화면에 표시된 마지막 줄의 시작 부분으로 이동합니다.
-Ctrl+Home 파일의 시작 부분으로 이동합니다.
-Ctrl+End 파일의 끝 부분으로 이동합니다.
-Ctrl+Page Up 파일의 시작 부분으로 이동합니다.
-Ctrl+Page Down 파일의 끝 부분으로 이동합니다.
+Page Up | 한 화면 위로 스크롤합니다.
+Page Down | 한 화면 아래로 스크롤합니다.
+Ctrl+Up | 한 화면 위로 스크롤합니다.
+Ctrl+Down | 한 화면 아래로 스크롤합니다.
+Home | 커서를 화면에 표시된 첫 번째 문자로 이동합니다.
+End | 커서를 화면에 표시된 마지막 줄의 시작 부분으로 이동합니다.
+Ctrl+Home | 파일의 시작 부분으로 이동합니다.
+Ctrl+End | 파일의 끝 부분으로 이동합니다.
+Ctrl+Page Up | 파일의 시작 부분으로 이동합니다.
+Ctrl+Page Down | 파일의 끝 부분으로 이동합니다.
 
 
 ## D.3 Editing
 
 키 | 동작
 --- | ---
-Backspace: 왼쪽의 문자를 삭제합니다.
-Delete: 오른쪽의 문자를 삭제합니다.
-Ctrl+H: 왼쪽의 문자를 삭제합니다(Backspace와 동일).
-Ctrl+W: 왼쪽의 단어를 삭제합니다.
-Ctrl+U: 줄의 시작 부분까지 삭제합니다.
-Enter: 새 줄을 삽입합니다(자동 들여쓰기가 활성화된 경우).
-Tab: 탭 문자를 삽입합니다.
-Escape: 최근에 입력한 텍스트를 선택합니다(두 번 누르면 잘라내기).
+Backspace | 왼쪽의 문자를 삭제합니다.
+Delete | 오른쪽의 문자를 삭제합니다.
+Ctrl+H | 왼쪽의 문자를 삭제합니다(Backspace와 동일).
+Ctrl+W | 왼쪽의 단어를 삭제합니다.
+Ctrl+U | 줄의 시작 부분까지 삭제합니다.
+Enter | 새 줄을 삽입합니다(자동 들여쓰기가 활성화된 경우).
+Tab | 탭 문자를 삽입합니다.
+Escape | 최근에 입력한 텍스트를 선택합니다(두 번 누르면 잘라내기).
 
 
 
@@ -2030,12 +2018,11 @@ Escape: 최근에 입력한 텍스트를 선택합니다(두 번 누르면 잘�
 
 키 | 동작
 --- | ---
-Alt 키(누르고 놓기)를 눌러 합성 모드를 전환합니다.
-그런 다음 입력 순서를 따라 합성된 유니코드 문자를 삽입합니다.
-Alt 키를 다시 누르면 합성을 취소합니다.
+Alt 키(누르고 놓기) | 합성 모드를 전환합니다.
+그런 다음 입력 순서를 따라 | 합성된 유니코드 문자를 삽입합니다.
+Alt 키를 다시 누르면 | 합성을 취소합니다.
 
-
-합성 순서에 대해서는 부록 E를 참조하십시오.
+합성 순서는 부록 E를 참조합니다.
 
 
 
@@ -2043,148 +2030,148 @@ Alt 키를 다시 누르면 합성을 취소합니다.
 
 # APPENDIX E Unicode Composition Table
 
-문자를 입력하려면 Alt 키를 눌렀다가 놓아 입력 모드로 전환한 다음, 표시된 순서대로 키를 입력하십시오. 입력한 문자가 삽입됩니다. Alt 키를 다시 누르면 입력 모드가 해제됩니다.
+문자를 입력하려면 Alt 키를 눌렀다가 놓고 입력 모드로 전환한 다음, 표시된 순서대로 키를 입력합니다. 입력한 문자가 삽입됩니다. Alt 키를 다시 누르면 입력 모드가 해제됩니다.
 
-아래의 입력 순서는 범주별로 정리되어 있습니다. 전체 표에는 500개 이상의 항목이 포함되어 있으며, 여기에는 가장 흔히 사용되는 항목들만 나열되어 있습니다.
+아래의 입력 순서는 범주별로 정리되어 있습니다. 전체 표에는 500개 이상의 항목이 포함되어 있으며, 여기는 가장 흔히 사용되는 항목들만 나열되어 있습니다.
 
 
 ## E.1 Latin Accented Characters
 
 시퀀스 | 문자 | 설명
 --- | --- | ---
-'A Á A acute
-'E É E acute
-'I Í I acute
-'O Ó O acute
-'U Ú U acute
-'a á a acute
-'e é e acute
-'i í i acute
-'o ó o acute
-'u ú u acute
-`A À A grave
-`E È E grave
-`a à a grave
-`e è e grave
-`o ò o grave
-`u ù u grave
-^A Â A circumflex
-^E Ê E circumflex
-^a â a circumflex
-^e ê e circumflex
-^o ô o circumflex
-^u û u circumflex
-"A Ä A diaeresis
-"O Ö O diaeresis
-"U Ü U diaeresis
-"a ä a diaeresis
-"o ö o diaeresis
-"u ü u diaeresis
-~N Ñ N tilde
-~n ñ n tilde
-~A Ã A tilde
-~a ã a tilde
-~O Õ O tilde
-~o õ o tilde
-,C Ç C cedilla
-,c ç c cedilla
-ss ß sharp s (eszett)
+'A | Á  | A acute
+'E | É  | E acute
+'I | Í  | I acute
+'O | Ó  | O acute
+'U | Ú  | U acute
+'a | á  | a acute
+'e | é  | e acute
+'i | í  | i acute
+'o | ó  | o acute
+'u | ú  | u acute
+`A | À  | A grave
+`E | È  | E grave
+`a | à  | a grave
+`e | è  | e grave
+`o | ò  | o grave
+`u | ù  | u grave
+^A | Â  | A circumflex
+^E | Ê  | E circumflex
+^a | â  | a circumflex
+^e | ê  | e circumflex
+^o | ô  | o circumflex
+^u | û  | u circumflex
+"A | Ä  | A diaeresis
+"O | Ö  | O diaeresis
+"U | Ü  | U diaeresis
+"a | ä  | a diaeresis
+"o | ö  | o diaeresis
+"u | ü  | u diaeresis
+~N | Ñ  | N tilde
+~n | ñ  | n tilde
+~A | Ã  | A tilde
+~a | ã  | a tilde
+~O | Õ  | O tilde
+~o | õ  | o tilde
+,C | Ç  | C cedilla
+,c | ç  | c cedilla
+ss | ß  | sharp s (eszett)
 
 
 ## E.2 Punctuation and Symbols
 
 시퀀스 | 문자 | 설명
 --- | --- | ---
-!! ¡ Inverted exclamation
-?? ¿ Inverted question
-<< « Left guillemet
->> » Right guillemet
-oo ° Degree sign
-+- ± Plus-minus
-xx × Multiplication
--: ÷ Division
-co © Copyright
-ro ® Registered
+!!  | ¡  | Inverted exclamation
+??  | ¿  | Inverted question
+<<  | «  | Left guillemet
+>>  | »  | Right guillemet
+oo  | °  | Degree sign
++-  | ±  | Plus-minus
+xx  | ×  | Multiplication
+-:  | ÷  | Division
+co  | ©  | Copyright
+ro  | ®  | Registered
 
 
 ## E.3 Greek Letters
 
 Upper | Lower | Name
 --- | --- | ---
-*A ⇒ A *a ⇒ α Alpha
-*B ⇒ B *b ⇒ β Beta
-*G ⇒ Γ *g ⇒ γ Gamma
-*D ⇒ ∆ *d ⇒ δ Delta
-*E ⇒ E *e ⇒ ϵ Epsilon
-*Z ⇒ Z *z ⇒ ζ Zeta
-*Y ⇒ H *y ⇒ η Eta
-*H ⇒ Θ *h ⇒ θ Theta
-*I ⇒ I *i ⇒ ι Iota
-*K ⇒ K *k ⇒ κ Kappa
-*L ⇒ Λ *l ⇒ λ Lambda
-*M ⇒ M *m ⇒ µ Mu
-*N ⇒ N *n ⇒ ν Nu
-*C ⇒ Ξ *c ⇒ ξ Xi
-*P ⇒ Π *p ⇒ π Pi
-*R ⇒ P *r ⇒ ρ Rho
-*S ⇒ Σ *s ⇒ σ Sigma
-*T ⇒ T *t ⇒ τ Tau
-*U ⇒ Υ *u ⇒ υ Upsilon
-*F ⇒ Φ *f ⇒ ϕ Phi
-*X ⇒ X *x ⇒ χ Chi
-*Q ⇒ Ψ *q ⇒ ψ Psi
-*W ⇒ Ω *w ⇒ ω Omega
+*A ⇒ A  | *a ⇒ α  | Alpha
+*B ⇒ B  | *b ⇒ β  | Beta
+*G ⇒ Γ  | *g ⇒ γ  | Gamma
+*D ⇒ ∆  | *d ⇒ δ  | Delta
+*E ⇒ E  | *e ⇒ ϵ  | Epsilon
+*Z ⇒ Z  | *z ⇒ ζ  | Zeta
+*Y ⇒ H  | *y ⇒ η  | Eta
+*H ⇒ Θ  | *h ⇒ θ  | Theta
+*I ⇒ I  | *i ⇒ ι  | Iota
+*K ⇒ K  | *k ⇒ κ  | Kappa
+*L ⇒ Λ  | *l ⇒ λ  | Lambda
+*M ⇒ M  | *m ⇒ µ  | Mu
+*N ⇒ N  | *n ⇒ ν  | Nu
+*C ⇒ Ξ  | *c ⇒ ξ  | Xi
+*P ⇒ Π  | *p ⇒ π  | Pi
+*R ⇒ P  | *r ⇒ ρ  | Rho
+*S ⇒ Σ  | *s ⇒ σ  | Sigma
+*T ⇒ T  | *t ⇒ τ  | Tau
+*U ⇒ Υ  | *u ⇒ υ  | Upsilon
+*F ⇒ Φ  | *f ⇒ ϕ  | Phi
+*X ⇒ X  | *x ⇒ χ  | Chi
+*Q ⇒ Ψ  | *q ⇒ ψ  | Psi
+*W ⇒ Ω  | *w ⇒ ω  | Omega
 
 
 ## E.4 Mathematical Symbols
 
 시퀸스 | 문자 | 설명
 --- | --- | ---
-!= ̸= Not equal
-== ≡ Identical / equivalent
-<= ≤ Less than or equal
->= ≥ Greater than or equal
-<< ≪ Much less than
->> ≫ Much greater than
-sr √ Square root
-if ∞ Infinity
-+- ± Plus-minus
-no ¬ Logical not
-an ∧ Logical and
-or ∨ Logical or
-el ∈ Element of
-mo ∋ Contains as member
-sb ⊂ Subset
-sp ⊃ Superset
-ca ∩ Intersection
-cu ∪ Union
-fa ∀ For all
-te ∃ There exists
-pd ∂ Partial derivative
-nb ∇ Nabla / gradient
-es ∅ Empty set
+!=  |  ̸= | Not equal
+==  | ≡  | Identical / equivalent
+<=  | ≤  | Less than or equal
+>=  | ≥  | Greater than or equal
+<<  | ≪  | Much less than
+>>  | ≫  | Much greater than
+sr  | √  | Square root
+if  | ∞ |  Infinity
++-  | ±  | Plus-minus
+no  | ¬  | Logical not
+an  | ∧  | Logical and
+or  | ∨  | Logical or
+el  | ∈  | Element of
+mo  | ∋  | Contains as member
+sb  | ⊂  | Subset
+sp  | ⊃  | Superset
+ca  | ∩  | Intersection
+cu  | ∪  | Union
+fa  | ∀  | For all
+te  | ∃  | There exists
+pd  | ∂  | Partial derivative
+nb  | ∇  | Nabla / gradient
+es  | ∅  | Empty set
 
 
 ## E.5 Arrows
 
 시퀸스 | 문자 | 설명
 --- | --- | ---
-<- ← Left arrow
--> → Right arrow
-ua ↑ Up arrow
-da ↓ Down arrow
-ab ↔ Left-right arrow
-=> ⇒ Double right arrow
+<-  | ←  | Left arrow
+->  | →  | Right arrow
+ua  | ↑  | Up arrow
+da  | ↓  | Down arrow
+ab  | ↔  | Left-right arrow
+=>  | ⇒  | Double right arrow
 
 
 ## E.6 Currency
 
 시퀸스 | 문자 | 설명
 --- | --- | ---
-eu € Euro sign
-l- £ Pound sterling
-y= ¥ Yen
-c| ¢ Cent
+eu  | €  | Euro sign
+l-  | £  | Pound sterling
+y=  | ¥  | Yen
+c|  | ¢  | Cent
 
 500개가 넘는 곡이 모두 수록된 전체 표는 acme 소스 배포본의 lib/keyboard 파일에 있습니다.
 
