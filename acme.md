@@ -122,21 +122,21 @@ Acme는 Linux, macOS 및 Windows에서 소스 코드를 통해 빌드됩니다. 
 
 C 컴파일러(GCC 또는 Clang), GNU make, 그리고 SDL3, FreeType, fontconfig, zlib 용 개발 라이브러리가 필요합니다.
 
-**Debian / Ubuntu:** \
+**Debian / Ubuntu:** 
 ```
 sudo apt install gcc make
 sudo apt install libsdl3-dev libfontconfig1-dev \
 libfreetype-dev zlib1g-dev
 ```
 
-**Fedora:** \
+**Fedora:** 
 ```
 sudo dnf install gcc make
 sudo dnf install SDL3-devel fontconfig-devel \
 freetype-devel zlib-devel
 ```
 
-**Arch Linux:** \
+**Arch Linux:** 
 ```
 sudo pacman -S gcc make sdl3 fontconfig freetype2 zlib
 ```
