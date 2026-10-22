@@ -5,12 +5,12 @@ The Acme Editor - A Comprehensive Guide
 
 
 > [!CAUTION]
-> 윈도우에서 MSYS로 새로 컴파일 - [My Env](https://github.com/xenostream/edbrowse/raw/refs/heads/main/acme.exe) \
-> `acme.exe -f MalgunGothic/12a/font` 로 실행 가능(`acme.exe -f Gulim/12/font`)\
-> `acme.exe -fonts`, `acme.exe --help` 둘 다 먹통(MSYS2 콘솔에서만 출력됨)\
-> `acme.exe --fonts > fonts.txt 2>&1` 로 생성
+> 윈도우에서 MSYS로 새로 컴파일 - [My Env](https://github.com/xenostream/edbrowse/raw/refs/heads/main/acme.exe)  
+> `acme.exe -f MalgunGothic/12a/font` 로 실행 가능(`acme.exe -f Gulim/12/font`)  
+> `acme.exe -fonts`, `acme.exe --help` 둘 다 먹통(MSYS2 콘솔에서만 출력됨)  
+> `acme.exe --fonts > fonts.txt 2>&1` 로 생성  
 >
-> `C:\Temp\acme.exe -a -f NotoSansKR-Regular/12a/font` 로 실행(Win10이상)\
+> `C:\Temp\acme.exe -a -f NotoSansKR-Regular/12a/font` 로 실행(Win10이상)  
 > `C:\Temp\acme.exe -a -f Sarasa-Mono-K-Nerd-Font-Regular/12a/font` 로 실행
 
 
@@ -65,16 +65,16 @@ Acme는 여러분이 사용해 본 그 어떤 편집기와도 많이 다릅니�
 
 올바른 모델은 편집기 프로그램과 컴파일러 프로그램을 구분하지 않는 셸을 갖는 것입니다. 모든 프로그램은 환경의 서비스에 동등하게 접근할 수 있어야 합니다. 이는 다음과 같은 몇 가지 원칙으로 이어집니다.
 
-- 텍스트는 보편적인 인터페이스입니다. \
+- 텍스트는 보편적인 인터페이스입니다.  
 명령은 텍스트입니다. 출력은 텍스트입니다. 파일 이름은 텍스트입니다. 사용자는 텍스트를 읽고 클릭함으로써 모든 것과 상호작용합니다.
 
-- 마우스가 주된 입력 장치입니다. \
+- 마우스가 주된 입력 장치입니다.  
 Acme는 3버튼 마우스를 위해 설계되었습니다. 키보드는 텍스트 입력을 위한 것이고, 마우스는 그 외 모든 작업—명령 실행, 파일 열기, 선택, 검색, 스크롤, 창 관리—을 위한 것입니다.
 
-- 기능보다 단순함을 우선시합니다. \
+- 기능보다 단순함을 우선시합니다.  
 Acme는 구문 강조, 자동 완성, 중괄호 일치 기능, 내장 디버거, 프로젝트 관리자가 없습니다. Acme는 강력한 작업 환경을 제공하며, 실제 작업은 외부 프로그램이 수행하도록 합니다.
 
-- 설정하지 말고 구성합니다. \
+- 설정하지 말고 구성합니다.  
 에디터를 설정하는 대신, 외부 도구를 사용해서 에디터를 구성합니다. 줄을 정렬합니까? 해당 줄을 선택하고 `|sort` 를 실행하세요. 서식을 다시 지정합니까? `|fmt` 를 실행하세요. 유닉스 툴킷이 바로 여러분의 확장 메커니즘입니다.
 
 
@@ -247,7 +247,7 @@ make
 
 그러면 MSYS2 나 Cygwin 런타임에 의존하지 않고 정적 링크된 `bin/acme.exe` (대략 13MB) 파일이 생성됩니다. acme.exe 를 Windows 10 이상 운영체제가 설치된 컴퓨터로 복사한 후 직접 실행하면 됩니다. 별도의 설치나 다른 파일은 필요하지 않습니다.
 
-기본 글꼴은 Windows에 포함된 Consolas 입니다. 글꼴은 C:\Windows\Fonts 디렉토리에서 자동으로 탐지됩니다. `Win` 명령어는 Windows ConPTY API를 사용해서 acme 창 내에서 대화형 cmd.exe 세션을 열어줍니다. 자세한 내용은 Windows-native.md 를 참조합니다.
+기본 글꼴은 Windows에 포함된 Consolas 입니다. 글꼴은 `C:\Windows\Fonts` 디렉토리에서 자동으로 탐지됩니다. `Win` 명령어는 Windows ConPTY API를 사용해서 acme 창 내에서 대화형 cmd.exe 세션을 열어줍니다. 자세한 내용은 Windows-native.md 를 참조합니다.
 
 
 ### 2.3.3 Mouse on Windows
@@ -427,19 +427,19 @@ acme의 창은 탭이나 파일 트리로 관리되지 않습니다. 대신 다�
 
 `B1` 은 텍스트를 선택하는 용도로 사용됩니다.
 
-**클릭** \
+**클릭**  
 클릭한 위치에 커서(빈 선택 영역)를 놓습니다.
 
-**드래그** \
+**드래그**  
 텍스트 범위를 선택합니다. 선택된 텍스트는 강조 표시됩니다.
 
-**더블 클릭** \
+**더블 클릭**  
 커서 아래에 있는 단어를 선택합니다. “단어” 는 문맥에 따라 알파벳 및 숫자, 밑줄로 구성된 연속된 문자열이거나, 공백이 아닌 문자로 구성된 연속된 문자열을 의미합니다.
 
-**괄호에서 더블 클릭** \
+**괄호에서 더블 클릭**  
 `( ) [ ] { } < >` 중 하나를 더블 클릭하면, acme는 중첩된 괄호를 포함해서 일치하는 쌍으로 둘러싸인 텍스트를 선택합니다. 이 기능은 둥근 괄호, 대괄호, 중괄호 및 각괄호에서 작동합니다.
 
-**따옴표에서 더블 클릭** \
+**따옴표에서 더블 클릭**  
 단일 따옴표, 큰따옴표 또는 백틱을 더블 클릭하면 일치하는 따옴표 문자로 둘러싸인 텍스트가 선택됩니다.
 
 화면 아무 곳이나 `B1` 을 클릭하면 이전 선택이 해제됩니다. 선택 기능은 acme의 핵심입니다. 많은 명령이 선택된 텍스트를 대상으로 작동하며, 선택된 텍스트는 잘라내기, 복사 또는 바꾸기 대상이 됩니다.
@@ -449,16 +449,16 @@ acme의 창은 탭이나 파일 트리로 관리되지 않습니다. 대신 다�
 
 `B2` 는 텍스트를 명령어로 실행합니다.
 
-**내장 명령어 클릭** \
+**내장 명령어 클릭**  
 `Put` 을 중간 버튼으로 클릭하면 acme가 해당 파일을 저장합니다. `Del` 을 중간 클릭하면 acme가 창을 닫습니다. `Undo` 를 중간 클릭하면 acme가 마지막 변경 사항을 취소합니다.
 
-**임의의 텍스트 클릭** \
+**임의의 텍스트 클릭**  
 임의의 텍스트를 중간 버튼으로 클릭하면 셸 명령어로 실행됩니다. 예를 들어, 태그 바에 `date` 를 입력하고 중간 버튼을 클릭하면 현재 날짜가 `+Errors` 창에 표시됩니다.
 
-**빈 영역 클릭** \
+**빈 영역 클릭**  
 빈 영역이나 공백을 클릭하면 acme는 선택 범위를 주변의 공백이 아닌 텍스트까지 확장해서 이를 실행합니다. 즉, 명령어를 정밀하게 선택할 필요가 없으며, 텍스트 아무 곳이나 클릭하면 됩니다.
 
-**파이프 명령 클릭** \
+**파이프 명령 클릭**  
 `<, >` 또는 `|` 로 시작하는 텍스트는 특별한 의미를 가집니다. 자세한 내용은 제7장을 참조합니다.
 
 명령은 해당 창과 연결된 디렉터리에서 실행됩니다. /home/user/src/main.c 파일의 경우, 명령은 /home/user/src/ 에서 실행됩니다.
@@ -468,22 +468,22 @@ acme의 창은 탭이나 파일 트리로 관리되지 않습니다. 대신 다�
 
 `B3` 는 “스마트 열기” 버튼입니다. 이 버튼은 사용자가 클릭한 텍스트를 분석해서 가장 유용한 작업을 수행합니다:
 
-**파일 이름 클릭** \
+**파일 이름 클릭**  
 main.c 를 마우스 오른쪽 버튼으로 클릭하면 acme가 새 창에서 해당 파일을 엽니다(또는 이미 열려 있는 경우 기존 창으로 이동합니다).
 
-**주소가 포함된 파일 이름 클릭** \
+**주소가 포함된 파일 이름 클릭**  
 main.c:42 를 마우스 오른쪽 버튼으로 클릭하면 main.c 파일을 열고 42번 줄로 이동합니다. 주소는 줄 번호, 줄:열 쌍(main.c:42.10), 또는 정규 표현식(main.c:/pattern/)일 수 있습니다.
 
-**현재 파일 내 주소 클릭** \
+**현재 파일 내 주소 클릭**  
 :42 또는 :/pattern/ 을 마우스 오른쪽 버튼으로 클릭하면 현재 창에서 해당 위치로 이동합니다.
 
-**인클루드 파일 클릭** \
+**인클루드 파일 클릭**  
 `<stdio.h>` 를 마우스 오른쪽 버튼으로 클릭하면 acme가 헤더 디렉터리를 검색해서 stdio.h 파일을 찾아 엽니다. 
 
-**URL 클릭** \
+**URL 클릭**  
 https://example.com 를 마우스 오른쪽 버튼으로 클릭하면 해당 주소를 웹 브라우저에서 엽니다(플랫폼에 따라 xdg-open, open 또는 explorer 를 통해).
 
-**일반 텍스트 클릭** \
+**일반 텍스트 클릭**  
 다른 일반 텍스트를 마우스 오른쪽 버튼으로 클릭하면 현재 창 본문에서 해당 텍스트를 앞(방향)으로 검색합니다—리터럴 검색(정규 표현식이 아님). 다시 클릭하면 다음 출현 위치를 찾습니다.
 
 의사 결정 과정은 플럼버(`plumber`)가 처리합니다(9장 참조). 내장된 플럼버 처리 규칙은 파일 이름, URL, 이미지 및 PDF를 처리합니다. 사용자 정의 규칙을 추가할 수 있습니다.
@@ -537,13 +537,13 @@ Acme는 `B1` 버튼으로 선택한 텍스트를 `B2` 명령의 인수로 전달
 
 스크롤바는 각 창 본문 왼쪽 가장자리의 좁은 띠입니다. 여기는 전체 파일에 대한 현재 뷰포트 위치를 나타내는 썸(작은 직사각형)이 있습니다.
 
-**스크롤바 B1 클릭** \
+**스크롤바 B1 클릭**  
 위쪽으로 스크롤합니다. 클릭한 위치의 줄이 창 상단으로 이동합니다.
 
-**스크롤바 B2 클릭** \
+**스크롤바 B2 클릭**  
 점프 스크롤입니다. 썸이 클릭한 위치에 오도록 화면을 이동합니다—비례 스크롤입니다.
 
-**스크롤바 B3 클릭** \
+**스크롤바 B3 클릭**  
 아래로 스크롤합니다. 창 상단에 있던 줄이 클릭한 위치로 이동합니다.
 
 `-r` 명령줄 옵션을 사용하면, 반대 방식의 동작을 선호하는 사용자를 위해 스크롤바에서 `B1` 과 `B3` 버튼의 동작이 반대로 바뀝니다.
@@ -669,7 +669,7 @@ Backspace는 왼쪽의 문자를 삭제하며, 이는 최신 시스템에서 표
 **자동 들여쓰기**  
 자동 들여쓰기가 활성화된 상태(`-a` 옵션 또는 `Indent` 명령을 통해)에서 Enter 키를 누르면 줄바꿈 뒤에 이전 줄과 동일한 선행 공백이 삽입됩니다.
 
-**Tab** \ 
+**Tab**  
 Tab 키는 리터럴 탭 문자를 삽입합니다. 탭의 표시 너비는 `Tab` 명령이나 `$tabstop` 환경 변수에 의해 제어됩니다(기본값: 4열).
 
 
@@ -736,13 +736,13 @@ Acme의 내장 명령어는 대문자로 표기된 단어이며, 해당 단어�
 
 Acme는 ‘snarf 버퍼’ 라는 내부 버퍼를 유지합니다. 이 버퍼는 SDL3를 통해 시스템 클립보드와 동기화되므로, Acme와 다른 애플리케이션 간에 복사 및 붙여넣기를 처리할 수 있습니다.
 
-**Cut** \ 
+**Cut**  
 선택한 텍스트를 삭제하고 스나프 버퍼에 저장합니다. 창은 변경된 상태로 표시됩니다.
 
-**Snarf** \
+**Snarf**  
 선택한 텍스트를 삭제하지 않고 스나프 버퍼에 복사합니다. 창은 변경된 상태로 표시되지 않습니다.
 
-**Paste** \
+**Paste**  
 현재 선택 영역을 스나프 버퍼의 내용으로 대체합니다. 선택 영역이 없는 경우 커서 위치에 삽입합니다.
 
 마우스 조합 키인 `B1–B2` (잘라내기), `B1–B3` (붙여넣기), `B1–B2+B3` (스나프)를 사용하면 동일한 작업을 좀 더 빠르게 수행할 수 있습니다. 4.4절을 참조합니다.
@@ -752,10 +752,10 @@ Acme는 ‘snarf 버퍼’ 라는 내부 버퍼를 유지합니다. 이 버퍼�
 
 ## 6.2 Undo and Redo
 
-**Undo** \
+**Undo**  
 마지막 변경 사항 또는 일련의 변경 사항을 실행 취소합니다. Acme는 관련 변경 사항(예: 일시 정지하기 전에 입력한 모든 문자)을 하나의 실행 취소 단계로 묶어 처리합니다.
 
-**Redo** \
+**Redo**  
 마지막 ‘실행 취소’ 를 다시 되돌립니다.
 
 실행 취소는 파일 단위로 적용됩니다. 동일한 파일이 여러 창에 열려 있는 경우, 한 창에서 실행 취소를 처리하면 해당 파일이 표시된 모든 창에 영향을 미칩니다.
@@ -763,49 +763,49 @@ Acme는 ‘snarf 버퍼’ 라는 내부 버퍼를 유지합니다. 이 버퍼�
 
 ## 6.3 File Operations: Get, Put, Putall
 
-**Get** \
+**Get**  
 디스크에서 파일을 다시 불러와 창 내용을 덮어씁니다. 창에 저장되지 않은 변경 사항이 있는 경우, acme가 경고를 표시합니다(덮어쓰려면 `Get` 명령어를 두 번 실행합니다). 인수(`Get filename`)를 지정하면, 창 이름을 변경하지 않고 지정한 파일을 현재 창으로 불러옵니다.
 
-**Put** \
+**Put**  
 창의 내용을 디스크에 기록합니다. 태그 바에 표시된 파일 이름을 사용합니다. 인수(`Put filename`)를 지정하면, 지정된 파일에 기록합니다(“다른 이름으로 저장”).
 
-**Putall** \
+**Putall**  
 변경된 모든 창의 내용을 각 파일에 기록합니다. 이름이 실제 파일과 일치하는 창만 저장합니다. 임시 창, 디렉터리 창 및 파일 이름이 없는 창은 건너뜁니다.
 
 
 ## 6.4 Window Management
 
-**New** \ 
+**New**  
 새로운 빈 창을 만듭니다. 인자(`New file1 file2...`)를 지정하면, 해당 파일들을 새 창에서 엽니다.
 
-**Del** \ 
+**Del**   
 현재 창을 닫습니다. 창에 저장되지 않은 변경 사항이 있는 경우, acme가 경고 메시지를 표시합니다. `Del` 을 한 번 더 실행하면 변경 사항을 저장하지 않고 강제로 닫을 수 있습니다.
 
-**Delete** \
+**Delete**  
 저장되지 않은 변경 사항을 확인하지 않고 현재 창을 닫습니다.
 
-**Zerox** \
+**Zerox**  
 현재 창을 복제해서 동일한 파일의 두 번째 보기를 생성합니다. 두 창 모두 동일한 파일을 표시하며, 한 쪽에서 변경하면 다른 쪽도 반영됩니다.
 
-**Newcol** \
+**Newcol**  
 새 열을 생성합니다.
 
-**Delcol** \
+**Delcol**  
 현재 열과 해당 열의 모든 창을 삭제합니다. 저장되지 않은 변경 사항이 있는 창이 있으면 경고합니다.
 
-**Sort** \
+**Sort**  
 현재 열의 창을 파일 이름 순으로 알파벳순 정렬합니다.
 
 
 ## 6.5 Session Management: Dump, Load, Exit
 
-**Dump** \
+**Dump**  
 창 레이아웃, 파일 이름, 글꼴 설정 및 위치 등 acme 세션 전체 상태를 파일에 저장합니다. 기본값: $HOME/acme.dump 인수(`Dump filename`)를 지정하면 지정한 파일로 저장합니다.
 
-**Load** \
+**Load**  
 덤프 파일에서 이전에 저장된 세션을 복원합니다. 기본값: $HOME/acme.dump 
 
-**Exit** \
+**Exit**  
 acme를 종료합니다. 저장되지 않은 변경 사항이 있는 창이 있으면 acme가 경고를 표시합니다. `Exit` 를 두 번 실행하면 강제로 종료할 수 있습니다.
 
 `Dump` 와 `Load` 를 함께 사용하면 세션 간 작업 공간을 유지할 수 있습니다. 종료하기 전에 덤프를 생성하고, 다시 시작할 때 로드하는 방식이 일반적입니다.
@@ -813,7 +813,7 @@ acme를 종료합니다. 저장되지 않은 변경 사항이 있는 창이 있�
 
 ## 6.6 Search: Look
 
-**Look** \
+**Look**  
 창 본문에서 텍스트를 검색합니다. 현재 선택된 부분을 검색어로 사용합니다. 선택된 부분이 없으면 커서에서 가장 가까운 단어를 사용합니다.
 
 인수를 지정하면(`B2-B1` 단축키를 사용하거나 `Look text` 를 입력해서),해당 텍스트를 검색합니다.
@@ -823,13 +823,13 @@ acme를 종료합니다. 저장되지 않은 변경 사항이 있는 창이 있�
 
 ## 6.7 Display: Font, Tab, Indent
 
-**Font** \
+**Font**  
 비례 글꼴과 고정 폭 글꼴을 전환합니다. 인수(`Font fontname`)를 지정하면 해당 창의 글꼴을 설정합니다. 글꼴 이름은 크기 접미사가 붙은 글꼴 구성 이름입니다(예: DejaVuSans/12a/font)
 
-**Tab** \
+**Tab**  
 인수가 없을 경우는 현재 탭 너비를 표시합니다. 숫자 인수를 지정할 경우(예: `Tab 8`)는 현재 창의 탭 표시 너비를 설정합니다.
 
-**Indent** \
+**Indent**  
 자동 들여쓰기를 제어합니다.
 
 - Indent on / Indent off — 현재 창에 적용됩니다.
@@ -838,16 +838,16 @@ acme를 종료합니다. 저장되지 않은 변경 사항이 있는 창이 있�
 
 ## 6.8 Process Control: Kill, ID
 
-**Kill** \
+**Kill**  
 실행 중인 명령에 종료 신호를 보냅니다. 인수를 지정하면, 이름과 일치하는 명령만 종료합니다.
 
-**ID** \ 
+**ID**  
 현재 창의 숫자 ID를 출력합니다.
 
 
 ## 6.9 Include Paths: Incl
 
-**Incl** \
+**Incl**  
 인수가 없을 경우는 현재 보조 포함 디렉터리를 나열합니다. 인수가 있을 경우(`Incl /헤더 파일 경로`)는 `<파일명.h>` 패턴을 마우스 오른쪽 버튼으로 클릭했을 때 사용되는 검색 경로에 디렉터리를 추가합니다.
 
 기본 검색 경로는 /usr/include 및 /usr/local/include 가 포함됩니다. `Incl` 명령어는 프로젝트별로 디렉터리를 추가합니다.
@@ -855,7 +855,7 @@ acme를 종료합니다. 저장되지 않은 변경 사항이 있는 창이 있�
 
 ## 6.10 Send
 
-**Send** \
+**Send**  
 `Win` 창(7장 참조)에서 프롬프트 경계와 본문 끝 사이에 있는 텍스트를 셸로 보냅니다. 일반 창에서는 snarf 버퍼의 내용을 본문 끝에 추가합니다.
 
 
@@ -1635,10 +1635,10 @@ acme --fonts
 
 기본 탭 너비는 4열입니다. 이를 변경하려면:
 
-**창별로:** \
+**창별로:**  
 창 태그에서 `Tab 8` (또는 임의의 숫자)을 중간 버튼으로 클릭합니다.
 
-**시작 시:** \
+**시작 시:**  
 `$tabstop` 환경 변수를 다음과 같이 설정합니다:
 
 ```
@@ -1650,17 +1650,17 @@ tabstop=8 acme
 
 자동 들여쓰기는 기본적으로 꺼져 있습니다. 이 기능을 활성화하면 Enter 키를 누를 때 현재 줄의 앞부분 공백이 새 줄로 복사됩니다.
 
-**시작 시:** \
+**시작 시:**  
 `-a` 옵션을 사용합니다:
 
 ```
 acme -a
 ```
 
-**창별 설정:** \
+**창별 설정:**  
 태그에서 `Indent on` 또는 `Indent off` 를 중간 버튼으로 클릭합니다.
 
-**전체 설정:** \
+**전체 설정:**  
 `Indent ON` 또는 `Indent OFF` (대문자)를 중간 버튼으로 클릭합니다.
 
 
@@ -2311,52 +2311,52 @@ plumb client $editor
 
 # Bibliography
 
-**Pike, Rob. “Acme: A User Interface for Programmers.”** \
-Proceedings of the Winter 1994 USENIX Conference, San Francisco, 1994. \
-https://research.swtch.com/acme.pdf \
+**Pike, Rob. “Acme: A User Interface for Programmers.”**  
+Proceedings of the Winter 1994 USENIX Conference, San Francisco, 1994.  
+https://research.swtch.com/acme.pdf  
 acme의 설계, 철학 및 인터페이스를 설명하는 기초 논문입니다. acme가 왜 그런 방식으로 작동하는지 이해하려면 반드시 읽어야 할 자료입니다.
 
-**Pike, Rob. “The Text Editor sam.”** \
-Software—Practice and Experience, Vol. 17, No. 11, pp. 813–845, November 1987. \
-https://doc.cat-v.org/plan_9/4th_edition/papers/sam/ \
+**Pike, Rob. “The Text Editor sam.”**  
+Software—Practice and Experience, Vol. 17, No. 11, pp. 813–845, November 1987.  
+https://doc.cat-v.org/plan_9/4th_edition/papers/sam/  
 ACME의 `Edit` 명령어가 구현하고 있는 Sam의 설계 및 명령어 언어에 관한 전체 논문입니다.
 
-**Pike, Rob. “Structural Regular Expressions.”** \
-Proceedings of the EUUG Spring 1987 Conference, Helsinki, 1987. \
-https://doc.cat-v.org/bell_labs/structural_regexps/ \
+**Pike, Rob. “Structural Regular Expressions.”**  
+Proceedings of the EUUG Spring 1987 Conference, Helsinki, 1987.  
+https://doc.cat-v.org/bell_labs/structural_regexps/  
 줄이 아닌 구조에 정규 표현식을 적용하는 sam의 `x` 및 `y` 명령어에 대한 이론적 근거를 설명합니다.
 
-**Cox, Russ. “A Tour of Acme” (screencast).** \
-https://research.swtch.com/acme \
-https://www.youtube.com/watch?v=dP1xVpMPn8M \
+**Cox, Russ. “A Tour of Acme” (screencast).**  
+https://research.swtch.com/acme  
+https://www.youtube.com/watch?v=dP1xVpMPn8M  
 Acme의 주요 유지보수자 중 한 명이 Acme를 일상적으로 사용하는 모습을 보여주는 데모 영상입니다. 신규 사용자에게 가장 좋은 입문 자료입니다.
 
-**acme(1) manual page.** \
-https://9fans.github.io/plan9port/man/man1/acme.html \
+**acme(1) manual page.**  
+https://9fans.github.io/plan9port/man/man1/acme.html  
 plan9port의 공식 매뉴얼 페이지입니다.
 
-**sam(1) manual page.** \
-https://9fans.github.io/plan9port/man/man1/sam.html \
+**sam(1) manual page.**  
+https://9fans.github.io/plan9port/man/man1/sam.html  
 acme의 `Edit` 명령어에서 사용하는 sam 명령어 언어에 대한 참조 자료입니다.
 
-**Pike, Rob. “Plumbing and Other Utilities.”** \
-https://doc.cat-v.org/plan_9/4th_edition/papers/plumb/ \
+**Pike, Rob. “Plumbing and Other Utilities.”**  
+https://doc.cat-v.org/plan_9/4th_edition/papers/plumb/  
 Plan 9의 애플리케이션 간 메시지 라우팅 시스템인 ‘plumber’ 의 설계 및 구현입니다.
 
-**Pike, Rob. “A Minimalist Global User Interface.”** \
-https://doc.cat-v.org/plan_9/4th_edition/papers/rio/ \
+**Pike, Rob. “A Minimalist Global User Interface.”**  
+https://doc.cat-v.org/plan_9/4th_edition/papers/rio/  
 ‘rio’ 에 대해 설명합니다. 이는 ‘Plan 9’ 의 창 시스템으로, 텍스트와 파일을 보편적인 인터페이스로 간주한다는 ‘acme’ 의 철학을 공유합니다.
 
-**Plan 9 from User Space (plan9port).** \
-https://github.com/9fans/plan9port \
+**Plan 9 from User Space (plan9port).**  
+https://github.com/9fans/plan9port  
 Plan9의 사용자 공간 도구를 Unix로 이식한 것으로, 이 독립형 acme는 이를 기반으로 개발되었습니다.
 
-**Plan 9 Fourth Edition Papers.** \
-https://doc.cat-v.org/plan_9/4th_edition/papers/ \
+**Plan 9 Fourth Edition Papers.**  
+https://doc.cat-v.org/plan_9/4th_edition/papers/  
 Plan 9 문서의 전체 모음입니다.
 
-**Acme community resources.** \
-https://acme.cat-v.org/ \
+**Acme community resources.**  
+https://acme.cat-v.org/  
 커뮤니티에서 관리하는 Acme 관련 팁, 스크립트 및 링크 모음입니다.
 
 
