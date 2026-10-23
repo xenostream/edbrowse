@@ -1072,7 +1072,7 @@ Edit ,s/old/new/g
 `i/text/` | 삽입: 지정한 텍스트 앞에 text 삽입
 `c/text/` | 변경: 지정한 텍스트를 text 로 대체
 `d` | 삭제: 지정한 텍스트 삭제
-`s/regexp/text/` 치환: 지정한 텍스트에서 regexp 와 일치하는 첫 번째 부분을 text 로 대체
+`s/regexp/text/` | 치환: 지정한 텍스트에서 regexp 와 일치하는 첫 번째 부분을 text 로 대체
 `s/정규식/텍스트/g` | 전역: 모든 일치 항목을 대체(전역 플래그)
 `m addr` | 이동: 지정된 텍스트를 addr 위치 뒤로 이동
 `t addr` | 복사: 지정된 텍스트를 addr 위치 뒤에 복사
