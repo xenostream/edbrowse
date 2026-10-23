@@ -1292,7 +1292,7 @@ URL, 이미지, PDF 파일을 여는 데 사용되는 명령어는 플랫폼에 
 처리 규칙은 빈 줄로 구분된 일련의 패턴과 동작으로 구성됩니다. 각 규칙은 다음과 같은 요소들로 이루어집니다:
 
 ```
-,# Optional comment
+# Optional comment
 type is text
 data matches '<regexp>'
 arg isfile $1
@@ -1334,7 +1334,7 @@ $editor | 편집기 변수(규칙 상단에서 설정됨).
 ### 9.3.3 Example Custom Rules
 
 ```
-,# Go import paths -> go doc
+# Go import paths -> go doc
 type is text
 data matches '[a-zA-Z0-9./\-]+'
 data matches '([a-z]+\.[a-z]+/[a-zA-Z0-9./\-]+)'
@@ -1717,7 +1717,7 @@ Fmt
 
 ```
 #!/bin/sh
-,# Fmt: 현재 파일의 서식을 정리하고 다시 불러오기
+# Fmt: 현재 파일의 서식을 정리하고 다시 불러오기
 case “$%” in
     *.go) gofmt -w “$%” ;;
     *.py) black “$%” ;;
@@ -1733,7 +1733,7 @@ esac
 
 ```
 #!/bin/sh
-,# 테스트: 현재 파일과 관련된 테스트 실행
+# 테스트: 현재 파일과 관련된 테스트 실행
 case “$%” in
     *_test.go) go test -run . -v “$(dirname ”$%“)” ;;
     *.py) python -m pytest “$%” -v ;;
@@ -1745,7 +1745,7 @@ esac
 
 ```
 #!/bin/sh
-,# 문서: ‘word’ 인자에 대한 open 문서
+# 문서: ‘word’ 인자에 대한 open 문서
 word="$1"
 case “$%” in
     *.go) xdg-open “https://pkg.go.dev/search?q=$word” ;;
@@ -1778,7 +1778,7 @@ acme -r
 
 ```
 #!/bin/sh
-,# ~/bin/a - 내 선호 설정으로 acme 시작
+# ~/bin/a - 내 선호 설정으로 acme 시작
 export tabstop=4
 export acmeshell=bash
 exec acme -a \
@@ -2239,7 +2239,7 @@ plumb start OPENER $file
 ## F.5 File Addresses with Two-Part Line:Column
 
 ```
-,# file:line.col,line.col
+# file:line.col,line.col
 type is text
 data matches '(filename_pattern)':$twocolonaddr,$twocolonaddr
 arg isfile $1
@@ -2255,7 +2255,7 @@ main.c:10.5,20.3 같은 패턴(양쪽 끝이 행.열로 지정된 범위)을 처
 ## F.6 File Addresses with Line:Column
 
 ```
-,# file:line.col
+# file:line.col
 type is text
 data matches '(filename_pattern)':$twocolonaddr
 arg isfile $1
@@ -2286,7 +2286,7 @@ plumb client $editor
 ## F.8 Include Files
 
 ```
-,# .h files in /usr/include
+# .h files in /usr/include
 type is text
 data matches '([a-zA-Z0-9/_\-]+\.h)'($addr)?
 arg isfile /usr/include/$1
@@ -2295,7 +2295,7 @@ attr add addr=$3
 plumb to edit
 plumb client $editor
 
-,# .h files in /usr/local/include
+# .h files in /usr/local/include
 type is text
 data matches '([a-zA-Z0-9/_\-]+\.h)'($addr)?
 arg isfile /usr/local/include/$1
