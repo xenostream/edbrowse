@@ -1,4 +1,0 @@
-.TODO list
-- Learn the AsciiDoc syntax
-- Install AsciiDoc
-- Write my document in AsciiDoc
