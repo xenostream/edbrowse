@@ -1,0 +1,400 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+
+:toc:
+:toc-placement!:
+toc::[]
+
+
+AsciiDoc Writer’s Guide
+
+이 가이드는 일반 텍스트 문서 구문 처리기인 `AsciiDoc` 에 대한 기초적인 소개를 제공합니다. 이 소개는 기술 문서, 기사, 웹 페이지 또는 전통적인 산문 등 어떤 형태의 콘텐츠든 작성 및 게시하는 데 드는 수고를 줄이려는 모든 분을 대상으로 합니다.
+
+[NOTE]
+====
+AsciiDoc이 무엇인지 알고 싶다면 ‘AsciiDoc 소개’ 에서 답을 찾아보세요. AsciiDoc 구문에 대한 간결한 개요를 찾고 있다면 ‘AsciiDoc 구문 빠른 참조’ 를 참고하세요.
+====
+
+이 가이드에서는 다음 내용을 배울 수 있습니다:
+
+AsciiDoc 문서의 기본 구조
+
+첫 번째 AsciiDoc 문서를 만드는 방법
+
+목록, 블록 인용문, 소스 코드 등 다른 구조적 요소를 추가하는 방법
+
+AsciiDoc 문서를 HTML, DocBook 및 PDF로 변환하는 방법
+
+이 가이드는 AsciiDoc의 기본 사항을 다루는 것 외에도, 더 일관성 있는 문서를 작성하고 글쓰기 생산성을 극대화하는 데 도움이 되는 일련의 규칙을 제안합니다.
+
+그럼 AsciiDoc을 자세히 알아보겠습니다!
+
+
+= Writing in AsciiDoc
+
+이 섹션의 목표는 여러분이 첫 번째 AsciiDoc 문서를 작성하는 방법을 알려드리는 것입니다. 나중에 되돌아보시면, 이 방법이 정말 합리적이라는 데 동의하시게 될 것입니다.
+
+AsciiDoc과의 여정은 여러분이 즐겨 사용하는 텍스트 편집기에서 시작됩니다.
+
+
+
+
+
+= It’s just text, mate.
+
+
+
+
+
+
+
+= Content is king!
+
+
+
+
+
+
+
+= Wrapped text and hard line breaks
+
+
+
+
+
+
+
+= Admonitions
+
+
+
+
+
+
+
+= Mild punctuation, strong impact
+
+
+
+
+
+
+
+= Quoted text
+
+
+
+
+
+
+
+= Preventing substitution
+
+
+
+
+
+
+
+= Inline pass macro and explicit substitutions
+
+
+
+
+
+
+
+= Triple plus passthrough
+
+
+
+
+
+
+
+= Replacements
+
+
+
+
+
+
+
+= Lists, lists, lists
+
+
+
+
+
+
+
+= Lists of things
+
+
+
+
+
+
+
+= Ordering the things
+
+
+
+
+
+
+
+= Description lists
+
+
+
+
+
+
+
+= Hybrid lists
+
+
+
+
+
+
+
+= Links and images
+
+
+
+
+
+
+
+= External links
+
+
+
+
+
+
+
+= Target window and role attributes for links
+
+
+
+
+
+
+
+= Links to relative files
+
+
+
+
+
+
+
+= Cross references
+
+
+
+
+
+
+
+= Images
+
+
+
+
+
+
+
+= Titles, titles, titles
+
+
+
+
+
+
+
+= Document title
+
+
+
+
+
+
+
+= Document attributes
+
+
+
+
+
+
+
+= Section titles
+
+
+
+
+
+
+
+= Block titles
+
+
+
+
+
+
+
+= Building blocks in AsciiDoc
+
+
+
+
+
+
+
+= Delimited blocks
+
+
+
+
+
+
+
+= Block metadata
+
+
+
+
+
+
+
+= Masquerading blocks
+
+
+
+
+
+
+
+= Admonition blocks
+
+
+
+
+
+
+
+= Listing and source code blocks
+
+
+
+
+
+
+
+= Open blocks
+
+
+
+
+
+
+
+= Passthrough blocks
+
+
+
+
+
+
+
+= Delimiters optional
+
+
+
+
+
+
+
+= A new perspective on tables
+
+
+
+
+
+
+
+= What else can AsciiDoc do?
+
+
+
+
+
+
+
+= Converting your document
+
+
+
+
+
+
+
+= Converting a document to HTML 5
+
+
+
+
+
+
+
+= Converting a document to DocBook
+
+
+
+
+
+
+
+= Output galore
+
+
+
+
+
+
+
+= Where else is AsciiDoc supported?
+
+
+
+
+
+
+
+= Wrap-up
+
+
+
+
+
+
+
+= Glossary
+
+
+
+
+
+
+
