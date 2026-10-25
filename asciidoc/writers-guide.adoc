@@ -23,41 +23,62 @@ AsciiDoc이 무엇인지 알고 싶다면 ‘AsciiDoc 소개’ 에서 답을 �
 
 이 가이드에서는 다음 내용을 배울 수 있습니다:
 
-AsciiDoc 문서의 기본 구조
+* AsciiDoc 문서의 기본 구조
+* 첫 번째 AsciiDoc 문서를 만드는 방법
+* 목록, 블록 인용문, 소스 코드 등 다른 구조적 요소를 추가하는 방법
+* AsciiDoc 문서를 HTML, DocBook 및 PDF로 변환하는 방법
 
-첫 번째 AsciiDoc 문서를 만드는 방법
+이 가이드는 AsciiDoc의 기본 사항을 다루는 것 외에도, 좀 더 일관성 있는 문서를 작성하고 글쓰기 생산성을 극대화하는 데 도움되는 일련의 규칙을 제안합니다.
 
-목록, 블록 인용문, 소스 코드 등 다른 구조적 요소를 추가하는 방법
-
-AsciiDoc 문서를 HTML, DocBook 및 PDF로 변환하는 방법
-
-이 가이드는 AsciiDoc의 기본 사항을 다루는 것 외에도, 더 일관성 있는 문서를 작성하고 글쓰기 생산성을 극대화하는 데 도움이 되는 일련의 규칙을 제안합니다.
-
-그럼 AsciiDoc을 자세히 알아보겠습니다!
+그럼 `AsciiDoc` 을 자세히 알아보겠습니다!
 
 
 = Writing in AsciiDoc
 
-이 섹션의 목표는 여러분이 첫 번째 AsciiDoc 문서를 작성하는 방법을 알려드리는 것입니다. 나중에 되돌아보시면, 이 방법이 정말 합리적이라는 데 동의하시게 될 것입니다.
+이 섹션의 목표는 여러분이 첫 번째 AsciiDoc 문서를 작성하는 방법을 알려드리는 것입니다. 나중에 되돌아보면, 이 방법이 정말 합리적이라는 데 동의하게 될 것입니다.
 
 AsciiDoc과의 여정은 여러분이 즐겨 사용하는 텍스트 편집기에서 시작됩니다.
 
 
-
-
-
 = It’s just text, mate.
 
+AsciiDoc의 구문은 단순한 "일반 텍스트" 이므로, 어떤 텍스트 편집기를 사용하든 AsciiDoc 문서를 작성할 수 있습니다. Microsoft Word, OpenOffice Writer, Google Docs 같은 복잡한 워드 프로세서 프로그램은 필요하지 않습니다. 사실, 이런 프로그램들은 문서에 (눈에 보이지 않는) 불필요한 요소를 추가하고 변환 과정을 번거롭게 만들기 때문에 사용하지 않는 것이 좋습니다.
 
+[NOTE]
+====
+어떤 텍스트 편집기라도 사용할 수 있는 것은 사실이지만, AsciiDoc 구문 강조 기능을 지원하는 편집기를 선택하는 것이 좋습니다. 색상은 텍스트에 대비를 주며 가독성을 높여줍니다. 또한 구문 강조 기능을 통해 인라인 요소나 블록 요소에 대한 구문을 올바르게 입력했는지 확인할 수 있습니다.
+====
 
+macOS에서 일반 텍스트를 편집하는 데 가장 널리 사용되는 프로그램은 `TextMate` 입니다. 리눅스는 `GEdit` 가 이와 비슷한 선택지입니다. 윈도우는 메모장이나 워드패드는 피하시기 바랍니다. 이 프로그램들이 생성하는 일반 텍스트는 크로스 플랫폼 호환성이 많이 떨어지기 때문입니다. 대신 `Notepad++` 같은 성능 좋은 텍스트 편집기를 선택합니다. 프로그래머이거나 혹은 내면에 괴짜 기질이 있는 작가라면 `Vim, Emacs, Sublime Text` 를 선호할 가능성이 높으며, 이 편집기들 모두 크로스 플랫폼으로 사용할 수 있습니다. 이 모든 편집기가 공통적으로 갖춘 핵심 기능은 바로 "AsciiDoc에 대한 구문 강조 표시" 입니다.
 
-
+자신이 좋아하는 텍스트 편집기를 열고 AsciiDoc을 작성할 준비를 합니다!
 
 
 = Content is king!
 
+대부분의 문서는 단락 텍스트로 이루어져 있습니다. 그렇기 때문에 Asciidoctor은 단락을 지정하기 위한 특별한 마크업이나 속성이 필요하지 않습니다. 그냥 입력하면 됩니다.
 
+Asciidoctor는 인접하거나 연속된 텍스트 줄은 하나의 단락을 형성합니다. 섹션 제목이나 표와 같은 다른 요소 뒤에 새 단락을 시작하려면 `RETURN` 키를 두 번 눌러 빈 줄을 삽입한 다음, 내용을 계속 입력하면 됩니다.
 
+.AsciiDoc 문서의 두 단락
+[source,asciidoc]
+----
+This journey begins one late Monday afternoon in Antwerp.
+Our team desperately needs coffee, but none of us dare open the office door.
+
+To leave means code dismemberment and certain death.
+----
+
+.기본 (html5) 변환기와 스타일시트 (asciidoctor.css)를 사용하여 렌더링된 두 단락
+======
+[NOTE]
+====
+This journey begins one late Monday afternoon in Antwerp.
+Our team desperately needs coffee, but none of us dare open the office door.
+
+To leave means code dismemberment and certain death.
+====
+======
 
 
 
