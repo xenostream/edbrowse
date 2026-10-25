@@ -2389,7 +2389,7 @@ Be sure to read the {link-docs} too!
 
 = Text replacements
 
-[cols=5,options=header]
+[cols=5a,options=header]
 |===
 |이름    
 |구문    
