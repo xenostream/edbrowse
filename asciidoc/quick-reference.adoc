@@ -1,3 +1,9 @@
+Asciidoc Quick Reference Guide
+==============================
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+:showtitle:
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -7,13 +13,6 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-
-:toc:
-:toc-placement!:
-toc::[]
-
-
-= AsciiDoc 구문 빠른 참조
 
 [IMPORTANT]
 ====
