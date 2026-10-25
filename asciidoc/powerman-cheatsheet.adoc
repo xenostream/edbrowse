@@ -1,0 +1,14 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+https://powerman.name/doc/asciidoc-compact.html
+
+*요약* +
+이 문서는 “텍스트 기반 문서 생성” 스크립트인 `AsciiDoc` 을 위한 치트시트입니다. 이 치트시트는 (마크업 구문 변경으로 인해) 다양한 AsciiDoc 버전에 맞춰 제공되며, 각기 다른 CSS 스타일을 사용합니다. 다음은 다양한 AsciiDoc 버전과 각기 다른 CSS 스타일을 적용한 모든 치트시트 목록입니다(GitHub 포함).
+
+이 치트시트는 AsciiDoc 8.6.9용이며, 제가 만든 간결한 CSS를 사용합니다.
