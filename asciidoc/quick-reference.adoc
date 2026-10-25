@@ -2452,7 +2452,7 @@ Be sure to read the {link-docs} too!
 |
 
 |타이포그래픽 아포스트로피
-|\Sam's
+|Sam's
 |\Sam&#8217;s
 |Sam’s
 |타자기 아포스트로피는 타이포그래픽(일명 컬리 또는 스마트) 아포스트로피로 대체됩니다.
