@@ -1,10 +1,40 @@
-= AsciiDoc Writer’s Guide
+// View this document online at https://asciidoctor.org/docs/asciidoc-writers-guide/
+= AsciiDoc Writer's Guide
+Dan Allen <https://github.com/mojavelinux[@mojavelinux]>; Sarah White <https://github.com/graphitefriction[@graphitefriction]>
+:description: 이 가이드에서는 AsciiDoc 문서의 기본 구조, 첫 번째 AsciiDoc 문서를 작성하는 방법, 목록, 블록 인용문, 소스 코드 등의 다른 구조적 요소를 추가하는 방법, 그리고 AsciiDoc 문서를 HTML, DocBook 및 PDF로 변환하는 방법을 설명합니다.
+:keywords: AsciiDoc, Asciidoctor, syntax, reference, learn, how to, writers, authors
+:page-description: {description}
+:page-keywords: {keywords}
+:page-layout: docs
+ifndef::env-site[]
+:toc: left
+:icons: font
+:idprefix:
+:idseparator: -
+:sectanchors:
+:source-highlighter: highlightjs
+endif::[]
+:experimental:
+:mdash: &#8212;
+:language: asciidoc
+:source-language: {language}
+:table-caption!:
+:example-caption!:
+:figure-caption!:
+:imagesdir: ../images
+// Refs
+:url-docs-asciidoc: https://docs.asciidoctor.org/asciidoc/latest/
+:url-quickref: {url-docs-asciidoc}syntax-quick-reference/
+:user-ref: https://asciidoctor.org/docs/user-manual
+:asciidoctor-ref: https://asciidoctor.org/
+:asciidoctor-gem-ref: https://rubygems.org/gems/asciidoctor
+:uri-install: https://asciidoctor.org/docs/install-toolchain/
+:fopub-doc-ref: https://github.com/asciidoctor/asciidoctor-fopub#readme
+:docs-ref: https://asciidoctor.org/docs
+:gist-ref: https://gist.github.com
+:snippets-ref: https://gitlab.com/explore/snippets
+:publican-ref: https://fedorahosted.org/publican
 
-:toc:
-:toc-placement: preamble
-:toclevels: 1
-:showtitle:
-:sectnums:
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -19,54 +49,54 @@ endif::[]
 * https://asciidocalive.draftview.app/[온라인 에디터 #1]
 * https://asciidoceditor.com/[온라인 에디터 #2]
 
-이 가이드는 일반 텍스트 문서 구문 처리기인 `AsciiDoc` 에 대한 기초적인 소개를 제공합니다. 이 소개는 기술 문서, 기사, 웹 페이지 또는 전통적인 산문 등 어떤 형태의 콘텐츠든 작성 및 게시하는 데 드는 수고를 줄이려는 모든 분을 대상으로 합니다.
 
-[NOTE]
-====
-AsciiDoc이 무엇인지 알고 싶다면 ‘AsciiDoc 소개’ 에서 답을 찾아보세요. AsciiDoc 구문에 대한 간결한 개요를 찾고 있다면 ‘AsciiDoc 구문 빠른 참조’ 를 참고하세요.
-====
+이 가이드는 _일반 텍스트_ 문서 *구문* 및 *처리기* 인 AsciiDoc에 대해 쉽게 이해할 수 있도록 안내합니다. 이 소개 자료는 기술 문서, 기사, 웹 페이지 또는 전통적인 산문 등 어떤 형태의 콘텐츠이든 작성 및 게시하는 데 드는 수고를 줄이고자 하는 모든 분을 대상으로 합니다.
 
-이 가이드에서는 다음 내용을 배울 수 있습니다:
+TIP: AsciiDoc이 무엇인지 알고 싶다면, {url-docs-asciidoc}#about-asciidoc[AsciiDoc 소개]에서 답을 찾아보세요. AsciiDoc 구문에 대한 간결한 개요를 찾고 있다면, {url-quickref}[AsciiDoc 구문 빠른 참조]를 참고하세요.
 
-* AsciiDoc 문서의 기본 구조
-* 첫 번째 AsciiDoc 문서를 만드는 방법
-* 목록, 블록 인용문, 소스 코드 등 다른 구조적 요소를 추가하는 방법
-* AsciiDoc 문서를 HTML, DocBook 및 PDF로 변환하는 방법
+이 가이드에서는 다음 내용을 배울 수 있습니다.
 
-이 가이드는 AsciiDoc의 기본 사항을 다루는 것 외에도, 좀 더 일관성 있는 문서를 작성하고 글쓰기 생산성을 극대화하는 데 도움되는 일련의 규칙을 제안합니다.
+- AsciiDoc 문서의 기본 구조
+- 첫 번째 AsciiDoc 문서를 작성하는 방법
+- 목록, 블록 인용문, 소스 코드 등 다른 구조적 요소를 추가하는 방법
+- AsciiDoc 문서를 HTML, DocBook 및 PDF로 변환하는 방법
 
-그럼 `AsciiDoc` 을 자세히 알아보겠습니다!
+이 가이드는 AsciiDoc의 기본 사항을 다루는 것 외에도, 더 일관성 있는 문서를 작성하고 글쓰기 생산성을 극대화하는 데 도움이 되는 일련의 규칙을 제안합니다.
 
+자, 이제 AsciiDoc을 자세히 알아보겠습니다!
 
 == Writing in AsciiDoc
 
-이 섹션의 목표는 여러분이 첫 번째 AsciiDoc 문서를 작성하는 방법을 알려드리는 것입니다. 나중에 되돌아보면, 이 방법이 정말 합리적이라는 데 동의하게 될 것입니다.
+이 섹션의 목표는 여러분이 첫 번째 AsciiDoc 문서를 작성하는 방법을 알려드리는 것입니다.
+나중에 되돌아보시면, 이 방법이 정말 합리적이라는 데 동의하실 거라 믿습니다.
 
 AsciiDoc과의 여정은 여러분이 즐겨 사용하는 텍스트 편집기에서 시작됩니다.
 
+=== It's just text, mate.
 
-== It’s just text, mate.
+AsciiDoc 구문은 단순한 _일반 텍스트_ 이므로, _어떤_ 텍스트 편집기를 사용하든 AsciiDoc 문서를 작성할 수 있습니다. Microsoft Word, OpenOffice Writer, Google Docs와 같은 복잡한 워드 프로세서 프로그램은 필요하지 않습니다. 사실, 이러한 프로그램은 문서에 (눈에 보이지 않는) 불필요한 요소를 추가하고 변환 과정을 번거롭게 만들기 때문에 _사용해서는 안 됩니다_.
 
-AsciiDoc의 구문은 단순한 "일반 텍스트" 이므로, 어떤 텍스트 편집기를 사용하든 AsciiDoc 문서를 작성할 수 있습니다. Microsoft Word, OpenOffice Writer, Google Docs 같은 복잡한 워드 프로세서 프로그램은 필요하지 않습니다. 사실, 이런 프로그램들은 문서에 (눈에 보이지 않는) 불필요한 요소를 추가하고 변환 과정을 번거롭게 만들기 때문에 사용하지 않는 것이 좋습니다.
+TIP: 물론 어떤 텍스트 편집기든 상관없지만, AsciiDoc의 구문 강조 기능을 지원하는 편집기를 선택하는 것이 좋습니다.
+*[red]##c##[green]##o##[purple]##l##[fuchsia]##o##[blue]##r##*  같은 표기법은 텍스트에 대비를 주어 가독성을 높여줍니다.
+또한 이 강조 표시를 통해 인라인 요소나 블록 요소에 대한 구문을 올바르게 입력했는지 확인할 수 있습니다.
 
-[NOTE]
-====
-어떤 텍스트 편집기라도 사용할 수 있는 것은 사실이지만, AsciiDoc 구문 강조 기능을 지원하는 편집기를 선택하는 것이 좋습니다. 색상은 텍스트에 대비를 주며 가독성을 높여줍니다. 또한 구문 강조 기능을 통해 인라인 요소나 블록 요소에 대한 구문을 올바르게 입력했는지 확인할 수 있습니다.
-====
+macOS에서 일반 텍스트를 편집하는 데 가장 널리 사용되는 프로그램은 *TextMate* 입니다. 리눅스에서는 *GEdit* 가 비슷한 대안입니다. 윈도우에서는 메모장이나 워드패드는 크로스 플랫폼 호환성이 떨어지는 일반 텍스트를 생성하므로 사용하지 않는 것이 좋습니다. 대신 *Notepad++* 같은 성능 좋은 텍스트 편집기를 선택하세요.
 
-macOS에서 일반 텍스트를 편집하는 데 가장 널리 사용되는 프로그램은 `TextMate` 입니다. 리눅스는 `GEdit` 가 이와 비슷한 선택지입니다. 윈도우는 메모장이나 워드패드는 피하시기 바랍니다. 이 프로그램들이 생성하는 일반 텍스트는 크로스 플랫폼 호환성이 많이 떨어지기 때문입니다. 대신 `Notepad++` 같은 성능 좋은 텍스트 편집기를 선택합니다. 프로그래머이거나 혹은 내면에 괴짜 기질이 있는 작가라면 `Vim, Emacs, Sublime Text` 를 선호할 가능성이 높으며, 이 편집기들 모두 크로스 플랫폼으로 사용할 수 있습니다. 이 모든 편집기가 공통적으로 갖춘 핵심 기능은 바로 "AsciiDoc에 대한 구문 강조 표시" 입니다.
+프로그래머이거나(혹은 내면에 괴짜 기질이 있는 작가라면) *Vim*, *Emacs*, *Sublime Text* 를 선호할 가능성이 높으며, 이 편집기들은 모두 크로스 플랫폼에서 사용할 수 있습니다. 이 모든 편집기가 공통적으로 갖춘 핵심 기능은 AsciiDoc에 대한 구문 강조 기능입니다.
 
-자신이 좋아하는 텍스트 편집기를 열고 AsciiDoc을 작성할 준비를 합니다!
+좋아하는 텍스트 편집기를 열고 AsciiDoc을 작성할 준비를 하세요!
 
+=== Content is king!
 
-== Content is king!
+문서의 내용 대부분은 단락 텍스트로 이루어져 있습니다.
+이 때문에 Asciidoctor에서는 단락 내용을 지정하기 위해 특별한 마크업이나 속성이 필요하지 않습니다.
+그냥 입력하기만 하면 됩니다.
 
-대부분의 문서는 단락 텍스트로 이루어져 있습니다. 그렇기 때문에 Asciidoctor은 단락을 지정하기 위한 특별한 마크업이나 속성이 필요하지 않습니다. 그냥 입력하면 됩니다.
-
-Asciidoctor는 인접하거나 연속된 텍스트 줄은 하나의 단락을 형성합니다. 섹션 제목이나 표와 같은 다른 요소 뒤에 새 단락을 시작하려면 `RETURN` 키를 두 번 눌러 빈 줄을 삽입한 다음, 내용을 계속 입력하면 됩니다.
+Asciidoctor에서는 인접하거나 연속된 텍스트 줄들이 단락 요소를 형성합니다.
+섹션 제목이나 표와 같은 다른 요소 뒤에 새 단락을 시작하려면, kbd:[RETURN] 키를 두 번 눌러 빈 줄을 삽입한 다음, 내용을 계속 입력하면 됩니다.
 
 .AsciiDoc 문서의 두 단락
-[source,asciidoc]
+[source]
 ----
 This journey begins one late Monday afternoon in Antwerp.
 Our team desperately needs coffee, but none of us dare open the office door.
@@ -74,150 +104,128 @@ Our team desperately needs coffee, but none of us dare open the office door.
 To leave means code dismemberment and certain death.
 ----
 
-기본 (html5) 변환기와 스타일시트 (asciidoctor.css)를 사용하여 렌더링된 두 단락
-======
-[NOTE]
+.기본(html5) 변환기와 스타일시트(asciidoctor.css)를 사용하여 렌더링된 두 단락
 ====
 This journey begins one late Monday afternoon in Antwerp.
 Our team desperately needs coffee, but none of us dare open the office door.
 
 To leave means code dismemberment and certain death.
 ====
-======
 
-이제 이것만으로도 AsciiDoc으로 글을 작성할 수 있습니다!! 보시다시피, 마치 이메일을 쓰는 것과 같습니다.
+이것만으로도 *이미 AsciiDoc으로 글을 쓰고 있는 셈입니다!* 보시다시피, 마치 이메일을 쓰는 것과 같습니다.
 
-파일 확장자를 `.adoc` 으로 지정해서 파일을 저장합니다.
+파일 확장자를 `.adoc`으로 지정하여 저장하세요.
 
-[NOTE]
-====
-문서를 HTML, DocBook 또는 PDF로 변환하는 방법을 알고 싶다면, ‘문서 변환’ 섹션으로 건너뛰세요.
-====
+TIP: 문서를 HTML, DocBook 또는 PDF로 변환하는 방법을 알고 싶다면, <<converting-your-document>> 섹션으로 건너뛰세요.
 
+==== Wrapped text and hard line breaks
 
-== Wrapped text and hard line breaks
+Asciidoctor가 문서를 변환할 때 인접한 텍스트 줄들이 하나의 단락으로 합쳐지기 때문에, 단락 내 텍스트를 줄바꿈하거나 각 문장이나 구를 별도의 줄에 배치할 수 있습니다. 출력 결과에는 줄바꿈이 표시되지 않습니다.
 
-Asciidoctor가 문서를 변환할 때 인접한 텍스트 줄들이 하나의 단락으로 합쳐지기 때문에, 단락 내 텍스트를 줄바꿈하거나 각 문장이나 구를 별도의 줄에 배치할 수 있습니다. 출력물에는 줄바꿈 표시가 나타나지 않습니다.
+하지만 단락 내의 줄바꿈을 그대로 유지하고 싶다면, 공백 뒤에 더하기 기호(`{plus}`)를 사용하거나 해당 단락에 `hardbreaks` 옵션을 설정하면 됩니다. 이렇게 하면 각 줄 뒤에 눈에 보이는 줄바꿈(예: `<br>`)이 표시됩니다.
 
-하지만 단락 내의 줄 바꿈을 그대로 유지하려면, 공백 뒤에 더하기 기호(`+`)를 사용하거나, 단락에 `hardbreaks` 옵션을 설정하면 됩니다. 이렇게 하면 각 줄 뒤에 눈에 보이는 줄 바꿈(예: `<br>`)이 생깁니다.
-
-.공백 뒤에 더하기 기호(`+`)를 사용해서 줄 바꿈을 유지하는 경우
-[source,asciidoc]
+[source]
+.공백 뒤에 더하기 기호({plus})를 붙여 줄바꿈을 유지합니다.
 ----
 Rubies are red, +
 Topazes are blue.
 ----
 
-======
-[NOTE]
 ====
 Rubies are red, +
 Topazes are blue.
 ====
-======
 
-.`hardbreaks` 옵션을 사용해서 줄바꿈을 유지함
-[source,asciidoc]
+[source]
+.‘hardbreaks’ 옵션을 사용하여 줄바꿈을 유지함
 ----
 [%hardbreaks]
 Ruby is red.
 Java is black.
 ----
 
-======
-[NOTE]
 ====
 [%hardbreaks]
 Ruby is red.
 Java is black.
 ====
-======
 
-문서 전체에서 줄 바꿈을 유지하려면 문서 헤더에 `hardbreaks` 속성을 추가합니다.
+문서 전체에서 줄 바꿈을 유지하려면 문서의 헤더에 `hardbreaks` 속성을 추가하세요.
 
-.`hardbreaks` 속성을 사용해서 문서 전체에서 줄 바꿈이 유지됨
-[source,asciidoc]
+.hardbreaks 속성을 사용하여 문서 전체에서 줄 바꿈을 유지
+[source]
 ----
-== Line Break Doc Title
+= Line Break Doc Title
 :hardbreaks:
 
 Rubies are red,
 Topazes are blue.
 ----
 
+=== Admonitions
 
-== Admonitions
+콘텐츠의 흐름에서 분리하여 우선순위 라벨을 붙여 특정 문장에 주목을 끌고 싶은 경우가 있습니다. 이를 ‘주의문’ 이라고 합니다. 주의문의 표시 스타일은 할당된 라벨(즉, 값)에 따라 결정됩니다. Asciidoctor는 다섯 가지 주의문 스타일 라벨을 제공합니다:
 
-콘텐츠 흐름에서 분리해서 우선순위 라벨을 붙여 특정 문장에 주목을 끌고 싶은 경우가 있습니다. 이를 ‘주의 사항’ 이라고 합니다. 주의 사항의 표시 스타일은 할당된 라벨(즉, 값)에 따라 결정됩니다. Asciidoctor는 다섯 가지 주의 사항 스타일 라벨을 제공합니다:
+* `NOTE`
+* `TIP`
+* `IMPORTANT`
+* `CAUTION`
+* `WARNING`
 
-* NOTE
-* TIP
-* IMPORTANT
-* CAUTION
-* WARNING
+.Caution vs. Warning
+[#caution-vs-warning]
+****
+경고 유형을 선택할 때, “주의(caution)”와 “경고(warning)”가 종종 혼용되어 사용되기 때문에 둘을 구분하는 데 혼란을 느낄 수 있습니다.
 
-[IMPORTANT]
-====
-*주의(CAUTION) 대 경고(WARNING)* 
+다음은 이 둘을 구별하는 데 도움이 되는 간단한 규칙입니다:
 
-경고 유형을 선택할 때, “주의(CAUTION)” 와 “경고(WARNING)” 가 혼용되어 사용되기 때문에 두 용어를 혼동하기 쉽습니다. 다음은 이 둘을 구별하는 데 도움되는 간단한 규칙입니다.
+* *CAUTION* 은 독자에게 신중하게 _행동_ 하도록(즉, 주의를 기울이도록) 권고할 때 사용합니다.
+* *WARNING* 은 독자에게 존재하는 위험, 피해 또는 결과를 알릴 때 사용합니다.
 
-* `CAUTION` 은 독자에게 신중하게 행동할 것(즉, 주의를 기울일 것)을 권고할 때 사용합니다.
-* `WARNING` (경고)은 독자에게 존재하는 위험, 피해 또는 결과를 알릴 때 사용합니다.
+더 자세한 분석은 https://www.differencebetween.com/difference-between-caution-and-vs-warning/을 참조하십시오.
+****
 
-자세한 분석은 https://www.differencebetween.com/difference-between-caution-and-vs-warning/ 을 참조합니다.
-====
+특정 단락에 주목을 끌고 싶다면, 해당 단락의 첫 줄을 사용하고자 하는 레이블로 시작하세요. 레이블은 대문자로 시작해야 하며, 그 뒤에 콜론(`:`)이 와야 합니다.
 
-특정 단락에 주목을 끌고 싶다면, 해당 단락의 첫 줄에 사용하려는 레이블을 적습니다. 레이블은 대문자로 시작해야 하며, 그 뒤에 콜론(`:`)을 붙여야 합니다.
-
-.경고 문단의 구문
-[source,asciidoc]
+.경고 문단 구문
+[source]
 ----
-WARNING: Wolpertingers are known to nest in server racks. ① ② 
+WARNING: Wolpertingers are known to nest in server racks. <1> <2>
 Enter at your own risk.
 ----
+<1> 레이블은 대문자로 작성해야 하며, 바로 뒤에 콜론(`:`)이 와야 합니다.
+<2> 단락의 첫 줄과 레이블 사이에는 공백 하나만 넣으십시오.
 
-① 라벨은 대문자로 작성해야 하며, 바로 뒤에 콜론(`:`)이 와야 합니다. +
-② 단락 첫 줄과 라벨 사이에는 공백 하나만 넣습니다.
-
-결과: 훈계 조항
-
-======
-[NOTE]
+.Result: Admonition paragraph
 ====
-WARNING: Wolpertingers are known to nest in server racks.   
+WARNING: Wolpertingers are known to nest in server racks.
 Enter at your own risk.
 ====
-======
 
-주의 문단은 콜아웃 상자로 표시되며, 여백 부분에 ‘주의’ 라벨 또는 이에 해당하는 아이콘이 표시됩니다. 아이콘은 문서의 `icons` 속성을 설정해서 활성화할 수 있습니다.
+주의 문단은 콜아웃 상자에 표시되며, 여백 부분에는 ‘주의’ 라벨 또는 이에 해당하는 아이콘이 표시됩니다. 아이콘은 문서에 `icons` 속성을 설정하여 활성화할 수 있습니다.
 
-IMPORTANT: Admonitions can also encapsulate any block content, which we’ll cover later.
+NOTE: 주의 문단은 블록 형식의 콘텐츠도 포함할 수 있으며, 이에 대해서는 나중에 다루겠습니다.
 
+=== Mild punctuation, strong impact
 
+말할 때 특정 단어나 구를 강조하듯이, 글에서도 구두점을 사용하여 이를 강조할 수 있습니다.
+AsciiDoc에서는 이러한 표기법을 _인용문_ 이라고 부릅니다.
 
-== Mild punctuation, strong impact
+==== Quoted text
 
-말할 때 특정 단어나 구를 강조하듯이, 글에서도 구두점을 사용해서 강조할 수 있습니다. AsciiDoc에서 이런 표기 방식을 ‘인용문’ 이라 부릅니다.
+예를 들어, 이메일에서는 단어를 별표로 묶어 더 강조해서 “`말할`” 수 있습니다.
 
-
-== Quoted text
-
-예를 들어, 이메일에서 단어를 별표로 묶어 그 단어를 “강조할” 수 있습니다.
-
-[source,asciidoc]
-----
+[source]
 I can't believe it, we *won*!
-----
 
-예상했지만, 별표(*)를 사용하면 텍스트가 굵게 표시됩니다. 거의 그 감정이 느껴질 정도입니다. 이것이 인용(즉, 서식이 적용된) 텍스트의 한 예입니다.
+예상하셨겠지만, 별표(*)를 사용하면 *won*이라는 단어가 굵게 표시됩니다. 그 감정이 거의 느껴질 정도입니다. 이것은 인용된(즉, 서식이 적용된) 텍스트의 한 예입니다.
 
-NOTE: 여기서 “인용” 이라는 용어는 강조나 특별한 의미를 부여하기 위해 텍스트를 둘러싸는 모든 기호를 포괄하는 의미로 널리 사용됩니다.
+NOTE: 여기서 “`quote`”라는 용어는 강조나 특별한 의미를 부여하기 위해 텍스트를 둘러싸는 모든 기호를 포괄하는 의미로 폭넓게 사용됩니다.
 
 다음은 AsciiDoc이 인식하는 인용 텍스트의 형태입니다:
 
-.굵게, 기울임꼴, 고정폭 서식 구문
-[source,asciidoc]
+.굵은 글씨, 기울임꼴, 고정폭 서식 구문
+[source]
 ----
 bold *constrained* & **un**constrained
 
@@ -234,12 +242,9 @@ monospace italic `_constrained_` & ``__un__``constrained
 monospace bold italic `*_constrained_*` & ``**__un__**``constrained
 ----
 
-단어 경계가 아닌 다른 위치에서 텍스트를 인용(예: 강조)할 때는 구두점을 두 번 사용해야 합니다.
+단어의 경계가 아닌 다른 위치에서 텍스트를 인용(예: 강조)하고 싶을 때는 구두점을 두 번 사용해야 합니다.
 
-결과: 굵은 글씨, 기울임체, 고정폭 글꼴
-
-======
-[NOTE]
+.Result: Bold, italic, and monospace text
 ====
 bold *constrained* & **un**constrained
 
@@ -255,38 +260,38 @@ monospace italic `_constrained_` & ``__un__``constrained
 
 monospace bold italic `*_constrained_*` & ``**__un__**``constrained
 ====
-======
 
-인용된 텍스트 앞에는 속성 목록을 붙일 수 있습니다. 첫 번째 위치 기반 속성은 역할로 간주됩니다. 이 역할을 사용해서 텍스트에 사용자 정의 스타일을 적용할 수 있습니다. 예를 들어:
+인용된 텍스트 앞에는 속성 목록을 붙일 수 있습니다.
+첫 번째 위치 기반 속성은 역할로 간주됩니다.
+이 역할을 사용하여 텍스트에 사용자 정의 스타일을 적용할 수 있습니다.
+예를 들어:
 
-[source,asciidoc]
-----
+[source]
 Type the word [.userinput]#asciidoc# into the search bar.
-----
 
-HTML로 변환할 때, “asciidoc” 단어는 `<span>` 태그로 감싸지며, role 속성은 해당 요소의 CSS 클래스로 사용됩니다:
+HTML로 변환할 때, “`asciidoc`” 이라는 단어는 `<span>` 태그로 감싸지며, 이 역할은 요소의 CSS 클래스로 사용됩니다:
 
-[source,html]
-----
+[source,xml]
 <span class="userinput">asciidoc</span>
-----
 
-CSS를 사용해서 텍스트에 스타일을 적용할 수 있습니다.
+CSS를 사용하여 텍스트에 스타일을 적용할 수 있습니다.
 
-이런 대체가 항상 이루어지기를 원하지 않을 수도 있습니다. 그런 경우는 마크업을 사용해서 텍스트를 이스케이프 처리해야 합니다.
+이러한 대체가 항상 이루어지기를 원하지 않을 수도 있습니다.
+그런 경우에는 마크업을 사용하여 텍스트를 이스케이프 처리해야 합니다.
 
+==== Preventing substitution
 
-
-== Preventing substitution
-
-원하지 않는 곳에서 인용문 처리가 발생하는 경우, 백슬래시나 패스스루 매크로를 사용해서 이를 방지할 수 있습니다.
+원하지 않는 곳에서 인용문 처리가 발생하는 경우, 백슬래시나 패스스루 매크로를 사용하여 이를 방지할 수 있습니다.
 
 Asciidoctor는 치환을 방지하기 위한 여러 가지 방법을 제공합니다.
 
-*백슬래시 이스케이프* +
-구두점이 서식 마크업으로 해석되는 것을 방지하려면, 해당 구두점 앞에 백슬래시(\)를 붙입니다. 서식 구두점이 두 개의 문자로 시작하는 경우(예: __), 그 앞에 백슬래시 두 개(\\)를 붙여야 합니다. 이 방법은 문자 및 속성 참조가 대체되는 것을 방지할 때도 사용할 수 있습니다. 문서가 처리될 때 백슬래시는 제거되므로 출력 결과에 표시되지 않습니다.
+.백슬래시 이스케이프
+구두점이 서식 마크업으로 해석되는 것을 방지하려면, 구두점 앞에 백슬래시(`\`)를 붙이십시오.
+서식 구두점이 두 개의 문자로 시작하는 경우(예: `+__+`), 그 앞에 백슬래시를 두 개(`+\\+`) 붙여야 합니다.
+이 방법은 문자 및 속성 참조가 대체되는 것을 방지하는 데에도 사용할 수 있습니다.
+문서가 처리될 때 백슬래시는 제거되므로 출력 결과에는 표시되지 않습니다.
 
-[source,asciidoc]
+[source]
 ----
 \*Stars* will appear as *Stars*, not as bold text.
 
@@ -299,332 +304,1989 @@ Asciidoctor는 치환을 방지하기 위한 여러 가지 방법을 제공합�
 
 Asciidoctor는 여러 형태의 패스스루 매크로를 지원합니다.
 
-*인라인 pass 매크로* +
-콘텐츠를 그대로 전달할 때 사용할 수 있는 `pass` 라는 이름의 인라인 매크로입니다. 선택적인 대체 항목 집합을 지원합니다.
-
-[source,asciidoc]
+inline pass macro:: `pass` 라는 이름의 인라인 매크로로, 내용을 그대로 전달하는 데 사용할 수 있습니다.
+선택적인 대체 항목 집합을 지원합니다.
++
+[source]
 ----
 pass:[content like #{variable} passed directly to the output] followed by normal content.
 
 content with only select substitutions applied: pass:c,a[__<{email}>__]
 ----
 
-*단일 및 이중 플러스* +
-텍스트 서식이 적용되지 않도록 하는 특수 구문입니다. 출력 형식을 준수하기 위해 특수 문자만 이스케이프 처리하며, 명시적 치환은 지원하지 않습니다.
+단일 및 이중 플러스:: 텍스트 서식이 적용되지 않도록 하는 특수 구문입니다.
+출력 형식을 준수하기 위해 특수 문자만 이스케이프 처리하며, 명시적 치환은 지원하지 않습니다.
 
-*삼중 플러스* +
-통과 콘텐츠를 지정하는 특수 구문입니다. 어떤 치환도 적용하지 않으며(인라인 pass 매크로와 동일), 명시적 치환을 지원하지 않습니다.
+삼중 플러스:: 통과 콘텐츠를 지정하는 특수 구문입니다.
+어떤 치환도 적용하지 않으며(인라인 pass 매크로와 동일), 명시적 치환을 지원하지 않습니다.
 
-*이중 달러 (사용 중단됨)* +
-패스스루 콘텐츠를 지정하기 위한 더 이상 사용되지 않는 특수 구문입니다. 트리플 플러스와 마찬가지로 어떤 대체도 적용하지 않으며, 명시적 대체도 지원하지 않습니다.
+더블 달러 (사용 중단):: 통과 콘텐츠를 지정하기 위한 사용이 중단된 특수 구문입니다.
+트리플 플러스와 마찬가지로 어떠한 대체도 적용하지 않으며, 명시적 대체도 지원하지 않습니다.
 
-CAUTION: Asciidoctor는 블록 패스 매크로를 구현하지 않습니다. 대신, 패스 블록을 사용해야 합니다.
+주의: Asciidoctor는 블록 패스 매크로를 구현하지 않습니다.
+대신 <<pass-blocks,pass block>>을 사용해야 합니다.
 
+==== Inline pass macro and explicit substitutions
 
-== Inline pass macro and explicit substitutions
+특정 구문을 치환 대상에서 제외하고 특수 문자의 이스케이핑을 비활성화하려면, 해당 구문을 inline pass 매크로로 감싸주십시오.
+예를 들어, AsciiDoc에서 HTML을 생성할 때 텍스트에 밑줄을 적용하는 한 가지 방법은 다음과 같습니다:
 
-특정 구문을 치환 대상에서 제외하고 특수 문자의 이스케이프를 비활성화하려면, 해당 구문을 inline pass 매크로로 감쌉니다. 예를 들어, AsciiDoc에서 HTML을 생성할 때 텍스트에 밑줄을 적용하는 한 가지 방법은 다음과 같습니다:
-
-[source,asciidoc]
+[source]
 ----
 The text pass:[<u>underline me</u>] is underlined.
 ----
 
-======
-[NOTE]
 ====
 The text pass:[<u>underline me</u>] is underlined.
 ====
-======
 
-애드혹(Ad-Hoc) 인용문 대체 기능을 활성화하려면, 매크로 값을 `subs` 에 할당하고 인라인 패스 매크로를 사용합니다.
+애드혹 `quotes` 치환을 활성화하려면 `macros` 값을 `subs`에 할당하고 인라인 패스 매크로를 사용하십시오.
+
+------
+[subs=+macros] <1>
+----
+I better not contain *bold* or _italic_ text.
+pass:quotes[But I should contain *bold* text.] <2>
+----
+------
+<1> `macros`가 `subs`에 할당되어, 블록 내의 모든 매크로가 처리될 수 있게 됩니다.
+<2> `pass` 매크로에는 `quotes` 값이 할당됩니다. 대괄호 안의 텍스트는 서식이 적용됩니다.
 
+`inline pass` 매크로는 소스 코드에 추가적인 마크업을 삽입하므로, 원본 형태로는 유효하지 않을 수 있습니다.
+그러나 뷰어(HTML, PDF 등)에서 볼 때 생성된 출력은 유효합니다.
+
+====
+[subs=+macros]
+----
+I better not contain *bold* or _italic_ text.
+pass:quotes[But I should contain *bold* text.]
+----
+====
+
+인라인 패스 매크로는 대체 내용을 지정할 때 약식 값도 허용합니다.
+
+* `c` = 특수 문자
+* `q` = 따옴표
+* `a` = 속성
+* `r` = 대체 내용
+* `m` = 매크로
+* `p` = 후처리 대체 내용
+
+예를 들어, 아래의 인라인 패스스루 매크로에서는 따옴표 텍스트 대체 값이 할당되어 있습니다:
+
+[source]
+----
+The text pass:q[<u>underline *me*</u>] is underlined and the word "`me`" is bold.
+----
+
+====
+The text pass:q[<u>underline *me*</u>] is underlined and the word "`me`" is bold.
+====
+
+==== Triple plus passthrough
+
+트리플 플러스 패스스루는 pass 매크로와 거의 동일한 방식으로 작동합니다.
+대체 대상에서 특정 내용을 제외하려면 해당 내용을 트리플 플러스(+++)로 묶어주세요 (예: pass:[+++]).
+
+ +++출력으로 직접 전달되는 내용+++ 그 뒤에 일반 내용이 이어집니다.
+
+트리플 플러스 매크로는 사용자 정의 HTML이나 XML을 출력하는 데 자주 사용됩니다.
+
+[source]
+----
+The text +++<u>underline me</u>+++ is underlined.
+----
+
+====
+The text +++<u>underline me</u>+++ is underlined.
+====
+
+.단일 플러스 괄호
+
+특정 구문을 치환 대상에서 제외하려면 해당 구문을 플러스 기호(`+`)로 묶으십시오.
+
+[source]
+----
+This +*literal*+ will appear as *literal*.
+----
+
+==== Replacements
 
-== Triple plus passthrough
+AsciiDoc은 기호, 화살표, 대시의 텍스트 표현도 인식합니다.
+
+[cols="2,^1l,^1l,^1,2"]
+.Textual symbol replacements
+|===
+|Name |Syntax |Unicode Replacement |Rendered |Notes
+
+|Copyright
+|(C)
+|&#169;
+|(C)
+|
+
+|Registered
+|(R)
+|&#174;
+|(R)
+|
+
+|Trademark
+|(TM)
+|&#8482;
+|(TM)
+|
+
+|Em dash
+|--
+|&#8212;
+|{empty}--{empty}
+|두 단어 문자 사이, 단어 문자와 줄 경계 사이, 또는 양쪽에 공백이 있는 경우에만 대체됩니다.
+
+양쪽에 공백 문자가 있는 경우(예: `+a -- b+`), 일반 공백은 얇은 공백(\&#8201;)으로 대체됩니다.
+
+|Ellipsis
+|...
+|&#8230;
+|...
+|
+
+|Single right arrow
+|->
+|&#8594;
+|->
+|
+
+|Double right arrow
+|=>
+|&#8658;
+|=>
+|
+
+|Single left arrow
+|<-
+|&#8592;
+|<-
+|
+
+|Double left arrow
+|<=
+|&#8656;
+|<=
+|
+
+|Typographic apostrophe
+|Sam's
+|Sam&#8217;s
+|Sam's
+|The typewriter apostrophe is replaced with the typographic (aka curly) apostrophe.
+|===
+
+이러한 절제된 구두점 사용이 텍스트의 가독성을 떨어뜨리지는 않습니다.
+사실, 오히려 텍스트를 더 읽기 쉽게 만든다고 볼 수도 있습니다.
+중요한 점은 이러한 규칙들이 여러분이 이미 잘 알고 계실 가능성이 높다는 것입니다.
+
+AsciiDoc에서는 구두점을 사용하여 문서에서 매우 흔히 볼 수 있는 또 다른 요소인 _목록!_을 만듭니다.
+
+=== Lists, lists, lists
+
+AsciiDoc에서는 세 가지 유형의 목록을 지원합니다:
+
+. 번호 없는 목록
+. 번호 있는 목록
+. 설명 목록
+
+번호 없는 목록과 번호 있는 목록은 구조적으로 매우 유사합니다.
+이 목록들은 각 항목 앞에 서로 다른 유형의 표시자(예: 글머리 기호)가 붙은 항목들로 구성됩니다.
+반면, 설명 목록(가변 목록, 레이블 목록 또는 용어 정의 목록이라고도 함)은 각각 고유한 설명 내용을 가진 용어들의 모음입니다.
+번호가 없는 목록과 번호가 있는 목록과 달리, 설명 목록은 중첩되는 경우가 드물지만, 종종 앞서 언급한 두 가지 유형의 목록을 포함하기도 합니다.
+
+각 목록 유형을 살펴본 다음, 이를 혼합해 보겠습니다.
+또한 목록 항목 안에 복잡한 내용을 넣는 방법도 살펴보겠습니다.
+
+==== Lists of things
+
+이메일에서 목록을 만들려면 어떻게 하시겠습니까?
+아마도 Asciidoctor가 목록 항목을 식별하는 데 사용하는 것과 동일한 문자를 사용하여 목록 항목을 표시할 가능성이 높습니다.
+
+아래 예시에서 각 목록 항목은 별표(`{asterisk}`)로 표시되어 있는데, 이는 AsciiDoc 구문에서 순서 없는 목록 항목을 지정하는 방식입니다.
+
+[source]
+----
+* Edgar Allan Poe
+* Sheri S. Tepper
+* Bill Bryson
+----
+
+목록 항목의 첫 번째 줄은 마커(`{별표}`)로부터 최소한 공백 하나만큼 들여쓰기해야 합니다.
+원한다면 목록 항목을 들여쓰기할 수도 있습니다.
+목록 앞뒤에는 반드시 빈 줄을 넣어야 합니다.
+또한, 목록 항목 사이에는 빈 줄을 넣을 수 있지만, 반드시 넣어야 하는 것은 아닙니다.
+
+.Rendered unordered list
+====
+* Edgar Allan Poe
+* Sheri S. Tepper
+* Bill Bryson
+====
+
+목록에 제목을 추가하려면 제목 앞에 마침표(`.`)를 붙이면 됩니다.
+
+[source]
+----
+.Kizmet's Favorite Authors
+* Edgar Allan Poe
+* Sheri S. Tepper
+* Bill Bryson
+----
+
+.제목이 있는 순서 없는 목록 렌더링
+====
+.Kizmet's Favorite Authors
+* Edgar Allan Poe
+* Sheri S. Tepper
+* Bill Bryson
+====
+
+목록 항목을 표시할 때 별표 대신 하이픈(`-`)을 쓰고 싶은 충동이 들지 않았나요?
+그거 아세요?
+그 방법도 통합니다!
+
+[source]
+----
+- Edgar Allan Poe
+- Sheri S. Tepper
+- Bill Bryson
+----
+
+하이픈(`-`)은 중첩된 목록에서는 제대로 작동하지 않으므로, 단일 계층의 목록에만 사용해야 합니다.
+중첩된 목록에 대해 언급했으니, 이제 다음 섹션으로 넘어가서 여러 계층으로 구성된 목록을 만드는 방법을 배워봅시다.
+
+[#separating-lists]
+.Separating Lists
+****
+인접한 목록이 있으면 서로 합쳐지려는 경향이 있습니다.
+목록을 강제로 분리하려면 두 목록 사이에 공백 줄로 둘러싼 줄 주석(`//`)을 삽입하세요.
+다음은 그 예시입니다. 여기서 줄 주석에 있는 `-` 문자는 해당 줄이 “`목록 끝`” 표시 역할을 함을 나타냅니다:
+
+[source]
+----
+* Apples
+* Oranges
+
+//-
+
+* Walnuts
+* Almonds
+----
+****
+
+항목을 중첩하려면 마커에 별표(`{별표}`)를 하나 더 추가하고, 그 이후의 각 레벨마다 별표를 하나씩 더 추가하면 됩니다.
+
+[source]
+----
+.Possible DefOps manual locations
+* West wood maze
+** Maze heart
+*** Reflection pool
+** Secret exit
+* Untracked file in git repository
+----
+
+.중첩된 순서 없는 목록으로 렌더링됨
+====
+.Possible DefOps manual locations
+* West wood maze
+** Maze heart
+*** Reflection pool
+** Secret exit
+* Untracked file in git repository
+====
+
+Asciidoctor 1.5.7 및 그 이전 버전에서는 최대 6단계까지 중첩할 수 있었습니다(한 단계에 하이픈 마커를 사용한다고 가정할 때).
+
+Asciidoctor 1.5.8부터는 순서 없는 목록을 원하는 깊이까지 중첩할 수 있습니다.
+다만, 일부 인터페이스에서는 특정 깊이 이상부터 목록을 평평하게 정리하기 시작한다는 점을 유의하시기 바랍니다.
+GitHub은 중첩 수준이 10단계에 도달하면 목록을 평면화하기 시작합니다.
+
+[source]
+----
+* level 1
+** level 2
+*** level 3
+**** level 4
+***** level 5
+* level 1
+----
+
+====
+* level 1
+** level 2
+*** level 3
+**** level 4
+***** level 5
+* level 1
+====
+
+별표의 개수가 중첩 수준을 나타내는 것처럼 보일 수 있지만, 깊이는 그런 식으로 결정되지 않습니다.
+고유한 마커가 하나 발견될 때마다 새로운 수준이 생성됩니다.
+하지만 별표의 개수가 중첩 수준과 같다는 관례를 따르는 것이 훨씬 더 직관적입니다.
+어쨌든, 우리는 _있는 그대로_ 읽을 수 있는 일반 텍스트 마크업을 목표로 하고 있으니까요.
+
+==== Ordering the things
+
+때로는 목록에 있는 항목들에 번호를 매겨야 할 때가 있습니다.
+본능적으로 각 항목 앞에 번호를 붙이고 싶을 수도 있습니다. 다음 목록처럼 말이죠:
+
+[source]
+----
+1. Protons
+2. Electrons
+3. Neutrons
+----
+
+위의 방법은 작동하지만,
+번호 매기기가 명확하기 때문에, 번호를 생략해도 AsciiDoc 프로세서가 자동으로 번호를 삽입해 줍니다:
+
+[source]
+----
+. Protons
+. Electrons
+. Neutrons
+----
+
+====
+. Protons
+. Electrons
+. Neutrons
+====
+
+번호를 사용한 순서 지정 목록을 만들기로 했다면, 번호를 순차적으로 매겨야 합니다.
+이는 다른 경량 마크업 언어와는 다릅니다.
+이는 목록의 번호 매기기 시작 위치를 조정하는 방법 중 하나입니다.
+예를 들어, 다음과 같이 입력할 수 있습니다:
+
+[source]
+----
+4. Step four
+5. Step five
+6. Step six
+----
+
+하지만 일반적으로는 `start` 속성을 사용하여 이러한 설정을 구성하는 것이 가장 좋은 방법입니다:
+
+[source]
+----
+[start=4]
+. Step four
+. Step five
+. Step six
+----
+
+항목을 역순으로 표시하려면 `reversed` 옵션을 추가하세요:
+
+[source]
+----
+[%reversed]
+.Parts of an atom
+. Protons
+. Electrons
+. Neutrons
+----
+
+====
+[%reversed]
+.Parts of an atom
+. Protons
+. Electrons
+. Neutrons
+====
+
+목록의 맨 앞에 점(.)을 붙이고 바로 그 뒤에 텍스트를 입력하면(점 뒤에 공백을 두지 말고) 목록에 제목을 붙일 수 있습니다.
+
+다음은 제목이 있는 목록의 예시입니다:
+
+[source]
+----
+.Parts of an atom
+. Protons
+. Electrons
+. Neutrons
+----
+
+====
+.Parts of an atom
+. Protons
+. Electrons
+. Neutrons
+====
+
+각 항목 앞에 하나 이상의 점을 붙이면 중첩 항목을 만들 수 있습니다.
+
+[source]
+----
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+----
+
+AsciiDoc은 중첩 수준마다 서로 다른 번호 체계를 사용합니다.
+앞서 언급한 목록은 다음과 같이 표시됩니다:
+
+.중첩된 순서 목록
+====
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+====
+
+[TIP]
+====
+순서 없는 목록의 별표와 마찬가지로, 순서 있는 목록에서 점의 개수는 중첩 수준을 나타내지 않습니다.
+하지만 다음과 같은 관례를 따르는 것이 훨씬 더 직관적입니다:
+
+[quote]
+# 점의 개수 = 중첩 수준
+
+다시 말하지만, 우리는 _있는 그대로_ 읽을 수 있는 일반 텍스트 마크업을 목표로 하고 있습니다.
+====
+
+Asciidoctor는 우리 인간에게 가장 직관적인 항목들 간의 관계를 추론하기 위해 최선을 다하고 있습니다.
+다음은 순서 없는 목록을 순서 있는 목록 안에 중첩한 예시입니다:
+
+[source]
+----
+. Linux
+* Fedora
+* Ubuntu
+* Slackware
+. BSD
+* FreeBSD
+* NetBSD
+----
+
+====
+. Linux
+* Fedora
+* Ubuntu
+* Slackware
+. BSD
+* FreeBSD
+* NetBSD
+====
+
+읽기 편하다면 항목을 더 넓게 배치하고 중첩된 목록의 들여쓰기를 조정할 수 있습니다:
+[source]
+----
+. Linux
+
+  * Fedora
+  * Ubuntu
+  * Slackware
+
+. BSD
+
+  * FreeBSD
+  * NetBSD
+----
+
+다음 표는 각 중첩 수준에 대해 기본적으로 사용되는 번호 매기기 방식을 보여줍니다.
+
+.수준별 순서 번호 매기기 방식
+[cols="^2,3,3,4"]
+|===
+|Level |Numbering Scheme |Examples |CSS class (HTML converter)
+
+|1
+|Arabic
+|1. 2. 3.
+|arabic
+
+|2
+|Lower Alpha
+|a. b. c.
+|loweralpha
+
+|3
+|Lower Roman
+|i. ii. iii.
+|lowerroman
+
+|4
+|Upper Alpha
+|A. B. C.
+|upperalpha
+
+|5
+|Upper Roman
+|I. II. III.
+|upperroman
+|===
+
+각 레벨의 번호 매기기 방식을 해당 레벨의 스타일(블록 속성 목록의 첫 번째 위치 기반 항목)을 설정하여 재정의할 수 있습니다.
+또한 `start` 속성을 사용하여 시작 번호를 설정할 수도 있습니다:
+
+[source]
+----
+[lowerroman, start=5]
+. Five
+. Six
+[loweralpha]
+.. a
+.. b
+.. c
+. Seven
+----
+
+==== Description lists
+
+설명 목록(흔히 dlist로 줄여 씁니다)은 하나 이상의 용어에 대한 설명이나 보조 텍스트를 포함해야 할 때 유용합니다.
+설명 목록의 각 항목은 다음으로 구성됩니다.
+
+* 하나 이상의 용어
+* 각 용어 뒤에 오는 구분 기호(일반적으로 이중 콜론, `::`)
+* 최소 한 개의 공백 또는 줄바꿈
+* 설명 내용(텍스트, 첨부된 블록 또는 둘 다)
+
+다음은 컴퓨터의 각 부품을 설명하는 설명 목록의 예시입니다.
+
+[source]
+----
+CPU:: The brain of the computer.
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+Keyboard:: Used to enter text or control items on the screen.
+Mouse:: Used to point to and select items on your computer screen.
+Monitor:: Displays information in visual form using text and graphics.
+----
+
+기본적으로 각 항목의 내용은 렌더링될 때 설명 아래에 표시됩니다.
+다음은 이 목록이 어떻게 렌더링되는지 보여주는 미리보기입니다:
+
+.기본 설명 목록
+====
+CPU:: The brain of the computer.
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+Keyboard:: Used to enter text or control items on the screen.
+Mouse:: Used to point to and select items on your computer screen.
+Monitor:: Displays information in visual form using text and graphics.
+====
+
+설명과 내용을 같은 줄에 표시하려면 목록에 ‘수평’ 스타일을 추가하세요.
+
+[source]
+----
+[horizontal]
+CPU:: The brain of the computer.
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+----
+
+====
+[horizontal]
+CPU:: The brain of the computer.
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+====
+
+설명 목록의 내용은 어떤 AsciiDoc 요소든 될 수 있습니다.
+예를 들어, 위의 장보기 목록을 각 통로가 상위 개요 목록 항목이 아닌 설명이 되도록 다시 작성할 수 있습니다.
+
+[source]
+----
+Dairy::
+* Milk
+* Eggs
+Bakery::
+* Bread
+Produce::
+* Bananas
+----
+
+====
+Dairy::
+* Milk
+* Eggs
+Bakery::
+* Bread
+Produce::
+* Bananas
+====
+
+설명 목록은 공백 처리에 대해 꽤 유연하므로, 항목을 간격을 두고 배치하거나 가독성을 높이기 위해 내용을 들여쓰기할 수도 있습니다:
+
+[source]
+----
+Dairy::
+
+  * Milk
+  * Eggs
+
+Bakery::
+
+  * Bread
+
+Produce::
+
+  * Bananas
+----
+
+==== Hybrid lists
+
+[#three-hybrid]
+마지막으로, 하나의 하이브리드 목록 내에서 세 가지 목록 유형을 자유롭게 조합할 수 있습니다.
+Asciidoctor는 우리 인간에게 가장 직관적인 항목 간의 관계를 추론하기 위해 최선을 다합니다.
+
+다음은 설명형, 순서형, 무순서형 목록 항목을 혼합한 목록입니다:
+
+[source]
+----
+Operating Systems::
+  Linux:::
+    . Fedora
+      * Desktop
+    . Ubuntu
+      * Desktop
+      * Server
+  BSD:::
+    . FreeBSD
+    . NetBSD
+
+Cloud Providers::
+  PaaS:::
+    . OpenShift
+    . CloudBees
+  IaaS:::
+    . Amazon EC2
+    . Rackspace
+----
+
+목록은 다음과 같이 표시됩니다:
+
+.혼합형 목록
+====
+Operating Systems::
+  Linux:::
+    . Fedora
+      * Desktop
+    . Ubuntu
+      * Desktop
+      * Server
+  BSD:::
+    . FreeBSD
+    . NetBSD
+
+Cloud Providers::
+  PaaS:::
+    . OpenShift
+    . CloudBees
+  IaaS:::
+    . Amazon EC2
+    . Rackspace
+====
+
+목록 항목에 더 복잡한 내용을 포함할 수도 있습니다.
+
+=== Links and images
+
+AsciiDoc을 사용하면 문서에 링크, 이미지 및 기타 유형의 미디어를 쉽게 삽입할 수 있습니다.
+
+==== External links
+
+URL에 링크를 걸기 위해 별도로 할 일은 없습니다.
+문서에 URL을 포함하기만 하면 AsciiDoc이 이를 링크로 변환해 줍니다.
+
+Asciidoctor는 별도의 마크업 없이도 다음과 같은 일반적인 스키마를 인식합니다.
+
+[#schemes]
+* http
+* https
+* ftp
+* irc
+* mailto
+* \email@email.com
+
+이것들을 암시적 매크로 이름으로 생각하면 됩니다(단순한 이메일 주소는 특별한 경우입니다).
+아래 예시의 URL은 프로토콜(이 경우 _https_ 뒤에 콜론이 붙은 형태)로 시작하므로, Asciidoctor는 이를 처리할 때 자동으로 하이퍼링크로 변환합니다.
+
+[source]
+----
+The homepage for the Asciidoctor Project is https://asciidoctor.org. <1>
+----
+<1> URL 끝에 붙은 마침표는 링크에 포함되지 않습니다.
+
+URL이 자동으로 링크로 변환되는 것을 방지하려면 URL 앞에 백슬래시(`\`)를 붙이세요. 
+
+[source]
+----
+Once launched, the site will be available at \https://example.org.
+----
+
+URL을 표시할 때 스키마가 숨겨지도록 하려면, 문서 헤더에 `hide-uri-scheme` 속성을 설정하세요.
+
+[source]
+----
+:hide-uri-scheme:
+
+https://asciidoctor.org
+----
+
+hide-uri-scheme 속성이 설정되면, 위의 URL은 다음과 같이 표시됩니다:
+
+[source,xml]
+----
+<a href="https://asciidoctor.org">asciidoctor.org</a>
+----
+
+`<a>` 요소 안에 _https_가 없다는 점에 유의하십시오.
+
+텍스트에 URL을 연결하려면, URL의 끝에 해당 텍스트를 대괄호로 묶어 URL 매크로로 만드십시오:
+
+[source]
+----
+Chat with other Fedora users in the irc://irc.freenode.org/#fedora[Fedora IRC channel].
+----
+
+URL이 <<schemes,common schemes>> 중 하나로 시작하지 않거나, URL이 단어 경계로 둘러싸여 있지 않은 경우, `link` 매크로를 사용해야 합니다.
+`link` 매크로는 URI 매크로의 강화된 버전으로, 제약이 없는 매크로라고 생각할 수 있습니다.
+URL 앞에는 `link:`가 오고, 뒤에는 대괄호가 붙습니다.
+대괄호 안에는 선택적인 링크 텍스트를 포함할 수 있습니다.
+링크 텍스트가 지정되지 않은 경우 URL이 링크 텍스트로 사용됩니다.
+1.5.7 이전 버전에서는 `linkattrs` 문서 속성이 설정된 경우, 대괄호 안의 텍스트가 속성으로 해석되어 창 이름이나 역할을 지정할 수 있었습니다.
+1.5.7 버전부터는 쉼표 뒤에 등호가 발견되면(예: `[link text,window=_blank]`) 속성이 자동으로 구문 분석됩니다.
+
+.링크 매크로의 구조
+[source]
+----
+link:url[optional link text, optional target attribute, optional role attribute]
+----
+
+단어 경계와 인접하지 않은(즉, 제약이 없는) 링크를 확장하기 위해 (단순한 URI 매크로 대신) 링크 매크로를 사용해야 하는 경우를 생각해 봅시다.
+
+[source]
+----
+search/link:https://ecosia.org[Ecosia]
+----
+
+====
+search/link:https://ecosia.org[Ecosia]
+====
+
+이 경우 `link:` 접두사를 사용하지 않았다면, 파서가 URL 매크로를 인식하지 못했을 것입니다.
+
+==== Target window and role attributes for links
+
+[#link-macro-attributes]
+1.5.7 이전 버전에서는 Asciidoctor가 기본적으로 링크 매크로의 속성을 파싱하지 않습니다.
+링크 매크로의 속성을 파싱하려면 헤더에서 `linkattrs` 문서 속성을 설정해야 합니다.
+1.5.7 버전부터는 쉼표 뒤에 등호가 발견되면 이 파싱이 자동으로 수행되며(속성 지정은 필수가 아닙니다).
+속성 파싱이 활성화되면 `window` 속성을 사용하여 대상 창의 이름을 지정할 수 있습니다.
+
+[source]
+----
+= Asciidoctor Document Title
+
+Let's view the raw HTML of the link:view-source:asciidoctor.org[Asciidoctor homepage,window=_blank].
+----
+
+====
+Let's view the raw HTML of the link:view-source:asciidoctor.org[Asciidoctor homepage,window=_blank].
+====
+
+`_blank`는 가장 흔히 사용되는 창 이름이므로, 이에 대한 약어를 도입했습니다.
+링크 텍스트 끝에 캐럿(`+^+`)을 붙이기만 하면 됩니다:
+
+[source]
+----
+Let's view the raw HTML of the link:view-source:asciidoctor.org[Asciidoctor homepage^].
+----
+
+CAUTION: 단일 단락 내에서 캐럿 구문을 두 번 이상 사용하는 경우, 처음 나오는 캐럿 앞에 백슬래시를 붙여 이스케이프 처리해야 할 수도 있습니다.
+
+속성 구문 분석이 활성화된 경우, 링크에 역할(즉, CSS 클래스)을 추가할 수 있습니다.
+
+[source]
+----
+Chat with other Asciidoctor users on the https://discuss.asciidoctor.org/[*mailing list*^,role=green].
+----
+
+====
+Chat with other Asciidoctor users on the https://discuss.asciidoctor.org/[*mailing list*^,role=green].
+====
+
+TIP: 속성이 지정된 링크(mailto 링크의 ‘subject’ 및 ‘body’ 세그먼트 포함)는 Asciidoctor만의 고유한 기능입니다.
+이 기능이 활성화된 경우, 링크 텍스트에 쉼표가 포함되어 있다면 해당 텍스트를 큰따옴표로 묶어야 합니다.
+
+==== Links to relative files
+
+현재 문서를 기준으로 외부 파일에 링크를 걸려면, 파일 이름 앞에 `link` 매크로를 사용하십시오.
+
+[source]
+----
+link:protocol.json[Open the JSON file]
+----
+
+파일이 HTML 파일인 경우, 문서 내의 특정 섹션으로 직접 링크를 걸 수 있습니다. 파일 이름 끝에 해시 기호(`#`)와 해당 섹션의 ID를 차례로 추가하면 됩니다.
+
+[source]
+----
+link:external.html#livereload[LiveReload]
+----
+
+관련 AsciiDoc 문서로 연결되는 링크의 경우 상호 참조를 사용해야 합니다.
+
+[reftext="Internal Cross References"]
+==== Cross references
+
+AsciiDoc 문서 내의 다른 위치나 AsciiDoc 문서 간을 연결하는 링크를 _교차 참조_(_xref_라고도 함)라고 합니다.
+
+Asciidoctor에서는 인라인 xref 매크로를 사용하여 ID가 지정된(ID가 명시적으로 지정되었는지 또는 자동 생성되었는지와 관계없이) 콘텐츠 요소(섹션, 블록 또는 구)에 대한 상호 참조(문장 내 인용 또는 페이지 인용이라고도 함)를 생성합니다.
+
+크로스 레퍼런스를 생성하려면 대상 블록이나 섹션의 ID(또는 선택적 앵커가 포함된 다른 문서의 경로)를 이중 각괄호로 묶으면 됩니다.
+
+.대상 섹션의 ID를 사용한 크로스 레퍼런스
+[source]
+----
+The section <<images>> describes how to insert images into your document.
+----
+
+.대상 섹션의 ID를 사용하여 상호 참조를 표시했습니다.
+====
+The section <<images>> describes how to insert images into your document.
+====
+
+또한 [.term]_자연 교차 참조_라고 하는 방식을 통해 제목을 참조하여 블록이나 섹션으로 링크할 수도 있습니다.
+제목에는 공백 문자가 하나 이상 포함되거나 대문자가 하나 이상 포함되어야 합니다.
+(Ruby 2.4 미만을 사용하는 경우, 해당 대문자는 기본 라틴 문자 집합으로 제한됩니다).
+
+.섹션 제목을 사용한 교차 참조
+[source]
+----
+Refer to <<Internal Cross References>>.
+----
+
+.섹션 제목을 사용하여 상호 참조를 표시함
+====
+Refer to <<Internal Cross References>>.
+====
+
+변환기는 일반적으로 대상의 reftext를 링크의 기본 텍스트로 사용합니다.
+문서가 구문 분석될 때, reftext 내의 속성 참조는 즉시 대체됩니다.
+참조 텍스트가 표시될 때, 텍스트에 추가적인 참조 텍스트 치환(특수 문자, 따옴표 및 대체)이 적용됩니다.
+
+교차 참조 위치에 대체 텍스트를 지정하여 대상의 참조 텍스트를 재정의할 수 있습니다.
+ID 뒤에 쉼표를 추가한 다음, 교차 참조에 표시할 사용자 지정 텍스트를 입력하십시오.
+
+.사용자 지정 xreflabel 텍스트가 포함된 교차 참조
+[source]
+----
+Learn how to <<link-macro-attributes,use attributes within the link macro>>.
+----
+
+.사용자 정의 xreflabel 텍스트를 사용하여 상호 참조를 렌더링함
+====
+Learn how to <<link-macro-attributes,use attributes within the link macro>>.
+====
+
+더블 앵글 브래킷 형식의 대안으로 인라인 xref 매크로를 사용할 수도 있습니다.
+
+.인라인 xref 매크로
+[source]
+----
+Learn how to xref:link-macro-attributes[use attributes within the link macro].
+----
+
+교차 참조를 사용하여 현재 문서에 상대적인 경로의 파일에 대한 링크를 생성할 수도 있습니다.
+다른 AsciiDoc 문서로 연결되는 링크의 경우, 이 방법이 권장됩니다.
+
+끝에 붙은 해시 기호(`#`)는 문서의 맨 위를 참조함을 의미합니다.
+
+.상대 경로의 AsciiDoc 문서 맨 위로의 교차 참조
+[source]
+----
+Refer to <<document-b.adoc#,Document B>> for more information.
+----
+
+.상대 경로의 AsciiDoc 문서를 참조하기 위해 변환된 HTML
+[source,html]
+----
+Refer to <a href="document-b.html">Document B</a> for more information.
+----
+
+문서 내의 특정 섹션으로 직접 링크를 연결하려면 해시 기호(`#`) 뒤에 해당 섹션의 ID를 추가하세요.
+
+.관련 AsciiDoc 문서의 특정 섹션으로의 상호 참조
+[source]
+----
+Refer to <<document-b.adoc#section-b,Section B>> for more information.
+----
+
+.관련 AsciiDoc 문서의 해당 섹션으로의 상호 참조를 위해 변환된 HTML
+[source,html]
+----
+Refer to <a href="document-b.html#section-b">Section B</a> for more information.
+----
+
+두 경우 모두, 참조하는 문서 내부에 있을 때도 이 구문이 작동합니다.
+이는 여러 문서에서 동일한 링크를 공유할 때 유용합니다.
+
+문서 간 상호 참조를 통해 생성된 링크에서는 원본 파일 확장자가 `outfilesuffix` 속성의 값으로 대체됩니다.
+링크 대상에 사용될 파일 확장자를 사용자 정의하려면 이 속성의 값을 변경하기만 하면 됩니다.
+
+이미지 참조는 URL이나 파일을 참조한다는 점에서 링크와 유사합니다.
+물론 차이점은 문서 내에 이미지를 직접 표시한다는 점입니다.
+
+==== Images
+
+이미지를 별도의 줄에 배치하려면(즉, _블록 이미지_), 파일 이름 앞에 `image::` 접두사를 붙이고 그 뒤에 대괄호를 추가하십시오:
+
+[source]
+image::sunset.jpg[]
+
+대체 텍스트를 지정하려면 대괄호 안에 포함시키세요:
+
+[source]
+image::sunset.jpg[Sunset]
+
+또한 이미지에 ID나 제목(즉, 캡션)을 지정하고, 크기(즉, 너비와 높이)를 설정하며, 링크로 만들 수도 있습니다:
+
+[source]
+----
+[#img-sunset]
+.A mountain sunset
+[link=https://www.flickr.com/photos/javh/5448336655]
+image::sunset.jpg[Sunset,300,200]
+----
+
+블록 이미지의 제목은 이미지가 표시될 때 이미지 아래에 나타납니다.
+다음은 미리보기입니다:
+
+.설명이 포함된 하이퍼링크 이미지
+====
+[#img-sunset]
+.A mountain sunset
+[link=https://www.flickr.com/photos/javh/5448336655]
+image::sunset.jpg[Sunset,300,200]
+====
+
+IMPORTANT: 이미지는 `imagesdir` 문서 속성의 값을 기준으로 해결되며, 이 속성의 기본값은 빈 값입니다.
+`imagesdir` 속성은 절대 경로, 상대 경로 또는 기본 URL일 수 있습니다.
+이미지 대상이 URL이나 절대 경로인 경우, `imagesdir` 접두사는 추가되지 않습니다.
+
+TIP: 모든 이미지 매크로에 이미지 파일의 공유 경로를 하드코딩하지 않으려면 `imagesdir` 속성을 사용해야 합니다.
+
+이미지를 인라인으로 삽입하려면 대신 `image:` 접두사를 사용하세요(콜론이 하나뿐이라는 점에 유의하세요):
+
+[source]
+Press the image:save.png[Save, title="Save"] button.
+
+인라인 이미지의 경우, 선택 사항인 제목이 툴팁으로 표시됩니다.
+
+단락과 목록이 문서의 ‘살’이라면, 제목과 섹션은 그 ‘뼈’에 해당합니다.
+문서에 구조를 부여하는 방법을 살펴보겠습니다.
+
+=== Titles, titles, titles
+
+AsciiDoc은 세 가지 유형의 제목을 지원합니다:
+
+. 문서 제목
+. 섹션 제목
+. 블록 제목
+
+AsciiDoc에서는 모든 제목이 선택 사항입니다.
+이 섹션에서는 각 제목 유형을 정의하고, 이를 어떻게, 언제 사용해야 하는지 설명합니다.
+
+==== Document title
+
+모든 이메일에 제목이 있는 것처럼, 모든 문서에는 (일반적으로) 제목이 있습니다.
+제목은 AsciiDoc 문서의 맨 위에 위치합니다.
+
+TIP: 문서 제목은 AsciiDoc 문서의 _선택적_ 기능입니다.
+
+문서 제목을 만들려면, 문서의 첫 번째 줄을 등호 하나(``= ``)와 그 뒤에 공백 하나 이상으로 시작한 다음, 제목 텍스트를 입력하면 됩니다.
+이 구문은 문서 제목을 지정하는 가장 간단한(따라서 권장되는) 방법입니다.
+
+다음은 문서 제목과 그 뒤에 이어지는 짧은 단락의 예시입니다:
+
+[source]
+----
+= Lightweight Markup Languages
+
+According to Wikipedia...
+----
+
+문서 제목은 문서 헤더의 일부입니다.
+그렇다면 헤더에는 또 어떤 내용이 들어갈 수 있을까요?
+좋은 질문이네요.
+
+===== The document header
+
+앞서 제시한 예시에서 제목 줄과 본문 첫 줄 사이에 있는 빈 줄을 주목해 보세요.
+이 빈 줄은 문서 헤더와 문서 본문(이 경우 단락)을 구분합니다.
+문서 제목은 문서 헤더의 일부입니다.
+전체적으로 문서 헤더에는 제목, 작성자, 수정 정보 및 문서 전체에 적용되는 속성이 포함됩니다.
+
+CAUTION: 제목 줄이 빈 줄로 구분되어 있지 않으면, 해당 줄은 섹션 제목으로 해석되는데, 이에 대해서는 나중에 다루겠습니다.
+
+이제 문서에 제목이 생겼지만, 작성자는 어떻게 할까요?
+모든 이메일에 발신자가 있는 것처럼, 모든 문서에는 반드시 작성자가 있어야 합니다.
+이제 작성자를 포함하여 헤더에 추가 정보를 넣는 방법을 살펴보겠습니다.
+
+문서 제목 바로 아래에 일반적인 문서 속성을 정의하기 위해 추가할 수 있는 두 줄의 선택적 텍스트가 있습니다:
+
+1줄째:: 작성자 이름 및 선택 사항인 이메일 주소
+2줄째:: 선택 사항인 수정 내역, 날짜 및 선택 사항인 비고
+
+이제 이 줄들을 문서에 추가해 보겠습니다:
+
+[source]
+----
+= Lightweight Markup Languages
+Doc Writer <doc.writer@asciidoc.org>
+v1.0, 2012-01-01
+
+According to Wikipedia...
+----
+
+헤더에는 이제 문서 제목, 작성자, 개정 번호 및 날짜가 포함됩니다.
+이 정보는 일반적으로 출력 문서 상단에 서식이 지정된 헤더 형태로 표시됩니다.
+
+NOTE: 문서 제목을 포함한 헤더는 _필수 사항이 아닙니다_.
+헤더가 없더라도 AsciiDoc 프로세서는 있는 그대로의 내용을 문제없이 변환합니다.
+헤더는 전체 문서를 생성할 때만 사용됩니다.
+임베디드 문서의 출력물에서는 헤더가 제외됩니다.
+
+문서 헤더는 속성을 정의하는 데에도 사용할 수 있습니다.
+
+==== Document attributes
+
+속성은 AsciiDoc을 다른 경량 마크업 언어와 차별화하는 특징 중 하나입니다.
+속성을 사용하여 기능을 켜거나 끄거나, 재사용 가능한 콘텐츠나 대체 콘텐츠를 저장할 수 있습니다.
+
+대부분의 경우, 속성은 문서 헤더에 정의됩니다.
+인라인으로 정의할 수 있는 경우도 있지만, 여기서는 더 일반적인 사용법에 초점을 맞추겠습니다.
+
+속성 항목은 줄의 시작 부분에 콜론으로 둘러싸인 이름, 그 뒤에 최소 한 개의 공백, 그리고 내용이 이어지는 형태로 구성됩니다.
+내용은 선택 사항입니다.
+
+다음은 애플리케이션의 버전을 저장하는 속성의 예시입니다:
+
+[source]
+----
+= User Guide
+Doc Writer <doc.writer@asciidoc.org>
+2012-01-01
+:appversion: 1.0.0
+----
+
+IMPORTANT: 첫 번째 속성 항목과 나머지 헤더 사이에는 빈 줄이 없어야 합니다.
+
+이제 문서 내 어디에서나(속성 대체가 수행되는 곳) 이 속성을 참조할 수 있으며, 이때 속성 이름을 중괄호로 묶어 주면 됩니다:
+
+[source]
+The current version of the application is {appversion}.
+
+속성은 URL을 저장하는 데에도 흔히 사용되는데, URL은 꽤 길어질 수 있습니다.
+다음은 그 예시입니다:
+
+[source]
+----
+:fedpkg: https://apps.fedoraproject.org/packages/rubygem-asciidoctor
+----
+
+다음은 해당 속성이 사용된 예시입니다:
+
+[source]
+Information about the Asciidoctor package for Fedora can found at {fedpkg}.
+
+문서 속성은 AsciiDoc 프로세서가 생성하는 출력을 제어하는 설정을 전환하거나 구성 변수를 설정하는 데에도 사용할 수 있습니다.
+
+예를 들어, 문서에 목차를 포함시키려면 `toc` 속성을 정의하면 됩니다:
+
+[source]
+----
+:toc:
+----
+
+속성 정의를 해제하려면 이름 끝에 `!`를 붙이세요:
+
+[source]
+----
+:linkcss!:
+----
+
+또한 이미지(기본값: _비어 있음_), 아이콘(기본값: `./images/icons`), 스타일시트(기본값: `./stylesheets`) 및 자바스크립트 파일(기본값: `./javascripts`)의 기본 경로를 설정할 수도 있습니다:
+
+[source]
+----
+:imagesdir: ./images
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
+----
+
+TIP: AsciiDoc 프로세서를 호출할 때 속성 값을 설정하거나 재정의할 수도 있습니다.
+이 기능에 대해서는 나중에 자세히 살펴보겠습니다.
+
+같은 텍스트를 반복해서 입력해야 하거나 자주 업데이트해야 하는 텍스트가 있다면, 이를 문서 속성에 할당하여 대신 사용하는 것을 고려해 보세요.
+
+문서의 분량이 늘어남에 따라, 이 가이드와 같이 내용을 섹션별로 나누고 싶을 때가 있을 것입니다.
+이는 섹션 제목을 사용하여 구현할 수 있습니다.
+
+==== Section titles
+
+섹션은 문서를 내용 계층 구조로 나눕니다.
+AsciiDoc에서 섹션은 섹션 제목을 사용하여 정의됩니다.
+
+섹션 제목은 문서 제목과 동일한 구문을 사용하지만, 줄의 시작 부분에 등호가 하나만 있는 대신 2개에서 6개까지의 등호가 올 수 있다는 점이 다릅니다.
+등호의 개수는 중첩 수준을 나타냅니다(0을 기준으로 한 인덱스).
 
+다음은 AsciiDoc 문서(기본값인 article 도큐타입의 경우)에서 허용되는 모든 섹션 수준으로, 문서 제목 바로 아래에 표시됩니다:
 
+[source]
+----
+= Document Title (Level 0)
 
+== Level 1 Section
 
+=== Level 2 Section
 
+==== Level 3 Section
 
+===== Level 4 Section
 
-== Replacements
+====== Level 5 Section
 
+== Another Level 1 Section
+----
+
+NOTE: 문서가 (내장된 `html5` 백엔드를 사용하여) HTML 5로 변환되면, 각 섹션 제목은 등호 개수에 따라 해당 수준에 맞는 제목 요소로 변환됩니다.
+예를 들어, 레벨 1 섹션(등호 2개)은 `<h2>` 요소로 매핑됩니다.
 
+섹션 레벨은 임의로 선택할 수 없습니다.
+다음 두 가지 규칙을 반드시 준수해야 합니다:
 
+. `doctype` 이 `book`으로 설정된 경우에만 문서에 여러 개의 레벨 0 섹션을 포함할 수 있습니다. 각주:[기본 doctype은 `article`이며, 이 경우 레벨 0 섹션은 하나만 허용됩니다(즉, 문서 제목).]
+. 섹션을 중첩할 때 섹션 레벨을 건너뛸 수 없습니다.
 
+예를 들어, 다음 구문은 유효하지 않습니다:
 
+[source]
+----
+= Document Title
 
+= Illegal Level 0 Section (violates rule #1)
 
-== Lists, lists, lists
+== First Section
 
+==== Illegal Nested Section (violates rule #2)
+----
 
+첫 번째 섹션(문서 제목 다음) 위의 내용은 서문(preamble)의 일부입니다.
+첫 번째 섹션에 도달하면, 그 이후의 내용은 바로 앞의 섹션과 연관됩니다:
 
+[source]
+----
+== First Section
 
+Content of first section
 
+=== Nested Section
 
+Content of nested section
 
-== Lists of things
+== Second Section
 
+Content of second section
+----
 
+TIP: 한 줄로 된 섹션 제목을 정의하는 데 사용되는 등호(=) 기호 외에도, Asciidoctor는 마크다운의 해시 기호(`#`)를 인식합니다.
+즉, 마크다운 문서의 개요 구조는 AsciiDoc 문서로 문제없이 변환됩니다.
 
+프로세서가 섹션에 자동으로 번호를 매기도록 하려면, 문서 헤더에 `sectnums` 속성을 정의하세요:
 
+[source]
+----
+:sectnums:
+----
 
+You can also use this attribute entry above any section title in the document to toggle the auto-numbering setting.
+When you want to turn off the numbering, add an exclamation point to the end of the attribute name:
 
+[source]
+----
+:sectnums!:
 
-== Ordering the things
+== Unnumbered Section
+----
 
+===== Preamble
 
+문서 제목과 첫 번째 섹션 사이에 있는 내용을 ‘서문’이라고 합니다.
+문서 제목이 없는 경우, 이 내용은 서문 섹션으로 묶이지 않습니다.
 
+[source]
+----
+= Document Title
 
+preamble
 
+another preamble paragraph
 
+== First Section
+----
 
-== Description lists
+TIP: 기본 Asciidoctor 스타일시트를 사용할 경우, 이 서문은 리드(lead) 스타일(즉, 더 큰 글꼴)로 표시됩니다.
 
+개별 요소에 제목을 지정할 수도 있습니다.
 
+==== Block titles
 
+모든 단락, 목록 또는 구분된 블록 요소에 제목을 지정할 수 있습니다.
+이 제목은 해당 요소의 캡션으로 사용됩니다.
+대부분의 경우, 제목은 내용 바로 위에 표시됩니다.
+내용이 그림이나 이미지인 경우, 제목은 내용 아래에 표시됩니다.
 
+블록 제목은 요소 바로 위의 줄에 정의됩니다.
+이 줄은 점(`.`)으로 시작해야 하며, 그 뒤에 공백 없이 바로 제목 텍스트가 이어져야 합니다.
 
+다음은 제목이 있는 목록의 예시입니다:
 
+[source]
+----
+.TODO list
+- Learn the AsciiDoc syntax
+- Install AsciiDoc
+- Write my document in AsciiDoc
+----
 
-== Hybrid lists
-
-
-
-
-
-
-
-== Links and images
-
-
-
-
-
-
-
-== External links
-
-
-
-
-
-
-
-== Target window and role attributes for links
-
-
-
-
-
-
-
-== Links to relative files
-
-
-
-
-
-
-
-== Cross references
-
-
-
-
-
-
-
-== Images
-
-
-
-
-
-
-
-== Titles, titles, titles
-
-
-
-
-
-
-
-== Document title
-
-
-
-
-
-
-
-== Document attributes
-
-
-
-
-
-
-
-== Section titles
-
-
-
-
-
-
-
-== Block titles
-
-
-
-
-
-
+블록 제목에 대해 이야기한 김에, 블록에 대해 자세히 알아보고 AsciiDoc이 어떤 종류의 블록을 지원하는지 확인해 봅시다.
 
 == Building blocks in AsciiDoc
 
-
-
-
-
-
-
-== Delimited blocks
-
-
-
-
-
-
-
-== Block metadata
-
-
-
-
-
-
-
-== Masquerading blocks
-
-
-
-
-
-
-
-== Admonition blocks
-
-
-
-
-
-
-
-== Listing and source code blocks
-
-
-
-
-
-
-
-== Open blocks
-
-
-
-
-
-
-
-== Passthrough blocks
-
-
-
-
-
-
-
-== Delimiters optional
-
-
-
-
-
-
-
-== A new perspective on tables
-
-
-
-
-
-
+AsciiDoc은 문서에 단락이 아닌 텍스트(예: 블록 인용문, 소스 코드 목록, 사이드바, 표 등)를 삽입할 수 있는 유용한 구성 요소들을 제공합니다.
+이러한 구성 요소들은 구분선으로 둘러싸여 있기 때문에 _구분된 블록_이라고 불립니다.
+
+=== Delimited blocks
+
+여러분은 이미 4개 이상의 하이픈으로 둘러싸인 리스팅 블록(즉, 코드 블록)의 예시를 많이 보셨을 것입니다.
+
+[source]
+....
+----
+This is an example of a _listing block_.
+The content inside is displayed as <pre> text.
+----
+....
+
+구분된 블록의 범위 내에서는 어떤 콘텐츠나 빈 줄이라도 입력할 수 있습니다.
+끝 구분자가 발견될 때까지 블록은 끝나지 않습니다.
+블록을 둘러싼 구분자는 블록의 유형, 콘텐츠가 처리 및 변환되는 방식, 그리고 출력 시 콘텐츠를 감싸는 데 사용되는 요소를 결정합니다.
+
+위의 블록을 HTML로 변환하여 브라우저에서 볼 때 다음과 같이 표시됩니다:
+
+....
+This is an example of a _listing block_.
+The content inside is displayed as <pre> text.
+....
+
+Here's the HTML source that is generated:
+
+[source,html]
+----
+<div class="listingblock">
+  <div class="content monospaced">
+    <pre>This is an example of a _listing block_.
+The content inside is displayed as &lt;pre&gt; text.</pre>
+  </div>
+</div>
+----
+
+콘텐츠가 처리되는 방식에 대해 몇 가지 주의할 점이 있습니다:
+
+* HTML 태그 `<pre>`는 이스케이프 처리됩니다.
+* 줄바꿈은 그대로 유지됩니다.
+* “`listing block`”이라는 문구는 밑줄로 둘러싸여 있음에도 불구하고 이탤릭체로 표시되지 않습니다.
+
+각 블록 유형은 그 용도에 따라 처리됩니다.
+리터럴 블록은 일반적으로 단락에 적용되는 모든 대체 처리를 받지 않습니다.
+리스트 블록은 주로 소스 코드에 사용되므로, 대체 처리는 바람직하지 않습니다.
+
+다음 표는 AsciiDoc이 기본적으로 제공하는 구분된 블록, 그 용도 및 해당 콘텐츠에 수행되는 대체 처리를 보여줍니다.
+
+[cols="1,1l,1,1"]
+|===
+|Name (Style) |Line delimiter |Purpose |Substitutions
+
+|주석
+|////
+|출력 결과에 표시되지 않는 비공개 메모
+|없음
+
+|예시
+|====
+|예시 내용을 표시하거나 주의 사항 블록을 정의함
+|일반
+
+|리터럴
+|....
+|입력된 그대로 표시될 출력 텍스트
+|verbatim
+
+|listing, source
+|----
+|입력된 그대로 표시될 소스 코드 또는 키보드 입력
+|verbatim
+
+|open
+|--
+|다른 모든 블록(_pass_ 또는 _table_ 제외)의 역할을 할 수 있는 익명 블록
+|varies
+
+|pass
+|++++
+|처리되지 않은 채로 전달될 원본 텍스트
+|none
+
+|quote, verse
+|____
+|출처 표기가 선택적으로 포함될 수 있는 인용문이나 시구
+|normal
+
+|sidebar
+|****
+|문서의 본문 흐름 외부에 표시되는 부가 텍스트
+|normal
+
+|table
+|\|===
+|표 형식 콘텐츠나 고급 레이아웃을 표시하는 데 사용됨
+|varies
+|===
+
+IMPORTANT: AsciiDoc에서는 구분자 줄의 길이가 4자 이상이어도 허용됩니다.
+*그러지 마세요.*
+긴 구분자 줄을 관리하는 것은 _엄청난_ 시간 낭비일 뿐만 아니라, 임의적이고 오류가 발생하기 쉽습니다.
+구분된 블록을 만드는 데 필요한 최소 줄 길이를 사용하고, _바로_ 내용 작성으로 넘어가세요.
+어차피 긴 구분자는 출력물에 반영되지 않으므로 독자는 절대 볼 수 없습니다.
+
+이 표는 앞 표에서 언급된 각 치환 그룹이 수행한 치환 내용을 보여줍니다.
+
+|===
+|Group / Substitution |Normal |Verbatim |None
+
+h|Special chars
+|Yes
+|Yes
+|No
+
+h|Callouts
+|No
+|Yes
+|No
+
+h|Quotes
+|Yes
+|No
+|No
+
+h|Attributes
+|Yes
+|No
+|No
+
+h|Replacements
+|Yes
+|No
+|No
+
+h|Macros
+|Yes
+|No
+|No
+
+h|Post replacements
+|Yes
+|No
+|No
+|===
+
+속성 값에 일반적인 치환을 적용하려면 해당 값을 작은따옴표로 묶어야 합니다.
+이 규칙에는 두 가지 예외가 있습니다. 현재 `options` 및 `title` 속성 값에는
+일반적인 치환이 적용되지 않습니다.
+
+블록 메타데이터를 사용하여 블록이 표시되는 방식을 제어할 수 있습니다.
+
+=== Block metadata
+
+메타데이터는 어떤 블록이든 지정할 수 있습니다.
+메타데이터에는 여러 가지 유형이 있습니다:
+
+* 제목
+* ID (즉, 앵커)
+* 스타일 (이름이 지정되지 않은 첫 번째 블록 속성)
+* 이름이 지정된 블록 속성
+
+다음은 모든 유형의 메타데이터를 포함하는 인용 블록의 예시입니다:
+
+[source]
+----
+.Gettysburg Address
+[[gettysburg]]
+[quote, Abraham Lincoln, Address delivered at the dedication of the Cemetery at Gettysburg]
+____
+Four score and seven years ago our fathers brought forth
+on this continent a new nation...
+
+Now we are engaged in a great civil war, testing whether
+that nation, or any nation so conceived and so dedicated,
+can long endure. ...
+____
+----
+
+Here's the metadata extracted from this block:
+
+Title:: Gettysburg Address
+Id:: gettysburg
+Style:: quote
+Named block attributes::
+  attribution::: Abraham Lincoln
+  citetitle::: Address delivered at the dedication of the Cemetery at Gettysburg
+
+TIP: 블록에는 여러 개의 블록 속성 행이 포함될 수 있습니다.
+속성들은 통합됩니다.
+이름이 중복될 경우, 마지막으로 정의된 속성이 우선합니다.
+
+제목과 같은 일부 메타데이터는 보충 콘텐츠로 사용되는 반면, 스타일과 같은 다른 메타데이터는 블록이 변환되는 방식을 제어합니다.
+
+=== Masquerading blocks
+
+일부 블록은 다른 블록으로 위장할 수 있으며, 이 기능은 블록 스타일에 의해 제어됩니다.
+블록 스타일은 블록 속성 목록에서 첫 번째 위치 속성입니다.
+
+==== Admonition blocks
+
+예를 들어, 예제 블록은 경고 블록의 역할을 할 수 있습니다:
+
+[source]
+----
+[NOTE]
+====
+This is an example of an admonition block.
+
+Unlike an admonition paragraph, it may contain any AsciiDoc content.
+The style can be any one of the admonition labels:
+
+* NOTE
+* TIP
+* WARNING
+* CAUTION
+* IMPORTANT
+====
+----
+
+==== Listing and source code blocks
+
+이 튜토리얼의 시작 부분에서, 기존의 워드 프로세서를 사용해 문서에 소스 코드를 삽입하는 것이 얼마나 번거로운지 언급했던 것을 기억하시나요?
+이러한 워드 프로세서들은 애초에 그런 용도로 설계되지 않았기 때문입니다.
+*AsciiDoc은 다릅니다!*
+
+사실, AsciiDoc에 소스 코드를 삽입하는 것은 놀라울 정도로 쉽습니다.
+그냥 원본 코드를 리스팅 블록 안에 넣기만 하면 됩니다.
+
+[source]
+....
+----
+require 'asciidoctor'
+
+puts Asciidoctor.convert_file 'mysample.adoc', to_file: false
+----
+....
+
+출력에서 구문 강조 표시를 활성화하려면 블록의 스타일을 `source`로 설정하고 두 번째 속성 위치에 소스 언어를 지정하십시오.
+
+[source]
+....
+[source,ruby]
+----
+require 'asciidoctor'
+
+puts Asciidoctor.convert_file 'mysample.adoc', to_file: false
+----
+....
+
+별도의 파일에 있는 소스 코드도 사용할 수 있습니다.
+AsciiDoc의 include 지시어를 사용하기만 하면 됩니다:
+
+[source]
+....
+[source,ruby]
+----
+\include::example.rb[]
+----
+....
+
+AsciiDoc이 기술 문서에 얼마나 적합한지 제대로 보여주기 위해, 이 문서는 소스 코드 내의 설명도 지원합니다.
+코드 설명은 소스 코드의 각 줄을 설명하는 데 사용됩니다.
+설명은 코드 목록 아래에 명시되며 번호 순서대로 나열됩니다.
+다음은 그 예시입니다:
+
+[source]
+....
+[source,ruby]
+----
+require 'asciidoctor'  # \<1>
+
+Asciidoctor.convert_file 'mysample.adoc'  # \<2>
+----
+<1> Imports the library
+<2> Reads, parses, and converts the file
+....
+
+다음은 렌더링 시 주석이 표시되는 모습입니다:
+
+[#eg-callouts]
+.Source code with callouts
+====
+[source,ruby]
+----
+require 'asciidoctor'  # <1>
+
+puts Asciidoctor.convert_file 'mysample.adoc'  # <2>
+----
+<1> Imports the library
+<2> Reads, parses, and converts the file
+====
+
+==== Open blocks
+
+모든 블록 중에서 가장 다용도로 활용되는 블록은 오픈 블록입니다.
+오픈 블록은 _pass_ 와 _table_ 을 제외하고는 다른 모든 블록의 역할을 할 수 있습니다.
+다음은 오픈 블록을 사이드바로 사용하는 예시입니다:
+
+[source]
+----
+[sidebar]
+.Related information
+--
+This is aside text.
+
+It is used to present information related to the main content.
+--
+----
+
+[#pass-blocks]
+==== Passthrough blocks
+
+AsciiDoc에서 “`무엇이든 허용`”되는 메커니즘은 패스스루 블록입니다.
+이름에서 알 수 있듯이, 이 블록은 블록의 내용을 출력 문서로 그대로 전달합니다.
+AsciiDoc 구문만으로는 충족할 수 없는 복잡한 요구 사항에 직면했을 때, 패스스루 블록이 매우 유용하게 쓰일 수 있습니다.
+
+예를 들어, 문서에 GitHub gist를 삽입하고 싶다고 가정해 봅시다.
+다음과 같은 패스스루 블록을 정의할 수 있습니다:
+
+[source]
+----
+++++
+<script src="https://gist.github.com/piscisaureus/3342247.js"></script>
+++++
+----
+
+////
+[source]
+----
+++++
+<video poster="images/movie-reel.png">
+  <source src="videos/writing-zen.webm" type="video/webm">
+</video>
+++++
+----
+////
+
+CAUTION: 패스스루 블록을 사용하면 콘텐츠를 HTML과 같은 특정 출력 형식에 연결할 수 있습니다.
+패스스루 블록을 사용할 경우, {user-ref}#conditional-preprocessor-directives[조건부 전처리기 지시문]을 사용하여 지원하려는 각 백엔드에 형식별 콘텐츠를 연결하는 것이 좋습니다.
+
+// 블록 구분자가 없는 경우 블록 스타일을 사용하여 단락을 블록 요소로 승격시킬 수 있습니다.
+
+=== Delimiters optional
+
+내용이 연속되어 있는 경우(빈 줄로 끊어지지 않은 경우), 블록 구분자를 사용하지 않고 대신 단락 위에 블록 스타일을 적용하여 이를 구분된 블록 유형 중 하나로 활용할 수 있습니다.
+
+이 형식은 주로 한 줄짜리 목록에 사용됩니다:
+
+[source]
+----
+[listing]
+sudo dnf install asciidoc
+----
+
+또는 한 줄 따옴표:
+
+[source]
+----
+[quote]
+Never do today what you can put off 'til tomorrow.
+----
+
+대부분의 블록은 수직 방향으로 배열되지만, 테이블을 사용하면 콘텐츠를 수평 방향으로도 배치할 수 있습니다.
+
+=== A new perspective on tables
+
+표는 AsciiDoc 구문에서 가장 정교하게 다듬어진 부분 중 하나입니다.
+표는 만들기도 쉽고, 원본 형태로 읽기에도 편하며, 놀라울 정도로 정교합니다.
+표는 독자와의 흐름을 끊을 수 있으므로, 가급적 적게 사용하는 것을 권장합니다.
+정보를 전달하는 데 표가 가장 적합한 방법일 때는, 여러분이 강력한 도구를 손에 쥐고 있다는 점을 명심하세요.
+
+표는 하나 이상의 글머리 기호 목록을 포함하는 구분된 블록으로 생각할 수 있습니다.
+목록 구분 기호는 수직 막대(`|`)입니다.
+각 목록은 표의 한 행을 나타내며, 항목 수는 반드시 동일해야 합니다(열 또는 행을 가로지르는 경우를 고려해야 함).
+
+다음은 두 열과 세 행으로 구성된 표의 간단한 예시입니다:
+
+[source]
+----
+[cols=2*]
+|===
+|Firefox
+|Web Browser
+
+|Ruby
+|Programming Language
+
+|TorqueBox
+|Application Server
+|===
+----
+
+블록 구분자(`|===`) 안의 첫 번째 비공백 줄이 열 수를 결정합니다.
+각 열 제목을 별도의 줄에 배치하므로, `cols` 블록 속성을 사용하여 이 표가 두 개의 열로 구성되어 있음을 명시적으로 지정해야 합니다.
+`*`는 반복 연산자입니다.
+이는 나머지 열에 대해 열 지정 내용을 반복한다는 의미입니다.
+이 경우, 특별한 서식이 없으므로(현재 서식이 없음) 2개의 열에 걸쳐 특별한 서식 없이 그대로 반복된다는 뜻입니다.
+
+테이블에 `header` 옵션을 설정하여 테이블의 첫 번째 행을 헤더로 지정할 수 있습니다.
+
+[source]
+----
+[cols=2*,options=header]
+|===
+|Name
+|Group
+
+|Firefox
+|Web Browser
+
+|Ruby
+|Programming Language
+
+...
+|===
+----
+
+다음과 같은 약식 표기법을 사용하여 `header` 옵션을 정의할 수도 있습니다:
+
+```
+[%header,cols=2*]
+```
+
+또는 본문 행에서 빈 줄 하나를 사이에 두고 헤더 행을 한 줄 아래에 배치하도록 정의할 수도 있으므로, 이 경우 `cols`나 `options` 속성은 필요하지 않습니다.
+
+[source]
+----
+|===
+|Name |Group
+
+|Firefox
+|Web Browser
+
+...
+|===
+----
+
+AsciiDoc의 다른 목록과 마찬가지로, 각 항목(즉, 셀)의 내용은 여러 줄에 걸쳐 있을 수 있습니다.
+다른 목록과 달리, 각 셀의 내용에는 빈 줄이 포함될 수 있으며, 이를 하나로 묶기 위해 목록 연속 기호를 사용할 필요가 없습니다.
+에스케이프 처리되지 않은 수직 막대(`|`)가 다시 나타나면 새로운 셀이 시작됩니다.
+
+[source]
+----
+|===
+|Name |Group |Description
+
+|Firefox
+|Web Browser
+|Mozilla Firefox is an open-source web browser.
+It's designed for standards compliance,
+performance, portability.
+
+|Ruby
+|Programming Language
+|A programmer's best friend.
+
+...
+|===
+----
+
+`cols` 블록 속성에 정의된 쉼표로 구분된 상대값 목록인 _column 지정자_를 사용하여 각 열의 상대적 너비를 설정할 수 있습니다.
+목록에 포함된 항목의 개수가 열의 개수를 결정합니다.
+
+[source]
+----
+[cols="2,3,5"]
+|===
+|Name |Group |Description
+
+|Firefox
+|Web Browser
+|Mozilla Firefox is an open-source web browser.
+It's designed for standards compliance,
+performance and portability.
+
+|Ruby
+|Programming Language
+|A programmer's best friend.
+
+...
+|===
+----
+
+컬럼 내용 안에 블록이나 목록을 포함하고 싶다면, 해당 컬럼의 상대 값 끝에 `a`(AsciiDoc을 의미)를 추가하면 됩니다.
+
+[source]
+----
+[cols="2,3,5a"]
+|===
+|Name |Group |Description
+
+|Firefox
+|Web Browser
+|Mozilla Firefox is an open-source web browser.
+It's designed for:
+
+* standards compliance,
+* performance and
+* portability.
+
+|Ruby
+|Programming Language
+|A programmer's best friend.
+
+...
+|===
+----
+
+또는 세로줄 앞에 `a`를 붙여 개별 셀에 AsciiDoc 스타일을 적용할 수도 있습니다:
+
+[source]
+----
+a|Mozilla Firefox is an open-source web browser.
+It's designed for:
+
+* standards compliance,
+* performance and
+* portability.
+----
+
+표의 내용을 서식 지정하고(스타일 및 정렬 포함) 사용할 수 있는 다양한 열 및 셀 지정자가 있습니다.
+
+AsciiDoc 표는 CSV 데이터에서 직접 생성할 수도 있습니다.
+`format` 블록 속성을 `csv`로 설정하고, 블록 구분자 안에 CSV 데이터를 직접 삽입하기만 하면 됩니다:
+
+[source]
+----
+[%header,format=csv]
+|===
+Artist,Track,Genre
+Baauer,Harlem Shake,Hip Hop
+The Lumineers,Ho Hey,Folk Rock
+|===
+----
+
+또는 `include::[]` 지시어를 사용하는 방법:
+
+[source]
+----
+[%header,format=csv]
+|===
+\include::tracks.csv[]
+|===
+----
+
+Asciidoctor 0.1.3은 CSV 및 DSV 테이블 형식을 설정하기 위한 약식 표기법도 지원합니다.
+테이블 블록 구분자(예: `|===`)의 첫 번째 위치를 데이터 구분자로 대체하여 해당 테이블 형식을 설정할 수 있습니다.
+
+속성을 사용하여 `csv` 형식을 지정하는 대신, 맨 앞의 파이프(`|`)를 쉼표(`,`)로 간단히 대체하면 됩니다.
+
+//[source]
+----
+,===
+a,b,c
+,===
+----
+
+마찬가지로, 맨 앞의 파이프(`|`)를 콜론(`:`)으로 바꾸면 `dsv` 형식을 지정할 수 있습니다.
+
+//[source]
+----
+:===
+a:b:c
+:===
+----
+
+꽤 강력한 기능이에요.
 
 == What else can AsciiDoc do?
 
+지금까지 AsciiDoc 구문의 여러 기능을 살펴보았지만, 이 구문은 여전히 훨씬 더 심도 있는 내용을 담고 있습니다.
+AsciiDoc은 README 문서를 작성하기에는 충분히 간단하면서도, 출판사의 요구 사항을 충족할 수 있을 만큼 확장성이 뛰어납니다.
 
+다음은 AsciiDoc 구문이 지원하는 몇 가지 기능입니다:
 
+* 각주
+* 색인
+* 부록, 서문, 헌사, 부분 소개
+* 여러 줄로 구성된 속성
+* 전처리기 지시문 (조건부 마크업)
+* 수학 공식
+* 악보
+* 다이어그램
+* 블록 필터
+* 테마
+* 사용자 정의 블록, 매크로 및 출력 형식
 
+구문과 프로세서의 기능을 더 자세히 알아보려면 {user-ref}[Asciidoctor 사용자 매뉴얼]을 참조하십시오.
 
-
+지금은 이 정도로 구문 설명을 마치겠습니다.
+첫 번째 AsciiDoc 문서를 만들었습니다.
+이제 문서를 보기 좋은 형식으로 변환할 차례입니다.
+이를 통해 AsciiDoc이 제공하는 강력한 기능을 진정으로 체감하게 될 것입니다.
 
 == Converting your document
 
+AsciiDoc 구문은 원본 형태로도 가독성이 뛰어나도록 설계되었지만, 이 형식의 주요 대상은 작가와 편집자입니다.
+독자들은 원본 텍스트를 그다지 좋아하지 않을 것입니다.
+미적 요소도 중요합니다.
+문서에 걸맞은 가치를 부여하기 위해 “`황금비`”를 따르는 글자 크기, 색상, 아이콘, 이미지를 활용하여 멋진 타이포그래피를 적용하고 싶을 것입니다.
+바로 이때(글을 다 쓴 *후*) Asciidoctor 프로세서가 등장합니다.
 
+Asciidoctor 프로세서는 문서를 분석하여 HTML, ePub, DocBook 또는 PDF와 같은 백엔드 형식으로 변환합니다.
+Asciidoctor에는 기본적으로 일련의 템플릿이 포함되어 있지만, 원하는 출력을 정확히 얻기 위해 템플릿을 사용자 정의하거나 직접 만들 수도 있습니다.
 
+Asciidoctor 프로세서를 사용하려면 먼저 {asciidoctor-gem-ref}[Asciidoctor Ruby Gem]을 설치해야 합니다.
+젬 설치에 도움이 필요하면 {uri-install}[Asciidoctor 설치 가이드]를 참고하세요.
 
+=== Converting a document to HTML 5
 
+Asciidoctor는 AsciiDoc 문서를 HTML 5, Docbook 5.0 및 사용자 정의 출력 형식으로 변환하기 위한 명령줄 도구와 Ruby API를 모두 제공합니다.
 
+Asciidoctor를 사용하여 HTML 문서를 생성하려면, 명령줄에서 `asciidoctor` 뒤에 문서 이름을 입력하세요.
 
-== Converting a document to HTML 5
+ $ asciidoctor mysample.adoc
 
+Asciidoctor에서는 *html5* 백엔드가 기본값이므로, HTML 5 문서를 생성할 때 백엔드를 명시적으로 지정할 필요가 없습니다.
 
+또한 Asciidoctor는 Ruby API도 제공하므로, Ruby 애플리케이션에서 직접 HTML 문서를 생성할 수 있습니다:
 
+[source,ruby]
+----
+require 'asciidoctor'
 
+Asciidoctor.convert_file 'mysample.adoc'
+----
 
+또는, HTML 출력 결과를 파일에 기록하는 대신 변수에 저장할 수도 있습니다:
 
+[source,ruby]
+----
+html = Asciidoctor.convert_file 'mysample.adoc', to_file: false, header_footer: true
+puts html
+----
 
-== Converting a document to DocBook
+DocBook을 생성하려면 다음 백엔드 옵션을 지정하기만 하면 됩니다:
 
+[source,ruby]
+----
+Asciidoctor.convert_file 'mysample.adoc', backend: 'docbook'
+----
 
+Asciidoctor의 장점 중 하나는 HTML뿐만 아니라 다양한 형식으로 출력할 수 있다는 점입니다.
 
+=== Converting a document to DocBook
 
+DocBook으로 작성하는 것이 비인간적이라는 사실에도 불구하고, 이 형식은 이식성이 뛰어난 문서 형식으로서 유용합니다.
+AsciiDoc 구문은 DocBook 출력을 염두에 두고 설계되었기 때문에 변환 품질이 매우 우수합니다.
+AsciiDoc 구문의 각 마크업 요소마다 대응하는 DocBook 요소가 있습니다.
 
+Asciidoctor는 기본적으로 DocBook 5.0 백엔드를 제공합니다.
+문서를 DocBook 5.0으로 변환하려면 백엔드 플래그를 `docbook5`로 설정하여 프로세서를 호출하십시오:
 
+ $ asciidoctor -b docbook5 mysample.adoc
 
-== Output galore
+이제 현재 디렉토리에 `mysample.xml`이라는 이름의 새로운 XML 문서가 생성됩니다:
 
+ $ ls -1
+ mysample.adoc
+ mysample.html
+ mysample.xml
 
+리눅스를 사용 중이라면 Yelp를 사용하여 DocBook 파일을 볼 수 있습니다:
 
+ $ yelp mysample.xml
 
+DocBook은 Asciidoctor 툴체인에서 단지 중간 형식일 뿐입니다.
+이 파일을 DocBook을 처리하는 시스템(예: {publican-ref}[publican])에 입력하거나, {fopub-doc-ref}[asciidoctor-fopub 도구]를 사용하여 PDF로 변환할 수 있습니다.
 
+=== Output galore
 
+Asciidoctor 프로세서가 생성하는 출력을 사용자 정의할 수 있는 방법은 정말 무궁무진합니다.
+여기서는 그 일부만 간략히 다루었습니다.
 
-== Where else is AsciiDoc supported?
+자세한 내용은 {user-ref}[Asciidoctor 사용자 설명서]와 {docs-ref}[Asciidoctor 문서 페이지]를 확인해 보세요.
 
+=== Where else is AsciiDoc supported?
 
+AsciiDoc을 사용해 보는 가장 쉬운 방법은 온라인에서 직접 체험해 보는 것입니다.
+GitHub 저장소/링크:{gist-ref}[gist] 또는 Codeberg 저장소에 있는 AsciiDoc 문서는 자동으로 HTML로 변환되어 웹 인터페이스에 표시됩니다.
+GitLab 저장소/링크:{snippets-ref}[snippets]도 지원되며, 여기에는 `include::[]` 지시문도 포함됩니다.
 
+GitHub, GitLab 또는 Codeberg에 프로젝트가 있다면, README나 기타 문서를 AsciiDoc으로 작성할 수 있으며, 해당 Git 플랫폼의 인터페이스에서 방문자가 볼 수 있도록 HTML 출력 결과가 표시됩니다.
 
+// image?
 
+특히 Gist는 AsciiDoc을 실험해 보기에 아주 좋은 방법입니다.
+새 Gist를 만들고, 파일 이름을 `.adoc` 확장자로 지정한 뒤 AsciiDoc 마크업을 입력하기만 하면 됩니다.
+문서를 공개 또는 비공개로 저장할 수 있습니다.
+소프트웨어를 설치하지 않고 AsciiDoc을 사용해 보고 싶다면, Gist가 시작하기에 아주 좋은 방법입니다.
 
+// image?
+
+AsciiDoc의 구문과 도구 체인에는 탐구할 내용이 훨씬 더 많지만, 간단한 README부터 포괄적인 사용자 가이드에 이르기까지 다양한 문서를 작성하는 데 필요한 지식은 이미 충분히 익히셨습니다.
 
 == Wrap-up
 
+AsciiDoc으로 글을 쓰는 것은 이메일을 쓰는 것보다 더 복잡하지 않아야 합니다.
+AsciiDoc으로 문서를 작성하려면 텍스트 편집기를 열고 일반적인 문단을 입력하기만 하면 됩니다.
+추가적인 의미나 서식이 필요할 때만 마크업을 사용해야 합니다.
+어떤 구두점을 사용해야 할지 기억해야 할 때는 본인의 직감을 따르세요.
+AsciiDoc 구문은 지난 수십 년간의 컴퓨팅 역사에서 검증된 일반 텍스트 관례를 기반으로 합니다.
+AsciiDoc과 같은 경량 마크업 언어의 핵심 목표가 바로 원본 텍스트의 가독성을 해치지 않는 것이므로, 마크업이 텍스트의 가독성을 떨어뜨리지 않는다는 점에 동의하시리라 믿습니다.
 
+인간으로서, 의사소통은 시대를 초월해 우리를 연결하고 지식을 전수할 수 있게 해줍니다.
+AsciiDoc을 사용하면 방해가 되는 다른 요소들에 신경 쓰지 않고, 소통 자체에 집중할 수 있습니다.
+이메일 내용을 문서에 복사해 보세요. 이를 문서로 재구성하는 것이 얼마나 쉬운지 직접 확인해 보실 수 있습니다.
+거의 즉시 글쓰기의 ‘선(禪)’을 깨닫게 될 것이며, 글을 만들어내는 보람찬 경험을 즐기게 될 것입니다.
 
-
-
-
-
+[glossary]
 == Glossary
 
-
-
-
-
-
-
+[glossary]
+주의 문단:: 우선순위를 나타내는 레이블이나 아이콘이 있는 콜아웃 문단
+주의 블록:: 우선순위를 나타내는 레이블이나 아이콘이 있는, 복잡한 내용을 포함하는 콜아웃 블록
+백엔드:: AsciiDoc 소스 코드를 다양한 출력 형식으로 변환하기 위한 템플릿 모음
+참조:: 문서 내 한 위치에서 앵커로 표시된 다른 위치로 연결되는 링크
+목록 이어쓰기:: 단독으로 한 줄에 있는 더하기 기호(`+`)로, 인접한 텍스트 줄을 목록 항목에 연결하는 것
+인용문:: 강조나 특별한 의미를 부여하기 위해 특수 구두점으로 둘러싸인 텍스트
