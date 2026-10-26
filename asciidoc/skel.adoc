@@ -32,9 +32,6 @@ endif::[]
 
 == asciidoc이란?
 
-asciidoc은 [blue]##경량 마크업 언어##입니다
-
-
 자세한 내용은 <<what_is_asciidoctor, asciidoctor란?>>을 참조하십시오.
 
 [[what_is_asciidoctor]]
@@ -53,36 +50,19 @@ asciidoc은 [blue]##경량 마크업 언어##입니다
 |====
 
 
-// 다른 팀의 앱 이름
 :other-app-name: 호게 툴
-// 다른 팀의 API 사양서
 :other-app-api-doc-path: ../../other_app/api/index.html
-
 {other-app-name}의 link:{other-app-api-doc-path}[API 사양서]
 
+TIP: Tip
 
-.시퀀스 다이어그램
-[plantuml]
-----
-actor 사용자 as user
-user -> 로그인 : 로그인한다
-로그인 --> user:
-----
+NOTE: Note
 
-.클래스 다이어그램
-[plantuml]
-----
-class Animal {
-  int age
-  run()
-}
+IMPORTANT: Important
 
-class Cat extends Animal {
-}
+WARNING: Warning
 
-class Dog extends Animal {
-}
-----
+CAUTION: Caution
 
 [quote, Stuart Rackham, AsciiDoc author]
 ____
