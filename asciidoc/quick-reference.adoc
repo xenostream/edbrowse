@@ -1,9 +1,11 @@
-Asciidoc Quick Reference Guide
-==============================
-:toc:
+= Asciidoc Quick Reference Guide
+
+:toc: 
 :toc-placement: preamble
 :toclevels: 1
 :showtitle:
+:sectnums:
+
 
 ifdef::env-github[]
 :tip-caption: :bulb:
