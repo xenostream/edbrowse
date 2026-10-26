@@ -1,10 +1,25 @@
 = A tutorial for the sam command language
-:toc: 
-:toc-placement: left
+:docname: = sam command language 사용법
+:author: piljin.kwon@gmail.com
+:revnumber: 0.1
+:revdate: 2026/10/27
+:description: 문서 기본 구조
+:lang: ko
+:source-language: asciidoc
+:doctype: book
+:toc: left
 :toclevels: 1
-:showtitle:
+:toc-title: 목차
 :sectnums:
-
+:sectlinks:
+:sectnumlevels: 4
+:chapter-label:
+:icons: font
+:imagesdir: ./images
+:source-highlighter: coderay
+:example-caption: 예제
+:table-caption: 표
+:figure-caption: 그림
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
