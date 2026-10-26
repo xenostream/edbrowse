@@ -624,18 +624,19 @@ This document provides...
 ======
 [NOTE]
 ====
-== Document Title (Level 0)
-
+[float]
+= Document Title (Level 0)
+[float]
 == Level 1 Section Title
-
+[float]
 === Level 2 Section Title
-
+[float]
 ==== Level 3 Section Title
-
+[float]
 ===== Level 4 Section Title
-
+[float]
 ====== Level 5 Section Title
-
+[float]
 == Another Level 1 Section Title
 ====
 ======
