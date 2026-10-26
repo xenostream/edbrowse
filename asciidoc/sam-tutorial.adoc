@@ -5,7 +5,6 @@
 :showtitle:
 :sectnums:
 
-
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
