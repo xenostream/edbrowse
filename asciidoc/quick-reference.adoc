@@ -19,7 +19,7 @@ endif::[]
 이 페이지의 예제는 내장된 HTML 변환기가 생성한 출력 결과를 보여줍니다. AsciiDoc 변환기는 PDF, EPUB, DocBook과 같은 다른 출력 형식을 생성할 때 이에 상응하는 출력 결과를 생성해야 합니다.
 ====
 
-= Paragraphs
+== Paragraphs
 
 *예 1. 문단*
 
@@ -133,7 +133,7 @@ This paragraph will not be.
 
 
 
-= Text formatting
+== Text formatting
 
 *예 5. 굵게, 기울임꼴 및 고정폭 글꼴에 제약 조건 적용*
 
@@ -284,7 +284,7 @@ Olaf had been with the company since the `'00s.
 ======
 
 
-= Links
+== Links
 
 *예제 10. 자동 링크, URL 매크로 및 mailto 매크로*
 
@@ -470,7 +470,7 @@ If you never return from xref:document-b.adoc[Document B], we'll send help.
 
 
 
-= Document header
+== Document header
 
 문서 헤더는 선택 사항입니다. 헤더에는 빈 줄이 포함되어서는 안 되며, 본문과는 최소한 한 줄의 빈 줄로 구분되어야 합니다.
 
@@ -478,7 +478,7 @@ If you never return from xref:document-b.adoc[Document B], we'll send help.
 
 [source,asciidoc]
 ----
-= Document Title
+== Document Title
 
 This document provides...
 ----
@@ -488,7 +488,7 @@ This document provides...
 ======
 [NOTE]
 ====
-= Document Title
+== Document Title
 
 This document provides...
 ====
@@ -498,7 +498,7 @@ This document provides...
 
 [source,asciidoc]
 ----
-= Document Title
+== Document Title
 Author Name <author@email.org>
 
 This document provides...
@@ -509,7 +509,7 @@ This document provides...
 ======
 [NOTE]
 ====
-= Document Title
+== Document Title
 Author Name <author@email.org>
 
 This document provides...
@@ -520,7 +520,7 @@ This document provides...
 
 [source,asciidoc]
 ----
-= Document Title
+== Document Title
 Author Name <author@email.org>; Another Author <a.author@email.org>
 v2.0, 2019-03-22
 
@@ -532,7 +532,7 @@ This document provides...
 ======
 [NOTE]
 ====
-= Document Title
+== Document Title
 Author Name <author@email.org>; Another Author <a.author@email.org>
 v2.0, 2019-03-22
 
@@ -549,7 +549,7 @@ This document provides...
 
 [source,asciidoc]
 ----
-= Document Title
+== Document Title
 Author Name <author@email.org>
 v2.0, 2019-03-22
 :toc:
@@ -563,7 +563,7 @@ This document provides...
 ======
 [NOTE]
 ====
-= Document Title
+== Document Title
 Author Name <author@email.org>
 v2.0, 2019-03-22
 :toc:
@@ -575,7 +575,7 @@ This document provides...
 
 
 
-= Section titles
+== Section titles
 
 문서 유형이 ‘기사’(기본값)인 경우, 문서에는 레벨 0 섹션 제목(=)이 하나만 포함될 수 있으며, 이는 문서 제목(즉, doctitle)입니다.
 
@@ -583,7 +583,7 @@ This document provides...
 
 [source,asciidoc]
 ----
-= Document Title (Level 0)
+== Document Title (Level 0)
 
 == Level 1 Section Title
 
@@ -603,7 +603,7 @@ This document provides...
 ======
 [NOTE]
 ====
-= Document Title (Level 0)
+== Document Title (Level 0)
 
 == Level 1 Section Title
 
@@ -626,11 +626,11 @@ This document provides...
 
 [source,asciidoc]
 ----
-= Document Title (Level 0)
+== Document Title (Level 0)
 
 == Level 1 Section Title
 
-= Level 0 Section Title (Part)
+== Level 0 Section Title (Part)
 
 == Level 1 Section Title
 
@@ -642,7 +642,7 @@ This document provides...
 
 ====== Level 5 Section Title
 
-= Another Level 0 Section Title (Part)
+== Another Level 0 Section Title (Part)
 ----
 
 .예제 23의 결과 보기
@@ -650,11 +650,11 @@ This document provides...
 ======
 [NOTE]
 ====
-= Document Title (Level 0)
+== Document Title (Level 0)
 
 == Level 1 Section Title
 
-= Level 0 Section Title (Part)
+== Level 0 Section Title (Part)
 
 == Level 1 Section Title
 
@@ -666,7 +666,7 @@ This document provides...
 
 ====== Level 5 Section Title
 
-= Another Level 0 Section Title (Part)
+== Another Level 0 Section Title (Part)
 ====
 ======
 
@@ -694,13 +694,13 @@ This paragraph is its sibling, not its child.
 
 
 
-= Automatic TOC
+== Automatic TOC
 
 *예 25. 문서의 목차 활성화하기*
 
 [source,asciidoc]
 ----
-= Document Title
+== Document Title
 Doc Writer <doc.writer@email.org>
 :toc:
 ----
@@ -709,13 +709,13 @@ Doc Writer <doc.writer@email.org>
 
 
 
-= Includes
+== Includes
 
 *예 26. 문서 부분 포함하기*
 
 [source,asciidoc]
 ----
-= Reference Documentation
+== Reference Documentation
 Lead Developer
 
 This is documentation for project X.
@@ -753,7 +753,7 @@ URL의 콘텐츠를 포함하는 것은 잠재적으로 위험할 수 있으므�
 
 
 
-= Lists
+== Lists
 
 *예 29. 순서가 없는 목록*
 
@@ -1055,7 +1055,7 @@ list continuation:: a plus sign (`{plus}`) on a line by itself
 ======
 
 
-= Images
+== Images
 
 imagesdir 속성을 사용하면 모든 이미지 매크로에 이미지 파일의 공통 경로를 직접 하드코딩하지 않아도 됩니다. 이 속성의 값은 절대 경로, 상대 경로 또는 기본 URL일 수 있습니다. 이미지 대상이 상대 경로인 경우, 이 속성의 값이 앞에 추가됩니다(즉, imagesdir 속성의 값을 기준으로 상대 경로가 해결됩니다). 이미지 대상이 URL이나 절대 경로인 경우, 이 속성의 값은 앞에 추가되지 않습니다.
 
@@ -1136,7 +1136,7 @@ image:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
 
 [source,asciidoc]
 ----
-= Document Title
+== Document Title
 :data-uri:
 ----
 
@@ -1144,7 +1144,7 @@ data-uri 속성이 설정되면, 문서 내의 모든 이미지(경고 아이콘
 
 
 
-= Audio
+== Audio
 
 *예제 42. 오디오 차단 매크로*
 
@@ -1159,7 +1159,7 @@ audio::ocean-waves.wav[start=60,opts=autoplay]
 
 
 
-= Videos
+== Videos
 
 *예제 43. 블록 비디오 매크로*
 
@@ -1188,7 +1188,7 @@ video::67480300[vimeo]
 
 
 
-= Keyboard, button, and menu macros
+== Keyboard, button, and menu macros
 
 [IMPORTANT]
 ====
@@ -1272,7 +1272,7 @@ Select a file in the file navigator and click btn:[Open].
 
 
 
-= Literals and source code
+== Literals and source code
 
 *예 49. 인라인 리터럴 고정폭*
 
@@ -1562,7 +1562,7 @@ This is normal content.
 
 
 
-= Admonitions
+== Admonitions
 
 *예 60. 훈계 문단*
 
@@ -1643,7 +1643,7 @@ Another paragraph.
 
 
 
-= More delimited blocks
+== More delimited blocks
 
 모든 블록에는 제목을 지정할 수 있습니다. 블록 제목은 블록 상단에 점(.)으로 시작하는 한 줄의 텍스트를 사용하여 정의합니다. 이 점 뒤에는 공백을 넣을 수 없습니다. 이미지 블록의 경우 제목은 블록 하단에 표시됩니다. 그 외의 모든 블록에서는 제목이 일반적으로 블록 상단에 표시됩니다.
 
@@ -1679,7 +1679,7 @@ that supplement the main text.
 Here's a sample AsciiDoc document:
 
 ----
-= Title of Document
+== Title of Document
 Doc Writer
 :toc:
 
@@ -1699,7 +1699,7 @@ The document header is useful, but not required.
 Here's a sample AsciiDoc document:
 
 ----
-= Title of Document
+== Title of Document
 Doc Writer
 :toc:
 
@@ -1868,7 +1868,7 @@ That means you can include raw HTML, like this embedded Gist:
 
 
 
-= Tables
+== Tables
 
 *예 68. 제목, 두 개의 열, 머리글 행, 그리고 두 개의 내용 행으로 구성된 표*
 
@@ -2167,7 +2167,7 @@ Robyn:Indestructible:Dance
 
 
 
-= IDs, roles, and options
+== IDs, roles, and options
 
 *예 77. 블록 ID(앵커) 및 역할 할당을 위한 간이 방법*
 
@@ -2242,7 +2242,7 @@ Robyn:Indestructible:Dance
 
 
 
-= Comments
+== Comments
 
 *예제 83. 줄 주석과 블록 주석*
 
@@ -2259,7 +2259,7 @@ Notice it's a delimited block.
 
 
 
-= Breaks
+== Breaks
 
 *예 84. 주제 구분선 (일명 수평선)*
 
@@ -2295,7 +2295,7 @@ after
 
 
 
-= Attributes and substitutions
+== Attributes and substitutions
 
 *예제 86. 속성 선언 및 사용법*
 
@@ -2386,7 +2386,7 @@ Be sure to read the {link-docs} too!
 
 
 
-= Text replacements
+== Text replacements
 
 [cols=5,options=header]
 |===
@@ -2462,7 +2462,7 @@ Be sure to read the {link-docs} too!
 
 
 
-= Escaping substitutions
+== Escaping substitutions
 
 *예 88. 백슬래시*
 
@@ -2580,7 +2580,7 @@ pass:[<del>strike this</del>] is also marked as deleted.
 
 
 
-= Bibliography
+== Bibliography
 
 *예 91. 인용된 문헌이 포함된 참고문헌 목록*
 
@@ -2618,7 +2618,7 @@ Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 
 
 
 
-= Footnotes
+== Footnotes
 
 *예 92. 일반 각주와 재사용 가능한 각주*
 
@@ -2646,7 +2646,7 @@ Another bold statement.footnote:disclaimer[]
 
 
 
-= Markdown compatibility
+== Markdown compatibility
 
 마크다운 호환 구문은 AsciiDoc 언어의 선택적 기능이며, 현재는 Asciidoctor를 사용할 때만 사용할 수 있습니다.
 
