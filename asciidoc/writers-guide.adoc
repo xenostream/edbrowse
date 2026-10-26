@@ -13,7 +13,10 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-https://narusas.github.io/2018/03/21/Asciidoc-basic.html
+.유용한 링크
+* https://narusas.github.io/2018/03/21/Asciidoc-basic.html[한글사용법-번역 window=_blank]
+* https://asciidocalive.draftview.app/[온라인 에디터 #1 window=_blank]
+* https://asciidoceditor.com/[온라인 에디터 #2 window=_blank]
 
 이 가이드는 일반 텍스트 문서 구문 처리기인 `AsciiDoc` 에 대한 기초적인 소개를 제공합니다. 이 소개는 기술 문서, 기사, 웹 페이지 또는 전통적인 산문 등 어떤 형태의 콘텐츠든 작성 및 게시하는 데 드는 수고를 줄이려는 모든 분을 대상으로 합니다.
 
@@ -34,14 +37,14 @@ AsciiDoc이 무엇인지 알고 싶다면 ‘AsciiDoc 소개’ 에서 답을 �
 그럼 `AsciiDoc` 을 자세히 알아보겠습니다!
 
 
-= Writing in AsciiDoc
+== Writing in AsciiDoc
 
 이 섹션의 목표는 여러분이 첫 번째 AsciiDoc 문서를 작성하는 방법을 알려드리는 것입니다. 나중에 되돌아보면, 이 방법이 정말 합리적이라는 데 동의하게 될 것입니다.
 
 AsciiDoc과의 여정은 여러분이 즐겨 사용하는 텍스트 편집기에서 시작됩니다.
 
 
-= It’s just text, mate.
+== It’s just text, mate.
 
 AsciiDoc의 구문은 단순한 "일반 텍스트" 이므로, 어떤 텍스트 편집기를 사용하든 AsciiDoc 문서를 작성할 수 있습니다. Microsoft Word, OpenOffice Writer, Google Docs 같은 복잡한 워드 프로세서 프로그램은 필요하지 않습니다. 사실, 이런 프로그램들은 문서에 (눈에 보이지 않는) 불필요한 요소를 추가하고 변환 과정을 번거롭게 만들기 때문에 사용하지 않는 것이 좋습니다.
 
@@ -55,7 +58,7 @@ macOS에서 일반 텍스트를 편집하는 데 가장 널리 사용되는 프�
 자신이 좋아하는 텍스트 편집기를 열고 AsciiDoc을 작성할 준비를 합니다!
 
 
-= Content is king!
+== Content is king!
 
 대부분의 문서는 단락 텍스트로 이루어져 있습니다. 그렇기 때문에 Asciidoctor은 단락을 지정하기 위한 특별한 마크업이나 속성이 필요하지 않습니다. 그냥 입력하면 됩니다.
 
@@ -91,7 +94,7 @@ To leave means code dismemberment and certain death.
 ====
 
 
-= Wrapped text and hard line breaks
+== Wrapped text and hard line breaks
 
 Asciidoctor가 문서를 변환할 때 인접한 텍스트 줄들이 하나의 단락으로 합쳐지기 때문에, 단락 내 텍스트를 줄바꿈하거나 각 문장이나 구를 별도의 줄에 배치할 수 있습니다. 출력물에는 줄바꿈 표시가 나타나지 않습니다.
 
@@ -134,7 +137,7 @@ Java is black.
 .`hardbreaks` 속성을 사용해서 문서 전체에서 줄 바꿈이 유지됨
 [source,asciidoc]
 ----
-= Line Break Doc Title
+== Line Break Doc Title
 :hardbreaks:
 
 Rubies are red,
@@ -142,7 +145,7 @@ Topazes are blue.
 ----
 
 
-= Admonitions
+== Admonitions
 
 콘텐츠 흐름에서 분리해서 우선순위 라벨을 붙여 특정 문장에 주목을 끌고 싶은 경우가 있습니다. 이를 ‘주의 사항’ 이라고 합니다. 주의 사항의 표시 스타일은 할당된 라벨(즉, 값)에 따라 결정됩니다. Asciidoctor는 다섯 가지 주의 사항 스타일 라벨을 제공합니다:
 
@@ -192,12 +195,12 @@ IMPORTANT: Admonitions can also encapsulate any block content, which we’ll cov
 
 
 
-= Mild punctuation, strong impact
+== Mild punctuation, strong impact
 
 말할 때 특정 단어나 구를 강조하듯이, 글에서도 구두점을 사용해서 강조할 수 있습니다. AsciiDoc에서 이런 표기 방식을 ‘인용문’ 이라 부릅니다.
 
 
-= Quoted text
+== Quoted text
 
 예를 들어, 이메일에서 단어를 별표로 묶어 그 단어를 “강조할” 수 있습니다.
 
@@ -273,7 +276,7 @@ CSS를 사용해서 텍스트에 스타일을 적용할 수 있습니다.
 
 
 
-= Preventing substitution
+== Preventing substitution
 
 원하지 않는 곳에서 인용문 처리가 발생하는 경우, 백슬래시나 패스스루 매크로를 사용해서 이를 방지할 수 있습니다.
 
@@ -317,7 +320,7 @@ content with only select substitutions applied: pass:c,a[__<{email}>__]
 CAUTION: Asciidoctor는 블록 패스 매크로를 구현하지 않습니다. 대신, 패스 블록을 사용해야 합니다.
 
 
-= Inline pass macro and explicit substitutions
+== Inline pass macro and explicit substitutions
 
 특정 구문을 치환 대상에서 제외하고 특수 문자의 이스케이프를 비활성화하려면, 해당 구문을 inline pass 매크로로 감쌉니다. 예를 들어, AsciiDoc에서 HTML을 생성할 때 텍스트에 밑줄을 적용하는 한 가지 방법은 다음과 같습니다:
 
@@ -336,7 +339,7 @@ The text pass:[<u>underline me</u>] is underlined.
 애드혹(Ad-Hoc) 인용문 대체 기능을 활성화하려면, 매크로 값을 `subs` 에 할당하고 인라인 패스 매크로를 사용합니다.
 
 
-= Triple plus passthrough
+== Triple plus passthrough
 
 
 
@@ -344,7 +347,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Replacements
+== Replacements
 
 
 
@@ -352,7 +355,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Lists, lists, lists
+== Lists, lists, lists
 
 
 
@@ -360,7 +363,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Lists of things
+== Lists of things
 
 
 
@@ -368,7 +371,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Ordering the things
+== Ordering the things
 
 
 
@@ -376,7 +379,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Description lists
+== Description lists
 
 
 
@@ -384,7 +387,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Hybrid lists
+== Hybrid lists
 
 
 
@@ -392,7 +395,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Links and images
+== Links and images
 
 
 
@@ -400,7 +403,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= External links
+== External links
 
 
 
@@ -408,7 +411,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Target window and role attributes for links
+== Target window and role attributes for links
 
 
 
@@ -416,7 +419,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Links to relative files
+== Links to relative files
 
 
 
@@ -424,7 +427,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Cross references
+== Cross references
 
 
 
@@ -432,7 +435,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Images
+== Images
 
 
 
@@ -440,7 +443,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Titles, titles, titles
+== Titles, titles, titles
 
 
 
@@ -448,7 +451,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Document title
+== Document title
 
 
 
@@ -456,7 +459,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Document attributes
+== Document attributes
 
 
 
@@ -464,7 +467,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Section titles
+== Section titles
 
 
 
@@ -472,7 +475,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Block titles
+== Block titles
 
 
 
@@ -480,7 +483,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Building blocks in AsciiDoc
+== Building blocks in AsciiDoc
 
 
 
@@ -488,7 +491,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Delimited blocks
+== Delimited blocks
 
 
 
@@ -496,7 +499,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Block metadata
+== Block metadata
 
 
 
@@ -504,7 +507,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Masquerading blocks
+== Masquerading blocks
 
 
 
@@ -512,7 +515,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Admonition blocks
+== Admonition blocks
 
 
 
@@ -520,7 +523,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Listing and source code blocks
+== Listing and source code blocks
 
 
 
@@ -528,7 +531,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Open blocks
+== Open blocks
 
 
 
@@ -536,7 +539,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Passthrough blocks
+== Passthrough blocks
 
 
 
@@ -544,7 +547,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Delimiters optional
+== Delimiters optional
 
 
 
@@ -552,7 +555,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= A new perspective on tables
+== A new perspective on tables
 
 
 
@@ -560,7 +563,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= What else can AsciiDoc do?
+== What else can AsciiDoc do?
 
 
 
@@ -568,7 +571,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Converting your document
+== Converting your document
 
 
 
@@ -576,7 +579,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Converting a document to HTML 5
+== Converting a document to HTML 5
 
 
 
@@ -584,7 +587,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Converting a document to DocBook
+== Converting a document to DocBook
 
 
 
@@ -592,7 +595,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Output galore
+== Output galore
 
 
 
@@ -600,7 +603,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Where else is AsciiDoc supported?
+== Where else is AsciiDoc supported?
 
 
 
@@ -608,7 +611,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Wrap-up
+== Wrap-up
 
 
 
@@ -616,7 +619,7 @@ The text pass:[<u>underline me</u>] is underlined.
 
 
 
-= Glossary
+== Glossary
 
 
 
