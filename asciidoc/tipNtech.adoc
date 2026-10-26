@@ -1,0 +1,909 @@
+= ASCIIDOC
+:toc: left
+:toclevels: 1
+:toc-title: 목차
+:sectnums:
+:sectlinks:
+:icons: font
+
+== asciidoc이란
+
+`asciidoc` 은 Markdown 같은 경량 마크업 언어 중 하나로, 웹 페이지 등을 일반 텍스트 형태로 작성할 수 있다(파일 확장자는 `.adoc`).
+
+
+== asciidoc을 사용하게 된 경위
+
+지금까지 Word로 기능 사양서 등을 작성했지만, Word는 매우 무겁고, 수정 위치를 파악하기 어렵고, 여러 사람이 동시에 수정하는 것도 번거로워서 Word 사용을 그만두고 싶어졌다. 그래서 “경량 마크업 언어” 를 사용하기로 했는데, 가장 대중적인? Markdown 을 사용해 보니 다음과 같은 제약 사항들 때문에 아무래도 좀 아쉽다...
+
+* 표에서 셀을 병합할 수 없다
+* 표의 셀 내에서 글머리 기호를 사용할 수 없다
+* 목차를 만들 수 없다
+* 글자에 색을 입힐 수 없다
+* 위 사항들을 해결하려면 플러그인이나 마크다운 변형 버전 이것저것...
+
+그래서 마크다운보다 표현 방법이 풍부한 `asciidoc` 을 사용해 보고, 실제로 사용한 후 특징과 과제를 정리해 보았다.
+
+
+== asciidoctor, asciidoctor-pdf란
+
+asciidoctor:: asciidoc 파일을 HTML 파일로 변환하는 Ruby 기반 도구
+asciidoctor-pdf:: asciidoc 파일을 PDF 파일로 변환하는 Ruby 기반 도구
+
+
+== asciidoctor로 생성한 HTML 예시
+
+[source,asciidoc]
+-----
+:lang: ja
+:doctype: book
+:toc: left
+:toclevels: 3
+:toc-title: 목차
+:sectnums:
+:sectnumlevels: 4
+:sectlinks:
+:imagesdir: ./_images
+:icons: font
+:source-highlighter: coderay
+:example-caption: 예제
+:table-caption: 표
+:figure-caption: 그림
+:docname: = asciidoc 사용법
+:author: asciidoc 사업부 개발 1그룹
+:revnumber: 0.1
+:revdate: 2017/10/25
+
+= asciidoc 사용법
+
+== asciidoc이란?
+
+asciidoc은 [blue]#경량 마크업 언어#입니다
+
+자세한 내용은 <<can_asciidoc, asciidoc으로 할 수 있는 것>>을 참조하세요
+
+[[can_asciidoc]]
+== asciidoc으로 할 수 있는 것
+
+.코드 하이라이트
+[source, json]
+{
+  “hoge” : “fuga”,
+  “foo” : [1,2,3]
+}
+
+.합치기 + 글머리 기호 예시
+[cols=“1,2a,3a”]
+|====
+|열 1|열 2|열 3
+3+|3열 합치기
+.2+|2행 세로 합치기|b-1|c-2
+|b-2|
+* c-3
+* c-4
+|====
+
+[참고]
+====
+* format="csv"에서는 불가능합니다
+====
+
+=== asciidoctor를 사용하면 PlantUML로 시퀀스 다이어그램 작성
+
+[plantuml]
+----
+actor 사용자 as user
+user -> 로그인 : 로그인한다
+로그인 --> user:
+----
+
+-----
+
+
+== 환경 구축(Windows)
+
+=== asciidoctor, asciidoctor-pdf 설치
+
+ruby(2.2 이상) 설치
+
+https://rubyinstaller.org/downloads/
+
+명령 프롬프트에서 다음 명령을 실행
+
+ gem install asciidoctor             # asciidoctor 설치
+ gem install --pre asciidoctor-pdf   # asciidoctor-pdf 설치
+ gem install coderay                 # 코드 구문 강조 표시용
+ gem install asciidoctor-pdf-cjk     # PDF 변환 시 레이아웃 깨짐 문제 해결
+ gem install asciidoctor-diagram     # PlantUML 등의 다이어그램 사용
+
+
+=== asciidoc 파일을 HTML, PDF로 변환
+
+HTML 파일 변환
+
+ asciidoctor test.adoc
+
+=> test.html이 생성됩니다
+
+PDF 파일 변환
+
+ asciidoctor-pdf test.adoc
+
+=> test.pdf이 생성됩니다
+
+여러 파일을 한꺼번에 변환
+
+ asciidoctor *.adoc
+ asciidoctor-pdf *.adoc
+ asciidoctor-pdf-cjk나 asciidoctor-diagram을 사용할 경우(-r 옵션 추가)
+ asciidoctor -r asciidoctor-pdf-cjk -r asciidoctor-diagram test.adoc
+ asciidoctor-pdf -r asciidoctor-pdf-cjk -r asciidoctor-diagram test.adoc
+
+
+
+=== asciidoc 파일을 브라우저에서 표시
+
+Firefox나 Chrome에서 플러그인을 설치하면 렌더링이 가능합니다.
+
+* Firefox 플러그인
+https://addons.mozilla.org/ja/firefox/addon/asciidoctorjs-live-preview/
+
+* Chrome 플러그인
+https://chrome.google.com/webstore/detail/asciidoctorjs-live-previe/iaalpfgpbocpdfblpnhhgllgbdbchmia
+
+
+
+=== asciidoc 파일을 미리 볼 수 있는 편집기
+
+다음 편집기를 사용하면 실시간으로 미리 볼 수 있어 편리합니다.
+
+* Asciidoc FX
+http://asciidocfx.com/
+
+* Atom
+https://atom.io/
+
+설치 후 플러그인을 추가하면 미리 보기(Ctrl + Shift + A)가 가능합니다.
+
+ apm install language-asciidoc
+ apm install asciidoc-preview
+
+
+=== Word(docx)를 asciidoc 파일로 변환하기
+
+`pandoc` 도구를 사용하면 변환할 수 있습니다다 제법 괜찮게 변환합니다.
+
+pandoc 설치
+
+링크에 Windows용 설치 프로그램 다운로드 페이지가 있다
+
+http://pandoc.org/installing.html
+
+명령 프롬프트에서 실행
+
+ pandoc --from=docx --to=asciidoc --wrap=none --atx-headers --normalize --extract-media=extracte
+
+
+
+=== PlantUML 등의 다이어그램을 표시하기 위한 환경 구축
+
+PlantUML 등의 다이어그램을 작성하려면 asciidoctor-diagram 이 필요하지만, 그 외에도 Java와 Graphviz 를 설치해야 한다(gem install Graphviz 로는 안된다).
+
+* asciidoctor-diagram 설치
+
+ gem install asciidoctor-diagram
+
+* Java 설치
+
+* Graphviz 설치
+https://graphviz.gitlab.io/_pages/Download/Download_windows.html
+
+
+== 팁
+
+=== 글자 색상 변경하기 (변경되지 않음)
+
+색상을 변경할 경우 `[color]#문자#` 같이 표기하지만, `#` 이 하나일 때는 앞뒤에 공백이 없으면 색상이 바뀌지 않습니다. 공백이 없는 경우는 **## 을 두 개 넣어야 합니다**.
+
+.color.adoc
+[source,asciidoc]
+----
+
+// 앞뒤에 공백이 있으므로 # 하나면 됩니다.
+
+asciidoc이란 [blue]#경량 마크업 언어#입니다
+
+// 앞뒤에 공백이 없으므로 # 하나만으로는 색이 바뀌지 않습니다
+
+asciidoc이란 [blue]#경량 마크업 언어#입니다
+
+// 앞뒤에 공백이 없는 경우, ##로 하면 됩니다
+
+asciidoc이란 [blue]##경량 마크업 언어##입니다
+----
+
+
+HTML
+color_html.jpg
+
+PDF
+color_pdf.jpg
+
+PDF는 asciidoctor-pdf의 버그인지 색이 변하지 않네요...
+
+http://gozuk16.hatenablog.com/entry/2016/08/01/180402
+
+
+
+=== 목차 사용하기·설정하기
+
+`:toc:` 를 사용해서 목차를 표시할 수 있음(HTML/PDF) top, left, right 등으로 표시 위치를 지정할 수도 있음(개인적으로는 항상 표시되는 left(right)를 추천함)
+
+:toc: left를 추가한 결과
+
+[source,asciidoc]
+----
+toc.adoc
+:toc: left
+
+= asciidoc 사용법
+
+== asciidoc이란?
+
+=== asciidoctor란?
+
+==== asciidoctor의 장점
+
+==== asciidoctor의 단점
+
+=== asciidoctor-pdf란?
+
+== asciidoc 표기법
+toc_left.jpg
+----
+
+`:sectnums:` 속성을 추가하면 섹션에 자동으로 번호가 매겨지므로 추가하는 것이 좋습니다
+
+PDF로 변환할 때 ‘Chapter’ 문구가 자동 삽입되므로, HTML과 섹션 이름을 일치시키려면 `:chapter-label:` 속성을 추가하면 사라집니다
+
+목차 이름은 기본적으로 ‘Table of Contents’ 로, `:toc-title:` 속성을 사용해서 ‘목차’ 등으로 지정하는 것이 좋습니다
+
+`:sectnums:` 와 `:toc-title:` 을 사용해서 목차를 추가한 결과
+[source,asciidoc]
+----
+:toc: left
+:sectnums:
+:toc-title: 목차
+:chapter-label:
+
+= asciidoc 사용법
+
+== asciidoc이란?
+
+=== asciidoctor란?
+
+==== asciidoctor의 장점
+
+==== asciidoctor의 단점
+
+=== asciidoctor-pdf란?
+
+== asciidoc 표기법
+toc_sectnum.jpg
+----
+
+`:toclevels:` 속성으로 표시할 계층을 지정 가능 (기본값 2, 최대 5)
+
+`:toclevels:` 를 3으로 설정한 결과
+
+
+.toclevels.adoc
+[source,asciidoc]
+----
+:toc: left
+:sectnums:
+:toc-title: 목차
+:toclevels: 3
+
+= asciidoc 사용법
+
+== asciidoc이란?
+
+=== asciidoctor란?
+
+==== asciidoctor의 장점
+
+==== asciidoctor의 단점
+
+=== asciidoctor-pdf란?
+
+== asciidoc 표기법
+image.png
+----
+
+
+
+=== 코드 구문 강조 표시하기
+
+예를 들어, JSON을 구문 강조하고 싶은 경우 단순히 [source, json] 이라 작성해도 강조 표시되지 않는다 ‘coderay’ 등의 라이브러리 및 정의가 필요하다
+
+coderay 설치
+
+ gem install coderay
+
+adoc 파일에 정의 및 작성
+
+.source-highlighter.adoc
+[source,asciidoc]
+----
+:source-highlighter: coderay
+
+[source, json]
+{
+  “hoge” : “fuga”,
+  “foo” : [1,2,3]
+}
+----
+
+수정 후
+
+[source,asciidoc]
+----
+{
+  “hoge” : “fuga”,
+  “foo” : [1,2,3]
+}
+----
+
+
+
+=== 섹션에 자동으로 앵커 추가하기
+
+목차는 자동으로 앵커가 생성되지만, 본문은 생성되지 않으므로 `:sectlinks:` 속성을 추가하면 자동으로 앵커가 생성된다.
+
+
+
+=== 내부 섹션 간 링크 연결하기
+
+`[[<앵커 이름>]]` 같은 형식으로 앵커 이름을 지정할 수 있습니다. 해당 앵커에 링크를 걸려면 `<<<앵커 이름>,<링크 이름>>>` 으로 지정하면 됩니다.
+
+.internal_link.adoc
+[source,asciidoc]
+----
+asciidoctor는 asciidoc 파일을 HTML 파일로 변환하는 Ruby 기반 도구입니다.
+
+자세한 내용은 <<what_is_asciidoctor, asciidoctor란?>>을 참조하십시오.
+
+[[what_is_asciidoctor]]
+== asciidoctor란?
+image.png
+----
+
+
+
+=== 표 셀 병합하기
+
+숫자 뒤에 `+` 를 붙이면 결합이 된다. 숫자 앞에 `.` 이 있으면 세로 방향 결합이고, 없으면 가로 방향 결합이 된다.
+
+.cellspan.adoc
+[source,asciidoc]
+----
+|====
+|열 1|열 2|열 3
+3+|3열 병합
+.2+|2행 세로 병합|b-1|c-2
+|b-2|c-2
+.2+|2행 세로 + 2열 병합의 조합 2+|b-3
+|b-4|c-4
+|====
+image.png
+----
+
+
+=== 표 셀 내에서 글머리 기호 목록 만들기
+
+`cols` 에 `a` 를 추가하면 asciidoc 형식이 되어, 글머리 기호 목록 등을 만들 수 있다.
+
+.list.adoc
+[source,asciidoc]
+----
+[cols=“1,5a”]
+|====
+|No|항목
+|1|지원 브라우저
+
+* Firefox
+* Chrome
+* Edge
+|2| 지원 OS
+
+. Windows
+. Linux
+. Mac
+|====
+image.png
+----
+
+참고: format="csv" 는 불가능한 것으로 보인다.
+
+
+
+=== 표 열 너비 자동 조정하기
+
+`options` 에 `autowidth` 를 추가하면 열 너비가 자동으로 조정된다
+
+.autowidth.adoc
+[source,asciidoc]
+----
+.autowidth 적용
+[options=“autowidth”]
+|====
+|No|OS
+|1|Windows
+|2|Linux
+|====
+
+.열 너비 미지정
+|====
+|No|OS
+|1|Windows
+|2|Linux
+|====
+
+.열 너비를 비율로 지정
+[cols=“1,5”]
+|====
+|No|OS
+|1|Windows
+|2|Linux
+|====
+image.png
+----
+
+
+
+=== 속성을 상수처럼 지정하기
+
+asciidoc에는 미리 설정된 많은 속성(attribute)이 있으며, 이와 별도로 속성을 설정할 수도 있다.
+
+속성은 `:속성명:` 으로 선언하고, `{속성명}` 으로 참조할 수 있다.
+
+예를 들어, 다른 링크 주소 등 상수처럼 사용하고 싶은 경우, 직접 설정해 두면 편리하다.
+
+.attribute.adoc
+[source,asciidoc]
+----
+// 다른 팀의 앱 이름
+:other-app-name: 호게 툴
+// 다른 팀의 API 사양서
+:other-app-api-doc-path: ../../other_app/api/index.html
+
+{other-app-name}의 link:{other-app-api-doc-path}[API 사양서]
+image.png
+----
+
+
+=== 조건에 따라 표시·숨기기
+
+`ifdef ~ endif` 구문을 사용하면 가능. 이를 통해 팀용·고객 제출용 등으로 구분할 수 있음
+
+표시하지 않는 경우(env-external 속성이 없음)
+
+env-external은 예시이며, 값은 무엇이든 상관없음
+
+.invisible.adoc
+[source,asciidoc]
+----
+ifdef::env-external[]
+  이 문장은 고객용입니다
+endif::[]
+표시할 경우(env-external 속성이 있는 경우)
+visible.adoc
+:env-external:
+
+ifdef::env-external[]
+  이 문장은 고객용입니다
+endif::[]
+----
+
+
+
+=== 명령줄에서 속성 전달하기
+
+앞서 설명한 env-external 경우처럼, adoc 내에 기술하지 않고 조건에 따라 값을 변경하고 싶은 경우, 명령줄에서 속성을 전달할 수도 있습니다
+
+ asciidoctor -a env-external test.adoc
+
+속성명뿐만 아니라 값도 전달하고 싶은 경우, `속성명=값` 형식으로 지정한다
+
+이미 adoc 파일에 동일한 속성이 기술되어 있는 경우, 명령줄에서 전달한 값이 우선 적용된다
+
+ asciidoctor -a toc-title=목차 test.adoc
+
+
+
+
+=== 각주 아이콘 표시하기
+
+adoc 파일에서 아이콘은 표시되는데, HTML/PDF에서는 표시되지 않는다
+
+.icon.adoc
+[source,asciidoc]
+----
+[NOTE]
+====
+* 기본적으로 [NOTE]는 표시되지 않습니다
+====
+
+[CAUTION]
+====
+* 기본적으로 [CAUTION]은 표시되지 않습니다
+====
+image.png
+
+:icons: font를 지정하면 표시됩니다
+
+icon-font.adoc
+
+:icons: font
+
+[NOTE]
+====
+* 기본적으로 [NOTE]는 표시되지 않습니다
+====
+
+[CAUTION]
+====
+* 기본적으로 [CAUTION]은 표시되지 않습니다
+====
+image.png
+----
+
+
+
+=== 버전, 최종 업데이트 날짜 등 표시하기
+
+`:author:, :revnumber:, :revdate:` 를 정의한다.
+
+.revnumber.adoc
+[source,asciidoc]
+----
+:author: asciidoc 사업부 개발 1그룹
+:revnumber: 0.1
+:revdate: 2017/10/25
+
+= asciidoc 사용법
+HTML의 경우 (맨 위에 표시)
+image.png
+
+PDF의 경우 (표지에 표시)
+image.png
+----
+
+
+
+=== PlantUML 등 작성하기
+
+PlantUML(텍스트로 UML을 작성할 수 있는 도구)를 삽입할 수 있습니다.
+
+.plantuml.adoc
+[source,asciidoc]
+-----
+.시퀀스 다이어그램
+[plantuml]
+----
+actor 사용자 as user
+user -> 로그인 : 로그인한다
+로그인 --> user:
+----
+
+.클래스 다이어그램
+[plantuml]
+----
+class Animal {
+  int age
+  run()
+}
+
+class Cat extends Animal {
+}
+
+class Dog extends Animal {
+}
+----
+image.png
+-----
+
+asciidoc-diagram 을 사용하므로, PDF/HTML 변환 시 지정하지 않으면 표시되지 않습니다.
+
+ asciidoctor -r asciidoctor-diagram sample.asoc
+
+PlantUML 외에도 ditaa, graphviz 등에도 대응합니다.
+
+
+
+=== 예시·표·이미지에 설명문(캡션) 추가하기
+
+example, table, image 등에는 그 앞에 `.<문자>` 를 붙여 설명을 추가할 수 있다(번호도 매겨진다).
+
+`:example-caption:, :table-caption:, :figure-caption:` 등 접두사도 지정 가능
+
+.example-caption.adoc
+[source,asciidoc]
+----
+:example-caption: 예시
+
+.참고
+====
+asciidoc 예시입니다
+
+====
+
+.참고
+====
+asciidoc 예시 2
+====
+image.png
+----
+
+.table-caption.adoc
+[source,asciidoc]
+----
+:table-caption: 표
+
+.OS 목록
+|======
+|번호|OS
+|1|Windows
+|2|Linux
+|======
+
+.OS 목록
+|======
+|번호|OS
+|1|Android
+|2|iOS
+|======
+image.png
+---- 
+
+.image-caption.adoc
+[source,asciidoc]
+----
+
+:figure-caption: 그림
+
+.각주(NOTE)
+image::icon_note.jpg[]
+image.png
+----
+
+
+
+
+=== 파일 불러오기
+
+`include::` 를 사용하면 다른 파일을 불러올 수 있다 adoc 파일이 커져서 분할하고 싶을 때나, csv나 소스 코드 등 adoc과는 별개의 파일을 관리하고 싶을 때 유용하다
+
+.include.adoc
+[source,asciidoc]
+-----
+// adoc 파일 불러오기
+include::other.adoc
+
+// csv를 테이블로 불러오기
+[format=“csv”]
+|===
+include::_includes/other.csv[]
+|===
+
+// 소스 코드 포함
+[source,ruby]
+----
+include::_includes/other.rb[]
+----
+
+// PlantUML 포함
+[plantuml]
+----
+include::_includes/sequence.puml[]
+----
+-----
+
+`lindes` 를 사용해서 포함할 범위를 지정하거나, `:includedir:` 를 사용해서 포함할 폴더를 일괄 지정할 수도 있습니다.
+
+.lines.adoc
+[source,asciidoc]
+----
+:includedir: _includes
+
+// _includes/other.csv의 1~3행을 표시
+[format=“csv”]
+|===
+include::{includedir}/other.csv[lines=1..3]
+|===
+----
+
+
+=== HTML 스타일(CSS) 설정하기
+
+`:stylesdir:` 로 CSS 폴더를, `:stylesheet:` 로 CSS 파일을 지정할 수 있습니다.
+
+.html-style.adoc
+[source,asciidoc]
+----
+:stylesdir: stylesheets/
+:stylesheet: asciidoctor-default.css
+----
+
+아무것도 지정하지 않은 경우, Windows에서는 다음 위치에 있으므로, CSS 파일을 복사하여 편집하면 됩니다.
+
+ # ruby2.4에서 asciidoctor 버전이 1.5.6.1인 경우
+
+ C:\Ruby24\lib\ruby\gems\2.4.0\gems\asciidoctor-1.5.6.1\data\stylesheets\asciidoctor-default.css
+
+
+
+=== PDF 스타일 설정하기
+
+PDF 스타일은 설정 파일(yaml)로 정의한다. `:pdf-style:` 을 통해 설정 파일을 지정할 수 있다
+
+.pdf-style.adoc
+[source,asciidoc]
+----
+:pdf-style: themes/default-theme.yml
+----
+
+아무것도 지정하지 않은 경우, Windows에서는 다음 위치에 있으므로, yaml 파일을 복사하여 편집하면 된다
+
+ # ruby2.4에서 asciidoctor-pdf 버전이 1.5.0.alpha16인 경우
+
+ C:\Ruby24\lib\ruby\gems\2.4.0\gems\asciidoctor-pdf-1.5.0.alpha.16\data\themes\default-theme.yml
+
+
+
+=== PDF 바닥글에 ‘Copyright’ 삽입하기
+
+기업 문서 등에는 ‘Copyright’ 표기를 넣는 경우가 많으므로, PDF 스타일 설정의 바닥글에 기재함으로써 대응할 수 있습니다.
+
+ :pdf-style: themes/default-theme.yml
+
+.default-theme.yml
+[source,asciidoc]
+----
+footer:
+  font_size: $base_font_size_small
+  border_color: dddddd
+  border_width: 0.25
+  height: $base_line_height_length * 2.5
+  line_height: 1
+  padding: [$base_line_height_length / 2, 1, 0, 1]
+  vertical_align: top
+  recto:
+    right:
+      content: '{page-number} / {page-count}'
+    center:
+      content: Copyright (C) adoc company CO.,LTD. All rights reserved.
+  verso:
+    right:
+      content: ‘{page-number} / {page-count}’
+    center:
+      content: Copyright (C) adoc company CO.,LTD. All rights reserved.
+image.png
+----
+
+
+=== 반각·전각이 섞이면 공백이 이상해짐(asciidoctor-pdf)
+
+반각·전각 문자가 섞이면 공백이 이상해진다.
+
+공백이 이상하게 표시되는 예시
+image.png
+
+해결책으로는 ‘asciidoctor-pdf-cjk’ 를 설치하면 대체로 해결된다.
+
+ gem install asciidoctor-pdf-cjk
+
+또한, PDF 변환 시 ‘-r asciidoctor-pdf-cjk’를 지정해야 한다.
+
+ asciidoctor-pdf -r asciidoctor-pdf-cjk test.asc
+
+적용 후의 예시
+image.png
+
+
+
+=== 텍스트 접기/펼치기
+
+긴 텍스트를 접어서 표시하고 싶을 때는 `%collapsible` 을 사용한다
+
+※asciidoctor 버전이 2.0.0 이상일 경우
+
+.collapsible.adoc
+[source,asciidoc]
+----
+.텍스트 접기 제목
+[%collapsible]
+====
+* 여기에 내용을 작성 1
+* 여기에 내용을 작성 2
+
+.표도 작성할 수 있다
+[options=“autowidth”]
+|====
+|열 1|열 2|열 3
+|a|b|c
+|====
+
+.코드 하이라이트도 작성할 수 있습니다
+[source, json]
+{
+  “hoge” : “fuga”,
+  “foo” : [1,2,3]
+}
+====
+----
+
+
+
+== asciidoctor-pdf의 문제점
+
+=== 글자 색상을 변경할 수 없음
+
+==== 「※」나 「①」이 표시되지 않음
+
+기본 글꼴에 ‘※’ 나 ‘①’ 이 포함되어 있지 않다. fonts 폴더에 ‘※’ 나 ‘①’ 이 포함된 글꼴 파일을 넣으면 된다.
+
+HTML(※나 ①이 표시됨)
+image.png
+
+PDF(※나 ①가 표시되지 않음)
+image.png
+
+해결책으로는 ‘※’ 나 ‘①’ 이 포함된 글꼴을 사용하는 것이다.
+
+다음은 IPA 글꼴을 사용할 경우의 절차
+
+IPA 글꼴 다운로드(여기서는 P 고딕 다운로드)
+
+다운로드한 zip 파일 내에 있는 ipagp.ttf 파일을 pdf-fontsdir로 지정된 폴더에 넣는다
+
+.pdf-font.adoc
+[source,asciidoc]
+----
+// PDF 변환 시 글꼴 지정
+// 지정하지 않을 경우, 기본값으로 ↓가 적용된다 (ruby2.4 + 64비트 Windows OS)
+// C:\Ruby24-x64\lib\ruby\gems\2.4.0\gems\asciidoctor-pdf-1.5.0.alpha.16\data\fonts
+:pdf-fontsdir: ./_pdf_fonts
+
+// PDF 변환 시 스타일 지정
+// 지정하지 않을 경우, 기본값으로 ↓가 적용됩니다 (Ruby 2.4 + 64비트 Windows OS)
+// C:\Ruby24-x64\lib\ruby\gems\2.4.0\gems\asciidoctor-pdf-1.5.0.alpha.16\data\themes\default-theme.yml
+:pdf-style: ./_pdf_themes/default-theme.yml
+----
+
+:pdf-style:로 지정한 yml 파일을 다음과 같이 수정한다
+
+.default-theme.yml
+[source,asciidoc]
+----
+font:
+  catalog:
+    IPA PGothic:           # 추가 부분
+      normal: ipagp.ttf    # 추가 부분
+      bold: ipagp.ttf      # 추가 부분
+      italic: ipagp.ttf    # 추가 부분
+      bold_italic: ipagp.ttf # 추가 부분
+base:
+  font_family: IPA PGothic # 변경 부분
+----
+IPA 폰트로 생성한 PDF(※나 ①이 나타남)
+image.png
+
+
+
+
+
+
+
+
+
