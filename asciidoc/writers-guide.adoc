@@ -1,5 +1,5 @@
-AsciiDoc Writer’s Guide
-==============================
+= AsciiDoc Writer’s Guide
+
 :toc:
 :toc-placement: preamble
 :toclevels: 1
