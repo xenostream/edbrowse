@@ -34,7 +34,7 @@ Line breaks within a paragraph are not displayed.
 Leave at least one empty line to begin a new paragraph.
 ----
 
-.예제 1의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -62,7 +62,7 @@ A normal paragraph.
  are preserved.
 ----
 
-.예제 2의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -92,7 +92,7 @@ A ruby is red.
 Java is black.
 ----
 
-.예제 3의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -116,7 +116,7 @@ This text will be styled as a lead paragraph (i.e., larger font).
 This paragraph will not be.
 ----
 
-.예제 4의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -152,7 +152,7 @@ That *_really_* has to go.
 Can't pick one? Let's use them `*_all_*`.
 ----
 
-.예제 5의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -182,7 +182,7 @@ Don't pass generic ``Object``s to methods that accept ``String``s!
 It was Beatle**__mania__**!
 ----
 
-.예제 6의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -212,7 +212,7 @@ We need [.line-through]#ten# twenty VMs.
 A [.myrole]#custom role# must be fulfilled by the theme.
 ----
 
-.예제 7의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -238,7 +238,7 @@ A [.myrole]#custom role# must be fulfilled by the theme.
 ~sub~script
 ----
 
-.예제 8의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -266,7 +266,7 @@ All of the werewolves`' desks were a mess.
 Olaf had been with the company since the `'00s.
 ----
 
-.예제 9의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -303,7 +303,7 @@ mailto:devel@discuss.example.org[Discuss]
 mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
 ----
 
-.예제 10의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -329,7 +329,7 @@ https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
 https://chat.asciidoc.org[Discuss AsciiDoc^]
 ----
 
-.예제 11의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -359,7 +359,7 @@ link:++https://example.org/?q=[a b]++[URL with special characters]
 https://example.org/?q=%5Ba%20b%5D[URL with special characters]
 ----
 
-.예제 12의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -377,7 +377,7 @@ https://example.org/?q=%5Ba%20b%5D[URL with special characters]
 link:index.html[Docs]
 ----
 
-.예제 7의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -393,7 +393,7 @@ link:index.html[Docs]
 link:\\server\share\whitepaper.pdf[Whitepaper]
 ----
 
-.예제 14의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -415,7 +415,7 @@ anchor:bookmark-c[]Use a cross reference to link to this location.
 [[bookmark-d,last paragraph]]The xreflabel attribute will be used as link text in the cross-reference link.
 ----
 
-.예제 15의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -439,7 +439,7 @@ See <<paragraphs>> to learn how to write paragraphs.
 Learn how to organize the document into <<section-titles,sections>>.
 ----
 
-.예제 7의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -459,7 +459,7 @@ Refer to xref:document-b.adoc#section-b[Section B of Document B] for more inform
 If you never return from xref:document-b.adoc[Document B], we'll send help.
 ----
 
-.예제 17의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -485,7 +485,7 @@ If you never return from xref:document-b.adoc[Document B], we'll send help.
 This document provides...
 ----
 
-.예제 18의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -506,7 +506,7 @@ Author Name <author@email.org>
 This document provides...
 ----
 
-.예제 19의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -529,7 +529,7 @@ v2.0, 2019-03-22
 This document provides...
 ----
 
-.예제 20의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -560,7 +560,7 @@ v2.0, 2019-03-22
 This document provides...
 ----
 
-.예제 21의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -600,7 +600,7 @@ This document provides...
 == Another Level 1 Section Title
 ----
 
-.예제 22의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -647,7 +647,7 @@ This document provides...
 == Another Level 0 Section Title (Part)
 ----
 
-.예제 23의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -682,7 +682,7 @@ This document provides...
 This paragraph is its sibling, not its child.
 ----
 
-.예제 24의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -769,7 +769,7 @@ URL의 콘텐츠를 포함하는 것은 잠재적으로 위험할 수 있으므�
 * List item
 ----
 
-.예제 29의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -801,7 +801,7 @@ URL의 콘텐츠를 포함하는 것은 잠재적으로 위험할 수 있으므�
 * Level 1 list item
 ----
 
-.예제 30의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -830,7 +830,7 @@ URL의 콘텐츠를 포함하는 것은 잠재적으로 위험할 수 있으므�
 . Step 3
 ----
 
-.예제 31의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -856,7 +856,7 @@ URL의 콘텐츠를 포함하는 것은 잠재적으로 위험할 수 있으므�
 . Level 1 list item
 ----
 
-.예제 32의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -883,7 +883,7 @@ URL의 콘텐츠를 포함하는 것은 잠재적으로 위험할 수 있으므�
 * normal list item
 ----
 
-.예제 33의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -906,7 +906,7 @@ Description of the second term.
 The description can also start on its own line.
 ----
 
-.예제 34의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -932,7 +932,7 @@ Are backpacks allowed?::
 No.
 ----
 
-.예제 35의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -971,7 +971,7 @@ Cloud Providers::
     . Rackspace
 ----
 
-.예제 36의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1028,7 +1028,7 @@ list continuation:: a plus sign (`{plus}`) on a line by itself
 |===
 ----
 
-.예제 37의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1077,7 +1077,7 @@ image::macros:sunset.jpg[Sunset,200,100]
 image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
 ----
 
-.예제 38의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1106,7 +1106,7 @@ Click image:play.png[] to get the party started.
 Click image:pause.png[title=Pause] when you need a break.
 ----
 
-.예제 39의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1124,7 +1124,7 @@ Click image:pause.png[title=Pause] when you need a break.
 image:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
 ----
 
-.예제 40의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1212,7 +1212,7 @@ video::67480300[vimeo]
 |===
 ----
 
-.예제 46의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1239,7 +1239,7 @@ To save the file, select menu:File[Save].
 Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
 ----
 
-.예제 47의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1260,7 +1260,7 @@ Press the btn:[OK] button when you are finished.
 Select a file in the file navigator and click btn:[Open].
 ----
 
-.예제 48의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1283,7 +1283,7 @@ Select a file in the file navigator and click btn:[Open].
 Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair of backticks.
 ----
 
-.예제 49의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1303,7 +1303,7 @@ Normal line.
 Normal line.
 ----
 
-.예제 50의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1329,7 +1329,7 @@ Would you like to try again? y/n
 ....
 ----
 
-.예제 51의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1362,7 +1362,7 @@ DEPENDENCIES
 ----
 ----
 
-.예제 52의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1398,7 +1398,7 @@ end
 ----
 ----
 
-.예제 53의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1440,7 +1440,7 @@ end
 <3> HTTP response body
 ----
 
-.예제 54의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1475,7 +1475,7 @@ line of code <!--4-->
 <4> A callout behind a line comment for XML or SGML languages like HTML.
 ----
 
-.예제 55의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1549,7 +1549,7 @@ indent가 0보다 큰 경우, 먼저 블록의 선행 들여쓰기가 제거된 
 This is normal content.
 ----
 
-.예제 59의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1585,7 +1585,7 @@ WARNING: The software you're about to use is untested.
 IMPORTANT: Sign off before stepping away from your computer.
 ----
 
-.예제 60의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1624,7 +1624,7 @@ Another paragraph.
 ====
 ----
 
-.예제 61의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1660,7 +1660,7 @@ that supplement the main text.
 ****
 ----
 
-.예제 62의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1692,7 +1692,7 @@ The document header is useful, but not required.
 ====
 ----
 
-.예제 63의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1740,7 +1740,7 @@ and as necessary in the political world as storms in the physical."
 -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
 ----
 
-.예제 64의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1785,7 +1785,7 @@ puts "I'm a source block!"
 --
 ----
 
-.예제 65의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1817,7 +1817,7 @@ That means you can include raw HTML, like this embedded Gist:
 ++++
 ----
 
-.예제 66의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1850,7 +1850,7 @@ That means you can include raw HTML, like this embedded Gist:
 ----
 ----
 
-.예제 67의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1891,7 +1891,7 @@ That means you can include raw HTML, like this embedded Gist:
 ① : cols 속성이 지정되지 않은 경우, 열의 수는 첫 번째 (비어 있지 않은) 줄에 있는 셀 구분자의 개수와 동일합니다.
 ② : 테이블 시작 부분에서 비어 있지 않은 줄 바로 뒤에 빈 줄이 올 경우, 첫 번째 줄의 셀들은 테이블 헤더로 승격됩니다.
 
-.예제 68의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1930,7 +1930,7 @@ That means you can include raw HTML, like this embedded Gist:
 ① : cols 속성의 *는 반복 연산자입니다. 이는 나머지 열에 대해 해당 열 지정 내용을 반복한다는 의미입니다. 이 경우, 기본 서식을 2개의 열에 걸쳐 반복하고 있습니다. 헤더의 셀이 한 줄에 정의되어 있지 않은 경우, cols 속성을 사용하여 테이블의 열 수를 설정하고, %header 옵션(또는 options=header 속성)을 사용하여 첫 번째 행을 테이블 헤더로 지정해야 합니다.
 
 
-.예제 69의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -1974,7 +1974,7 @@ Empowers developers to easily create real, automated tests.
 
 ① : 이 예제에서 cols 속성은 두 가지 역할을 합니다. 이 속성은 이 테이블에 세 개의 열이 있음을 지정하고, 각 열의 상대적 너비를 설정합니다.
 
-.예제 70의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2018,7 +2018,7 @@ https://getfirefox.com[Get Firefox]!
 |===
 ----
 
-.예제 71의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2052,7 +2052,7 @@ Baauer,Harlem Shake,Hip Hop
 ,===
 ----
 
-.예제 72의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2078,7 +2078,7 @@ The Lumineers,Ho Hey,Folk Rock
 |===
 ----
 
-.예제 73의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2101,7 +2101,7 @@ include::customers.csv[]
 ,===
 ----
 
-.예제 74의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2124,7 +2124,7 @@ Robyn:Indestructible:Dance
 :===
 ----
 
-.예제 75의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2151,7 +2151,7 @@ Robyn:Indestructible:Dance
 |===
 ----
 
-.예제 76의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2274,7 +2274,7 @@ before
 after
 ----
 
-.예제 84의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2321,7 +2321,7 @@ Be sure to read the {link-docs} too!
 {checkedbox} That's done!
 ----
 
-.예제 86의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2368,7 +2368,7 @@ Be sure to read the {link-docs} too!
 |===
 ----
 
-.예제 87의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2494,7 +2494,7 @@ The double brackets around it are preserved.
 The URL \https://example.org isn't converted into an active link.
 ----
 
-.예제 88의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2541,7 +2541,7 @@ A plus passthrough will escape standalone formatting marks,
 like +``+, or formatting marks within a word, like all-natural++*++.
 ----
 
-.예제 89의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2569,7 +2569,7 @@ like +``+, or formatting marks within a word, like all-natural++*++.
 pass:[<del>strike this</del>] is also marked as deleted.
 ----
 
-.예제 90의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2600,7 +2600,7 @@ From Journeyman to Master. Addison-Wesley. 1999.
 Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
 ----
 
-.예제 91의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2633,7 +2633,7 @@ A bold statement!footnote:disclaimer[Opinions are my own.]
 Another bold statement.footnote:disclaimer[]
 ----
 
-.예제 92의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2670,7 +2670,7 @@ Another bold statement.footnote:disclaimer[]
 ###### Section Level 5
 ----
 
-.예제 93의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2703,7 +2703,7 @@ end
 ```
 ----
 
-.예제 94의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2727,7 +2727,7 @@ end
 > -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
 ----
 
-.예제 95의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2758,7 +2758,7 @@ end
 > Yep. AsciiDoc and Markdown share a lot of common syntax already.
 ----
 
-.예제 96의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
@@ -2793,7 +2793,7 @@ end
 * * *
 ----
 
-.예제 7의 결과 보기
+.결과 보기
 [%collapsible]
 ======
 [NOTE]
