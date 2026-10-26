@@ -15,7 +15,7 @@ ifdef::env-github[]
 endif::[]
 
 .유용한 링크
-* link:https://narusas.github.io/2018/03/21/Asciidoc-basic.html[한글사용법-번역 window=_blank]
+* link:https://narusas.github.io/2018/03/21/Asciidoc-basic.html[한글사용법-번역, window=_blank]
 * https://asciidocalive.draftview.app/[온라인 에디터 #1 window=_blank]
 * https://asciidoceditor.com/[온라인 에디터 #2 window=_blank]
 
