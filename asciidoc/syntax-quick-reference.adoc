@@ -8,6 +8,13 @@
 :!table-grid:
 // release-version is used for an example; it's not the release version for this document
 :release-version: 2.4.3
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 
 ////
 이 문서는 AsciiDoc 언어 자체에 대한 설명서를 대체하기 위한 것이 아닙니다.
