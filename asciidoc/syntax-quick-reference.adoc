@@ -1,0 +1,2349 @@
+= AsciiDoc Syntax Quick Reference
+:navtitle: Syntax Quick Reference
+:description: 일반적인 AsciiDoc 문서 및 텍스트 서식 지정 마크업에 대한 빠른 참조 가이드.
+:collapsible:
+:url-char-xml: https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
+:url-data-uri: https://developer.mozilla.org/en-US/docs/data_URIs
+:!table-frame:
+:!table-grid:
+// release-version is used for an example; it's not the release version for this document
+:release-version: 2.4.3
+
+////
+이 문서는 AsciiDoc 언어 자체에 대한 설명서를 대체하기 위한 것이 아닙니다.
+이 문서는 작성자가 글을 쓰는 도중에 참고할 수 있도록 제공하는 유용한 안내서입니다.
+가장 일반적인 구문과 사용 사례를 빠르게 짚어보는 참고 자료로 생각해 주시기 바랍니다.
+AsciiDoc 처리 과정이나 출력 형식으로 변환할 때 사용할 수 있는 옵션에 대해서는 자세히 다루지 않습니다.
+////
+
+[IMPORTANT]
+이 페이지의 예시는 내장된 HTML 변환기가 생성한 출력 결과를 보여줍니다.
+AsciiDoc 변환기는 PDF, EPUB, DocBook과 같은 다른 출력 형식을 생성할 때 이에 상응하는 출력 결과를 생성해야 합니다.
+
+== Paragraphs
+
+.단락
+[#ex-normal]
+----
+Paragraphs don't require special markup in AsciiDoc.
+A paragraph is defined by one or more consecutive lines of text.
+Line breaks within a paragraph are not displayed.
+
+Leave at least one empty line to begin a new paragraph.
+----
+
+.<<ex-normal>>의 결과 보기
+[%collapsible.result]
+====
+Paragraphs don't require special markup in AsciiDoc.
+A paragraph is defined by one or more consecutive lines of text.
+Line breaks within a paragraph are not displayed.
+
+Leave at least one empty line to begin a new paragraph.
+====
+
+.리터럴 단락
+[#ex-literal]
+----
+A normal paragraph.
+
+ A literal paragraph.
+ One or more consecutive lines indented by at least one space.
+
+ The text is shown in a fixed-width (typically monospace) font.
+ The lines are preformatted (i.e., as formatted in the source).
+ Spaces and newlines,
+ like the ones in this sentence,
+ are preserved.
+----
+
+.<<ex-literal>> 결과 보기
+[%collapsible.result]
+====
+A normal paragraph.
+
+ A literal paragraph.
+ One or more consecutive lines indented by at least one space.
+
+ The text is shown in a fixed-width (typically monospace) font.
+ The lines are preformatted (i.e., as formatted in the source).
+ Spaces and newlines,
+ like the ones in this sentence,
+ are preserved.
+====
+
+.강제 줄바꿈
+[#ex-hardbreaks]
+----
+Roses are red, +
+violets are blue.
+
+[%hardbreaks]
+A ruby is red.
+Java is black.
+----
+
+.<<ex-hardbreaks>> 결과 보기
+[%collapsible.result]
+====
+Roses are red, +
+violets are blue.
+
+[%hardbreaks]
+A ruby is red.
+Java is black.
+====
+
+.리드 문단
+[#ex-lead]
+----
+[.lead]
+This text will be styled as a lead paragraph (i.e., larger font).
+
+This paragraph will not be.
+----
+
+.<<ex-lead>> 결과 보기
+[%collapsible.result]
+====
+[.lead]
+This text will be styled as a lead paragraph (i.e., larger font).
+
+This paragraph will not be.
+====
+
+TIP: 기본 Asciidoctor 스타일시트는 서문의 첫 번째 단락에 역할이 지정되지 않은 경우, 해당 단락을 자동으로 xref:blocks:preamble-and-lead.adoc[lead paragraph] 스타일로 적용합니다.
+
+== 텍스트 서식 지정
+
+.제한된 굵게, 기울임꼴 및 고정폭
+[#ex-constrained]
+----
+It has *strong* significance to me.
+
+I _cannot_ stress this enough.
+
+Type `OK` to accept.
+
+That *_really_* has to go.
+
+Can't pick one? Let's use them `*_all_*`.
+----
+
+.<<ex-constrained>>의 결과 보기
+[%collapsible.result]
+====
+It has *strong* significance to me.
+
+I _cannot_ stress this enough.
+
+Type `OK` to accept.
+
+That *_really_* has to go.
+
+Can't pick one? Let's use them `*_all_*`.
+====
+
+.제한 없는 굵게, 기울임꼴 및 고정폭 글꼴
+[#ex-unconstrained]
+----
+**C**reate, **R**ead, **U**pdate, and **D**elete (CRUD)
+
+That's fan__freakin__tastic!
+
+Don't pass generic ``Object``s to methods that accept ``String``s!
+
+It was Beatle**__mania__**!
+----
+
+.<<ex-unconstrained>> 결과 보기
+[%collapsible.result]
+====
+**C**reate, **R**ead, **U**pdate, and **D**elete (CRUD)
+
+That's fan__freakin__tastic!
+
+Don't pass generic ``Object``s to methods that accept ``String``s!
+
+It was Beatle**__mania__**!
+====
+
+.강조, 밑줄, 취소선 및 사용자 정의 역할
+[#ex-lines]
+----
+Mark my words, #automation is essential#.
+
+##Mark##up refers to text that contains formatting ##mark##s.
+
+Where did all the [.underline]#cores# go?
+
+We need [.line-through]#ten# twenty VMs.
+
+A [.myrole]#custom role# must be fulfilled by the theme.
+----
+
+.<<ex-lines>> 결과 보기
+[%collapsible.result]
+====
+Mark my words, #automation is essential#.
+
+##Mark##up refers to text that contains formatting ##mark##s.
+
+Where did all the [.underline]#cores# go?
+
+We need [.line-through]#ten# twenty VMs.
+
+A [.myrole]#custom role# must be fulfilled by the theme.
+====
+
+.위첨자 및 아래첨자
+[#ex-sub-sup]
+----
+^super^script
+
+~sub~script
+----
+
+.<<ex-sub-sup>>의 결과 보기
+[%collapsible.result]
+====
+^super^script
+
+~sub~script
+====
+
+.스마트 따옴표와 아포스트로피
+[#ex-curved]
+----
+"`double curved quotes`"
+
+'`single curved quotes`'
+
+Olaf's desk was a mess.
+
+A ``std::vector```'s size is the number of items it contains.
+
+All of the werewolves`' desks were a mess.
+
+Olaf had been with the company since the `'00s.
+----
+
+.<<ex-curved>>의 결과 보기
+[%collapsible.result]
+====
+"`double curved quotes`"
+
+'`single curved quotes`'
+
+Olaf's desk was a mess.
+
+A ``std::vector```'s size is the number of items it contains.
+
+All of the werewolves`' desks were a mess.
+
+Olaf had been with the company since the `'00s.
+====
+
+== 링크
+
+.자동 링크, URL 매크로 및 mailto 매크로
+[#ex-urls]
+----
+https://asciidoctor.org - automatic!
+
+https://asciidoctor.org[Asciidoctor]
+
+devel@discuss.example.org
+
+mailto:devel@discuss.example.org[Discuss]
+
+mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
+----
+
+.<<ex-urls>>의 결과 보기
+[%collapsible.result]
+====
+https://asciidoctor.org - automatic!
+
+https://asciidoctor.org[Asciidoctor]
+
+devel@discuss.example.org
+
+mailto:devel@discuss.example.org[Discuss]
+
+mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
+====
+
+.속성이 있는 URL 매크로
+[#ex-linkattrs]
+----
+https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
+
+https://chat.asciidoc.org[Discuss AsciiDoc^]
+----
+
+.<<ex-linkattrs>> 결과 보기
+[%collapsible.result]
+====
+https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
+
+https://chat.asciidoc.org[Discuss AsciiDoc^]
+====
+
+중요: 대상이 `https:`와 같은 URL 스키마로 시작할 경우 `link:` 매크로 접두사는 _필요하지_ 않습니다.
+URL 스키마 자체가 암시적인 매크로 접두사 역할을 합니다.
+
+주의: 링크 텍스트에 쉼표가 포함되어 있고 그 뒤에 하나 이상의 명명된 속성이 오는 경우, 해당 텍스트를 큰따옴표로 묶어야 합니다.
+그렇지 않으면 텍스트가 쉼표에서 잘리게 되며(나머지 텍스트는 속성 구문 분석에 포함됩니다).
+
+.공백 및 특수 문자가 포함된 URL
+----
+link:++https://example.org/?q=[a b]++[URL with special characters]
+
+https://example.org/?q=%5Ba%20b%5D[URL with special characters]
+----
+
+.상대 경로 파일 링크
+----
+link:index.html[Docs]
+----
+
+.Windows UNC 경로를 사용한 링크
+----
+link:\\server\share\whitepaper.pdf[Whitepaper]
+----
+
+.인라인 앵커
+----
+[[bookmark-a]]Inline anchors make arbitrary content referenceable.
+----
+
+.교차 참조
+[#ex-xrefs]
+----
+include::macros:example$xref.adoc[tag=b-base]
+----
+
+.<<ex-xrefs>> 결과 보기
+[%collapsible.result]
+====
+See <<paragraphs>> to learn how to write paragraphs.
+
+Learn how to organize the document into <<section-titles,sections>>.
+====
+
+.문서 간 상호 참조
+----
+Refer to xref:document-b.adoc#section-b[Section B of Document B] for more information.
+
+If you never return from xref:document-b.adoc[Document B], we'll send help.
+----
+
+== 문서 헤더
+
+xref:document:header.adoc[문서 헤더]는 선택 사항입니다.
+헤더에는 빈 줄이 포함되어서는 안 되며, 본문과는 최소 한 줄의 빈 줄로 구분되어야 합니다.
+
+.제목
+----
+= Document Title
+
+This document provides...
+----
+
+.제목 및 저자 정보
+----
+= Document Title
+Author Name <author@email.org>
+
+This document provides...
+----
+
+.제목, 저자 정보 및 개정 정보
+----
+= Document Title
+Author Name <author@email.org>; Another Author <a.author@email.org>
+v2.0, 2019-03-22
+
+This document provides...
+----
+
+중요: xref:document:author-line.adoc[저자 정보]가 없으면 xref:document:revision-line.adoc[수정 내역]을 사용할 수 없습니다.
+
+.속성 항목이 포함된 문서 헤더
+----
+= Document Title
+Author Name <author@email.org>
+v2.0, 2019-03-22
+:toc:
+:homepage: https://example.org
+
+This document provides...
+----
+
+[#section-titles]
+== 섹션 제목
+
+문서 유형이 `article`(기본값)인 경우, 문서에는 0단계 섹션 제목(`=`)이 하나만 있을 수 있으며, 이는 문서 제목(즉, doctitle)입니다.
+
+.기사 섹션 수준
+[#ex-article]
+----
+= Document Title (Level 0)
+
+== Level 1 Section Title
+
+=== Level 2 Section Title
+
+==== Level 3 Section Title
+
+===== Level 4 Section Title
+
+====== Level 5 Section Title
+
+== Another Level 1 Section Title
+----
+
+.<<ex-article>> 결과 보기
+[%collapsible.result]
+====
+// the float style is required to create standalone (non-section) headings
+[float]
+= Document Title (Level 0)
+
+[float]
+== Level 1 Section Title
+
+[float]
+=== Level 2 Section Title
+
+[float]
+==== Level 3 Section Title
+
+[float]
+===== Level 4 Section Title
+
+[float]
+====== Level 5 Section Title
+
+[float]
+== Another Level 1 Section Title
+====
+
+`book` 문서 유형은 추가적인 레벨 0 섹션 제목을 가질 수 있으며, 이는 xref:sections:parts.adoc[parts]로 해석됩니다.
+적어도 하나의 파트가 존재하면 문서는 암묵적으로 다중 파트 책으로 간주됩니다.
+
+.책의 섹션 수준
+----
+= Document Title (Level 0)
+
+== Level 1 Section Title
+
+= Level 0 Section Title (Part)
+
+== Level 1 Section Title
+
+=== Level 2 Section Title
+
+==== Level 3 Section Title
+
+===== Level 4 Section Title
+
+====== Level 5 Section Title
+
+= Another Level 0 Section Title (Part)
+----
+
+////
+xref:sections:title-links.adoc#link[sectlinks]::
+문서 속성 `sectlinks`가 설정되면 섹션 제목이 자체 링크가 됩니다.
+이 기능을 통해 독자는 해당 섹션을 쉽게 북마크할 수 있습니다.
+
+xref:sections:title-links.adoc#anchor[sectanchors]::
+문서 속성 `sectanchors`가 설정되면, 마우스를 올렸을 때 섹션 제목 앞에 떠 있는 섹션 아이콘 앵커가 나타납니다.
+이 기능을 통해 독자는 섹션을 쉽게 북마크할 수 있는 또 다른 방법을 이용할 수 있습니다.
+섹션 제목 앵커가 올바르게 렌더링되려면 스타일시트의 지원이 필요합니다.
+////
+
+.독립적인 제목 (섹션 아님)
+[#ex-discrete]
+----
+[discrete]
+=== 저는 독립적인 제목입니다!
+
+이 단락은 이 제목의 자식이 아니라 형제 요소입니다.
+----
+
+.<<ex-discrete>> 결과 보기
+[%collapsible.result]
+====
+[discrete]
+=== 저는 독립적인 제목입니다!
+
+이 단락은 이 제목의 자식이 아니라 형제 요소입니다.
+====
+
+== 자동 목차
+
+.문서의 목차 활성화
+----
+= 문서 제목
+Doc Writer <doc.writer@email.org>
+:toc:
+----
+
+목차`'의 xref:toc:title.adoc[title], xref:toc:levels.adoc[표시되는 섹션 깊이], xref:toc:position.adoc[위치]는 사용자 정의가 가능합니다.
+
+== 포함
+
+.문서 부분 포함
+----
+= Reference Documentation
+Lead Developer
+
+This is documentation for project X.
+
+\include::basics.adoc[]
+
+\include::installation.adoc[]
+
+\include::example.adoc[]
+----
+
+.태그가 지정된 영역이나 줄 단위로 내용 포함
+----
+// selects lines between tag::definition[] and end::definition[] lines
+\include::filename.txt[tag=definition]
+
+\include::filename.txt[lines=5..10]
+----
+
+.URL에서 내용 포함
+----
+\include::https://raw.githubusercontent.com/asciidoctor/asciidoctor/main/README.adoc[]
+----
+
+경고: URL에서 콘텐츠를 포함하는 것은 잠재적으로 위험할 수 있으므로, 안전 모드가 SECURE 이상인 경우 이 기능은 비활성화됩니다.
+안전 모드가 SECURE 미만인 경우, AsciiDoc 프로세서가 URL에서 콘텐츠를 읽을 수 있도록 `allow-uri-read` 속성도 설정해야 합니다.
+
+== 목록
+
+.번호 없는 목록
+[#ex-ul]
+----
+* List item
+** Nested list item
+*** Deeper nested list item
+* List item
+ ** Another nested list item
+* List item
+----
+
+.<<ex-ul>>의 결과 보기
+[%collapsible.result]
+====
+* List item
+** Nested list item
+*** Deeper nested list item
+* List item
+ ** Another nested list item
+* List item
+====
+
+팁: 목록을 다른 블록과 구분하기 위해 목록 앞뒤에 빈 줄을 반드시 넣어야 합니다.
+인접한 두 목록을 강제로 분리하려면 두 번째 목록 위에 빈 속성 목록(예: `[]`)을 추가하거나, 첫 번째 목록 뒤에 빈 줄을 삽입한 다음 줄 주석을 추가하면 됩니다.
+줄 주석을 사용할 경우, 다른 작성자들에게 이것이 목록 구분자 역할을 한다는 힌트를 주기 위해 `//-`를 사용하는 것이 관례입니다.
+
+.번호 없는 목록의 최대 중첩 수준
+[#ex-ul-max]
+----
+* Level 1 list item
+** Level 2 list item
+*** Level 3 list item
+**** Level 4 list item
+***** Level 5 list item
+****** etc.
+* Level 1 list item
+----
+
+.<<ex-ul-max>>의 결과 보기
+[%collapsible.result]
+====
+* Level 1 list item
+** Level 2 list item
+*** Level 3 list item
+**** Level 4 list item
+***** Level 5 list item
+****** etc.
+* Level 1 list item
+====
+
+xref:lists:unordered.adoc#markers[무순서 목록 마커]는 목록 스타일(예: `square`)을 사용하여 변경할 수 있습니다.
+
+.순서 목록
+[#ex-ol]
+----
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+----
+
+.<<ex-ol>> 결과 보기
+[%collapsible.result]
+====
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+====
+
+.번호 매긴 목록의 최대 중첩 수준
+[#ex-ol-max]
+----
+. Level 1 list item
+.. Level 2 list item
+... Level 3 list item
+.... Level 4 list item
+..... Level 5 list item
+. Level 1 list item
+----
+
+.<<ex-ol-max>> 결과 보기
+[%collapsible.result]
+====
+. Level 1 list item
+.. Level 2 list item
+... Level 3 list item
+.... Level 4 list item
+..... Level 5 list item
+. Level 1 list item
+====
+
+정렬된 목록은 `lowergreek` 및 `decimal-leading-zero`와 같은 xref:lists:ordered.adoc#styles[번호 매기기 스타일]을 지원합니다.
+
+.체크리스트
+[#ex-check]
+----
+* [*] checked
+* [x] also checked
+* [ ] not checked
+* normal list item
+----
+
+.<<ex-check>> 결과 보기
+[%collapsible.result]
+====
+* [*] checked
+* [x] also checked
+* [ ] not checked
+* normal list item
+====
+
+.설명 목록
+[#ex-dlist]
+----
+First term:: The description can be placed on the same line
+as the term.
+Second term::
+Description of the second term.
+The description can also start on its own line.
+----
+
+.<<ex-dlist>> 결과 보기
+[%collapsible.result]
+====
+First term:: The description can be placed on the same line
+as the term.
+Second term::
+Description of the second term.
+The description can also start on its own line.
+====
+
+.질문 및 답변 목록
+[#ex-qa]
+----
+[qanda]
+What is the answer?::
+This is the answer.
+
+Are cameras allowed?::
+Are backpacks allowed?::
+No.
+----
+
+.<<ex-qa>> 결과 보기
+[%collapsible.result]
+====
+[qanda]
+What is the answer?::
+This is the answer.
+
+Are cameras allowed?::
+Are backpacks allowed?::
+No.
+====
+
+.혼합
+[#ex-mixed]
+----
+Operating Systems::
+  Linux:::
+    . Fedora
+      * Desktop
+    . Ubuntu
+      * Desktop
+      * Server
+  BSD:::
+    . FreeBSD
+    . NetBSD
+
+Cloud Providers::
+  PaaS:::
+    . OpenShift
+    . CloudBees
+  IaaS:::
+    . Amazon EC2
+    . Rackspace
+----
+
+.<<ex-mixed>>의 결과 보기
+[%collapsible.result]
+====
+Operating Systems::
+  Linux:::
+    . Fedora
+      * Desktop
+    . Ubuntu
+      * Desktop
+      * Server
+  BSD:::
+    . FreeBSD
+    . NetBSD
+
+Cloud Providers::
+  PaaS:::
+    . OpenShift
+    . CloudBees
+  IaaS:::
+    . Amazon EC2
+    . Rackspace
+====
+
+팁: 목록은 들여쓰기를 할 수 있습니다.
+선행 공백은 무시됩니다.
+
+.개요 목록 내의 복잡한 내용
+[#ex-complex]
+----
+* Every list item has at least one paragraph of content,
+  which may be wrapped, even using a hanging indent.
++
+Additional paragraphs or blocks are adjoined by putting
+a list continuation on a line adjacent to both blocks.
++
+list continuation:: a plus sign (`{plus}`) on a line by itself
+
+* A literal paragraph does not require a list continuation.
+
+ $ cd projects/my-book
+
+* AsciiDoc lists may contain any compound content.
++
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Column 1, Row 1
+|Column 2, Row 1
+|===
+----
+
+.<<ex-complex>> 결과 보기
+[%collapsible.result]
+====
+* Every list item has at least one paragraph of content,
+  which may be wrapped, even using a hanging indent.
++
+Additional paragraphs or blocks are adjoined by putting
+a list continuation on a line adjacent to both blocks.
++
+list continuation:: a plus sign (`{plus}`) on a line by itself
+
+* A literal paragraph does not require a list continuation.
+
+ $ cd projects/my-book
+
+* AsciiDoc lists may contain any compound content.
++
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Column 1, Row 1
+|Column 2, Row 1
+|===
+====
+
+== 이미지
+
+xref:macros:images-directory.adoc[imagesdir 속성]을 사용하면 모든 이미지 매크로에 이미지 경로를 직접 하드코딩하지 않아도 됩니다.
+이 속성의 값은 절대 경로, 상대 경로 또는 기본 URL일 수 있습니다.
+이미지 대상이 상대 경로인 경우, 속성의 값이 앞에 추가됩니다(즉, `imagesdir` 속성의 값을 기준으로 상대 경로로 해석됩니다).
+이미지 대상이 URL이나 절대 경로인 경우, 속성의 값은 앞에 추가되지 않습니다.
+
+.블록 이미지 매크로
+[#ex-image-blocks]
+----
+image::sunset.jpg[]
+
+image::sunset.jpg[Sunset]
+
+.A mountain sunset
+[#img-sunset,caption="Figure 1: ",link=https://www.flickr.com/photos/javh/5448336655]
+image::macros:sunset.jpg[Sunset,200,100]
+
+image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
+----
+
+.<<ex-image-blocks>>의 결과 보기
+[%collapsible.result]
+====
+image::sunset.jpg[]
+
+image::sunset.jpg[Sunset]
+
+.A mountain sunset
+[#img-sunset,caption="Figure 1: ",link=https://www.flickr.com/photos/javh/5448336655]
+image::macros:sunset.jpg[Sunset,200,100]
+
+image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
+====
+
+매크로에서 `image` 키워드 뒤에 콜론이 두 개(예: `image::`) 있으면 블록 이미지(그림)를 나타내고, 콜론이 하나(예: `image:`) 있으면 인라인 이미지를 나타냅니다.
+(모든 매크로는 이 패턴을 따릅니다).
+텍스트 줄 안에 이미지를 배치해야 할 때는 인라인 이미지를 사용합니다.
+그 외의 경우에는 블록 형식을 사용하는 것이 좋습니다.
+
+.인라인 이미지 매크로
+[#ex-image-inline]
+----
+Click image:play.png[] to get the party started.
+
+Click image:pause.png[title=Pause] when you need a break.
+----
+
+.<<ex-image-inline>>의 결과 보기
+[%collapsible.result]
+====
+Click image:macros:play.png[] to get the party started.
+
+Click image:macros:pause.png[title=Pause] when you need a break.
+====
+
+.배치 역할이 지정된 인라인 이미지 매크로
+[#ex-image-role]
+----
+image:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
+----
+
+.<<ex-image-role>>의 결과 보기
+[%collapsible.result]
+====
+image:macros:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
+====
+
+.임베드
+----
+= Document Title
+:data-uri:
+----
+
+`data-uri` 속성이 설정되면, 문서 내의 모든 이미지(경고 아이콘 포함)가 {url-data-uri}[데이터 URI] 형태로 문서에 임베드됩니다.
+`-a data-uri`를 사용하여 명령줄 인수로 전달할 수도 있습니다.
+
+== 오디오
+
+.블록 오디오 매크로
+----
+audio::ocean-waves.wav[]
+
+audio::ocean-waves.wav[start=60,opts=autoplay]
+----
+
+매크로의 xref:macros:audio-and-video.adoc[추가 속성 및 옵션]을 사용하여 오디오 설정을 제어할 수 있습니다.
+
+== 동영상
+
+.동영상 매크로
+----
+video::video-file.mp4[]
+
+video::video-file.mp4[width=640,start=60,opts=autoplay]
+----
+
+.임베드된 YouTube 동영상
+----
+video::RvRhUHTV_8k[youtube]
+----
+
+.Vimeo 동영상 삽입
+----
+video::67480300[vimeo]
+----
+
+매크로의 xref:macros:audio-and-video.adoc[추가 속성 및 옵션]을 사용하여 동영상 설정을 제어할 수 있습니다.
+
+== 키보드, 버튼 및 메뉴 매크로
+
+중요: 이 매크로를 사용하려면 문서 헤더에 `experimental` 속성을 설정해야 합니다.
+
+.키보드 매크로
+[#ex-kbd]
+----
+|===
+|Shortcut |Purpose
+
+|kbd:[F11]
+|Toggle fullscreen
+
+|kbd:[Ctrl+T]
+|Open a new tab
+|===
+----
+
+.<<ex-kbd>> 결과 보기
+[%collapsible.result]
+====
+|===
+|Shortcut |Purpose
+
+|kbd:[F11]
+|Toggle fullscreen
+
+|kbd:[Ctrl+T]
+|Open a new tab
+|===
+====
+
+.메뉴 매크로
+[#ex-menu]
+----
+To save the file, select menu:File[Save].
+
+Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
+----
+
+.<<ex-menu>> 결과 보기
+[%collapsible.result]
+====
+To save the file, select menu:File[Save].
+
+Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
+====
+
+.버튼 매크로
+[#ex-button]
+----
+Press the btn:[OK] button when you are finished.
+
+Select a file in the file navigator and click btn:[Open].
+----
+
+.<<ex-button>>의 결과 보기
+[%collapsible.result]
+====
+Press the btn:[OK] button when you are finished.
+
+Select a file in the file navigator and click btn:[Open].
+====
+
+== 리터럴 및 소스 코드
+
+////
+.인라인 고정폭 문자열 전용
+[#ex-inline-code]
+----
+Reference code like `types` or `methods` inline.
+
+Do not pass arbitrary ``Object``s to methods that accept ``String``s!
+----
+
+.<<ex-inline-code>>의 결과 보기
+[%collapsible.result]
+====
+Reference code like `types` or `methods` inline.
+
+Do not pass arbitrary ``Object``s to methods that accept ``String``s!
+====
+////
+
+.인라인 리터럴(고정폭)
+[#ex-inline-literal]
+----
+Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair of backticks.
+----
+
+.<<ex-inline-literal>>의 결과 보기
+[%collapsible.result]
+====
+Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair of backticks.
+====
+
+.리터럴 단락
+[#ex-literal-line]
+----
+Normal line.
+
+ Indent line by one space to create a literal line.
+
+Normal line.
+----
+
+.<<ex-literal-line>>의 결과 보기
+[%collapsible.result]
+====
+Normal line.
+
+ Indent line by one space to create a literal line.
+
+Normal line.
+====
+
+.리터럴 블록
+[#ex-literal-block]
+----
+....
+error: 1954 Forbidden search
+absolutely fatal: operation lost in the dodecahedron of doom
+
+Would you like to try again? y/n
+....
+----
+
+.<<ex-literal-block>>의 결과 보기
+[%collapsible.result]
+====
+....
+error: 1954 Forbidden search
+absolutely fatal: operation lost in the dodecahedron of doom
+
+Would you like to try again? y/n
+....
+====
+
+.제목이 있는 리스팅 블록
+[#ex-listing]
+------
+.Gemfile.lock
+----
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciidoctor (2.0.15)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciidoctor (~> 2.0.15)
+----
+------
+
+.<<ex-listing>> 결과 보기
+[%collapsible.result]
+====
+[caption=“리스트 1. ”]
+[listing]
+.Gemfile.lock
+----
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciidoctor (2.0.15)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciidoctor (~> 2.0.15)
+----
+====
+
+.제목과 구문 강조 표시가 포함된 소스 블록
+[#ex-highlight]
+------
+.일부 Ruby 코드
+[source,ruby]
+----
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+----
+------
+
+.<<ex-highlight>>의 결과 보기
+[%collapsible.result]
+====
+[caption=“리스트 1. ”]
+.일부 Ruby 코드
+[source,ruby]
+----
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+----
+====
+
+[중요]
+====
+문서 헤더, CLI 또는 API에서 `source-highlighter` 속성을 설정하여 xref:verbatim:source-highlighter.adoc[소스 하이라이트] 기능을 활성화해야 합니다.
+
+----
+:source-highlighter: rouge
+----
+
+Asciidoctor 사용 시 허용되는 값을 확인하려면 xref:asciidoctor:syntax-highlighting:index.adoc[]를 참조하십시오.
+====
+
+.콜아웃이 포함된 소스 블록
+[#ex-callouts,subs=-callouts]
+------
+[source,ruby]
+----
+require 'sinatra' // <1>
+
+get '/hi' do // <2>
+  "Hello World!" // <3>
+end
+----
+<1> Library import
+<2> URL mapping
+<3> HTTP response body
+------
+
+.<<ex-callouts>>의 결과 보기
+[%collapsible.result]
+====
+[source,ruby]
+----
+require 'sinatra' // <1>
+
+get '/hi' do // <2>
+  "Hello World!" // <3>
+end
+----
+<1> Library import
+<2> URL mapping
+<3> HTTP response body
+====
+
+.콜아웃을 선택할 수 없도록 설정
+[#ex-hide-callouts,subs=-callouts]
+------
+----
+line of code // <1>
+line of code # <2>
+line of code ;; <3>
+line of code <!--4-->
+----
+<1> A callout behind a line comment for C-style languages.
+<2> A callout behind a line comment for Ruby, Python, Perl, etc.
+<3> A callout behind a line comment for Clojure.
+<4> A callout behind a line comment for XML or SGML languages like HTML.
+------
+
+.<<ex-hide-callouts>> 결과 보기
+[%collapsible.result]
+====
+----
+line of code // <1>
+line of code # <2>
+line of code ;; <3>
+line of code <!--4-->
+----
+<1> A callout behind a line comment for C-style languages.
+<2> A callout behind a line comment for Ruby, Python, Perl, etc.
+<3> A callout behind a line comment for Clojure.
+<4> A callout behind a line comment for XML or SGML languages like HTML.
+====
+
+.파일에서 포함된 소스 블록 내용
+------
+[,ruby]
+----
+\include::app.rb[]
+----
+------
+
+.소스 디렉터리를 기준으로 파일에서 포함된 소스 블록 내용
+------
+:sourcedir: src/main/java
+
+[source,java]
+----
+\include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+----
+------
+
+.부분 파일 내용의 선행 들여쓰기 제거
+------
+[source,ruby]
+----
+\include::lib/app.rb[tag=main,indent=0]
+----
+------
+
+[참고]
+====
+xref:directives:include-with-indent.adoc[indent 속성]은 xref:directives:include-tagged-regions.adoc[태그가 지정된 영역]이나 xref:directives:include-lines.adoc[줄]을 통해 소스 코드를 포함할 때 자주 사용됩니다.
+이 속성은 include 지시어 자체나, 이를 감싸고 있는 리터럴, 리스팅, 또는 소스 블록에 지정할 수 있습니다.
+
+indent 값이 0인 경우, 블록의 선행 들여쓰기가 제거됩니다.
+
+indent 값이 0보다 큰 경우, 먼저 블록의 선행 들여쓰기가 제거된 후, 이 값과 동일한 열 수만큼 블록이 들여쓰기됩니다.
+====
+
+.소스 단락 (빈 줄 없음)
+[#ex-source-para]
+----
+[source,xml]
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+This is normal content.
+----
+
+.<<ex-source-para>>의 결과 보기
+[%collapsible.result]
+====
+[source,xml]
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+This is normal content.
+====
+
+== 주의 사항
+
+.주의 사항 단락
+[#ex-admon-para]
+----
+NOTE: An admonition draws the reader's attention to auxiliary information.
+
+Here are the other built-in admonition types:
+
+IMPORTANT: Don't forget the children!
+
+TIP: Look for the warp zone under the bridge.
+
+CAUTION: Slippery when wet.
+
+WARNING: The software you're about to use is untested.
+
+IMPORTANT: Sign off before stepping away from your computer.
+----
+
+.<<ex-admon-para>> 결과 보기
+[%collapsible.result]
+====
+NOTE: An admonition draws the reader's attention to auxiliary information.
+
+Here are the other built-in admonition types:
+
+IMPORTANT: Don't forget the children!
+
+TIP: Look for the warp zone under the bridge.
+
+CAUTION: Slippery when wet.
+
+WARNING: The software you're about to use is untested.
+
+IMPORTANT: Sign off before stepping away from your computer.
+====
+
+.경고 블록
+[#ex-admon-block]
+----
+[NOTE]
+====
+An admonition block may contain compound content.
+
+.A list
+- one
+- two
+- three
+
+Another paragraph.
+====
+----
+
+.<<ex-admon-block>> 결과 보기
+[%collapsible.result]
+=====
+[NOTE]
+====
+An admonition block may contain compound content.
+
+.A list
+- one
+- two
+- three
+
+Another paragraph.
+====
+=====
+
+== 구분 기호가 있는 블록 더 보기
+
+모든 블록에는 제목을 지정할 수 있습니다.
+블록 제목은 블록 위쪽에 점(.)으로 시작하는 한 줄의 텍스트를 사용하여 정의합니다.
+이 점 뒤에는 공백을 넣을 수 없습니다.
+이미지 블록의 경우, 제목은 블록 아래에 표시됩니다.
+그 외 모든 블록의 경우, 제목은 일반적으로 블록 위에 표시됩니다.
+
+.사이드바 블록
+[#ex-sidebar]
+----
+.Optional Title
+****
+Sidebars are used to visually separate auxiliary bits of content
+that supplement the main text.
+----
+
+.<<ex-sidebar>>의 결과 보기
+[%collapsible.result]
+====
+.Optional Title
+****
+Sidebars are used to visually separate auxiliary bits of content
+that supplement the main text.
+====
+
+.예제 블록
+[#ex-example]
+------
+====
+Here's a sample AsciiDoc document:
+
+----
+= Title of Document
+Doc Writer
+:toc:
+
+This guide provides...
+----
+
+The document header is useful, but not required.
+====
+------
+
+.<<ex-example>>의 결과 보기
+[example%collapsible.result]
+--
+====
+Here's a sample AsciiDoc document:
+
+----
+= Title of Document
+Doc Writer
+:toc:
+
+This guide provides...
+----
+
+The document header is useful, but not required.
+====
+--
+
+.블록 인용문
+[#ex-quotes]
+----
+[quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
+____
+Four score and seven years ago our fathers brought forth
+on this continent a new nation...
+____
+
+[quote,Albert Einstein]
+A person who never made a mistake never tried anything new.
+
+____
+A person who never made a mistake never tried anything new.
+____
+
+[quote,Charles Lutwidge Dodgson,'Mathematician and author, also known as https://en.wikipedia.org/wiki/Lewis_Carroll[Lewis Carroll]']
+____
+If you don't know where you are going, any road will get you there.
+____
+
+"I hold it that a little rebellion now and then is a good thing,
+and as necessary in the political world as storms in the physical."
+-- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+----
+
+.<<ex-quotes>>의 결과 보기
+[%collapsible.result]
+====
+[quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
+____
+Four score and seven years ago our fathers brought forth
+on this continent a new nation...
+____
+
+[quote,Albert Einstein]
+A person who never made a mistake never tried anything new.
+
+____
+A person who never made a mistake never tried anything new.
+____
+
+[quote,Charles Lutwidge Dodgson,'Mathematician and author, also known as https://en.wikipedia.org/wiki/Lewis_Carroll[Lewis Carroll]']
+____
+If you don't know where you are going, any road will get you there.
+____
+
+"I hold it that a little rebellion now and then is a good thing,
+and as necessary in the political world as storms in the physical."
+-- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+====
+
+.블록 열기
+[#ex-open]
+----
+--
+An open block can be an anonymous container,
+or it can masquerade as any other block.
+--
+
+[source]
+--
+puts "I'm a source block!"
+--
+----
+
+.<<ex-open>> 결과 보기
+[%collapsible.result]
+====
+--
+An open block can be an anonymous container,
+or it can masquerade as any other block.
+--
+
+[source]
+--
+puts "I'm a source block!"
+--
+====
+
+.Passthrough 블록
+[#ex-pass-block]
+----
+++++
+<p>
+Content in a passthrough block is passed to the output unprocessed.
+That means you can include raw HTML, like this embedded Gist:
+</p>
+
+<script src="https://gist.github.com/mojavelinux/5333524.js">
+</script>
+++++
+----
+
+.<<ex-pass-block>> 결과 보기
+[%collapsible.result]
+====
+++++
+<p>
+Content in a passthrough block is passed to the output unprocessed.
+That means you can include raw HTML, like this embedded Gist:
+</p>
+
+<script src="https://gist.github.com/mojavelinux/5333524.js">
+</script>
+++++
+====
+
+.블록 대체 내용 사용자 정의
+[#ex-block-subs,subs=+macros]
+------
+:release-version: pass:a[{release-version}]
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+  <groupId>org.asciidoctor</groupId>
+  <artifactId>asciidoctorj</artifactId>
+  <version>{release-version}</version>
+</dependency>
+----
+------
+
+.<<ex-block-subs>> 결과 보기
+[%collapsible.result]
+====
+[source,xml,subs=attributes+]
+----
+<dependency>
+  <groupId>org.asciidoctor</groupId>
+  <artifactId>asciidoctorj</artifactId>
+  <version>{release-version}</version>
+</dependency>
+----
+====
+
+== 표
+
+.제목, 두 열, 헤더 행, 두 개의 내용 행이 있는 표
+[#ex-header-row]
+----
+.Table Title
+|===
+|Column 1, Header Row |Column 2, Header Row <.>
+<.>
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+----
+<.> `cols` 속성이 지정되지 않은 경우, 열의 수는 첫 번째 (비어 있지 않은) 줄에 있는 셀 구분자의 개수와 같습니다.
+<.> 표의 시작 부분에서 비어 있지 않은 줄 바로 뒤에 빈 줄이 올 경우, 첫 번째 줄의 셀은 표 헤더로 승격됩니다.
+
+.<<ex-header-row>>의 결과 보기
+[%collapsible.result]
+====
+[caption=“표 1. ”]
+.Table Title
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+====
+
+.두 개의 열, 헤더 행, 그리고 두 행의 내용으로 구성된 표
+[#ex-cols]
+----
+[%header,cols=2*] <.>
+|===
+|Name of Column 1
+|Name of Column 2
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+----
+<.> `cols` 속성의 `+*+`는 반복 연산자입니다.
+이는 나머지 열에 대해 열 지정 내용을 반복한다는 의미입니다.
+이 경우, 기본 서식을 2개의 열에 걸쳐 반복 적용합니다.
+헤더의 셀이 한 줄로 정의되지 않은 경우, `cols` 속성을 사용하여 테이블의 열 수를 설정하고, `%header` 옵션(또는 `options=header` 속성)을 사용하여 첫 번째 행을 테이블 헤더로 지정해야 합니다.
+
+.<<ex-cols>>의 결과 보기
+[%collapsible.result]
+====
+[%header,cols=2*]
+|===
+|Name of Column 1
+|Name of Column 2
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+====
+
+.헤더 행 1개와 내용 행 2개로 구성된 3열 테이블
+[#ex-cols-widths]
+----
+include::tables:example$table.adoc[tag=b-col-indv-co]
+----
+<. > 이 예제에서 `cols` 속성은 두 가지 기능을 합니다.
+이 테이블이 3개의 열로 구성됨을 지정하고, 각 열의 상대적 너비를 설정합니다.
+
+.<<ex-cols-widths>> 결과 보기
+[%collapsible.result]
+====
+[caption=“표 1.”]
+.Applications
+[cols="1,1,2"] <.>
+|===
+|Name |Category |Description
+
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+It's designed for standards compliance,
+performance, portability.
+
+|Arquillian
+|Testing
+|An innovative and highly extensible testing platform.
+Empowers developers to easily create real, automated tests.
+|===
+====
+
+.AsciiDoc 콘텐츠가 포함된 열이 있는 표
+[#ex-table-adoc]
+----
+[cols="2,2,5a"]
+|===
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+
+It's designed for:
+
+* standards compliance
+* performance
+* portability
+
+https://getfirefox.com[Get Firefox]!
+|===
+----
+
+.<<ex-table-adoc>> 결과 보기
+[%collapsible.result]
+====
+[cols="2,2,5a"]
+|===
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+
+It's designed for:
+
+* standards compliance
+* performance
+* portability
+
+https://getfirefox.com[Get Firefox]!
+|===
+====
+
+.CSV 데이터를 사용하여 약식 표 생성
+[#ex-csv]
+----
+,===
+Artist,Track,Genre
+
+Baauer,Harlem Shake,Hip Hop
+,===
+----
+
+.<<ex-csv>> 결과 보기
+[%collapsible.result]
+====
+,===
+Artist,Track,Genre
+
+Baauer,Harlem Shake,Hip Hop
+,===
+====
+
+.CSV 데이터로 만든 표
+[#ex-csv-formal]
+----
+[%header,format=csv]
+|===
+Artist,Track,Genre
+Baauer,Harlem Shake,Hip Hop
+The Lumineers,Ho Hey,Folk Rock
+|===
+----
+
+.<<ex-csv-formal>> 결과 보기
+[%collapsible.result]
+====
+[%header,format=csv]
+|===
+Artist,Track,Genre
+Baauer,Harlem Shake,Hip Hop
+The Lumineers,Ho Hey,Folk Rock
+|===
+====
+
+.파일에서 포함된 CSV 데이터를 기반으로 한 테이블
+[#ex-csv-include]
+----
+,===
+\include::customers.csv[]
+,===
+----
+
+.약어 구문을 사용한 DSV 데이터 기반 표
+[#ex-dsv]
+----
+:===
+Artist:Track:Genre
+
+Robyn:Indestructible:Dance
+:===
+----
+
+.<<ex-dsv>> 결과 보기
+[%collapsible.result]
+====
+:===
+Artist:Track:Genre
+
+Robyn:Indestructible:Dance
+:===
+====
+
+.서식이 적용되고, 정렬되며, 셀이 병합된 표
+[#ex-cell-format]
+----
+[cols="e,m,^,>s",width="25%"]
+|===
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|===
+----
+
+.<<ex-cell-format>>의 결과 보기
+[%collapsible.result]
+====
+[cols="e,m,^,>s",width="25%"]
+|===
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|===
+====
+
+== ID, 역할 및 옵션
+
+.블록 ID(앵커) 및 역할 할당을 위한 약식 방법
+----
+[#goals.incremental]
+* 목표 1
+* 목표 2
+----
+
+[팁]
+====
+* 약식 구문을 사용하여 여러 역할을 지정하려면 점(.)으로 구분하십시오.
+* 약식 구문에서 `id`와 `role` 값의 순서는 중요하지 않습니다.
+====
+
+.블록 ID(앵커) 및 역할 할당을 위한 공식적인 방법
+----
+[id=“goals”,role=“incremental”]
+* 목표 1
+* 목표 2
+----
+
+.명시적인 섹션 ID(앵커)
+----
+[#null-values]
+== 기본 데이터형과 null 값
+----
+
+.인라인 서식 텍스트에 ID(앵커) 및 역할 할당
+----
+[#id-name.role-name]`고정폭 텍스트`
+
+[#free-world.goals]*세상을 자유롭게*
+----
+
+.블록 옵션 할당을 위한 약식 방법
+----
+[%header%footer%autowidth]
+|===
+|헤더 A |헤더 B
+|푸터 A |푸터 B
+|===
+----
+
+.블록 옵션 할당을 위한 정식 방법
+----
+[options=“header,footer,autowidth”]
+|===
+|헤더 A |헤더 B
+|푸터 A |푸터 B
+|===
+
+// options는 opts로 축약할 수 있습니다
+[opts=“header,footer,autowidth”]
+|===
+|헤더 A |헤더 B
+|푸터 A |푸터 B
+|===
+----
+
+== 주석
+
+.줄 주석 및 블록 주석
+----
+// 한 줄 주석
+
+////
+여러 줄 주석.
+
+구분된 블록이라는 점에 유의하십시오.
+////
+----
+
+== 줄바꿈
+
+.주제별 줄바꿈 (일명 수평선)
+[#ex-thematic]
+----
+앞
+
+‘’'
+
+뒤
+----
+
+.<<ex-thematic>> 결과 보기
+[%collapsible.result]
+====
+앞
+
+‘’'
+
+뒤
+====
+
+.페이지 나누기
+----
+<<<
+----
+
+== 속성 및 대체
+
+.속성 선언 및 사용법
+[#ex-attributes]
+----
+:url-home: https://asciidoctor.org
+:link-docs: https://asciidoctor.org/docs[문서]
+:summary: AsciiDoc은 메모, 기사, 문서, 책 등을 작성하기 위한 \
+       성숙한 일반 텍스트 문서 형식입니다. \
+       또한 문서를 HTML, DocBook, PDF, ePub 등 \
+       다양한 출력 형식(즉, 백엔드)으로 변환하기 위한 \
+       텍스트 프로세서이자 툴체인입니다.
+:checkedbox: pass:normal[{startsb}&#10004;{endsb}]
+
+{url-home}[Asciidoctor]를 확인해 보세요!
+
+{summary}
+
+{link-docs}도 꼭 읽어보세요!
+
+{checkedbox} 끝났습니다!
+----
+
+.<<ex-attributes>>의 결과 보기
+[%collapsible.result]
+====
+// 여기서는 중첩된 문서 해킹을 사용해야 합니다. 그렇지 않으면 속성이 해결되지 않습니다.
+[.unstyled]
+|===
+a|
+:url-home: https://asciidoctor.org
+:link-docs: https://asciidoctor.org/docs[문서]
+:summary: AsciiDoc은 메모, 기사, 문서, 책 등을 작성하기 위한 \
+       성숙한 일반 텍스트 문서 형식입니다. \
+       또한 이 형식은 문서를 \
+       HTML, DocBook, PDF, ePub 등 다양한 출력 형식(즉, 백엔드)으로 \
+       변환하기 위한 텍스트 프로세서이자 툴체인입니다.
+:checkedbox: pass:normal[{startsb}&#10004;{endsb}]
+
+
+{url-home}[Asciidoctor]를 확인해 보세요!
+
+{summary}
+
+{link-docs}도 꼭 읽어보세요!
+
+{checkedbox} 끝났습니다!
+|===
+====
+
+사용 가능한 속성과 대체 그룹에 대해 자세히 알아보려면 다음을 참조하세요:
+
+* xref:attributes:document-attributes-ref.adoc[]
+* xref:attributes:character-replacement-ref.adoc[]
+* xref:subs:apply-subs-to-blocks.adoc#subs-groups[대체 그룹]
+
+.카운터 속성
+[#ex-counter]
+----
+.Parts{counter2:index:0}
+|===
+|Part Id |Description
+
+|PX-{counter:index}
+|Description of PX-{index}
+
+|PX-{counter:index}
+|Description of PX-{index}
+|===
+----
+
+.<<ex-counter>>의 결과 보기
+[%collapsible.result]
+====
+[caption=“표 1. ”]
+.Parts{counter2:index:0}
+|===
+|Part Id |Description
+
+|PX-{counter:index}
+|Description of PX-{index}
+
+|PX-{counter:index}
+|Description of PX-{index}
+|===
+====
+
+== 텍스트 치환
+
+[frame=none,grid=rows]
+[%autowidth,cols="~,^~,^~,^~,~"]
+.Textual symbol replacements
+|===
+|Name |Syntax |Unicode Replacement |Rendered |Notes
+
+|Copyright
+|+(C)+
+|+&#169;+
+|(C)
+|
+
+|Registered
+|+(R)+
+|+&#174;+
+|(R)
+|
+
+|Trademark
+|+(TM)+
+|+&#8482;+
+|(TM)
+|
+
+|Em dash
+|+--+
+|+&#8212;+
+|{empty}--{empty}
+|Only replaced if between two word characters, between a word character and a line boundary, or flanked by spaces.
+
+When flanked by space characters (e.g., `+a -- b+`), the normal spaces are replaced by thin spaces (\&#8201;).
+Otherwise, the em dash is followed by a zero-width space (\&#8203;) to provide a break opportunity.
+
+|Ellipsis
+|+...+
+|+&#8230;+
+|...
+|The ellipsis is followed by a zero-width space (\&#8203;) to provide a break opportunity.
+
+|Single right arrow
+|+->+
+|+&#8594;+
+|->
+|
+
+|Double right arrow
+|+=>+
+|+&#8658;+
+|=>
+|
+
+|Single left arrow
+|+<-+
+|+&#8592;+
+|<-
+|
+
+|Double left arrow
+|+<=+
+|+&#8656;+
+|<=
+|
+
+|Typographic apostrophe
+|Sam\'s
+|+Sam&#8217;s+
+|Sam's
+|The typewriter apostrophe is replaced with the typographic (aka curly or smart) apostrophe.
+|===
+
+
+이름이 지정된, 숫자 또는 16진수 {url-char-xml}[XML 문자 참조^]이 지원됩니다.
+
+== 대체 문자 이스케이프
+
+.백슬래시
+[#ex-slash]
+----
+In /items/\{id}, the id attribute isn't replaced.
+The curly braces around it are preserved.
+
+\*Stars* isn't displayed as bold text.
+The asterisks around it are preserved.
+
+\&sect; appears as an entity reference.
+It's not converted into the section symbol (&#167;).
+
+\=> The backslash prevents the equals sign followed by a greater
+than sign from combining to form a double arrow character (=>).
+
+\[[Word]] is not interpreted as an anchor.
+The double brackets around it are preserved.
+
+[\[[Word]]] is not interpreted as a bibliography anchor.
+The triple brackets around it are preserved.
+
+\((DD AND CC) OR (DD AND EE)) is not interpreted as a flow index term.
+The double brackets around it are preserved.
+
+The URL \https://example.org isn't converted into an active link.
+----
+
+.<<ex-slash>>의 결과 보기
+[%collapsible.result]
+====
+In /items/\{id}, the id attribute isn't replaced.
+The curly braces around it are preserved.
+
+\*Stars* isn't displayed as bold text.
+The asterisks around it are preserved.
+
+\&sect; appears as an entity reference.
+It's not converted into the section symbol (&#167;).
+
+\=> The backslash prevents the equals sign followed by a greater
+than sign from combining to form a double arrow character (=>).
+
+\[[Word]] is not interpreted as an anchor.
+The double brackets around it are preserved.
+
+[\[[Word]]] is not interpreted as a bibliography anchor.
+The triple brackets around it are preserved.
+
+\((DD AND CC) OR (DD AND EE)) is not interpreted as a flow index term.
+The double brackets around it are preserved.
+
+The URL \https://example.org isn't converted into an active link.
+====
+
+.단일 및 이중 플러스 인라인 통과
+[#ex-single-plus]
+----
+A word or phrase between single pluses, such as +/user/{id}+,
+is not substituted.
+However, the special characters like +<+ and +>+ are still
+escaped in the output.
+
+An attribute reference within a word, such as dev++{conf}++,
+is not replaced.
+
+A plus passthrough will escape standalone formatting marks,
+like +``+, or formatting marks within a word, like all-natural++*++.
+----
+
+.<<ex-single-plus>>의 결과 보기
+[%collapsible.result]
+====
+A word or phrase between single pluses, such as +/user/{id}+,
+is not substituted.
+However, the special characters like +<+ and +>+ are still
+escaped in the output.
+
+An attribute reference within a word, such as dev++{conf}++,
+is not replaced.
+
+A plus passthrough will escape standalone formatting marks,
+like +``+, or formatting marks within a word, like all-natural++*++.
+====
+
+.트리플 플러스 인라인 패스스루 및 인라인 패스 매크로
+[#ex-inline-pass]
+----
++++<del>strike this</del>+++ is marked as deleted.
+
+pass:[<del>strike this</del>] is also marked as deleted.
+----
+
+.<<ex-inline-pass>> 결과 보기
+[%collapsible.result]
+====
++++<del>strike this</del>+++ is marked as deleted.
+
+pass:[<del>strike this</del>] is also marked as deleted.
+====
+
+== 참고 문헌
+
+.인용된 문헌이 포함된 참고 문헌
+[#ex-biblio]
+----
+_The Pragmatic Programmer_ <<pp>> should be required reading for all developers.
+To learn all about design patterns, refer to the book by the "`Gang of Four`" <<gof>>.
+
+[bibliography]
+== References
+
+* [[[pp]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
+From Journeyman to Master. Addison-Wesley. 1999.
+* [[[gof,gang]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides.
+Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
+----
+
+.<<ex-biblio>> 결과 보기
+[%collapsible.result]
+====
+|===
+a|
+_The Pragmatic Programmer_ <<pp>> should be required reading for all developers.
+To learn all about design patterns, refer to the book by the "`Gang of Four`" <<gof>>.
+
+[bibliography]
+== References
+
+* [[[pp]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
+From Journeyman to Master. Addison-Wesley. 1999.
+* [[[gof,gang]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides.
+Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
+|===
+====
+
+[#section-footnotes]
+== 각주
+
+.일반 및 재사용 가능한 각주
+[#ex-footnotes]
+----
+A statement.footnote:[Clarification about this statement.]
+
+A bold statement!footnote:disclaimer[Opinions are my own.]
+
+Another bold statement.footnote:disclaimer[]
+----
+
+.<<ex-footnotes>> 결과 보기
+[%collapsible.result]
+====
+[.unstyled]
+|===
+a|
+A statement.footnote:[Clarification about this statement.]
+
+A bold statement!footnote:disclaimer[Opinions are my own.]
+
+Another bold statement.footnote:disclaimer[]
+|===
+====
+
+[#markdown-compatibility]
+== 마크다운 호환성
+
+마크다운 호환 구문은 AsciiDoc 언어의 선택적 기능이며, 현재는 Asciidoctor를 사용할 때만 사용할 수 있습니다.
+
+.마크다운 스타일의 제목
+[#ex-md-headings]
+----
+# Document Title (Level 0)
+
+## Section Level 1
+
+### Section Level 2
+
+#### Section Level 3
+
+##### Section Level 4
+
+###### Section Level 5
+----
+
+.<<ex-md-headings>>의 결과 보기
+[%collapsible.result]
+====
+[float]
+# Document Title (Level 0)
+
+[float]
+## Section Level 1
+
+[float]
+### Section Level 2
+
+[float]
+#### Section Level 3
+
+[float]
+##### Section Level 4
+
+[float]
+###### Section Level 5
+====
+
+.구문 강조가 적용된 펜스 코드 블록
+[#ex-fenced]
+----
+```ruby
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+```
+----
+
+.<<ex-fenced>> 결과 보기
+[%collapsible.result]
+====
+```ruby
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+```
+====
+
+.마크다운 스타일 인용문
+[#ex-md-quote]
+----
+> I hold it that a little rebellion now and then is a good thing,
+> and as necessary in the political world as storms in the physical.
+> -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+----
+
+.<<ex-md-quote>> 결과 보기
+[%collapsible.result]
+====
+> I hold it that a little rebellion now and then is a good thing,
+> and as necessary in the political world as storms in the physical.
+> -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+====
+
+.블록 콘텐츠가 포함된 마크다운 스타일 블록 인용문
+[#ex-md-blockquote]
+----
+> > What's new?
+>
+> I've got Markdown in my AsciiDoc!
+>
+> > Like what?
+>
+> * Blockquotes
+> * Headings
+> * Fenced code blocks
+>
+> > Is there more?
+>
+> Yep. AsciiDoc and Markdown share a lot of common syntax already.
+----
+
+.<<ex-md-blockquote>> 결과 보기
+[%collapsible.result]
+====
+> > What's new?
+>
+> I've got Markdown in my AsciiDoc!
+>
+> > Like what?
+>
+> * Blockquotes
+> * Headings
+> * Fenced code blocks
+>
+> > Is there more?
+>
+> Yep. AsciiDoc and Markdown share a lot of common syntax already.
+====
+
+.마크다운 스타일의 주제별 구분
+[#ex-md-breaks]
+----
+---
+
+- - -
+
+***
+
+* * *
+----
+
+.<<ex-md-breaks>>의 결과 보기
+[%collapsible.result]
+====
+---
+
+- - -
+
+***
+
+* * *
+====
+
+
+////
+향후 `%collapsible` 블록에 대한 변경 가능성
+
+.일반
+----
+AsciiDoc에서 단락에는 특별한 마크업이 필요하지 않습니다.
+단락은 연속된 텍스트 한 줄 이상으로 구성됩니다.
+
+새로운 단락을 시작하려면, 적어도 한 줄의 빈 줄로 구분하십시오.
+단락 내의 줄 바꿈은 표시되지 않습니다.
+----
+
+.결과 보기 (일반)
+[%collapsible.result]
+====
+AsciiDoc에서 단락을 표시하기 위해 특별한 마크업은 필요하지 않습니다.
+단락은 단순히 한 줄 이상 연속된 텍스트로 구성됩니다.
+
+새로운 단락을 시작하려면, 적어도 한 줄의 빈 줄로 구분하십시오.
+단락 내의 줄 바꿈은 표시되지 않습니다.
+====
+
+‘’'
+
+.일반
+[탭]
+====
+소스::
++
+----
+AsciiDoc에서는 단락을 표시하기 위해 특별한 마크업이 필요하지 않습니다.
+단락은 단순히 한 줄 이상의 연속된 텍스트로 구성됩니다.
+
+새로운 단락을 시작하려면, 적어도 한 줄의 빈 줄로 구분하십시오.
+단락 내의 줄 바꿈은 표시되지 않습니다.
+----
+
+출력::
++
+--
+AsciiDoc에서는 단락에 특별한 마크업이 필요하지 않습니다.
+단락은 단순히 한 줄 이상의 연속된 텍스트로 구성됩니다.
+
+새로운 단락을 시작하려면, 적어도 한 줄의 빈 줄로 구분하십시오.
+단락 내의 줄 바꿈은 표시되지 않습니다.
+--
+====
+////
