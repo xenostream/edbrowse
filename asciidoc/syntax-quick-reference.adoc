@@ -15,7 +15,7 @@
 :toclevels: 1
 :toc-title: 목차
 :sectnums:
-:sectlinks:
+:sectlinks!:
 :sectnumlevels: 4
 :chapter-label:
 :icons: font
