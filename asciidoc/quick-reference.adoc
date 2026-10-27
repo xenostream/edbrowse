@@ -37,7 +37,7 @@ endif::[]
 [TIP]
 ====
 * link:https://asciidoceditor.com/[온라인 편집기 - 추천, window=_blank]
-* https://asciidocalive.draftview.app/[온라인 편집기2 - 베타]
+* https://asciidocalive.draftview.app/[온라인 편집기2 - 베타^]
 ====
 
 == Paragraphs
