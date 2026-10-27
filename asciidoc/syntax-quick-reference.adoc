@@ -1969,16 +1969,16 @@ a|
 |+--+
 |+&#8212;+
 |{empty}--{empty}
-|Only replaced if between two word characters, between a word character and a line boundary, or flanked by spaces.
+|두 단어 문자 사이, 단어 문자와 줄 경계 사이, 또는 양쪽에 공백이 있는 경우에만 대체됩니다.
 
-When flanked by space characters (e.g., `+a -- b+`), the normal spaces are replaced by thin spaces (\&#8201;).
-Otherwise, the em dash is followed by a zero-width space (\&#8203;) to provide a break opportunity.
+양쪽에 공백 문자가 있는 경우(예: `+a -- b+`), 일반 공백은 얇은 공백(\&#8201;)으로 대체됩니다.
+그 외의 경우, 엠 대시 뒤에는 줄 바꿈 기회를 제공하기 위해 너비 0의 공백(\&#8203;)이 따라옵니다.
 
 |Ellipsis
 |+...+
 |+&#8230;+
 |...
-|The ellipsis is followed by a zero-width space (\&#8203;) to provide a break opportunity.
+|줄임표 뒤에는 줄 바꿈을 할 수 있도록 너비 0의 공백(\&#8203;)이 이어집니다.
 
 |Single right arrow
 |+->+
@@ -2008,7 +2008,7 @@ Otherwise, the em dash is followed by a zero-width space (\&#8203;) to provide a
 |Sam\'s
 |+Sam&#8217;s+
 |Sam's
-|The typewriter apostrophe is replaced with the typographic (aka curly or smart) apostrophe.
+|타자기 아포스트로피는 타이포그래픽 아포스트로피(일명 컬리 아포스트로피 또는 스마트 아포스트로피)로 대체됩니다.
 |===
 
 
