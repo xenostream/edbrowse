@@ -55,7 +55,7 @@ Line breaks within a paragraph are not displayed.
 Leave at least one empty line to begin a new paragraph.
 ----
 
-.<<ex-normal>>의 결과 보기
+.ex-normal>>의 결과 보기
 [%collapsible.result]
 ====
 Paragraphs don't require special markup in AsciiDoc.
@@ -80,7 +80,7 @@ A normal paragraph.
  are preserved.
 ----
 
-.<<ex-literal>> 결과 보기
+.ex-literal 결과 보기
 [%collapsible.result]
 ====
 A normal paragraph.
@@ -106,7 +106,7 @@ A ruby is red.
 Java is black.
 ----
 
-.<<ex-hardbreaks>> 결과 보기
+.ex-hardbreaks 결과 보기
 [%collapsible.result]
 ====
 Roses are red, +
@@ -126,7 +126,7 @@ This text will be styled as a lead paragraph (i.e., larger font).
 This paragraph will not be.
 ----
 
-.<<ex-lead>> 결과 보기
+.ex-lead 결과 보기
 [%collapsible.result]
 ====
 [.lead]
@@ -153,7 +153,7 @@ That *_really_* has to go.
 Can't pick one? Let's use them `*_all_*`.
 ----
 
-.<<ex-constrained>>의 결과 보기
+.ex-constrained>>의 결과 보기
 [%collapsible.result]
 ====
 It has *strong* significance to me.
@@ -179,7 +179,7 @@ Don't pass generic ``Object``s to methods that accept ``String``s!
 It was Beatle**__mania__**!
 ----
 
-.<<ex-unconstrained>> 결과 보기
+.ex-unconstrained 결과 보기
 [%collapsible.result]
 ====
 **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD)
@@ -205,7 +205,7 @@ We need [.line-through]#ten# twenty VMs.
 A [.myrole]#custom role# must be fulfilled by the theme.
 ----
 
-.<<ex-lines>> 결과 보기
+.ex-lines 결과 보기
 [%collapsible.result]
 ====
 Mark my words, #automation is essential#.
@@ -227,7 +227,7 @@ A [.myrole]#custom role# must be fulfilled by the theme.
 ~sub~script
 ----
 
-.<<ex-sub-sup>>의 결과 보기
+.ex-sub-sup>>의 결과 보기
 [%collapsible.result]
 ====
 ^super^script
@@ -251,7 +251,7 @@ All of the werewolves`' desks were a mess.
 Olaf had been with the company since the `'00s.
 ----
 
-.<<ex-curved>>의 결과 보기
+.ex-curved>>의 결과 보기
 [%collapsible.result]
 ====
 "`double curved quotes`"
@@ -283,7 +283,7 @@ mailto:devel@discuss.example.org[Discuss]
 mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
 ----
 
-.<<ex-urls>>의 결과 보기
+.ex-urls>>의 결과 보기
 [%collapsible.result]
 ====
 https://asciidoctor.org - automatic!
@@ -305,7 +305,7 @@ https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
 https://chat.asciidoc.org[Discuss AsciiDoc^]
 ----
 
-.<<ex-linkattrs>> 결과 보기
+.ex-linkattrs 결과 보기
 [%collapsible.result]
 ====
 https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
@@ -347,7 +347,7 @@ link:\\server\share\whitepaper.pdf[Whitepaper]
 include::macros:example$xref.adoc[tag=b-base]
 ----
 
-.<<ex-xrefs>> 결과 보기
+.ex-xrefs 결과 보기
 [%collapsible.result]
 ====
 See <<paragraphs>> to learn how to write paragraphs.
@@ -427,7 +427,7 @@ This document provides...
 == Another Level 1 Section Title
 ----
 
-.<<ex-article>> 결과 보기
+.ex-article 결과 보기
 [%collapsible.result]
 ====
 // the float style is required to create standalone (non-section) headings
@@ -497,7 +497,7 @@ xref:sections:title-links.adoc#anchor[sectanchors]::
 이 단락은 이 제목의 자식이 아니라 형제 요소입니다.
 ----
 
-.<<ex-discrete>> 결과 보기
+.ex-discrete 결과 보기
 [%collapsible.result]
 ====
 [discrete]
@@ -562,7 +562,7 @@ This is documentation for project X.
 * List item
 ----
 
-.<<ex-ul>>의 결과 보기
+.ex-ul>>의 결과 보기
 [%collapsible.result]
 ====
 * List item
@@ -589,7 +589,7 @@ This is documentation for project X.
 * Level 1 list item
 ----
 
-.<<ex-ul-max>>의 결과 보기
+.ex-ul-max>>의 결과 보기
 [%collapsible.result]
 ====
 * Level 1 list item
@@ -613,7 +613,7 @@ xref:lists:unordered.adoc#markers[무순서 목록 마커]는 목록 스타일(�
 . Step 3
 ----
 
-.<<ex-ol>> 결과 보기
+.ex-ol 결과 보기
 [%collapsible.result]
 ====
 . Step 1
@@ -634,7 +634,7 @@ xref:lists:unordered.adoc#markers[무순서 목록 마커]는 목록 스타일(�
 . Level 1 list item
 ----
 
-.<<ex-ol-max>> 결과 보기
+.ex-ol-max 결과 보기
 [%collapsible.result]
 ====
 . Level 1 list item
@@ -656,7 +656,7 @@ xref:lists:unordered.adoc#markers[무순서 목록 마커]는 목록 스타일(�
 * normal list item
 ----
 
-.<<ex-check>> 결과 보기
+.ex-check 결과 보기
 [%collapsible.result]
 ====
 * [*] checked
@@ -675,7 +675,7 @@ Description of the second term.
 The description can also start on its own line.
 ----
 
-.<<ex-dlist>> 결과 보기
+.ex-dlist 결과 보기
 [%collapsible.result]
 ====
 First term:: The description can be placed on the same line
@@ -697,7 +697,7 @@ Are backpacks allowed?::
 No.
 ----
 
-.<<ex-qa>> 결과 보기
+.ex-qa 결과 보기
 [%collapsible.result]
 ====
 [qanda]
@@ -732,7 +732,7 @@ Cloud Providers::
     . Rackspace
 ----
 
-.<<ex-mixed>>의 결과 보기
+.ex-mixed>>의 결과 보기
 [%collapsible.result]
 ====
 Operating Systems::
@@ -783,7 +783,7 @@ list continuation:: a plus sign (`{plus}`) on a line by itself
 |===
 ----
 
-.<<ex-complex>> 결과 보기
+.ex-complex 결과 보기
 [%collapsible.result]
 ====
 * Every list item has at least one paragraph of content,
@@ -829,7 +829,7 @@ image::macros:sunset.jpg[Sunset,200,100]
 image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
 ----
 
-.<<ex-image-blocks>>의 결과 보기
+.ex-image-blocks>>의 결과 보기
 [%collapsible.result]
 ====
 image::sunset.jpg[]
@@ -856,7 +856,7 @@ Click image:play.png[] to get the party started.
 Click image:pause.png[title=Pause] when you need a break.
 ----
 
-.<<ex-image-inline>>의 결과 보기
+.ex-image-inline>>의 결과 보기
 [%collapsible.result]
 ====
 Click image:macros:play.png[] to get the party started.
@@ -870,7 +870,7 @@ Click image:macros:pause.png[title=Pause] when you need a break.
 image:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
 ----
 
-.<<ex-image-role>>의 결과 보기
+.ex-image-role>>의 결과 보기
 [%collapsible.result]
 ====
 image:macros:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
@@ -935,7 +935,7 @@ video::67480300[vimeo]
 |===
 ----
 
-.<<ex-kbd>> 결과 보기
+.ex-kbd 결과 보기
 [%collapsible.result]
 ====
 |===
@@ -957,7 +957,7 @@ To save the file, select menu:File[Save].
 Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
 ----
 
-.<<ex-menu>> 결과 보기
+.ex-menu 결과 보기
 [%collapsible.result]
 ====
 To save the file, select menu:File[Save].
@@ -973,7 +973,7 @@ Press the btn:[OK] button when you are finished.
 Select a file in the file navigator and click btn:[Open].
 ----
 
-.<<ex-button>>의 결과 보기
+.ex-button>>의 결과 보기
 [%collapsible.result]
 ====
 Press the btn:[OK] button when you are finished.
@@ -992,7 +992,7 @@ Reference code like `types` or `methods` inline.
 Do not pass arbitrary ``Object``s to methods that accept ``String``s!
 ----
 
-.<<ex-inline-code>>의 결과 보기
+.ex-inline-code>>의 결과 보기
 [%collapsible.result]
 ====
 Reference code like `types` or `methods` inline.
@@ -1007,7 +1007,7 @@ Do not pass arbitrary ``Object``s to methods that accept ``String``s!
 Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair of backticks.
 ----
 
-.<<ex-inline-literal>>의 결과 보기
+.ex-inline-literal>>의 결과 보기
 [%collapsible.result]
 ====
 Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair of backticks.
@@ -1023,7 +1023,7 @@ Normal line.
 Normal line.
 ----
 
-.<<ex-literal-line>>의 결과 보기
+.ex-literal-line>>의 결과 보기
 [%collapsible.result]
 ====
 Normal line.
@@ -1044,7 +1044,7 @@ Would you like to try again? y/n
 ....
 ----
 
-.<<ex-literal-block>>의 결과 보기
+.ex-literal-block>>의 결과 보기
 [%collapsible.result]
 ====
 ....
@@ -1073,7 +1073,7 @@ DEPENDENCIES
 ----
 ------
 
-.<<ex-listing>> 결과 보기
+.ex-listing 결과 보기
 [%collapsible.result]
 ====
 [caption=“리스트 1. ”]
@@ -1107,7 +1107,7 @@ end
 ----
 ------
 
-.<<ex-highlight>>의 결과 보기
+.ex-highlight>>의 결과 보기
 [%collapsible.result]
 ====
 [caption=“리스트 1. ”]
@@ -1149,7 +1149,7 @@ end
 <3> HTTP response body
 ------
 
-.<<ex-callouts>>의 결과 보기
+.ex-callouts>>의 결과 보기
 [%collapsible.result]
 ====
 [source,ruby]
@@ -1180,7 +1180,7 @@ line of code <!--4-->
 <4> A callout behind a line comment for XML or SGML languages like HTML.
 ------
 
-.<<ex-hide-callouts>> 결과 보기
+.ex-hide-callouts 결과 보기
 [%collapsible.result]
 ====
 ----
@@ -1241,7 +1241,7 @@ indent 값이 0보다 큰 경우, 먼저 블록의 선행 들여쓰기가 제거
 This is normal content.
 ----
 
-.<<ex-source-para>>의 결과 보기
+.ex-source-para>>의 결과 보기
 [%collapsible.result]
 ====
 [source,xml]
@@ -1271,7 +1271,7 @@ WARNING: The software you're about to use is untested.
 IMPORTANT: Sign off before stepping away from your computer.
 ----
 
-.<<ex-admon-para>> 결과 보기
+.ex-admon-para 결과 보기
 [%collapsible.result]
 ====
 NOTE: An admonition draws the reader's attention to auxiliary information.
@@ -1305,7 +1305,7 @@ Another paragraph.
 ====
 ----
 
-.<<ex-admon-block>> 결과 보기
+.ex-admon-block 결과 보기
 [%collapsible.result]
 =====
 [NOTE]
@@ -1338,7 +1338,7 @@ Sidebars are used to visually separate auxiliary bits of content
 that supplement the main text.
 ----
 
-.<<ex-sidebar>>의 결과 보기
+.ex-sidebar>>의 결과 보기
 [%collapsible.result]
 ====
 .Optional Title
@@ -1365,7 +1365,7 @@ The document header is useful, but not required.
 ====
 ------
 
-.<<ex-example>>의 결과 보기
+.ex-example>>의 결과 보기
 [example%collapsible.result]
 --
 ====
@@ -1409,7 +1409,7 @@ and as necessary in the political world as storms in the physical."
 -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
 ----
 
-.<<ex-quotes>>의 결과 보기
+.ex-quotes>>의 결과 보기
 [%collapsible.result]
 ====
 [quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
@@ -1449,7 +1449,7 @@ puts "I'm a source block!"
 --
 ----
 
-.<<ex-open>> 결과 보기
+.ex-open 결과 보기
 [%collapsible.result]
 ====
 --
@@ -1477,7 +1477,7 @@ That means you can include raw HTML, like this embedded Gist:
 ++++
 ----
 
-.<<ex-pass-block>> 결과 보기
+.ex-pass-block 결과 보기
 [%collapsible.result]
 ====
 ++++
@@ -1506,7 +1506,7 @@ That means you can include raw HTML, like this embedded Gist:
 ----
 ------
 
-.<<ex-block-subs>> 결과 보기
+.ex-block-subs 결과 보기
 [%collapsible.result]
 ====
 [source,xml,subs=attributes+]
@@ -1538,7 +1538,7 @@ That means you can include raw HTML, like this embedded Gist:
 <.> `cols` 속성이 지정되지 않은 경우, 열의 수는 첫 번째 (비어 있지 않은) 줄에 있는 셀 구분자의 개수와 같습니다.
 <.> 표의 시작 부분에서 비어 있지 않은 줄 바로 뒤에 빈 줄이 올 경우, 첫 번째 줄의 셀은 표 헤더로 승격됩니다.
 
-.<<ex-header-row>>의 결과 보기
+.ex-header-row>>의 결과 보기
 [%collapsible.result]
 ====
 [caption=“표 1. ”]
@@ -1574,7 +1574,7 @@ That means you can include raw HTML, like this embedded Gist:
 이 경우, 기본 서식을 2개의 열에 걸쳐 반복 적용합니다.
 헤더의 셀이 한 줄로 정의되지 않은 경우, `cols` 속성을 사용하여 테이블의 열 수를 설정하고, `%header` 옵션(또는 `options=header` 속성)을 사용하여 첫 번째 행을 테이블 헤더로 지정해야 합니다.
 
-.<<ex-cols>>의 결과 보기
+.ex-cols>>의 결과 보기
 [%collapsible.result]
 ====
 [%header,cols=2*]
@@ -1598,7 +1598,7 @@ include::tables:example$table.adoc[tag=b-col-indv-co]
 <. > 이 예제에서 `cols` 속성은 두 가지 기능을 합니다.
 이 테이블이 3개의 열로 구성됨을 지정하고, 각 열의 상대적 너비를 설정합니다.
 
-.<<ex-cols-widths>> 결과 보기
+.ex-cols-widths 결과 보기
 [%collapsible.result]
 ====
 [caption=“표 1.”]
@@ -1639,7 +1639,7 @@ https://getfirefox.com[Get Firefox]!
 |===
 ----
 
-.<<ex-table-adoc>> 결과 보기
+.ex-table-adoc 결과 보기
 [%collapsible.result]
 ====
 [cols="2,2,5a"]
@@ -1668,7 +1668,7 @@ Baauer,Harlem Shake,Hip Hop
 ,===
 ----
 
-.<<ex-csv>> 결과 보기
+.ex-csv 결과 보기
 [%collapsible.result]
 ====
 ,===
@@ -1689,7 +1689,7 @@ The Lumineers,Ho Hey,Folk Rock
 |===
 ----
 
-.<<ex-csv-formal>> 결과 보기
+.ex-csv-formal 결과 보기
 [%collapsible.result]
 ====
 [%header,format=csv]
@@ -1718,7 +1718,7 @@ Robyn:Indestructible:Dance
 :===
 ----
 
-.<<ex-dsv>> 결과 보기
+.ex-dsv 결과 보기
 [%collapsible.result]
 ====
 :===
@@ -1740,7 +1740,7 @@ Robyn:Indestructible:Dance
 |===
 ----
 
-.<<ex-cell-format>>의 결과 보기
+.ex-cell-format>>의 결과 보기
 [%collapsible.result]
 ====
 [cols="e,m,^,>s",width="25%"]
@@ -1837,7 +1837,7 @@ Robyn:Indestructible:Dance
 뒤
 ----
 
-.<<ex-thematic>> 결과 보기
+.ex-thematic 결과 보기
 [%collapsible.result]
 ====
 앞
@@ -1875,7 +1875,7 @@ Robyn:Indestructible:Dance
 {checkedbox} 끝났습니다!
 ----
 
-.<<ex-attributes>>의 결과 보기
+.ex-attributes>>의 결과 보기
 [%collapsible.result]
 ====
 // 여기서는 중첩된 문서 해킹을 사용해야 합니다. 그렇지 않으면 속성이 해결되지 않습니다.
@@ -1923,7 +1923,7 @@ a|
 |===
 ----
 
-.<<ex-counter>>의 결과 보기
+.ex-counter>>의 결과 보기
 [%collapsible.result]
 ====
 [caption=“표 1. ”]
@@ -2043,7 +2043,7 @@ The double brackets around it are preserved.
 The URL \https://example.org isn't converted into an active link.
 ----
 
-.<<ex-slash>>의 결과 보기
+.ex-slash>>의 결과 보기
 [%collapsible.result]
 ====
 In /items/\{id}, the id attribute isn't replaced.
@@ -2085,7 +2085,7 @@ A plus passthrough will escape standalone formatting marks,
 like +``+, or formatting marks within a word, like all-natural++*++.
 ----
 
-.<<ex-single-plus>>의 결과 보기
+.ex-single-plus>>의 결과 보기
 [%collapsible.result]
 ====
 A word or phrase between single pluses, such as +/user/{id}+,
@@ -2108,7 +2108,7 @@ like +``+, or formatting marks within a word, like all-natural++*++.
 pass:[<del>strike this</del>] is also marked as deleted.
 ----
 
-.<<ex-inline-pass>> 결과 보기
+.ex-inline-pass 결과 보기
 [%collapsible.result]
 ====
 +++<del>strike this</del>+++ is marked as deleted.
@@ -2133,7 +2133,7 @@ From Journeyman to Master. Addison-Wesley. 1999.
 Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
 ----
 
-.<<ex-biblio>> 결과 보기
+.ex-biblio 결과 보기
 [%collapsible.result]
 ====
 |===
@@ -2164,7 +2164,7 @@ A bold statement!footnote:disclaimer[Opinions are my own.]
 Another bold statement.footnote:disclaimer[]
 ----
 
-.<<ex-footnotes>> 결과 보기
+.ex-footnotes 결과 보기
 [%collapsible.result]
 ====
 [.unstyled]
@@ -2199,7 +2199,7 @@ Another bold statement.footnote:disclaimer[]
 ###### Section Level 5
 ----
 
-.<<ex-md-headings>>의 결과 보기
+.ex-md-headings>>의 결과 보기
 [%collapsible.result]
 ====
 [float]
@@ -2233,7 +2233,7 @@ end
 ```
 ----
 
-.<<ex-fenced>> 결과 보기
+.ex-fenced 결과 보기
 [%collapsible.result]
 ====
 ```ruby
@@ -2253,7 +2253,7 @@ end
 > -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
 ----
 
-.<<ex-md-quote>> 결과 보기
+.ex-md-quote 결과 보기
 [%collapsible.result]
 ====
 > I hold it that a little rebellion now and then is a good thing,
@@ -2279,7 +2279,7 @@ end
 > Yep. AsciiDoc and Markdown share a lot of common syntax already.
 ----
 
-.<<ex-md-blockquote>> 결과 보기
+.ex-md-blockquote 결과 보기
 [%collapsible.result]
 ====
 > > What's new?
@@ -2309,7 +2309,7 @@ end
 * * *
 ----
 
-.<<ex-md-breaks>>의 결과 보기
+.ex-md-breaks>>의 결과 보기
 [%collapsible.result]
 ====
 ---
