@@ -33,7 +33,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-[TIP]
+[NOTE]
 ====
 * link:https://asciidoceditor.com/[온라인 편집기 - 추천]
 * https://asciidocalive.draftview.app/[온라인 편집기2 - 베타]
