@@ -5,6 +5,7 @@
 :revdate: 2026/10/27
 :description: 문서 기본 구조
 :lang: ko
+:experimental:
 :source-language: asciidoc
 :doctype: book
 :toc: left
