@@ -96,7 +96,7 @@ ed가 표준 UNIX 편집기이긴 하지만, vi는 대중에게 널리 쓰이는
 PS: BSD 편집기인 nvi(new vi)는 vi(1)과 버그 하나하나까지 완벽하게 호환되므로 더 우수합니다.
 
 
-== A word about Emacs
+=== A word about Emacs
 
 Emacs는 다음 문장으로 가장 잘 요약할 수 있습니다. “Emacs는 훌륭한 텍스트 편집기만 빠진 운영 체제입니다.” Emacs에는 여러 가지 파크 버전이 있지만, 그중에서도 단연 가장 인기 있는 것은 GNU Emacs입니다. 본질적으로 Emacs가 있다면 이 글 전체가 불필요해집니다. 콘솔에서 할 수 있는 모든 일은 Emacs에서도 할 수 있기 때문입니다. 예를 들어, M-x shell-command(즉, Alt-x를 누른 다음 shell-command를 입력)를 입력하면 ifconfig나 firefox 등 어떤 명령이든 실행할 수 있습니다. 완전한 셸 세션을 실행하려면 M-x shell을 입력하세요(고급 ncurses 프로그램을 실행해야 한다면 M-x ansi-term을 사용하세요).
 
