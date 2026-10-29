@@ -1,3 +1,34 @@
+= Console Desktop Guide
+:docname: = Console 사용법
+:author: piljin.kwon@gmail.com
+:revnumber: 0.1
+:revdate: 2026/10/29
+:description: Console 데스크탑
+:lang: ko
+:experimental:
+:source-language: asciidoc
+:doctype: book
+:toc: left
+:toclevels: 1
+:toc-title: 목차
+:sectnums:
+:sectlinks:
+:sectnumlevels: 4
+:chapter-label:
+:icons: font
+:imagesdir: ./images
+:source-highlighter: coderay
+:example-caption: 예제
+:table-caption: 표
+:figure-caption: 그림
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 # What is a Console?
 
 유닉스 용어에서 “콘솔”(유닉스…? 리눅스를 떠올리세요. 한 번에 하나의 개념만 헷갈리게 하는 게 가장 좋죠!)이란 그래픽 인터페이스(일반적으로 “데스크톱”이라고 부르는 것)와 대조되는 텍스트 기반 인터페이스를 말합니다. 콘솔은 때때로 “tty”라고도 불립니다(teletype의 약자로, 이는 ‘회색 수염’ 세대—모니터를 “유리 텔레타이프”라고 부르는 사람들—가 사용하는 용어입니다). Ctrl + Alt + Fn 키를 누르고 있으면 콘솔과 그래픽 환경 사이를 전환할 수 있습니다(예: Ctrl + Alt + F1을 누르면 tty1, 즉 첫 번째 콘솔로 전환됩니다). 정확히 몇 개의 콘솔을 사용할 수 있는지, 그리고 그래픽 환경이 어디에 위치하는지는 실행 중인 UNIX 버전과 구성 방식에 따라 크게 달라집니다. 이에 대해서는 나중에 더 자세히 다루겠지만, 부담 없이 직접 실험해 보세요! 콘솔(기술적으로는 가상 콘솔)은 XTerm과 같은 터미널 에뮬레이터와는 다릅니다. 터미널 에뮬레이터는 그래픽 환경 내에서 실행할 수 있는 프로그램입니다. 또한 콘솔은 셸과도 다릅니다. 예를 들어 bash와 같은 셸은 터미널 에뮬레이터나 가상 콘솔 내에서 실행됩니다. 하지만 터미널 에뮬레이터와 가상 콘솔이 종종 “터미널”, “콘솔” 또는 “셸”이라는 용어로 혼용되어 사용되기 때문에 혼란이 큽니다(참고로, 이 모든 것은 “CLI(명령줄 인터페이스)”에 해당합니다).
