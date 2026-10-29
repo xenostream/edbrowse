@@ -6,6 +6,7 @@
 :description: 문서 기본 구조
 :lang: ko
 :experimental:
+:showtitle:
 :source-language: asciidoc
 :doctype: book
 :toc: left
