@@ -190,6 +190,21 @@ Heading
 item1 | item2 | item3
 line1 | line2 | line3
 .TE
+
+.TS
+allbox tab(|);
+c s s
+c r c.
+title
+T{
+aaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaa
+T}| a | a
+.TE
 ----  
+
+
   
   
