@@ -68,21 +68,19 @@ ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 echo "Asia/Seoul" > /etc/timezone
 ----
 
-.troff & tool install
+.Troff & tool install
 [source,bash]
 ----
 apk add ghostscript groff fontforge imagemagick unzip bash make
 wget http://schaffter.ca/mom/bin/install-font.sh
 chmod 755 install-font.sh
   
-cp /mnt/c/Users/PJKwon/Downloads/NotoFonts/Noto* .
-cp /mnt/c/Alpine/sarasa-mono-k-regular-nerd-font.ttf .  
-  
-./install-font.sh -s -F Noto -f +R NotoSerifKR-Regular.ttf
-./install-font.sh -s -F Noto -f +I NotoSansKR-Regular.ttf
-./install-font.sh -s -F Noto -f +B NotoSerifKR-Bold.ttf
-./install-font.sh -s -F Noto -f +BI NotoSansKR-Bold.ttf
-./install-font.sh -s -F Noto -f +CR sarasa-mono-k-regular-nerd-font.ttf
+./install-font.sh -s -F Noto -f +R /mnt/c/Temp/groff/NotoSerifKR-Regular.ttf
+./install-font.sh -s -F Noto -f +I /mnt/c/Temp/groff/NotoSansKR-Regular.ttf
+./install-font.sh -s -F Noto -f +B /mnt/c/Temp/groff/NotoSerifKR-Bold.ttf
+./install-font.sh -s -F Noto -f +BI /mnt/c/Temp/groff/NotoSansKR-Bold.ttf
+./install-font.sh -s -F Noto -f +CR /mnt/c/Temp/groff/NotoSansMono-Regular.ttf
+./install-font.sh -s -F Noto -f +CB /mnt/c/Temp/groff/NotoSansMono-Bold.ttf
 
 (Always ’y’ Entered)
 
@@ -132,7 +130,7 @@ clean:
 
   
 == Include Picture 
-WARNING: eps Only - imagemagick’s `convert test.jpg test.eps` )
+WARNING: eps Only!! -- imagemagick’s `convert test.jpg test.eps` )
 
 [source,groff]
 ----
