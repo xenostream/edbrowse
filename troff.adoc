@@ -165,7 +165,8 @@ This line’s color is still RED
 Line inside color is \m[blue]BLUE\m[]
 
 
-== Basic Table ( tbl test.ms | groff -ms -mspdf -k -Tpdf > test.pdf )
+== Basic Table 
+`tbl test.ms | groff -ms -mspdf -k -Tpdf > test.pdf`
 
 [source,groff]
 ----
