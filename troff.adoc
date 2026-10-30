@@ -112,7 +112,13 @@ clean:
 	rm -f $(FILE).ps $(FILE).pdf
 ----        
 
-== Troff 작성팁
+== Troff 작성 팁
+
+타이포 따옴표 
+[source,groff]
+----
+이건 ``쌍따옴표'' 입니다.
+----
 
 [source,groff]
 ----
