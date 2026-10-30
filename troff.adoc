@@ -81,13 +81,15 @@ apk add ghostscript groff fontforge imagemagick unzip bash make
 wget http://schaffter.ca/mom/bin/install-font.sh
 chmod 755 install-font.sh
   
-cp /mnt/c/Temp/groff/HCR* .
+cp /mnt/c/Temp/groff/*.ttf .
 
 ./install-font.sh -s -F HCR -f +R HCRBatang-LVT.ttf
 ./install-font.sh -s -F HCR -f +I HCRDotum-LVT.ttf
 ./install-font.sh -s -F HCR -f +B HCRBatang-Bold-LVT.ttf
 ./install-font.sh -s -F HCR -f +BI HCRDotum-Bold-LVT.ttf
-./install-font.sh -s -F Nanum -f +CR NotoSansMono-Regular.ttf
+./install-font.sh -s -F Nanum -f +CR JetBrainsMonoNerdFontMono-Regular.ttf
+
+
 ./install-font.sh -s -F Nanum -f +CB NotoSansMono-Bold.ttf
 
 (Always ’y’ Entered)
