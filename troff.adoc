@@ -66,6 +66,12 @@ rm -rf sbin .PKGINFO .SIGN.RSA.alpine-devel@lists.alpinelinux.org-6165ee59.rsa.p
 apk add tzdata
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 echo "Asia/Seoul" > /etc/timezone
+
+# NeoVIM
+apk add git curl nodejs neovim ripgrep build-base
+mkdir .config
+cp -R /mnt/c/Alpine/config/.config/nvim ~/.config 
+nvim
 ----
 
 .Troff & tool install
@@ -75,12 +81,14 @@ apk add ghostscript groff fontforge imagemagick unzip bash make
 wget http://schaffter.ca/mom/bin/install-font.sh
 chmod 755 install-font.sh
   
-./install-font.sh -s -F Noto -f +R /mnt/c/Temp/groff/NotoSerifKR-Regular.ttf
-./install-font.sh -s -F Noto -f +I /mnt/c/Temp/groff/NotoSansKR-Regular.ttf
-./install-font.sh -s -F Noto -f +B /mnt/c/Temp/groff/NotoSerifKR-Bold.ttf
-./install-font.sh -s -F Noto -f +BI /mnt/c/Temp/groff/NotoSansKR-Bold.ttf
-./install-font.sh -s -F Noto -f +CR /mnt/c/Temp/groff/NotoSansMono-Regular.ttf
-./install-font.sh -s -F Noto -f +CB /mnt/c/Temp/groff/NotoSansMono-Bold.ttf
+cp /mnt/c/Temp/groff/나눔* .
+
+./install-font.sh -s -F Nanum -f +R 나눔명조.ttf
+./install-font.sh -s -F Nanum -f +I 나눔고딕.ttf
+./install-font.sh -s -F Nanum -f +B 나눔고딕Bold.ttf
+./install-font.sh -s -F Nanum -f +BI 나눔명조Bold.ttf
+./install-font.sh -s -F Nanum -f +CR NotoSansMono-Regular.ttf
+./install-font.sh -s -F Nanum -f +CB NotoSansMono-Bold.ttf
 
 (Always ’y’ Entered)
 
