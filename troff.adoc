@@ -1,0 +1,196 @@
+= Troff with Hangul
+:docname: = asciidoc 사용법
+:author: piljin.kwon@gmail.com
+:revnumber: 0.1
+:revdate: 2026/10/30
+:description: 한글 Troff
+:lang: ko
+:experimental:
+:showtitle:
+:source-language: asciidoc
+:doctype: book
+:toc: left
+:toclevels: 1
+:toc-title: 목차
+:sectnums:
+:sectlinks:
+:sectnumlevels: 4
+:chapter-label:
+:icons: font
+:imagesdir: ./images
+:source-highlighter: coderay
+:example-caption: 예제
+:table-caption: 표
+:figure-caption: 그림
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+
+== Alpine Linux Install 
+
+.관라지 권한 파워쉘 실행
+[source,powershell]
+----
+Set-Path C:\Alpine
+wsl --import Xeno . .\rootfs.tar.gz 
+wsl -d xeno --exec /bin/busybox --install -s /bin 
+wsl --shutdown
+
+# Connect VM
+wsl -d Xeno
+----
+
+.Alpine Linux Side
+[source,bash]
+----
+# Enabel APK
+cd; mkdir -p /etc/apk
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+
+wget --no-check-certificate https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/apk-tools-static-3.0.8-r0.apk
+
+tar xvzf apk-tools-static-3.0.8-r0.apk 
+sbin/apk.static --initdb --allow-untrusted add apk-tools
+apk add --allow-untrusted alpine-keys
+apk update
+
+rm -rf sbin .PKGINFO .SIGN.RSA.alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub apk-tools-static-3.0.8-r0.apk
+
+# Timezone Setting
+apk add tzdata
+ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+echo "Asia/Seoul" > /etc/timezone
+----
+
+.troff & tool install
+[source,bash]
+----
+apk add ghostscript groff fontforge imagemagick unzip bash make
+wget http://schaffter.ca/mom/bin/install-font.sh
+chmod 755 install-font.sh
+  
+cp /mnt/c/Users/PJKwon/Downloads/NotoFonts/Noto* .
+cp /mnt/c/Alpine/sarasa-mono-k-regular-nerd-font.ttf .  
+  
+./install-font.sh -s -F Noto -f +R NotoSerifKR-Regular.ttf
+./install-font.sh -s -F Noto -f +I NotoSansKR-Regular.ttf
+./install-font.sh -s -F Noto -f +B NotoSerifKR-Bold.ttf
+./install-font.sh -s -F Noto -f +BI NotoSansKR-Bold.ttf
+./install-font.sh -s -F Noto -f +CR sarasa-mono-k-regular-nerd-font.ttf
+
+(Always ’y’ Entered)
+
+cd /usr/share/groff/site-tmac  
+wget https://github.com/aosm/groff/raw/refs/heads/master/groff/contrib/pdfmark/spdf.tmac  
+wget https://github.com/aosm/groff/raw/refs/heads/master/groff/contrib/pdfmark/pdfmark.tmac
+----
+
+.Makefile
+[source,makefile]
+----
+.SUFFIXES: .ms .ps .pdf
+PRE = preconv | tbl | eqn
+ROFF = troff
+POST = grops
+
+FILE = test
+
+all: $(FILE).pdf
+	ls -alt
+
+.ps.pdf:
+	ps2pdf $<
+
+.ms.ps:
+	cat $< | $(PRE) | $(ROFF) -ms -mspdf | $(POST) > $(FILE).ps
+
+clean:
+	rm -f $(FILE).ps $(FILE).pdf
+----        
+
+== Troff 작성팁
+
+[source,groff]
+----
+.fam Noto  
+.nr .PS 10
+.nr .VS 16
+
+.rn DS DS0
+
+.de DS
+.DS0 \\$1 \\$2
+.ft CR
+..
+----
+
+  
+== Include Picture 
+WARNING: eps Only - imagemagick’s `convert test.jpg test.eps` )
+
+[source,groff]
+----
+.PSPIC -C "test.eps" 3i 2i
+----
+
+NOTE: PSPIC [align(L|R|C) -I 2i] "file.eps" [width] [height]  
+  
+
+== Table Of Contents 
+`groff -ms -mspdf -k -Tpdf test.ms > test.pdf`
+
+.번호 있는 제목
+[source,groff]
+.NH
+.XN "Heading 1"
+.NH
+.XN "Heading 2"
+.TC
+
+== Use a Color
+
+.사용자 컬러나 내장 컬러
+[source,groff]
+.defcolor blue rgb 0 0 1
+.defcolor red rgb #FF0000
+.gcolor red
+This line’s color is still RED
+.gcolor
+Line inside color is \m[blue]BLUE\m[]
+
+
+== Basic Table ( tbl test.ms | groff -ms -mspdf -k -Tpdf > test.pdf )
+
+[source,groff]
+----
+.TS
+allbox ;
+c s s s
+c s c s
+c c c c.
+Heading
+Sub1Sub2
+a1 a2 a3 a4
+b1 b2 b3 b4
+c1 c2 c3 c4
+d1 d2 d3 d4
+.TE
+
+Table2
+.TS
+center allbox tab(|) ;
+c s s
+c c c.
+Heading
+item1 | item2 | item3
+line1 | line2 | line3
+.TE
+----  
+  
+  
