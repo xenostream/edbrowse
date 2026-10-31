@@ -1,5 +1,35 @@
 = JScript Tutorial
-
+= JScript Tutorials
+:docname: = JScript 사용법
+:author: piljin.kwon@gmail.com
+:revnumber: 0.1
+:revdate: 2026/10/31
+:description: JScript 기본 구조
+:lang: ko
+:experimental:
+:showtitle:
+:source-language: asciidoc
+:doctype: book
+:toc: left
+:toclevels: 1
+:toc-title: 목차
+:sectnums:
+:sectlinks:
+:sectnumlevels: 4
+:chapter-label:
+:icons: font
+:imagesdir: ./images
+:source-highlighter: coderay
+:example-caption: 예제
+:table-caption: 표
+:figure-caption: 그림
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 
 https://documentation.help/MS-Office-JScript/[Reference]
 
