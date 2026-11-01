@@ -1,27 +1,25 @@
-= asciidoc 사용법
-:docname: = asciidoc 사용법
-:author: piljin.kwon@gmail.com
-:revnumber: 0.1
-:revdate: 2026/10/27
-:description: 문서 기본 구조
-:lang: ko
+= Multi-Part Book with Special Sections
+Author Name <piljin.kwon@gmail.com>
 :experimental:
-:showtitle:
-:source-language: asciidoc
 :doctype: book
+:lang: ko
+:source-language: asciidoc
+:source-highlighter: coderay
+:showtitle:
 :toc: left
 :toclevels: 1
 :toc-title: 목차
+:partnums:
 :sectnums:
 :sectlinks:
 :sectnumlevels: 4
 :chapter-label:
 :icons: font
 :imagesdir: ./images
-:source-highlighter: coderay
 :example-caption: 예제
 :table-caption: 표
 :figure-caption: 그림
+:appendix-caption: 부록
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -32,43 +30,39 @@ endif::[]
 
 
 
-== asciidoc이란?
-
-자세한 내용은 <<what_is_asciidoctor, asciidoctor란?>>을 참조하십시오.
-
-[[what_is_asciidoctor]]
-== asciidoctor란?
+[abstract]
+--
+This Book will take you on a wonderful adventure of knowledge.
+--
 
 
-.임시 테이블
-[options="autowidth"]
-|====
-|열 1|열 2|열 3
-3+|3열 병합
-.2+|2행 세로 병합|b-1|c-2
-|b-2|c-2
-.2+|2행 세로 + 2열 병합의 조합 2+|b-3
-|b-4|c-4
-|====
+[preface]
+== Our Preface
+
+I awoke one morning and was confronted by the dark and stormy eyes of the chinchilla.
 
 
-:other-app-name: 호게 툴
-:other-app-api-doc-path: ../../other_app/api/index.html
-{other-app-name}의 link:{other-app-api-doc-path}[API 사양서]
+= The First Part
 
-TIP: Tip
+== The First Chapter
 
-NOTE: Note
-
-IMPORTANT: Important
-
-WARNING: Warning
-
-CAUTION: Caution
-
-[quote, Stuart Rackham, AsciiDoc author]
-____
-Plain text that reads well and converts to many formats.
-____
+Chapters can be grouped by preceding them with a level 0 Book Part title.
 
 
+= The Second Part
+
+== The First Chapter
+
+Chapters can be grouped by preceding them with a level 0 Book Part title.
+
+
+[appendix]
+= The Appendix
+
+=== Basics
+
+A multipart book can have appendixes, which should be defined at section level 0.
+
+=== Subsections
+
+Subsections of an appendix in a multipart book should start at level 2.
