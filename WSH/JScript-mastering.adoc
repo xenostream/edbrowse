@@ -1,4 +1,33 @@
 = WSH JScript 마스터하기
+Author Name <piljin.kwon@gmail.com>
+:experimental:
+:doctype: book
+:lang: ko
+:source-language: asciidoc
+:source-highlighter: coderay
+:showtitle:
+:toc: left
+:toclevels: 1
+:toc-title: 목차
+:partnums:
+:sectnums:
+:sectlinks:
+:sectnumlevels: 4
+:chapter-label:
+:icons: font
+:imagesdir: ./images
+:example-caption: 예제
+:table-caption: 표
+:figure-caption: 그림
+:appendix-caption: 부록
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 * https://jscript.zouri.jp/index.html[Reference]
 * https://atmarkit.itmedia.co.jp/ait/series/2728/[WSH Reference]
 
