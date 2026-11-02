@@ -7,7 +7,7 @@ Author Name <piljin.kwon@gmail.com>
 :source-highlighter: coderay
 :showtitle:
 :toc: left
-:toclevels: 1
+:toclevels: 2
 :toc-title: 목차
 :partnums:
 :sectnums:
