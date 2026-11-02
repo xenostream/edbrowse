@@ -4,7 +4,7 @@
 
 == 소개
 
-WSH JScript를 능숙하게 다루자 
+https://jscript.zouri.jp/[WSH JScript를 능숙하게 다루자^]
 
 === 서문
 
