@@ -6355,22 +6355,21 @@ Navigate() 함수에 대해서는 ‘사이트로 이동’을 참조하십시�
 Busy 속성에 대해서는 ‘사이트로 이동’을 참조하십시오.
 ReadyState 속성에 대해서는 ‘사이트로 이동’을 참조하십시오.
 
-함수명
+함수명::
 　IEObj.GoBack();
 
-함수 설명
+함수 설명::
 　　Internet Explorer에서 바로 이전 페이지로 돌아갈 수 있습니다.
 　‘뒤로’ 버튼과 동일한 기능입니다.
 
-인수
+인수::
 　IEObj ・・・・・・Internet Explorer 조작용 객체
 
-반환값
+반환값::
 　없음
 
-
 [source,js]
-----　
+----
 //
 //  Internet Explorer 조작 (IE 버전 6)
 //
@@ -6425,7 +6424,7 @@ WScript.Echo( “종료” );
 IEApp = null;
 ----
 
-　Internet Explorer(IE)를 실행하고, 3초 후에 Google 메인 페이지를 표시합니다.
+Internet Explorer(IE)를 실행하고, 3초 후에 Google 메인 페이지를 표시합니다.
 그로부터 1초 후에 Yahoo Japan 메인 페이지가 표시됩니다.
 그로부터 또 1초 후에 이전 화면(Google 메인 페이지)으로 돌아갑니다.
 그 후, Internet Explorer(IE)를 종료합니다.
