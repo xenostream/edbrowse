@@ -30,13 +30,6 @@ endif::[]
 
 https://www.i-vinci.co.jp/techblog/2161[고대 언어 JScript를 추천합니다^]
 
-== 자기소개
-
-처음 뵙겠습니다. i-Vinci의 나카지마입니다.
-
-작년 10월경 SNS에서 잠시 화제가 되었던 ‘농가는 Replace()되었습니다’ 라는 게임을 추천합니다. 파이썬과 매우 유사한 프로그래밍 언어로 드론을 조작해 농업을 자동화하는 게임입니다. 2026년 중에 추가 콘텐츠도 공개될 예정이니, 관심이 있으시면 꼭 한번 플레이해 보세요.
-
-
 == JScript란
 
 JScript는 마이크로소프트가 개발한 ECMAScript(JavaScript의 표준 사양) 3.x를 준수하는 스크립트 언어입니다. 예전에는 Internet Explorer나 IIS의 서버 측 스크립트, Windows Scripting Host(WSH)에서 사용되었지만, 현재는 거의 사용되지 않습니다.
