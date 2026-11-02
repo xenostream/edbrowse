@@ -11,7 +11,7 @@ Author Name <piljin.kwon@gmail.com>
 :toc-title: 목차
 :partnums:
 :sectnums:
-:sectlinks:
+:sectlinks!:
 :sectnumlevels: 4
 :chapter-label:
 :icons: font
