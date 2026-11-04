@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package>
+<!-- cscript //Job:MixedJob Windows_Script_File.wsf-->
+   <job id="VBScriptJob">
+      <script language="VBScript">
+         WScript.Echo "Hello world! - VBScriptJob"
+      </script>
+   </job>
+
+   <job id="JScriptJob">
+      <script language="JScript">
+         WScript.Echo("Hello world! - JScriptJob");
+      </script>
+   </job>
+
+   <job id="MixedJob">
+      <script language="VBScript">
+         Dim sName
+         sName = "MixedJob"
+      </script>
+      <script language="JScript">
+         WScript.Echo("Hello world! - "+sName);
+      </script>
+   </job>
+
+
+<job id="IEX">
+  <script language="VBScript">
+      Set ie = CreateObject("InternetExplorer.Application")
+      ie.Navigate "https://www.microsoft.com/ja-jp/"
+      ie.Visible = True
+  </script>
+</job>
+
+</package>

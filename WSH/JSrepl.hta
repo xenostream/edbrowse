@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<HTA:APPLICATION
+  APPLICATIONNAME="WSH JScript REPL"
+  BORDER="thick"
+  BORDERSTYLE="normal"
+  CAPTION="WSH JScript REPL"
+  MAXIMIZEBUTTON="yes"
+  MINIMIZEBUTTON="yes"
+  SCROLL="no"
+  SHOWINTASKBAR="yes"
+  SINGLEINSTANCE="yes"
+  SYSMENU="yes"
+  VERSION="1.0"
+  WINDOWSTATE="normal"
+/>
+
+<html>
+<head>
+<meta charset="EUC_KR">
+<title>WSH JScript REPL</title>
+
+<style>
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #111827;
+  color: #d1d5db;
+  font-family: Consolas, monospace;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+#output {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 65px;
+
+    box-sizing: border-box;
+
+    overflow-x: auto;
+    overflow-y: scroll;
+
+    padding: 12px 12px 20px 12px;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+    scrollbar-face-color: #111827;
+    scrollbar-track-color: #111827;
+    scrollbar-arrow-color: #111827;
+    scrollbar-shadow-color: #111827;
+    scrollbar-highlight-color: #111827;
+    scrollbar-3dlight-color: #111827;
+    scrollbar-darkshadow-color: #111827;
+}
+
+#cmd {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 65px;
+
+  box-sizing: border-box;
+
+  background: #1f2937;
+  color: #a7f3d0;
+
+  border: none;
+  border-top: 1px solid #374151;
+  outline: none;
+
+  padding: 10px;
+
+  resize: none;
+
+  font-family: Consolas, monospace;
+  font-size: 14px;
+}
+
+/* 출력 색상 */
+
+.output-normal {
+  color: #d1d5db;
+}
+
+.output-echo {
+  color: #a7f3d0;
+}
+
+.output-error {
+  color: #f87171;
+}
+
+.output-result {
+  color: #93c5fd;
+}
+
+.output-prompt {
+  color: #fbbf24;
+}
+
+/* 폰트 선택 팝업 */
+
+#fontPicker {
+  display: none;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 280px;
+
+  margin-left: -140px;
+  margin-top: -130px;
+
+  padding: 15px;
+
+  box-sizing: border-box;
+
+  background: #1f2937;
+  border: 1px solid #475569;
+
+  z-index: 1000;
+}
+
+#fontPicker select {
+  width: 100%;
+  height: 35px;
+
+  background: #111827;
+  color: #d1d5db;
+
+  border: 1px solid #475569;
+
+  padding: 5px;
+  font-size: 13px;
+}
+
+#fontPicker button {
+  margin-top: 12px;
+  padding: 6px 15px;
+
+  background: #374151;
+  color: #ffffff;
+
+  border: 1px solid #64748b;
+  cursor: pointer;
+}
+
+#fontPicker .title {
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #a7f3d0;
+}
+
+#fontPicker .preview {
+  margin-top: 12px;
+  padding: 10px;
+
+  background: #111827;
+  color: #d1d5db;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+</style>
+
+<script language="JScript">
+
+/* =========================================
+   WSH JScript REPL
+========================================= */
+
+var commandHistory = [];
+var historyIndex = 0;
+
+var executing = false;
+
+
+/* =========================================
+   폰트 설정
+========================================= */
+
+var defaultFontSize = 15;
+var currentFontSize = 15;
+
+var defaultFontName = "Sarasa Mono K Nerd Font";
+var currentFontName = "Sarasa Mono K Nerd Font";
+
+
+/* =========================================
+   WSH 객체
+========================================= */
+
+var wshShell = null;
+var fso = null;
+
+
+/* =========================================
+   초기화
+========================================= */
+
+function initialize() {
+  window.resizeTo(1024, 768);
+
+  /*
+    실제 WSH ActiveX 객체
+  */
+  wshShell = new ActiveXObject("WScript.Shell");
+
+  fso = new ActiveXObject("Scripting.FileSystemObject");
+
+  /*
+    편의용 전역 객체
+  */
+
+  window.shell = wshShell;
+  window.fso = fso;
+
+ /*
+  WScript 호환 객체 생성
+*/
+
+  window.WScript = new Object();
+
+  window.WScript.Echo = function() {
+  
+    var args = [];
+  
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(toStringValue(arguments[i]));
+    }
+  
+    print(args.join(" "), "echo");
+  
+  };
+  
+  window.WScript.Quit = function(code) {
+      window.close();
+  };
+  
+  window.WScript.Sleep = function(milliseconds) {
+    throw new Error(
+      "WScript.Sleep is not supported in this REPL."
+    );
+  };
+  
+  window.WScript.ScriptName = "WSH JScript REPL";
+  window.WScript.ScriptFullName = window.location.pathname;
+  window.WScript.Version = "HTA JScript REPL";
+
+  /*
+    편의 함수
+  */
+  window.clear = function() {
+    clearOutput();
+  };
+
+  /*
+    마우스 휠 이벤트
+  */
+  document.attachEvent(
+    "onmousewheel",
+    mouseWheelHandler
+  );
+
+  /*
+    초기 메시지
+  */
+  print("WSH JScript REPL", "result");
+  print("----------------------------------------");
+  print("JScript execution environment ready.");
+  print("");
+  print("Available objects:");
+  print("  WScript");
+  print("  shell");
+  print("  fso");
+  print("");
+  print("Examples:");
+  print('  WScript.Echo("Hello WSH");');
+  print('  shell.ExpandEnvironmentStrings("%USERPROFILE%");');
+  print('  fso.GetSpecialFolder(2).Path;');
+  print("");
+  print("REPL Commands:");
+  print("  :clear   Clear output");
+  print("  :exit    Exit REPL");
+  print("  :help    Show help");
+  print("  :vars    Show global variables");
+  print("  :reset   Restart REPL");
+  print("  font=    Change font");
+  print("----------------------------------------");
+  print("");
+
+  setFocus();
+}
+
+
+/* =========================================
+   값 문자열 변환
+========================================= */
+
+function toStringValue(value) {
+  if (value === null) {
+    return "null";
+  }
+
+  if (typeof value == "undefined") {
+    return "undefined";
+  }
+
+  if (typeof value == "object") {
+    try {
+      return value.toString();
+    }
+    catch(e) {
+      return "[object]";
+    }
+  }
+
+  return String(value);
+}
+
+
+/* =========================================
+   출력
+========================================= */
+
+function print(text, type) {
+  var output = document.getElementById("output");
+  var line = document.createElement("div");
+
+  line.className = "output-" + (type || "normal");
+  line.style.whiteSpace = "pre-wrap";
+
+  if (text === "" || text === " ") {
+      line.appendChild(document.createElement("br"));
+  }
+  else {
+      line.appendChild(
+          document.createTextNode(
+              toStringValue(text)
+          )
+      );
+  }
+
+  output.appendChild(line);
+  output.scrollTop = output.scrollHeight;
+}
+
+
+/* =========================================
+   출력창 초기화
+========================================= */
+
+function clearOutput() {
+  document.getElementById("output").innerHTML = "";
+}
+
+
+/* =========================================
+   REPL 입력 프롬프트
+========================================= */
+
+function showPrompt(code) {
+  print("js> " + code, "prompt");
+}
+
+
+/* =========================================
+   JScript 문자열 이스케이프
+========================================= */
+
+function quoteString(str) {
+  return '"' +
+    String(str)
+      .replace(/\\/g, "\\\\")
+      .replace(/"/g, '\\"')
+      .replace(/\r/g, "\\r")
+      .replace(/\n/g, "\\n")
+      .replace(/\t/g, "\\t") +
+    '"';
+}
+
+
+/* =========================================
+   JScript 코드 실행
+========================================= */
+
+function execute() {
+  if (executing) return;
+
+  var input = document.getElementById("cmd");
+  var code = input.value;
+
+  if (!code.replace(/\s/g, "")) return;
+
+  input.value = "";
+  commandHistory.push(code);
+  historyIndex = commandHistory.length;
+
+  /*
+    REPL 메타 명령
+  */
+
+  var command = code.replace(/^\s+|\s+$/g, "");
+
+  if (command == ":help" || command == "help") {
+  
+      print("WSH JScript REPL Help", "result");
+      print("================================================");
+	  
+      print("");
+      print("[ REPL Commands ]");
+      print(":help       Show this help");
+      print(":clear      Clear output screen");
+      print(":exit       Close REPL");
+      print(":reset      Restart REPL environment");
+      print(":vars       Show global variables");
+      print("font=NAME   Change font");
+      print("font=       Open font picker");
+	  
+      print("");
+      print("[ Available Objects ]");
+      print("WScript     WSH compatibility object");
+      print("shell       WScript.Shell object");
+      print("fso         FileSystemObject");
+	  
+      print("");
+      print("[ WScript Examples ]");
+      print('WScript.Echo("Hello World");');
+      print("WScript.ScriptName;");
+      print("WScript.ScriptFullName;");
+	  
+      print("");
+      print("[ Shell Examples ]");
+      print('shell.ExpandEnvironmentStrings("%USERPROFILE%");');
+      print('shell.RegRead("HKCU\\\\Environment\\\\TEMP");');
+      print('shell.Run("notepad.exe");');
+	  
+      print("");
+      print("[ FileSystem Examples ]");
+      print('fso.GetSpecialFolder(2).Path;');
+      print('fso.FileExists("C:\\\\Windows\\\\notepad.exe");');
+      print('fso.GetDrive("C:").FreeSpace;');
+	  
+      print("");
+      print("[ JavaScript Examples ]");
+      print("var x = 100;");
+      print("x * 2;");
+      print("function hello() { return 'Hello'; }");
+      print("hello();");
+	  
+      print("");
+      print("[ REPL Features ]");
+      print("- Variables and functions persist between commands.");
+      print("- Multiple statements can be executed together.");
+      print("- Shift + Enter inserts a new line.");
+      print("- Up / Down arrows browse command history.");
+      print("- Ctrl + Mouse Wheel changes font size.");
+	  
+      print("");
+      print("================================================");
+  
+      return;
+  }
+  
+  if (command == ":vars" || command == "vars") {
+        for (var name in window) {
+            try {
+                print(
+                  name + " : " + typeof window[name]
+              );
+            }
+          catch(e) {
+          }
+        }
+  
+      return;
+  }
+  
+  if (command == ":reset" || command == "reset") {
+        window.location.reload();
+  
+      return;
+  }
+
+  if (command == ":clear" || command == "clear") {
+    clearOutput();
+
+    return;
+  }
+
+  if (command == ":exit" || command == "exit") {
+    window.close();
+
+    return;
+  }
+
+  /* 폰트 명령 */
+
+  var fontCommand = code.replace(/^\s+|\s+$/g, "");
+
+  if (fontCommand.indexOf("font=") == 0) {
+      var fontName = fontCommand.substring(5);
+
+      if (fontName == "") {
+          showFontPicker();
+      }
+      else {
+          applyFont(fontName);
+          print("Font changed: " + fontName);
+      }
+
+      return;
+  }
+
+  /*
+    입력 표시
+  */
+
+  showPrompt(code);
+
+  executing = true;
+
+  try {
+    /*
+      실행 결과 초기화
+    */
+
+    window.__replResult = undefined;
+    window.__replError = null;
+
+    /*
+      전역 JScript eval 실행
+
+      execScript를 이용해 HTA의 전역
+      JScript 컨텍스트에서 eval을 수행한다.
+
+      따라서 var로 선언한 변수와 함수는
+      다음 REPL 입력에서도 사용할 수 있다.
+    */
+
+    var script =
+      "try {" +
+        "__replResult = eval(" +
+          quoteString(code) +
+        ");" +
+        "__replError = null;" +
+      "} catch (__e) {" +
+        "__replError = __e;" +
+      "}";
+
+    window.execScript(script, "JScript");
+
+    /*
+      예외 출력
+    */
+
+    if (window.__replError !== null) {
+      var error = window.__replError;
+
+      print(
+        "Error: " + error.message,
+        "error"
+      );
+
+      if (error.number) {
+        print(
+          "Error number: " + error.number,
+          "error"
+        );
+      }
+    }
+
+    /*
+      실행 결과 출력
+
+      undefined는 출력하지 않는다.
+    */
+
+    else if (
+      typeof window.__replResult != "undefined"
+    ) {
+      print(
+        toStringValue(window.__replResult),
+        "result"
+      );
+    }
+  }
+  catch(e) {
+    print(
+      "Execution error: " + e.message,
+      "error"
+    );
+  }
+
+  executing = false;
+
+  window.__replResult = undefined;
+  window.__replError = null;
+
+  setFocus();
+}
+
+
+/* =========================================
+   입력 포커스
+========================================= */
+
+function setFocus() {
+  document.getElementById("cmd").focus();
+}
+
+
+/* =========================================
+   폰트 변경
+========================================= */
+
+function applyFont(name) {
+  if (!name) return;
+
+  currentFontName = name;
+
+  document.body.style.fontFamily =
+    "'" + name + "', monospace";
+
+  document.getElementById("cmd").style.fontFamily =
+    "'" + name + "', monospace";
+
+  document.getElementById("output").style.fontFamily =
+    "'" + name + "', monospace";
+}
+
+
+/* =========================================
+   폰트 크기 변경
+========================================= */
+
+function changeFontSize(delta) {
+  var size = currentFontSize + delta;
+
+  if (size < 8 || size > 30) {
+    size = defaultFontSize;
+  }
+
+  currentFontSize = size;
+
+  document.body.style.fontSize =
+    size + "px";
+
+  document.getElementById("cmd").style.fontSize =
+    size + "px";
+
+  document.getElementById("output").style.fontSize =
+    size + "px";
+}
+
+
+/* =========================================
+   Ctrl + 마우스 휠
+========================================= */
+
+function mouseWheelHandler(event) {
+  event = event || window.event;
+
+  if (!event.ctrlKey) return true;
+
+  var delta = event.wheelDelta;
+
+  if (delta > 0) {
+    changeFontSize(1);
+  }
+  else if (delta < 0) {
+    changeFontSize(-1);
+  }
+
+  event.returnValue = false;
+
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+
+  return false;
+}
+
+
+/* =========================================
+   폰트 선택 팝업
+========================================= */
+
+function showFontPicker() {
+  var picker =
+    document.getElementById("fontPicker");
+
+  var select =
+    document.getElementById("fontList");
+
+  picker.style.display = "block";
+
+  select.value = currentFontName;
+
+  document.getElementById("fontPreview").style.fontFamily =
+    "'" + currentFontName + "'";
+
+  select.focus();
+}
+
+
+/* =========================================
+   폰트 선택
+========================================= */
+
+function selectFont(name) {
+  if (!name) return;
+
+  applyFont(name);
+
+  document.getElementById("fontPreview").style.fontFamily =
+    "'" + name + "'";
+
+  print("Font changed: " + name);
+}
+
+
+/* =========================================
+   폰트 팝업 닫기
+========================================= */
+
+function closeFontPicker() {
+  document.getElementById("fontPicker").style.display =
+    "none";
+
+  setFocus();
+}
+
+
+/* =========================================
+   키보드 이벤트
+========================================= */
+
+function keyHandler(event) {
+  event = event || window.event;
+
+  var key = event.keyCode;
+
+  var input = document.getElementById("cmd");
+
+  /*
+    Enter: 실행
+
+    Shift + Enter: 줄바꿈
+  */
+
+  if (key == 13) {
+    if (event.shiftKey) {
+
+      return true;
+    }
+
+    execute();
+
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    return false;
+  }
+
+
+  /*
+    위쪽 방향키: 이전 명령
+  */
+
+  if (key == 38) {
+    if (historyIndex > 0) {
+      historyIndex--;
+
+      input.value =
+        commandHistory[historyIndex];
+    }
+
+    return false;
+  }
+
+
+  /*
+    아래쪽 방향키: 다음 명령
+  */
+
+  if (key == 40) {
+    if (historyIndex < commandHistory.length - 1) {
+
+      historyIndex++;
+
+      input.value =
+        commandHistory[historyIndex];
+    }
+    else {
+      historyIndex = commandHistory.length;
+
+      input.value = "";
+    }
+
+    return false;
+  }
+}
+
+
+/* =========================================
+   페이지 초기화
+========================================= */
+
+window.onload = initialize;
+
+</script>
+</head>
+
+<body>
+
+<div id="output"></div>
+
+<textarea
+  id="cmd"
+  autocomplete="off"
+  spellcheck="false"
+  onkeydown="return keyHandler(event)"
+></textarea>
+
+
+<!-- 폰트 선택 팝업 -->
+
+<div id="fontPicker">
+
+  <div class="title">
+    Select REPL Font
+  </div>
+
+  <select
+    id="fontList"
+    onchange="selectFont(this.value)"
+  >
+    <option value="Consolas">Consolas</option>
+    <option value="Courier New">Courier New</option>
+    <option value="Lucida Console">Lucida Console</option>
+    <option value="Cascadia Mono">Cascadia Mono</option>
+    <option value="Cascadia Code">Cascadia Code</option>
+
+    <option value="Sarasa Mono K Nerd Font">Sarasa Mono K Nerd Font</option>
+    <option value="MS Gothic">MS Gothic</option>
+    <option value="MS PGothic">MS PGothic</option>
+
+    <option value="Malgun Gothic">맑은 고딕</option>
+    <option value="Gulim">굴림</option>
+    <option value="Dotum">돋움</option>
+    <option value="Batang">바탕</option>
+    <option value="Gungsuh">궁서</option>
+
+    <option value="Arial">Arial</option>
+    <option value="Tahoma">Tahoma</option>
+    <option value="Verdana">Verdana</option>
+    <option value="Segoe UI">Segoe UI</option>
+    <option value="Times New Roman">Times New Roman</option>
+
+  </select>
+
+  <div id="fontPreview" class="preview">
+    ABC abc 123 가나다
+  </div>
+
+  <button onclick="closeFontPicker()">
+    Close
+  </button>
+
+</div>
+
+</body>
+</html>
