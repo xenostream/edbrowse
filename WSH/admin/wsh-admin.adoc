@@ -28,6 +28,9 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
+* https://atmarkit.itmedia.co.jp/ait/series/2728/[Reference^] 
+* https://atmarkit.itmedia.co.jp/ait/series/2744/[vbscript기초^]
+
 == 제1회 WSH의 내부 구조
 
 관리 작업은 정해진 일련의 처리를 실행하거나, 동일한 처리를 반복하는 경우가 많다. WSH를 활용해서 자동화 및 업무 효율화를 도모하자.
