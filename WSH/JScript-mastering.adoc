@@ -1132,9 +1132,8 @@ sh = null;
 　　부울 값을 반환합니다.
 
 인수::
-
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・ 존재 여부를 확인하려는 파일의 경로(절대 경로,
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・ 존재 여부를 확인하려는 파일의 경로(절대 경로,
 　　　　　　　　　　상대 경로 모두 지정 가능)
 반환값::
 　path로 지정한 경로의 파일이 존재할 경우 true. 존재하지 않을 경우 false.
