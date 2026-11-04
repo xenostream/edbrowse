@@ -1087,7 +1087,7 @@ JScript에서 사용할 수 있는 특수 문자 표를 아래에 제시합니�
 　
 인수::
 
-*　object・・・・・・WshShell 객체
+* object・・・・・・WshShell 객체
 
 반환값::
 　현재 활성화된 디렉터리로의 경로.
@@ -1175,9 +1175,9 @@ fs = null;
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　src ・・・・・・・이동할 파일의 경로(와일드카드 사용 가능)
-*　dest・・・・・・・이동할 경로(이미 같은 이름의 파일이 존재하는 경우 예외가 발생합니다)
+* object・・・・・・FileSystemObject 객체
+* src ・・・・・・・이동할 파일의 경로(와일드카드 사용 가능)
+* dest・・・・・・・이동할 경로(이미 같은 이름의 파일이 존재하는 경우 예외가 발생합니다)
 
 반환값::
 　없음.
@@ -1284,10 +1284,10 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　src ・・・・・・・복사할 파일의 경로(와일드카드 사용 가능)
-*　dest・・・・・・・복사 대상 경로
-*　op・・・・・・・・복사 대상에 같은 이름의 파일이 존재할 때 덮어쓸지 여부를
+* object・・・・・・FileSystemObject 객체
+* src ・・・・・・・복사할 파일의 경로(와일드카드 사용 가능)
+* dest・・・・・・・복사 대상 경로
+* op・・・・・・・・복사 대상에 같은 이름의 파일이 존재할 때 덮어쓸지 여부를
 　　　　　　　　　　나타내는 부울 값.
 　　　　　　　　　　단, 복사 대상의 같은 이름 파일이 읽기 전용 파일인 경우
 　　　　　　　　　　예외가 발생합니다.
@@ -1399,9 +1399,9 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・삭제할 파일의 경로(와일드카드 사용 가능)
-*　op・・・・・・・・삭제할 파일이 읽기 전용 파일인 경우, 삭제 가능 여부를
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・삭제할 파일의 경로(와일드카드 사용 가능)
+* op・・・・・・・・삭제할 파일이 읽기 전용 파일인 경우, 삭제 가능 여부를
 　　　　　　　　　　나타내는 부울 값.
 　　　　　　　　　　설정값이 true이면 읽기 전용 파일의 삭제가 가능하며,
 　　　　　　　　　　false인 경우 읽기 전용 파일은 삭제할 수 없습니다.
@@ -1486,8 +1486,8 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・대상 파일의 경로
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・대상 파일의 경로
 
 반환값::
 　대상 파일의 File 객체
@@ -1501,7 +1501,7 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・File 객체
+* object・・・・・・File 객체
 
 반환값::
 　File 객체에 설정된 파일 이름
@@ -1549,8 +1549,8 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・대상 폴더의 경로
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・대상 폴더의 경로
 
 반환값::
 　대상 폴더의 Folder 객체
@@ -1564,7 +1564,7 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・Folder 객체
+* object・・・・・・Folder 객체
 
 반환값::
 　Folder 객체에 설정된 모든 File 객체를
@@ -1613,8 +1613,8 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・ 존재 여부를 확인할 폴더의 경로(절대 경로,
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・ 존재 여부를 확인할 폴더의 경로(절대 경로,
 　　　　　　　　　　상대 경로 모두 지정 가능)
 
 반환값::
@@ -1658,8 +1658,8 @@ fs = null;
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・생성할 폴더의 경로(절대 경로,
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・생성할 폴더의 경로(절대 경로,
 　　　　　　　　　　상대 경로 모두 지정 가능)
 　　　　　　　※한 번에 여러 계층을 생성할 수는 없습니다.
 　　　　　　　　「C:/1/2/3/4/5/6/7」처럼 한 번에
@@ -1712,9 +1712,9 @@ fs = null;
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　src ・・・・・・・이동할 폴더의 경로(와일드카드 사용 가능)
-*　dest・・・・・・・이동할 경로(이미 같은 이름의 폴더가 존재하는 경우
+* object・・・・・・FileSystemObject 객체
+* src ・・・・・・・이동할 폴더의 경로(와일드카드 사용 가능)
+* dest・・・・・・・이동할 경로(이미 같은 이름의 폴더가 존재하는 경우
 　　　　　　　　　　예외가 발생합니다)
 반환값::
 　없음.
@@ -1821,10 +1821,10 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　src ・・・・・・・복사할 폴더의 경로 (와일드카드 사용 가능)
-*　dest・・・・・・・복사 대상 경로
-*　op・・・・・・・・복사 대상에 같은 이름의 폴더가 존재할 때 덮어쓸지 여부를
+* object・・・・・・FileSystemObject 객체
+* src ・・・・・・・복사할 폴더의 경로 (와일드카드 사용 가능)
+* dest・・・・・・・복사 대상 경로
+* op・・・・・・・・복사 대상에 같은 이름의 폴더가 존재할 때 덮어쓸지 여부를
 　　　　　　　　　　나타내는 부울 값.
 　　　　　　　　　　설정값이 true이면 덮어쓰고, false는 덮어쓰지 않습니다. (생략 가능)
 　　　　　　　　　　생략한 경우, true와 동일한 동작을 합니다.
@@ -1934,9 +1934,9 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・삭제할 폴더의 경로(와일드카드 사용 가능)
-*　op・・・・・・・・삭제할 폴더가 읽기 전용 폴더인 경우, 삭제 가능 여부를
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・삭제할 폴더의 경로(와일드카드 사용 가능)
+* op・・・・・・・・삭제할 폴더가 읽기 전용 폴더인 경우, 삭제 가능 여부를
 　　　　　　　　　　나타내는 부울 값.
 　　　　　　　　　　설정값이 true이면 읽기 전용 폴더를 삭제할 수 있으며,
 　　　　　　　　　　false인 경우 읽기 전용 폴더는 삭제할 수 없습니다.
@@ -2022,7 +2022,7 @@ GetFolder() 함수에 대해서는 ‘지정된 계층의 모든 파일 가져�
 
 인수::
 
-*　object・・・・・・Folder 객체
+* object・・・・・・Folder 객체
 
 반환값::
 　Folder 객체에 설정된 폴더 이름
@@ -2069,7 +2069,7 @@ GetFolder() 함수에 대해서는 ‘지정된 계층의 모든 파일 가져�
 
 인수::
 
-*　object・・・・・・Folder 객체
+* object・・・・・・Folder 객체
 
 반환값::
 　Folder 객체에 설정된 모든 하위 폴더의 Folder 객체를
@@ -2124,7 +2124,7 @@ WScript.Echo( “종료” );
 
 인수::
 
-*　object・・・・・・File 객체 또는 Folder 객체
+* object・・・・・・File 객체 또는 Folder 객체
 
 반환값::
 　지정한 파일 또는 폴더의 속성값
@@ -2211,8 +2211,8 @@ fs = null;
 
 인수::
 
-*　object・・・・・・WshShell 객체
-*　sp_name ・・・・・획득할 특수 폴더 이름
+* object・・・・・・WshShell 객체
+* sp_name ・・・・・획득할 특수 폴더 이름
 
 .특수 폴더 이름
 |===
@@ -2273,8 +2273,8 @@ sh = null;
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・파일 경로 또는 폴더 경로
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・파일 경로 또는 폴더 경로
 　
 반환값::
 　path로 지정된 경로의 마지막 파일명 또는 폴더명
@@ -2314,8 +2314,8 @@ fs = null;
 
 인수::
 
-*　object・・・・・・FileSystemObject 객체
-*　path・・・・・・・파일 경로 또는 폴더 경로
+* object・・・・・・FileSystemObject 객체
+* path・・・・・・・파일 경로 또는 폴더 경로
 　
 반환값::
 　path로 지정한 경로의 파일 또는 폴더의 상위 폴더 경로
@@ -2359,7 +2359,7 @@ GetFolder() 함수에 대해서는 ‘지정된 계층의 모든 파일 가져�
 
 인수::
 
-*　object・・・・・・File 객체 또는 Folder 객체
+* object・・・・・・File 객체 또는 Folder 객체
 　
 반환값::
 　파일 또는 폴더의 용량(바이트 단위)
@@ -2433,8 +2433,8 @@ fs = null;
 　
 인수::
 
-*　object・・・・・・WshShell 객체
-*　path・・・・・・・생성하거나 가져올 바로 가기 파일의 경로
+* object・・・・・・WshShell 객체
+* path・・・・・・・생성하거나 가져올 바로 가기 파일의 경로
 　　　　　　　　　　(확장자가 .lnk인 경우 파일 및 폴더 바로 가기,
 　　　　　　　　　　.url인 경우 웹 페이지 바로 가기를 생성할 때 지정)
 
@@ -2452,7 +2452,7 @@ fs = null;
 　
 인수::
 
-*　object・・・・・・WshShortcut 개체 또는 WshURLShortcut 개체
+* object・・・・・・WshShortcut 개체 또는 WshURLShortcut 개체
 　
 반환 값::
 　바로 가기 파일의 대상 경로 또는 URL
@@ -2466,7 +2466,7 @@ fs = null;
 
 인수::
 
-*　object・・・・・・WshShortcut 객체
+* object・・・・・・WshShortcut 객체
 　
 반환 값::
 　창 스타일(창의 표시 형식) 값
@@ -2717,19 +2717,19 @@ sh = null;
 　
 인수::
 
-*　object・・・・・・WshNetwork 객체
-*　DriveNm ・・・・・할당할 드라이브 이름(예: ‘Z:’ 드라이브에
+* object・・・・・・WshNetwork 객체
+* DriveNm ・・・・・할당할 드라이브 이름(예: ‘Z:’ 드라이브에
 　　　　　　　　　　할당할 경우, ‘“Z:”’를 설정합니다)
-*　ServerNm・・・・・공유 드라이브의 UNC 이름(서버명 및 IP 주소를 통한
+* ServerNm・・・・・공유 드라이브의 UNC 이름(서버명 및 IP 주소를 통한
 　　　　　　　　　　설정도 가능합니다)
-*　Update・・・・・・할당된 드라이브를 저장할지 여부를 나타내는 부울 값.
+* Update・・・・・・할당된 드라이브를 저장할지 여부를 나타내는 부울 값.
 　　　　　　　　　　true를 지정하면 시스템을 종료하더라도 다음 번 시작 시에도
 　　　　　　　　　　연결된 상태를 유지합니다.
 　　　　　　　　　　false를 지정하면 시스템을 종료한 후 다음 번 시작 시에는
 　　　　　　　　　　연결이 해제됩니다. (생략 가능하며, 생략 시 false가 지정됨)
-*　User・・・・・・・ ServerNm에서 지정한 서버에 접속하기 위해 사용하는 사용자 ID.
+* User・・・・・・・ ServerNm에서 지정한 서버에 접속하기 위해 사용하는 사용자 ID.
 　　　　　　　　　　(생략 가능하며, 생략하면 null이 지정됩니다)
-*　Pass・・・・・・・ServerNm에서 지정한 서버에 접속하기 위해 사용하는 비밀번호(
+* Pass・・・・・・・ServerNm에서 지정한 서버에 접속하기 위해 사용하는 비밀번호(
 　　　　　　　　　　User에 대응하는 것).
 　　　　　　　　　　(생략 가능하며, 생략하면 null이 지정됩니다)
 
