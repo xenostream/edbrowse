@@ -15,7 +15,7 @@ Author Name <piljin.kwon@gmail.com>
 :sectnumlevels: 4
 :chapter-label:
 :icons: font
-:imagesdir: ./images
+:imagesdir!: ./images
 :example-caption: 예제
 :table-caption: 표
 :figure-caption: 그림
