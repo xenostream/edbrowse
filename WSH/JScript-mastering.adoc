@@ -5398,11 +5398,12 @@ Visible 속성에 대해서는 Internet Explorer의 시작 및 종료를 참조�
  PostData = “ID=100&Name=Yamada&Sex=Man”
 
 * 헤더 ・・・・・URL이 HTTP URL을 나타낼 때 서버로 전송되는 헤더입니다. (생략 가능) 자세한 내용은 필자도 잘 알지 못하지만, PHP 등을 학습하면 이해하게 될 가능성은 있습니다. PostData 전송과도 관련이 있으므로 PostData에 전송 데이터를 설정했을 때는 필수입니다. 참고로, 맨 끝에 줄바꿈 코드를 설정해야 하므로 주의가 필요합니다. 생략한 경우에는 null이 지정됩니다.
-+
+
 다음은 설정값의 예시입니다. (솔직히 의문점이 많아 설명할 수 없음)
 
  Headers = “Content-Type: application/x-www-form-urlencoded\r\n”
-　　　　　　　　　　
+　　　　　　　　
+
 .리소스 설정 옵션용 플래그
 [%autowidth]
 |===
