@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=9">
+<meta charset="ks_c_5601-1987">
+<hta:application id="JSPAD" applicationname="JSPAD" caption="yes" border="thick" borderstyle="normal" maximizebutton="yes" minimizebutton="yes" scroll="no" singleinstance="yes" sysmenu="yes" windowstate="normal"/>
+<title>JSPAD - Untitled.js</title>
+<style>
+html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden}
+body{background:PapayaWhip}
+#editorBox{position:absolute;left:0;top:0;right:0;bottom:27px;background:FloralWhite;overflow:hidden}
+#gutter{position:absolute;left:0;top:0;bottom:0;width:55px;box-sizing:border-box;padding:10px 7px 10px 0;background:#F3E8D4;border-right:1px solid #D6C6A9;color:#998B73;text-align:right;font-family:Consolas,monospace;font-size:15px;line-height:1.4;white-space:pre;overflow:hidden;pointer-events:none}
+#highlight,#editor{position:absolute;left:55px;top:0;width:calc(100% - 55px);height:100%;box-sizing:border-box;margin:0;padding:10px;border:0;font-family:"SarasaMonoK Nerd Font",Consolas,monospace;font-size:15px;line-height:1.4;white-space:pre;tab-size:4}
+#highlight{z-index:1;color:black;background:FloralWhite;pointer-events:none;overflow:hidden}
+#editor{z-index:2;resize:none;outline:none;background:transparent;color:transparent;caret-color:black;overflow:scroll}
+#editor::selection{background:rgba(80,130,220,.35)}
+#currentLine{position:absolute;left:55px;right:0;top:10px;height:21px;background:rgba(222,184,135,.17);pointer-events:none;z-index:0}
+#status{position:absolute;left:0;right:0;bottom:0;height:27px;line-height:26px;padding:0 10px;box-sizing:border-box;background:#E8D7B8;border-top:1px solid #C8B99E;color:#574A36;font-family:Consolas,monospace;font-size:12px;white-space:nowrap;overflow:hidden}
+#status span{margin-right:17px}
+#status .dirty{color:#A52A2A;font-weight:bold}
+#status .saved{color:#526B37}
+.kw{color:#0000CC;font-weight:bold}
+.str{color:#A31515}
+.comment{color:#008000}
+.num{color:#098658}
+.obj{color:#267F99;font-weight:bold}
+.fn{color:#795E26}
+.tag{color:#800080}
+.attr{color:#FF0000}
+.const{color:#0000FF}
+.op{color:#666}
+</style>
+<script language="JScript">
+var shell=new ActiveXObject("WScript.Shell");
+var fso=new ActiveXObject("Scripting.FileSystemObject");
+var editor,highlight,gutter,status,currentLine;
+var currentFile=null;
+var modified=false;
+var internalChange=false;
+var fontSize=15;
+var indentSize=4;
+var indentUnit="    ";
+var pairs={"(":")","[":"]","{":"}",'"':'"',"'":"'"};
+var keywords={"var":1,"function":1,"return":1,"if":1,"else":1,"for":1,"while":1,"do":1,"switch":1,"case":1,"default":1,"break":1,"continue":1,"try":1,"catch":1,"finally":1,"throw":1,"new":1,"this":1,"typeof":1,"instanceof":1,"in":1,"delete":1,"void":1,"with":1,"true":1,"false":1,"null":1,"undefined":1};
+var objects={"WScript":1,"ActiveXObject":1,"Scripting":1,"FileSystemObject":1,"Dictionary":1,"shell":1,"fso":1,"Enumerator":1,"RegExp":1,"VBArray":1,"Date":1,"Math":1,"Array":1,"String":1,"Number":1,"Boolean":1,"Object":1,"Error":1,"Function":1,"arguments":1,"window":1,"document":1,"screen":1,"navigator":1,"location":1,"event":1,"XMLHttpRequest":1,"ADODB":1};
+var methods={"CreateObject":1,"GetObject":1,"CreateTextFile":1,"OpenTextFile":1,"ReadAll":1,"ReadLine":1,"Write":1,"WriteLine":1,"Close":1,"GetFileName":1,"GetParentFolderName":1,"FileExists":1,"FolderExists":1,"ExpandEnvironmentStrings":1,"Run":1,"Exec":1,"Sleep":1,"Echo":1,"Quit":1,"MoveFile":1,"CopyFile":1,"DeleteFile":1,"GetFolder":1,"GetFile":1,"GetSpecialFolder":1,"BuildPath":1};
+window.onload=function(){
+    editor=document.getElementById("editor");
+    highlight=document.getElementById("highlight");
+    gutter=document.getElementById("gutter");
+    status=document.getElementById("status");
+    currentLine=document.getElementById("currentLine");
+    editor.oninput=editorChanged;
+    editor.onkeypress=editorKeyPress;
+    editor.onmousewheel=editorMouseWheel;
+    editor.onscroll=syncScroll;
+    editor.onkeyup=updateStatus;
+    editor.onclick=updateStatus;
+    editor.onselect=updateStatus;
+    window.resizeTo(1280,1024);
+    window.setTimeout(function(){
+        try{window.moveTo((screen.availWidth-window.outerWidth)/2,(screen.availHeight-window.outerHeight)/2);}catch(e){}
+        updateHighlight();
+        updateStatus();
+        updateTitle();
+        editor.focus();
+    },100);
+};
+function escapeHtml(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function updateHighlight(){
+    if(!editor||!highlight)return;
+    var source=editor.value;
+    var re=/<!--[\s\S]*?-->|\/\/[^\r\n]*|\/\*[\s\S]*?\*\/|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|<\/?[A-Za-z!][^>]*>|\b(?:0[xX][0-9a-fA-F]+|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b|[A-Za-z_$][\w$]*|[+\-*\/%=!<>&|^~?:]+/g;
+    var result="",last=0,m,t,c;
+    while((m=re.exec(source))!==null){
+        result+=escapeHtml(source.substring(last,m.index));
+        t=m[0];
+        c="";
+        if(/^\/\//.test(t)||/^\/\*/.test(t)||/^<!--/.test(t))c="comment";
+        else if(/^["']/.test(t))c="str";
+        else if(/^<\/?[A-Za-z!]/.test(t))c="tag";
+        else if(/^\d/.test(t))c="num";
+        else if(keywords[t])c="kw";
+        else if(objects[t])c="obj";
+        else if(methods[t])c="fn";
+        else if(/^[+\-*\/%=!<>&|^~?:]+$/.test(t))c="op";
+        if(c=="tag"){
+            var tag=escapeHtml(t).replace(/(&lt;\/?)([\w:-]+)/g,'$1<span class="attr">$2</span>');
+            result+='<span class="tag">'+tag+'</span>';
+        }else if(c)result+='<span class="'+c+'">'+escapeHtml(t)+'</span>';
+        else result+=escapeHtml(t);
+        last=re.lastIndex;
+    }
+    result+=escapeHtml(source.substring(last));
+    highlight.innerHTML=result+"\r\n";
+    updateGutter();
+    syncScroll();
+}
+function updateGutter(){
+    if(!editor||!gutter)return;
+    var count=editor.value.split("\n").length;
+    var lines=[];
+    for(var i=1;i<=count;i++)lines.push(i);
+    gutter.innerHTML=lines.join("\n");
+}
+function syncScroll(){
+    if(!editor||!highlight)return;
+    highlight.scrollTop=editor.scrollTop;
+    highlight.scrollLeft=editor.scrollLeft;
+    gutter.scrollTop=editor.scrollTop;
+    currentLine.style.top=(10+getCurrentLine()*fontSize*1.4-editor.scrollTop)+"px";
+}
+function getCurrentLine(){
+    var text=editor.value;
+    var pos=editor.selectionStart;
+    return text.substring(0,pos).split("\n").length-1;
+}
+function updateStatus(){
+    if(!editor||!status)return;
+    var text=editor.value;
+    var pos=editor.selectionStart;
+    var start=text.lastIndexOf("\n",pos-1)+1;
+    var line=text.substring(0,start).split("\n").length;
+    var col=pos-start+1;
+    var selected=Math.abs(editor.selectionEnd-pos);
+    var lines=text.split("\n").length;
+    status.innerHTML='<span>Ln '+line+'</span><span>Col '+col+'</span><span>Sel '+selected+'</span><span>Lines '+lines+'</span><span>Length '+text.length+'</span><span>'+(modified?'<b class="dirty">Modified *</b>':'<b class="saved">Saved</b>')+'</span><span>'+(currentFile?escapeHtml(fso.GetFileName(currentFile)):"Untitled.js")+'</span>';
+    currentLine.style.top=(10+getCurrentLine()*fontSize*1.4-editor.scrollTop)+"px";
+}
+function updateTitle(){
+    var name=currentFile?fso.GetFileName(currentFile):"Untitled.js";
+    document.title="JSPAD - "+name+(modified?" *":"");
+}
+function changed(){
+    if(internalChange)return;
+    modified=true;
+    updateTitle();
+    updateHighlight();
+    updateStatus();
+}
+function normalizeNewlines(text){
+    return text.replace(/\r\n|\r|\n/g,"\r\n");
+}
+function readFile(path){
+    var file=fso.OpenTextFile(path,1,false,0);
+    var content;
+    try{content=file.ReadAll();}
+    finally{file.Close();}
+    return normalizeNewlines(content);
+}
+function writeFile(path,content){
+    content=normalizeNewlines(content);
+    var file=fso.CreateTextFile(path,true,false);
+    try{file.Write(content);}
+    finally{file.Close();}
+}
+function openDialog(){
+    var oldPicker=document.getElementById("filePicker");
+    var picker=document.createElement("input");
+    picker.type="file";
+    picker.id="filePicker";
+    picker.accept=".js,.hta";
+    picker.style.display="none";
+    picker.onchange=onFileSelected;
+    if(oldPicker)oldPicker.parentNode.replaceChild(picker,oldPicker);
+    else document.body.appendChild(picker);
+    window.setTimeout(function(){
+        try{picker.click();}
+        catch(e){alert("파일 선택 오류\r\n\r\n"+e.message);}
+    },10);
+}
+function onFileSelected(){
+    var picker=document.getElementById("filePicker");
+    if(!picker||!picker.value)return;
+    var path=picker.value;
+    if(!confirmChanges()){
+        picker.value="";
+        editor.focus();
+        return;
+    }
+    try{
+        var content=readFile(path);
+        internalChange=true;
+        editor.value=content;
+        currentFile=path;
+        modified=false;
+        internalChange=false;
+        updateHighlight();
+        updateTitle();
+        updateStatus();
+        editor.focus();
+    }catch(e){
+        internalChange=false;
+        alert("파일 열기 오류\r\n\r\n"+e.message);
+        editor.focus();
+    }
+    picker.value="";
+}
+function saveDialog(){
+    var initial=currentFile||shell.CurrentDirectory+"\\Untitled.js";
+    var path=prompt("저장할 파일의 전체 경로를 입력하세요.",initial);
+    if(path===null||path==="")return null;
+    path=path.replace(/^"|"$/g,"");
+    if(!/\.(js|hta)$/i.test(path))path+=".js";
+    return path;
+}
+function save(){
+    var path=currentFile;
+    if(!path){
+        path=saveDialog();
+        if(!path)return false;
+    }
+    try{
+        writeFile(path,editor.value);
+        currentFile=path;
+        modified=false;
+        updateTitle();
+        updateStatus();
+        return true;
+    }catch(e){
+        alert("저장 오류\r\n\r\n"+e.message+"\r\n\r\n파일 경로:\r\n"+path);
+        return false;
+    }
+}
+function saveAs(){
+    var oldFile=currentFile;
+    var path=saveDialog();
+    if(!path)return false;
+    currentFile=oldFile;
+    try{
+        writeFile(path,editor.value);
+        currentFile=path;
+        modified=false;
+        updateTitle();
+        updateStatus();
+        return true;
+    }catch(e){
+        currentFile=oldFile;
+        updateTitle();
+        updateStatus();
+        alert("저장 오류\r\n\r\n"+e.message+"\r\n\r\n파일 경로:\r\n"+path);
+        return false;
+    }
+}
+function confirmChanges(){
+    if(!modified)return true;
+    if(confirm("변경된 내용을 저장하시겠습니까?"))return save();
+    return confirm("저장하지 않고 계속하시겠습니까?");
+}
+function newFile(){
+    if(!confirmChanges())return;
+    internalChange=true;
+    editor.value="";
+    currentFile=null;
+    modified=false;
+    internalChange=false;
+    updateHighlight();
+    updateTitle();
+    updateStatus();
+    editor.focus();
+}
+function openFile(){openDialog();}
+function runScript(){
+    if(!save())return;
+    try{
+        var ext=currentFile.substring(currentFile.lastIndexOf(".")+1).toLowerCase();
+        var cmd=shell.ExpandEnvironmentStrings("%ComSpec%");
+        var runner=ext=="hta"?"mshta.exe":"cscript.exe";
+        shell.CurrentDirectory=fso.GetParentFolderName(currentFile);
+        var command='"'+cmd+'" /d /c ""'+runner+'" "'+currentFile+'" & echo. & pause"';
+        shell.Run(command,1,false);
+    }catch(e){
+        alert("실행 오류\r\n\r\n"+e.message);
+    }
+}
+function getStart(){return editor.selectionStart;}
+function getEnd(){return editor.selectionEnd;}
+function setSelection(start,end){
+    editor.focus();
+    editor.setSelectionRange(start,end);
+    updateStatus();
+}
+function insertText(text,start,end){
+    editor.value=editor.value.substring(0,start)+text+editor.value.substring(end);
+    changed();
+}
+function getIndent(text){
+    var match=text.match(/^[ \t]*/);
+    return match?match[0]:"";
+}
+function getLineInfo(position){
+    var text=editor.value;
+    var start=text.lastIndexOf("\n",position-1)+1;
+    var end=text.indexOf("\n",position);
+    if(end<0)end=text.length;
+    return {start:start,end:end,text:text.substring(start,end)};
+}
+function handleEnter(){
+    var start=getStart(),end=getEnd();
+    var line=getLineInfo(start);
+    var before=editor.value.substring(line.start,start);
+    var after=editor.value.substring(end,line.end);
+    var indent=getIndent(line.text);
+    var trimmed=before.replace(/[ \t]+$/,"");
+    var opening=trimmed.charAt(trimmed.length-1)=="{";
+    var closing=after.replace(/^[ \t]+/,"").charAt(0)=="}";
+    var replacement;
+    if(opening&&closing){
+        var inner=indent+indentUnit;
+        replacement="\r\n"+inner+"\r\n"+indent;
+        insertText(replacement,start,end);
+        setSelection(start+2+inner.length,start+2+inner.length);
+        return true;
+    }
+    if(opening){
+        replacement="\r\n"+indent+indentUnit;
+        insertText(replacement,start,end);
+        setSelection(start+replacement.length,start+replacement.length);
+        return true;
+    }
+    if(closing&&before.replace(/[ \t]+$/,"").length==0&&indent.length>=indentSize)
+        indent=indent.substring(0,indent.length-indentSize);
+    replacement="\r\n"+indent;
+    insertText(replacement,start,end);
+    setSelection(start+replacement.length,start+replacement.length);
+    return true;
+}
+function handleClosingBrace(){
+    var start=getStart(),end=getEnd();
+    if(start!=end)return false;
+    var line=getLineInfo(start);
+    var before=editor.value.substring(line.start,start);
+    if(!/^[ \t]+$/.test(before))return false;
+    var indent=getIndent(line.text);
+    if(indent.length<indentSize)return false;
+    var newIndent=indent.substring(0,indent.length-indentSize);
+    insertText(newIndent+"}",line.start,start);
+    setSelection(line.start+newIndent.length+1,line.start+newIndent.length+1);
+    return true;
+}
+function handleTab(shift){
+    var start=getStart(),end=getEnd();
+    if(!shift){
+        if(start==end){
+            insertText(indentUnit,start,end);
+            setSelection(start+indentSize,start+indentSize);
+        }else{
+            var first=getLineInfo(start).start;
+            var last=getLineInfo(end).end;
+            var lines=editor.value.substring(first,last).split("\n");
+            for(var i=0;i<lines.length;i++)lines[i]=indentUnit+lines[i];
+            var result=lines.join("\n");
+            insertText(result,first,last);
+            setSelection(first,first+result.length);
+        }
+        return true;
+    }
+    var line=getLineInfo(start);
+    var indent=getIndent(line.text);
+    if(indent.length==0)return true;
+    var remove=Math.min(indentSize,indent.length);
+    insertText("",line.start,line.start+remove);
+    var position=Math.max(line.start,start-remove);
+    setSelection(position,position);
+    return true;
+}
+function handlePair(key){
+    if(!pairs.hasOwnProperty(key))return false;
+    var start=getStart(),end=getEnd();
+    var close=pairs[key];
+    var selected=editor.value.substring(start,end);
+    if(start==end&&editor.value.charAt(start)==close){
+        setSelection(start+1,start+1);
+        return true;
+    }
+    insertText(key+selected+close,start,end);
+    if(start==end)setSelection(start+1,start+1);
+    else setSelection(start+1,end+1);
+    return true;
+}
+function handleBackspace(){
+    var start=getStart(),end=getEnd();
+    if(start!=end||start<=0)return false;
+    var before=editor.value.charAt(start-1);
+    var after=editor.value.charAt(start);
+    if(pairs.hasOwnProperty(before)&&pairs[before]==after){
+        insertText("",start-1,start+1);
+        setSelection(start-1,start-1);
+        return true;
+    }
+    return false;
+}
+function duplicateLine(){
+    var line=getLineInfo(getStart());
+    insertText("\r\n"+line.text,line.end,line.end);
+}
+function deleteLine(){
+    var line=getLineInfo(getStart());
+    var start=line.start,end=line.end;
+    if(editor.value.charAt(end)=="\n")end++;
+    else if(start>0)start--;
+    insertText("",start,end);
+    setSelection(start,start);
+}
+function toggleComment(){
+    var start=getStart(),end=getEnd();
+    var first=getLineInfo(start).start;
+    var last=getLineInfo(end).end;
+    var lines=editor.value.substring(first,last).split("\n");
+    var allCommented=true;
+    for(var i=0;i<lines.length;i++){
+        if(!/^\s*\/\//.test(lines[i])){
+            allCommented=false;
+            break;
+        }
+    }
+    for(var i=0;i<lines.length;i++){
+        if(allCommented)lines[i]=lines[i].replace(/^(\s*)\/\/ ?/,"$1");
+        else lines[i]=lines[i].replace(/^(\s*)/,"$1// ");
+    }
+    var result=lines.join("\r\n");
+    insertText(result,first,last);
+    setSelection(first,first+result.length);
+}
+function moveLine(direction){
+    var line=getLineInfo(getStart());
+    var text=editor.value;
+    var start=line.start,end=line.end;
+    if(direction<0){
+        if(start==0)return;
+        var previous=getLineInfo(start-1);
+        var replacement=line.text+"\r\n"+previous.text;
+        insertText(replacement,previous.start,end);
+        setSelection(previous.start,previous.start);
+    }else{
+        if(end>=text.length)return;
+        var next=getLineInfo(end+1);
+        var replacement=next.text+"\r\n"+line.text;
+        insertText(replacement,start,next.end);
+        var target=start+next.text.length+2;
+        setSelection(target,target);
+    }
+}
+function changeFont(delta){
+    var size=fontSize+delta;
+    fontSize=(size<8||size>40)?15:size;
+    editor.style.fontSize=fontSize+"px";
+    highlight.style.fontSize=fontSize+"px";
+    gutter.style.fontSize=fontSize+"px";
+    updateHighlight();
+    syncScroll();
+    updateStatus();
+}
+document.onkeydown=function(e){
+    e=e||window.event;
+    var code=e.keyCode,ctrl=e.ctrlKey,shift=e.shiftKey,alt=e.altKey;
+    if(ctrl){
+        switch(code){
+            case 83:
+                if(shift)saveAs();
+                else save();
+                return cancelEvent(e);
+            case 78:
+                newFile();
+                return cancelEvent(e);
+            case 79:
+                openFile();
+                return cancelEvent(e);
+            case 81:
+                window.close();
+                return cancelEvent(e);
+            case 13:
+                runScript();
+                return cancelEvent(e);
+            case 68:
+                duplicateLine();
+                return cancelEvent(e);
+            case 76:
+                deleteLine();
+                return cancelEvent(e);
+            case 191:
+                toggleComment();
+                return cancelEvent(e);
+        }
+    }
+    if(code==116){
+        runScript();
+        return cancelEvent(e);
+    }
+    if(code==8&&handleBackspace())return cancelEvent(e);
+    if(alt&&(code==38||code==40)){
+        moveLine(code==38?-1:1);
+        return cancelEvent(e);
+    }
+    if(code==9){
+        handleTab(shift);
+        return cancelEvent(e);
+    }
+    if(code==13){
+        handleEnter();
+        return cancelEvent(e);
+    }
+    return true;
+};
+function cancelEvent(e){
+    e.returnValue=false;
+    if(e.preventDefault)e.preventDefault();
+    return false;
+}
+function editorKeyPress(e){
+    e=e||window.event;
+    if(e.ctrlKey||e.altKey)return true;
+    var key=e.key;
+    if(!key&&e.charCode)key=String.fromCharCode(e.charCode);
+    if(!key&&e.keyCode)key=String.fromCharCode(e.keyCode);
+    if(key=="}"&&handleClosingBrace())return cancelEvent(e);
+    if(key&&key.length==1&&pairs.hasOwnProperty(key)){
+        handlePair(key);
+        return cancelEvent(e);
+    }
+    return true;
+}
+function editorChanged(){
+    changed();
+}
+function editorMouseWheel(e){
+    e=e||window.event;
+    if(e.ctrlKey){
+        changeFont(e.wheelDelta>0?1:-1);
+        return cancelEvent(e);
+    }
+    return true;
+}
+window.onbeforeunload=function(){
+    if(!modified)return;
+    if(confirm("변경된 내용을 저장하시겠습니까?")){
+        if(!save())return false;
+    }else{
+        if(!confirm("저장하지 않고 종료하시겠습니까?"))return false;
+    }
+};
+</script>
+</head>
+<body>
+<div id="editorBox">
+<div id="gutter"></div>
+<div id="currentLine"></div>
+<pre id="highlight"></pre>
+<textarea id="editor" spellcheck="false" wrap="off" autocomplete="off"></textarea>
+</div>
+<div id="status"></div>
+<input type="file" id="filePicker" accept=".js,.hta" style="display:none" onchange="onFileSelected()">
+</body>
+</html>
