@@ -602,7 +602,7 @@ sh = null;
 폴더 선택 대화 상자가 표시됩니다. 옵션으로 폴더 이름을 지정하는 텍스트 상자가 표시되어 있습니다.
 
 
-== 텍스트 파일 연산
+== 텍스트 파일
 
 이 글은 JScript를 사용해서 텍스트 파일을 읽거나 쓰는 방법 등에 대해 소개합니다. 텍스트 파일에서 정보를 읽거나, 텍스트 파일에 문자열을 쓰는 작업에 대해 몇 가지 방법을 소개합니다.
 
@@ -1071,7 +1071,7 @@ JScript에서 사용할 수 있는 특수 문자 표를 아래에 제시합니�
 |===
 
 
-== 파일 및 폴더 작업
+== 파일 및 폴더
 
 여기서는 JScript를 사용해서 파일과 폴더를 복사하거나 이동하고, 속성을 설정하거나 조회하는 방법을 소개합니다. 이 파트의 예제를 실행할 때는 소스 코드에 기재된 경로와 파일명에 주의해 주세요. 우선, 컴퓨터가 불안정해지는 일이 절대 없도록 테스트용 폴더 내에서만 작동하도록 설정해 두었습니다. 시스템 파일을 이동했다가는 최악의 상황이 벌어질 테니까요. f^^
 
@@ -2357,7 +2357,7 @@ fs = null;
 「C:」 드라이브의 「TEST」 폴더 용량이 메시지 상자에 표시됩니다.
 
 
-== 바로가기 파일 작업
+== 바로가기 파일
 
 여기서는 JScript를 사용해서 바로 가기 파일을 만드는 등의 작업을 수행하는 방법에 대해 소개합니다. 바로 가기 파일을 만드는 방법과 기존 바로 가기 파일에서 대상 경로를 가져오는 방법 등을 소개합니다.
 
@@ -2618,7 +2618,7 @@ sh = null;
 실행 전에, 이 파일과 같은 디렉터리에 바로가기 파일을 배치해 주십시오. 배치한 파일의 파일명은 ‘TEST 바로가기.lnk’로 지정해 주십시오. 그 후, 실행하면 해당 바로가기가 가리키는 경로가 메시지 상자에 표시됩니다. 실행 전 준비를 잊은 경우, 빈 메시지 상자가 표시되므로 주의해 주십시오.
 
 
-== 네트워크 드라이브 동작
+== 네트워크 드라이브
 
 여기서는 JScript를 사용해서 네트워크 드라이브를 연결하거나 해제하는 방법 등에 대해 소개합니다. 프린터 연결에 대해서도 소개하고 싶지만, 환경이 갖춰지지 않아 여기서는 생략하겠습니다. 직장에서 틈을 봐서 실험해 볼 생각이지만, 기대는 하지 말아 주세요. 그리고 앞으로 소개할 샘플 소스 코드는 실행하지 마세요. 반드시 오류가 발생합니다. 그 이유는 네트워크에 물리적으로 연결되어 있지 않은 점도 있지만, 제가 네트워크에 대해 전혀 이해하지 못하고 있으니 자세한 내용은 검색해 보시기 바랍니다. 참고로, 제 집에서도 테스트할 수 있는 환경이 없었기 때문에 샘플 소스 코드에도 임의의 샘플 경로를 사용하고 있습니다. 하지만 직장에서 사용해 본 적이 있으므로, 사용법은 샘플 소스 코드에서 파악하실 수 있을 것입니다.
 
@@ -2768,12 +2768,16 @@ nw = null;
 실행 전에 하나 이상의 네트워크 드라이브를 할당해 두십시오. 실행하면 현재 드라이브에 할당된 네트워크 드라이브가 하나씩 표시됩니다.
 
 
-== 애플리케이션 운영
-
-여기서는 JScript를 사용해서 애플리케이션을 실행하는 방법에 대해 소개하겠습니다. 단순히 실행하는 방법만 소개할 뿐이므로, 솔직히 말해 소개는 하겠지만 기억해 두더라도 별로 사용할 일은 없을 것 같습니다. 다음 회부터 소개할 키보드 조작과 마우스 조작을 병행해야 비로소 쓸 수 있을 것 같기도 하고, 아닐 것 같기도 하고... 키보드 조작과 마우스 조작으로 억지로 애플리케이션을 조작하는 것은 제 생각에는 별로 추천하지 않습니다. 왜냐하면, 실행하는 컴퓨터의 성능이 너무 나쁘면 처리가 따라가지 못해 제대로 작동하지 않을 수도 있으니까요~.
 
 
-=== 애플리케이션 출시
+== 애플리케이션
+
+여기서는 JScript를 사용해서 애플리케이션을 실행하는 방법에 대해 소개하겠습니다. 단순히 실행하는 방법만 소개할 뿐이므로, 솔직히 말해 기억해 두더라도 별로 사용할 일은 없을 것 같습니다. 다음 회부터 소개할 키보드 조작과 마우스 조작을 병행해야 비로소 쓸 수 있을 것 같기도 하고, 아닐 것 같기도 하고... 
+
+키보드 조작과 마우스 조작으로 억지로 애플리케이션을 조작하는 것은 제 생각에는 별로 추천하지 않습니다. 왜냐하면, 실행하는 컴퓨터의 성능이 너무 나쁘면 처리 속도가 따라가지 못해 제대로 작동하지 않을 수도 있으니까요~
+
+
+=== 애플리케이션 실행
 
 애플리케이션을 실행하려면 다음 함수를 사용합니다.
 
@@ -2781,69 +2785,69 @@ nw = null;
 　object.Run( cmd, [WinStyle], [WaitOnReturn] );
 
 함수 설명::
-새로운 프로세스 내에서 프로그램을 실행합니다.
+새로운 프로세스에서 프로그램을 실행합니다.
 　
 인수::
 
 * object・・・・・・WshShell 객체
-* cmd ・・・・・・・실행할 명령줄을 나타내는 문자열. 여기에 대상 애플리케이션의 경로를 지정함으로써, 애플리케이션을 실행할 수 있습니다. 대상 경로 뒤에 반각 공백으로 구분해서 문자열을 설정함으로써 애플리케이션에 명령줄 인수를 전달할 수 있습니다.
+* cmd ・・・・・・・실행할 명령줄 문자열. 애플리케이션 경로를 지정함으로써, 애플리케이션을 실행할 수 있습니다. 경로에 공백으로 구분해서 문자열을 설정함으로써 애플리케이션에 명령줄 인수를 전달할 수 있습니다.
 +
-예제 1・・명령줄 인수 없음 +
-　object.Run( “C:/WINDOWS/system32/notepad.exe” );
-예 2・・명령줄 인수가 있는 경우 +
-　object.Run( “C:/WINDOWS/system32/notepad.exe C:\\Info.txt” ); +
-예 3・・애플리케이션 경로에 반각 공백이 섞여 있을 때
+** 예제 1・・명령줄 인수 없음 +
+　object.Run( “C:/WINDOWS/system32/notepad.exe” ); 
+** 예 2・・명령줄 인수가 있는 경우 +
+　object.Run( “C:/WINDOWS/system32/notepad.exe C:\\Info.txt” ); 
+** 예 3・・애플리케이션 경로에 공백이 있을 때 +
 　object.Run( “\”C:/Program Files/sakura/sakura.exe\“” );
-* WinStyle・・・・・창 스타일. 프로그램 창의 외관을 나타내는 정수값(생략 가능). 생략한 경우, 1이 기본값이 됩니다. 설정 가능한 값은 1~10까지 있지만, 실제로 실행해 보니 작동 방식을 잘 알 수 없는 경우가 있어, 파악된 내용을 아래 표에 정리해 보았습니다.
-　
+* WinStyle・・・・・창 스타일. 프로그램의 외관을 나타내는 정수값(생략 가능). 생략한 경우, 1이 기본값입니다. 설정 가능한 값은 1에서 10까지 있지만, 작동 방식을 제대로 알 수 없는 경우가 있으므로, 파악한 내용을 정리했습니다.
++
 .창 스타일
 [%autowidth]
 |===
-|값    |창 상태    |창 크기    |비고
+|값    |창 상태    |창 크기                 |비고
 
-|0    |숨김    |               |화면이 숨겨져 조작 불가 
-|1    |활성    |일반           |기본값
-|2    |활성    |최소           |　
-|3    |활성    |최대           |　
-|4    |비활성  |일반           |　
-|5    |활성    |마지막 종료 시와 동일    |앱마다 동작이 다름
-|7    |비활성  |최소	|　
+|0     |숨김       |                        |화면이 숨겨져 조작 불가 
+|1     |활성       |일반                    |기본값
+|2     |활성       |최소                    |　
+|3     |활성       |최대                    |　
+|4     |비활성     |일반                    |　
+|5     |활성       |마지막 종료 시와 동일   |앱마다 동작이 다름
+|7     |비활성     |최소	                |　
 |===
-　
-* WaitOnReturn... 스크립트 내의 다음 문장으로 진행하지 않고 프로그램의 실행이 종료될 때까지 스크립트를 대기시킬지 여부를 지정하는 부울 값(생략 가능). true인 경우, Run() 메서드로 호출된 프로그램이 종료될 때까지 스크립트 처리가 중지됩니다. false인 경우, 스크립트 처리는 중지되지 않고 다음 처리를 실행합니다. 생략하면 false로 설정됩니다.
+
+* WaitOnReturn... 스크립트의 다음 문장으로 진행하지 않고 프로그램 실행이 종료될 때까지 스크립트를 대기시킬지 여부를 지정하는 부울 값(생략 가능). true 인 경우, Run() 메서드로 호출된 프로그램이 종료될 때까지 스크립트 처리가 중지됩니다. false 인 경우, 스크립트 처리는 중지되지 않고 다음 처리를 실행합니다. 생략하면 false 로 설정됩니다.
 
 반환값::
-애플리케이션에서 반환되는 임의의 오류 코드. 단, WaitOnReturn에 false를 설정했을 경우에는 0이 반환값이 된다.
+애플리케이션에서 반환되는 오류 코드. 단, WaitOnReturn 에 false 를 설정했을 경우는 0 이 반환값입니다.
 
 [source,js]
 ----
 //
 //  애플리케이션 조작
 //
-//  　경로를 지정해서 애플리케이션을 실행한다.
+//  　실행 경로를 지정해서 애플리케이션을 실행한다.
 //
 
 //  창 스타일
-var WS_NOTVISIBLE   = 0;    //창은 숨김
-var WS_ACT_NORMAL    = 1;    //창은 활성, 크기는 보통(기본값)
-var WS_ACT_MIN      = 2;    //창은 활성, 크기는 최소
-var WS_ACT_MAX      = 3;    //창은 활성 상태, 크기는 최대
-var WS_NOTACT_NOMAL = 4;    //창은 비활성 상태, 크기는 보통
-var WS_ACT_DEF      = 5;    //창은 활성 상태, 크기는 마지막으로 종료되었을 때와 동일
-                            //(애플리케이션에 따라 동작이 다를 수 있음)
-var WS_NOTACT_MIN   = 7;    //창은 비활성 상태, 크기는 최소
+var WS_NOTVISIBLE   = 0;    // 숨김
+var WS_ACT_NORMAL   = 1;    // 활성, 크기는 보통(기본값)
+var WS_ACT_MIN      = 2;    // 활성, 크기는 최소
+var WS_ACT_MAX      = 3;    // 활성, 크기는 최대
+var WS_NOTACT_NOMAL = 4;    // 비활성, 크기는 보통
+var WS_ACT_DEF      = 5;    // 활성, 크기는 마지막으로 종료할 때와 동일
+                            // (애플리케이션에 따라 동작이 다를 수 있음)
+var WS_NOTACT_MIN   = 7;    // 비활성, 크기는 최소
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  경로를 지정해서 메모장을 실행
-sh.Run( “C:/WINDOWS/system32/notepad.exe”, WS_ACT_NOMAL );
+//  경로를 지정해서 메모장 실행
+sh.Run( "C:/WINDOWS/system32/notepad.exe", WS_ACT_NORMAL );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-메모장이 실행됩니다. 주의 사항으로, 컴퓨터 환경에 따라 메모장 애플리케이션이 다른 경로에 저장되어 있으므로 주의해 주십시오.
+메모장이 실행됩니다. 주의 사항으로, 컴퓨터 환경에 따라 메모장 애플리케이션이 다른 경로에 저장되므로 주의합니다.
 
 [source,js]
 ----
@@ -2854,26 +2858,26 @@ sh = null;
 //
 
 //  창 스타일
-var WS_NOTVISIBLE   = 0;    //창은 숨김
-var WS_ACT_NORMAL    = 1;    //창은 활성 상태, 크기는 일반(기본값)
-var WS_ACT_MIN      = 2;    //창은 활성 상태, 크기는 최소
-var WS_ACT_MAX      = 3;    //창은 활성 상태, 크기는 최대
-var WS_NOTACT_NOMAL = 4;    //창은 비활성 상태, 크기는 보통
-var WS_ACT_DEF      = 5;    //창은 활성 상태, 크기는 마지막으로 종료되었을 때와 동일
-                            //(애플리케이션에 따라 동작이 다를 수 있음)
-var WS_NOTACT_MIN   = 7;    //창은 비활성 상태, 크기는 최소
+var WS_NOTVISIBLE   = 0;    // 숨김
+var WS_ACT_NORMAL   = 1;    // 활성, 크기는 보통(기본값)
+var WS_ACT_MIN      = 2;    // 활성, 크기는 최소
+var WS_ACT_MAX      = 3;    // 활성, 크기는 최대
+var WS_NOTACT_NOMAL = 4;    // 비활성, 크기는 보통
+var WS_ACT_DEF      = 5;    // 활성, 크기는 마지막으로 종료할 때와 동일
+                            // (애플리케이션에 따라 동작이 다를 수 있음)
+var WS_NOTACT_MIN   = 7;    // 비활성, 크기는 최소
 
-//  Shell 관련 작업을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 작업을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  「C:/TEST/Info.txt」 파일을 메모장으로 실행
-sh.Run( “C:/WINDOWS/system32/notepad.exe C:/TEST/Info.txt”, WS_ACT_NOMAL );
+// 「C:/TEST/Info.txt」 파일을 메모장으로 실행
+sh.Run( "C:/WINDOWS/system32/notepad.exe C:/TEST/Info.txt", WS_ACT_NORMAL );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-실행 전에 「C:/TEST」 디렉터리에 「Info.txt」 파일을 준비해 주십시오. 시험 삼아 「Info.txt」 파일에 임의의 문자열을 입력해 두십시오. 실행하면 「Info.txt」 파일이 메모장으로 열립니다. 주의 사항으로, 컴퓨터 환경에 따라 메모장 애플리케이션이 저장된 경로가 다를 수 있으니 주의해 주십시오.
+실행 전에 「C:/TEST」 디렉터리에 「Info.txt」 파일을 미리 준비합니다. 시험삼아 「Info.txt」 파일에 임의의 문자열을 입력합니다. 실행하면 「Info.txt」 파일이 메모장으로 열립니다. 주의 사항으로, 컴퓨터 환경에 따라 메모장 애플리케이션이 저장된 경로가 다를 수 있으니 주의합니다.
 
 [source,js]
 ----
@@ -2884,26 +2888,26 @@ sh = null;
 //
 
 //  창 스타일
-var WS_NOTVISIBLE   = 0;    //창은 숨김
-var WS_ACT_NORMAL    = 1;    //창은 활성 상태, 크기는 일반(기본값)
-var WS_ACT_MIN      = 2;    //창은 활성 상태, 크기는 최소
-var WS_ACT_MAX      = 3;    //창은 활성 상태, 크기는 최대
-var WS_NOTACT_NOMAL = 4;    //창은 비활성 상태, 크기는 보통
-var WS_ACT_DEF      = 5;    //창은 활성 상태이며, 크기는 마지막으로 종료되었을 때와 동일
-                            //(애플리케이션에 따라 동작이 다를 수 있음)
-var WS_NOTACT_MIN   = 7;    //창은 비활성 상태이며, 크기는 최소
+var WS_NOTVISIBLE   = 0;    // 숨김
+var WS_ACT_NORMAL   = 1;    // 활성, 크기는 보통(기본값)
+var WS_ACT_MIN      = 2;    // 활성, 크기는 최소
+var WS_ACT_MAX      = 3;    // 활성, 크기는 최대
+var WS_NOTACT_NOMAL = 4;    // 비활성, 크기는 보통
+var WS_ACT_DEF      = 5;    // 활성, 크기는 마지막으로 종료할 때와 동일
+                            // (애플리케이션에 따라 동작이 다를 수 있음)
+var WS_NOTACT_MIN   = 7;    // 비활성, 크기는 최소
 
-//  Shell 관련 작업을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 작업을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  애플리케이션 이름으로 메모장을 실행
-sh.Run( “notepad.exe”, WS_ACT_NOMAL );
+//  애플리케이션 이름으로 메모장 실행
+sh.Run( "notepad.exe", WS_ACT_NORMAL );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-메모장이 실행됩니다. 주의 사항으로, 환경 변수 PATH에 메모장 애플리케이션이 저장된 디렉터리로의 경로가 지정되어 있어야 합니다. 특별히 변경하지 않았다면 설정되어 있지만, 설정을 변경한 경우 작동하지 않을 수 있습니다.
+메모장이 실행됩니다. 주의 사항으로, 환경 변수 PATH 에 메모장 애플리케이션이 저장된 디렉터리로 경로가 지정되어 있어야 합니다. 특별히 변경하지 않았다면 설정되지만, 설정을 변경한 경우 제대로 작동하지 않을 수 있습니다.
 
 [source,js]
 ----
@@ -2914,50 +2918,50 @@ sh = null;
 //
 
 //  창 스타일
-var WS_NOTVISIBLE   = 0;    //창은 숨김
-var WS_ACT_NORMAL    = 1;    //창은 활성 상태, 크기는 일반(기본값)
-var WS_ACT_MIN      = 2;    //창은 활성 상태, 크기는 최소
-var WS_ACT_MAX      = 3;    //창은 활성 상태, 크기는 최대
-var WS_NOTACT_NOMAL = 4;    //창은 비활성 상태, 크기는 보통
-var WS_ACT_DEF      = 5;    //창은 활성 상태, 크기는 마지막으로 종료되었을 때와 동일
-                            //(애플리케이션에 따라 동작이 다를 수 있음)
-var WS_NOTACT_MIN   = 7;    //창은 비활성 상태, 크기는 최소
+var WS_NOTVISIBLE   = 0;    // 숨김
+var WS_ACT_NORMAL   = 1;    // 활성, 크기는 보통(기본값)
+var WS_ACT_MIN      = 2;    // 활성, 크기는 최소
+var WS_ACT_MAX      = 3;    // 활성, 크기는 최대
+var WS_NOTACT_NOMAL = 4;    // 비활성, 크기는 보통
+var WS_ACT_DEF      = 5;    // 활성, 크기는 마지막으로 종료할 때와 동일
+                            // (애플리케이션에 따라 동작이 다를 수 있음)
+var WS_NOTACT_MIN   = 7;    // 비활성, 크기는 최소
 
-//  Shell 관련 작업을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 작업을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  텍스트 파일에 지정된 기본 애플리케이션으로
-//  「C:/TEST/Info.txt」 파일을 실행
-sh.Run( “C:/TEST/Info.txt”, WS_ACT_NOMAL );
+//  「C:/TEST/Info.txt」 파일 실행
+sh.Run( "C:/TEST/Info.txt", WS_ACT_NORMAL );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-실행 전에 ‘C:/TEST’ 경로에 ‘Info.txt’ 파일을 준비해 주십시오. 시험 삼아 「Info.txt」 파일에 임의의 문자열을 입력해 두십시오. 실행하면 「Info.txt」 파일에 연결된 애플리케이션이 실행됩니다. 예를 들어, 사쿠라 에디터로 기본 파일을 열도록 설정해 둔 경우, 사쿠라 에디터에서 「Info.txt」 파일이 열립니다. 주의 사항으로, 컴퓨터 환경에 따라 메모장 애플리케이션이 다른 경로에 저장되어 있을 수 있으니 주의해 주십시오.
+실행 전에 ‘C:/TEST’ 경로에 ‘Info.txt’ 파일을 준비합니다. 시험삼아 「Info.txt」 파일에 임의의 문자열을 입력합니다. 실행하면 「Info.txt」 파일에 연결된 애플리케이션이 실행됩니다. 예를 들어, 사쿠라 에디터로 기본 파일을 열도록 설정한 경우, 사쿠라 에디터에서 「Info.txt」 파일이 열립니다. 주의 사항으로, 컴퓨터 환경에 따라 메모장 애플리케이션이 다른 경로에 저장될 수 있으니 주의합니다.
 
 
 === 동기화 및 비동기 애플리케이션 실행
 
-앞서 ‘애플리케이션 실행’에서 소개한 내용은 단순히 애플리케이션을 실행하는 처리였습니다. 사실 애플리케이션이 실행되는 도중에도 다음 처리가 실행되어 버립니다. 따라서 여기서는 애플리케이션이 종료될 때까지 실행을 중지하는 등의 처리를 소개합니다. 다음 함수와 속성을 사용하면 이를 구현할 수 있습니다. Run() 함수에 대해서는 ‘애플리케이션 실행’을 참조하십시오.
+앞서 ‘애플리케이션 실행’ 에서 소개한 내용은 단순히 애플리케이션을 실행하는 처리였습니다. 사실 애플리케이션이 실행되는 도중에도 다음 처리가 실행되어 버립니다. 따라서 여기서는 애플리케이션이 종료될 때까지 실행을 중지하는 등의 처리를 소개합니다. 다음 함수와 속성을 사용하면 이를 구현할 수 있습니다. Run() 함수는 ‘애플리케이션 실행’ 을 참조합니다.
 
 함수명::
 　object.Exec( cmd );
 
 함수 설명::
-자식 명령 셸에서 애플리케이션을 실행합니다. 애플리케이션에서 StdIn / StdOut / StdErr 스트림에 액세스할 수 있습니다.
+자식 셸에서 애플리케이션을 실행합니다. 애플리케이션은 StdIn / StdOut / StdErr 스트림에 액세스할 수 있습니다.
 　
 인수::
 
 * object・・・・・・WshShell 객체
-* cmd ・・・・・・・실행할 명령줄을 나타내는 문자열. 여기에 대상 애플리케이션의 경로를 지정함으로써, 애플리케이션을 시작할 수 있습니다. 대상 경로 뒤에 반각 공백으로 구분해서 문자열을 설정함으로써 애플리케이션에 명령줄 인수를 전달할 수 있습니다.
+* cmd ・・・・・・・실행할 명령줄 문자열. 애플리케이션 경로를 지정함으로써, 애플리케이션을 시작할 수 있습니다. 경로 뒤에 공백으로 구분해서 문자열을 설정함으로써 애플리케이션에 명령줄 인수를 전달할 수 있습니다.
 +
-예제 1・・명령줄 인수 없음 +
-　object.Exec( “C:/WINDOWS/system32/notepad.exe” ); +
-예 2・・명령줄 인수가 있는 경우 +
-　object.Exec( “C:/WINDOWS/system32/notepad.exe C:\\Info.txt” ); +
-예 3・・애플리케이션 경로에 반각 공백이 섞여 있을 때 +
-  object.Exec( “\”C:/Program Files/sakura/sakura.exe\“” );
+** 예제 1・・명령줄 인수 없음 +
+ object.Exec( “C:/WINDOWS/system32/notepad.exe” ); 
+** 예 2・・명령줄 인수가 있는 경우 +
+ object.Exec( “C:/WINDOWS/system32/notepad.exe C:\\Info.txt” ); 
+** 예 3・・애플리케이션 경로에 공백이 섞여 있을 때 +
+ object.Exec( “\”C:/Program Files/sakura/sakura.exe\“” );
 
 반환값::
 WshScriptExec 객체
@@ -2966,7 +2970,7 @@ WshScriptExec 객체
 　object.Terminate();
 
 함수 설명::
-Exec() 메서드에 의해 시작된 프로세스를 종료합니다. 실제로는 종료하도록 스크립트 엔진에 지시만 내리기 때문에 실제 종료에는 시간 지연이 발생합니다.
+Exec() 메서드에 의해 시작된 프로세스를 종료합니다. 실제로는 종료하도록 스크립트 엔진에 지시만 내리기 때문에 실제 종료에 시간 지연이 발생합니다.
 　
 인수::
 
@@ -3007,29 +3011,29 @@ Exec() 메서드에 의해 시작된 프로세스를 종료합니다. 실제로�
 //
 
 //  창 스타일
-var WS_NOTVISIBLE   = 0;    //창은 비표시
-var WS_ACT_NORMAL    = 1;    //창은 활성 상태, 크기는 일반(기본값)
-var WS_ACT_MIN      = 2;    //창은 활성 상태, 크기는 최소
-var WS_ACT_MAX      = 3;    //창은 활성 상태, 크기는 최대
-var WS_NOTACT_NOMAL = 4;    //창은 비활성 상태, 크기는 보통
-var WS_ACT_DEF      = 5;    //창은 활성 상태, 크기는 마지막으로 종료되었을 때와 동일
-                            //(애플리케이션에 따라 동작이 다를 수 있음)
-var WS_NOTACT_MIN   = 7;    //창은 비활성 상태, 크기는 최소
+var WS_NOTVISIBLE   = 0;    // 숨김
+var WS_ACT_NORMAL   = 1;    // 활성, 크기는 보통(기본값)
+var WS_ACT_MIN      = 2;    // 활성, 크기는 최소
+var WS_ACT_MAX      = 3;    // 활성, 크기는 최대
+var WS_NOTACT_NOMAL = 4;    // 비활성, 크기는 보통
+var WS_ACT_DEF      = 5;    // 활성, 크기는 마지막으로 종료할 때와 동일
+                            // (애플리케이션에 따라 동작이 다를 수 있음)
+var WS_NOTACT_MIN   = 7;    // 비활성, 크기는 최소
 
-//  Shell 관련 작업을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 작업을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  Excel을 실행합니다
-sh.Run( “\”C:/Program Files/Microsoft Office/OFFICE11/EXCEL.EXE\“”, WS_ACT_MAX, true );
+sh.Run( "\"C:/Program Files/Microsoft Office/OFFICE11/EXCEL.EXE\"", WS_ACT_MAX, true );
 
 //  Excel이 종료되면 표시합니다
-WScript.Echo( “Excel이 종료되었습니다.” );
+WScript.Echo( "Excel이 종료되었습니다." );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-Excel이 실행됩니다. 그리고 실행된 Excel을 종료하면 메시지 상자에 “Excel이 종료되었습니다.”라고 표시됩니다. 이를 통해 프로그램이 종료될 때까지 처리가 중단된다는 것을 알 수 있습니다. 주의할 점으로, 실행하는 컴퓨터에 Excel이 설치되어 있지 않으면 실행되지 않습니다. 또한, Excel이 저장된 디렉터리가 다른 경우에도 실행되지 않습니다.
+Excel이 실행됩니다. 그리고 실행된 Excel을 종료하면 메시지 상자에 “Excel이 종료되었습니다.” 라고 표시됩니다. 이를 통해 “프로그램이 종료될 때까지 처리가 중단된다” 는 것을 알 수 있습니다. 주의할 점으로, 실행하는 컴퓨터에 Excel이 설치되지 않으면 실행되지 않습니다. 또한, Excel이 저장된 디렉터리가 다른 경우도 실행되지 않습니다.
 
 [source,js]
 ----
@@ -3040,27 +3044,27 @@ Excel이 실행됩니다. 그리고 실행된 Excel을 종료하면 메시지 �
 //
 
 //  창 스타일
-var WS_NOTVISIBLE   = 0;    //창은 보이지 않음
-var WS_ACT_NORMAL    = 1;    //창은 활성 상태, 크기는 일반(기본값)
-var WS_ACT_MIN      = 2;    //창은 활성 상태, 크기는 최소
-var WS_ACT_MAX      = 3;    //창은 활성 상태, 크기는 최대
-var WS_NOTACT_NOMAL = 4;    //창은 비활성 상태, 크기는 보통
-var WS_ACT_DEF      = 5;    //창은 활성 상태, 크기는 마지막으로 종료되었을 때와 동일
-                            //(애플리케이션에 따라 동작이 다를 수 있음)
-var WS_NOTACT_MIN   = 7;    //창은 비활성 상태, 크기는 최소
+var WS_NOTVISIBLE   = 0;    // 숨김
+var WS_ACT_NORMAL   = 1;    // 활성, 크기는 보통(기본값)
+var WS_ACT_MIN      = 2;    // 활성, 크기는 최소
+var WS_ACT_MAX      = 3;    // 활성, 크기는 최대
+var WS_NOTACT_NORMAL = 4;    // 비활성, 크기는 보통
+var WS_ACT_DEF      = 5;    // 활성, 크기는 마지막으로 종료할 때와 동일
+                            // (애플리케이션에 따라 동작이 다를 수 있음)
+var WS_NOTACT_MIN   = 7;    // 비활성, 크기는 최소
 
-//  Shell 관련 작업을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 작업을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  Excel을 실행합니다
-sh.Run( “\”C:/Program Files/Microsoft Office/OFFICE11/EXCEL.EXE\“”, WS_ACT_MAX, false );
-WScript.Echo( “스크립트 처리가 계속되었습니다.” );
+sh.Run( "\"C:/Program Files/Microsoft Office/OFFICE11/EXCEL.EXE\"", WS_ACT_MAX, false );
+WScript.Echo( "스크립트 처리가 계속되었습니다." );
 
 //  객체를 해제합니다
 sh = null;
 ----
 
-Excel이 실행됩니다. 그리고 곧바로 메시지 상자에 “Excel이 종료되었습니다.”라는 메시지가 표시됩니다. 위의 예제 1과 달리, 실행된 Excel을 종료하지 않아도 메시지 상자가 표시됩니다. 이로 인해 프로그램이 종료될 때까지 기다리지 않고 다음 처리가 실행되어 버립니다. 주의할 점으로, 실행하는 컴퓨터에 Excel이 설치되어 있지 않으면 실행되지 않습니다. 또한, Excel이 저장된 디렉터리가 다른 경우에도 실행되지 않습니다.
+Excel이 실행됩니다. 곧바로 메시지 상자에 “Excel이 종료되었습니다.” 라는 메시지가 표시됩니다. 이전 예제와 달리, 실행된 Excel을 종료하지 않아도 메시지 상자가 표시됩니다. 이로 인해 프로그램이 종료될 때까지 기다리지 않고 다음 처리가 실행되어 버립니다. 주의할 점으로, 실행하는 컴퓨터에 Excel이 설치되지 않으면 실행되지 않습니다. 또한, Excel이 저장된 디렉터리가 다른 경우도 실행되지 않습니다.
 
 [source,js]
 ----
@@ -3074,11 +3078,11 @@ Excel이 실행됩니다. 그리고 곧바로 메시지 상자에 “Excel이 �
 var WSH_RUNNING  = 0;   // 실행 중
 var WSH_FINISHED = 1;   // 종료
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  Excel을 실행함
-var job = sh.Exec( “\”C:/Program Files/Microsoft Office/OFFICE11/EXCEL.EXE\“” );
+var job = sh.Exec( "\"C:/Program Files/Microsoft Office/OFFICE11/EXCEL.EXE\"" );
 
 //  실행 중인 동안 루프
 var cnt = 0;
@@ -3091,18 +3095,18 @@ while( job.Status  ==  0 )
         job.Terminate();
 }
 
-WScript.Echo( “실행 시간 = ” + cnt + “초” );
+WScript.Echo( "실행 시간 = " + cnt + "초" );
 
 //  객체 해제
 sh = null;
 ----
 
-Excel이 실행됩니다. 그리고 실행된 Excel을 종료하면 메시지 상자에 Excel이 실행된 후 종료될 때까지의 시간이 표시됩니다. 이번 예제에서는 실행된 Excel이 종료되지 않아도 다음 처리를 실행하지만, 여기서는 실행된 Excel이 실행 중인지 종료 중인지 판단할 수 있으므로 종료될 때까지 루프 처리를 추가했습니다. 이 방법을 사용하면 애플리케이션을 실행하면서 스크립트 내에서 다양한 처리를 할 수 있습니다. 주의 사항으로, 실행하는 컴퓨터에 Excel이 설치되어 있지 않으면 실행되지 않습니다. 또한, Excel이 저장된 디렉터리가 다른 경우에도 실행되지 않습니다.
+Excel이 실행됩니다. 그리고 실행된 Excel을 종료하면 메시지 상자에 Excel이 실행된 후 종료될 때까지의 시간이 표시됩니다. 이번 예제는 실행된 Excel이 종료되지 않아도 다음 처리를 실행하지만, 여기서는 실행된 Excel이 실행 중인지 종료 중인지 판단할 수 있으므로 종료될 때까지 루프 처리를 추가했습니다. 이 방법을 사용하면 애플리케이션을 실행하면서 스크립트에서 다양한 처리를 할 수 있습니다. 주의 사항으로, 실행하는 컴퓨터에 Excel이 설치되지 않으면 실행되지 않습니다. 또한, Excel이 저장된 디렉터리가 다른 경우도 실행되지 않습니다.
 
 
-=== 창을 활성화하세요
+=== 창을 활성화합니다
 
-이미 존재하는 창을 활성 상태로 만들려면 다음 함수를 사용합니다. Run() 함수에 대해서는 ‘애플리케이션 실행’을 참조하십시오.
+이미 존재하는 창을 활성 상태로 만들려면 다음 함수를 사용합니다. Run() 함수는 ‘애플리케이션 실행’ 을 참조합니다.
 
 함수명::
 　object.AppActivate( title );
@@ -3113,10 +3117,10 @@ Excel이 실행됩니다. 그리고 실행된 Excel을 종료하면 메시지 �
 인수::
 
 * object・・・・・・WshShell 객체
-* title ・・・・・・애플리케이션의 제목 표시줄에 표시되는 제목 문자열 또는 애플리케이션의 프로세스 ID. title로 지정한 문자열과 완전히 일치하는 애플리케이션의 제목이 없는 경우, 애플리케이션 제목의 맨 앞에 title이 일치하는 것을 활성 상태로 만듭니다. 제목의 맨 앞과 비교해도 일치하는 것이 없는 경우, 애플리케이션 제목의 맨 끝에 title이 일치하는 것을 활성 상태로 만듭니다. 그래도 일치하는 것이 없는 경우에는 아무것도 활성 상태가 되지 않습니다. 같은 제목의 애플리케이션이 여러 개 있는 경우에는, 어느 것이 활성 상태가 될지 알 수 없습니다.
+* title ・・・・・・애플리케이션 제목 표시줄에 표시되는 제목 문자열 또는 애플리케이션 프로세스 ID. title로 지정한 문자열과 일치하는 애플리케이션 제목이 없는 경우, 애플리케이션 제목 맨 앞에 title 이 일치하는 것을 활성 상태로 만듭니다. 제목 맨 앞과 비교해도 일치하는 것이 없는 경우, 애플리케이션 제목 맨 끝에 title 이 일치하는 것을 활성 상태로 만듭니다. 그래도 일치하는 것이 없는 경우는 아무것도 활성 상태가 되지 않습니다. 같은 제목의 애플리케이션이 여러 개 있는 경우는, 어느 것이 활성 상태가 될지 알 수 없습니다.
 
 반환값::
-함수가 정상적으로 종료되었는지 여부의 부울 값. 창을 활성 상태로 만들 수 있었던 경우 true, 창을 활성 상태로 만들 수 없었던 경우 false.
+함수가 정상적으로 종료된지 여부의 부울 값. 창을 활성 상태로 만들면 true, 창을 활성 상태로 만들 수 없으면 false.
 
 함수명::
 　WScript.Sleep( time );
@@ -3140,30 +3144,30 @@ Excel이 실행됩니다. 그리고 실행된 Excel을 종료하면 메시지 �
 //
 
 //  창 스타일
-var WS_NOTVISIBLE   = 0;    //창은 숨김
-var WS_ACT_NOMAL    = 1;    //창은 활성 상태, 크기는 보통(기본값)
-var WS_ACT_MIN      = 2;    //창은 활성 상태, 크기는 최소
-var WS_ACT_MAX      = 3;    //창은 활성 상태, 크기는 최대
-var WS_NOTACT_NOMAL = 4;    //창은 비활성 상태, 크기는 보통
-var WS_ACT_DEF      = 5;    //창은 활성 상태, 크기는 마지막으로 종료되었을 때와 동일
-                            //(애플리케이션에 따라 동작이 다를 수 있음)
-var WS_NOTACT_MIN   = 7;    //창은 비활성 상태, 크기는 최소
+var WS_NOTVISIBLE   = 0;    // 숨김
+var WS_ACT_NORMAL   = 1;    // 활성, 크기는 보통(기본값)
+var WS_ACT_MIN      = 2;    // 활성, 크기는 최소
+var WS_ACT_MAX      = 3;    // 활성, 크기는 최대
+var WS_NOTACT_NORMAL = 4;    // 비활성, 크기는 보통
+var WS_ACT_DEF      = 5;    // 활성, 크기는 마지막으로 종료할 때와 동일
+                            // (애플리케이션에 따라 동작이 다를 수 있음)
+var WS_NOTACT_MIN   = 7;    // 비활성, 크기는 최소
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져옴
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  비활성 상태로 메모장 실행
-sh.Run( “notepad.exe”, WS_NOTACT_NOMAL );
+sh.Run( "notepad.exe", WS_NOTACT_NORMAL );
 
-//  바로 활성 상태로 전환하면 혼란스러울 수 있으므로 일단 3초간 대기
+//  곧바로 활성 상태로 전환하면 혼란스러울 수 있으므로 3초간 대기
 WScript.Sleep( 3000 );
 
-//  제목이 ‘제목 없음 - 메모장’인 창을 활성 상태로 전환
-sh.AppActivate( “제목 없음 - 메모장” );
+//  제목이 ‘제목 없음 - Windows 메모장’ 인 창을 활성 상태로 전환
+sh.AppActivate( "제목 없음 - Windows 메모장" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
@@ -3172,7 +3176,7 @@ sh = null;
 
 === 다른 JScript 파일을 실행하세요
 
-외부 JScript 파일을 실행하려면 다음 예제를 통해 구현할 수 있습니다. Run() 함수에 대해서는 ‘애플리케이션 시작’을 참조하십시오.
+외부 JScript 파일을 실행하려면 다음 예제를 통해 구현할 수 있습니다. Run() 함수는 ‘애플리케이션 시작’ 을 참조합니다.
 
 [source,js]
 ----
@@ -3183,27 +3187,31 @@ sh = null;
 //
 
 //  Shell 관련 조작을 제공하는 객체 가져오기
-var sh = new ActiveXObject( “WScript.Shell” );
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  ‘wscript.exe’ 애플리케이션에 본 파일과 같은 계층에 있는 'call.js'를
-//  명령줄 인수로 전달해서 실행
-sh.Run( “C:/WINDOWS/system32/wscript.exe call.js” );
+//  ‘wscript.exe’ 애플리케이션에 본 파일과 같은 계층에 있는 
+//  'call.js' 를 명령줄 인수로 전달해서 실행
+sh.Run( "C:/WINDOWS/system32/wscript.exe call.js" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
+----
 
+.call.js
+[source,js]
+----
 //
 //  애플리케이션 조작
 //
 //  　외부 스크립트 파일을 실행합니다(호출받는 쪽).
 //
-WScript.Echo( “호출되었습니다!?” );
+WScript.Echo( "호출되었습니다!?" );
 ----
 
-실행 전에, 이 파일과 같은 디렉터리에 ‘Call.js’ 파일을 생성해야 합니다. 위의 소스 코드를 복사해서 「Call.js」 파일을 생성해 주십시오. 실행하면 메시지 상자에 「호출되었습니다!？」라고 표시됩니다. 이번 예제에서는 「wscript.exe」 애플리케이션을 시작할 때 명령줄 인수로 실행하고자 하는 스크립트 파일의 경로를 설정하고 있습니다.
+실행 전에, 이 파일과 같은 디렉터리에 ‘Call.js’ 파일을 생성해야 합니다. 위의 소스 코드를 복사해서 「Call.js」 파일을 생성합니다. 실행하면 메시지 상자에 「호출되었습니다!？」라고 표시됩니다. 이번 예제는 「wscript.exe」 애플리케이션을 시작할 때 명령줄 인수로 실행하려는 스크립트 파일의 경로를 설정하고 있습니다.
 
 
-=== 폴더 열기
+=== 지정한 폴더를 탐색기로 열기
 
 지정한 경로의 폴더를 탐색기에서 열려면 다음 함수를 사용합니다. 이 샘플을 작성하는 데 있어 이 사이트를 참고했습니다.
 
@@ -3216,7 +3224,7 @@ WScript.Echo( “호출되었습니다!?” );
 인수::
 
 * object・・・・・・ShellApplication 객체
-* dir ・・・・・・・열할 폴더의 경로 또는 특수 폴더에 할당된 상수값. (경로는 ‘/’를 사용하지 말고 ‘\’를 사용하십시오)
+* dir ・・・・・・・열릴 폴더의 경로 또는 특수 폴더에 할당된 상수값. (경로는 ‘/’ 를 사용하지 말고 ‘\’ 를 사용합니다.)
 
 .특수 폴더 상수의 종류
 [%autowidth]
@@ -3250,16 +3258,16 @@ WScript.Echo( “호출되었습니다!?” );
 //
 //  애플리케이션 조작
 //
-//  　경로를 지정해서 탐색기에서 열기.
+//  　경로를 지정해서 탐색기로 열기.
 //
 
-//  Shell 관련 조작을 제공하는 객체 2를 가져오기
-var sh = new ActiveXObject( “Shell.Application” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "Shell.Application" );
 
-//  ‘C:’ 드라이브를 탐색기에서 엽니다.
-sh.Open( “C:\\” );
+//  ‘C:’ 드라이브를 탐색기로 열기
+sh.Open( "C:\\" );
 
-//  객체를 해제합니다.
+//  객체 해제
 sh = null;
 ----
 
@@ -3270,7 +3278,7 @@ sh = null;
 //
 //  애플리케이션 조작
 //
-//  　상수를 지정해서 탐색기에서 엽니다.
+//  　상수를 지정해서 탐색기로 열기.
 //
 
 //  특수 폴더 상수
@@ -3293,107 +3301,108 @@ var SSF_NETHOOD          = 19;  // NetHood
 var SSF_FONTS            = 20;  // 글꼴
 var SSF_TEMPLATES        = 21;  // 템플릿
 
-//  셸 관련 작업을 제공하는 두 번째 객체를 가져옵니다.
-var sh = new ActiveXObject( “Shell.Application” );
+//  셸 관련 작업을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "Shell.Application" );
 
-//  내 문서를 탐색기에서 엽니다.
+//  내 문서를 탐색기로 열기
 sh.Open( SSF_PERSONAL );
 
-//  객체를 해제합니다.
+//  객체 해제
 sh = null;
 ----
 
-탐색기가 열리고 내 문서가 표시됩니다.
+탐색기가 열리고 내 문서 폴더가 표시됩니다.
 
 
 
-== 키보드 작동
 
-여기서는 JScript를 사용해서 키보드를 조작하는 방법에 대해 소개합니다. 스크립트 처리를 통해 마치 키보드의 키를 누른 것과 같은 동작을 수행하게 합니다. 다만, 키를 계속 누르고 있는 것과 같은 조작은 할 수 없습니다. 지난 시간에 소개한 애플리케이션 조작 기능과 함께 사용하면, 활용의 폭이 넓어질 수도 있습니다.
+== 키보드
+
+여기서는 JScript를 사용해서 키보드를 조작하는 방법에 대해 소개합니다. 스크립트 처리를 통해 마치 키보드의 키를 누른 것 같은 동작을 수행합니다. 다만, 키를 계속 누르는 것 같은 조작은 할 수 없습니다. 지난 시간에 소개한 애플리케이션 조작 기능과 함께 사용하면, 활용의 폭이 넓어질 수도 있습니다.
 
 
 === 알파벳 키 입력
 
-A~Z 알파벳 키를 입력하려면 다음 함수를 이용합니다. Sleep() 함수에 대해서는 ‘애플리케이션 창을 활성 상태로 만들기’를 참조하십시오.
+A~Z 알파벳 키를 입력하려면 다음 함수를 이용합니다. 
 
 함수명::
 　object.SendKeys( keys );
 
 함수 설명::
-애플리케이션에 키 입력을 전송합니다. 키보드의 문자 대부분은 단일 키로 표현됩니다. 키보드 문자 중에는 ‘Ctrl+Shift+Home’과 같이 여러 키의 조합으로 표현되는 것도 있습니다. 키보드 문자를 하나 전송하려면 해당 문자 자체를 keys(인수)로 지정합니다. 예를 들어, X 키를 전송하려면 keys(인수)에 문자열 ‘“X”’를 지정합니다.
+애플리케이션에 키 입력을 전송합니다. 키보드의 문자 대부분은 단일 키로 표현됩니다. 키보드 문자 중에는 ‘Ctrl+Shift+Home’ 같이 여러 키의 조합으로 표현되는 것도 있습니다. 키보드 문자 하나를 전송하려면 해당 문자를 keys(인수) 로 지정합니다. 예를 들어, X 키를 전송하려면 keys(인수) 에 문자열 ‘“X”’ 를 지정합니다.
 　
 인수::
 
 * object・・・・・・WshShell 객체
 * keys・・・・・・・전송할 키 입력을 문자열로 지정.
 +
-설정 예 1: A 키를 전송하는 경우 +
+** 설정 예 1: A 키를 전송하는 경우 +
 　object.SendKeys( “A” );
 　
-설정 예 2: 1 키를 전송하는 경우 +
+** 설정 예 2: 1 키를 전송하는 경우 +
 　object.SendKeys( “1” );
 　
-설정 예 3: ! 키를 전송하는 경우 +
+** 설정 예 3: ! 키를 전송하는 경우 +
 　object.SendKeys( “!” );
 
-설정 예 4: Ctrl+Shift+S 키를 전송하는 경우 +
+** 설정 예 4: Ctrl+Shift+S 키를 전송하는 경우 +
 　object.SendKeys( “^+S” );
 
-설정 예 5: abCdE를 연속으로 전송하는 경우 +
+** 설정 예 5: abCdE를 연속으로 전송하는 경우 +
 　object.SendKeys( “abCdE” );
-
++
 엔터 키 등의 특수 키는 다음 표를 참조하십시오.
-　　　　　　　　　　
++
 .특수 키 문자
 [%autowidth]
 |===
-|키    |설정 문자열    |비고
-
-|F1    |{F1}    　|
-|F2    |{F2}    　|
-|F3    |{F3}    　|
-|F4    |{F4}    　|
-|F5    |{F5}    　|
-|F6    |{F6}    　|
-|F7    |{F7}	　|
-|F8    |{F8}    　|
-|F9    |{F9}    　|
-|F10   |{F10}    |
-|F11   |{F11}    |　
-|F12   |{F12}    |　
-|+     |{+}    　|
-|^     |{^}    　|
-|%     |{%}    　|
-|~     |{~}    　|
-|[     |{[}    　|
-|]	   |{]}    　|
-|{     |{{}    　|
-|}     |{}}    　|
-|(     |{(}    　|
-|)     |{)}    　|
-|Space    |“ ”   |반각 공백
-|Shift    |+     |    　
-|Ctrl     |^     |
-|Alt      |%     |　
-|Home     |{HOME} |    　
-|End      |{END}  |   　
-|Enter    |{ENTER} |   |~도 가능
-|BackSpace    |{BACKSPACE}    |{BS}, {BKSP}도 가능
-|Insert    |{INSERT}    |{INS}도 가능
-|Delete    |{DELETE}    |{DEL}도 가능
-|↑    |{UP}    　|
-|↓    |{DOWN}    |　
-|←    |{LEFT}    |　
-|→    |{RIGHT}    |　
-|PageUp    |{PGUP}	　|
-|PageDown    |{PGDN}  |
-|Esc    |{ESC}    　|
-|Tab    |{TAB}    　|
-|Caps Lock    |{CAPSLOCK}     |
-|Num Lock     |{NUMLOCK}    　|
-|Scroll Lock  |{SCROLLLOCK}   |
-|Break    |{BREAK}    　|
-|PRINT SCREEN    |{PRTSC}    |화면 캡처 기능은 반응하지 않음
+|키              |설정 문자열    |비고
+	             
+|F1              |{F1}    　     |
+|F2              |{F2}    　     |
+|F3              |{F3}    　     |
+|F4              |{F4}    　     |
+|F5              |{F5}    　     |
+|F6              |{F6}    　     |
+|F7              |{F7}	　       |
+|F8              |{F8}    　     |
+|F9              |{F9}    　     |
+|F10             |{F10}          |
+|F11             |{F11}          |　
+|F12             |{F12}          |　
+|+               |{+}    　      |
+|^               |{^}    　      |
+|%               |{%}    　      |
+|~               |{~}    　      |
+|[               |{[}    　      |
+|]	             |{]}    　      |
+|{               |{{}    　      |
+|}               |{}}    　      |
+|(               |{(}    　      |
+|)               |{)}    　      |
+|Space           |“ ”            |반각 공백
+|Shift           |+              |    　
+|Ctrl            |^              |
+|Alt             |%              |　
+|Home            |{HOME}         |    　
+|End             |{END}          |   　
+|Enter           |{ENTER}        |~도 가능
+|BackSpace       |{BACKSPACE}    |{BS}, {BKSP}도 가능
+|Insert          |{INSERT}       |{INS}도 가능
+|Delete          |{DELETE}       |{DEL}도 가능
+|↑              |{UP}    　     |
+|↓              |{DOWN}         |　
+|←              |{LEFT}         |　
+|→              |{RIGHT}        |　
+|PageUp          |{PGUP}	     |
+|PageDown        |{PGDN}         |
+|Esc             |{ESC}          |
+|Tab             |{TAB}          |
+|Caps Lock       |{CAPSLOCK}     |
+|Num Lock        |{NUMLOCK}    　|
+|Scroll Lock     |{SCROLLLOCK}   |
+|Break           |{BREAK}    　  |
+|PRINT SCREEN    |{PRTSC}        |화면 캡처 기능은 반응하지 않음
 |===
 
 반환값::
@@ -3407,72 +3416,72 @@ A~Z 알파벳 키를 입력하려면 다음 함수를 이용합니다. Sleep() �
 //  　메모장을 실행하고 A~Z 키를 전송한다.
 //
 
-//  Shell 관련 조작을 제공하는 객체를 가져온다.
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  메모장 실행
-sh.Run( “notepad.exe” );
+sh.Run( "notepad.exe" );
 
 //  실행 직후 키를 전송하면 실패할 가능성이 있으므로 3초간 대기
 WScript.Sleep( 3000 );
 
 //  0.1초 간격으로 A~Z 키를 전송
-sh.SendKeys( “A” );     WScript.Sleep( 100 );
-sh.SendKeys( “B” );     WScript.Sleep( 100 );
-sh.SendKeys( “C” );     WScript.Sleep( 100 );
-sh.SendKeys( “D” );     WScript.Sleep( 100 );
-sh.SendKeys( “E” );     WScript.Sleep( 100 );
-sh.SendKeys( “F” );     WScript.Sleep( 100 );
-sh.SendKeys( “G” );     WScript.Sleep( 100 );
-sh.SendKeys( “H” );     WScript.Sleep( 100 );
-sh.SendKeys( “I” );     WScript.Sleep( 100 );
-sh.SendKeys( “J” );     WScript.Sleep( 100 );
-sh.SendKeys( “K” );     WScript.Sleep( 100 );
-sh.SendKeys( “L” );     WScript.Sleep( 100 );
-sh.SendKeys( “M” );     WScript.Sleep( 100 );
-sh.SendKeys( “N” );     WScript.Sleep( 100 );
-sh.SendKeys( “O” );     WScript.Sleep( 100 );
-sh.SendKeys( “P” );     WScript.Sleep( 100 );
-sh.SendKeys( “Q” );     WScript.Sleep( 100 );
-sh.SendKeys( “R” );     WScript.Sleep( 100 );
-sh.SendKeys( “S” );     WScript.Sleep( 100 );
-sh.SendKeys( “T” );     WScript.Sleep( 100 );
-sh.SendKeys( “U” );     WScript.Sleep( 100 );
-sh.SendKeys( “V” );     WScript.Sleep( 100 );
-sh.SendKeys( “W” );     WScript.Sleep( 100 );
-sh.SendKeys( “X” );     WScript.Sleep( 100 );
-sh.SendKeys( “Y” );     WScript.Sleep( 100 );
-sh.SendKeys( “Z” );     WScript.Sleep( 100 );
+sh.SendKeys( "A" );     WScript.Sleep( 100 );
+sh.SendKeys( "B" );     WScript.Sleep( 100 );
+sh.SendKeys( "C" );     WScript.Sleep( 100 );
+sh.SendKeys( "D" );     WScript.Sleep( 100 );
+sh.SendKeys( "E" );     WScript.Sleep( 100 );
+sh.SendKeys( "F" );     WScript.Sleep( 100 );
+sh.SendKeys( "G" );     WScript.Sleep( 100 );
+sh.SendKeys( "H" );     WScript.Sleep( 100 );
+sh.SendKeys( "I" );     WScript.Sleep( 100 );
+sh.SendKeys( "J" );     WScript.Sleep( 100 );
+sh.SendKeys( "K" );     WScript.Sleep( 100 );
+sh.SendKeys( "L" );     WScript.Sleep( 100 );
+sh.SendKeys( "M" );     WScript.Sleep( 100 );
+sh.SendKeys( "N" );     WScript.Sleep( 100 );
+sh.SendKeys( "O" );     WScript.Sleep( 100 );
+sh.SendKeys( "P" );     WScript.Sleep( 100 );
+sh.SendKeys( "Q" );     WScript.Sleep( 100 );
+sh.SendKeys( "R" );     WScript.Sleep( 100 );
+sh.SendKeys( "S" );     WScript.Sleep( 100 );
+sh.SendKeys( "T" );     WScript.Sleep( 100 );
+sh.SendKeys( "U" );     WScript.Sleep( 100 );
+sh.SendKeys( "V" );     WScript.Sleep( 100 );
+sh.SendKeys( "W" );     WScript.Sleep( 100 );
+sh.SendKeys( "X" );     WScript.Sleep( 100 );
+sh.SendKeys( "Y" );     WScript.Sleep( 100 );
+sh.SendKeys( "Z" );     WScript.Sleep( 100 );
 
 //  a~z 키를 0.1초 간격으로 전송
-sh.SendKeys( “a” );     WScript.Sleep( 100 );
-sh.SendKeys( “b” );     WScript.Sleep( 100 );
-sh.SendKeys( “c” );     WScript.Sleep( 100 );
-sh.SendKeys( “d” );     WScript.Sleep( 100 );
-sh.SendKeys( “e” );     WScript.Sleep( 100 );
-sh.SendKeys( “f” );     WScript.Sleep( 100 );
-sh.SendKeys( “g” );     WScript.Sleep( 100 );
-sh.SendKeys( “h” );     WScript.Sleep( 100 );
-sh.SendKeys( “i” );     WScript.Sleep( 100 );
-sh.SendKeys( “j” );     WScript.Sleep( 100 );
-sh.SendKeys( “k” );     WScript.Sleep( 100 );
-sh.SendKeys( “l” );     WScript.Sleep( 100 );
-sh.SendKeys( “m” );     WScript.Sleep( 100 );
-sh.SendKeys( “n” );     WScript.Sleep( 100 );
-sh.SendKeys( “o” );     WScript.Sleep( 100 );
-sh.SendKeys( “p” );     WScript.Sleep( 100 );
-sh.SendKeys( “q” );     WScript.Sleep( 100 );
-sh.SendKeys( “r” );     WScript.Sleep( 100 );
-sh.SendKeys( “s” );     WScript.Sleep( 100 );
-sh.SendKeys( “t” );     WScript.Sleep( 100 );
-sh.SendKeys( “u” );     WScript.Sleep( 100 );
-sh.SendKeys( “v” );     WScript.Sleep( 100 );
-sh.SendKeys( “w” );     WScript.Sleep( 100 );
-sh.SendKeys( “x” );     WScript.Sleep( 100 );
-sh.SendKeys( “y” );     WScript.Sleep( 100 );
-sh.SendKeys( “z” );     WScript.Sleep( 100 );
+sh.SendKeys( "a" );     WScript.Sleep( 100 );
+sh.SendKeys( "b" );     WScript.Sleep( 100 );
+sh.SendKeys( "c" );     WScript.Sleep( 100 );
+sh.SendKeys( "d" );     WScript.Sleep( 100 );
+sh.SendKeys( "e" );     WScript.Sleep( 100 );
+sh.SendKeys( "f" );     WScript.Sleep( 100 );
+sh.SendKeys( "g" );     WScript.Sleep( 100 );
+sh.SendKeys( "h" );     WScript.Sleep( 100 );
+sh.SendKeys( "i" );     WScript.Sleep( 100 );
+sh.SendKeys( "j" );     WScript.Sleep( 100 );
+sh.SendKeys( "k" );     WScript.Sleep( 100 );
+sh.SendKeys( "l" );     WScript.Sleep( 100 );
+sh.SendKeys( "m" );     WScript.Sleep( 100 );
+sh.SendKeys( "n" );     WScript.Sleep( 100 );
+sh.SendKeys( "o" );     WScript.Sleep( 100 );
+sh.SendKeys( "p" );     WScript.Sleep( 100 );
+sh.SendKeys( "q" );     WScript.Sleep( 100 );
+sh.SendKeys( "r" );     WScript.Sleep( 100 );
+sh.SendKeys( "s" );     WScript.Sleep( 100 );
+sh.SendKeys( "t" );     WScript.Sleep( 100 );
+sh.SendKeys( "u" );     WScript.Sleep( 100 );
+sh.SendKeys( "v" );     WScript.Sleep( 100 );
+sh.SendKeys( "w" );     WScript.Sleep( 100 );
+sh.SendKeys( "x" );     WScript.Sleep( 100 );
+sh.SendKeys( "y" );     WScript.Sleep( 100 );
+sh.SendKeys( "z" );     WScript.Sleep( 100 );
 
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
 //  객체 해제
 sh = null;
@@ -3483,7 +3492,7 @@ sh = null;
 
 === 숫자 키패드 입력
 
-0~9의 숫자 키를 입력하려면 다음 예제를 참고하십시오. Sleep() 함수에 대해서는 ‘응용 프로그램 창을 활성 상태로 만들기’를 참조하십시오. SendKeys() 함수에 대해서는 ‘알파벳 키 입력’을 참조하십시오.
+0~9의 숫자 키를 입력하려면 다음 예제를 참고합니다. 
 
 [source,js]
 ----
@@ -3493,27 +3502,27 @@ sh = null;
 //  　메모장을 실행하고 0~9 키를 전송합니다.
 //
 
-//  Shell 관련 조작을 제공하는 객체를 가져옵니다.
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  메모장 실행
-sh.Run( “notepad.exe” );
+sh.Run( "notepad.exe" );
 
-//  실행 직후 키를 전송하면 실패할 가능성이 있으므로 3초간 대기합니다.
+//  실행 직후 키를 전송하면 실패할 가능성이 있으므로 3초간 대기
 WScript.Sleep( 3000 );
 
 //  0~9 키를 0.1초 간격으로 전송
-sh.SendKeys( “0” );     WScript.Sleep( 100 );
-sh.SendKeys( “1” );     WScript.Sleep( 100 );
-sh.SendKeys( “2” );     WScript.Sleep( 100 );
-sh.SendKeys( “3” );     WScript.Sleep( 100 );
-sh.SendKeys( “4” );     WScript.Sleep( 100 );
-sh.SendKeys( “5” );     WScript.Sleep( 100 );
-sh.SendKeys( “6” );     WScript.Sleep( 100 );
-sh.SendKeys( “7” );     WScript.Sleep( 100 );
-sh.SendKeys( “8” );     WScript.Sleep( 100 );
-sh.SendKeys( “9” );     WScript.Sleep( 100 );
-WScript.Echo( “종료” );
+sh.SendKeys( "0" );     WScript.Sleep( 100 );
+sh.SendKeys( "1" );     WScript.Sleep( 100 );
+sh.SendKeys( "2" );     WScript.Sleep( 100 );
+sh.SendKeys( "3" );     WScript.Sleep( 100 );
+sh.SendKeys( "4" );     WScript.Sleep( 100 );
+sh.SendKeys( "5" );     WScript.Sleep( 100 );
+sh.SendKeys( "6" );     WScript.Sleep( 100 );
+sh.SendKeys( "7" );     WScript.Sleep( 100 );
+sh.SendKeys( "8" );     WScript.Sleep( 100 );
+sh.SendKeys( "9" );     WScript.Sleep( 100 );
+WScript.Echo( "종료" );
 
 //  객체 해제
 sh = null;
@@ -3524,7 +3533,7 @@ sh = null;
 
 === 기능 키 입력
 
-F1~F12 기능 키를 입력하려면 다음 예제를 참고하십시오. Sleep() 함수에 대해서는 ‘응용 프로그램 창을 활성 상태로 만들기’를 참조하십시오. SendKeys() 함수에 대해서는 ‘알파벳 키 입력’을 참조하십시오.
+F1~F12 기능 키를 입력하려면 다음 예제를 참고합니다. 
 
 [source,js]
 ----
@@ -3535,31 +3544,31 @@ F1~F12 기능 키를 입력하려면 다음 예제를 참고하십시오. Sleep(
 //
 
 //  기능 키 문자
-var KEY_F1  = “{F1}”;   // F1 키
-var KEY_F2  = “{F2}”;   // F2 키
-var KEY_F3  = “{F3}”;   // F3 키
-var KEY_F4  = “{F4}”;   // F4 키
-var KEY_F5  = “{F5}”;   // F5 키
-var KEY_F6  = “{F6}”;   // F6 키
-var KEY_F7  = “{F7}”;   // F7 키
-var KEY_F8  = “{F8}”;   // F8 키
-var KEY_F9  = “{F9}”;   // F9 키
-var KEY_F10 = “{F10}”;  // F10 키
-var KEY_F11 = “{F11}”;  // F11 키
-var KEY_F12 = “{F12}”;  // F12 키
+var KEY_F1  = "{F1}";   // F1 키
+var KEY_F2  = "{F2}";   // F2 키
+var KEY_F3  = "{F3}";   // F3 키
+var KEY_F4  = "{F4}";   // F4 키
+var KEY_F5  = "{F5}";   // F5 키
+var KEY_F6  = "{F6}";   // F6 키
+var KEY_F7  = "{F7}";   // F7 키
+var KEY_F8  = "{F8}";   // F8 키
+var KEY_F9  = "{F9}";   // F9 키
+var KEY_F10 = "{F10}";  // F10 키
+var KEY_F11 = "{F11}";  // F11 키
+var KEY_F12 = "{F12}";  // F12 키
 
-//  Shell 관련 작업을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 작업을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  메모장 실행
-sh.Run( “notepad.exe” );
+sh.Run( "notepad.exe" );
 
 //  실행 직후 키를 전송하면 실패할 가능성이 있으므로 3초간 대기
 WScript.Sleep( 3000 );
 
 //  F5 키 전송(메모장에서는 현재 날짜와 시각이 출력되는 단축키)
 sh.SendKeys( KEY_F5 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
 //  객체 해제
 sh = null;
@@ -3570,7 +3579,7 @@ sh = null;
 
 === 기타 특수 키 입력
 
-Enter 키, 스페이스 키 등을 입력하려면 다음 예제를 참고하십시오. Sleep() 함수에 대해서는 ‘응용 프로그램 창을 활성 상태로 만들기’를 참조하십시오. SendKeys() 함수에 대해서는 ‘알파벳 키 입력’을 참조하십시오.
+Enter 키, 스페이스 키 등을 입력하려면 다음 예제를 참고합니다. 
 
 [source,js]
 ----
@@ -3581,44 +3590,44 @@ Enter 키, 스페이스 키 등을 입력하려면 다음 예제를 참고하십
 //
 
 //  특수 키 문자
-var KEY_PLUS            = "{+}";            // +キー
-var KEY_CARET           = "{^}";            // ^キー
-var KEY_PERCENT         = "{%}";            // %キー
-var KEY_TILDE           = "{~}";            // ~キー
-var KEY_BRACKET_L       = "{[}";            // [キー
-var KEY_BRACKET_R       = "{]}";            // ]キー
-var KEY_BRACE_L         = "{{}";            // {キー
-var KEY_BRACE_R         = "{}}";            // }キー
-var KEY_PARENTHESIS_L   = "{(}";            // (キー
-var KEY_PARENTHESIS_R   = "{)}";            // )キー
-var KEY_SPACE           = " ";              // Spaceキー
-var KEY_SHIFT           = "+";              // Shiftキー
-var KEY_CTRL            = "^";              // Ctrlキー
-var KEY_ALT             = "%";              // Altキー
-var KEY_HOME            = "{HOME}";         // Homeキー
-var KEY_END             = "{END}";          // Endキー
-var KEY_ENTER           = "{ENTER}";        // Enterキー
-var KEY_BACKSPACE       = "{BACKSPACE}";    // BackSpaceキー
-var KEY_INSERT          = "{INSERT}";       // Insertキー
-var KEY_DELETE          = "{DELETE}";       // Deleteキー
-var KEY_ARROW_UP        = "{UP}";           // ↑キー
-var KEY_ARROW_DOWN      = "{DOWN}";         // ↓キー
-var KEY_ARROW_LEFT      = "{LEFT}";         // ←キー
-var KEY_ARROW_RIGHT     = "{RIGHT}";        // →キー
-var KEY_PAGE_UP         = "{PGUP}";         // PageUpキー
-var KEY_PAGE_DOWN       = "{PGDN}";         // PageDownキー
-var KEY_ESC             = "{ESC}";          // Escキー
-var KEY_TAB             = "{TAB}";          // Tabキー
-var KEY_CAPS_LOCK       = "{CAPSLOCK}";     // Caps Lockキー
-var KEY_NUM_LOCK        = "{NUMLOCK}";      // Num Lockキー
-var KEY_SCROLL_LOCK     = "{SCROLLLOCK}";   // Scroll Lockキー
-var KEY_BREAK           = "{BREAK}";        // Breakキー
+var KEY_PLUS            = "{+}";            // + 키
+var KEY_CARET           = "{^}";            // ^ 키
+var KEY_PERCENT         = "{%}";            // % 키
+var KEY_TILDE           = "{~}";            // ~ 키
+var KEY_BRACKET_L       = "{[}";            // [ 키
+var KEY_BRACKET_R       = "{]}";            // ] 키
+var KEY_BRACE_L         = "{{}";            // { 키
+var KEY_BRACE_R         = "{}}";            // } 키
+var KEY_PARENTHESIS_L   = "{(}";            // ( 키
+var KEY_PARENTHESIS_R   = "{)}";            // ) 키
+var KEY_SPACE           = " ";              // Space 키
+var KEY_SHIFT           = "+";              // Shift 키
+var KEY_CTRL            = "^";              // Ctrl 키
+var KEY_ALT             = "%";              // Alt 키
+var KEY_HOME            = "{HOME}";         // Home 키
+var KEY_END             = "{END}";          // End 키
+var KEY_ENTER           = "{ENTER}";        // Enter 키
+var KEY_BACKSPACE       = "{BACKSPACE}";    // BackSpace 키
+var KEY_INSERT          = "{INSERT}";       // Insert 키
+var KEY_DELETE          = "{DELETE}";       // Delete 키
+var KEY_ARROW_UP        = "{UP}";           // ↑ 키
+var KEY_ARROW_DOWN      = "{DOWN}";         // ↓ 키
+var KEY_ARROW_LEFT      = "{LEFT}";         // ← 키
+var KEY_ARROW_RIGHT     = "{RIGHT}";        // → 키
+var KEY_PAGE_UP         = "{PGUP}";         // PageUp 키
+var KEY_PAGE_DOWN       = "{PGDN}";         // PageDown 키
+var KEY_ESC             = "{ESC}";          // Esc 키
+var KEY_TAB             = "{TAB}";          // Tab 키
+var KEY_CAPS_LOCK       = "{CAPSLOCK}";     // Caps Lock 키
+var KEY_NUM_LOCK        = "{NUMLOCK}";      // Num Lock 키
+var KEY_SCROLL_LOCK     = "{SCROLLLOCK}";   // Scroll Lock 키
+var KEY_BREAK           = "{BREAK}";        // Break 키
 
 //  Shell 관련 작업을 수행하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  메모장 실행
-sh.Run( “notepad.exe” );
+sh.Run( "notepad.exe" );
 
 //  실행 직후 키를 전송하면 실패할 수 있으므로 3초 동안 대기
 WScript.Sleep( 3000 );
@@ -3677,7 +3686,7 @@ sh.SendKeys( KEY_ARROW_RIGHT );     WScript.Sleep( 100 );
 sh.SendKeys( KEY_ARROW_LEFT );      WScript.Sleep( 100 );
 sh.SendKeys( KEY_ARROW_DOWN );      WScript.Sleep( 100 );
 
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
 //  객체 해제
 sh = null;
@@ -3688,7 +3697,7 @@ sh = null;
 
 === 조합 입력
 
-Shift 키, Ctrl 키, Alt 키 등의 키와 조합해서 키 입력을 하려면 다음 예제를 통해 구현할 수 있습니다. 대표적인 조합으로는 Alt 키 + F4 키가 있습니다. 아시다시피, 이는 응용 프로그램을 종료하는 단축키입니다. 여기서는 이러한 조합을 이용한 입력 방법을 예제를 통해 소개합니다. Sleep() 함수에 대해서는 ‘애플리케이션 조작 창을 활성 상태로 만들기’를 참조하십시오. SendKeys() 함수에 대해서는 ‘알파벳 키 입력’을 참조하십시오.
+Shift 키, Ctrl 키, Alt 키 등의 키와 조합해서 키를 입력하려면 다음 예제를 통해 구현할 수 있습니다. 대표적인 조합으로는 Alt 키 + F4 키가 있습니다. 아시다시피, 이는 응용 프로그램을 종료하는 단축키입니다. 여기서는 이런 조합을 이용한 입력 방법을 예제를 통해 소개합니다.
 
 [source,js]
 ----
@@ -3699,61 +3708,59 @@ Shift 키, Ctrl 키, Alt 키 등의 키와 조합해서 키 입력을 하려면 
 //
 
 //  특수 키 문자
-var KEY_SHIFT   = “+”;          // Shift 키
-var KEY_CTRL    = “^”;          // Ctrl 키
-var KEY_ALT     = “%”;          // Alt 키
-var KEY_ENTER   = “{ENTER}”;    // Enter 키
-var KEY_F1      = “{F1}”;       // F1 키
-var KEY_F2      = “{F2}”;       // F2 키
-var KEY_F3      = “{F3}”;       // F3 키
-var KEY_F4      = “{F4}”;       // F4 키
-var KEY_F5      = “{F5}”;       // F5 키
-var KEY_F6      = “{F6}”;       // F6 키
-var KEY_F7      = “{F7}”;       // F7 키
-var KEY_F8      = “{F8}”;       // F8 키
-var KEY_F9      = “{F9}”;       // F9 키
-var KEY_F10     = “{F10}”;      // F10 키
-var KEY_F11     = “{F11}”;      // F11 키
-var KEY_F12     = “{F12}”;      // F12 키
+var KEY_SHIFT   = "+";          // Shift 키
+var KEY_CTRL    = "^";          // Ctrl 키
+var KEY_ALT     = "%";          // Alt 키
+var KEY_ENTER   = "{ENTER}";    // Enter 키
+var KEY_F1      = "{F1}";       // F1 키
+var KEY_F2      = "{F2}";       // F2 키
+var KEY_F3      = "{F3}";       // F3 키
+var KEY_F4      = "{F4}";       // F4 키
+var KEY_F5      = "{F5}";       // F5 키
+var KEY_F6      = "{F6}";       // F6 키
+var KEY_F7      = "{F7}";       // F7 키
+var KEY_F8      = "{F8}";       // F8 키
+var KEY_F9      = "{F9}";       // F9 키
+var KEY_F10     = "{F10}";      // F10 키
+var KEY_F11     = "{F11}";      // F11 키
+var KEY_F12     = "{F12}";      // F12 키
 
-//  Shell 관련 작업을 수행하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 작업을 수행하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  메모장 실행
-sh.Run( “notepad.exe” );
+sh.Run( "notepad.exe" );
 
 //  실행 직후 키 입력을 보내면 실패할 수 있으므로 3초간 대기
 WScript.Sleep( 3000 );
 
 //  ‘Shift’ 키를 누른 상태에서 ‘a’ 키를 누름
-sh.SendKeys( KEY_SHIFT + “a” );
+sh.SendKeys( KEY_SHIFT + "a" );
 WScript.Sleep( 1000 );
 
-//  ‘Shift’ 키를 누른 상태에서 ‘a’ 키, ‘b’ 키를
-//  연달아 누름
-sh.SendKeys( KEY_SHIFT + “(ab)” );
+//  ‘Shift’ 키를 누른 상태에서 ‘a’ 키, ‘b’ 키를 연달아 누름
+sh.SendKeys( KEY_SHIFT + "(ab)" );
 WScript.Sleep( 1000 );
 
 //  ‘Alt’ 키를 누른 상태에서 ‘F4’ 키를 누름
 sh.SendKeys( KEY_ALT + KEY_F4 );
 WScript.Sleep( 2000 );
 
-//  저장 대화 상자가 나타나면 ‘n’ 키를
-//  ‘저장하지 않음’을 선택
-sh.SendKeys( “n” );
+//  저장 대화 상자가 나타나면 ‘n’ 키로 ‘저장하지 않음’ 선택
+sh.SendKeys( "n" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
 //  객체를 해제
 sh = null;
 ----
 
-메모장이 실행되고, 3초 후에 ‘A’, ‘AB’ 순으로 표시됩니다. 그 후, 저장 대화 상자가 표시되고, ‘아니요’가 선택되어 종료됩니다. 해설하자면, 문자가 입력된 후 Alt 키와 F4 키를 눌러 응용 프로그램을 종료하려고 했습니다. 그러면 저장할지 여부를 묻는 대화 상자가 표시됩니다. 여기서 N 키를 입력해서 ‘아니요’를 선택하고, 저장하지 않고 종료했습니다.
+메모장이 실행되고, 3초 후에 ‘A’, ‘AB’ 순으로 표시됩니다. 그 후, 저장 대화 상자가 표시되고, ‘아니요’ 가 선택되어 종료됩니다. 해설하면, 문자가 입력된 후 Alt 키와 F4 키를 눌러 응용 프로그램을 종료합니다. 그러면 저장 여부를 묻는 대화 상자가 표시됩니다. 여기서 N 키를 입력해서 ‘아니요’ 를 선택하고, 저장하지 않고 종료합니다.
 
 
-=== 하나의 함수 호출에서 여러 키를 전송합니다
+=== 하나의 함수 호출에 여러 키를 전송합니다
 
-지금까지는 키 하나당 SendKeys() 함수를 한 번 호출하는 예제만 있었지만, 여기서는 SendKeys() 함수 하나로 여러 키를 입력하는 방법을 소개합니다. 다음 예제를 통해 구현할 수 있습니다. Sleep() 함수에 대해서는 ‘애플리케이션 조작 창을 활성 상태로 만들기’를 참조하십시오. SendKeys() 함수에 대해서는 ‘알파벳 키 입력’을 참조하십시오.
+지금까지는 키 하나당 SendKeys() 함수를 한 번 호출하는 예제만 있었지만, 여기서는 SendKeys() 함수 하나로 여러 키를 입력하는 방법을 소개합니다. 다음 예제를 통해 구현할 수 있습니다. 
 
 [source,js]
 ----
@@ -3764,35 +3771,35 @@ sh = null;
 //
 
 //  특수 키 문자
-var KEY_ENTER           = “{ENTER}”;        // Enter 키
-var KEY_ARROW_UP        = “{UP}”;           // 위쪽 화살표 키
-var KEY_ARROW_DOWN      = “{DOWN}”;         // 아래쪽 화살표 키
-var KEY_ARROW_LEFT      = “{LEFT}”;         // 왼쪽 화살표 키
-var KEY_ARROW_RIGHT     = “{RIGHT}”;        // 오른쪽 화살표 키
+var KEY_ENTER           = "{ENTER}";        // Enter 키
+var KEY_ARROW_UP        = "{UP}";           // 위쪽 화살표 키
+var KEY_ARROW_DOWN      = "{DOWN}";         // 아래쪽 화살표 키
+var KEY_ARROW_LEFT      = "{LEFT}";         // 왼쪽 화살표 키
+var KEY_ARROW_RIGHT     = "{RIGHT}";        // 오른쪽 화살표 키
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  메모장 실행
-sh.Run( “notepad.exe” );
+sh.Run( "notepad.exe" );
 
 //  실행 직후 키를 전송하면 실패할 가능성이 있으므로 3초간 대기
 WScript.Sleep( 3000 );
 
 //  키를 한꺼번에 전송
-sh.SendKeys( “ABCDEF” + KEY_ENTER + “GHIJKLMN” + KEY_ARROW_LEFT + KEY_ENTER );
-WScript.Echo( “종료” );
+sh.SendKeys( "ABCDEF" + KEY_ENTER + "GHIJKLMN" + KEY_ARROW_LEFT + KEY_ENTER );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-메모장이 실행되고, 3초 후에 1행부터 ‘ABCDEF’, ‘GHIJKLM’, ‘N’ 순으로 3행이 표시됩니다. 자세히 설명하자면, ‘ABCDEF’라는 여러 키가 전송된 후, 엔터 키가 전송되어 커서가 2행으로 이동합니다. 그 후, ‘GHIJKLMN’이라는 여러 키가 전송되고, 다음으로 왼쪽 화살표 키가 전송되어 커서가 ‘M’과 ‘N’ 사이로 이동합니다. 그 다음 엔터 키가 전송되어 커서가 3번째 줄로 이동하고, ‘N’도 3번째 줄에 위치하게 됩니다.
+메모장이 실행되고, 3초 후에 1행부터 ‘ABCDEF’, ‘GHIJKLM’, ‘N’ 순으로 3행이 표시됩니다. 자세히 설명하면, ‘ABCDEF’ 라는 여러 키가 전송된 후, 엔터 키가 전송되어 커서는 2행으로 이동합니다. 그 후, ‘GHIJKLMN’ 이라는 여러 키가 전송되고, 다음으로 왼쪽 화살표 키가 전송되어 커서가 ‘M’ 과 ‘N’ 사이로 이동합니다. 그 다음 엔터 키가 전송되어 커서는 3번째 줄로 이동하고, ‘N’ 도 3번째 줄에 위치하게 됩니다.
 
 
 === 단일 키를 보내려면 횟수를 지정해
 
-하나의 키에 대해 횟수를 지정해서 전송하는 방법은 다음 예제를 통해 구현할 수 있습니다. Sleep() 함수에 대해서는 ‘응용 프로그램 창을 활성 상태로 만들기’를 참조하십시오. SendKeys() 함수에 대해서는 ‘알파벳 키 입력’을 참조하십시오.
+하나의 키에 횟수를 지정해서 전송하는 방법은 다음 예제를 통해 구현할 수 있습니다. 
 
 [source,js]
 ----
@@ -3803,39 +3810,43 @@ sh = null;
 //
 
 //  Shell 관련 조작을 제공하는 객체 가져오기
-var sh = new ActiveXObject( “WScript.Shell” );
+var sh = new ActiveXObject( "WScript.Shell" );
 
 //  메모장 실행
-sh.Run( “notepad.exe” );
+sh.Run( "notepad.exe" );
 
-//  실행 직후 키를 전송하면 실패할 가능성이
-//  있으므로, 3초 동안 대기
+//  실행 직후 키를 전송하면 실패할 가능성이 있으므로, 3초간 대기
 WScript.Sleep( 3000 );
 
 //  횟수를 지정해서 키를 전송
-sh.SendKeys( “{0 10}” );    WScript.Sleep( 100 );
-sh.SendKeys( “{A 5}” );     WScript.Sleep( 100 );
-sh.SendKeys( “{ENTER 5}” ); WScript.Sleep( 100 );
-sh.SendKeys( “{TAB 5}” );   WScript.Sleep( 100 );
-sh.SendKeys( “{! 5}” );     WScript.Sleep( 100 );
-WScript.Echo( “종료” );
+sh.SendKeys( "{0 10}" );    WScript.Sleep( 100 );
+sh.SendKeys( "{A 5}" );     WScript.Sleep( 100 );
+sh.SendKeys( "{ENTER 5}" ); WScript.Sleep( 100 );
+sh.SendKeys( "{TAB 5}" );   WScript.Sleep( 100 );
+sh.SendKeys( "{! 5}" );     WScript.Sleep( 100 );
+WScript.Echo( "종료" );
 
 //  객체 해제
 sh = null;
 ----
 
-메모장이 실행되고, 3초 후에 0.1초 간격으로 ‘0’이 10자, ‘A’가 5자, 줄바꿈이 5개, 탭 문자가 5개, 마지막으로 ‘!’가 5자 표시됩니다.
+메모장이 실행되고, 3초 후에 0.1초 간격으로 ‘0’ 이 10자, ‘A’ 가 5자, 줄바꿈 5개, 탭 문자가 5개, 마지막으로 ‘!’ 가 5자 표시됩니다.
 
 
 
-== 마우스 작동
-
-여기서는 JScript로 마우스를 조작하는 방법에 대해 소개합니다. 스크립트 처리를 통해 클릭이나 마우스 포인터 이동을 할 수 있습니다. 사실, JScript에서는 본래 마우스를 조작할 수 없습니다. 지금부터 소개할 내용은 DLL의 도움을 받아서야 비로소 가능한 것입니다. 이 사이트에서도 소개한 적이 있지만, 이를 한층 더 강화해 보았습니다. 여기서는 Run() 함수와 Sleep() 함수 정도만 사용합니다. Run() 함수에 대해서는 ‘애플리케이션 조작’의 ‘애플리케이션 실행’을 참조해 주십시오. Sleep() 함수에 대해서는 ‘애플리케이션 조작’의 ‘창을 활성 상태로 만들기’를 참조해 주십시오. 이 페이지의 샘플은 모두 마우스 조작용 DLL이 필요합니다. 실행할 때는 위의 링크에서 다운로드해서 샘플 코드 파일과 같은 디렉터리에 둔 후 실행해 주십시오.
 
 
-=== 마우스 포인터를 이동하세요 (절대값)
 
-마우스 포인터를 지정된 위치로 이동시키려면 다음 샘플 코드를 사용합니다. 단, 마우스 조작용 DLL이 이 샘플 코드 파일과 같은 디렉터리에 없으면 작동하지 않습니다.
+== 마우스
+
+여기서는 JScript로 마우스를 조작하는 방법에 대해 소개합니다. 스크립트 처리를 통해 클릭이나 마우스 포인터 이동을 처리할 수 있습니다. 사실, JScript는 마우스를 조작할 수 없습니다!! 지금부터 소개할 내용은 별도의 DLL 도움을 받아야 가능한 것입니다. 이 사이트에서 소개한 적이 있지만, 이를 한층 더 강화했습니다. 
+
+여기서는 Run() 함수와 Sleep() 함수 정도만 사용합니다. 이 페이지의 샘플은 모두 마우스 조작용 DLL이 필요합니다. 실행할 때는 위의 링크에서 다운로드해서 샘플 코드 파일과 같은 디렉터리에 둔 후 실행합니다.
+
+
+=== 마우스 포인터를 이동합니다 (절대값)
+
+마우스 포인터를 지정된 위치로 이동시키려면 다음 샘플 코드를 사용합니다. 단, 마우스 조작용 DLL 파일이 샘플 코드 파일과 같은 디렉터리에 없으면 작동하지 않습니다.
 
 [source,js]
 ----
@@ -3845,28 +3856,28 @@ sh = null;
 //  　마우스 포인터의 위치를 설정합니다.
 //
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  3초 동안 처리를 중지
+//  3초간 대기
 WScript.Sleep( 3000 );
 
-//  DLL 파일에서 함수를 호출해서 마우스 포인터의 위치를 설정
+//  DLL 파일에서 함수를 호출해서 마우스 포인터 위치 설정
 //  (X좌표=100, Y좌표=300)
-sh.Run( “rundll32.exe MouseEmulator.dll, _SetMouseXY@16 100, 300” );
+sh.Run( "rundll32.exe MouseEmulator.dll, _SetMouseXY@16 100, 300" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-실행하면 3초 후에 마우스 커서의 위치가 X좌표 100px, Y좌표 300px로 이동합니다.
+실행하면 3초 후에 마우스 커서의 위치가 X좌표 100px, Y좌표 300px 로 이동합니다.
 
 
-=== 마우스 포인터를 이동하세요 (상대 값)
+=== 마우스 포인터를 이동합니다 (상대 값)
 
-마우스 포인터를 현재 위치를 기준으로 이동시키려면 다음 샘플 코드를 사용합니다. 단, 마우스 조작용 DLL이 이 샘플 코드 파일과 같은 디렉터리에 없으면 작동하지 않습니다.
+마우스 포인터를 현재 위치를 기준으로 이동시키려면 다음 샘플 코드를 사용합니다.
 
 [source,js]
 ----
@@ -3877,27 +3888,27 @@ sh = null;
 //
 
 //  Shell 관련 조작을 제공하는 객체 가져오기
-var sh = new ActiveXObject( “WScript.Shell” );
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  3초 동안 처리 중지
+//  3초 동안간 대기
 WScript.Sleep( 3000 );
 
-//  DLL 파일에서 함수를 호출해서 마우스 포인터의 위치를 이동
+//  DLL 파일에서 함수를 호출해서 마우스 포인터 위치 이동
 //  (X좌표+=100, Y좌표+=300)
-sh.Run( “rundll32.exe MouseEmulator.dll, _AddMouseXY@16 100, 300” );
+sh.Run( "rundll32.exe MouseEmulator.dll, _AddMouseXY@16 100, 300" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
-실행 후 3초가 지나면 현재 마우스 커서 위치에서 X좌표 100px, Y좌표 300px만큼 이동합니다.
+실행 후 3초가 지나면 현재 마우스 커서 위치에서 X좌표 100px, Y좌표 300px 만큼 이동합니다.
 
 
-=== 딸깍
+=== 클릭
 
-클릭 동작을 구현하려면 다음 샘플을 사용할 수 있습니다. 단, 마우스 조작용 DLL이 이 샘플 코드 파일과 같은 디렉터리에 없으면 작동하지 않습니다.
+클릭 동작을 구현하려면 다음 샘플을 사용할 수 있습니다. 
 
 [source,js]
 ----
@@ -3907,18 +3918,18 @@ sh = null;
 //  　클릭합니다.
 //
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  3초 동안 처리를 중지
+//  3초간 대기
 WScript.Sleep( 3000 );
 
 //  DLL 파일에서 함수를 호출해서 클릭
-sh.Run( “rundll32.exe MouseEmulator.dll, _ClickLeft@16” );
+sh.Run( "rundll32.exe MouseEmulator.dll, _ClickLeft@16" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
@@ -3927,7 +3938,7 @@ sh = null;
 
 === 더블 클릭
 
-더블 클릭 동작을 구현하려면 다음 샘플 코드를 사용합니다. 단, 마우스 조작용 DLL이 이 샘플 코드 파일과 같은 디렉터리에 없으면 작동하지 않습니다.
+더블 클릭 동작을 구현하려면 다음 샘플 코드를 사용합니다. 
 
 [source,js]
 ----
@@ -3937,18 +3948,18 @@ sh = null;
 //  　더블 클릭합니다.
 //
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  3초 동안 처리를 중지
+//  3초간 대기
 WScript.Sleep( 3000 );
 
 //  DLL 파일에서 함수를 호출해서 더블 클릭
-sh.Run( “rundll32.exe MouseEmulator.dll, _DoubleClickLeft@16” );
+sh.Run( "rundll32.exe MouseEmulator.dll, _DoubleClickLeft@16" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
@@ -3957,7 +3968,7 @@ sh = null;
 
 === 우클릭
 
-오른쪽 클릭 기능을 구현하려면 다음 샘플 코드를 사용합니다. 단, 마우스 조작용 DLL이 이 샘플 코드 파일과 같은 디렉터리에 없으면 작동하지 않습니다.
+우클릭 기능을 구현하려면 다음 샘플 코드를 사용합니다. 
 
 [source,js]
 ----
@@ -3967,27 +3978,27 @@ sh = null;
 //  　오른쪽 클릭하기.
 //
 
-//  Shell 관련 조작을 제공하는 객체를 가져옴
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  3초 동안 처리를 중지
+//  3초간 대기
 WScript.Sleep( 3000 );
 
-//  DLL 파일에서 함수를 호출해서 마우스 오른쪽 버튼을 클릭
-sh.Run( “rundll32.exe MouseEmulator.dll, _ClickRight@16” );
+//  DLL 파일에서 함수를 호출해서 마우스 오른쪽 버튼 클릭
+sh.Run( "rundll32.exe MouseEmulator.dll, _ClickRight@16" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
 실행한 후, 3초 후에 현재 마우스 커서 위치에서 마우스 오른쪽 버튼을 클릭합니다.
 
 
-=== 바퀴 돌리기
+=== 휠 돌리기
 
-마우스 휠을 회전시키는 동작은 다음 샘플을 통해 구현할 수 있습니다. 단, 마우스 조작용 DLL이 이 샘플 코드 파일과 같은 디렉터리에 없으면 작동하지 않습니다.
+마우스 휠을 회전시키는 동작은 다음 샘플을 통해 구현할 수 있습니다. 
 
 [source,js]
 ----
@@ -3997,22 +4008,22 @@ sh = null;
 //  　마우스 휠을 회전시킨다.
 //
 
-//  Shell 관련 조작을 제공하는 객체를 가져온다
-var sh = new ActiveXObject( “WScript.Shell” );
+//  Shell 관련 조작을 제공하는 객체 가져오기
+var sh = new ActiveXObject( "WScript.Shell" );
 
-//  3초 동안 처리 중지
+//  3초간 대기
 WScript.Sleep( 3000 );
 
 //  DLL 파일에서 함수를 호출해서 휠을 위로 돌리기
-sh.Run( “rundll32.exe MouseEmulator.dll, _RotWheel@16 120” );
+sh.Run( "rundll32.exe MouseEmulator.dll, _RotWheel@16 120" );
 WScript.Sleep( 1000 );
 
 //  DLL 파일에서 함수를 호출해서 휠을 아래로 돌리기
-sh.Run( “rundll32.exe MouseEmulator.dll, _RotWheel@16 -120” );
+sh.Run( "rundll32.exe MouseEmulator.dll, _RotWheel@16 -120" );
 WScript.Sleep( 1000 );
-WScript.Echo( “종료” );
+WScript.Echo( "종료" );
 
-//  객체를 해제
+//  객체 해제
 sh = null;
 ----
 
@@ -4021,44 +4032,47 @@ sh = null;
 
 === 마우스 조작을 위한 DLL에 대한 설명
 
-지금까지 소개해 드린 마우스 조작에 대해, 예제만 제시하고 자세한 사용법을 설명하지 않았기 때문에 여기서 소개해 드리겠습니다. 또한, 제가 작성한 마우스 조작용 DLL 파일 내에 포함된 함수는 지금까지 소개해 드린 것 외에도 있으므로 여기서 소개해 드리겠습니다. Run() 함수의 인자에 작성해 온 DLL 함수 호출 구문을 아래 이미지로 설명했습니다.
+지금까지 소개한 마우스 조작에 대해, 예제만 제시하고 자세한 사용법을 설명하지 않았기 때문에 여기서 소개하겠습니다. 또한, 제가 작성한 마우스 조작용 DLL 파일에 포함된 함수는 지금까지 소개한 것 외에도 더 있으므로 여기서 소개하겠습니다. Run() 함수의 인자에 작성한 DLL 함수 호출 구문을 아래 이미지로 설명했습니다.
 
-아래 이미지에서는 DLL 내의 함수에 전달하는 인자...라고 기재했지만, 함수 내부에서 C 언어의 sscanf() 함수를 사용해서 인자로 전달하고 있습니다. sscanf() 함수의 인자로 저는 “"%ld,%ld...”라고 작성했습니다. 아래 이미지에서는 “100, 300”이라고 쉼표로 구분해서 전달하고 있습니다. 이것이 “"%ld%ld...””로 되어 있는 경우에는 “100 300”이라고 반각 공백으로 구분해야 합니다. 뭐, 이건 어디까지나 확장하려는 분들을 위한 해설입니다.
+아래 이미지는 DLL 내의 함수에 전달하는 인자...라고 기재했지만, 함수 내부에서 C 언어의 sscanf() 함수를 사용해서 인자로 전달합니다. sscanf() 함수 인자로 “"%ld,%ld...” 라고 작성했습니다. 아래 이미지는 “100, 300” 이라고 쉼표로 구분해서 전달합니다. 이것이 “"%ld%ld...”” 로 되는 경우는 “100 300” 이라고 공백으로 구분합니다. 뭐, 이건 어디까지나 확장하려는 분들을 위한 해설입니다.
 
 image:images/20261101_145351.jpg[] +
 
-지금까지 소개한 클릭이나 마우스 포인터 이동에 관한 함수 외에도, 마우스 조작용 DLL 파일에는 다른 함수들이 있습니다. 지금까지 소개한 것들을 포함해서 아래 표에 정리해 보았습니다. 적절히 활용해 보시기 바랍니다. 그리고 이번에 사용한 DLL을 더욱 확장하고 싶으신 분들은 여기에서 이번 DLL을 작성한 C 언어 소스 파일을 다운로드하셔도 좋습니다. 마음껏 다운로드하세요...
+지금까지 소개한 클릭이나 마우스 포인터 이동에 관한 함수 외에도, 마우스 조작용 DLL 파일에는 다른 함수들이 있습니다. 지금까지 소개한 것들을 포함해서 아래 표에 정리했습니다. 적절히 활용하시기 바랍니다. 그리고 이번에 사용한 DLL을 확장하려는 분들은 여기서 DLL을 작성한 C 언어 소스 파일을 다운로드해도 좋습니다. 마음껏 다운로드하세요...
 
 .DLL 내 함수 목록
 [%autowidth]
 |===
-|함수명    |인수1    |인수2    |반환값    |함수 개요
-
-|SetMouseXY   |X좌표    |Y좌표    |없음    |마우스 좌표를 설정합니다(X,Y)
-|SetMouseX    |X좌표    |　       |없음    |마우스 좌표를 설정합니다(X)
-|SetMouseY    |Y좌표    |　       |없음    |마우스 좌표를 설정합니다(Y)
-|GetMouseX    |마우스의 X 좌표    |        |마우스 좌표를 가져옵니다(X)
-|GetMouseY    |마우스의 Y 좌표    |        |마우스 좌표를 가져옵니다(Y)
-|AddMouseXY   |X 좌표의 가산값    |Y 좌표의 가산값    |없음    |마우스 좌표에 값을 더합니다(X,Y)
-|AddMouseX    |X 좌표 가산값    　    |없음    |마우스 좌표에 값 더하기(X)
-|AddMouseY    |Y 좌표 가산값    　    |없음    |마우스 좌표에 값 더하기(Y)
-|DownLeft     |없음         |왼쪽 버튼 누르기
-|UpLeft    　 |없음         |왼쪽 버튼 놓기
-|ClickLeft    |없음         |왼쪽 클릭
-|DoubleClickLeft   |없음    |왼쪽 더블 클릭
-|DownRight    　   |없음    |오른쪽 버튼을 누른다
-|UpRight    　     |없음    |오른쪽 버튼을 뗀다
-|ClickRight    　  |없음    |오른쪽 클릭
-|DoubleClickRight  |없음    |오른쪽 더블 클릭
-|DownMiddle    　  |없음    |중간 버튼 아래로 내리기
-|UpMiddle    　    |없음    |중간 버튼 위로 올리기
-|ClickMiddle    　 |없음    |중간 버튼 클릭
-|DoubleClickMiddle |없음    |중간 버튼 더블 클릭
-|RotWheel    |휠 이동량     |없음    |휠 회전시키기
+|함수명            |인수1              |인수2              |반환값             |함수 개요
+							                               
+|SetMouseXY        |X좌표              |Y좌표              |없음               |마우스 좌표를 설정합니다(X,Y)
+|SetMouseX         |X좌표              |　                 |없음               |마우스 좌표를 설정합니다(X)
+|SetMouseY         |Y좌표              |　                 |없음               |마우스 좌표를 설정합니다(Y)
+|GetMouseX         |                   |                   |마우스의 X 좌표    |마우스 좌표를 가져옵니다(X)
+|GetMouseY         |                   |                   |마우스의 Y 좌표    |마우스 좌표를 가져옵니다(Y)
+|AddMouseXY        |X 좌표의 가산값    |Y 좌표의 가산값    |없음               |마우스 좌표에 값을 더합니다(X,Y)
+|AddMouseX         |X 좌표 가산값    　|                   |없음               |마우스 좌표에 값 더하기(X)
+|AddMouseY         |Y 좌표 가산값    　|                   |없음               |마우스 좌표에 값 더하기(Y)
+|DownLeft          |                   |                   |없음               |왼쪽 버튼 누르기
+|UpLeft    　      |                   |                   |없음               |왼쪽 버튼 놓기
+|ClickLeft         |                   |                   |없음               |왼쪽 클릭
+|DoubleClickLeft   |                   |                   |없음               |왼쪽 더블 클릭
+|DownRight    　   |                   |                   |없음               |오른쪽 버튼을 누른다
+|UpRight    　     |                   |                   |없음               |오른쪽 버튼을 뗀다
+|ClickRight    　  |                   |                   |없음               |오른쪽 클릭
+|DoubleClickRight  |                   |                   |없음               |오른쪽 더블 클릭
+|DownMiddle    　  |                   |                   |없음               |중간 버튼 아래로 내리기
+|UpMiddle    　    |                   |                   |없음               |중간 버튼 위로 올리기
+|ClickMiddle    　 |                   |                   |없음               |중간 버튼 클릭
+|DoubleClickMiddle |                   |                   |없음               |중간 버튼 더블 클릭
+|RotWheel          |휠 이동량          |                   |없음               |휠 회전시키기
 |===
 
 
-== 엑셀 작업
+
+
+
+== 엑셀
 
 JScript로 Excel을 조작하는 방법을 소개합니다. 스크립트 처리 과정에서 Excel을 실행하거나 셀의 값을 가져오게 되는데, 실제 스크립트 소스 코드는 JScript와 Excel VBA(이하 VBA)를 혼합해서 작성하게 됩니다. VBA를 잘 모르시는 분은 ‘Excel VBA’로 검색해 보세요. 여기서 다시 본론으로 돌아가자면, 서두에서도 언급했듯이 “VBScript를 추천합니다.”라고 했었죠. 사실 VBA와 VBScript는 구문이 거의 비슷합니다… 아니, 똑같은 걸까요? 뭐, 거의 비슷한 방식으로 작성할 수 있습니다.
 
@@ -4547,7 +4561,7 @@ ExcelApp = null;
 
 
 
-== 접근 운영
+== Access
 
 JScript로 Access를 조작하는 방법을 소개합니다. 스크립트 처리 과정에서 Access를 실행하거나, 테이블을 생성하거나, SQL을 실행하게 되는데, 실제 스크립트 소스 코드는 JScript와 Access VBA(이하 VBA)가 혼합된 형태로 작성됩니다.
 
@@ -5298,7 +5312,7 @@ AccessApp = null;
 
 
 
-== 인터넷 익스플로러 운영
+== 인터넷 익스플로러
 
 여기서는 JScript를 사용해서 Internet Explorer(IE)를 조작하는 방법에 대해 소개합니다. 여러분도 아마 이 코너를 손꼽아 기다리셨을 거라 생각합니다. Internet Explorer(IE)의 실행이나 종료, 홈페이지 내 버튼 조작 등을 자동화할 수 있습니다. 웹 메일 프로그램 등의 자동 로그인이나 매일 방문하는 홈페이지로 이동하는 것도 자동화할 수 있으며, 사용 방법에 따라 매우 편리합니다. 주의사항으로, 여기서 설명하는 함수나 속성에 관해 말씀드리자면, Internet Explorer(IE) 조작 관련 함수나 속성은 의문점이 엄청나게 많습니다. 이 페이지도 여러 사이트를 돌아다니며 겨우 정리한 것입니다. 하지만 솔직히 다양한 정보가 뒤섞여 있어 이 페이지에서 설명하는 내용이 반드시 정확하다고는 할 수 없습니다. 그 점 양해 부탁드립니다.
 
