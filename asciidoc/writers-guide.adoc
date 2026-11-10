@@ -10,7 +10,7 @@ ifndef::env-site[]
 :experimental:
 :toc: left
 :toc-placement: left
-:toclevels: 2
+:toclevels: 1
 :showtitle:
 :sectnums:
 :icons: font
