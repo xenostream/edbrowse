@@ -507,7 +507,7 @@ sed ‘s/BEGIN/begin/’ <old | sed ‘s/END/end/’ >new
 대신 이 방법은 하나의 프로세스 대신 두 개의 프로세스를 사용합니다. sed의 고수라면 하나의 프로세스로 해결할 수 있는 일을 두 개의 프로세스로 처리하지 않습니다!!
 
 
-== Multiple commands with -e command
+=== Multiple commands with -e command
 
 여러 명령을 실행하는 방법 중 하나는 명령마다 “-e” 옵션을 사용하는 것입니다:
 
@@ -528,7 +528,7 @@ sed --expression=‘s/a/A/’ --expression=‘s/b/B/’ <old >new
 또한 Bourne 셸에서 여러 명령을 따옴표로 묶는 방법도 참조합니다.
 
 
-== Filenames on the command line
+=== Filenames on the command line
 
 원한다면 명령줄에 여러 파일을 지정할 수 있습니다. sed는 옵션으로 시작하지 않는 인수가 두 개 이상일 경우 해당 인수는 반드시 파일 이름이라야 합니다!!
 
@@ -560,7 +560,7 @@ sed -e ‘s/^#.*//’ f1 f2 f3 | grep -v ‘^$’ | wc -l
 sed는 이 외에도 두 가지 옵션이 더 있습니다.
 
 
-== sed -n: no printing
+=== sed -n: no printing
 
 “-n” 옵션은 (명시적인) 출력 요청이 발견되지 않는 한 아무것도 출력하지 않습니다!! 앞서 _substitute_ 명령의 “/p” 플래그로 출력을 켜는 방법을 언급한 바 있습니다.
 
@@ -597,7 +597,7 @@ sed --silent ‘s/PATTERN/&/p’ file
 ----
 
 
-== Using 'sed /pattern/'
+=== Using 'sed /pattern/'
 
 sed는 명령 앞에 주소를 지정해서 특정 줄만 검사하거나 수정할지 지정할 수 있는 기능을 가집니다. 가장 간단한 /PATTERN/ (패턴) 주소에 대해 설명하겠습니다.
 
@@ -634,7 +634,7 @@ sed ‘/PATTERN/ p’ file
 ----
 
 
-== Using 'sed -n /pattern/p' to duplicate the function of grep
+==== Using 'sed -n /pattern/p' to duplicate the function of grep
 
 grep 프로그램을 재현하려면 “-n” (_nocopy_) 옵션과 “/p” (_print_)플래그를 함께 사용합니다:
 
@@ -644,7 +644,7 @@ sed -n ‘/PATTERN/p’ file
 ----
 
 
-== sed -f scriptname
+=== sed -f scriptname
 
 사용할 명령이 많다면 (스크립트) 파일로 저장한 후 호출할 수 있습니다.
 
@@ -677,7 +677,7 @@ sed --file=sedscript <old >new
 또한 sed를 호출하는 쉘스크립트의 작성 방법은 다음을 참조합니다.
 
 
-== sed in shell scripts
+=== sed in shell scripts
 
 명령이 많아 한 줄에 들어가지 않을 경우 백슬래시로 줄을 나눕니다:
 
@@ -691,7 +691,7 @@ sed -e ‘s/a/A/g’ \
 ----
 
 
-=== Quoting multiple sed lines in the C shell
+==== Quoting multiple sed lines in the C shell
 
 C 셸은 여러 줄로 구성된 sed 명령을 사용할 수 있지만 따옴표로 “여러 줄에 걸쳐진다!” 는 사실을 알려야 합니다.
 
@@ -707,7 +707,7 @@ s/o/O/g \
 s/u/U/g'  <old >new
 ----
 
-=== Quoting multiple sed lines in the Bourne shell
+==== Quoting multiple sed lines in the Bourne shell
 
 Bourne 셸은 따옴표로 여러 줄을 한 번에 감쌀 수 있으므로 좀 더 쉽습니다:
 
@@ -723,7 +723,7 @@ s/u/U/g'  <old >new
 ----
 
 
-== sed -V
+=== sed -V
 
 “-V” (대문자)옵션은 sed의 버전을 표시합니다. 긴 형식은 다음과 같습니다.
 
@@ -733,7 +733,7 @@ sed --version
 ----
 
 
-== sed -h
+=== sed -h
 
 “-h” 옵션은 sed 명령에 대한 요약 정보를 표시합니다. 긴 형식은 다음과 같습니다.
 
@@ -743,7 +743,7 @@ sed --help
 ----
 
 
-== A sed interpreter script
+=== A sed interpreter script
 
 sed를 실행할 수 있는 또 다른 방법은 인터프리터 스크립트 형태로 사용하는 것입니다.
 
@@ -767,14 +767,14 @@ CapVowel <old >new
 ----
 
 
-== Comments
+=== Sed Comments
 
 sed의 주석은 첫 번째 비-공백 문자가 “#” 인 줄입니다!! 많은 시스템의 sed는 한 가지 형태의 주석만 가지며 스크립트 첫 번째 줄에 위치해야 합니다. Sun 시스템(이 글을 작성한 1988년 당시)은 스크립트 어디서나 주석을 넣을 수 있습니다. (최신 버전의 sed는 이를 지원합니다.)
 
 CAUTION: 스크립트 첫 번째 줄에 정확히 +#n+ 시퀀스가 포함되면 “-n” 옵션과 동일한 기능을 수행합니다!! 즉, 기본 출력 기능을 비활성화 합니다. 하지만, sed 인터프리터 스크립트는 이를 수행할 수 없습니다. 왜냐하면, 첫 번째 줄은 반드시 +#!/bin/sed -f+ 로 시작하기 때문인데 제 기억에 +#!/bin/sed -nf+ 는 오류를 발생시킨 것으로 기억합니다. 이 글을 작성했을 때(2008년)는 정상 작동했습니다. +#!/bin/sed -fn+ 은 sed가 스크립트 파일 이름을 “n” 으로 인식하므로 작동하지 않는다는 점에 유의합니다. +#!/bin/sed -nf+ 는 정상 작동합니다.
 
 
-== Passing arguments into a sed script
+=== Passing arguments into a sed script
 
 UNIX 따옴표 튜토리얼을 읽었다면 sed를 호출하는 쉘 스크립트에 단어(인수)를 전달하는 것은 쉽습니다. 정리하면 작은 따옴표로 따옴표 처리를 켜거나 끌 수 있습니다.
 
@@ -811,7 +811,7 @@ sedgrep ‘[A-Z][A-Z]’ <file
 sedgrep 프로그램은 grep처럼 작동할 것입니다.
 
 
-== Using sed in a shell here-is document
+=== Using sed in a shell here-is document
 
 sed로 사용자에게 몇 가지 매개변수를 입력받은 다음 매개변수로 채워진 파일을 생성할 수 있습니다. 즉, 가짜 값이 들어 있는 파일을 만들고 sed로 가짜 값을 변경할 수 있습니다.
 
@@ -881,7 +881,7 @@ EOF
 이 내용은 따옴표 튜토리얼에서 이미 다룬 바 있습니다.
 
 
-== Multiple commands and order of execution
+=== Multiple commands and order of execution
 
 sed 명령을 알아갈수록 명령이 복잡해지므로 실행 순서가 헷갈릴 수 있습니다. 사실 아주 간단합니다!!
 
@@ -920,7 +920,7 @@ restriction command
 ----
 
 
-== Restricting to a line number
+=== Restricting to a line number
 
 가장 간단한 제한 조건은 행 번호입니다. 3번 행의 첫 번째 숫자를 삭제하려면 명령 앞에 “3” 을 추가합니다.
 
@@ -930,7 +930,7 @@ sed ‘3 s/[0-9][0-9]*//’ <file >new
 ----
 
 
-== Patterns
+=== Patterns
 
 vi나 more 같은 UNIX 유틸리티는 슬래시 문자로 정규식을 검색합니다. Sed도 표현식을 슬래시로 끝맺으면 동일한 규칙을 따릅니다. 예를 들어, “#” 으로 시작하는 모든 줄의 첫 번째 숫자를 삭제하려면 다음을 입력합니다.
 
@@ -987,7 +987,7 @@ sed ‘/^g/ s_g_s_g’
 스크립트 작성 당시엔 완벽히 이해했을지도 모릅니다. 하지만 6개월 후에는 마치 모뎀 잡음처럼 보일 수 있습니다. 이런 비유가 이해되지 않으면 8개월 된 아이가 키보드를 두드리는 모습을 상상하시기 바랍니다.
 
 
-== Ranges by line number
+=== Ranges by line number
 
 줄 번호에 쉼표를 삽입해서 (주소) 범위로 지정할 수 있습니다. 첫 100줄로 치환을 제한하려면 다음과 같이 입력합니다.
 
@@ -1027,7 +1027,7 @@ cat f1 f2 f3 | sed ‘200,300 s/A/a/’ >new
 ----
 
 
-== Ranges by patterns
+=== Ranges by patterns
 
 범위에 두 개의 정규식을 지정할 수 있습니다. “#” 문자로 시작하는 주석을 가정할 때 첫 번째 키워드부터 두 번째 키워드가 나타날 때까지의 모든 주석을 제거할 수 있습니다. 이때 사용할 키워드는 “start” 와 “stop” 입니다.
 
@@ -1589,7 +1589,7 @@ c\
 ----
 
 
-== Leading tabs and spaces in a sed script
+=== Leading tabs and spaces in a sed script
 
 sed는 기본적으로 모든 명령 앞의 탭과 공백을 무시합니다! 하지만, 공백 문자가 `a`, `c` 또는 `i` 명령의 텍스트 시작 부분에 위치할 경우 무시할 수도 있고 무시하지 않을 수도 있습니다.
 
@@ -1607,7 +1607,7 @@ sed '
 ----
 
 
-== Adding more than one line
+=== Adding more than one line
 
 세 명령 모두 한 줄 이상 추가할 수 있습니다. 이 경우 이어지는 줄 끝은 “`\`” 문자로 마무리해야 합니다. (마지막 줄만 제외)
 
@@ -1623,14 +1623,14 @@ sed '
 ----
 
 
-== Adding lines and the pattern space
+=== Adding lines and the pattern space
 
 앞서 패턴 공간에 대해 살짝 언급했습니다. 대부분의 명령은 패턴 공간에 작동하며 뒤따르는 명령은 직전 명령으로 수정한 결과에 적용됩니다.
 
 앞서 살펴본 세 명령은 파일 읽기 명령과 마찬가지로 *패턴 공간을 거치지 않고* 출력 스트림에 줄을 추가합니다.
 
 
-== Address ranges and the above commands
+=== Address ranges and the above commands
 
 “일부 명령은 줄 범위를 지정할 수 있지만 다른 명령은 그렇지 않다” 고 말씀드린 것을 기억하실 겁니다. 정확히 말하면 `a`, `i`, `r`, `q` 명령은 1,100 이나 /begin/,/end/ 같은 범위를 지정할 수 없습니다!! 설명서에는 _read_ 명령이 범위를 지정할 수 있다고 나오지만 직접 시도하면 오류가 발생합니다.
 
@@ -1896,7 +1896,7 @@ sed '
 ----
 
 
-== Matching three lines with sed
+=== Matching three lines with sed
 
 검색 시 여러 줄을 일괄적으로 일치시킬 수 있습니다.
 
@@ -1934,7 +1934,7 @@ sed '
 ----
 
 
-== Matching patterns that span multiple lines
+=== Matching patterns that span multiple lines
 
 연속된 두 줄에서 특정 패턴을 검색하거나 줄 경계에서 나뉠 수 있는 연속된 단어를 검색할 수 있습니다.
 
@@ -2125,7 +2125,7 @@ s/ /\\\\
 
 
 
-== Using newlines in sed scripts
+=== Using newlines in sed scripts
 
 때때로 sed 스크립트에서 줄바꿈 문자를 사용할 때가 있습니다. 그런데 미묘한 문제가 있습니다. 줄바꿈 문자을 검색하려면 “\n” 을 사용합니다. 다음은 특정 구문을 검색한 후 그 구문 뒤의 줄바꿈 문자를 삭제해서 두 줄을 하나로 합치는 예시입니다.
 
@@ -2165,7 +2165,7 @@ y
 
 
 
-== The Hold Buffer
+=== The Hold Buffer
 
 지금까지 sed의 세 가지 개념을 살펴봤습니다:
 
@@ -2180,7 +2180,7 @@ y
 홀드 버퍼를 사용하는 명령은 다섯 가지입니다.
 
 
-== Exchange with x
+=== Exchange with x
 
 `x` (_exchange_)명령은 패턴 영역(버퍼)과 홀드 버퍼(영역)의 내용을 교환합니다. 이 명령 자체는 별다른 용도가 없습니다. 다음 sed 명령
 
@@ -2195,7 +2195,7 @@ sed ‘x’
 두 번째 `x` 명령은 두 번째 줄을 첫 번째 줄이 들어있는 홀드 버퍼와 교환합니다. 이후 각 줄은 바로 앞 줄과 교환됩니다. 마지막 줄은 홀드 버퍼에 저장되지만 교환되지 않으므로 프로그램을 종료할 때 홀드 버퍼에 그대로 남아 있고 출력되지 않습니다. 이는 “홀드 버퍼에 데이터를 저장할 때는 주의해서 처리해야 함” 을 의미합니다. 명시적으로 요청하지 않는 한 해당 데이터를 출력하지 않기 때문입니다.
 
 
-== Example of Context Grep
+=== Example of Context Grep
 
 홀드 버퍼의 용도는 이전 줄을 “기억하는 것” 입니다. 예를 들어, 패턴과 일치한 줄을 표시하는 grep 과 유사한 유틸리티를 가정합니다. 이 유틸리티는 패턴 앞뒤 줄도 함께 표시합니다. 즉, 8번 줄에 패턴이 있다면 이 유틸리티는 7, 8, 9번 줄을 출력합니다.
 
@@ -2254,7 +2254,7 @@ grep3 vt100 </etc/termcap
 ----
 
 
-== Hold with h or H
+=== Hold with h or H
 
 `x` 명령은 홀드 버퍼와 패턴 버퍼의 위치를 서로 바꿉니다. 이때 두 버퍼 모두 변경됩니다. `h` 명령은 패턴 버퍼의 내용을 홀드 버퍼로 복사합니다. 이때 패턴 버퍼는 변경되지 않습니다.
 
@@ -2298,7 +2298,7 @@ sed -n '
 ----
 
 
-== Keeping more than one line in the hold buffer
+=== Keeping more than one line in the hold buffer
 
 `H` 명령을 사용하면 홀드 버퍼에 여러 줄을 “결합” 할 수 있습니다. 이 명령은 버퍼에 줄을 추가할 때 줄 사이에 “\n” 을 삽입한다는 점은 `N` (대문자)명령과 유사합니다. 홀드 버퍼에 여러 줄을 저장했다가 나중에 특정 패턴이 발견될 때만 이를 출력합니다.
 
@@ -2385,7 +2385,7 @@ sed -n '
 이 스크립트를 조금만 수정하면 패턴 중심으로 원하는 줄 수만큼 출력할 수 있습니다. 보다시피, 홀드 버퍼에 무엇이 들어있는지, 패턴 버퍼에 무엇이 들어있는지 기억해야 합니다. 동일한 루틴을 작성하는 또다른 방법도 있습니다.
 
 
-== Get with g or G
+=== Get with g or G
 
 홀드 공간과 패턴 공간을 바꾸는 대신 `g` 명령으로 홀드 공간의 내용을 패턴 공간으로 복사합니다. 이 명령은 패턴 공간을 삭제합니다!! 패턴 공간에 내용을 추가하려면 `G` (대문자)명령을 사용합니다. 이 명령은 패턴 공간에 새로운 줄을 추가하고 새로운 줄 뒤에 홀드 공간의 내용을 복사합니다.
 
@@ -3012,6 +3012,7 @@ grep -lZ STRING */*/* | sed -z ‘s:^.*/::’ | xargs -0 echo
 ----
 
 이 기능은 사용자가 파일 이름을 생성할 경우에 유용합니다.
+
 
 
 == FreeBSD Extensions
