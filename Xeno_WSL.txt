@@ -5,20 +5,22 @@ wsl --shutdown
 # Connect VM
 wsl -d Xeno
 
+# Remove VM
+wsl --unregister xeno
+
 # Enabel APK
 cd; mkdir -p /etc/apk
 echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories
 echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
 
-wget https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/apk-tools-static-3.0.8-r0.apk
-wget --no-check-certificate https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/apk-tools-static-3.0.8-r0.apk
+wget --no-check-certificate https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/apk-tools-static-3.0.9-r0.apk
 
-tar xvzf apk-tools-static-3.0.8-r0.apk 
+tar xvzf apk-tools-static-3.0.9-r0.apk 
 sbin/apk.static --initdb --allow-untrusted add apk-tools
 apk add --allow-untrusted alpine-keys
 apk update
 
-rm -rf sbin .PKGINFO .SIGN.RSA.alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub apk-tools-static-3.0.8-r0.apk
+rm -rf sbin .PKGINFO .SIGN.RSA.alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub apk-tools-static-3.0.9-r0.apk
 
 
 # Timezone Setting
@@ -39,9 +41,6 @@ mkdir .config
 cp -R /mnt/c/Alpine/config/.config/nvim ~/.config 
 nvim
 
-
-# Remove VM
-wsl --unregister xeno
 
 
 # Make a rootfs
@@ -73,3 +72,19 @@ https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/
 
 https://github.com/cstria0106/sarasa-mono-k-nerd-font/releases/download/1.0/sarasa-mono-k-nerd-font.zip
 https://github.com/jonz94/Sarasa-Gothic-Nerd-Fonts/releases/download/v1.0.37-0/sarasa-mono-k-nerd-font.zip
+
+
+# sed shell & syntax highlighting
+apk add sed source-highlight
+
+sed -n 'w xed'
+
+```
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+    sed 's#.*#& | source-highlight -f esc -s bash#e'
+else
+    source-highlight -f esc -s "$2" -i "$1" -o STDOUT
+fi
+```
